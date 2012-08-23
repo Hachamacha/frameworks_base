@@ -42,7 +42,11 @@ int create_pkg_path_in_dir(char path[PKG_PATH_MAX],
      if (append_and_increment(&dst, dir->path, &dst_size) < 0
              || append_and_increment(&dst, pkgname, &dst_size) < 0
              || append_and_increment(&dst, postfix, &dst_size) < 0) {
+<<<<<<< HEAD
          ALOGE("Error building APK path");
+=======
+         LOGE("Error building APK path");
+>>>>>>> upstream/master
          return -1;
      }
 
@@ -76,14 +80,22 @@ int create_pkg_path(char path[PKG_PATH_MAX],
 
     if (append_and_increment(&dst, android_data_dir.path, &dst_size) < 0
             || append_and_increment(&dst, persona_prefix, &dst_size) < 0) {
+<<<<<<< HEAD
         ALOGE("Error building prefix for APK path");
+=======
+        LOGE("Error building prefix for APK path");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (persona != 0) {
         int ret = snprintf(dst, dst_size, "%d/", persona);
         if (ret < 0 || (size_t) ret != uid_len + 1) {
+<<<<<<< HEAD
             ALOGW("Error appending UID to APK path");
+=======
+            LOGW("Error appending UID to APK path");
+>>>>>>> upstream/master
             return -1;
         }
     }
@@ -117,18 +129,30 @@ int create_persona_path(char path[PKG_PATH_MAX],
 
     if (append_and_increment(&dst, android_data_dir.path, &dst_size) < 0
             || append_and_increment(&dst, persona_prefix, &dst_size) < 0) {
+<<<<<<< HEAD
         ALOGE("Error building prefix for user path");
+=======
+        LOGE("Error building prefix for user path");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (persona != 0) {
         if (dst_size < uid_len + 1) {
+<<<<<<< HEAD
             ALOGE("Error building user path");
+=======
+            LOGE("Error building user path");
+>>>>>>> upstream/master
             return -1;
         }
         int ret = snprintf(dst, dst_size, "%d/", persona);
         if (ret < 0 || (size_t) ret != uid_len) {
+<<<<<<< HEAD
             ALOGE("Error appending persona id to path");
+=======
+            LOGE("Error appending persona id to path");
+>>>>>>> upstream/master
             return -1;
         }
     }
@@ -163,7 +187,11 @@ int is_valid_package_name(const char* pkgname) {
         } else if (*x == '.') {
             if ((x == pkgname) || (x[1] == '.') || (x[1] == 0)) {
                     /* periods must not be first, last, or doubled */
+<<<<<<< HEAD
                 ALOGE("invalid package name '%s'\n", pkgname);
+=======
+                LOGE("invalid package name '%s'\n", pkgname);
+>>>>>>> upstream/master
                 return -1;
             }
         } else if (*x == '-') {
@@ -172,7 +200,11 @@ int is_valid_package_name(const char* pkgname) {
             alpha = 1;
         } else {
                 /* anything not A-Z, a-z, 0-9, _, or . is invalid */
+<<<<<<< HEAD
             ALOGE("invalid package name '%s'\n", pkgname);
+=======
+            LOGE("invalid package name '%s'\n", pkgname);
+>>>>>>> upstream/master
             return -1;
         }
 
@@ -184,7 +216,11 @@ int is_valid_package_name(const char* pkgname) {
         x++;
         while (*x) {
             if (!isalnum(*x)) {
+<<<<<<< HEAD
                 ALOGE("invalid package name '%s' should include only numbers after -\n", pkgname);
+=======
+                LOGE("invalid package name '%s' should include only numbers after -\n", pkgname);
+>>>>>>> upstream/master
                 return -1;
             }
             x++;
@@ -222,13 +258,21 @@ static int _delete_dir_contents(DIR *d, const char *ignore)
 
             subfd = openat(dfd, name, O_RDONLY | O_DIRECTORY);
             if (subfd < 0) {
+<<<<<<< HEAD
                 ALOGE("Couldn't openat %s: %s\n", name, strerror(errno));
+=======
+                LOGE("Couldn't openat %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
                 result = -1;
                 continue;
             }
             subdir = fdopendir(subfd);
             if (subdir == NULL) {
+<<<<<<< HEAD
                 ALOGE("Couldn't fdopendir %s: %s\n", name, strerror(errno));
+=======
+                LOGE("Couldn't fdopendir %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
                 close(subfd);
                 result = -1;
                 continue;
@@ -238,12 +282,20 @@ static int _delete_dir_contents(DIR *d, const char *ignore)
             }
             closedir(subdir);
             if (unlinkat(dfd, name, AT_REMOVEDIR) < 0) {
+<<<<<<< HEAD
                 ALOGE("Couldn't unlinkat %s: %s\n", name, strerror(errno));
+=======
+                LOGE("Couldn't unlinkat %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
                 result = -1;
             }
         } else {
             if (unlinkat(dfd, name, 0) < 0) {
+<<<<<<< HEAD
                 ALOGE("Couldn't unlinkat %s: %s\n", name, strerror(errno));
+=======
+                LOGE("Couldn't unlinkat %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
                 result = -1;
             }
         }
@@ -261,14 +313,22 @@ int delete_dir_contents(const char *pathname,
 
     d = opendir(pathname);
     if (d == NULL) {
+<<<<<<< HEAD
         ALOGE("Couldn't opendir %s: %s\n", pathname, strerror(errno));
+=======
+        LOGE("Couldn't opendir %s: %s\n", pathname, strerror(errno));
+>>>>>>> upstream/master
         return -errno;
     }
     res = _delete_dir_contents(d, ignore);
     closedir(d);
     if (also_delete_dir) {
         if (rmdir(pathname)) {
+<<<<<<< HEAD
             ALOGE("Couldn't rmdir %s: %s\n", pathname, strerror(errno));
+=======
+            LOGE("Couldn't rmdir %s: %s\n", pathname, strerror(errno));
+>>>>>>> upstream/master
             res = -1;
         }
     }
@@ -282,12 +342,20 @@ int delete_dir_contents_fd(int dfd, const char *name)
 
     fd = openat(dfd, name, O_RDONLY | O_DIRECTORY);
     if (fd < 0) {
+<<<<<<< HEAD
         ALOGE("Couldn't openat %s: %s\n", name, strerror(errno));
+=======
+        LOGE("Couldn't openat %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
     d = fdopendir(fd);
     if (d == NULL) {
+<<<<<<< HEAD
         ALOGE("Couldn't fdopendir %s: %s\n", name, strerror(errno));
+=======
+        LOGE("Couldn't fdopendir %s: %s\n", name, strerror(errno));
+>>>>>>> upstream/master
         close(fd);
         return -1;
     }
@@ -307,7 +375,11 @@ int validate_system_app_path(const char* path) {
         const size_t dir_len = android_system_dirs.dirs[i].len;
         if (!strncmp(path, android_system_dirs.dirs[i].path, dir_len)) {
             if (path[dir_len] == '.' || strchr(path + dir_len, '/') != NULL) {
+<<<<<<< HEAD
                 ALOGE("invalid system apk path '%s' (trickery)\n", path);
+=======
+                LOGE("invalid system apk path '%s' (trickery)\n", path);
+>>>>>>> upstream/master
                 return -1;
             }
             return 0;
@@ -326,7 +398,11 @@ int get_path_from_env(dir_rec_t* rec, const char* var) {
     const char* path = getenv(var);
     int ret = get_path_from_string(rec, path);
     if (ret < 0) {
+<<<<<<< HEAD
         ALOGW("Problem finding value for environment variable %s\n", var);
+=======
+        LOGW("Problem finding value for environment variable %s\n", var);
+>>>>>>> upstream/master
     }
     return ret;
 }
@@ -377,7 +453,11 @@ int get_path_from_string(dir_rec_t* rec, const char* path) {
 
             if (append_and_increment(&dst, path, &dst_size) < 0
                     || append_and_increment(&dst, "/", &dst_size)) {
+<<<<<<< HEAD
                 ALOGE("Error canonicalizing path");
+=======
+                LOGE("Error canonicalizing path");
+>>>>>>> upstream/master
                 return -1;
             }
 
@@ -395,7 +475,11 @@ int copy_and_append(dir_rec_t* dst, const dir_rec_t* src, const char* suffix) {
     if (dst->path == NULL
             || snprintf(dst->path, dstSize, "%s%s", src->path, suffix)
                     != (ssize_t) dst->len) {
+<<<<<<< HEAD
         ALOGE("Could not allocate memory to hold appended path; aborting\n");
+=======
+        LOGE("Could not allocate memory to hold appended path; aborting\n");
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -422,7 +506,11 @@ int validate_apk_path(const char *path)
         dir_len = android_asec_dir.len;
         allowsubdir = 1;
     } else {
+<<<<<<< HEAD
         ALOGE("invalid apk path '%s' (bad prefix)\n", path);
+=======
+        LOGE("invalid apk path '%s' (bad prefix)\n", path);
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -435,7 +523,11 @@ int validate_apk_path(const char *path)
         ++subdir;
         if (!allowsubdir
                 || (path_len > (size_t) (subdir - path) && (strchr(subdir, '/') != NULL))) {
+<<<<<<< HEAD
             ALOGE("invalid apk path '%s' (subdir?)\n", path);
+=======
+            LOGE("invalid apk path '%s' (subdir?)\n", path);
+>>>>>>> upstream/master
             return -1;
         }
     }
@@ -446,7 +538,11 @@ int validate_apk_path(const char *path)
      */
     if (path[dir_len] == '.'
             || (subdir != NULL && ((*subdir == '.') || (strchr(subdir, '/') != NULL)))) {
+<<<<<<< HEAD
         ALOGE("invalid apk path '%s' (trickery)\n", path);
+=======
+        LOGE("invalid apk path '%s' (trickery)\n", path);
+>>>>>>> upstream/master
         return -1;
     }
 

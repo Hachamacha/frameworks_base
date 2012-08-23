@@ -81,6 +81,7 @@ public class Visualizer {
      */
     public static final int STATE_ENABLED   = 2;
 
+<<<<<<< HEAD
     // to keep in sync with system/media/audio_effects/include/audio_effects/effect_visualizer.h
     /**
      * Defines a capture mode where amplification is applied based on the content of the captured
@@ -97,6 +98,11 @@ public class Visualizer {
     private static final int NATIVE_EVENT_PCM_CAPTURE = 0;
     private static final int NATIVE_EVENT_FFT_CAPTURE = 1;
     private static final int NATIVE_EVENT_SERVER_DIED = 2;
+=======
+    // to keep in sync with frameworks/base/media/jni/audioeffect/android_media_Visualizer.cpp
+    private static final int NATIVE_EVENT_PCM_CAPTURE = 0;
+    private static final int NATIVE_EVENT_FFT_CAPTURE = 1;
+>>>>>>> upstream/master
 
     // Error codes:
     /**
@@ -160,10 +166,13 @@ public class Visualizer {
      *  PCM and FFT capture listener registered by client
      */
     private OnDataCaptureListener mCaptureListener = null;
+<<<<<<< HEAD
     /**
      *  Server Died listener registered by client
      */
     private OnServerDiedListener mServerDiedListener = null;
+=======
+>>>>>>> upstream/master
 
     // accessed by native methods
     private int mNativeVisualizer;
@@ -314,6 +323,7 @@ public class Visualizer {
     }
 
     /**
+<<<<<<< HEAD
      * Set the type of scaling applied on the captured visualization data.
      * @param mode see {@link #SCALING_MODE_NORMALIZED}
      *     and {@link #SCALING_MODE_AS_PLAYED}
@@ -350,6 +360,8 @@ public class Visualizer {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns the sampling rate of the captured audio.
      * @return the sampling rate in milliHertz.
      */
@@ -449,9 +461,12 @@ public class Visualizer {
     public interface OnDataCaptureListener  {
         /**
          * Method called when a new waveform capture is available.
+<<<<<<< HEAD
          * <p>Data in the waveform buffer is valid only within the scope of the callback.
          * Applications which needs access to the waveform data after returning from the callback
          * should make a copy of the data instead of holding a reference.
+=======
+>>>>>>> upstream/master
          * @param visualizer Visualizer object on which the listener is registered.
          * @param waveform array of bytes containing the waveform representation.
          * @param samplingRate sampling rate of the audio visualized.
@@ -460,9 +475,12 @@ public class Visualizer {
 
         /**
          * Method called when a new frequency capture is available.
+<<<<<<< HEAD
          * <p>Data in the fft buffer is valid only within the scope of the callback.
          * Applications which needs access to the fft data after returning from the callback
          * should make a copy of the data instead of holding a reference.
+=======
+>>>>>>> upstream/master
          * @param visualizer Visualizer object on which the listener is registered.
          * @param fft array of bytes containing the frequency representation.
          * @param samplingRate sampling rate of the audio visualized.
@@ -511,6 +529,7 @@ public class Visualizer {
     }
 
     /**
+<<<<<<< HEAD
      * @hide
      *
      * The OnServerDiedListener interface defines a method called by the Visualizer to indicate that
@@ -548,6 +567,8 @@ public class Visualizer {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Helper class to handle the forwarding of native events to the appropriate listeners
      */
     private class NativeEventHandler extends Handler
@@ -559,7 +580,15 @@ public class Visualizer {
             mVisualizer = v;
         }
 
+<<<<<<< HEAD
         private void handleCaptureMessage(Message msg) {
+=======
+        @Override
+        public void handleMessage(Message msg) {
+            if (mVisualizer == null) {
+                return;
+            }
+>>>>>>> upstream/master
             OnDataCaptureListener l = null;
             synchronized (mListenerLock) {
                 l = mVisualizer.mCaptureListener;
@@ -568,7 +597,10 @@ public class Visualizer {
             if (l != null) {
                 byte[] data = (byte[])msg.obj;
                 int samplingRate = msg.arg1;
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
                 switch(msg.what) {
                 case NATIVE_EVENT_PCM_CAPTURE:
                     l.onWaveFormDataCapture(mVisualizer, data, samplingRate);
@@ -577,11 +609,16 @@ public class Visualizer {
                     l.onFftDataCapture(mVisualizer, data, samplingRate);
                     break;
                 default:
+<<<<<<< HEAD
                     Log.e(TAG,"Unknown native event in handleCaptureMessge: "+msg.what);
+=======
+                    Log.e(TAG,"Unknown native event: "+msg.what);
+>>>>>>> upstream/master
                     break;
                 }
             }
         }
+<<<<<<< HEAD
 
         private void handleServerDiedMessage(Message msg) {
             OnServerDiedListener l = null;
@@ -612,6 +649,8 @@ public class Visualizer {
                 break;
             }
         }
+=======
+>>>>>>> upstream/master
     }
 
     //---------------------------------------------------------
@@ -636,10 +675,13 @@ public class Visualizer {
 
     private native final int native_getCaptureSize();
 
+<<<<<<< HEAD
     private native final int native_setScalingMode(int mode);
 
     private native final int native_getScalingMode();
 
+=======
+>>>>>>> upstream/master
     private native final int native_getSamplingRate();
 
     private native final int native_getWaveForm(byte[] waveform);

@@ -20,7 +20,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.webkit.WebView;
+<<<<<<< HEAD
 import android.webkit.WebViewClassic;
+=======
+>>>>>>> upstream/master
 
 import name.fraser.neil.plaintext.diff_match_patch;
 
@@ -234,7 +237,11 @@ public class TextResult extends AbstractResult {
          */
         msg.arg1 = 1;
         msg.arg2 = mDumpChildFramesAsText ? 1 : 0;
+<<<<<<< HEAD
         WebViewClassic.fromWebView(webview).documentAsText(msg);
+=======
+        webview.documentAsText(msg);
+>>>>>>> upstream/master
     }
 
     @Override

@@ -94,7 +94,11 @@ public class AudioStream extends RtpStream {
                 mGroup = null;
             }
             if (group != null) {
+<<<<<<< HEAD
                 group.add(this);
+=======
+                group.add(this, mCodec, mDtmfType);
+>>>>>>> upstream/master
                 mGroup = group;
             }
         }
@@ -158,7 +162,11 @@ public class AudioStream extends RtpStream {
             if (type < 96 || type > 127) {
                 throw new IllegalArgumentException("Invalid type");
             }
+<<<<<<< HEAD
             if (mCodec != null && type == mCodec.type) {
+=======
+            if (type == mCodec.type) {
+>>>>>>> upstream/master
                 throw new IllegalArgumentException("The type is used by codec");
             }
         }

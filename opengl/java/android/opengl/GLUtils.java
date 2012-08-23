@@ -227,9 +227,15 @@ public final class GLUtils {
     /**
      * Return a string for the EGL error code, or the hex representation
      * if the error is unknown.
+<<<<<<< HEAD
      *
      * @param error The EGL error to convert into a String.
      *
+=======
+     * 
+     * @param error The EGL error to convert into a String.
+     * 
+>>>>>>> upstream/master
      * @return An error string corresponding to the EGL error code.
      */
     public static String getEGLErrorString(int error) {
@@ -269,6 +275,7 @@ public final class GLUtils {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Enable tracing of OpenGL functions for this application.
      * @hide
@@ -277,6 +284,8 @@ public final class GLUtils {
         native_enableTracing();
     }
 
+=======
+>>>>>>> upstream/master
     native private static void nativeClassInit();
 
     native private static int native_getInternalFormat(Bitmap bitmap);
@@ -285,5 +294,8 @@ public final class GLUtils {
             Bitmap bitmap, int type, int border);
     native private static int native_texSubImage2D(int target, int level, int xoffset, int yoffset,
             Bitmap bitmap, int format, int type);
+<<<<<<< HEAD
     native private static void native_enableTracing();
+=======
+>>>>>>> upstream/master
 }

@@ -18,7 +18,10 @@ package android.util;
 
 import java.util.Locale;
 
+<<<<<<< HEAD
 import android.view.View;
+=======
+>>>>>>> upstream/master
 import libcore.icu.ICU;
 
 /**
@@ -30,6 +33,21 @@ public class LocaleUtil {
 
     private LocaleUtil() { /* cannot be instantiated */ }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @hide Do not use. Implementation not finished.
+     */
+    public static final int TEXT_LAYOUT_DIRECTION_LTR_DO_NOT_USE = 0;
+
+    /**
+     * @hide Do not use. Implementation not finished.
+     */
+    public static final int TEXT_LAYOUT_DIRECTION_RTL_DO_NOT_USE = 1;
+
+    private static final char UNDERSCORE_CHAR = '_';
+
+>>>>>>> upstream/master
     private static String ARAB_SCRIPT_SUBTAG = "Arab";
     private static String HEBR_SCRIPT_SUBTAG = "Hebr";
 
@@ -38,10 +56,18 @@ public class LocaleUtil {
      *
      * @param locale the Locale for which we want the layout direction. Can be null.
      * @return the layout direction. This may be one of:
+<<<<<<< HEAD
      * {@link View#LAYOUT_DIRECTION_LTR} or
      * {@link View#LAYOUT_DIRECTION_RTL}.
      *
      * Warning: this code does not support vertical scripts.
+=======
+     * {@link #TEXT_LAYOUT_DIRECTION_LTR_DO_NOT_USE} or
+     * {@link #TEXT_LAYOUT_DIRECTION_RTL_DO_NOT_USE}.
+     *
+     * Be careful: this code will need to be changed when vertical scripts will be supported
+     *
+>>>>>>> upstream/master
      * @hide
      */
     public static int getLayoutDirectionFromLocale(Locale locale) {
@@ -51,11 +77,19 @@ public class LocaleUtil {
 
             if (scriptSubtag.equalsIgnoreCase(ARAB_SCRIPT_SUBTAG) ||
                     scriptSubtag.equalsIgnoreCase(HEBR_SCRIPT_SUBTAG)) {
+<<<<<<< HEAD
                 return View.LAYOUT_DIRECTION_RTL;
             }
         }
 
         return View.LAYOUT_DIRECTION_LTR;
+=======
+                return TEXT_LAYOUT_DIRECTION_RTL_DO_NOT_USE;
+            }
+        }
+
+        return TEXT_LAYOUT_DIRECTION_LTR_DO_NOT_USE;
+>>>>>>> upstream/master
     }
 
     /**
@@ -65,21 +99,37 @@ public class LocaleUtil {
      *
      * @param locale
      * @return the layout direction. This may be one of:
+<<<<<<< HEAD
      * {@link View#LAYOUT_DIRECTION_LTR} or
      * {@link View#LAYOUT_DIRECTION_RTL}.
      *
      * Warning: this code does not support vertical scripts.
+=======
+     * {@link #TEXT_LAYOUT_DIRECTION_LTR_DO_NOT_USE} or
+     * {@link #TEXT_LAYOUT_DIRECTION_RTL_DO_NOT_USE}.
+     *
+     * Be careful: this code will need to be changed when vertical scripts will be supported
+     *
+>>>>>>> upstream/master
      * @hide
      */
     private static int getLayoutDirectionFromFirstChar(Locale locale) {
         switch(Character.getDirectionality(locale.getDisplayName(locale).charAt(0))) {
             case Character.DIRECTIONALITY_RIGHT_TO_LEFT:
             case Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC:
+<<<<<<< HEAD
                 return View.LAYOUT_DIRECTION_RTL;
 
             case Character.DIRECTIONALITY_LEFT_TO_RIGHT:
             default:
                 return View.LAYOUT_DIRECTION_LTR;
+=======
+                return TEXT_LAYOUT_DIRECTION_RTL_DO_NOT_USE;
+
+            case Character.DIRECTIONALITY_LEFT_TO_RIGHT:
+            default:
+                return TEXT_LAYOUT_DIRECTION_LTR_DO_NOT_USE;
+>>>>>>> upstream/master
         }
     }
 }

@@ -59,7 +59,10 @@ class BroadcastRecord extends Binder {
     IBinder receiver;       // who is currently running, null if none.
     int state;
     int anrCount;           // has this broadcast record hit any ANRs?
+<<<<<<< HEAD
     BroadcastQueue queue;   // the outbound queue handling this broadcast
+=======
+>>>>>>> upstream/master
 
     static final int IDLE = 0;
     static final int APP_RECEIVE = 1;
@@ -162,13 +165,20 @@ class BroadcastRecord extends Binder {
         }
     }
 
+<<<<<<< HEAD
     BroadcastRecord(BroadcastQueue _queue,
             Intent _intent, ProcessRecord _callerApp, String _callerPackage,
+=======
+    BroadcastRecord(Intent _intent, ProcessRecord _callerApp, String _callerPackage,
+>>>>>>> upstream/master
             int _callingPid, int _callingUid, String _requiredPermission,
             List _receivers, IIntentReceiver _resultTo, int _resultCode,
             String _resultData, Bundle _resultExtras, boolean _serialized,
             boolean _sticky, boolean _initialSticky) {
+<<<<<<< HEAD
         queue = _queue;
+=======
+>>>>>>> upstream/master
         intent = _intent;
         callerApp = _callerApp;
         callerPackage = _callerPackage;

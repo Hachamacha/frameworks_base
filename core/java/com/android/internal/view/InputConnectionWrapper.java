@@ -387,9 +387,15 @@ public class InputConnectionWrapper implements InputConnection {
         }
     }
     
+<<<<<<< HEAD
     public boolean deleteSurroundingText(int beforeLength, int afterLength) {
         try {
             mIInputContext.deleteSurroundingText(beforeLength, afterLength);
+=======
+    public boolean deleteSurroundingText(int leftLength, int rightLength) {
+        try {
+            mIInputContext.deleteSurroundingText(leftLength, rightLength);
+>>>>>>> upstream/master
             return true;
         } catch (RemoteException e) {
             return false;

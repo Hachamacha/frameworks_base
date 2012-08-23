@@ -98,8 +98,13 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
      */
     public CursorWindow(String name) {
         mStartPos = 0;
+<<<<<<< HEAD
         mName = name != null && name.length() != 0 ? name : "<unnamed>";
         mWindowPtr = nativeCreate(mName, sCursorWindowSize);
+=======
+        mName = name;
+        mWindowPtr = nativeCreate(name, sCursorWindowSize);
+>>>>>>> upstream/master
         if (mWindowPtr == 0) {
             throw new CursorWindowAllocationException("Cursor window allocation of " +
                     (sCursorWindowSize / 1024) + " kb failed. " + printStats());
@@ -161,7 +166,11 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the name of this cursor window, never null.
+=======
+     * Gets the name of this cursor window.
+>>>>>>> upstream/master
      * @hide
      */
     public String getName() {
@@ -169,6 +178,17 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Closes the cursor window and frees its underlying resources when all other
+     * remaining references have been released.
+     */
+    public void close() {
+        releaseReference();
+    }
+
+    /**
+>>>>>>> upstream/master
      * Clears out the existing contents of the window, making it safe to reuse
      * for new data.
      * <p>
@@ -695,6 +715,7 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
     }
 
     public void writeToParcel(Parcel dest, int flags) {
+<<<<<<< HEAD
         acquireReference();
         try {
             dest.writeInt(mStartPos);
@@ -702,6 +723,10 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
         } finally {
             releaseReference();
         }
+=======
+        dest.writeInt(mStartPos);
+        nativeWriteToParcel(mWindowPtr, dest);
+>>>>>>> upstream/master
 
         if ((flags & Parcelable.PARCELABLE_WRITE_RETURN_VALUE) != 0) {
             releaseReference();

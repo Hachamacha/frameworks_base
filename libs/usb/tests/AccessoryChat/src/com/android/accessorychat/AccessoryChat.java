@@ -33,8 +33,13 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbAccessory;
+=======
+import com.android.future.usb.UsbAccessory;
+import com.android.future.usb.UsbManager;
+>>>>>>> upstream/master
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -64,11 +69,17 @@ public class AccessoryChat extends Activity implements Runnable, TextView.OnEdit
         public void onReceive(Context context, Intent intent) {
             if (ACTION_USB_PERMISSION.equals(intent.getAction())) {
                 synchronized (this) {
+<<<<<<< HEAD
                     UsbAccessory accessory = (UsbAccessory) intent.getParcelableExtra(UsbManager.EXTRA_ACCESSORY);
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                         if (accessory != null) {
                             openAccessory(accessory);
                         }
+=======
+                    UsbAccessory accessory = UsbManager.getAccessory(intent);
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        openAccessory(accessory);
+>>>>>>> upstream/master
                     } else {
                         Log.d(TAG, "permission denied for accessory " + accessory);
                     }
@@ -82,7 +93,11 @@ public class AccessoryChat extends Activity implements Runnable, TextView.OnEdit
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+<<<<<<< HEAD
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+=======
+        mUsbManager = UsbManager.getInstance(this);
+>>>>>>> upstream/master
         mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
         registerReceiver(mUsbReceiver, filter);

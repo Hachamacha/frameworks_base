@@ -41,6 +41,7 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
      */
     public CharSequence nonLocalizedDescription;
 
+<<<<<<< HEAD
     /**
      * Flag for {@link #flags}, corresponding to <code>personalInfo</code>
      * value of {@link android.R.attr#permissionGroupFlags}.
@@ -61,6 +62,8 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
      */
     public int priority;
 
+=======
+>>>>>>> upstream/master
     public PermissionGroupInfo() {
     }
 
@@ -68,8 +71,11 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
         super(orig);
         descriptionRes = orig.descriptionRes;
         nonLocalizedDescription = orig.nonLocalizedDescription;
+<<<<<<< HEAD
         flags = orig.flags;
         priority = orig.priority;
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -99,7 +105,11 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
     public String toString() {
         return "PermissionGroupInfo{"
             + Integer.toHexString(System.identityHashCode(this))
+<<<<<<< HEAD
             + " " + name + " flgs=0x" + Integer.toHexString(flags) + "}";
+=======
+            + " " + name + "}";
+>>>>>>> upstream/master
     }
 
     public int describeContents() {
@@ -110,8 +120,11 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
         super.writeToParcel(dest, parcelableFlags);
         dest.writeInt(descriptionRes);
         TextUtils.writeToParcel(nonLocalizedDescription, dest, parcelableFlags);
+<<<<<<< HEAD
         dest.writeInt(flags);
         dest.writeInt(priority);
+=======
+>>>>>>> upstream/master
     }
 
     public static final Creator<PermissionGroupInfo> CREATOR =
@@ -128,7 +141,10 @@ public class PermissionGroupInfo extends PackageItemInfo implements Parcelable {
         super(source);
         descriptionRes = source.readInt();
         nonLocalizedDescription = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+<<<<<<< HEAD
         flags = source.readInt();
         priority = source.readInt();
+=======
+>>>>>>> upstream/master
     }
 }

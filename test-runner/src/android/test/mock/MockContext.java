@@ -251,26 +251,33 @@ public class MockContext extends Context {
     }
 
     @Override
+<<<<<<< HEAD
     public void startActivity(Intent intent, Bundle options) {
         startActivity(intent);
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public void startActivities(Intent[] intents) {
         throw new UnsupportedOperationException();
     }
 
     @Override
+<<<<<<< HEAD
     public void startActivities(Intent[] intents, Bundle options) {
         startActivities(intents);
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public void startIntentSender(IntentSender intent,
             Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)
             throws IntentSender.SendIntentException {
         throw new UnsupportedOperationException();
     }
+<<<<<<< HEAD
 
     @Override
     public void startIntentSender(IntentSender intent,
@@ -278,18 +285,23 @@ public class MockContext extends Context {
             Bundle options) throws IntentSender.SendIntentException {
         startIntentSender(intent, fillInIntent, flagsMask, flagsValues, extraFlags);
     }
+=======
+>>>>>>> upstream/master
     
     @Override
     public void sendBroadcast(Intent intent) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public void sendBroadcast(Intent intent, int userId) {
         throw new UnsupportedOperationException();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void sendBroadcast(Intent intent, String receiverPermission) {
         throw new UnsupportedOperationException();
@@ -356,12 +368,15 @@ public class MockContext extends Context {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public boolean bindService(Intent service, ServiceConnection conn, int flags, int userId) {
         throw new UnsupportedOperationException();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void unbindService(ServiceConnection conn) {
         throw new UnsupportedOperationException();

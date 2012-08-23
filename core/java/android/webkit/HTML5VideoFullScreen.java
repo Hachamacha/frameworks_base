@@ -104,9 +104,13 @@ public class HTML5VideoFullScreen extends HTML5VideoView
             // After we return from this we can't use the surface any more.
             // The current Video View will be destroy when we play a new video.
             pauseAndDispatch(mProxy);
+<<<<<<< HEAD
             // TODO: handle full screen->inline mode transition without a reload.
             mPlayer.release();
             mPlayer = null;
+=======
+            mPlayer.release();
+>>>>>>> upstream/master
             mSurfaceHolder = null;
             if (mMediaController != null) {
                 mMediaController.hide();
@@ -114,6 +118,7 @@ public class HTML5VideoFullScreen extends HTML5VideoView
         }
     };
 
+<<<<<<< HEAD
     MediaPlayer.OnVideoSizeChangedListener mSizeChangedListener =
         new MediaPlayer.OnVideoSizeChangedListener() {
             @Override
@@ -126,16 +131,27 @@ public class HTML5VideoFullScreen extends HTML5VideoView
             }
     };
 
+=======
+>>>>>>> upstream/master
     private SurfaceView getSurfaceView() {
         return mVideoSurfaceView;
     }
 
+<<<<<<< HEAD
     HTML5VideoFullScreen(Context context, int videoLayerId, int position, boolean skipPrepare) {
+=======
+    HTML5VideoFullScreen(Context context, int videoLayerId, int position,
+            boolean autoStart) {
+>>>>>>> upstream/master
         mVideoSurfaceView = new VideoSurfaceView(context);
         mFullScreenMode = FULLSCREEN_OFF;
         mVideoWidth = 0;
         mVideoHeight = 0;
+<<<<<<< HEAD
         init(videoLayerId, position, skipPrepare);
+=======
+        init(videoLayerId, position, autoStart);
+>>>>>>> upstream/master
     }
 
     private void setMediaController(MediaController m) {
@@ -158,11 +174,19 @@ public class HTML5VideoFullScreen extends HTML5VideoView
     }
 
     private void prepareForFullScreen() {
+<<<<<<< HEAD
+=======
+        // So in full screen, we reset the MediaPlayer
+        mPlayer.reset();
+>>>>>>> upstream/master
         MediaController mc = new FullScreenMediaController(mProxy.getContext(), mLayout);
         mc.setSystemUiVisibility(mLayout.getSystemUiVisibility());
         setMediaController(mc);
         mPlayer.setScreenOnWhilePlaying(true);
+<<<<<<< HEAD
         mPlayer.setOnVideoSizeChangedListener(mSizeChangedListener);
+=======
+>>>>>>> upstream/master
         prepareDataAndDisplayMode(mProxy);
     }
 
@@ -194,6 +218,20 @@ public class HTML5VideoFullScreen extends HTML5VideoView
             mCanPause = mCanSeekBack = mCanSeekForward = true;
         }
 
+<<<<<<< HEAD
+=======
+        // mMediaController status depends on the Metadata result, so put it
+        // after reading the MetaData
+        if (mMediaController != null) {
+            mMediaController.setEnabled(true);
+            // If paused , should show the controller for ever!
+            if (getAutostart())
+                mMediaController.show();
+            else
+                mMediaController.show(0);
+        }
+
+>>>>>>> upstream/master
         if (mProgressView != null) {
             mProgressView.setVisibility(View.GONE);
         }
@@ -202,6 +240,7 @@ public class HTML5VideoFullScreen extends HTML5VideoView
         mVideoHeight = mp.getVideoHeight();
         // This will trigger the onMeasure to get the display size right.
         mVideoSurfaceView.getHolder().setFixedSize(mVideoWidth, mVideoHeight);
+<<<<<<< HEAD
         // Call into the native to ask for the state, if still in play mode,
         // this will trigger the video to play.
         mProxy.dispatchOnRestoreState();
@@ -219,6 +258,8 @@ public class HTML5VideoFullScreen extends HTML5VideoView
             mMediaController.setEnabled(true);
             mMediaController.show();
         }
+=======
+>>>>>>> upstream/master
     }
 
     public boolean fullScreenExited() {
@@ -247,13 +288,21 @@ public class HTML5VideoFullScreen extends HTML5VideoView
 
                 // Don't show the controller after exiting the full screen.
                 mMediaController = null;
+<<<<<<< HEAD
                 mCurrentState = STATE_RESETTED;
+=======
+                mCurrentState = STATE_RELEASED;
+>>>>>>> upstream/master
             }
         };
 
     @Override
     public void enterFullScreenVideoState(int layerId,
+<<<<<<< HEAD
             HTML5VideoViewProxy proxy, WebViewClassic webView) {
+=======
+            HTML5VideoViewProxy proxy, WebView webView) {
+>>>>>>> upstream/master
         mFullScreenMode = FULLSCREEN_SURFACECREATING;
         mCurrentBufferPercentage = 0;
         mPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
@@ -324,6 +373,7 @@ public class HTML5VideoFullScreen extends HTML5VideoView
     return 0;
     }
 
+<<<<<<< HEAD
     @Override
     public void showControllerInFullScreen() {
         if (mMediaController != null) {
@@ -331,6 +381,8 @@ public class HTML5VideoFullScreen extends HTML5VideoView
         }
     }
 
+=======
+>>>>>>> upstream/master
     // Other listeners functions:
     private MediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener =
         new MediaPlayer.OnBufferingUpdateListener() {

@@ -60,7 +60,11 @@ public class BluetoothPbap {
     public static final String PBAP_PREVIOUS_STATE =
         "android.bluetooth.pbap.intent.PBAP_PREVIOUS_STATE";
 
+<<<<<<< HEAD
     /** Indicates the state of a pbap connection state has changed.
+=======
+    /** Indicates the state of an pbap connection state has changed.
+>>>>>>> upstream/master
      *  This intent will always contain PBAP_STATE, PBAP_PREVIOUS_STATE and
      *  BluetoothIntent.ADDRESS extras.
      */

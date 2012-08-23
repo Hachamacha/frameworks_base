@@ -291,7 +291,10 @@ public final class Canvas_Delegate {
             Paint paint) {
         draw(thisCanvas.mNativeCanvas, paint.mNativePaint, false /*compositeOnly*/,
                 false /*forceSrcMode*/, new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                         for (int i = 0 ; i < count ; i += 4) {
                             graphics.drawLine((int)pts[i + offset], (int)pts[i + offset + 1],
@@ -307,11 +310,14 @@ public final class Canvas_Delegate {
     }
 
     @LayoutlibDelegate
+<<<<<<< HEAD
     /*package*/ static void freeTextLayoutCaches() {
         // nothing to be done here yet.
     }
 
     @LayoutlibDelegate
+=======
+>>>>>>> upstream/master
     /*package*/ static int initRaster(int nativeBitmapOrZero) {
         if (nativeBitmapOrZero > 0) {
             // get the Bitmap from the int
@@ -625,7 +631,10 @@ public final class Canvas_Delegate {
         final int h = canvasDelegate.mBitmap.getImage().getHeight();
         draw(nativeCanvas, new GcSnapshot.Drawable() {
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public void draw(Graphics2D graphics, Paint_Delegate paint) {
                 // reset its transform just in case
                 graphics.setTransform(new AffineTransform());
@@ -658,7 +667,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                         graphics.drawLine((int)startX, (int)startY, (int)stopX, (int)stopY);
                     }
@@ -677,7 +689,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                         int style = paintDelegate.getStyle();
 
@@ -702,7 +717,10 @@ public final class Canvas_Delegate {
         if (oval.right > oval.left && oval.bottom > oval.top) {
             draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                     new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                         @Override
+=======
+>>>>>>> upstream/master
                         public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                             int style = paintDelegate.getStyle();
 
@@ -727,7 +745,11 @@ public final class Canvas_Delegate {
     /*package*/ static void native_drawCircle(int nativeCanvas,
             float cx, float cy, float radius, int paint) {
         native_drawOval(nativeCanvas,
+<<<<<<< HEAD
                 new RectF(cx - radius, cy - radius, cx + radius, cy + radius),
+=======
+                new RectF(cx - radius, cy - radius, radius, radius),
+>>>>>>> upstream/master
                 paint);
     }
 
@@ -738,7 +760,10 @@ public final class Canvas_Delegate {
         if (oval.right > oval.left && oval.bottom > oval.top) {
             draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                     new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                         @Override
+=======
+>>>>>>> upstream/master
                         public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                             int style = paintDelegate.getStyle();
 
@@ -768,7 +793,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                         int style = paintDelegate.getStyle();
 
@@ -801,7 +829,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                         Shape shape = pathDelegate.getJavaShape();
                         int style = paintDelegate.getStyle();
@@ -905,7 +936,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, nativePaintOrZero, true /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paint) {
                         if (paint != null && paint.isFilterBitmap()) {
                             graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -945,7 +979,10 @@ public final class Canvas_Delegate {
         final AffineTransform mtx = matrixDelegate.getAffineTransform();
 
         canvasDelegate.getSnapshot().draw(new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                 @Override
+=======
+>>>>>>> upstream/master
                 public void draw(Graphics2D graphics, Paint_Delegate paint) {
                     if (paint != null && paint.isFilterBitmap()) {
                         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -985,7 +1022,10 @@ public final class Canvas_Delegate {
             final float startX, final float startY, int flags, int paint) {
         draw(nativeCanvas, paint, false /*compositeOnly*/, false /*forceSrcMode*/,
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public void draw(Graphics2D graphics, Paint_Delegate paintDelegate) {
                 // WARNING: the logic in this method is similar to Paint_Delegate.measureText.
                 // Any change to this method should be reflected in Paint.measureText
@@ -1295,7 +1335,10 @@ public final class Canvas_Delegate {
 
         draw(nativeCanvas, nativePaintOrZero, true /*compositeOnly*/, sBoolOut[0],
                 new GcSnapshot.Drawable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void draw(Graphics2D graphics, Paint_Delegate paint) {
                         if (paint != null && paint.isFilterBitmap()) {
                             graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,

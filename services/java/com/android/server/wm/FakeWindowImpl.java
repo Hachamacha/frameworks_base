@@ -16,14 +16,21 @@
 
 package com.android.server.wm;
 
+<<<<<<< HEAD
 import com.android.server.input.InputApplicationHandle;
 import com.android.server.input.InputWindowHandle;
 
+=======
+>>>>>>> upstream/master
 import android.os.Looper;
 import android.os.Process;
 import android.util.Slog;
 import android.view.InputChannel;
+<<<<<<< HEAD
 import android.view.InputEventReceiver;
+=======
+import android.view.InputHandler;
+>>>>>>> upstream/master
 import android.view.InputQueue;
 import android.view.WindowManagerPolicy;
 
@@ -32,13 +39,20 @@ public final class FakeWindowImpl implements WindowManagerPolicy.FakeWindow {
     final InputChannel mServerChannel, mClientChannel;
     final InputApplicationHandle mApplicationHandle;
     final InputWindowHandle mWindowHandle;
+<<<<<<< HEAD
     final InputEventReceiver mInputEventReceiver;
+=======
+>>>>>>> upstream/master
     final int mWindowLayer;
 
     boolean mTouchFullscreen;
 
+<<<<<<< HEAD
     public FakeWindowImpl(WindowManagerService service,
             Looper looper, InputEventReceiver.Factory inputEventReceiverFactory,
+=======
+    public FakeWindowImpl(WindowManagerService service, Looper looper, InputHandler inputHandler,
+>>>>>>> upstream/master
             String name, int windowType, int layoutParamsFlags, boolean canReceiveKeys,
             boolean hasFocus, boolean touchFullscreen) {
         mService = service;
@@ -47,9 +61,13 @@ public final class FakeWindowImpl implements WindowManagerPolicy.FakeWindow {
         mServerChannel = channels[0];
         mClientChannel = channels[1];
         mService.mInputManager.registerInputChannel(mServerChannel, null);
+<<<<<<< HEAD
 
         mInputEventReceiver = inputEventReceiverFactory.createInputEventReceiver(
                 mClientChannel, looper);
+=======
+        InputQueue.registerInputChannel(mClientChannel, inputHandler, looper.getQueue());
+>>>>>>> upstream/master
 
         mApplicationHandle = new InputApplicationHandle(null);
         mApplicationHandle.name = name;
@@ -94,8 +112,13 @@ public final class FakeWindowImpl implements WindowManagerPolicy.FakeWindow {
     public void dismiss() {
         synchronized (mService.mWindowMap) {
             if (mService.removeFakeWindowLocked(this)) {
+<<<<<<< HEAD
                 mInputEventReceiver.dispose();
                 mService.mInputManager.unregisterInputChannel(mServerChannel);
+=======
+                mService.mInputManager.unregisterInputChannel(mServerChannel);
+                InputQueue.unregisterInputChannel(mClientChannel);
+>>>>>>> upstream/master
                 mClientChannel.dispose();
                 mServerChannel.dispose();
             }

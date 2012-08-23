@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.phone;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -67,6 +68,37 @@ import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.DelegateViewHelper;
 import com.android.systemui.statusbar.policy.KeyButtonView;
 import com.android.systemui.statusbar.policy.ExtensibleKeyButtonView;
+=======
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
+import android.os.ServiceManager;
+import android.util.AttributeSet;
+import android.util.Slog;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.LinearLayout;
+
+import com.android.internal.statusbar.IStatusBarService;
+import com.android.systemui.R;
+import com.android.systemui.recent.RecentsPanelView;
+>>>>>>> upstream/master
 
 public class NavigationBarView extends LinearLayout {
     final static boolean DEBUG = false;
@@ -77,6 +109,16 @@ public class NavigationBarView extends LinearLayout {
     final static boolean NAVBAR_ALWAYS_AT_RIGHT = true;
 
     final static boolean ANIMATE_HIDE_TRANSITION = false; // turned off because it introduces unsightly delay when videos goes to full screen
+<<<<<<< HEAD
+=======
+    final static String NAVBAR_EDIT = "android.intent.action.NAVBAR_EDIT";
+
+    private static boolean EDIT_MODE;
+    private NavbarEditor mEditBar;
+    private NavBarReceiver mNavBarReceiver;
+    private OnClickListener mRecentsClickListener;
+    private RecentsPanelView mRecentsPanel;
+>>>>>>> upstream/master
 
     protected IStatusBarService mBarService;
     final Display mDisplay;
@@ -88,16 +130,20 @@ public class NavigationBarView extends LinearLayout {
 
     boolean mHidden, mLowProfile, mShowMenu;
     int mDisabledFlags = 0;
+<<<<<<< HEAD
     int mNavigationIconHints = 0;
 
     private Drawable mBackIcon, mBackLandIcon, mBackAltIcon, mBackAltLandIcon;
     
     private DelegateViewHelper mDelegateHelper;
+=======
+>>>>>>> upstream/master
 
     // workaround for LayoutTransitions leaving the nav buttons in a weird state (bug 5549288)
     final static boolean WORKAROUND_INVALID_LAYOUT = true;
     final static int MSG_CHECK_INVALID_LAYOUT = 8686;
 
+<<<<<<< HEAD
     // Navbar Custom Targets defines.
     final static String ACTION_HOME = "**home**";
     final static String ACTION_BACK = "**back**";
@@ -144,6 +190,8 @@ public class NavigationBarView extends LinearLayout {
 
 
     
+=======
+>>>>>>> upstream/master
     private class H extends Handler {
         public void handleMessage(Message m) {
             switch (m.what) {
@@ -167,6 +215,7 @@ public class NavigationBarView extends LinearLayout {
         }
     }
 
+<<<<<<< HEAD
     public void setDelegateView(View view) {
         mDelegateHelper.setDelegateView(view);
     }
@@ -208,6 +257,32 @@ public class NavigationBarView extends LinearLayout {
 
     public View getHomeButton() {
         return mCurrentView.findViewById(R.id.home);
+=======
+    private H mHandler = new H();
+
+    public static boolean getEditMode() {
+        return EDIT_MODE;
+    }
+
+    protected void setListener(OnClickListener RecentsClickListener, RecentsPanelView RecentsPanel) {
+        mRecentsClickListener = RecentsClickListener;
+        mRecentsPanel = RecentsPanel;
+    }
+
+    protected void toggleRecentListener(boolean enable) {
+        View recentView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_RECENT);
+        if (recentView != null) {
+            recentView.setOnClickListener(enable ? mRecentsClickListener : null);
+            recentView.setOnTouchListener(enable ? mRecentsPanel : null);
+        }
+    }
+
+    private void setButtonWithTagVisibility(String string, int visibility) {
+        View findView = mCurrentView.findViewWithTag(string);
+        if (findView != null) {
+            findView.setVisibility(visibility);
+        }
+>>>>>>> upstream/master
     }
 
     public NavigationBarView(Context context, AttributeSet attrs) {
@@ -224,6 +299,7 @@ public class NavigationBarView extends LinearLayout {
         mBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
         mVertical = false;
         mShowMenu = false;
+<<<<<<< HEAD
         mDelegateHelper = new DelegateViewHelper(this);
 
         mBackIcon = res.getDrawable(R.drawable.ic_sysbar_back);
@@ -434,6 +510,46 @@ public class NavigationBarView extends LinearLayout {
                 new LayoutParams((int) px, LayoutParams.MATCH_PARENT);
     }
     
+=======
+        mNavBarReceiver = new NavBarReceiver();
+        mContext.registerReceiver(mNavBarReceiver, new IntentFilter(NAVBAR_EDIT));
+    }
+
+    protected void unregisterReceivers() {
+        mContext.unregisterReceiver(mNavBarReceiver);
+    }
+
+    public class NavBarReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean edit = intent.getBooleanExtra("edit", false);
+            boolean save = intent.getBooleanExtra("save", false);
+            if (edit != EDIT_MODE) {
+                EDIT_MODE = edit;
+                if (EDIT_MODE) {
+                    toggleRecentListener(false);
+                    mEditBar.setupListeners();
+                    mEditBar.updateKeys();
+                } else {
+                    mEditBar.dismissDialog();
+                    if (save) {
+                        mEditBar.saveKeys();
+                    }
+                    mEditBar.reInflate();
+                    mEditBar = new NavbarEditor((ViewGroup) mCurrentView.findViewById(R.id.container), mVertical);
+                    mEditBar.updateKeys();
+                    toggleRecentListener(true);
+                    if (save) {
+                        mEditBar.updateLowLights(mCurrentView);
+                    }
+                    ((ViewGroup) mCurrentView.findViewById(R.id.mid_nav_buttons)).setLayoutTransition(
+                            new LayoutTransition());
+                }
+            }
+        }
+    }
+
+>>>>>>> upstream/master
     View.OnTouchListener mLightsOutListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent ev) {
@@ -444,7 +560,11 @@ public class NavigationBarView extends LinearLayout {
                 setLowProfile(false, false, false);
 
                 try {
+<<<<<<< HEAD
                     mBarService.setSystemUiVisibility(0, View.SYSTEM_UI_FLAG_LOW_PROFILE);
+=======
+                    mBarService.setSystemUiVisibility(0);
+>>>>>>> upstream/master
                 } catch (android.os.RemoteException ex) {
                 }
             }
@@ -452,6 +572,7 @@ public class NavigationBarView extends LinearLayout {
         }
     };
 
+<<<<<<< HEAD
     public void setNavigationIconHints(int hints) {
         setNavigationIconHints(hints, false);
     }
@@ -486,6 +607,8 @@ public class NavigationBarView extends LinearLayout {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public void setDisabledFlags(int disabledFlags) {
         setDisabledFlags(disabledFlags, false);
     }
@@ -499,6 +622,7 @@ public class NavigationBarView extends LinearLayout {
         final boolean disableRecent = ((disabledFlags & View.STATUS_BAR_DISABLE_RECENT) != 0);
         final boolean disableBack = ((disabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0);
 
+<<<<<<< HEAD
         setSlippery(disableHome && disableRecent && disableBack);
         
         for (int j = 0; j < mNumberOfButtons; j++) {
@@ -530,6 +654,15 @@ public class NavigationBarView extends LinearLayout {
             }
             WindowManagerImpl.getDefault().updateViewLayout(this, lp);
         }
+=======
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_BACK, disableBack ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_HOME, disableHome ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_RECENT, disableRecent ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_RECENT, disableRecent ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_ALWAYS_MENU, disableRecent ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_MENU_BIG, disableRecent ? View.INVISIBLE : View.VISIBLE);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_SEARCH, disableRecent ? View.INVISIBLE : View.VISIBLE);
+>>>>>>> upstream/master
     }
 
     public void setMenuVisibility(final boolean show) {
@@ -537,6 +670,7 @@ public class NavigationBarView extends LinearLayout {
     }
 
     public void setMenuVisibility(final boolean show, final boolean force) {
+<<<<<<< HEAD
 
     	if (!force && mShowMenu == show)
             return;
@@ -610,6 +744,13 @@ public class NavigationBarView extends LinearLayout {
                 getRightMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
                 break;
         }
+=======
+        if (!force && mShowMenu == show) return;
+
+        mShowMenu = show;
+
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_CONDITIONAL_MENU, mShowMenu ? View.VISIBLE : View.INVISIBLE);
+>>>>>>> upstream/master
     }
 
     public void setLowProfile(final boolean lightsOut) {
@@ -638,7 +779,11 @@ public class NavigationBarView extends LinearLayout {
         } else {
             navButtons.animate()
                 .alpha(lightsOut ? 0f : 1f)
+<<<<<<< HEAD
                 .setDuration(lightsOut ? 750 : 250)
+=======
+                .setDuration(lightsOut ? 600 : 200)
+>>>>>>> upstream/master
                 .start();
 
             lowLights.setOnTouchListener(mLightsOutListener);
@@ -648,7 +793,12 @@ public class NavigationBarView extends LinearLayout {
             }
             lowLights.animate()
                 .alpha(lightsOut ? 1f : 0f)
+<<<<<<< HEAD
                 .setDuration(lightsOut ? 750 : 250)
+=======
+                .setStartDelay(lightsOut ? 500 : 0)
+                .setDuration(lightsOut ? 1000 : 300)
+>>>>>>> upstream/master
                 .setInterpolator(new AccelerateInterpolator(2.0f))
                 .setListener(lightsOut ? null : new AnimatorListenerAdapter() {
                     @Override
@@ -671,6 +821,7 @@ public class NavigationBarView extends LinearLayout {
         setLowProfile(false);
     }
 
+<<<<<<< HEAD
     @Override
     public void onFinishInflate() {
     	 rot0 = (FrameLayout) findViewById(R.id.rot0);
@@ -695,6 +846,24 @@ public class NavigationBarView extends LinearLayout {
          // this takes care of making the buttons
          SettingsObserver settingsObserver = new SettingsObserver(new Handler());
          settingsObserver.observe();
+=======
+    public void onFinishInflate() {
+        mRotatedViews[Surface.ROTATION_0] = 
+        mRotatedViews[Surface.ROTATION_180] = findViewById(R.id.rot0);
+
+        mRotatedViews[Surface.ROTATION_90] = findViewById(R.id.rot90);
+        
+        mRotatedViews[Surface.ROTATION_270] = NAVBAR_ALWAYS_AT_RIGHT
+                                                ? findViewById(R.id.rot90)
+                                                : findViewById(R.id.rot270);
+
+        for (View v : mRotatedViews) {
+            // this helps avoid drawing artifacts with glowing navigation keys 
+            ViewGroup group = (ViewGroup) v.findViewById(R.id.nav_buttons);
+            group.setMotionEventSplittingEnabled(false);
+        }
+        mCurrentView = mRotatedViews[Surface.ROTATION_0];
+>>>>>>> upstream/master
     }
 
     public void reorient() {
@@ -704,12 +873,23 @@ public class NavigationBarView extends LinearLayout {
         }
         mCurrentView = mRotatedViews[rot];
         mCurrentView.setVisibility(View.VISIBLE);
+<<<<<<< HEAD
 
+=======
+        mVertical = (rot == Surface.ROTATION_90 || rot == Surface.ROTATION_270);
+        mEditBar = new NavbarEditor((ViewGroup) mCurrentView.findViewById(R.id.container), mVertical);
+        mEditBar.updateKeys();
+        mEditBar.updateLowLights(mCurrentView);
+        toggleRecentListener(true);
+>>>>>>> upstream/master
         // force the low profile & disabled states into compliance
         setLowProfile(mLowProfile, false, true /* force */);
         setDisabledFlags(mDisabledFlags, true /* force */);
         setMenuVisibility(mShowMenu, true /* force */);
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         if (DEBUG_DEADZONE) {
             mCurrentView.findViewById(R.id.deadzone).setBackgroundColor(0x808080FF);
         }
@@ -717,6 +897,7 @@ public class NavigationBarView extends LinearLayout {
         if (DEBUG) {
             Slog.d(TAG, "reorient(): rot=" + mDisplay.getRotation());
         }
+<<<<<<< HEAD
 
         setNavigationIconHints(mNavigationIconHints, true);
     }
@@ -725,12 +906,15 @@ public class NavigationBarView extends LinearLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         mDelegateHelper.setInitialTouchRegion(getHomeButton(), getBackButton(), getRecentsButton());
+=======
+>>>>>>> upstream/master
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (DEBUG) Slog.d(TAG, String.format(
                     "onSizeChanged: (%dx%d) old: (%dx%d)", w, h, oldw, oldh));
+<<<<<<< HEAD
 
         final boolean newVertical = w > 0 && h > w;
         if (newVertical != mVertical) {
@@ -739,6 +923,8 @@ public class NavigationBarView extends LinearLayout {
             reorient();
         }
 
+=======
+>>>>>>> upstream/master
         postCheckForInvalidLayout("sizeChanged");
         super.onSizeChanged(w, h, oldw, oldh);
     }
@@ -764,6 +950,7 @@ public class NavigationBarView extends LinearLayout {
     }
     */
         
+<<<<<<< HEAD
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -884,6 +1071,8 @@ public class NavigationBarView extends LinearLayout {
 
         return getResources().getDrawable(R.drawable.ic_sysbar_null);
     }
+=======
+>>>>>>> upstream/master
 
     private String getResourceName(int resId) {
         if (resId != 0) {
@@ -912,4 +1101,53 @@ public class NavigationBarView extends LinearLayout {
                 return "VISIBLE";
         }
     }
+<<<<<<< HEAD
+=======
+
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        pw.println("NavigationBarView {");
+        final Rect r = new Rect();
+
+        pw.println(String.format("      this: " + PhoneStatusBar.viewInfo(this)
+                        + " " + visibilityToString(getVisibility())));
+
+        getWindowVisibleDisplayFrame(r);
+        final boolean offscreen = r.right > mDisplay.getRawWidth()
+            || r.bottom > mDisplay.getRawHeight();
+        pw.println("      window: " 
+                + r.toShortString()
+                + " " + visibilityToString(getWindowVisibility())
+                + (offscreen ? " OFFSCREEN!" : ""));
+
+        pw.println(String.format("      mCurrentView: id=%s (%dx%d) %s",
+                        getResourceName(mCurrentView.getId()),
+                        mCurrentView.getWidth(), mCurrentView.getHeight(),
+                        visibilityToString(mCurrentView.getVisibility())));
+
+        pw.println(String.format("      disabled=0x%08x vertical=%s hidden=%s low=%s menu=%s",
+                        mDisabledFlags,
+                        mVertical ? "true" : "false",
+                        mHidden ? "true" : "false",
+                        mLowProfile ? "true" : "false",
+                        mShowMenu ? "true" : "false"));
+
+        final View back = mCurrentView.findViewWithTag("back");
+        final View home = mCurrentView.findViewWithTag("home");
+        final View recent = mCurrentView.findViewWithTag("recent");
+
+        pw.println("      back: "
+                + PhoneStatusBar.viewInfo(back)
+                + " " + visibilityToString(back.getVisibility())
+                );
+        pw.println("      home: "
+                + PhoneStatusBar.viewInfo(home)
+                + " " + visibilityToString(home.getVisibility())
+                );
+        pw.println("      rcnt: "
+                + PhoneStatusBar.viewInfo(recent)
+                + " " + visibilityToString(recent.getVisibility())
+                );
+        pw.println("    }");
+    }
+>>>>>>> upstream/master
 }

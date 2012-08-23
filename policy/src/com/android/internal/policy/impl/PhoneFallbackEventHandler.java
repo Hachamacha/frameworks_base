@@ -23,12 +23,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
+<<<<<<< HEAD
 import android.media.IAudioService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.TelephonyManager;
 import android.util.EventLog;
 import android.util.Log;
+=======
+import android.telephony.TelephonyManager;
+import android.util.EventLog;
+>>>>>>> upstream/master
 import android.util.Slog;
 import android.view.View;
 import android.view.HapticFeedbackConstants;
@@ -56,7 +61,12 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
     }
 
     public void preDispatchKeyEvent(KeyEvent event) {
+<<<<<<< HEAD
         getAudioManager().preDispatchKeyEvent(event, AudioManager.USE_DEFAULT_STREAM_TYPE);
+=======
+        getAudioManager().preDispatchKeyEvent(event.getKeyCode(),
+                AudioManager.USE_DEFAULT_STREAM_TYPE);
+>>>>>>> upstream/master
     }
 
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -82,7 +92,11 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
             case KeyEvent.KEYCODE_VOLUME_UP:
             case KeyEvent.KEYCODE_VOLUME_DOWN:
             case KeyEvent.KEYCODE_VOLUME_MUTE: {
+<<<<<<< HEAD
                 getAudioManager().handleKeyDown(event, AudioManager.USE_DEFAULT_STREAM_TYPE);
+=======
+                getAudioManager().handleKeyDown(keyCode, AudioManager.USE_DEFAULT_STREAM_TYPE);
+>>>>>>> upstream/master
                 return true;
             }
 
@@ -103,7 +117,13 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
             case KeyEvent.KEYCODE_MEDIA_REWIND:
             case KeyEvent.KEYCODE_MEDIA_RECORD:
             case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD: {
+<<<<<<< HEAD
                 handleMediaKeyEvent(event);
+=======
+                Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
+                intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+                mContext.sendOrderedBroadcast(intent, null);
+>>>>>>> upstream/master
                 return true;
             }
 
@@ -198,7 +218,12 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
                     AudioManager audioManager = (AudioManager)mContext.getSystemService(
                             Context.AUDIO_SERVICE);
                     if (audioManager != null) {
+<<<<<<< HEAD
                         getAudioManager().handleKeyUp(event, AudioManager.USE_DEFAULT_STREAM_TYPE);
+=======
+                        getAudioManager().handleKeyUp(keyCode,
+                                AudioManager.USE_DEFAULT_STREAM_TYPE);
+>>>>>>> upstream/master
                     }
                 }
                 return true;
@@ -215,7 +240,13 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
             case KeyEvent.KEYCODE_MEDIA_REWIND:
             case KeyEvent.KEYCODE_MEDIA_RECORD:
             case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD: {
+<<<<<<< HEAD
                 handleMediaKeyEvent(event);
+=======
+                Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
+                intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+                mContext.sendOrderedBroadcast(intent, null);
+>>>>>>> upstream/master
                 return true;
             }
 
@@ -285,6 +316,7 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
     void sendCloseSystemWindows() {
         PhoneWindowManager.sendCloseSystemWindows(mContext, null);
     }
+<<<<<<< HEAD
 
     private void handleMediaKeyEvent(KeyEvent keyEvent) {
         IAudioService audioService = IAudioService.Stub.asInterface(
@@ -299,5 +331,7 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
             Slog.w(TAG, "Unable to find IAudioService for media key event.");
         }
     }
+=======
+>>>>>>> upstream/master
 }
 

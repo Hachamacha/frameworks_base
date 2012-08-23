@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (C) 2008-2012 The Android Open Source Project
+=======
+ * Copyright (C) 2008 The Android Open Source Project
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +26,11 @@ import android.content.res.Resources;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+<<<<<<< HEAD
 import android.view.Surface;
 import android.graphics.SurfaceTexture;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -80,8 +87,11 @@ public class Allocation extends BaseObj {
     boolean mConstrainedFace;
     boolean mConstrainedY;
     boolean mConstrainedZ;
+<<<<<<< HEAD
     boolean mReadAllowed = true;
     boolean mWriteAllowed = true;
+=======
+>>>>>>> upstream/master
     int mSelectedY;
     int mSelectedZ;
     int mSelectedLOD;
@@ -103,7 +113,11 @@ public class Allocation extends BaseObj {
     public static final int USAGE_SCRIPT = 0x0001;
 
     /**
+<<<<<<< HEAD
      * GRAPHICS_TEXTURE The allocation will be used as a texture
+=======
+     * GRAPHICS_TEXTURE The allcation will be used as a texture
+>>>>>>> upstream/master
      * source by one or more graphics programs.
      *
      */
@@ -125,12 +139,17 @@ public class Allocation extends BaseObj {
     public static final int USAGE_GRAPHICS_CONSTANTS = 0x0008;
 
     /**
+<<<<<<< HEAD
      * USAGE_GRAPHICS_RENDER_TARGET The allocation will be used as a
+=======
+     * USAGE_GRAPHICS_RENDER_TARGET The allcation will be used as a
+>>>>>>> upstream/master
      * target for offscreen rendering
      *
      */
     public static final int USAGE_GRAPHICS_RENDER_TARGET = 0x0010;
 
+<<<<<<< HEAD
     /**
      * USAGE_IO_INPUT The allocation will be used as SurfaceTexture
      * consumer.  This usage will cause the allocation to be created
@@ -146,6 +165,8 @@ public class Allocation extends BaseObj {
      *
      */
     public static final int USAGE_IO_OUTPUT = 0x0040;
+=======
+>>>>>>> upstream/master
 
     /**
      * Controls mipmap behavior when using the bitmap creation and
@@ -182,6 +203,7 @@ public class Allocation extends BaseObj {
 
     private int getIDSafe() {
         if (mAdaptedAllocation != null) {
+<<<<<<< HEAD
             return mAdaptedAllocation.getID(mRS);
         }
         return getID(mRS);
@@ -218,6 +240,11 @@ public class Allocation extends BaseObj {
      */
     public int getBytesSize() {
         return mType.getCount() * mType.getElement().getBytesSize();
+=======
+            return mAdaptedAllocation.getID();
+        }
+        return getID();
+>>>>>>> upstream/master
     }
 
     private void updateCacheInfo(Type t) {
@@ -239,6 +266,7 @@ public class Allocation extends BaseObj {
                        USAGE_GRAPHICS_TEXTURE |
                        USAGE_GRAPHICS_VERTEX |
                        USAGE_GRAPHICS_CONSTANTS |
+<<<<<<< HEAD
                        USAGE_GRAPHICS_RENDER_TARGET |
                        USAGE_IO_INPUT |
                        USAGE_IO_OUTPUT)) != 0) {
@@ -257,6 +285,12 @@ public class Allocation extends BaseObj {
 
         mType = t;
         mUsage = usage;
+=======
+                       USAGE_GRAPHICS_RENDER_TARGET)) != 0) {
+            throw new RSIllegalArgumentException("Unknown usage specified.");
+        }
+        mType = t;
+>>>>>>> upstream/master
 
         if (t != null) {
             updateCacheInfo(t);
@@ -318,7 +352,11 @@ public class Allocation extends BaseObj {
     @Override
     void updateFromNative() {
         super.updateFromNative();
+<<<<<<< HEAD
         int typeID = mRS.nAllocationGetType(getID(mRS));
+=======
+        int typeID = mRS.nAllocationGetType(getID());
+>>>>>>> upstream/master
         if(typeID != 0) {
             mType = new Type(typeID, mRS);
             mType.updateFromNative();
@@ -326,21 +364,27 @@ public class Allocation extends BaseObj {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Get the type of the Allocation.
      *
      * @return Type
      *
      */
+=======
+>>>>>>> upstream/master
     public Type getType() {
         return mType;
     }
 
+<<<<<<< HEAD
     /**
      * Propagate changes from one usage of the allocation to the
      * remaining usages of the allocation.
      *
      */
+=======
+>>>>>>> upstream/master
     public void syncAll(int srcLocation) {
         switch (srcLocation) {
         case USAGE_SCRIPT:
@@ -355,6 +399,7 @@ public class Allocation extends BaseObj {
         mRS.nAllocationSyncAll(getIDSafe(), srcLocation);
     }
 
+<<<<<<< HEAD
     /**
      * Send a buffer to the output stream.  The contents of the
      * Allocation will be undefined after this operation.
@@ -395,6 +440,8 @@ public class Allocation extends BaseObj {
      *
      * @param d Source array.
      */
+=======
+>>>>>>> upstream/master
     public void copyFrom(BaseObj[] d) {
         mRS.validate();
         validateIsObject();
@@ -404,7 +451,11 @@ public class Allocation extends BaseObj {
         }
         int i[] = new int[d.length];
         for (int ct=0; ct < d.length; ct++) {
+<<<<<<< HEAD
             i[ct] = d[ct].getID(mRS);
+=======
+            i[ct] = d[ct].getID();
+>>>>>>> upstream/master
         }
         copy1DRangeFromUnchecked(0, mCurrentCount, i);
     }
@@ -417,37 +468,65 @@ public class Allocation extends BaseObj {
                 throw new RSIllegalArgumentException("Allocation kind is " +
                                                      mType.getElement().mKind + ", type " +
                                                      mType.getElement().mType +
+<<<<<<< HEAD
                                                      " of " + mType.getElement().getBytesSize() +
+=======
+                                                     " of " + mType.getElement().getSizeBytes() +
+>>>>>>> upstream/master
                                                      " bytes, passed bitmap was " + bc);
             }
             break;
         case ARGB_8888:
             if ((mType.getElement().mKind != Element.DataKind.PIXEL_RGBA) ||
+<<<<<<< HEAD
                 (mType.getElement().getBytesSize() != 4)) {
                 throw new RSIllegalArgumentException("Allocation kind is " +
                                                      mType.getElement().mKind + ", type " +
                                                      mType.getElement().mType +
                                                      " of " + mType.getElement().getBytesSize() +
+=======
+                (mType.getElement().getSizeBytes() != 4)) {
+                throw new RSIllegalArgumentException("Allocation kind is " +
+                                                     mType.getElement().mKind + ", type " +
+                                                     mType.getElement().mType +
+                                                     " of " + mType.getElement().getSizeBytes() +
+>>>>>>> upstream/master
                                                      " bytes, passed bitmap was " + bc);
             }
             break;
         case RGB_565:
             if ((mType.getElement().mKind != Element.DataKind.PIXEL_RGB) ||
+<<<<<<< HEAD
                 (mType.getElement().getBytesSize() != 2)) {
                 throw new RSIllegalArgumentException("Allocation kind is " +
                                                      mType.getElement().mKind + ", type " +
                                                      mType.getElement().mType +
                                                      " of " + mType.getElement().getBytesSize() +
+=======
+                (mType.getElement().getSizeBytes() != 2)) {
+                throw new RSIllegalArgumentException("Allocation kind is " +
+                                                     mType.getElement().mKind + ", type " +
+                                                     mType.getElement().mType +
+                                                     " of " + mType.getElement().getSizeBytes() +
+>>>>>>> upstream/master
                                                      " bytes, passed bitmap was " + bc);
             }
             break;
         case ARGB_4444:
             if ((mType.getElement().mKind != Element.DataKind.PIXEL_RGBA) ||
+<<<<<<< HEAD
                 (mType.getElement().getBytesSize() != 2)) {
                 throw new RSIllegalArgumentException("Allocation kind is " +
                                                      mType.getElement().mKind + ", type " +
                                                      mType.getElement().mType +
                                                      " of " + mType.getElement().getBytesSize() +
+=======
+                (mType.getElement().getSizeBytes() != 2)) {
+                throw new RSIllegalArgumentException("Allocation kind is " +
+                                                     mType.getElement().mKind + ", type " +
+                                                     mType.getElement().mType +
+                                                     " of " + mType.getElement().getSizeBytes() +
+>>>>>>> upstream/master
                                                      " bytes, passed bitmap was " + bc);
             }
             break;
@@ -564,7 +643,11 @@ public class Allocation extends BaseObj {
         mRS.validate();
         validateBitmapSize(b);
         validateBitmapFormat(b);
+<<<<<<< HEAD
         mRS.nAllocationCopyFromBitmap(getID(mRS), b);
+=======
+        mRS.nAllocationCopyFromBitmap(getID(), b);
+>>>>>>> upstream/master
     }
 
     /**
@@ -575,8 +658,12 @@ public class Allocation extends BaseObj {
      * @param fp
      */
     public void setFromFieldPacker(int xoff, FieldPacker fp) {
+<<<<<<< HEAD
         mRS.validate();
         int eSize = mType.mElement.getBytesSize();
+=======
+        int eSize = mType.mElement.getSizeBytes();
+>>>>>>> upstream/master
         final byte[] data = fp.getData();
 
         int count = data.length / eSize;
@@ -596,7 +683,10 @@ public class Allocation extends BaseObj {
      * @param fp
      */
     public void setFromFieldPacker(int xoff, int component_number, FieldPacker fp) {
+<<<<<<< HEAD
         mRS.validate();
+=======
+>>>>>>> upstream/master
         if (component_number >= mType.mElement.mElements.length) {
             throw new RSIllegalArgumentException("Component_number " + component_number + " out of range.");
         }
@@ -605,8 +695,12 @@ public class Allocation extends BaseObj {
         }
 
         final byte[] data = fp.getData();
+<<<<<<< HEAD
         int eSize = mType.mElement.mElements[component_number].getBytesSize();
         eSize *= mType.mElement.mArraySizes[component_number];
+=======
+        int eSize = mType.mElement.mElements[component_number].getSizeBytes();
+>>>>>>> upstream/master
 
         if (data.length != eSize) {
             throw new RSIllegalArgumentException("Field packer sizelength " + data.length +
@@ -645,7 +739,11 @@ public class Allocation extends BaseObj {
      * followup sync will be required.
      */
     public void generateMipmaps() {
+<<<<<<< HEAD
         mRS.nAllocationGenerateMipmaps(getID(mRS));
+=======
+        mRS.nAllocationGenerateMipmaps(getID());
+>>>>>>> upstream/master
     }
 
     /**
@@ -658,7 +756,11 @@ public class Allocation extends BaseObj {
      * @param d the source data array
      */
     public void copy1DRangeFromUnchecked(int off, int count, int[] d) {
+<<<<<<< HEAD
         int dataSize = mType.mElement.getBytesSize() * count;
+=======
+        int dataSize = mType.mElement.getSizeBytes() * count;
+>>>>>>> upstream/master
         data1DChecks(off, count, d.length * 4, dataSize);
         mRS.nAllocationData1D(getIDSafe(), off, mSelectedLOD, count, d, dataSize);
     }
@@ -672,7 +774,11 @@ public class Allocation extends BaseObj {
      * @param d the source data array
      */
     public void copy1DRangeFromUnchecked(int off, int count, short[] d) {
+<<<<<<< HEAD
         int dataSize = mType.mElement.getBytesSize() * count;
+=======
+        int dataSize = mType.mElement.getSizeBytes() * count;
+>>>>>>> upstream/master
         data1DChecks(off, count, d.length * 2, dataSize);
         mRS.nAllocationData1D(getIDSafe(), off, mSelectedLOD, count, d, dataSize);
     }
@@ -686,7 +792,11 @@ public class Allocation extends BaseObj {
      * @param d the source data array
      */
     public void copy1DRangeFromUnchecked(int off, int count, byte[] d) {
+<<<<<<< HEAD
         int dataSize = mType.mElement.getBytesSize() * count;
+=======
+        int dataSize = mType.mElement.getSizeBytes() * count;
+>>>>>>> upstream/master
         data1DChecks(off, count, d.length, dataSize);
         mRS.nAllocationData1D(getIDSafe(), off, mSelectedLOD, count, d, dataSize);
     }
@@ -700,7 +810,11 @@ public class Allocation extends BaseObj {
      * @param d the source data array
      */
     public void copy1DRangeFromUnchecked(int off, int count, float[] d) {
+<<<<<<< HEAD
         int dataSize = mType.mElement.getBytesSize() * count;
+=======
+        int dataSize = mType.mElement.getSizeBytes() * count;
+>>>>>>> upstream/master
         data1DChecks(off, count, d.length * 4, dataSize);
         mRS.nAllocationData1D(getIDSafe(), off, mSelectedLOD, count, d, dataSize);
     }
@@ -773,7 +887,11 @@ public class Allocation extends BaseObj {
     public void copy1DRangeFrom(int off, int count, Allocation data, int dataOff) {
         mRS.nAllocationData2D(getIDSafe(), off, 0,
                               mSelectedLOD, mSelectedFace.mID,
+<<<<<<< HEAD
                               count, 1, data.getID(mRS), dataOff, 0,
+=======
+                              count, 1, data.getID(), dataOff, 0,
+>>>>>>> upstream/master
                               data.mSelectedLOD, data.mSelectedFace.mID);
     }
 
@@ -850,7 +968,11 @@ public class Allocation extends BaseObj {
         validate2DRange(xoff, yoff, w, h);
         mRS.nAllocationData2D(getIDSafe(), xoff, yoff,
                               mSelectedLOD, mSelectedFace.mID,
+<<<<<<< HEAD
                               w, h, data.getID(mRS), dataXoff, dataYoff,
+=======
+                              w, h, data.getID(), dataXoff, dataYoff,
+>>>>>>> upstream/master
                               data.mSelectedLOD, data.mSelectedFace.mID);
     }
 
@@ -881,7 +1003,11 @@ public class Allocation extends BaseObj {
         mRS.validate();
         validateBitmapFormat(b);
         validateBitmapSize(b);
+<<<<<<< HEAD
         mRS.nAllocationCopyToBitmap(getID(mRS), b);
+=======
+        mRS.nAllocationCopyToBitmap(getID(), b);
+>>>>>>> upstream/master
     }
 
     /**
@@ -894,7 +1020,11 @@ public class Allocation extends BaseObj {
     public void copyTo(byte[] d) {
         validateIsInt8();
         mRS.validate();
+<<<<<<< HEAD
         mRS.nAllocationRead(getID(mRS), d);
+=======
+        mRS.nAllocationRead(getID(), d);
+>>>>>>> upstream/master
     }
 
     /**
@@ -907,7 +1037,11 @@ public class Allocation extends BaseObj {
     public void copyTo(short[] d) {
         validateIsInt16();
         mRS.validate();
+<<<<<<< HEAD
         mRS.nAllocationRead(getID(mRS), d);
+=======
+        mRS.nAllocationRead(getID(), d);
+>>>>>>> upstream/master
     }
 
     /**
@@ -920,7 +1054,11 @@ public class Allocation extends BaseObj {
     public void copyTo(int[] d) {
         validateIsInt32();
         mRS.validate();
+<<<<<<< HEAD
         mRS.nAllocationRead(getID(mRS), d);
+=======
+        mRS.nAllocationRead(getID(), d);
+>>>>>>> upstream/master
     }
 
     /**
@@ -933,7 +1071,11 @@ public class Allocation extends BaseObj {
     public void copyTo(float[] d) {
         validateIsFloat32();
         mRS.validate();
+<<<<<<< HEAD
         mRS.nAllocationRead(getID(mRS), d);
+=======
+        mRS.nAllocationRead(getID(), d);
+>>>>>>> upstream/master
     }
 
     /**
@@ -952,15 +1094,23 @@ public class Allocation extends BaseObj {
         if ((mType.getY() > 0)|| (mType.getZ() > 0) || mType.hasFaces() || mType.hasMipmaps()) {
             throw new RSInvalidStateException("Resize only support for 1D allocations at this time.");
         }
+<<<<<<< HEAD
         mRS.nAllocationResize1D(getID(mRS), dimX);
         mRS.finish();  // Necessary because resize is fifoed and update is async.
 
         int typeID = mRS.nAllocationGetType(getID(mRS));
+=======
+        mRS.nAllocationResize1D(getID(), dimX);
+        mRS.finish();  // Necessary because resize is fifoed and update is async.
+
+        int typeID = mRS.nAllocationGetType(getID());
+>>>>>>> upstream/master
         mType = new Type(typeID, mRS);
         mType.updateFromNative();
         updateCacheInfo(mType);
     }
 
+<<<<<<< HEAD
     /**
      * Resize a 2D allocation.  The contents of the allocation are
      * preserved.  If new elements are allocated objects are created
@@ -992,6 +1142,19 @@ public class Allocation extends BaseObj {
         mType.updateFromNative();
         updateCacheInfo(mType);
     }
+=======
+    /*
+    public void resize(int dimX, int dimY) {
+        if ((mType.getZ() > 0) || mType.getFaces() || mType.getLOD()) {
+            throw new RSIllegalStateException("Resize only support for 2D allocations at this time.");
+        }
+        if (mType.getY() == 0) {
+            throw new RSIllegalStateException("Resize only support for 2D allocations at this time.");
+        }
+        mRS.nAllocationResize2D(getID(), dimX, dimY);
+    }
+    */
+>>>>>>> upstream/master
 
 
 
@@ -1012,10 +1175,17 @@ public class Allocation extends BaseObj {
      */
     static public Allocation createTyped(RenderScript rs, Type type, MipmapControl mips, int usage) {
         rs.validate();
+<<<<<<< HEAD
         if (type.getID(rs) == 0) {
             throw new RSInvalidStateException("Bad Type");
         }
         int id = rs.nAllocationCreateTyped(type.getID(rs), mips.mID, usage, 0);
+=======
+        if (type.getID() == 0) {
+            throw new RSInvalidStateException("Bad Type");
+        }
+        int id = rs.nAllocationCreateTyped(type.getID(), mips.mID, usage);
+>>>>>>> upstream/master
         if (id == 0) {
             throw new RSRuntimeException("Allocation creation failed.");
         }
@@ -1070,7 +1240,11 @@ public class Allocation extends BaseObj {
         b.setX(count);
         Type t = b.create();
 
+<<<<<<< HEAD
         int id = rs.nAllocationCreateTyped(t.getID(rs), MipmapControl.MIPMAP_NONE.mID, usage, 0);
+=======
+        int id = rs.nAllocationCreateTyped(t.getID(), MipmapControl.MIPMAP_NONE.mID, usage);
+>>>>>>> upstream/master
         if (id == 0) {
             throw new RSRuntimeException("Allocation creation failed.");
         }
@@ -1137,7 +1311,11 @@ public class Allocation extends BaseObj {
         rs.validate();
         Type t = typeFromBitmap(rs, b, mips);
 
+<<<<<<< HEAD
         int id = rs.nAllocationCreateFromBitmap(t.getID(rs), mips.mID, b, usage);
+=======
+        int id = rs.nAllocationCreateFromBitmap(t.getID(), mips.mID, b, usage);
+>>>>>>> upstream/master
         if (id == 0) {
             throw new RSRuntimeException("Load failed.");
         }
@@ -1145,6 +1323,7 @@ public class Allocation extends BaseObj {
     }
 
     /**
+<<<<<<< HEAD
      *
      *
      * @hide
@@ -1202,6 +1381,8 @@ public class Allocation extends BaseObj {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Creates a non-mipmapped renderscript allocation to use as a
      * graphics texture
      *
@@ -1257,7 +1438,11 @@ public class Allocation extends BaseObj {
         tb.setMipmaps(mips == MipmapControl.MIPMAP_FULL);
         Type t = tb.create();
 
+<<<<<<< HEAD
         int id = rs.nAllocationCubeCreateFromBitmap(t.getID(rs), mips.mID, b, usage);
+=======
+        int id = rs.nAllocationCubeCreateFromBitmap(t.getID(), mips.mID, b, usage);
+>>>>>>> upstream/master
         if(id == 0) {
             throw new RSRuntimeException("Load failed for bitmap " + b + " element " + e);
         }

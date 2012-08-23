@@ -5,7 +5,11 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= backup.cpp
 
+<<<<<<< HEAD
 LOCAL_SHARED_LIBRARIES := libcutils libutils libandroidfw
+=======
+LOCAL_SHARED_LIBRARIES := libcutils libutils
+>>>>>>> upstream/master
 
 LOCAL_MODULE:= btool
 

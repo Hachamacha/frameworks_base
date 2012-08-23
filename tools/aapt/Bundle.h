@@ -15,6 +15,7 @@
 #include <utils/String8.h>
 #include <utils/Vector.h>
 
+<<<<<<< HEAD
 enum {
     SDK_CUPCAKE = 3,
     SDK_DONUT = 4,
@@ -27,6 +28,8 @@ enum {
     SDK_ICE_CREAM_SANDWICH_MR1 = 15,
 };
 
+=======
+>>>>>>> upstream/master
 /*
  * Things we can do.
  */
@@ -84,7 +87,11 @@ public:
     bool getForce(void) const { return mForce; }
     void setForce(bool val) { mForce = val; }
     void setGrayscaleTolerance(int val) { mGrayscaleTolerance = val; }
+<<<<<<< HEAD
     int  getGrayscaleTolerance() const { return mGrayscaleTolerance; }
+=======
+    int  getGrayscaleTolerance() { return mGrayscaleTolerance; }
+>>>>>>> upstream/master
     bool getMakePackageDirs(void) const { return mMakePackageDirs; }
     void setMakePackageDirs(bool val) { mMakePackageDirs = val; }
     bool getUpdate(void) const { return mUpdate; }
@@ -97,6 +104,10 @@ public:
     void setRequireLocalization(bool val) { mRequireLocalization = val; }
     bool getPseudolocalize(void) const { return mPseudolocalize; }
     void setPseudolocalize(bool val) { mPseudolocalize = val; }
+<<<<<<< HEAD
+=======
+    bool getWantUTF16(void) const { return mWantUTF16; }
+>>>>>>> upstream/master
     void setWantUTF16(bool val) { mWantUTF16 = val; }
     bool getValues(void) const { return mValues; }
     void setValues(bool val) { mValues = val; }
@@ -117,10 +128,13 @@ public:
     bool getGenDependencies() { return mGenDependencies; }
     void setGenDependencies(bool val) { mGenDependencies = val; }
 
+<<<<<<< HEAD
     bool getUTF16StringsOption() {
         return mWantUTF16 || !isMinSdkAtLeast(SDK_FROYO);
     }
 
+=======
+>>>>>>> upstream/master
     /*
      * Input options.
      */
@@ -169,14 +183,24 @@ public:
     void setExtraPackages(const char* val) { mExtraPackages = val; }
     const char* getMaxResVersion() const { return mMaxResVersion; }
     void setMaxResVersion(const char * val) { mMaxResVersion = val; }
+<<<<<<< HEAD
     bool getDebugMode() const { return mDebugMode; }
     void setDebugMode(bool val) { mDebugMode = val; }
     bool getNonConstantId() const { return mNonConstantId; }
+=======
+    bool getDebugMode() { return mDebugMode; }
+    void setDebugMode(bool val) { mDebugMode = val; }
+    bool getNonConstantId() { return mNonConstantId; }
+>>>>>>> upstream/master
     void setNonConstantId(bool val) { mNonConstantId = val; }
     const char* getProduct() const { return mProduct; }
     void setProduct(const char * val) { mProduct = val; }
     void setUseCrunchCache(bool val) { mUseCrunchCache = val; }
+<<<<<<< HEAD
     bool getUseCrunchCache() const { return mUseCrunchCache; }
+=======
+    bool getUseCrunchCache() { return mUseCrunchCache; }
+>>>>>>> upstream/master
 
     /*
      * Set and get the file specification.

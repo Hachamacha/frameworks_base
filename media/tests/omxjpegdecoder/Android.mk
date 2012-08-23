@@ -26,12 +26,19 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libskia \
     libstagefright \
+<<<<<<< HEAD
     libstagefright_foundation \
+=======
+>>>>>>> upstream/master
     libbinder \
     libutils \
     libjpeg
 
 LOCAL_C_INCLUDES := \
+<<<<<<< HEAD
+=======
+    $(JNI_H_INCLUDE) \
+>>>>>>> upstream/master
     $(TOP)/external/jpeg \
     $(TOP)/external/skia/include/config \
     $(TOP)/external/skia/include/core \
@@ -39,9 +46,15 @@ LOCAL_C_INCLUDES := \
     $(TOP)/external/skia/include/utils \
     $(TOP)/external/skia/include/effects \
     $(TOP)/frameworks/base/media/libstagefright \
+<<<<<<< HEAD
     $(TOP)/frameworks/base/include/ \
     $(TOP)/frameworks/base/ \
     $(TOP)/frameworks/native/include/media/openmax
+=======
+    $(TOP)/frameworks/base/include/media/stagefright/openmax \
+    $(TOP)/frameworks/base/include/ \
+    $(TOP)/frameworks/base/
+>>>>>>> upstream/master
 
 LOCAL_MODULE := jpeg_bench
 

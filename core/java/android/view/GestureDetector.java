@@ -193,8 +193,15 @@ public class GestureDetector {
         }
     }
 
+<<<<<<< HEAD
     private int mTouchSlopSquare;
     private int mDoubleTapTouchSlopSquare;
+=======
+    // TODO: ViewConfiguration
+    private int mBiggerTouchSlopSquare = 20 * 20;
+
+    private int mTouchSlopSquare;
+>>>>>>> upstream/master
     private int mDoubleTapSlopSquare;
     private int mMinimumFlingVelocity;
     private int mMaximumFlingVelocity;
@@ -389,11 +396,18 @@ public class GestureDetector {
         mIgnoreMultitouch = ignoreMultitouch;
 
         // Fallback to support pre-donuts releases
+<<<<<<< HEAD
         int touchSlop, doubleTapSlop, doubleTapTouchSlop;
         if (context == null) {
             //noinspection deprecation
             touchSlop = ViewConfiguration.getTouchSlop();
             doubleTapTouchSlop = touchSlop; // Hack rather than adding a hiden method for this
+=======
+        int touchSlop, doubleTapSlop;
+        if (context == null) {
+            //noinspection deprecation
+            touchSlop = ViewConfiguration.getTouchSlop();
+>>>>>>> upstream/master
             doubleTapSlop = ViewConfiguration.getDoubleTapSlop();
             //noinspection deprecation
             mMinimumFlingVelocity = ViewConfiguration.getMinimumFlingVelocity();
@@ -401,13 +415,19 @@ public class GestureDetector {
         } else {
             final ViewConfiguration configuration = ViewConfiguration.get(context);
             touchSlop = configuration.getScaledTouchSlop();
+<<<<<<< HEAD
             doubleTapTouchSlop = configuration.getScaledDoubleTapTouchSlop();
+=======
+>>>>>>> upstream/master
             doubleTapSlop = configuration.getScaledDoubleTapSlop();
             mMinimumFlingVelocity = configuration.getScaledMinimumFlingVelocity();
             mMaximumFlingVelocity = configuration.getScaledMaximumFlingVelocity();
         }
         mTouchSlopSquare = touchSlop * touchSlop;
+<<<<<<< HEAD
         mDoubleTapTouchSlopSquare = doubleTapTouchSlop * doubleTapTouchSlop;
+=======
+>>>>>>> upstream/master
         mDoubleTapSlopSquare = doubleTapSlop * doubleTapSlop;
     }
 
@@ -546,7 +566,11 @@ public class GestureDetector {
                     mHandler.removeMessages(SHOW_PRESS);
                     mHandler.removeMessages(LONG_PRESS);
                 }
+<<<<<<< HEAD
                 if (distance > mDoubleTapTouchSlopSquare) {
+=======
+                if (distance > mBiggerTouchSlopSquare) {
+>>>>>>> upstream/master
                     mAlwaysInBiggerTapRegion = false;
                 }
             } else if ((Math.abs(scrollX) >= 1) || (Math.abs(scrollY) >= 1)) {
@@ -585,12 +609,17 @@ public class GestureDetector {
             }
             // Hold the event we obtained above - listeners may have changed the original.
             mPreviousUpEvent = currentUpEvent;
+<<<<<<< HEAD
             if (mVelocityTracker != null) {
                 // This may have been cleared when we called out to the
                 // application above.
                 mVelocityTracker.recycle();
                 mVelocityTracker = null;
             }
+=======
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+>>>>>>> upstream/master
             mIsDoubleTapping = false;
             mHandler.removeMessages(SHOW_PRESS);
             mHandler.removeMessages(LONG_PRESS);

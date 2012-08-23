@@ -37,10 +37,13 @@ namespace uirenderer {
 // Layers
 ///////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 // Forward declarations
 class OpenGLRenderer;
 class DisplayList;
 
+=======
+>>>>>>> upstream/master
 /**
  * A layer has dimensions and is backed by an OpenGL texture or FBO.
  */
@@ -55,9 +58,12 @@ struct Layer {
         texture.width = layerWidth;
         texture.height = layerHeight;
         colorFilter = NULL;
+<<<<<<< HEAD
         deferredUpdateScheduled = false;
         renderer = NULL;
         displayList = NULL;
+=======
+>>>>>>> upstream/master
     }
 
     ~Layer() {
@@ -84,6 +90,7 @@ struct Layer {
         regionRect.translate(layer.left, layer.top);
     }
 
+<<<<<<< HEAD
     void updateDeferred(OpenGLRenderer* renderer, DisplayList* displayList,
             int left, int top, int right, int bottom) {
         this->renderer = renderer;
@@ -93,6 +100,8 @@ struct Layer {
         deferredUpdateScheduled = true;
     }
 
+=======
+>>>>>>> upstream/master
     inline uint32_t getWidth() {
         return texture.width;
     }
@@ -163,12 +172,21 @@ struct Layer {
         this->renderTarget = renderTarget;
     }
 
+<<<<<<< HEAD
     void setWrap(GLenum wrap, bool bindTexture = false, bool force = false) {
         texture.setWrap(wrap, bindTexture, force, renderTarget);
     }
 
     void setFilter(GLenum filter, bool bindTexture = false, bool force = false) {
         texture.setFilter(filter, bindTexture, force, renderTarget);
+=======
+    void setWrap(GLenum wrapS, GLenum wrapT, bool bindTexture = false, bool force = false) {
+        texture.setWrap(wrapS, wrapT, bindTexture, force, renderTarget);
+    }
+
+    void setFilter(GLenum min, GLenum mag, bool bindTexture = false, bool force = false) {
+        texture.setFilter(min, mag,bindTexture, force, renderTarget);
+>>>>>>> upstream/master
     }
 
     inline bool isCacheable() {
@@ -250,6 +268,7 @@ struct Layer {
     uint16_t* meshIndices;
     GLsizei meshElementCount;
 
+<<<<<<< HEAD
     /**
      * Used for deferred updates.
      */
@@ -258,6 +277,8 @@ struct Layer {
     DisplayList* displayList;
     Rect dirtyRect;
 
+=======
+>>>>>>> upstream/master
 private:
     /**
      * Name of the FBO used to render the layer. If the name is 0

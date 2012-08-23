@@ -1,7 +1,12 @@
 //
 // Copyright 2006 The Android Open Source Project
+<<<<<<< HEAD
 // This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
 //
+=======
+// 
+// This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
+>>>>>>> upstream/master
 // Build resource files from raw assets.
 //
 
@@ -10,8 +15,13 @@
 #include "XMLNode.h"
 #include "ResourceFilter.h"
 
+<<<<<<< HEAD
 #include <androidfw/ResourceTypes.h>
 #include <utils/ByteOrder.h>
+=======
+#include <utils/ByteOrder.h>
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 #include <stdarg.h>
 
 #define NOISY(x) //x
@@ -754,7 +764,10 @@ status_t compileResourceFile(Bundle* bundle,
     const String16 public16("public");
     const String16 public_padding16("public-padding");
     const String16 private_symbols16("private-symbols");
+<<<<<<< HEAD
     const String16 java_symbol16("java-symbol");
+=======
+>>>>>>> upstream/master
     const String16 add_resource16("add-resource");
     const String16 skip16("skip");
     const String16 eat_comment16("eat-comment");
@@ -1060,6 +1073,7 @@ status_t compileResourceFile(Bundle* bundle,
                 }
                 continue;
 
+<<<<<<< HEAD
             } else if (strcmp16(block.getElementName(&len), java_symbol16.string()) == 0) {
                 SourcePos srcPos(in->getPrintableSource(), block.getLineNumber());
             
@@ -1103,6 +1117,8 @@ status_t compileResourceFile(Bundle* bundle,
                 continue;
 
 
+=======
+>>>>>>> upstream/master
             } else if (strcmp16(block.getElementName(&len), add_resource16.string()) == 0) {
                 SourcePos srcPos(in->getPrintableSource(), block.getLineNumber());
             
@@ -2092,8 +2108,12 @@ bool ResourceTable::stringToValue(Res_value* outValue, StringPool* pool,
                                   uint32_t attrID,
                                   const Vector<StringPool::entry_style_span>* style,
                                   String16* outStr, void* accessorCookie,
+<<<<<<< HEAD
                                   uint32_t attrType, const String8* configTypeName,
                                   const ConfigDescription* config)
+=======
+                                  uint32_t attrType)
+>>>>>>> upstream/master
 {
     String16 finalStr;
 
@@ -2121,6 +2141,7 @@ bool ResourceTable::stringToValue(Res_value* outValue, StringPool* pool,
     if (outValue->dataType == outValue->TYPE_STRING) {
         // Should do better merging styles.
         if (pool) {
+<<<<<<< HEAD
             String8 configStr;
             if (config != NULL) {
                 configStr = config->toString();
@@ -2134,6 +2155,12 @@ bool ResourceTable::stringToValue(Res_value* outValue, StringPool* pool,
                 outValue->data = pool->add(finalStr, *style, configTypeName, config);
             } else {
                 outValue->data = pool->add(finalStr, true, configTypeName, config);
+=======
+            if (style != NULL && style->size() > 0) {
+                outValue->data = pool->add(finalStr, *style);
+            } else {
+                outValue->data = pool->add(finalStr, true);
+>>>>>>> upstream/master
             }
         } else {
             // Caller will fill this in later.
@@ -2305,8 +2332,15 @@ bool ResourceTable::getAttributeFlags(
 
         const char16_t* end = name + nameLen;
         const char16_t* pos = name;
+<<<<<<< HEAD
         while (pos < end) {
             const char16_t* start = pos;
+=======
+        bool failed = false;
+        while (pos < end && !failed) {
+            const char16_t* start = pos;
+            end++;
+>>>>>>> upstream/master
             while (pos < end && *pos != '|') {
                 pos++;
             }
@@ -2332,7 +2366,13 @@ bool ResourceTable::getAttributeFlags(
                 // Didn't find this flag identifier.
                 return false;
             }
+<<<<<<< HEAD
             pos++;
+=======
+            if (pos < end) {
+                pos++;
+            }
+>>>>>>> upstream/master
         }
 
         return true;
@@ -2588,19 +2628,30 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
         return err;
     }
 
+<<<<<<< HEAD
     const ConfigDescription nullConfig;
 
+=======
+>>>>>>> upstream/master
     const size_t N = mOrderedPackages.size();
     size_t pi;
 
     const static String16 mipmap16("mipmap");
 
+<<<<<<< HEAD
     bool useUTF8 = !bundle->getUTF16StringsOption();
 
     // Iterate through all data, collecting all values (strings,
     // references, etc).
     StringPool valueStrings(useUTF8);
     Vector<sp<Entry> > allEntries;
+=======
+    bool useUTF8 = !bundle->getWantUTF16() && bundle->isMinSdkAtLeast(SDK_FROYO);
+
+    // Iterate through all data, collecting all values (strings,
+    // references, etc).
+    StringPool valueStrings = StringPool(false, useUTF8);
+>>>>>>> upstream/master
     for (pi=0; pi<N; pi++) {
         sp<Package> p = mOrderedPackages.itemAt(pi);
         if (p->getTypes().size() == 0) {
@@ -2608,8 +2659,13 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
             continue;
         }
 
+<<<<<<< HEAD
         StringPool typeStrings(useUTF8);
         StringPool keyStrings(useUTF8);
+=======
+        StringPool typeStrings = StringPool(false, useUTF8);
+        StringPool keyStrings = StringPool(false, useUTF8);
+>>>>>>> upstream/master
 
         const size_t N = p->getOrderedTypes().size();
         for (size_t ti=0; ti<N; ti++) {
@@ -2621,6 +2677,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
             const String16 typeName(t->getName());
             typeStrings.add(typeName, false);
 
+<<<<<<< HEAD
             // This is a hack to tweak the sorting order of the final strings,
             // to put stuff that is generally not language-specific first.
             String8 configTypeName(typeName);
@@ -2634,6 +2691,8 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 configTypeName = "2value";
             }
 
+=======
+>>>>>>> upstream/master
             const bool filterable = (typeName != mipmap16);
 
             const size_t N = t->getOrderedConfigs().size();
@@ -2653,6 +2712,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                         continue;
                     }
                     e->setNameIndex(keyStrings.add(e->getName(), true));
+<<<<<<< HEAD
 
                     // If this entry has no values for other configs,
                     // and is the default config, then it is special.  Otherwise
@@ -2668,6 +2728,12 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                         return err;
                     }
                     allEntries.add(e);
+=======
+                    status_t err = e->prepareFlatten(&valueStrings, this);
+                    if (err != NO_ERROR) {
+                        return err;
+                    }
+>>>>>>> upstream/master
                 }
             }
         }
@@ -2676,6 +2742,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
         p->setKeyStrings(keyStrings.createStringBlock());
     }
 
+<<<<<<< HEAD
     if (bundle->getOutputAPKFile() != NULL) {
         // Now we want to sort the value strings for better locality.  This will
         // cause the positions of the strings to change, so we need to go back
@@ -2687,6 +2754,8 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
         }
     }
 
+=======
+>>>>>>> upstream/master
     ssize_t strAmt = 0;
     
     // Now build the array of package chunks.
@@ -3226,16 +3295,24 @@ status_t ResourceTable::Entry::assignResourceIds(ResourceTable* table,
     return hasErrors ? UNKNOWN_ERROR : NO_ERROR;
 }
 
+<<<<<<< HEAD
 status_t ResourceTable::Entry::prepareFlatten(StringPool* strings, ResourceTable* table,
         const String8* configTypeName, const ConfigDescription* config)
+=======
+status_t ResourceTable::Entry::prepareFlatten(StringPool* strings, ResourceTable* table)
+>>>>>>> upstream/master
 {
     if (mType == TYPE_ITEM) {
         Item& it = mItem;
         AccessorCookie ac(it.sourcePos, String8(mName), String8(it.value));
         if (!table->stringToValue(&it.parsedValue, strings,
                                   it.value, false, true, 0,
+<<<<<<< HEAD
                                   &it.style, NULL, &ac, mItemFormat,
                                   configTypeName, config)) {
+=======
+                                  &it.style, NULL, &ac, mItemFormat)) {
+>>>>>>> upstream/master
             return UNKNOWN_ERROR;
         }
     } else if (mType == TYPE_BAG) {
@@ -3246,8 +3323,12 @@ status_t ResourceTable::Entry::prepareFlatten(StringPool* strings, ResourceTable
             AccessorCookie ac(it.sourcePos, String8(key), String8(it.value));
             if (!table->stringToValue(&it.parsedValue, strings,
                                       it.value, false, true, it.bagKeyId,
+<<<<<<< HEAD
                                       &it.style, NULL, &ac, it.format,
                                       configTypeName, config)) {
+=======
+                                      &it.style, NULL, &ac, it.format)) {
+>>>>>>> upstream/master
                 return UNKNOWN_ERROR;
             }
         }
@@ -3259,6 +3340,7 @@ status_t ResourceTable::Entry::prepareFlatten(StringPool* strings, ResourceTable
     return NO_ERROR;
 }
 
+<<<<<<< HEAD
 status_t ResourceTable::Entry::remapStringValue(StringPool* strings)
 {
     if (mType == TYPE_ITEM) {
@@ -3282,6 +3364,8 @@ status_t ResourceTable::Entry::remapStringValue(StringPool* strings)
     return NO_ERROR;
 }
 
+=======
+>>>>>>> upstream/master
 ssize_t ResourceTable::Entry::flatten(Bundle* bundle, const sp<AaptFile>& data, bool isPublic)
 {
     size_t amt = 0;

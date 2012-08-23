@@ -160,6 +160,7 @@ public final class BluetoothDevice implements Parcelable {
             "android.bluetooth.device.action.NAME_CHANGED";
 
     /**
+<<<<<<< HEAD
      * Broadcast Action: Indicates the alias of a remote device has been
      * changed.
      * <p>Always contains the extra field {@link #EXTRA_DEVICE}.
@@ -172,6 +173,8 @@ public final class BluetoothDevice implements Parcelable {
             "android.bluetooth.device.action.ALIAS_CHANGED";
 
     /**
+=======
+>>>>>>> upstream/master
      * Broadcast Action: Indicates a change in the bond state of a remote
      * device. For example, if a device is bonded (paired).
      * <p>Always contains the extra fields {@link #EXTRA_DEVICE}, {@link
@@ -205,7 +208,11 @@ public final class BluetoothDevice implements Parcelable {
     public static final String EXTRA_RSSI = "android.bluetooth.device.extra.RSSI";
 
     /**
+<<<<<<< HEAD
      * Used as a Parcelable {@link BluetoothClass} extra field in {@link
+=======
+     * Used as an Parcelable {@link BluetoothClass} extra field in {@link
+>>>>>>> upstream/master
      * #ACTION_FOUND} and {@link #ACTION_CLASS_CHANGED} intents.
      */
     public static final String EXTRA_CLASS = "android.bluetooth.device.extra.CLASS";

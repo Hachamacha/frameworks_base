@@ -32,8 +32,11 @@
     <declare-styleable name="NotificationRowLayout">
         <attr name="rowHeight" format="dimension" />
     </declare-styleable>
+<<<<<<< HEAD
     <declare-styleable name="RecentsPanelView">
         <attr name="recentItemLayout" format="reference" />
     </declare-styleable>
+=======
+>>>>>>> upstream/master
 </resources>
 

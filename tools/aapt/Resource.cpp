@@ -14,8 +14,11 @@
 #include "FileFinder.h"
 #include "CacheUpdater.h"
 
+<<<<<<< HEAD
 #include <utils/WorkQueue.h>
 
+=======
+>>>>>>> upstream/master
 #if HAVE_PRINTF_ZD
 #  define ZD "%zd"
 #  define ZD_TYPE ssize_t
@@ -26,9 +29,12 @@
 
 #define NOISY(x) // x
 
+<<<<<<< HEAD
 // Number of threads to use for preprocessing images.
 static const size_t MAX_THREADS = 4;
 
+=======
+>>>>>>> upstream/master
 // ==========================================================================
 // ==========================================================================
 // ==========================================================================
@@ -307,6 +313,7 @@ static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
     return hasErrors ? UNKNOWN_ERROR : NO_ERROR;
 }
 
+<<<<<<< HEAD
 class PreProcessImageWorkUnit : public WorkQueue::WorkUnit {
 public:
     PreProcessImageWorkUnit(const Bundle* bundle, const sp<AaptAssets>& assets,
@@ -353,6 +360,23 @@ static status_t preProcessImages(const Bundle* bundle, const sp<AaptAssets>& ass
             fprintf(stderr, "preProcessImages failed: finish() returned %d\n", status);
             hasErrors = true;
         }
+=======
+static status_t preProcessImages(Bundle* bundle, const sp<AaptAssets>& assets,
+                          const sp<ResourceTypeSet>& set, const char* type)
+{
+    bool hasErrors = false;
+    ssize_t res = NO_ERROR;
+    if (bundle->getUseCrunchCache() == false) {
+        ResourceDirIterator it(set, String8(type));
+        Vector<sp<AaptFile> > newNameFiles;
+        Vector<String8> newNamePaths;
+        while ((res=it.next()) == NO_ERROR) {
+            res = preProcessImage(bundle, assets, it.getFile(), NULL);
+            if (res < NO_ERROR) {
+                hasErrors = true;
+            }
+        }
+>>>>>>> upstream/master
     }
     return (hasErrors || (res < NO_ERROR)) ? UNKNOWN_ERROR : NO_ERROR;
 }
@@ -883,7 +907,12 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets)
      * request UTF-16 encoding and the parameters of this package
      * allow UTF-8 to be used.
      */
+<<<<<<< HEAD
     if (!bundle->getUTF16StringsOption()) {
+=======
+    if (!bundle->getWantUTF16()
+            && bundle->isMinSdkAtLeast(SDK_FROYO)) {
+>>>>>>> upstream/master
         xmlFlags |= XML_COMPILE_UTF8;
     }
 
@@ -1844,7 +1873,11 @@ static status_t writeSymbolClass(
         if (sym.typeCode != AaptSymbolEntry::TYPE_INT32) {
             continue;
         }
+<<<<<<< HEAD
         if (!assets->isJavaSymbol(sym, includePrivate)) {
+=======
+        if (!includePrivate && !sym.isPublic) {
+>>>>>>> upstream/master
             continue;
         }
         String16 name(sym.name);
@@ -1900,7 +1933,11 @@ static status_t writeSymbolClass(
         if (sym.typeCode != AaptSymbolEntry::TYPE_STRING) {
             continue;
         }
+<<<<<<< HEAD
         if (!assets->isJavaSymbol(sym, includePrivate)) {
+=======
+        if (!includePrivate && !sym.isPublic) {
+>>>>>>> upstream/master
             continue;
         }
         String16 name(sym.name);
@@ -2012,8 +2049,12 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
         "\n"
         "package %s;\n\n", package.string());
 
+<<<<<<< HEAD
         status_t err = writeSymbolClass(fp, assets, includePrivate, symbols,
                 className, 0, bundle->getNonConstantId());
+=======
+        status_t err = writeSymbolClass(fp, assets, includePrivate, symbols, className, 0, bundle->getNonConstantId());
+>>>>>>> upstream/master
         if (err != NO_ERROR) {
             return err;
         }
@@ -2089,6 +2130,7 @@ addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName,
     keep->add(rule, location);
 }
 
+<<<<<<< HEAD
 void
 addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
         const char* pkg, const String8& srcName, int line)
@@ -2106,6 +2148,8 @@ addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
     keep->add(rule, location);
 }
 
+=======
+>>>>>>> upstream/master
 status_t
 writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
 {
@@ -2268,6 +2312,7 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
                 }
             }
         }
+<<<<<<< HEAD
         ssize_t attrIndex = tree.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "onClick");
         if (attrIndex >= 0) {
             size_t len;
@@ -2275,6 +2320,8 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
                                 String8(tree.getAttributeStringValue(attrIndex, &len)), NULL,
                                 layoutFile->getPrintableSource(), tree.getLineNumber());
         }
+=======
+>>>>>>> upstream/master
     }
 
     return NO_ERROR;
@@ -2313,9 +2360,12 @@ writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
         } else if ((dirName == String8("xml")) || (strncmp(dirName.string(), "xml-", 4) == 0)) {
             startTag = "PreferenceScreen";
             tagAttrPairs = &kXmlTagAttrPairs;
+<<<<<<< HEAD
         } else if ((dirName == String8("menu")) || (strncmp(dirName.string(), "menu-", 5) == 0)) {
             startTag = "menu";
             tagAttrPairs = NULL;
+=======
+>>>>>>> upstream/master
         } else {
             continue;
         }

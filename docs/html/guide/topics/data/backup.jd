@@ -47,7 +47,11 @@ data onto the new device</li>
 
   <h2>See also</h2>
   <ol>
+<<<<<<< HEAD
     <li><a href="{@docRoot}tools/help/bmgr.html">{@code bmgr} tool</a></li>
+=======
+    <li><a href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr} tool</a></li>
+>>>>>>> upstream/master
   </ol>
 
 </div>
@@ -316,7 +320,11 @@ backup for all applications that have requested a backup since the last backup w
 
 <p class="note"><strong>Tip:</strong> While developing your application, you can initiate an
 immediate backup operation from the Backup Manager with the <a
+<<<<<<< HEAD
 href="{@docRoot}tools/help/bmgr.html">{@code bmgr} tool</a>.</p>
+=======
+href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr} tool</a>.</p>
+>>>>>>> upstream/master
 
 <p>When the Backup Manager calls your {@link
 android.app.backup.BackupAgent#onBackup(ParcelFileDescriptor,BackupDataOutput,ParcelFileDescriptor)
@@ -460,7 +468,11 @@ android.app.backup.BackupManager#requestRestore(RestoreObserver) requestRestore(
 href="#RequestingRestore">Requesting restore</a> for more information).</p>
 
 <p class="note"><strong>Note:</strong> While developing your application, you can also request a
+<<<<<<< HEAD
 restore operation with the <a href="{@docRoot}tools/help/bmgr.html">{@code bmgr}
+=======
+restore operation with the <a href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr}
+>>>>>>> upstream/master
 tool</a>.</p>
 
 <p>When the Backup Manager calls your {@link
@@ -708,9 +720,23 @@ you must use synchronized statements each time you perform a read or write. For 
 in any Activity where you read and write the file, you need an object to use as the intrinsic
 lock for the synchronized statements:</p>
 
+<<<<<<< HEAD
 <pre>
 // Object for intrinsic lock
 static final Object sDataLock = new Object();
+=======
+<div class="sidebox-wrapper">
+<div class="sidebox">
+<p><strong>Interesting Fact:</strong></p>
+<p>A zero-length array is lighter-weight than a normal Object, so it's great for an
+intrinsic lock.</p>
+</div>
+</div>
+
+<pre>
+// Object for intrinsic lock
+static final Object[] sDataLock = new Object[0];
+>>>>>>> upstream/master
 </pre>
 
 <p>Then create a synchronized statement with this lock each time you read or write the files. For
@@ -863,7 +889,11 @@ onBackup()}.</p>
 
 <p class="note"><strong>Note:</strong> While developing your application, you can request a
 backup and initiate an immediate backup operation with the <a
+<<<<<<< HEAD
 href="{@docRoot}tools/help/bmgr.html">{@code bmgr}
+=======
+href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr}
+>>>>>>> upstream/master
 tool</a>.</p>
 
 
@@ -878,7 +908,11 @@ android.app.backup.BackupAgent#onRestore(BackupDataInput,int,ParcelFileDescripto
 implementation, passing the data from the current set of backup data.</p>
 
 <p class="note"><strong>Note:</strong> While developing your application, you can request a
+<<<<<<< HEAD
 restore operation with the <a href="{@docRoot}tools/help/bmgr.html">{@code bmgr}
+=======
+restore operation with the <a href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr}
+>>>>>>> upstream/master
 tool</a>.</p>
 
 
@@ -886,7 +920,11 @@ tool</a>.</p>
 
 <p>Once you've implemented your backup agent, you can test the backup and restore functionality
 with the following procedure, using <a
+<<<<<<< HEAD
 href="{@docRoot}tools/help/bmgr.html">{@code bmgr}</a>.</p>
+=======
+href="{@docRoot}guide/developing/tools/bmgr.html">{@code bmgr}</a>.</p>
+>>>>>>> upstream/master
 
 <ol>
   <li>Install your application on a suitable Android system image

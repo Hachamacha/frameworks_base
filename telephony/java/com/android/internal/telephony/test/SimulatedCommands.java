@@ -120,9 +120,15 @@ public final class SimulatedCommands extends BaseCommands
 
         if (pin != null && pin.equals(mPinCode)) {
             Log.i(LOG_TAG, "[SimCmd] supplyIccPin: success!");
+<<<<<<< HEAD
             mPinUnlockAttempts = 0;
             mSimLockedState = SimLockState.NONE;
             mIccStatusChangedRegistrants.notifyRegistrants();
+=======
+            setRadioState(RadioState.SIM_READY);
+            mPinUnlockAttempts = 0;
+            mSimLockedState = SimLockState.NONE;
+>>>>>>> upstream/master
 
             if (result != null) {
                 AsyncResult.forMessage(result, null, null);
@@ -162,9 +168,15 @@ public final class SimulatedCommands extends BaseCommands
 
         if (puk != null && puk.equals(SIM_PUK_CODE)) {
             Log.i(LOG_TAG, "[SimCmd] supplyIccPuk: success!");
+<<<<<<< HEAD
             mSimLockedState = SimLockState.NONE;
             mPukUnlockAttempts = 0;
             mIccStatusChangedRegistrants.notifyRegistrants();
+=======
+            setRadioState(RadioState.SIM_READY);
+            mSimLockedState = SimLockState.NONE;
+            mPukUnlockAttempts = 0;
+>>>>>>> upstream/master
 
             if (result != null) {
                 AsyncResult.forMessage(result, null, null);
@@ -441,11 +453,19 @@ public final class SimulatedCommands extends BaseCommands
      *      The ar.result List is sorted by DriverCall.index
      */
     public void getCurrentCalls (Message result) {
+<<<<<<< HEAD
         if ((mState == RadioState.RADIO_ON) && !isSimLocked()) {
             //Log.i("GSM", "[SimCmds] getCurrentCalls");
             resultSuccess(result, simulatedCallState.getDriverCalls());
         } else {
             //Log.i("GSM", "[SimCmds] getCurrentCalls: RADIO_OFF or SIM not ready!");
+=======
+        if (mState == RadioState.SIM_READY) {
+            //Log.i("GSM", "[SimCmds] getCurrentCalls");
+            resultSuccess(result, simulatedCallState.getDriverCalls());
+        } else {
+            //Log.i("GSM", "[SimCmds] getCurrentCalls: SIM not ready!");
+>>>>>>> upstream/master
             resultFail(result,
                 new CommandException(
                     CommandException.Error.RADIO_NOT_AVAILABLE));
@@ -504,9 +524,12 @@ public final class SimulatedCommands extends BaseCommands
         resultSuccess(result, null);
     }
 
+<<<<<<< HEAD
     public void getIMSI(Message result) {
         getIMSIForApp(null, result);
     }
+=======
+>>>>>>> upstream/master
     /**
      *  returned message
      *  retMsg.obj = AsyncResult ar
@@ -514,7 +537,11 @@ public final class SimulatedCommands extends BaseCommands
      *  ar.userObject contains the original value of result.obj
      *  ar.result is String containing IMSI on success
      */
+<<<<<<< HEAD
     public void getIMSIForApp(String aid, Message result) {
+=======
+    public void getIMSI(Message result) {
+>>>>>>> upstream/master
         resultSuccess(result, "012345678901234");
     }
 
@@ -1025,7 +1052,18 @@ public final class SimulatedCommands extends BaseCommands
 
     public void setRadioPower(boolean on, Message result) {
         if(on) {
+<<<<<<< HEAD
             setRadioState(RadioState.RADIO_ON);
+=======
+            if (isSimLocked()) {
+                Log.i("SIM", "[SimCmd] setRadioPower: SIM locked! state=" +
+                        mSimLockedState);
+                setRadioState(RadioState.SIM_LOCKED_OR_ABSENT);
+            }
+            else {
+                setRadioState(RadioState.SIM_READY);
+            }
+>>>>>>> upstream/master
         } else {
             setRadioState(RadioState.RADIO_OFF);
         }
@@ -1045,18 +1083,26 @@ public final class SimulatedCommands extends BaseCommands
         unimplemented(result);
     }
 
+<<<<<<< HEAD
     public void iccIO(int command, int fileid, String path, int p1, int p2, int p3, String data,
             String pin2, Message response) {
         iccIOForApp(command, fileid, path, p1, p2, p3, data,pin2, null, response);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * parameters equivalent to 27.007 AT+CRSM command
      * response.obj will be an AsyncResult
      * response.obj.userObj will be a SimIoResult on success
      */
+<<<<<<< HEAD
     public void iccIOForApp (int command, int fileid, String path, int p1, int p2,
                        int p3, String data, String pin2, String aid, Message result) {
+=======
+    public void iccIO (int command, int fileid, String path, int p1, int p2,
+                       int p3, String data, String pin2, Message result) {
+>>>>>>> upstream/master
         unimplemented(result);
     }
 
@@ -1518,10 +1564,13 @@ public final class SimulatedCommands extends BaseCommands
     public void requestIsimAuthentication(String nonce, Message response) {
         unimplemented(response);
     }
+<<<<<<< HEAD
 
     public void getVoiceRadioTechnology(Message response) {
         unimplemented(response);
     }
 
     public boolean needsOldRilFeature(String feature) { return false; }
+=======
+>>>>>>> upstream/master
 }

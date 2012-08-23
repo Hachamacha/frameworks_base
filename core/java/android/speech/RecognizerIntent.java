@@ -115,6 +115,7 @@ public class RecognizerIntent {
     public static final String ACTION_WEB_SEARCH = "android.speech.action.WEB_SEARCH";
 
     /**
+<<<<<<< HEAD
      * Starts an activity that will prompt the user for speech without requiring the user's
      * visual attention or touch input. It will send it through a speech recognizer,
      * and either synthesize speech for a web search result or trigger
@@ -154,6 +155,8 @@ public class RecognizerIntent {
     public static final String EXTRA_SECURE = "android.speech.extras.EXTRA_SECURE";
 
     /**
+=======
+>>>>>>> upstream/master
      * The minimum length of an utterance. We will not stop recording before this amount of time.
      * 
      * Note that it is extremely rare you'd want to specify this value in an intent. If you don't

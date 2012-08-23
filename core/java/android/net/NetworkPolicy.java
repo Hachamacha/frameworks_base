@@ -30,13 +30,17 @@ import com.android.internal.util.Objects;
  * @hide
  */
 public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
+<<<<<<< HEAD
     public static final int CYCLE_NONE = -1;
+=======
+>>>>>>> upstream/master
     public static final long WARNING_DISABLED = -1;
     public static final long LIMIT_DISABLED = -1;
     public static final long SNOOZE_NEVER = -1;
 
     public final NetworkTemplate template;
     public int cycleDay;
+<<<<<<< HEAD
     public String cycleTimezone;
     public long warningBytes;
     public long limitBytes;
@@ -66,11 +70,27 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         this.lastLimitSnooze = lastLimitSnooze;
         this.metered = metered;
         this.inferred = inferred;
+=======
+    public long warningBytes;
+    public long limitBytes;
+    public long lastSnooze;
+
+    private static final long DEFAULT_MTU = 1500;
+
+    public NetworkPolicy(NetworkTemplate template, int cycleDay, long warningBytes, long limitBytes,
+            long lastSnooze) {
+        this.template = checkNotNull(template, "missing NetworkTemplate");
+        this.cycleDay = cycleDay;
+        this.warningBytes = warningBytes;
+        this.limitBytes = limitBytes;
+        this.lastSnooze = lastSnooze;
+>>>>>>> upstream/master
     }
 
     public NetworkPolicy(Parcel in) {
         template = in.readParcelable(null);
         cycleDay = in.readInt();
+<<<<<<< HEAD
         cycleTimezone = in.readString();
         warningBytes = in.readLong();
         limitBytes = in.readLong();
@@ -94,11 +114,29 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
     }
 
     @Override
+=======
+        warningBytes = in.readLong();
+        limitBytes = in.readLong();
+        lastSnooze = in.readLong();
+    }
+
+    /** {@inheritDoc} */
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(template, flags);
+        dest.writeInt(cycleDay);
+        dest.writeLong(warningBytes);
+        dest.writeLong(limitBytes);
+        dest.writeLong(lastSnooze);
+    }
+
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
     /**
+<<<<<<< HEAD
      * Test if given measurement is over {@link #warningBytes}.
      */
     public boolean isOverWarning(long totalBytes) {
@@ -106,6 +144,8 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Test if given measurement is near enough to {@link #limitBytes} to be
      * considered over-limit.
      */
@@ -116,6 +156,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         return limitBytes != LIMIT_DISABLED && totalBytes >= limitBytes;
     }
 
+<<<<<<< HEAD
     /**
      * Clear any existing snooze values, setting to {@link #SNOOZE_NEVER}.
      */
@@ -132,6 +173,9 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
     }
 
     @Override
+=======
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public int compareTo(NetworkPolicy another) {
         if (another == null || another.limitBytes == LIMIT_DISABLED) {
             // other value is missing or disabled; we win
@@ -146,14 +190,19 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
     @Override
     public int hashCode() {
+<<<<<<< HEAD
         return Objects.hashCode(template, cycleDay, cycleTimezone, warningBytes, limitBytes,
                 lastWarningSnooze, lastLimitSnooze, metered, inferred);
+=======
+        return Objects.hashCode(template, cycleDay, warningBytes, limitBytes, lastSnooze);
+>>>>>>> upstream/master
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof NetworkPolicy) {
             final NetworkPolicy other = (NetworkPolicy) obj;
+<<<<<<< HEAD
             return cycleDay == other.cycleDay && warningBytes == other.warningBytes
                     && limitBytes == other.limitBytes
                     && lastWarningSnooze == other.lastWarningSnooze
@@ -161,12 +210,18 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
                     && inferred == other.inferred
                     && Objects.equal(cycleTimezone, other.cycleTimezone)
                     && Objects.equal(template, other.template);
+=======
+            return Objects.equal(template, other.template) && cycleDay == other.cycleDay
+                    && warningBytes == other.warningBytes && limitBytes == other.limitBytes
+                    && lastSnooze == other.lastSnooze;
+>>>>>>> upstream/master
         }
         return false;
     }
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         final StringBuilder builder = new StringBuilder("NetworkPolicy");
         builder.append("[").append(template).append("]:");
         builder.append(" cycleDay=").append(cycleDay);
@@ -182,11 +237,21 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
     public static final Creator<NetworkPolicy> CREATOR = new Creator<NetworkPolicy>() {
         @Override
+=======
+        return "NetworkPolicy[" + template + "]: cycleDay=" + cycleDay + ", warningBytes="
+                + warningBytes + ", limitBytes=" + limitBytes + ", lastSnooze=" + lastSnooze;
+    }
+
+    public static final Creator<NetworkPolicy> CREATOR = new Creator<NetworkPolicy>() {
+>>>>>>> upstream/master
         public NetworkPolicy createFromParcel(Parcel in) {
             return new NetworkPolicy(in);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkPolicy[] newArray(int size) {
             return new NetworkPolicy[size];
         }

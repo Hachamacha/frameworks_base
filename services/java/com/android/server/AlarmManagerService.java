@@ -34,9 +34,15 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+<<<<<<< HEAD
 import android.os.WorkSource;
 import android.text.TextUtils;
 import android.text.format.Time;
+=======
+import android.text.TextUtils;
+import android.text.format.Time;
+import android.util.EventLog;
+>>>>>>> upstream/master
 import android.util.Slog;
 import android.util.TimeUtils;
 
@@ -50,7 +56,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+<<<<<<< HEAD
 import java.util.LinkedList;
+=======
+>>>>>>> upstream/master
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -90,7 +99,10 @@ class AlarmManagerService extends IAlarmManager.Stub {
     private int mDescriptor;
     private int mBroadcastRefCount = 0;
     private PowerManager.WakeLock mWakeLock;
+<<<<<<< HEAD
     private LinkedList<PendingIntent> mInFlight = new LinkedList<PendingIntent>();
+=======
+>>>>>>> upstream/master
     private final AlarmThread mWaitThread = new AlarmThread();
     private final AlarmHandler mHandler = new AlarmHandler();
     private ClockReceiver mClockReceiver;
@@ -479,8 +491,12 @@ class AlarmManagerService extends IAlarmManager.Stub {
                         : bs.filterStats.entrySet()) {
                     pw.print("    "); pw.print(fe.getValue().count);
                             pw.print(" alarms: ");
+<<<<<<< HEAD
                             pw.println(fe.getKey().getIntent().toShortString(
                                     false, true, false, true));
+=======
+                            pw.println(fe.getKey().getIntent().toShortString(false, true, false));
+>>>>>>> upstream/master
                 }
             }
         }
@@ -670,12 +686,19 @@ class AlarmManagerService extends IAlarmManager.Stub {
                                             Intent.EXTRA_ALARM_COUNT, alarm.count),
                                     mResultReceiver, mHandler);
                             
+<<<<<<< HEAD
                             // we have an active broadcast so stay awake.
                             if (mBroadcastRefCount == 0) {
                                 setWakelockWorkSource(alarm.operation);
                                 mWakeLock.acquire();
                             }
                             mInFlight.add(alarm.operation);
+=======
+                            // we have an active broadcast so stay awake. 
+                            if (mBroadcastRefCount == 0) {
+                                mWakeLock.acquire();
+                            }
+>>>>>>> upstream/master
                             mBroadcastRefCount++;
                             
                             BroadcastStats bs = getStatsLocked(alarm.operation);
@@ -704,6 +727,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
             }
         }
     }
+<<<<<<< HEAD
 
     void setWakelockWorkSource(PendingIntent pi) {
         try {
@@ -720,6 +744,9 @@ class AlarmManagerService extends IAlarmManager.Stub {
         mWakeLock.setWorkSource(null);
     }
 
+=======
+    
+>>>>>>> upstream/master
     private class AlarmHandler extends Handler {
         public static final int ALARM_EVENT = 1;
         public static final int MINUTE_CHANGE_EVENT = 2;
@@ -895,6 +922,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
                         fs.count++;
                     }
                 }
+<<<<<<< HEAD
                 mInFlight.removeFirst();
                 mBroadcastRefCount--;
                 if (mBroadcastRefCount == 0) {
@@ -909,6 +937,11 @@ class AlarmManagerService extends IAlarmManager.Stub {
                         Slog.e(TAG, "Alarm wakelock still held but sent queue empty");
                         mWakeLock.setWorkSource(null);
                     }
+=======
+                mBroadcastRefCount--;
+                if (mBroadcastRefCount == 0) {
+                    mWakeLock.release();
+>>>>>>> upstream/master
                 }
             }
         }

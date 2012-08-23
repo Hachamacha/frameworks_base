@@ -18,7 +18,10 @@ package android.speech.tts;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.os.Binder;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -273,9 +276,15 @@ public abstract class TextToSpeechService extends Service {
             return old;
         }
 
+<<<<<<< HEAD
         private synchronized SpeechItem maybeRemoveCurrentSpeechItem(Object callerIdentity) {
             if (mCurrentSpeechItem != null &&
                     mCurrentSpeechItem.getCallerIdentity() == callerIdentity) {
+=======
+        private synchronized SpeechItem maybeRemoveCurrentSpeechItem(String callingApp) {
+            if (mCurrentSpeechItem != null &&
+                    TextUtils.equals(mCurrentSpeechItem.getCallingApp(), callingApp)) {
+>>>>>>> upstream/master
                 SpeechItem current = mCurrentSpeechItem;
                 mCurrentSpeechItem = null;
                 return current;
@@ -312,7 +321,11 @@ public abstract class TextToSpeechService extends Service {
             }
 
             if (queueMode == TextToSpeech.QUEUE_FLUSH) {
+<<<<<<< HEAD
                 stopForApp(speechItem.getCallerIdentity());
+=======
+                stopForApp(speechItem.getCallingApp());
+>>>>>>> upstream/master
             } else if (queueMode == TextToSpeech.QUEUE_DESTROY) {
                 stopAll();
             }
@@ -329,7 +342,11 @@ public abstract class TextToSpeechService extends Service {
             // stopForApp(String).
             //
             // Note that this string is interned, so the == comparison works.
+<<<<<<< HEAD
             msg.obj = speechItem.getCallerIdentity();
+=======
+            msg.obj = speechItem.getCallingApp();
+>>>>>>> upstream/master
             if (sendMessage(msg)) {
                 return TextToSpeech.SUCCESS;
             } else {
@@ -345,12 +362,21 @@ public abstract class TextToSpeechService extends Service {
          *
          * Called on a service binder thread.
          */
+<<<<<<< HEAD
         public int stopForApp(Object callerIdentity) {
             if (callerIdentity == null) {
                 return TextToSpeech.ERROR;
             }
 
             removeCallbacksAndMessages(callerIdentity);
+=======
+        public int stopForApp(String callingApp) {
+            if (TextUtils.isEmpty(callingApp)) {
+                return TextToSpeech.ERROR;
+            }
+
+            removeCallbacksAndMessages(callingApp);
+>>>>>>> upstream/master
             // This stops writing data to the file / or publishing
             // items to the audio playback handler.
             //
@@ -358,13 +384,21 @@ public abstract class TextToSpeechService extends Service {
             // belongs to the callingApp, else the item will be "orphaned" and
             // not stopped correctly if a stop request comes along for the item
             // from the app it belongs to.
+<<<<<<< HEAD
             SpeechItem current = maybeRemoveCurrentSpeechItem(callerIdentity);
+=======
+            SpeechItem current = maybeRemoveCurrentSpeechItem(callingApp);
+>>>>>>> upstream/master
             if (current != null) {
                 current.stop();
             }
 
             // Remove any enqueued audio too.
+<<<<<<< HEAD
             mAudioPlaybackHandler.stopForApp(callerIdentity);
+=======
+            mAudioPlaybackHandler.removePlaybackItems(callingApp);
+>>>>>>> upstream/master
 
             return TextToSpeech.SUCCESS;
         }
@@ -378,7 +412,11 @@ public abstract class TextToSpeechService extends Service {
             // Remove all other items from the queue.
             removeCallbacksAndMessages(null);
             // Remove all pending playback as well.
+<<<<<<< HEAD
             mAudioPlaybackHandler.stop();
+=======
+            mAudioPlaybackHandler.removeAllItems();
+>>>>>>> upstream/master
 
             return TextToSpeech.SUCCESS;
         }
@@ -394,6 +432,7 @@ public abstract class TextToSpeechService extends Service {
      * An item in the synth thread queue.
      */
     private abstract class SpeechItem implements UtteranceProgressDispatcher {
+<<<<<<< HEAD
         private final Object mCallerIdentity;
         protected final Bundle mParams;
         private final int mCallerUid;
@@ -410,6 +449,20 @@ public abstract class TextToSpeechService extends Service {
 
         public Object getCallerIdentity() {
             return mCallerIdentity;
+=======
+        private final String mCallingApp;
+        protected final Bundle mParams;
+        private boolean mStarted = false;
+        private boolean mStopped = false;
+
+        public SpeechItem(String callingApp, Bundle params) {
+            mCallingApp = callingApp;
+            mParams = params;
+        }
+
+        public String getCallingApp() {
+            return mCallingApp;
+>>>>>>> upstream/master
         }
 
         /**
@@ -456,7 +509,11 @@ public abstract class TextToSpeechService extends Service {
         public void dispatchOnDone() {
             final String utteranceId = getUtteranceId();
             if (utteranceId != null) {
+<<<<<<< HEAD
                 mCallbacks.dispatchOnDone(getCallerIdentity(), utteranceId);
+=======
+                mCallbacks.dispatchOnDone(getCallingApp(), utteranceId);
+>>>>>>> upstream/master
             }
         }
 
@@ -464,7 +521,11 @@ public abstract class TextToSpeechService extends Service {
         public void dispatchOnStart() {
             final String utteranceId = getUtteranceId();
             if (utteranceId != null) {
+<<<<<<< HEAD
                 mCallbacks.dispatchOnStart(getCallerIdentity(), utteranceId);
+=======
+                mCallbacks.dispatchOnStart(getCallingApp(), utteranceId);
+>>>>>>> upstream/master
             }
         }
 
@@ -472,6 +533,7 @@ public abstract class TextToSpeechService extends Service {
         public void dispatchOnError() {
             final String utteranceId = getUtteranceId();
             if (utteranceId != null) {
+<<<<<<< HEAD
                 mCallbacks.dispatchOnError(getCallerIdentity(), utteranceId);
             }
         }
@@ -484,6 +546,12 @@ public abstract class TextToSpeechService extends Service {
             return mCallerPid;
         }
 
+=======
+                mCallbacks.dispatchOnError(getCallingApp(), utteranceId);
+            }
+        }
+
+>>>>>>> upstream/master
         protected synchronized boolean isStopped() {
              return mStopped;
         }
@@ -531,15 +599,24 @@ public abstract class TextToSpeechService extends Service {
         private AbstractSynthesisCallback mSynthesisCallback;
         private final EventLogger mEventLogger;
 
+<<<<<<< HEAD
         public SynthesisSpeechItem(Object callerIdentity, int callerUid, int callerPid,
                 Bundle params, String text) {
             super(callerIdentity, callerUid, callerPid, params);
+=======
+        public SynthesisSpeechItem(String callingApp, Bundle params, String text) {
+            super(callingApp, params);
+>>>>>>> upstream/master
             mText = text;
             mSynthesisRequest = new SynthesisRequest(mText, mParams);
             mDefaultLocale = getSettingsLocale();
             setRequestParams(mSynthesisRequest);
+<<<<<<< HEAD
             mEventLogger = new EventLogger(mSynthesisRequest, callerUid, callerPid,
                     mPackageName);
+=======
+            mEventLogger = new EventLogger(mSynthesisRequest, getCallingApp(), mPackageName);
+>>>>>>> upstream/master
         }
 
         public String getText() {
@@ -578,7 +655,11 @@ public abstract class TextToSpeechService extends Service {
 
         protected AbstractSynthesisCallback createSynthesisCallback() {
             return new PlaybackSynthesisCallback(getStreamType(), getVolume(), getPan(),
+<<<<<<< HEAD
                     mAudioPlaybackHandler, this, getCallerIdentity(), mEventLogger);
+=======
+                    mAudioPlaybackHandler, this, getCallingApp(), mEventLogger);
+>>>>>>> upstream/master
         }
 
         private void setRequestParams(SynthesisRequest request) {
@@ -633,10 +714,16 @@ public abstract class TextToSpeechService extends Service {
     private class SynthesisToFileSpeechItem extends SynthesisSpeechItem {
         private final File mFile;
 
+<<<<<<< HEAD
         public SynthesisToFileSpeechItem(Object callerIdentity, int callerUid, int callerPid,
                 Bundle params, String text,
                 File file) {
             super(callerIdentity, callerUid, callerPid, params, text);
+=======
+        public SynthesisToFileSpeechItem(String callingApp, Bundle params, String text,
+                File file) {
+            super(callingApp, params, text);
+>>>>>>> upstream/master
             mFile = file;
         }
 
@@ -694,12 +781,22 @@ public abstract class TextToSpeechService extends Service {
     }
 
     private class AudioSpeechItem extends SpeechItem {
+<<<<<<< HEAD
         private final AudioPlaybackQueueItem mItem;
         public AudioSpeechItem(Object callerIdentity, int callerUid, int callerPid,
                 Bundle params, Uri uri) {
             super(callerIdentity, callerUid, callerPid, params);
             mItem = new AudioPlaybackQueueItem(this, getCallerIdentity(),
                     TextToSpeechService.this, uri, getStreamType());
+=======
+
+        private final BlockingMediaPlayer mPlayer;
+        private AudioMessageParams mToken;
+
+        public AudioSpeechItem(String callingApp, Bundle params, Uri uri) {
+            super(callingApp, params);
+            mPlayer = new BlockingMediaPlayer(TextToSpeechService.this, uri, getStreamType());
+>>>>>>> upstream/master
         }
 
         @Override
@@ -709,7 +806,12 @@ public abstract class TextToSpeechService extends Service {
 
         @Override
         protected int playImpl() {
+<<<<<<< HEAD
             mAudioPlaybackHandler.enqueue(mItem);
+=======
+            mToken = new AudioMessageParams(this, getCallingApp(), mPlayer);
+            mAudioPlaybackHandler.enqueueAudio(mToken);
+>>>>>>> upstream/master
             return TextToSpeech.SUCCESS;
         }
 
@@ -721,10 +823,17 @@ public abstract class TextToSpeechService extends Service {
 
     private class SilenceSpeechItem extends SpeechItem {
         private final long mDuration;
+<<<<<<< HEAD
 
         public SilenceSpeechItem(Object callerIdentity, int callerUid, int callerPid,
                 Bundle params, long duration) {
             super(callerIdentity, callerUid, callerPid, params);
+=======
+        private SilenceMessageParams mToken;
+
+        public SilenceSpeechItem(String callingApp, Bundle params, long duration) {
+            super(callingApp, params);
+>>>>>>> upstream/master
             mDuration = duration;
         }
 
@@ -735,14 +844,23 @@ public abstract class TextToSpeechService extends Service {
 
         @Override
         protected int playImpl() {
+<<<<<<< HEAD
             mAudioPlaybackHandler.enqueue(new SilencePlaybackQueueItem(
                     this, getCallerIdentity(), mDuration));
+=======
+            mToken = new SilenceMessageParams(this, getCallingApp(), mDuration);
+            mAudioPlaybackHandler.enqueueSilence(mToken);
+>>>>>>> upstream/master
             return TextToSpeech.SUCCESS;
         }
 
         @Override
         protected void stopImpl() {
+<<<<<<< HEAD
             // Do nothing, handled by AudioPlaybackHandler#stopForApp
+=======
+            // Do nothing.
+>>>>>>> upstream/master
         }
     }
 
@@ -761,6 +879,7 @@ public abstract class TextToSpeechService extends Service {
     // NOTE: All calls that are passed in a calling app are interned so that
     // they can be used as message objects (which are tested for equality using ==).
     private final ITextToSpeechService.Stub mBinder = new ITextToSpeechService.Stub() {
+<<<<<<< HEAD
         @Override
         public int speak(IBinder caller, String text, int queueMode, Bundle params) {
             if (!checkNonNull(caller, text, params)) {
@@ -776,10 +895,26 @@ public abstract class TextToSpeechService extends Service {
         public int synthesizeToFile(IBinder caller, String text, String filename,
                 Bundle params) {
             if (!checkNonNull(caller, text, filename, params)) {
+=======
+
+        public int speak(String callingApp, String text, int queueMode, Bundle params) {
+            if (!checkNonNull(callingApp, text, params)) {
+                return TextToSpeech.ERROR;
+            }
+
+            SpeechItem item = new SynthesisSpeechItem(intern(callingApp), params, text);
+            return mSynthHandler.enqueueSpeechItem(queueMode, item);
+        }
+
+        public int synthesizeToFile(String callingApp, String text, String filename,
+                Bundle params) {
+            if (!checkNonNull(callingApp, text, filename, params)) {
+>>>>>>> upstream/master
                 return TextToSpeech.ERROR;
             }
 
             File file = new File(filename);
+<<<<<<< HEAD
             SpeechItem item = new SynthesisToFileSpeechItem(caller, Binder.getCallingUid(),
                     Binder.getCallingPid(), params, text, file);
             return mSynthHandler.enqueueSpeechItem(TextToSpeech.QUEUE_ADD, item);
@@ -808,10 +943,36 @@ public abstract class TextToSpeechService extends Service {
         }
 
         @Override
+=======
+            SpeechItem item = new SynthesisToFileSpeechItem(intern(callingApp),
+                    params, text, file);
+            return mSynthHandler.enqueueSpeechItem(TextToSpeech.QUEUE_ADD, item);
+        }
+
+        public int playAudio(String callingApp, Uri audioUri, int queueMode, Bundle params) {
+            if (!checkNonNull(callingApp, audioUri, params)) {
+                return TextToSpeech.ERROR;
+            }
+
+            SpeechItem item = new AudioSpeechItem(intern(callingApp), params, audioUri);
+            return mSynthHandler.enqueueSpeechItem(queueMode, item);
+        }
+
+        public int playSilence(String callingApp, long duration, int queueMode, Bundle params) {
+            if (!checkNonNull(callingApp, params)) {
+                return TextToSpeech.ERROR;
+            }
+
+            SpeechItem item = new SilenceSpeechItem(intern(callingApp), params, duration);
+            return mSynthHandler.enqueueSpeechItem(queueMode, item);
+        }
+
+>>>>>>> upstream/master
         public boolean isSpeaking() {
             return mSynthHandler.isSpeaking() || mAudioPlaybackHandler.isSpeaking();
         }
 
+<<<<<<< HEAD
         @Override
         public int stop(IBinder caller) {
             if (!checkNonNull(caller)) {
@@ -822,6 +983,16 @@ public abstract class TextToSpeechService extends Service {
         }
 
         @Override
+=======
+        public int stop(String callingApp) {
+            if (!checkNonNull(callingApp)) {
+                return TextToSpeech.ERROR;
+            }
+
+            return mSynthHandler.stopForApp(intern(callingApp));
+        }
+
+>>>>>>> upstream/master
         public String[] getLanguage() {
             return onGetLanguage();
         }
@@ -830,7 +1001,10 @@ public abstract class TextToSpeechService extends Service {
          * If defaults are enforced, then no language is "available" except
          * perhaps the default language selected by the user.
          */
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int isLanguageAvailable(String lang, String country, String variant) {
             if (!checkNonNull(lang)) {
                 return TextToSpeech.ERROR;
@@ -839,7 +1013,10 @@ public abstract class TextToSpeechService extends Service {
             return onIsLanguageAvailable(lang, country, variant);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public String[] getFeaturesForLanguage(String lang, String country, String variant) {
             Set<String> features = onGetFeaturesForLanguage(lang, country, variant);
             String[] featuresArray = null;
@@ -856,7 +1033,10 @@ public abstract class TextToSpeechService extends Service {
          * There is no point loading a non default language if defaults
          * are enforced.
          */
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int loadLanguage(String lang, String country, String variant) {
             if (!checkNonNull(lang)) {
                 return TextToSpeech.ERROR;
@@ -865,6 +1045,7 @@ public abstract class TextToSpeechService extends Service {
             return onLoadLanguage(lang, country, variant);
         }
 
+<<<<<<< HEAD
         @Override
         public void setCallback(IBinder caller, ITextToSpeechCallback cb) {
             // Note that passing in a null callback is a valid use case.
@@ -873,6 +1054,15 @@ public abstract class TextToSpeechService extends Service {
             }
 
             mCallbacks.setCallback(caller, cb);
+=======
+        public void setCallback(String packageName, ITextToSpeechCallback cb) {
+            // Note that passing in a null callback is a valid use case.
+            if (!checkNonNull(packageName)) {
+                return;
+            }
+
+            mCallbacks.setCallback(packageName, cb);
+>>>>>>> upstream/master
         }
 
         private String intern(String in) {
@@ -889,6 +1079,7 @@ public abstract class TextToSpeechService extends Service {
     };
 
     private class CallbackMap extends RemoteCallbackList<ITextToSpeechCallback> {
+<<<<<<< HEAD
         private final HashMap<IBinder, ITextToSpeechCallback> mCallerToCallback
                 = new HashMap<IBinder, ITextToSpeechCallback>();
 
@@ -900,6 +1091,20 @@ public abstract class TextToSpeechService extends Service {
                     old = mCallerToCallback.put(caller, cb);
                 } else {
                     old = mCallerToCallback.remove(caller);
+=======
+
+        private final HashMap<String, ITextToSpeechCallback> mAppToCallback
+                = new HashMap<String, ITextToSpeechCallback>();
+
+        public void setCallback(String packageName, ITextToSpeechCallback cb) {
+            synchronized (mAppToCallback) {
+                ITextToSpeechCallback old;
+                if (cb != null) {
+                    register(cb, packageName);
+                    old = mAppToCallback.put(packageName, cb);
+                } else {
+                    old = mAppToCallback.remove(packageName);
+>>>>>>> upstream/master
                 }
                 if (old != null && old != cb) {
                     unregister(old);
@@ -907,8 +1112,13 @@ public abstract class TextToSpeechService extends Service {
             }
         }
 
+<<<<<<< HEAD
         public void dispatchOnDone(Object callerIdentity, String utteranceId) {
             ITextToSpeechCallback cb = getCallbackFor(callerIdentity);
+=======
+        public void dispatchOnDone(String packageName, String utteranceId) {
+            ITextToSpeechCallback cb = getCallbackFor(packageName);
+>>>>>>> upstream/master
             if (cb == null) return;
             try {
                 cb.onDone(utteranceId);
@@ -917,8 +1127,13 @@ public abstract class TextToSpeechService extends Service {
             }
         }
 
+<<<<<<< HEAD
         public void dispatchOnStart(Object callerIdentity, String utteranceId) {
             ITextToSpeechCallback cb = getCallbackFor(callerIdentity);
+=======
+        public void dispatchOnStart(String packageName, String utteranceId) {
+            ITextToSpeechCallback cb = getCallbackFor(packageName);
+>>>>>>> upstream/master
             if (cb == null) return;
             try {
                 cb.onStart(utteranceId);
@@ -928,8 +1143,13 @@ public abstract class TextToSpeechService extends Service {
 
         }
 
+<<<<<<< HEAD
         public void dispatchOnError(Object callerIdentity, String utteranceId) {
             ITextToSpeechCallback cb = getCallbackFor(callerIdentity);
+=======
+        public void dispatchOnError(String packageName, String utteranceId) {
+            ITextToSpeechCallback cb = getCallbackFor(packageName);
+>>>>>>> upstream/master
             if (cb == null) return;
             try {
                 cb.onError(utteranceId);
@@ -940,26 +1160,46 @@ public abstract class TextToSpeechService extends Service {
 
         @Override
         public void onCallbackDied(ITextToSpeechCallback callback, Object cookie) {
+<<<<<<< HEAD
             IBinder caller = (IBinder) cookie;
             synchronized (mCallerToCallback) {
                 mCallerToCallback.remove(caller);
             }
             mSynthHandler.stopForApp(caller);
+=======
+            String packageName = (String) cookie;
+            synchronized (mAppToCallback) {
+                mAppToCallback.remove(packageName);
+            }
+            mSynthHandler.stopForApp(packageName);
+>>>>>>> upstream/master
         }
 
         @Override
         public void kill() {
+<<<<<<< HEAD
             synchronized (mCallerToCallback) {
                 mCallerToCallback.clear();
+=======
+            synchronized (mAppToCallback) {
+                mAppToCallback.clear();
+>>>>>>> upstream/master
                 super.kill();
             }
         }
 
+<<<<<<< HEAD
         private ITextToSpeechCallback getCallbackFor(Object caller) {
             ITextToSpeechCallback cb;
             IBinder asBinder = (IBinder) caller;
             synchronized (mCallerToCallback) {
                 cb = mCallerToCallback.get(asBinder);
+=======
+        private ITextToSpeechCallback getCallbackFor(String packageName) {
+            ITextToSpeechCallback cb;
+            synchronized (mAppToCallback) {
+                cb = mAppToCallback.get(packageName);
+>>>>>>> upstream/master
             }
 
             return cb;

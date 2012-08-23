@@ -20,7 +20,11 @@
 #include "JNIHelp.h"
 #include <android_runtime/AndroidRuntime.h>
 
+<<<<<<< HEAD
 #include <androidfw/BackupHelpers.h>
+=======
+#include <utils/BackupHelpers.h>
+>>>>>>> upstream/master
 
 namespace android
 {

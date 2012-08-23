@@ -37,9 +37,12 @@ abstract class WebSyncManager implements Runnable {
     // handler of the sync thread
     protected Handler mHandler;
     // database for the persistent storage
+<<<<<<< HEAD
     // Note that this remains uninitialised as it is unused. We cannot remove
     // the member as it leaked into the public API via CookieSyncManager.
     // TODO: hide this member, ditto for mHandler.
+=======
+>>>>>>> upstream/master
     protected WebViewDatabase mDataBase;
     // Ref count for calls to start/stop sync
     private int mStartSyncRefCount;
@@ -65,6 +68,10 @@ abstract class WebSyncManager implements Runnable {
     protected WebSyncManager(Context context, String name) {
         mThreadName = name;
         if (context != null) {
+<<<<<<< HEAD
+=======
+            mDataBase = WebViewDatabase.getInstance(context);
+>>>>>>> upstream/master
             mSyncThread = new Thread(this);
             mSyncThread.setName(mThreadName);
             mSyncThread.start();

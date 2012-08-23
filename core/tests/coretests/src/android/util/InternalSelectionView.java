@@ -36,11 +36,14 @@ import android.util.AttributeSet;
  * entire width of the view.  The height of the view is divided evenly among
  * the rows.
  *
+<<<<<<< HEAD
  * Note: If the height of the view does not divide exactly to the number of rows,
  *       the last row's height is inflated with the remainder. For example, if the
  *       view height is 22 and there are two rows, the height of the first row is
  *       10 and the second 22.
  *
+=======
+>>>>>>> upstream/master
  * Notice what this view does to be a good citizen w.r.t its internal selection:
  * 1) calls {@link View#requestRectangleOnScreen} each time the selection changes due to
  *    internal navigation.
@@ -143,6 +146,12 @@ public class InternalSelectionView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+<<<<<<< HEAD
+=======
+
+        int rowHeight = getRowHeight();
+
+>>>>>>> upstream/master
         int rectTop = mPaddingTop;
         int rectLeft = mPaddingLeft;
         int rectRight = getWidth() - mPaddingRight;
@@ -151,8 +160,11 @@ public class InternalSelectionView extends View {
             mPainter.setColor(Color.BLACK);
             mPainter.setAlpha(0x20);
 
+<<<<<<< HEAD
             int rowHeight = getRowHeight(i);
 
+=======
+>>>>>>> upstream/master
             // draw background rect
             mTempRect.set(rectLeft, rectTop, rectRight, rectTop + rowHeight);
             canvas.drawRect(mTempRect, mPainter);
@@ -182,6 +194,7 @@ public class InternalSelectionView extends View {
         }
     }
 
+<<<<<<< HEAD
     private int getRowHeight(int row) {
         final int availableHeight = getHeight() - mPaddingTop - mPaddingBottom;
         final int desiredRowHeight = availableHeight / mNumRows;
@@ -195,6 +208,14 @@ public class InternalSelectionView extends View {
 
     public void getRectForRow(Rect rect, int row) {
         final int rowHeight = getRowHeight(row);
+=======
+    private int getRowHeight() {
+        return (getHeight() - mPaddingTop - mPaddingBottom) / mNumRows;
+    }
+
+    public void getRectForRow(Rect rect, int row) {
+        final int rowHeight = getRowHeight();
+>>>>>>> upstream/master
         final int top = mPaddingTop + row * rowHeight;
         rect.set(mPaddingLeft,
                 top,
@@ -208,7 +229,14 @@ public class InternalSelectionView extends View {
         requestRectangleOnScreen(mTempRect);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+
+    /* (non-Javadoc)
+    * @see android.view.KeyEvent.Callback#onKeyDown(int, android.view.KeyEvent)
+    */
+>>>>>>> upstream/master
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch(event.getKeyCode()) {
             case KeyEvent.KEYCODE_DPAD_UP:

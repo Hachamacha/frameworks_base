@@ -23,10 +23,13 @@ import android.os.Registrant;
 import android.os.RegistrantList;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+<<<<<<< HEAD
 import android.util.TimeUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+=======
+>>>>>>> upstream/master
 
 /**
  * {@hide}
@@ -58,10 +61,17 @@ public abstract class ServiceStateTracker extends Handler {
     protected boolean mDesiredPowerState;
 
     /**
+<<<<<<< HEAD
      *  Values correspond to ServiceState.RIL_RADIO_TECHNOLOGY_ definitions.
      */
     protected int mRilRadioTechnology = 0;
     protected int mNewRilRadioTechnology = 0;
+=======
+     *  Values correspond to ServiceState.RADIO_TECHNOLOGY_ definitions.
+     */
+    protected int mRadioTechnology = 0;
+    protected int mNewRadioTechnology = 0;
+>>>>>>> upstream/master
 
     /**
      * By default, strength polling is enabled.  However, if we're
@@ -128,10 +138,13 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int EVENT_ERI_FILE_LOADED                   = 36;
     protected static final int EVENT_OTA_PROVISION_STATUS_CHANGE       = 37;
     protected static final int EVENT_SET_RADIO_POWER_OFF               = 38;
+<<<<<<< HEAD
     protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED  = 39;
     protected static final int EVENT_CDMA_PRL_VERSION_CHANGED          = 40;
     protected static final int EVENT_RADIO_ON                          = 41;
 
+=======
+>>>>>>> upstream/master
 
     protected static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
 
@@ -146,7 +159,10 @@ public abstract class ServiceStateTracker extends Handler {
         "ci", // Cote d'Ivoire
         "eh", // Western Sahara
         "fo", // Faroe Islands, Denmark
+<<<<<<< HEAD
         "gb", // United Kingdom of Great Britain and Northern Ireland
+=======
+>>>>>>> upstream/master
         "gh", // Ghana
         "gm", // Gambia
         "gn", // Guinea
@@ -162,6 +178,10 @@ public abstract class ServiceStateTracker extends Handler {
         "sn", // Senegal
         "st", // Sao Tome and Principe
         "tg", // Togo
+<<<<<<< HEAD
+=======
+        "uk", // U.K
+>>>>>>> upstream/master
     };
 
     /** Reason for registration denial. */
@@ -463,6 +483,7 @@ public abstract class ServiceStateTracker extends Handler {
         // This will effectively cancel the rest of the poll requests.
         pollingContext = new int[1];
     }
+<<<<<<< HEAD
 
     /**
      * Return true if time zone needs fixing.
@@ -535,4 +556,6 @@ public abstract class ServiceStateTracker extends Handler {
         pw.println(" mPendingRadioPowerOffAfterDataOff=" + mPendingRadioPowerOffAfterDataOff);
         pw.println(" mPendingRadioPowerOffAfterDataOffTag=" + mPendingRadioPowerOffAfterDataOffTag);
     }
+=======
+>>>>>>> upstream/master
 }

@@ -23,7 +23,11 @@ account</li>
 <!-- related docs (NOT javadocs) -->
 <h2>You should also read</h2>
 <ul>
+<<<<<<< HEAD
   <li><a href="http://developer.android.com/guide/google/play/publishing/multiple-apks.html">Multiple APK
+=======
+  <li><a href="http://developer.android.com/guide/market/publishing/multiple-apks.html">Multiple APK
+>>>>>>> upstream/master
 Support</a></li>
 </ul>
 

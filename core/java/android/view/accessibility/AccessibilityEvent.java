@@ -59,12 +59,15 @@ import java.util.List;
  * by this class. For each event type there is a corresponding constant defined
  * in this class. Follows a specification of the event types and their associated properties:
  * </p>
+<<<<<<< HEAD
  * <div class="special reference">
  * <h3>Developer Guides</h3>
  * <p>For more information about creating and processing AccessibilityEvents, read the
  * <a href="{@docRoot}guide/topics/ui/accessibility/index.html">Accessibility</a>
  * developer guide.</p>
  * </div>
+=======
+>>>>>>> upstream/master
  * <p>
  * <b>VIEW TYPES</b></br>
  * </p>
@@ -226,6 +229,7 @@ import java.util.List;
  *   <li>{@link #getContentDescription()} - The content description of the source.</li>
  * </ul>
  * </p>
+<<<<<<< HEAD
  * <b>View text traversed at movement granularity</b> - represents the event of traversing the
  * text of a view at a given granularity. For example, moving to the next word.</br>
  * <em>Type:</em> {@link #TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY} </br>
@@ -251,6 +255,8 @@ import java.util.List;
  *   <li>{@link #getAction()} - Gets traversal action which specifies the direction.</li>
  * </ul>
  * </p>
+=======
+>>>>>>> upstream/master
  * <p>
  * <b>View scrolled</b> - represents the event of scrolling a view. If
  * the source is a descendant of {@link android.widget.AdapterView} the
@@ -460,6 +466,7 @@ import java.util.List;
  * view.</br>
  * </p>
  * <p>
+<<<<<<< HEAD
  * <b>MISCELLANEOUS TYPES</b></br>
  * </p>
  * <p>
@@ -480,6 +487,8 @@ import java.util.List;
  * </ul>
  * </p>
  * <p>
+=======
+>>>>>>> upstream/master
  * <b>Security note</b>
  * <p>
  * Since an event contains the text of its source privacy can be compromised by leaking
@@ -533,7 +542,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public static final int TYPE_VIEW_SELECTED = 0x00000004;
 
     /**
+<<<<<<< HEAD
      * Represents the event of setting input focus of a {@link android.view.View}.
+=======
+     * Represents the event of focusing a {@link android.view.View}.
+>>>>>>> upstream/master
      */
     public static final int TYPE_VIEW_FOCUSED = 0x00000008;
 
@@ -574,8 +587,12 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public static final int TYPE_TOUCH_EXPLORATION_GESTURE_END = 0x00000400;
 
     /**
+<<<<<<< HEAD
      * Represents the event of changing the content of a window and more
      * specifically the sub-tree rooted at the event's source.
+=======
+     * Represents the event of changing the content of a window.
+>>>>>>> upstream/master
      */
     public static final int TYPE_WINDOW_CONTENT_CHANGED = 0x00000800;
 
@@ -590,6 +607,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public static final int TYPE_VIEW_TEXT_SELECTION_CHANGED = 0x00002000;
 
     /**
+<<<<<<< HEAD
      * Represents the event of an application making an announcement.
      */
     public static final int TYPE_ANNOUNCEMENT = 0x00004000;
@@ -610,6 +628,8 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public static final int TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY = 0x00020000;
 
     /**
+=======
+>>>>>>> upstream/master
      * Mask for {@link AccessibilityEvent} all types.
      *
      * @see #TYPE_VIEW_CLICKED
@@ -626,8 +646,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
      * @see #TYPE_WINDOW_CONTENT_CHANGED
      * @see #TYPE_VIEW_SCROLLED
      * @see #TYPE_VIEW_TEXT_SELECTION_CHANGED
+<<<<<<< HEAD
      * @see #TYPE_ANNOUNCEMENT
      * @see #TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY
+=======
+>>>>>>> upstream/master
      */
     public static final int TYPES_ALL_MASK = 0xFFFFFFFF;
 
@@ -641,8 +664,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     private int mEventType;
     private CharSequence mPackageName;
     private long mEventTime;
+<<<<<<< HEAD
     int mMovementGranularity;
     int mAction;
+=======
+>>>>>>> upstream/master
 
     private final ArrayList<AccessibilityRecord> mRecords = new ArrayList<AccessibilityRecord>();
 
@@ -660,8 +686,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     void init(AccessibilityEvent event) {
         super.init(event);
         mEventType = event.mEventType;
+<<<<<<< HEAD
         mMovementGranularity = event.mMovementGranularity;
         mAction = event.mAction;
+=======
+>>>>>>> upstream/master
         mEventTime = event.mEventTime;
         mPackageName = event.mPackageName;
     }
@@ -779,6 +808,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     }
 
     /**
+<<<<<<< HEAD
      * Sets the movement granularity that was traversed.
      *
      * @param granularity The granularity.
@@ -821,6 +851,8 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns a cached instance if such is available or a new one is
      * instantiated with its type property set.
      *
@@ -908,8 +940,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     protected void clear() {
         super.clear();
         mEventType = 0;
+<<<<<<< HEAD
         mMovementGranularity = 0;
         mAction = 0;
+=======
+>>>>>>> upstream/master
         mPackageName = null;
         mEventTime = 0;
         while (!mRecords.isEmpty()) {
@@ -926,8 +961,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public void initFromParcel(Parcel parcel) {
         mSealed = (parcel.readInt() == 1);
         mEventType = parcel.readInt();
+<<<<<<< HEAD
         mMovementGranularity = parcel.readInt();
         mAction = parcel.readInt();
+=======
+>>>>>>> upstream/master
         mPackageName = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel);
         mEventTime = parcel.readLong();
         mConnectionId = parcel.readInt();
@@ -968,7 +1006,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
         record.mParcelableData = parcel.readParcelable(null);
         parcel.readList(record.mText, null);
         record.mSourceWindowId = parcel.readInt();
+<<<<<<< HEAD
         record.mSourceNodeId = parcel.readLong();
+=======
+        record.mSourceViewId = parcel.readInt();
+>>>>>>> upstream/master
         record.mSealed = (parcel.readInt() == 1);
     }
 
@@ -978,8 +1020,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(isSealed() ? 1 : 0);
         parcel.writeInt(mEventType);
+<<<<<<< HEAD
         parcel.writeInt(mMovementGranularity);
         parcel.writeInt(mAction);
+=======
+>>>>>>> upstream/master
         TextUtils.writeToParcel(mPackageName, parcel, 0);
         parcel.writeLong(mEventTime);
         parcel.writeInt(mConnectionId);
@@ -1019,7 +1064,11 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
         parcel.writeParcelable(record.mParcelableData, flags);
         parcel.writeList(record.mText);
         parcel.writeInt(record.mSourceWindowId);
+<<<<<<< HEAD
         parcel.writeLong(record.mSourceNodeId);
+=======
+        parcel.writeInt(record.mSourceViewId);
+>>>>>>> upstream/master
         parcel.writeInt(record.mSealed ? 1 : 0);
     }
 
@@ -1036,13 +1085,20 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
         builder.append("EventType: ").append(eventTypeToString(mEventType));
         builder.append("; EventTime: ").append(mEventTime);
         builder.append("; PackageName: ").append(mPackageName);
+<<<<<<< HEAD
         builder.append("; MovementGranularity: ").append(mMovementGranularity);
         builder.append("; Action: ").append(mAction);
+=======
+>>>>>>> upstream/master
         builder.append(super.toString());
         if (DEBUG) {
             builder.append("\n");
             builder.append("; sourceWindowId: ").append(mSourceWindowId);
+<<<<<<< HEAD
             builder.append("; mSourceNodeId: ").append(mSourceNodeId);
+=======
+            builder.append("; sourceViewId: ").append(mSourceViewId);
+>>>>>>> upstream/master
             for (int i = 0; i < mRecords.size(); i++) {
                 AccessibilityRecord record = mRecords.get(i);
                 builder.append("  Record ");
@@ -1112,6 +1168,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
                 return "TYPE_VIEW_TEXT_SELECTION_CHANGED";
             case TYPE_VIEW_SCROLLED:
                 return "TYPE_VIEW_SCROLLED";
+<<<<<<< HEAD
             case TYPE_ANNOUNCEMENT:
                 return "TYPE_ANNOUNCEMENT";
             case TYPE_VIEW_ACCESSIBILITY_FOCUSED:
@@ -1120,6 +1177,8 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
                 return "TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED";
             case TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY:
                 return "TYPE_CURRENT_AT_GRANULARITY_MOVEMENT_CHANGED";
+=======
+>>>>>>> upstream/master
             default:
                 return null;
         }

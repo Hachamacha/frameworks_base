@@ -138,6 +138,7 @@ public interface InputConnection {
             int flags);
 
     /**
+<<<<<<< HEAD
      * Delete <var>beforeLength</var> characters of text before the current cursor
      * position, and delete <var>afterLength</var> characters of text after the
      * current cursor position, excluding composing text. Before and after refer
@@ -153,6 +154,21 @@ public interface InputConnection {
      * valid.
      */
     public boolean deleteSurroundingText(int beforeLength, int afterLength);
+=======
+     * Delete <var>leftLength</var> characters of text before the current cursor
+     * position, and delete <var>rightLength</var> characters of text after the
+     * current cursor position, excluding composing text.
+     * 
+     * @param leftLength The number of characters to be deleted before the
+     *        current cursor position.
+     * @param rightLength The number of characters to be deleted after the
+     *        current cursor position.
+     *        
+     * @return Returns true on success, false if the input connection is no longer
+     * valid.
+     */
+    public boolean deleteSurroundingText(int leftLength, int rightLength);
+>>>>>>> upstream/master
 
     /**
      * Set composing text around the current cursor position with the given text,
@@ -283,7 +299,11 @@ public interface InputConnection {
     
     /**
      * Tell the editor that you are done with a batch edit previously
+<<<<<<< HEAD
      * initiated with {@link #beginBatchEdit}.
+=======
+     * initiated with {@link #endBatchEdit}.
+>>>>>>> upstream/master
      */
     public boolean endBatchEdit();
     
@@ -307,11 +327,15 @@ public interface InputConnection {
      * {@link KeyEvent#FLAG_SOFT_KEYBOARD KeyEvent.FLAG_SOFT_KEYBOARD} on all
      * key event objects you give to this API; the flag will not be set
      * for you.
+<<<<<<< HEAD
      *
      * <p>Note that it's discouraged to send such key events in normal operation;
      * this is mainly for use with {@link android.text.InputType#TYPE_NULL} type
      * text fields. Use the {@link #commitText} family of methods to send text
      * to the application instead.
+=======
+     * 
+>>>>>>> upstream/master
      * @param event The key event.
      *        
      * @return Returns true on success, false if the input connection is no longer

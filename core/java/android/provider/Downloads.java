@@ -17,7 +17,10 @@
 package android.provider;
 
 import android.app.DownloadManager;
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.net.NetworkPolicyManager;
 import android.net.Uri;
 
@@ -329,6 +332,7 @@ public final class Downloads {
         public static final String COLUMN_IS_PUBLIC_API = "is_public_api";
 
         /**
+<<<<<<< HEAD
          * The name of the column holding a bitmask of allowed network types.  This is only used for
          * public API downloads.
          * <P>Type: INTEGER</P>
@@ -337,6 +341,8 @@ public final class Downloads {
         public static final String COLUMN_ALLOWED_NETWORK_TYPES = "allowed_network_types";
 
         /**
+=======
+>>>>>>> upstream/master
          * The name of the column indicating whether roaming connections can be used.  This is only
          * used for public API downloads.
          * <P>Type: BOOLEAN</P>
@@ -345,12 +351,21 @@ public final class Downloads {
         public static final String COLUMN_ALLOW_ROAMING = "allow_roaming";
 
         /**
+<<<<<<< HEAD
          * The name of the column indicating whether metered connections can be used.  This is only
          * used for public API downloads.
          * <P>Type: BOOLEAN</P>
          * <P>Owner can Init/Read</P>
          */
         public static final String COLUMN_ALLOW_METERED = "allow_metered";
+=======
+         * The name of the column holding a bitmask of allowed network types.  This is only used for
+         * public API downloads.
+         * <P>Type: INTEGER</P>
+         * <P>Owner can Init/Read</P>
+         */
+        public static final String COLUMN_ALLOWED_NETWORK_TYPES = "allowed_network_types";
+>>>>>>> upstream/master
 
         /**
          * Whether or not this download should be displayed in the system's Downloads UI.  Defaults
@@ -709,6 +724,7 @@ public final class Downloads {
          * blocked by {@link NetworkPolicyManager}.
          *
          * @hide
+<<<<<<< HEAD
          * @deprecated since behavior now uses
          *             {@link #STATUS_WAITING_FOR_NETWORK}
          */
@@ -746,6 +762,11 @@ public final class Downloads {
             }
         }
 
+=======
+         */
+        public static final int STATUS_BLOCKED = 498;
+
+>>>>>>> upstream/master
         /**
          * This download is visible but only shows in the notifications
          * while it's in progress.
@@ -785,6 +806,7 @@ public final class Downloads {
             public static final String INSERT_KEY_PREFIX = "http_header_";
         }
     }
+<<<<<<< HEAD
 
     /**
      * Query where clause for general querying.
@@ -800,4 +822,6 @@ public final class Downloads {
         context.getContentResolver().delete(Impl.CONTENT_URI, QUERY_WHERE_CLAUSE,
                 new String[] { notification_package, notification_class });
     }
+=======
+>>>>>>> upstream/master
 }

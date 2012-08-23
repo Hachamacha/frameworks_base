@@ -21,6 +21,7 @@
     fallback fonts. That file can also specify the order in which the fallback fonts should be
     searched, to ensure that a vendor-provided font will be used before another fallback font
     which happens to handle the same glyph.
+<<<<<<< HEAD
 
     Han languages (Chinese, Japanese, and Korean) share a common range of unicode characters;
     their ordering in the fallback or vendor files gives priority to the first in the list.
@@ -30,11 +31,17 @@
     The standard fallback file (fallback_fonts.xml) is used when a locale does not have its own
     file. All fallback files must contain the same complete set of fonts; only their ordering
     can differ.
+=======
+>>>>>>> upstream/master
 -->
 <familyset>
     <family>
         <fileset>
+<<<<<<< HEAD
             <file>DroidNaskh-Regular-SystemUI.ttf</file>
+=======
+            <file>DroidNaskh-Regular.ttf</file>
+>>>>>>> upstream/master
         </fileset>
     </family>
     <family>
@@ -65,6 +72,7 @@
     </family>
     <family>
         <fileset>
+<<<<<<< HEAD
             <file>DroidSansDevanagari-Regular.ttf</file>
         </fileset>
     </family>
@@ -77,6 +85,9 @@
     <family>
         <fileset>
             <file>AnjaliNewLipi-light.ttf</file>
+=======
+            <file>Lohit-Devanagari.ttf</file>
+>>>>>>> upstream/master
         </fileset>
     </family>
     <family>
@@ -86,6 +97,7 @@
     </family>
     <family>
         <fileset>
+<<<<<<< HEAD
             <file>Lohit-Kannada.ttf</file>
         </fileset>
     </family>
@@ -97,6 +109,9 @@
     <family>
         <fileset>
             <file>AndroidEmoji.ttf</file>
+=======
+            <file>Lohit-Tamil.ttf</file>
+>>>>>>> upstream/master
         </fileset>
     </family>
     <family>
@@ -104,9 +119,12 @@
             <file>DroidSansFallback.ttf</file>
         </fileset>
     </family>
+<<<<<<< HEAD
     <family>
         <fileset>
             <file>MTLmr3m.ttf</file>
         </fileset>
     </family>
+=======
+>>>>>>> upstream/master
 </familyset>

@@ -16,6 +16,10 @@
 
 package com.android.tools.layoutlib.create;
 
+<<<<<<< HEAD
+=======
+import org.objectweb.asm.ClassAdapter;
+>>>>>>> upstream/master
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -28,7 +32,11 @@ import java.util.Set;
  * <p/>
  * This is used to override specific methods and or all native methods in classes.
  */
+<<<<<<< HEAD
 public class DelegateClassAdapter extends ClassVisitor {
+=======
+public class DelegateClassAdapter extends ClassAdapter {
+>>>>>>> upstream/master
 
     /** Suffix added to original methods. */
     private static final String ORIGINAL_SUFFIX = "_Original";
@@ -58,7 +66,11 @@ public class DelegateClassAdapter extends ClassVisitor {
             ClassVisitor cv,
             String className,
             Set<String> delegateMethods) {
+<<<<<<< HEAD
         super(Opcodes.ASM4, cv);
+=======
+        super(cv);
+>>>>>>> upstream/master
         mLog = log;
         mClassName = className;
         mDelegateMethods = delegateMethods;

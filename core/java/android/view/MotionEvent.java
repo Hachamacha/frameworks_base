@@ -167,6 +167,10 @@ import android.util.SparseArray;
  */
 public final class MotionEvent extends InputEvent implements Parcelable {
     private static final long NS_PER_MS = 1000000;
+<<<<<<< HEAD
+=======
+    private static final boolean TRACK_RECYCLED_LOCATION = false;
+>>>>>>> upstream/master
 
     /**
      * An invalid pointer id.
@@ -1314,6 +1318,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     private int mNativePtr;
 
     private MotionEvent mNext;
+<<<<<<< HEAD
+=======
+    private RuntimeException mRecycledLocation;
+    private boolean mRecycled;
+>>>>>>> upstream/master
 
     private static native int nativeInitialize(int nativePtr,
             int deviceId, int source, int action, int flags, int edgeFlags,
@@ -1394,8 +1403,14 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             gRecyclerTop = ev.mNext;
             gRecyclerUsed -= 1;
         }
+<<<<<<< HEAD
         ev.mNext = null;
         ev.prepareForReuse();
+=======
+        ev.mRecycledLocation = null;
+        ev.mRecycled = false;
+        ev.mNext = null;
+>>>>>>> upstream/master
         return ev;
     }
 
@@ -1642,9 +1657,26 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * Recycle the MotionEvent, to be re-used by a later caller.  After calling
      * this function you must not ever touch the event again.
      */
+<<<<<<< HEAD
     @Override
     public final void recycle() {
         super.recycle();
+=======
+    public final void recycle() {
+        // Ensure recycle is only called once!
+        if (TRACK_RECYCLED_LOCATION) {
+            if (mRecycledLocation != null) {
+                throw new RuntimeException(toString() + " recycled twice!", mRecycledLocation);
+            }
+            mRecycledLocation = new RuntimeException("Last recycled here");
+            //Log.w("MotionEvent", "Recycling event " + this, mRecycledLocation);
+        } else {
+            if (mRecycled) {
+                throw new RuntimeException(toString() + " recycled twice!");
+            }
+            mRecycled = true;
+        }
+>>>>>>> upstream/master
 
         synchronized (gRecyclerLock) {
             if (gRecyclerUsed < MAX_RECYCLED) {
@@ -1654,6 +1686,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             }
         }
     }
+<<<<<<< HEAD
 
     /**
      * Applies a scale factor to all points within this event.
@@ -1670,6 +1703,16 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         if (scale != 1.0f) {
             nativeScale(mNativePtr, scale);
         }
+=======
+    
+    /**
+     * Scales down the coordination of this event by the given scale.
+     *
+     * @hide
+     */
+    public final void scale(float scale) {
+        nativeScale(mNativePtr, scale);
+>>>>>>> upstream/master
     }
 
     /** {@inheritDoc} */
@@ -1781,6 +1824,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Retrieve the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
      *
@@ -1788,11 +1832,16 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
      */
     @Override
+=======
+     * Returns the time (in ms) when this specific event was generated.
+     */
+>>>>>>> upstream/master
     public final long getEventTime() {
         return nativeGetEventTimeNanos(mNativePtr, HISTORY_CURRENT) / NS_PER_MS;
     }
 
     /**
+<<<<<<< HEAD
      * Retrieve the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base but with
      * nanosecond precision.
@@ -1807,6 +1856,13 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @hide
      */
     @Override
+=======
+     * Returns the time (in ns) when this specific event was generated.
+     * The value is in nanosecond precision but it may not have nanosecond accuracy.
+     *
+     * @hide
+     */
+>>>>>>> upstream/master
     public final long getEventTimeNano() {
         return nativeGetEventTimeNanos(mNativePtr, HISTORY_CURRENT);
     }
@@ -2248,6 +2304,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
 
     /**
      * Returns the time that a historical movement occurred between this event
+<<<<<<< HEAD
      * and the previous event, in the {@link android.os.SystemClock#uptimeMillis} time base.
      * <p>
      * This only applies to ACTION_MOVE events.
@@ -2258,6 +2315,12 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @return Returns the time that a historical movement occurred between this
      * event and the previous event,
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
+=======
+     * and the previous event.  Only applies to ACTION_MOVE events.
+     *
+     * @param pos Which historical value to return; must be less than
+     * {@link #getHistorySize}
+>>>>>>> upstream/master
      *
      * @see #getHistorySize
      * @see #getEventTime
@@ -2267,6 +2330,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Returns the time that a historical movement occurred between this event
      * and the previous event, in the {@link android.os.SystemClock#uptimeMillis} time base
      * but with nanosecond (instead of millisecond) precision.
@@ -2293,6 +2357,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * {@link #getHistoricalX(int, int)} for the first pointer index (may be an
      * arbitrary pointer identifier).
      *
@@ -2685,9 +2751,13 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      * @param deltaY Amount to add to the current Y coordinate of the event.
      */
     public final void offsetLocation(float deltaX, float deltaY) {
+<<<<<<< HEAD
         if (deltaX != 0.0f || deltaY != 0.0f) {
             nativeOffsetLocation(mNativePtr, deltaX, deltaY);
         }
+=======
+        nativeOffsetLocation(mNativePtr, deltaX, deltaY);
+>>>>>>> upstream/master
     }
 
     /**
@@ -2700,7 +2770,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     public final void setLocation(float x, float y) {
         float oldX = getX();
         float oldY = getY();
+<<<<<<< HEAD
         offsetLocation(x - oldX, y - oldY);
+=======
+        nativeOffsetLocation(mNativePtr, x - oldX, y - oldY);
+>>>>>>> upstream/master
     }
     
     /**
@@ -2761,6 +2835,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Adds all of the movement samples of the specified event to this one if
      * it is compatible.  To be compatible, the event must have the same device id,
      * source, action, flags, pointer count, pointer properties.
@@ -2822,6 +2897,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns true if all points in the motion event are completely within the specified bounds.
      * @hide
      */
@@ -3523,6 +3600,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
             id = other.id;
             toolType = other.toolType;
         }
+<<<<<<< HEAD
 
         @Override
         public boolean equals(Object other) {
@@ -3540,5 +3618,7 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         public int hashCode() {
             return id | (toolType << 8);
         }
+=======
+>>>>>>> upstream/master
     }
 }

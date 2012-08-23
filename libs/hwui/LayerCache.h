@@ -31,7 +31,11 @@ namespace uirenderer {
 
 // Debug
 #if DEBUG_LAYERS
+<<<<<<< HEAD
     #define LAYER_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define LAYER_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define LAYER_LOGD(...)
 #endif

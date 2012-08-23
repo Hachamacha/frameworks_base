@@ -43,10 +43,17 @@ final class JWebCoreJavaBridge extends Handler {
     private boolean mTimerPaused;
     private boolean mHasDeferredTimers;
 
+<<<<<<< HEAD
     // keep track of the main WebViewClassic attached to the current window so that we
     // can get the proper Context.
     private static WeakReference<WebViewClassic> sCurrentMainWebView =
             new WeakReference<WebViewClassic>(null);
+=======
+    // keep track of the main WebView attached to the current window so that we
+    // can get the proper Context.
+    private static WeakReference<WebView> sCurrentMainWebView =
+            new WeakReference<WebView>(null);
+>>>>>>> upstream/master
 
     /* package */
     static final int REFRESH_PLUGINS = 100;
@@ -67,15 +74,26 @@ final class JWebCoreJavaBridge extends Handler {
         nativeFinalize();
     }
 
+<<<<<<< HEAD
     static synchronized void setActiveWebView(WebViewClassic webview) {
+=======
+    static synchronized void setActiveWebView(WebView webview) {
+>>>>>>> upstream/master
         if (sCurrentMainWebView.get() != null) {
             // it is possible if there is a sub-WebView. Do nothing.
             return;
         }
+<<<<<<< HEAD
         sCurrentMainWebView = new WeakReference<WebViewClassic>(webview);
     }
 
     static synchronized void removeActiveWebView(WebViewClassic webview) {
+=======
+        sCurrentMainWebView = new WeakReference<WebView>(webview);
+    }
+
+    static synchronized void removeActiveWebView(WebView webview) {
+>>>>>>> upstream/master
         if (sCurrentMainWebView.get() != webview) {
             // it is possible if there is a sub-WebView. Do nothing.
             return;
@@ -259,7 +277,11 @@ final class JWebCoreJavaBridge extends Handler {
 
     synchronized private String getSignedPublicKey(int index, String challenge,
             String url) {
+<<<<<<< HEAD
         WebViewClassic current = sCurrentMainWebView.get();
+=======
+        WebView current = sCurrentMainWebView.get();
+>>>>>>> upstream/master
         if (current != null) {
             // generateKeyPair expects organizations which we don't have. Ignore
             // url.

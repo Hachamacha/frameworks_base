@@ -292,6 +292,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public static final int FLAG_STOPPED = 1<<21;
 
     /**
+<<<<<<< HEAD
      * Value for {@link #flags}: true  when the application is willing to support
      * RTL (right to left). All activities will inherit this value.
      *
@@ -304,6 +305,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public static final int FLAG_SUPPORTS_RTL = 1<<22;
 
     /**
+=======
+>>>>>>> upstream/master
      * Value for {@link #flags}: Set to true if the application has been
      * installed using the forward lock option.
      *
@@ -503,6 +506,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         if (uiOptions != 0) {
             pw.println(prefix + "uiOptions=0x" + Integer.toHexString(uiOptions));
         }
+<<<<<<< HEAD
         pw.println(prefix + "supportsRtl=" + (hasRtlSupport() ? "true" : "false"));
         super.dumpBack(pw, prefix);
     }
@@ -514,6 +518,10 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public boolean hasRtlSupport() {
         return (flags & FLAG_SUPPORTS_RTL) == FLAG_SUPPORTS_RTL;
     }
+=======
+        super.dumpBack(pw, prefix);
+    }
+>>>>>>> upstream/master
     
     public static class DisplayNameComparator
             implements Comparator<ApplicationInfo> {

@@ -94,6 +94,7 @@ public class Environment {
     }
 
     /**
+<<<<<<< HEAD
      * Return directory used for internal media storage, which is protected by
      * {@link android.Manifest.permission#WRITE_MEDIA_STORAGE}.
      *
@@ -104,6 +105,8 @@ public class Environment {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns whether the Encrypted File System feature is enabled on the device or not.
      * @return <code>true</code> if Encrypted File System feature is enabled, <code>false</code>
      * if disabled.
@@ -122,6 +125,7 @@ public class Environment {
     private static final File SECURE_DATA_DIRECTORY
             = getDirectory("ANDROID_SECURE_DATA", "/data/secure");
 
+<<<<<<< HEAD
     /** @hide */
     private static final File MEDIA_STORAGE_DIRECTORY
             = getDirectory("MEDIA_STORAGE", "/data/media");
@@ -137,6 +141,22 @@ public class Environment {
 
     private static final File EXTERNAL_STORAGE_ANDROID_OBB_DIRECTORY = new File(new File(
             getDirectory("EXTERNAL_STORAGE", "/storage/sdcard0"), "Android"), "obb");
+=======
+    private static final File EXTERNAL_STORAGE_DIRECTORY
+            = getDirectory("EXTERNAL_STORAGE", "/mnt/sdcard");
+
+    private static final File EXTERNAL_STORAGE_ANDROID_DATA_DIRECTORY
+            = new File (new File(getDirectory("EXTERNAL_STORAGE", "/mnt/sdcard"),
+                    "Android"), "data");
+
+    private static final File EXTERNAL_STORAGE_ANDROID_MEDIA_DIRECTORY
+            = new File (new File(getDirectory("EXTERNAL_STORAGE", "/mnt/sdcard"),
+                    "Android"), "media");
+
+    private static final File EXTERNAL_STORAGE_ANDROID_OBB_DIRECTORY
+            = new File (new File(getDirectory("EXTERNAL_STORAGE", "/mnt/sdcard"),
+                    "Android"), "obb");
+>>>>>>> upstream/master
 
     private static final File DOWNLOAD_CACHE_DIRECTORY
             = getDirectory("DOWNLOAD_CACHE", "/cache");

@@ -16,12 +16,20 @@
 
 package android.widget;
 
+<<<<<<< HEAD
+=======
+import java.util.Map;
+
+>>>>>>> upstream/master
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 
 public class ImageSwitcher extends ViewSwitcher
@@ -55,6 +63,7 @@ public class ImageSwitcher extends ViewSwitcher
         image.setImageDrawable(drawable);
         showNext();
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -68,3 +77,7 @@ public class ImageSwitcher extends ViewSwitcher
         info.setClassName(ImageSwitcher.class.getName());
     }
 }
+=======
+}
+
+>>>>>>> upstream/master

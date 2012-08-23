@@ -30,7 +30,10 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteFullException;
 import android.database.sqlite.SQLiteProgram;
 import android.database.sqlite.SQLiteStatement;
+<<<<<<< HEAD
 import android.os.OperationCanceledException;
+=======
+>>>>>>> upstream/master
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
@@ -108,9 +111,12 @@ public class DatabaseUtils {
             code = 9;
         } else if (e instanceof OperationApplicationException) {
             code = 10;
+<<<<<<< HEAD
         } else if (e instanceof OperationCanceledException) {
             code = 11;
             logException = false;
+=======
+>>>>>>> upstream/master
         } else {
             reply.writeException(e);
             Log.e(TAG, "Writing exception to parcel", e);
@@ -182,8 +188,11 @@ public class DatabaseUtils {
                 throw new SQLiteDiskIOException(msg);
             case 9:
                 throw new SQLiteException(msg);
+<<<<<<< HEAD
             case 11:
                 throw new OperationCanceledException(msg);
+=======
+>>>>>>> upstream/master
             default:
                 reply.readException(code, msg);
         }
@@ -269,6 +278,7 @@ public class DatabaseUtils {
         if (position < 0 || position >= cursor.getCount()) {
             return;
         }
+<<<<<<< HEAD
         final int oldPos = cursor.getPosition();
         final int numColumns = cursor.getColumnCount();
         window.clear();
@@ -319,6 +329,65 @@ public class DatabaseUtils {
             } while (cursor.moveToNext());
         }
         cursor.moveToPosition(oldPos);
+=======
+        window.acquireReference();
+        try {
+            final int oldPos = cursor.getPosition();
+            final int numColumns = cursor.getColumnCount();
+            window.clear();
+            window.setStartPosition(position);
+            window.setNumColumns(numColumns);
+            if (cursor.moveToPosition(position)) {
+                do {
+                    if (!window.allocRow()) {
+                        break;
+                    }
+                    for (int i = 0; i < numColumns; i++) {
+                        final int type = cursor.getType(i);
+                        final boolean success;
+                        switch (type) {
+                            case Cursor.FIELD_TYPE_NULL:
+                                success = window.putNull(position, i);
+                                break;
+
+                            case Cursor.FIELD_TYPE_INTEGER:
+                                success = window.putLong(cursor.getLong(i), position, i);
+                                break;
+
+                            case Cursor.FIELD_TYPE_FLOAT:
+                                success = window.putDouble(cursor.getDouble(i), position, i);
+                                break;
+
+                            case Cursor.FIELD_TYPE_BLOB: {
+                                final byte[] value = cursor.getBlob(i);
+                                success = value != null ? window.putBlob(value, position, i)
+                                        : window.putNull(position, i);
+                                break;
+                            }
+
+                            default: // assume value is convertible to String
+                            case Cursor.FIELD_TYPE_STRING: {
+                                final String value = cursor.getString(i);
+                                success = value != null ? window.putString(value, position, i)
+                                        : window.putNull(position, i);
+                                break;
+                            }
+                        }
+                        if (!success) {
+                            window.freeLastRow();
+                            break;
+                        }
+                    }
+                    position += 1;
+                } while (cursor.moveToNext());
+            }
+            cursor.moveToPosition(oldPos);
+        } catch (IllegalStateException e){
+            // simply ignore it
+        } finally {
+            window.releaseReference();
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -726,6 +795,7 @@ public class DatabaseUtils {
     }
 
     /**
+<<<<<<< HEAD
      * Picks a start position for {@link Cursor#fillWindow} such that the
      * window will contain the requested row and a useful range of rows
      * around it.
@@ -752,6 +822,8 @@ public class DatabaseUtils {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Query the table for the number of rows in the table.
      * @param db the database the table is in
      * @param table the name of the table to query
@@ -1386,6 +1458,7 @@ public class DatabaseUtils {
         System.arraycopy(newValues, 0, result, originalValues.length, newValues.length);
         return result;
     }
+<<<<<<< HEAD
 
     /**
      * Returns column index of "_id" column, or -1 if not found.
@@ -1400,4 +1473,6 @@ public class DatabaseUtils {
         }
         return -1;
     }
+=======
+>>>>>>> upstream/master
 }

@@ -16,7 +16,10 @@
 
 package android.os.storage;
 
+<<<<<<< HEAD
 import android.os.Environment;
+=======
+>>>>>>> upstream/master
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -535,7 +538,10 @@ public class StorageManager
      * @hide
      */
     public String getVolumeState(String mountPoint) {
+<<<<<<< HEAD
          if (mMountService == null) return Environment.MEDIA_REMOVED;
+=======
+>>>>>>> upstream/master
         try {
             return mMountService.getVolumeState(mountPoint);
         } catch (RemoteException e) {
@@ -549,7 +555,10 @@ public class StorageManager
      * @hide
      */
     public StorageVolume[] getVolumeList() {
+<<<<<<< HEAD
         if (mMountService == null) return new StorageVolume[0];
+=======
+>>>>>>> upstream/master
         try {
             Parcelable[] list = mMountService.getVolumeList();
             if (list == null) return new StorageVolume[0];

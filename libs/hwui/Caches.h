@@ -70,12 +70,15 @@ static const GLsizei gVertexAAWidthOffset = 2 * sizeof(float);
 static const GLsizei gVertexAALengthOffset = 3 * sizeof(float);
 static const GLsizei gMeshCount = 4;
 
+<<<<<<< HEAD
 static const GLenum gTextureUnits[] = {
     GL_TEXTURE0,
     GL_TEXTURE1,
     GL_TEXTURE2
 };
 
+=======
+>>>>>>> upstream/master
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,8 +93,11 @@ struct CacheLogger {
 // Caches
 ///////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 class DisplayList;
 
+=======
+>>>>>>> upstream/master
 class ANDROID_API Caches: public Singleton<Caches> {
     Caches();
 
@@ -99,6 +105,18 @@ class ANDROID_API Caches: public Singleton<Caches> {
 
     CacheLogger mLogger;
 
+<<<<<<< HEAD
+=======
+    GLuint mCurrentBuffer;
+
+    // Used to render layers
+    TextureVertex* mRegionMesh;
+    GLuint mRegionMeshIndices;
+
+    mutable Mutex mGarbageLock;
+    Vector<Layer*> mLayerGarbage;
+
+>>>>>>> upstream/master
 public:
     enum FlushMode {
         kFlushMode_Layers = 0,
@@ -107,7 +125,11 @@ public:
     };
 
     /**
+<<<<<<< HEAD
      * Initialize caches.
+=======
+     * Initializes the cache.
+>>>>>>> upstream/master
      */
     void init();
 
@@ -143,6 +165,7 @@ public:
      */
     void deleteLayerDeferred(Layer* layer);
 
+<<<<<<< HEAD
     /*
      * Can be used to delete a display list from a non EGL thread.
      */
@@ -152,15 +175,26 @@ public:
      * Binds the VBO used to render simple textured quads.
      */
     bool bindMeshBuffer();
+=======
+    /**
+     * Binds the VBO used to render simple textured quads.
+     */
+    void bindMeshBuffer();
+>>>>>>> upstream/master
 
     /**
      * Binds the specified VBO if needed.
      */
+<<<<<<< HEAD
     bool bindMeshBuffer(const GLuint buffer);
+=======
+    void bindMeshBuffer(const GLuint buffer);
+>>>>>>> upstream/master
 
     /**
      * Unbinds the VBO used to render simple textured quads.
      */
+<<<<<<< HEAD
     bool unbindMeshBuffer();
 
     bool bindIndicesBuffer(const GLuint buffer);
@@ -203,6 +237,9 @@ public:
      * Resets the scissor state.
      */
     void resetScissor();
+=======
+    void unbindMeshBuffer();
+>>>>>>> upstream/master
 
     /**
      * Returns the mesh used to draw regions. Calling this method will
@@ -247,6 +284,7 @@ public:
     GammaFontRenderer fontRenderer;
     ResourceCache resourceCache;
 
+<<<<<<< HEAD
     // Debug methods
     PFNGLINSERTEVENTMARKEREXTPROC eventMark;
     PFNGLPUSHGROUPMARKEREXTPROC startMark;
@@ -293,6 +331,9 @@ private:
     Vector<Layer*> mLayerGarbage;
     Vector<DisplayList*> mDisplayListGarbage;
 
+=======
+private:
+>>>>>>> upstream/master
     DebugLevel mDebugLevel;
     bool mInitialized;
 }; // class Caches

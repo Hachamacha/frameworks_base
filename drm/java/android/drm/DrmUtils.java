@@ -55,8 +55,13 @@ public class DrmUtils {
                 bufferedStream.read(data);
              }
         } finally {
+<<<<<<< HEAD
             quietlyDispose(bufferedStream);
             quietlyDispose(inputStream);
+=======
+            quiteDispose(bufferedStream);
+            quiteDispose(inputStream);
+>>>>>>> upstream/master
         }
         return data;
     }
@@ -70,7 +75,11 @@ public class DrmUtils {
                 outputStream = new FileOutputStream(path);
                 outputStream.write(data);
             } finally {
+<<<<<<< HEAD
                 quietlyDispose(outputStream);
+=======
+                quiteDispose(outputStream);
+>>>>>>> upstream/master
             }
         }
     }
@@ -80,7 +89,11 @@ public class DrmUtils {
         file.delete();
     }
 
+<<<<<<< HEAD
     private static void quietlyDispose(InputStream stream) {
+=======
+    private static void quiteDispose(InputStream stream) {
+>>>>>>> upstream/master
         try {
             if (null != stream) {
                 stream.close();
@@ -90,7 +103,11 @@ public class DrmUtils {
         }
     }
 
+<<<<<<< HEAD
     private static void quietlyDispose(OutputStream stream) {
+=======
+    private static void quiteDispose(OutputStream stream) {
+>>>>>>> upstream/master
         try {
             if (null != stream) {
                 stream.close();
@@ -175,26 +192,33 @@ public class DrmUtils {
             }
         }
 
+<<<<<<< HEAD
         /**
          * This method returns an iterator object that can be used to iterate over
          * all values of the metadata.
          *
          * @return The iterator object.
          */
+=======
+>>>>>>> upstream/master
         public Iterator<String> iterator() {
             return mMap.values().iterator();
         }
 
+<<<<<<< HEAD
         /**
          * This method returns an iterator object that can be used to iterate over
          * all keys of the metadata.
          *
          * @return The iterator object.
          */
+=======
+>>>>>>> upstream/master
         public Iterator<String> keyIterator() {
             return mMap.keySet().iterator();
         }
 
+<<<<<<< HEAD
         /**
          * This method retrieves the metadata value associated with a given key.
          *
@@ -203,6 +227,8 @@ public class DrmUtils {
          * @return The metadata value associated with the given key. Returns null
          * if the key is not found.
          */
+=======
+>>>>>>> upstream/master
         public String get(String key) {
             return mMap.get(key);
         }

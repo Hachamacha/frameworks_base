@@ -43,6 +43,7 @@ import android.util.Log;
 public abstract class SQLiteOpenHelper {
     private static final String TAG = SQLiteOpenHelper.class.getSimpleName();
 
+<<<<<<< HEAD
     // When true, getReadableDatabase returns a read-only database if it is just being opened.
     // The database handle is reopened in read/write mode when getWritableDatabase is called.
     // We leave this behavior disabled in production because it is inefficient and breaks
@@ -51,14 +52,21 @@ public abstract class SQLiteOpenHelper {
     // wanted getWritableDatabase.
     private static final boolean DEBUG_STRICT_READONLY = false;
 
+=======
+>>>>>>> upstream/master
     private final Context mContext;
     private final String mName;
     private final CursorFactory mFactory;
     private final int mNewVersion;
 
+<<<<<<< HEAD
     private SQLiteDatabase mDatabase;
     private boolean mIsInitializing;
     private boolean mEnableWriteAheadLogging;
+=======
+    private SQLiteDatabase mDatabase = null;
+    private boolean mIsInitializing = false;
+>>>>>>> upstream/master
     private final DatabaseErrorHandler mErrorHandler;
 
     /**
@@ -75,7 +83,11 @@ public abstract class SQLiteOpenHelper {
      *     newer, {@link #onDowngrade} will be used to downgrade the database
      */
     public SQLiteOpenHelper(Context context, String name, CursorFactory factory, int version) {
+<<<<<<< HEAD
         this(context, name, factory, version, null);
+=======
+        this(context, name, factory, version, new DefaultDatabaseErrorHandler());
+>>>>>>> upstream/master
     }
 
     /**
@@ -90,14 +102,26 @@ public abstract class SQLiteOpenHelper {
      * @param name of the database file, or null for an in-memory database
      * @param factory to use for creating cursor objects, or null for the default
      * @param version number of the database (starting at 1); if the database is older,
+<<<<<<< HEAD
      *     {@link #onUpgrade} will be used to upgrade the database; if the database is
      *     newer, {@link #onDowngrade} will be used to downgrade the database
      * @param errorHandler the {@link DatabaseErrorHandler} to be used when sqlite reports database
      * corruption, or null to use the default error handler.
+=======
+     *     {@link #onUpgrade} will be used to upgrade the database
+     * @param errorHandler the {@link DatabaseErrorHandler} to be used when sqlite reports database
+     * corruption.
+>>>>>>> upstream/master
      */
     public SQLiteOpenHelper(Context context, String name, CursorFactory factory, int version,
             DatabaseErrorHandler errorHandler) {
         if (version < 1) throw new IllegalArgumentException("Version must be >= 1, was " + version);
+<<<<<<< HEAD
+=======
+        if (errorHandler == null) {
+            throw new IllegalArgumentException("DatabaseErrorHandler param value can't be null.");
+        }
+>>>>>>> upstream/master
 
         mContext = context;
         mName = name;
@@ -107,7 +131,11 @@ public abstract class SQLiteOpenHelper {
     }
 
     /**
+<<<<<<< HEAD
      * Return the name of the SQLite database being opened, as given to
+=======
+     * Return the name of the SQLite database being opened, as given tp
+>>>>>>> upstream/master
      * the constructor.
      */
     public String getDatabaseName() {
@@ -115,6 +143,7 @@ public abstract class SQLiteOpenHelper {
     }
 
     /**
+<<<<<<< HEAD
      * Enables or disables the use of write-ahead logging for the database.
      *
      * Write-ahead logging cannot be used with read-only databases so the value of
@@ -141,6 +170,8 @@ public abstract class SQLiteOpenHelper {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Create and/or open a database that will be used for reading and writing.
      * The first time this is called, the database will be opened and
      * {@link #onCreate}, {@link #onUpgrade} and/or {@link #onOpen} will be
@@ -159,6 +190,7 @@ public abstract class SQLiteOpenHelper {
      * @throws SQLiteException if the database cannot be opened for writing
      * @return a read/write database object valid until {@link #close} is called
      */
+<<<<<<< HEAD
     public SQLiteDatabase getWritableDatabase() {
         synchronized (this) {
             return getDatabaseLocked(true);
@@ -197,10 +229,20 @@ public abstract class SQLiteOpenHelper {
             } else if (!writable || !mDatabase.isReadOnly()) {
                 // The database is already open for business.
                 return mDatabase;
+=======
+    public synchronized SQLiteDatabase getWritableDatabase() {
+        if (mDatabase != null) {
+            if (!mDatabase.isOpen()) {
+                // darn! the user closed the database by calling mDatabase.close()
+                mDatabase = null;
+            } else if (!mDatabase.isReadOnly()) {
+                return mDatabase;  // The database is already open for business
+>>>>>>> upstream/master
             }
         }
 
         if (mIsInitializing) {
+<<<<<<< HEAD
             throw new IllegalStateException("getDatabase called recursively");
         }
 
@@ -246,6 +288,30 @@ public abstract class SQLiteOpenHelper {
                             db.getVersion() + " to " + mNewVersion + ": " + mName);
                 }
 
+=======
+            throw new IllegalStateException("getWritableDatabase called recursively");
+        }
+
+        // If we have a read-only database open, someone could be using it
+        // (though they shouldn't), which would cause a lock to be held on
+        // the file, and our attempts to open the database read-write would
+        // fail waiting for the file lock.  To prevent that, we acquire the
+        // lock on the read-only database, which shuts out other users.
+
+        boolean success = false;
+        SQLiteDatabase db = null;
+        if (mDatabase != null) mDatabase.lock();
+        try {
+            mIsInitializing = true;
+            if (mName == null) {
+                db = SQLiteDatabase.create(null);
+            } else {
+                db = mContext.openOrCreateDatabase(mName, 0, mFactory, mErrorHandler);
+            }
+
+            int version = db.getVersion();
+            if (version != mNewVersion) {
+>>>>>>> upstream/master
                 db.beginTransaction();
                 try {
                     if (version == 0) {
@@ -265,6 +331,7 @@ public abstract class SQLiteOpenHelper {
             }
 
             onOpen(db);
+<<<<<<< HEAD
 
             if (db.isReadOnly()) {
                 Log.w(TAG, "Opened " + mName + " in read-only mode");
@@ -277,6 +344,82 @@ public abstract class SQLiteOpenHelper {
             if (db != null && db != mDatabase) {
                 db.close();
             }
+=======
+            success = true;
+            return db;
+        } finally {
+            mIsInitializing = false;
+            if (success) {
+                if (mDatabase != null) {
+                    try { mDatabase.close(); } catch (Exception e) { }
+                    mDatabase.unlock();
+                }
+                mDatabase = db;
+            } else {
+                if (mDatabase != null) mDatabase.unlock();
+                if (db != null) db.close();
+            }
+        }
+    }
+
+    /**
+     * Create and/or open a database.  This will be the same object returned by
+     * {@link #getWritableDatabase} unless some problem, such as a full disk,
+     * requires the database to be opened read-only.  In that case, a read-only
+     * database object will be returned.  If the problem is fixed, a future call
+     * to {@link #getWritableDatabase} may succeed, in which case the read-only
+     * database object will be closed and the read/write object will be returned
+     * in the future.
+     *
+     * <p class="caution">Like {@link #getWritableDatabase}, this method may
+     * take a long time to return, so you should not call it from the
+     * application main thread, including from
+     * {@link android.content.ContentProvider#onCreate ContentProvider.onCreate()}.
+     *
+     * @throws SQLiteException if the database cannot be opened
+     * @return a database object valid until {@link #getWritableDatabase}
+     *     or {@link #close} is called.
+     */
+    public synchronized SQLiteDatabase getReadableDatabase() {
+        if (mDatabase != null) {
+            if (!mDatabase.isOpen()) {
+                // darn! the user closed the database by calling mDatabase.close()
+                mDatabase = null;
+            } else {
+                return mDatabase;  // The database is already open for business
+            }
+        }
+
+        if (mIsInitializing) {
+            throw new IllegalStateException("getReadableDatabase called recursively");
+        }
+
+        try {
+            return getWritableDatabase();
+        } catch (SQLiteException e) {
+            if (mName == null) throw e;  // Can't open a temp database read-only!
+            Log.e(TAG, "Couldn't open " + mName + " for writing (will try read-only):", e);
+        }
+
+        SQLiteDatabase db = null;
+        try {
+            mIsInitializing = true;
+            String path = mContext.getDatabasePath(mName).getPath();
+            db = SQLiteDatabase.openDatabase(path, mFactory, SQLiteDatabase.OPEN_READONLY,
+                    mErrorHandler);
+            if (db.getVersion() != mNewVersion) {
+                throw new SQLiteException("Can't upgrade read-only database from version " +
+                        db.getVersion() + " to " + mNewVersion + ": " + path);
+            }
+
+            onOpen(db);
+            Log.w(TAG, "Opened " + mName + " in read-only mode");
+            mDatabase = db;
+            return mDatabase;
+        } finally {
+            mIsInitializing = false;
+            if (db != null && db != mDatabase) db.close();
+>>>>>>> upstream/master
         }
     }
 
@@ -293,6 +436,7 @@ public abstract class SQLiteOpenHelper {
     }
 
     /**
+<<<<<<< HEAD
      * Called when the database connection is being configured, to enable features
      * such as write-ahead logging or foreign key support.
      * <p>
@@ -312,6 +456,8 @@ public abstract class SQLiteOpenHelper {
     public void onConfigure(SQLiteDatabase db) {}
 
     /**
+=======
+>>>>>>> upstream/master
      * Called when the database is created for the first time. This is where the
      * creation of tables and the initial population of the tables should happen.
      *
@@ -324,16 +470,23 @@ public abstract class SQLiteOpenHelper {
      * should use this method to drop tables, add tables, or do anything else it
      * needs to upgrade to the new schema version.
      *
+<<<<<<< HEAD
      * <p>
      * The SQLite ALTER TABLE documentation can be found
+=======
+     * <p>The SQLite ALTER TABLE documentation can be found
+>>>>>>> upstream/master
      * <a href="http://sqlite.org/lang_altertable.html">here</a>. If you add new columns
      * you can use ALTER TABLE to insert them into a live table. If you rename or remove columns
      * you can use ALTER TABLE to rename the old table, then create the new table and then
      * populate the new table with the contents of the old table.
+<<<<<<< HEAD
      * </p><p>
      * This method executes within a transaction.  If an exception is thrown, all changes
      * will automatically be rolled back.
      * </p>
+=======
+>>>>>>> upstream/master
      *
      * @param db The database.
      * @param oldVersion The old database version.
@@ -342,17 +495,25 @@ public abstract class SQLiteOpenHelper {
     public abstract void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
 
     /**
+<<<<<<< HEAD
      * Called when the database needs to be downgraded. This is strictly similar to
      * {@link #onUpgrade} method, but is called whenever current version is newer than requested one.
+=======
+     * Called when the database needs to be downgraded. This is stricly similar to
+     * onUpgrade() method, but is called whenever current version is newer than requested one.
+>>>>>>> upstream/master
      * However, this method is not abstract, so it is not mandatory for a customer to
      * implement it. If not overridden, default implementation will reject downgrade and
      * throws SQLiteException
      *
+<<<<<<< HEAD
      * <p>
      * This method executes within a transaction.  If an exception is thrown, all changes
      * will automatically be rolled back.
      * </p>
      *
+=======
+>>>>>>> upstream/master
      * @param db The database.
      * @param oldVersion The old database version.
      * @param newVersion The new database version.
@@ -366,12 +527,15 @@ public abstract class SQLiteOpenHelper {
      * Called when the database has been opened.  The implementation
      * should check {@link SQLiteDatabase#isReadOnly} before updating the
      * database.
+<<<<<<< HEAD
      * <p>
      * This method is called after the database connection has been configured
      * and after the database schema has been created, upgraded or downgraded as necessary.
      * If the database connection must be configured in some way before the schema
      * is created, upgraded, or downgraded, do it in {@link #onConfigure} instead.
      * </p>
+=======
+>>>>>>> upstream/master
      *
      * @param db The database.
      */

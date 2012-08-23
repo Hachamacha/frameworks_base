@@ -19,7 +19,10 @@
 
 #include <SkBitmap.h>
 
+<<<<<<< HEAD
 #include <utils/Mutex.h>
+=======
+>>>>>>> upstream/master
 #include <utils/Vector.h>
 
 #include "Debug.h"
@@ -35,7 +38,11 @@ namespace uirenderer {
 
 // Debug
 #if DEBUG_TEXTURES
+<<<<<<< HEAD
     #define TEXTURE_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define TEXTURE_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define TEXTURE_LOGD(...)
 #endif
@@ -67,11 +74,14 @@ public:
      */
     Texture* get(SkBitmap* bitmap);
     /**
+<<<<<<< HEAD
      * Returns the texture associated with the specified bitmap. The generated
      * texture is not kept in the cache. The caller must destroy the texture.
      */
     Texture* getTransient(SkBitmap* bitmap);
     /**
+=======
+>>>>>>> upstream/master
      * Removes the texture associated with the specified bitmap.
      * Upon remove the texture is freed.
      */

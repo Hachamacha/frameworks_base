@@ -44,18 +44,22 @@ public class KeyStoreTest extends ActivityUnitTestCase<Activity> {
     private static final String TEST_I18N_KEY = "\u4F60\u597D, \u4E16\u754C";
     private static final byte[] TEST_I18N_VALUE = TEST_I18N_KEY.getBytes(Charsets.UTF_8);
 
+<<<<<<< HEAD
     // Test vector data for signatures
     private static final byte[] TEST_DATA = {
             (byte) 0x00, (byte) 0xA0, (byte) 0xFF, (byte) 0x0A, (byte) 0x00, (byte) 0xFF,
             (byte) 0xAA, (byte) 0x55, (byte) 0x05, (byte) 0x5A,
     };
 
+=======
+>>>>>>> upstream/master
     private KeyStore mKeyStore = null;
 
     public KeyStoreTest() {
         super(Activity.class);
     }
 
+<<<<<<< HEAD
     private static final byte[] PRIVKEY_BYTES = hexToBytes(
             "308204BE020100300D06092A864886F70D0101010500048204A8308204A4020100028201" +
             "0100E0473E8AB8F2284FEB9E742FF9748FA118ED98633C92F52AEB7A2EBE0D3BE60329BE" +
@@ -103,14 +107,20 @@ public class KeyStoreTest extends ActivityUnitTestCase<Activity> {
         return data;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     protected void setUp() throws Exception {
         mKeyStore = KeyStore.getInstance();
         if (mKeyStore.state() != KeyStore.State.UNINITIALIZED) {
             mKeyStore.reset();
         }
+<<<<<<< HEAD
         assertEquals("KeyStore should be in an uninitialized state",
                 KeyStore.State.UNINITIALIZED, mKeyStore.state());
+=======
+        assertEquals(KeyStore.State.UNINITIALIZED, mKeyStore.state());
+>>>>>>> upstream/master
         super.setUp();
     }
 
@@ -218,6 +228,7 @@ public class KeyStoreTest extends ActivityUnitTestCase<Activity> {
         mKeyStore.reset();
         assertTrue(mKeyStore.isEmpty());
     }
+<<<<<<< HEAD
 
     public void testGenerate_NotInitialized_Fail() throws Exception {
         assertFalse("Should fail when keystore is not initialized",
@@ -397,4 +408,6 @@ public class KeyStoreTest extends ActivityUnitTestCase<Activity> {
         assertFalse("Should fail to ungrant key to other user second time",
                 mKeyStore.ungrant(TEST_KEYNAME, 0));
     }
+=======
+>>>>>>> upstream/master
 }

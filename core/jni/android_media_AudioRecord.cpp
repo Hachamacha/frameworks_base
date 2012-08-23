@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <math.h>
 
+<<<<<<< HEAD
 #include <jni.h>
 #include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
@@ -32,6 +33,15 @@
 #include <utils/threads.h>
 #include <media/AudioRecord.h>
 #include <media/mediarecorder.h>
+=======
+#include "jni.h"
+#include "JNIHelp.h"
+#include "android_runtime/AndroidRuntime.h"
+
+#include "utils/Log.h"
+#include "media/AudioRecord.h"
+#include "media/mediarecorder.h"
+>>>>>>> upstream/master
 
 #include <cutils/bitops.h>
 
@@ -57,12 +67,18 @@ static fields_t javaAudioRecordFields;
 struct audiorecord_callback_cookie {
     jclass      audioRecord_class;
     jobject     audioRecord_ref;
+<<<<<<< HEAD
     bool        busy;
     Condition   cond;
 };
 
 static Mutex sLock;
 static SortedVector <audiorecord_callback_cookie *> sAudioRecordCallBackCookies;
+=======
+ };
+
+Mutex sLock;
+>>>>>>> upstream/master
 
 // ----------------------------------------------------------------------------
 
@@ -77,7 +93,11 @@ static SortedVector <audiorecord_callback_cookie *> sAudioRecordCallBackCookies;
 #define AUDIORECORD_ERROR_SETUP_NATIVEINITFAILED    -20
 
 jint android_media_translateRecorderErrorCode(int code) {
+<<<<<<< HEAD
     switch (code) {
+=======
+    switch(code) {
+>>>>>>> upstream/master
     case NO_ERROR:
         return AUDIORECORD_SUCCESS;
     case BAD_VALUE:
@@ -86,12 +106,17 @@ jint android_media_translateRecorderErrorCode(int code) {
         return AUDIORECORD_ERROR_INVALID_OPERATION;
     default:
         return AUDIORECORD_ERROR;
+<<<<<<< HEAD
     }
+=======
+    }   
+>>>>>>> upstream/master
 }
 
 
 // ----------------------------------------------------------------------------
 static void recorderCallback(int event, void* user, void *info) {
+<<<<<<< HEAD
 
     audiorecord_callback_cookie *callbackInfo = (audiorecord_callback_cookie *)user;
     {
@@ -111,6 +136,19 @@ static void recorderCallback(int event, void* user, void *info) {
         if (user && env) {
             env->CallStaticVoidMethod(
                 callbackInfo->audioRecord_class,
+=======
+    if (event == AudioRecord::EVENT_MORE_DATA) {
+        // set size to 0 to signal we're not using the callback to read more data
+        AudioRecord::Buffer* pBuff = (AudioRecord::Buffer*)info;
+        pBuff->size = 0;  
+    
+    } else if (event == AudioRecord::EVENT_MARKER) {
+        audiorecord_callback_cookie *callbackInfo = (audiorecord_callback_cookie *)user;
+        JNIEnv *env = AndroidRuntime::getJNIEnv();
+        if (user && env) {
+            env->CallStaticVoidMethod(
+                callbackInfo->audioRecord_class, 
+>>>>>>> upstream/master
                 javaAudioRecordFields.postNativeEventInJava,
                 callbackInfo->audioRecord_ref, event, 0,0, NULL);
             if (env->ExceptionCheck()) {
@@ -120,10 +158,18 @@ static void recorderCallback(int event, void* user, void *info) {
         }
 
     } else if (event == AudioRecord::EVENT_NEW_POS) {
+<<<<<<< HEAD
         JNIEnv *env = AndroidRuntime::getJNIEnv();
         if (user && env) {
             env->CallStaticVoidMethod(
                 callbackInfo->audioRecord_class,
+=======
+        audiorecord_callback_cookie *callbackInfo = (audiorecord_callback_cookie *)user;
+        JNIEnv *env = AndroidRuntime::getJNIEnv();
+        if (user && env) {
+            env->CallStaticVoidMethod(
+                callbackInfo->audioRecord_class, 
+>>>>>>> upstream/master
                 javaAudioRecordFields.postNativeEventInJava,
                 callbackInfo->audioRecord_ref, event, 0,0, NULL);
             if (env->ExceptionCheck()) {
@@ -132,6 +178,7 @@ static void recorderCallback(int event, void* user, void *info) {
             }
         }
     }
+<<<<<<< HEAD
     {
         Mutex::Autolock l(sLock);
         callbackInfo->busy = false;
@@ -162,6 +209,10 @@ static sp<AudioRecord> setAudioRecord(JNIEnv* env, jobject thiz, const sp<AudioR
     env->SetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj, (int)ar.get());
     return old;
 }
+=======
+}
+
+>>>>>>> upstream/master
 
 // ----------------------------------------------------------------------------
 static int
@@ -169,33 +220,57 @@ android_media_AudioRecord_setup(JNIEnv *env, jobject thiz, jobject weak_this,
         jint source, jint sampleRateInHertz, jint channels,
         jint audioFormat, jint buffSizeInBytes, jintArray jSession)
 {
+<<<<<<< HEAD
     //ALOGV(">> Entering android_media_AudioRecord_setup");
     //ALOGV("sampleRate=%d, audioFormat=%d, channels=%x, buffSizeInBytes=%d",
     //     sampleRateInHertz, audioFormat, channels,     buffSizeInBytes);
 
     if (!audio_is_input_channel(channels)) {
         ALOGE("Error creating AudioRecord: channel count is not 1 or 2.");
+=======
+    //LOGV(">> Entering android_media_AudioRecord_setup");
+    //LOGV("sampleRate=%d, audioFormat=%d, channels=%x, buffSizeInBytes=%d",
+    //     sampleRateInHertz, audioFormat, channels,     buffSizeInBytes);
+
+    if (!audio_is_input_channel(channels)) {
+        LOGE("Error creating AudioRecord: channel count is not 1 or 2.");
+>>>>>>> upstream/master
         return AUDIORECORD_ERROR_SETUP_INVALIDCHANNELMASK;
     }
     uint32_t nbChannels = popcount(channels);
 
     // compare the format against the Java constants
+<<<<<<< HEAD
     if ((audioFormat != javaAudioRecordFields.PCM16)
         && (audioFormat != javaAudioRecordFields.PCM8)) {
         ALOGE("Error creating AudioRecord: unsupported audio format.");
+=======
+    if ((audioFormat != javaAudioRecordFields.PCM16) 
+        && (audioFormat != javaAudioRecordFields.PCM8)) {
+        LOGE("Error creating AudioRecord: unsupported audio format.");
+>>>>>>> upstream/master
         return AUDIORECORD_ERROR_SETUP_INVALIDFORMAT;
     }
 
     int bytesPerSample = audioFormat==javaAudioRecordFields.PCM16 ? 2 : 1;
+<<<<<<< HEAD
     audio_format_t format = audioFormat==javaAudioRecordFields.PCM16 ?
             AUDIO_FORMAT_PCM_16_BIT : AUDIO_FORMAT_PCM_8_BIT;
 
     if (buffSizeInBytes == 0) {
          ALOGE("Error creating AudioRecord: frameCount is 0.");
+=======
+    int format = audioFormat==javaAudioRecordFields.PCM16 ? 
+            AUDIO_FORMAT_PCM_16_BIT : AUDIO_FORMAT_PCM_8_BIT;
+
+    if (buffSizeInBytes == 0) {
+         LOGE("Error creating AudioRecord: frameCount is 0.");
+>>>>>>> upstream/master
         return AUDIORECORD_ERROR_SETUP_ZEROFRAMECOUNT;
     }
     int frameSize = nbChannels * bytesPerSample;
     size_t frameCount = buffSizeInBytes / frameSize;
+<<<<<<< HEAD
 
     if (uint32_t(source) >= AUDIO_SOURCE_CNT) {
         ALOGE("Error creating AudioRecord: unknown source.");
@@ -210,18 +285,33 @@ android_media_AudioRecord_setup(JNIEnv *env, jobject thiz, jobject weak_this,
 
     if (jSession == NULL) {
         ALOGE("Error creating AudioRecord: invalid session ID pointer");
+=======
+    
+    if (source >= AUDIO_SOURCE_CNT) {
+        LOGE("Error creating AudioRecord: unknown source.");
+        return AUDIORECORD_ERROR_SETUP_INVALIDSOURCE;
+    }
+
+    if (jSession == NULL) {
+        LOGE("Error creating AudioRecord: invalid session ID pointer");
+>>>>>>> upstream/master
         return AUDIORECORD_ERROR;
     }
 
     jint* nSession = (jint *) env->GetPrimitiveArrayCritical(jSession, NULL);
     if (nSession == NULL) {
+<<<<<<< HEAD
         ALOGE("Error creating AudioRecord: Error retrieving session id pointer");
+=======
+        LOGE("Error creating AudioRecord: Error retrieving session id pointer");
+>>>>>>> upstream/master
         return AUDIORECORD_ERROR;
     }
     int sessionId = nSession[0];
     env->ReleasePrimitiveArrayCritical(jSession, nSession, 0);
     nSession = NULL;
 
+<<<<<<< HEAD
     // create an uninitialized AudioRecord object
     sp<AudioRecord> lpRecorder = new AudioRecord();
     if (lpRecorder == NULL) {
@@ -238,32 +328,74 @@ android_media_AudioRecord_setup(JNIEnv *env, jobject thiz, jobject weak_this,
     lpCallbackData->busy = false;
 
     lpRecorder->set((audio_source_t) source,
+=======
+    audiorecord_callback_cookie *lpCallbackData = NULL;
+    AudioRecord* lpRecorder = NULL;
+
+    // create an uninitialized AudioRecord object
+    lpRecorder = new AudioRecord();
+        if(lpRecorder == NULL) {
+        LOGE("Error creating AudioRecord instance.");
+        return AUDIORECORD_ERROR_SETUP_NATIVEINITFAILED;
+    }
+    
+    // create the callback information:
+    // this data will be passed with every AudioRecord callback
+    jclass clazz = env->GetObjectClass(thiz);
+    if (clazz == NULL) {
+        LOGE("Can't find %s when setting up callback.", kClassPathName);
+        goto native_track_failure;
+    }
+    lpCallbackData = new audiorecord_callback_cookie;
+    lpCallbackData->audioRecord_class = (jclass)env->NewGlobalRef(clazz);
+    // we use a weak reference so the AudioRecord object can be garbage collected.
+    lpCallbackData->audioRecord_ref = env->NewGlobalRef(weak_this);
+    
+    lpRecorder->set(source,
+>>>>>>> upstream/master
         sampleRateInHertz,
         format,        // word length, PCM
         channels,
         frameCount,
+<<<<<<< HEAD
         (AudioRecord::record_flags) 0,  // flags
+=======
+        0,             // flags
+>>>>>>> upstream/master
         recorderCallback,// callback_t
         lpCallbackData,// void* user
         0,             // notificationFrames,
         true,          // threadCanCallJava)
         sessionId);
 
+<<<<<<< HEAD
     if (lpRecorder->initCheck() != NO_ERROR) {
         ALOGE("Error creating AudioRecord instance: initialization check failed.");
+=======
+    if(lpRecorder->initCheck() != NO_ERROR) {
+        LOGE("Error creating AudioRecord instance: initialization check failed.");
+>>>>>>> upstream/master
         goto native_init_failure;
     }
 
     nSession = (jint *) env->GetPrimitiveArrayCritical(jSession, NULL);
     if (nSession == NULL) {
+<<<<<<< HEAD
         ALOGE("Error creating AudioRecord: Error retrieving session id pointer");
         goto native_init_failure;
     }
     // read the audio session ID back from AudioRecord in case a new session was created during set()
+=======
+        LOGE("Error creating AudioRecord: Error retrieving session id pointer");
+        goto native_init_failure;
+    }
+    // read the audio session ID back from AudioTrack in case a new session was created during set()
+>>>>>>> upstream/master
     nSession[0] = lpRecorder->getSessionId();
     env->ReleasePrimitiveArrayCritical(jSession, nSession, 0);
     nSession = NULL;
 
+<<<<<<< HEAD
     {   // scope for the lock
         Mutex::Autolock l(sLock);
         sAudioRecordCallBackCookies.add(lpCallbackData);
@@ -278,13 +410,35 @@ android_media_AudioRecord_setup(JNIEnv *env, jobject thiz, jobject weak_this,
 
     return AUDIORECORD_SUCCESS;
 
+=======
+    // save our newly created C++ AudioRecord in the "nativeRecorderInJavaObj" field 
+    // of the Java object
+    env->SetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj, (int)lpRecorder);
+    
+    // save our newly created callback information in the "nativeCallbackCookie" field
+    // of the Java object (in mNativeCallbackCookie) so we can free the memory in finalize()
+    env->SetIntField(thiz, javaAudioRecordFields.nativeCallbackCookie, (int)lpCallbackData);
+    
+    return AUDIORECORD_SUCCESS;
+    
+>>>>>>> upstream/master
     // failure:
 native_init_failure:
     env->DeleteGlobalRef(lpCallbackData->audioRecord_class);
     env->DeleteGlobalRef(lpCallbackData->audioRecord_ref);
     delete lpCallbackData;
+<<<<<<< HEAD
     env->SetIntField(thiz, javaAudioRecordFields.nativeCallbackCookie, 0);
 
+=======
+
+native_track_failure:
+    delete lpRecorder;
+
+    env->SetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj, 0);
+    env->SetIntField(thiz, javaAudioRecordFields.nativeCallbackCookie, 0);
+    
+>>>>>>> upstream/master
     return AUDIORECORD_ERROR_SETUP_NATIVEINITFAILED;
 }
 
@@ -292,16 +446,28 @@ native_init_failure:
 
 // ----------------------------------------------------------------------------
 static int
+<<<<<<< HEAD
 android_media_AudioRecord_start(JNIEnv *env, jobject thiz, jint event, jint triggerSession)
 {
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
+=======
+android_media_AudioRecord_start(JNIEnv *env, jobject thiz)
+{
+    AudioRecord *lpRecorder = 
+            (AudioRecord *)env->GetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+>>>>>>> upstream/master
     if (lpRecorder == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException", NULL);
         return AUDIORECORD_ERROR;
     }
+<<<<<<< HEAD
 
     return android_media_translateRecorderErrorCode(
             lpRecorder->start((AudioSystem::sync_event_t)event, triggerSession));
+=======
+    
+    return android_media_translateRecorderErrorCode(lpRecorder->start());
+>>>>>>> upstream/master
 }
 
 
@@ -309,18 +475,28 @@ android_media_AudioRecord_start(JNIEnv *env, jobject thiz, jint event, jint trig
 static void
 android_media_AudioRecord_stop(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
+=======
+    AudioRecord *lpRecorder = 
+            (AudioRecord *)env->GetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+>>>>>>> upstream/master
     if (lpRecorder == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException", NULL);
         return;
     }
 
     lpRecorder->stop();
+<<<<<<< HEAD
     //ALOGV("Called lpRecorder->stop()");
+=======
+    //LOGV("Called lpRecorder->stop()");
+>>>>>>> upstream/master
 }
 
 
 // ----------------------------------------------------------------------------
+<<<<<<< HEAD
 
 #define CALLBACK_COND_WAIT_TIMEOUT_MS 1000
 static void android_media_AudioRecord_release(JNIEnv *env,  jobject thiz) {
@@ -331,11 +507,20 @@ static void android_media_AudioRecord_release(JNIEnv *env,  jobject thiz) {
     ALOGV("About to delete lpRecorder: %x\n", (int)lpRecorder.get());
     lpRecorder->stop();
 
+=======
+static void android_media_AudioRecord_release(JNIEnv *env,  jobject thiz) {
+
+    // serialize access. Ugly, but functional.
+    Mutex::Autolock lock(&sLock);
+    AudioRecord *lpRecorder = 
+            (AudioRecord *)env->GetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+>>>>>>> upstream/master
     audiorecord_callback_cookie *lpCookie = (audiorecord_callback_cookie *)env->GetIntField(
         thiz, javaAudioRecordFields.nativeCallbackCookie);
 
     // reset the native resources in the Java object so any attempt to access
     // them after a call to release fails.
+<<<<<<< HEAD
     env->SetIntField(thiz, javaAudioRecordFields.nativeCallbackCookie, 0);
 
     // delete the callback information
@@ -350,6 +535,21 @@ static void android_media_AudioRecord_release(JNIEnv *env,  jobject thiz) {
             }
         }
         sAudioRecordCallBackCookies.remove(lpCookie);
+=======
+    env->SetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj, 0);
+    env->SetIntField(thiz, javaAudioRecordFields.nativeCallbackCookie, 0);
+
+    // delete the AudioRecord object
+    if (lpRecorder) {
+        LOGV("About to delete lpRecorder: %x\n", (int)lpRecorder);
+        lpRecorder->stop();
+        delete lpRecorder;
+    }
+    
+    // delete the callback information
+    if (lpCookie) {
+        LOGV("deleting lpCookie: %x\n", (int)lpCookie);
+>>>>>>> upstream/master
         env->DeleteGlobalRef(lpCookie->audioRecord_class);
         env->DeleteGlobalRef(lpCookie->audioRecord_ref);
         delete lpCookie;
@@ -368,15 +568,29 @@ static jint android_media_AudioRecord_readInByteArray(JNIEnv *env,  jobject thiz
                                                         jbyteArray javaAudioData,
                                                         jint offsetInBytes, jint sizeInBytes) {
     jbyte* recordBuff = NULL;
+<<<<<<< HEAD
     // get the audio recorder from which we'll read new audio samples
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
     if (lpRecorder == NULL) {
         ALOGE("Unable to retrieve AudioRecord object, can't record");
+=======
+    AudioRecord *lpRecorder = NULL;
+
+    // get the audio recorder from which we'll read new audio samples
+    lpRecorder = 
+            (AudioRecord *)env->GetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+    if (lpRecorder == NULL) {
+        LOGE("Unable to retrieve AudioRecord object, can't record");
+>>>>>>> upstream/master
         return 0;
     }
 
     if (!javaAudioData) {
+<<<<<<< HEAD
         ALOGE("Invalid Java array to store recorded audio, can't record");
+=======
+        LOGE("Invalid Java array to store recorded audio, can't record");
+>>>>>>> upstream/master
         return 0;
     }
 
@@ -388,14 +602,23 @@ static jint android_media_AudioRecord_readInByteArray(JNIEnv *env,  jobject thiz
     recordBuff = (jbyte *)env->GetByteArrayElements(javaAudioData, NULL);
 
     if (recordBuff == NULL) {
+<<<<<<< HEAD
         ALOGE("Error retrieving destination for recorded audio data, can't record");
+=======
+        LOGE("Error retrieving destination for recorded audio data, can't record");
+>>>>>>> upstream/master
         return 0;
     }
 
     // read the new audio data from the native AudioRecord object
     ssize_t recorderBuffSize = lpRecorder->frameCount()*lpRecorder->frameSize();
+<<<<<<< HEAD
     ssize_t readSize = lpRecorder->read(recordBuff + offsetInBytes,
                                         sizeInBytes > (jint)recorderBuffSize ?
+=======
+    ssize_t readSize = lpRecorder->read(recordBuff + offsetInBytes, 
+                                        sizeInBytes > (jint)recorderBuffSize ? 
+>>>>>>> upstream/master
                                             (jint)recorderBuffSize : sizeInBytes );
     env->ReleaseByteArrayElements(javaAudioData, recordBuff, 0);
 
@@ -416,13 +639,24 @@ static jint android_media_AudioRecord_readInShortArray(JNIEnv *env,  jobject thi
 // ----------------------------------------------------------------------------
 static jint android_media_AudioRecord_readInDirectBuffer(JNIEnv *env,  jobject thiz,
                                                   jobject jBuffer, jint sizeInBytes) {
+<<<<<<< HEAD
     // get the audio recorder from which we'll read new audio samples
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
     if (lpRecorder==NULL)
+=======
+    AudioRecord *lpRecorder = NULL;
+    //LOGV("Entering android_media_AudioRecord_readInBuffer");
+
+    // get the audio recorder from which we'll read new audio samples
+    lpRecorder = 
+        (AudioRecord *)env->GetIntField(thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+    if(lpRecorder==NULL)
+>>>>>>> upstream/master
         return 0;
 
     // direct buffer and direct access supported?
     long capacity = env->GetDirectBufferCapacity(jBuffer);
+<<<<<<< HEAD
     if (capacity == -1) {
         // buffer direct access is not supported
         ALOGE("Buffer direct access is not supported, can't record");
@@ -437,43 +671,91 @@ static jint android_media_AudioRecord_readInDirectBuffer(JNIEnv *env,  jobject t
 
     // read new data from the recorder
     return (jint) lpRecorder->read(nativeFromJavaBuf,
+=======
+    if(capacity == -1) {
+        // buffer direct access is not supported
+        LOGE("Buffer direct access is not supported, can't record");
+        return 0;
+    }
+    //LOGV("capacity = %ld", capacity);
+    jbyte* nativeFromJavaBuf = (jbyte*) env->GetDirectBufferAddress(jBuffer);
+    if(nativeFromJavaBuf==NULL) {
+        LOGE("Buffer direct access is not supported, can't record");
+        return 0;
+    } 
+
+    // read new data from the recorder
+    return (jint) lpRecorder->read(nativeFromJavaBuf, 
+>>>>>>> upstream/master
                                    capacity < sizeInBytes ? capacity : sizeInBytes);
 }
 
 
 // ----------------------------------------------------------------------------
+<<<<<<< HEAD
 static jint android_media_AudioRecord_set_marker_pos(JNIEnv *env,  jobject thiz,
         jint markerPos) {
 
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
     if (lpRecorder == NULL) {
+=======
+static jint android_media_AudioRecord_set_marker_pos(JNIEnv *env,  jobject thiz, 
+        jint markerPos) {
+            
+    AudioRecord *lpRecorder = (AudioRecord *)env->GetIntField(
+                thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+                
+    if (lpRecorder) {
+        return 
+            android_media_translateRecorderErrorCode( lpRecorder->setMarkerPosition(markerPos) );   
+    } else {
+>>>>>>> upstream/master
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve AudioRecord pointer for setMarkerPosition()");
         return AUDIORECORD_ERROR;
     }
+<<<<<<< HEAD
     return android_media_translateRecorderErrorCode( lpRecorder->setMarkerPosition(markerPos) );
+=======
+>>>>>>> upstream/master
 }
 
 
 // ----------------------------------------------------------------------------
 static jint android_media_AudioRecord_get_marker_pos(JNIEnv *env,  jobject thiz) {
+<<<<<<< HEAD
 
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
     uint32_t markerPos = 0;
 
     if (lpRecorder == NULL) {
+=======
+    
+    AudioRecord *lpRecorder = (AudioRecord *)env->GetIntField(
+                thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+    uint32_t markerPos = 0;
+                
+    if (lpRecorder) {
+        lpRecorder->getMarkerPosition(&markerPos);
+        return (jint)markerPos;
+    } else {
+>>>>>>> upstream/master
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve AudioRecord pointer for getMarkerPosition()");
         return AUDIORECORD_ERROR;
     }
+<<<<<<< HEAD
     lpRecorder->getMarkerPosition(&markerPos);
     return (jint)markerPos;
+=======
+>>>>>>> upstream/master
 }
 
 
 // ----------------------------------------------------------------------------
 static jint android_media_AudioRecord_set_pos_update_period(JNIEnv *env,  jobject thiz,
         jint period) {
+<<<<<<< HEAD
 
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
 
@@ -483,22 +765,51 @@ static jint android_media_AudioRecord_set_pos_update_period(JNIEnv *env,  jobjec
         return AUDIORECORD_ERROR;
     }
     return android_media_translateRecorderErrorCode( lpRecorder->setPositionUpdatePeriod(period) );
+=======
+            
+    AudioRecord *lpRecorder = (AudioRecord *)env->GetIntField(
+                thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+                
+    if (lpRecorder) {
+        return 
+            android_media_translateRecorderErrorCode( lpRecorder->setPositionUpdatePeriod(period) );   
+    } else {
+        jniThrowException(env, "java/lang/IllegalStateException",
+            "Unable to retrieve AudioRecord pointer for setPositionUpdatePeriod()");
+        return AUDIORECORD_ERROR;
+    }            
+>>>>>>> upstream/master
 }
 
 
 // ----------------------------------------------------------------------------
 static jint android_media_AudioRecord_get_pos_update_period(JNIEnv *env,  jobject thiz) {
+<<<<<<< HEAD
 
     sp<AudioRecord> lpRecorder = getAudioRecord(env, thiz);
     uint32_t period = 0;
 
     if (lpRecorder == NULL) {
+=======
+    
+    AudioRecord *lpRecorder = (AudioRecord *)env->GetIntField(
+                thiz, javaAudioRecordFields.nativeRecorderInJavaObj);
+    uint32_t period = 0;
+                
+    if (lpRecorder) {
+        lpRecorder->getPositionUpdatePeriod(&period);
+        return (jint)period;
+    } else {
+>>>>>>> upstream/master
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve AudioRecord pointer for getPositionUpdatePeriod()");
         return AUDIORECORD_ERROR;
     }
+<<<<<<< HEAD
     lpRecorder->getPositionUpdatePeriod(&period);
     return (jint)period;
+=======
+>>>>>>> upstream/master
 }
 
 
@@ -509,8 +820,12 @@ static jint android_media_AudioRecord_get_pos_update_period(JNIEnv *env,  jobjec
 static jint android_media_AudioRecord_get_min_buff_size(JNIEnv *env,  jobject thiz,
     jint sampleRateInHertz, jint nbChannels, jint audioFormat) {
 
+<<<<<<< HEAD
     ALOGV(">> android_media_AudioRecord_get_min_buff_size(%d, %d, %d)",
           sampleRateInHertz, nbChannels, audioFormat);
+=======
+    LOGV(">> android_media_AudioRecord_get_min_buff_size(%d, %d, %d)", sampleRateInHertz, nbChannels, audioFormat);
+>>>>>>> upstream/master
 
     int frameCount = 0;
     status_t result = AudioRecord::getMinFrameCount(&frameCount,
@@ -533,13 +848,21 @@ static jint android_media_AudioRecord_get_min_buff_size(JNIEnv *env,  jobject th
 // ----------------------------------------------------------------------------
 static JNINativeMethod gMethods[] = {
     // name,               signature,  funcPtr
+<<<<<<< HEAD
     {"native_start",         "(II)I",    (void *)android_media_AudioRecord_start},
+=======
+    {"native_start",         "()I",    (void *)android_media_AudioRecord_start},
+>>>>>>> upstream/master
     {"native_stop",          "()V",    (void *)android_media_AudioRecord_stop},
     {"native_setup",         "(Ljava/lang/Object;IIIII[I)I",
                                        (void *)android_media_AudioRecord_setup},
     {"native_finalize",      "()V",    (void *)android_media_AudioRecord_finalize},
     {"native_release",       "()V",    (void *)android_media_AudioRecord_release},
+<<<<<<< HEAD
     {"native_read_in_byte_array",
+=======
+    {"native_read_in_byte_array", 
+>>>>>>> upstream/master
                              "([BII)I", (void *)android_media_AudioRecord_readInByteArray},
     {"native_read_in_short_array",
                              "([SII)I", (void *)android_media_AudioRecord_readInShortArray},
@@ -566,7 +889,11 @@ static JNINativeMethod gMethods[] = {
 
 // ----------------------------------------------------------------------------
 
+<<<<<<< HEAD
 extern bool android_media_getIntConstantFromClass(JNIEnv* pEnv,
+=======
+extern bool android_media_getIntConstantFromClass(JNIEnv* pEnv, 
+>>>>>>> upstream/master
                 jclass theClass, const char* className, const char* constName, int* constVal);
 
 // ----------------------------------------------------------------------------
@@ -575,12 +902,20 @@ int register_android_media_AudioRecord(JNIEnv *env)
     javaAudioRecordFields.postNativeEventInJava = NULL;
     javaAudioRecordFields.nativeRecorderInJavaObj = NULL;
     javaAudioRecordFields.nativeCallbackCookie = NULL;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
 
     // Get the AudioRecord class
     jclass audioRecordClass = env->FindClass(kClassPathName);
     if (audioRecordClass == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find %s", kClassPathName);
+=======
+        LOGE("Can't find %s", kClassPathName);
+>>>>>>> upstream/master
         return -1;
     }
     // Get the postEvent method
@@ -588,17 +923,29 @@ int register_android_media_AudioRecord(JNIEnv *env)
             audioRecordClass,
             JAVA_POSTEVENT_CALLBACK_NAME, "(Ljava/lang/Object;IIILjava/lang/Object;)V");
     if (javaAudioRecordFields.postNativeEventInJava == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find AudioRecord.%s", JAVA_POSTEVENT_CALLBACK_NAME);
+=======
+        LOGE("Can't find AudioRecord.%s", JAVA_POSTEVENT_CALLBACK_NAME);
+>>>>>>> upstream/master
         return -1;
     }
 
     // Get the variables
     //    mNativeRecorderInJavaObj
+<<<<<<< HEAD
     javaAudioRecordFields.nativeRecorderInJavaObj =
         env->GetFieldID(audioRecordClass,
                         JAVA_NATIVERECORDERINJAVAOBJ_FIELD_NAME, "I");
     if (javaAudioRecordFields.nativeRecorderInJavaObj == NULL) {
         ALOGE("Can't find AudioRecord.%s", JAVA_NATIVERECORDERINJAVAOBJ_FIELD_NAME);
+=======
+    javaAudioRecordFields.nativeRecorderInJavaObj = 
+        env->GetFieldID(audioRecordClass,
+                        JAVA_NATIVERECORDERINJAVAOBJ_FIELD_NAME, "I");
+    if (javaAudioRecordFields.nativeRecorderInJavaObj == NULL) {
+        LOGE("Can't find AudioRecord.%s", JAVA_NATIVERECORDERINJAVAOBJ_FIELD_NAME);
+>>>>>>> upstream/master
         return -1;
     }
     //     mNativeCallbackCookie
@@ -606,7 +953,11 @@ int register_android_media_AudioRecord(JNIEnv *env)
             audioRecordClass,
             JAVA_NATIVECALLBACKINFO_FIELD_NAME, "I");
     if (javaAudioRecordFields.nativeCallbackCookie == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find AudioRecord.%s", JAVA_NATIVECALLBACKINFO_FIELD_NAME);
+=======
+        LOGE("Can't find AudioRecord.%s", JAVA_NATIVECALLBACKINFO_FIELD_NAME);
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -614,6 +965,7 @@ int register_android_media_AudioRecord(JNIEnv *env)
     jclass audioFormatClass = NULL;
     audioFormatClass = env->FindClass(JAVA_AUDIOFORMAT_CLASS_NAME);
     if (audioFormatClass == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find %s", JAVA_AUDIOFORMAT_CLASS_NAME);
         return -1;
     }
@@ -624,6 +976,18 @@ int register_android_media_AudioRecord(JNIEnv *env)
                 JAVA_AUDIOFORMAT_CLASS_NAME,
                 JAVA_CONST_PCM8_NAME, &(javaAudioRecordFields.PCM8)) ) {
         // error log performed in getIntConstantFromClass()
+=======
+        LOGE("Can't find %s", JAVA_AUDIOFORMAT_CLASS_NAME);
+        return -1;
+    }
+    if ( !android_media_getIntConstantFromClass(env, audioFormatClass, 
+                JAVA_AUDIOFORMAT_CLASS_NAME, 
+                JAVA_CONST_PCM16_NAME, &(javaAudioRecordFields.PCM16))
+           || !android_media_getIntConstantFromClass(env, audioFormatClass, 
+                JAVA_AUDIOFORMAT_CLASS_NAME, 
+                JAVA_CONST_PCM8_NAME, &(javaAudioRecordFields.PCM8)) ) {
+        // error log performed in getIntConstantFromClass() 
+>>>>>>> upstream/master
         return -1;
     }
 

@@ -22,8 +22,13 @@ public class GPSButton extends PowerButton {
     public GPSButton() { mType = BUTTON_GPS; }
 
     @Override
+<<<<<<< HEAD
     protected void updateState(Context context) {
         if (getGpsState(context)) {
+=======
+    protected void updateState() {
+        if(getGpsState(mView.getContext())) {
+>>>>>>> upstream/master
             mIcon = R.drawable.stat_gps_on;
             mState = STATE_ENABLED;
         } else {
@@ -33,7 +38,12 @@ public class GPSButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected void toggleState(Context context) {
+=======
+    protected void toggleState() {
+        Context context = mView.getContext();
+>>>>>>> upstream/master
         ContentResolver resolver = context.getContentResolver();
         boolean enabled = getGpsState(context);
         Settings.Secure.setLocationProviderEnabled(resolver,
@@ -41,11 +51,19 @@ public class GPSButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected boolean handleLongClick(Context context) {
         Intent intent = new Intent("android.settings.LOCATION_SOURCE_SETTINGS");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+=======
+    protected boolean handleLongClick() {
+        Intent intent = new Intent("android.settings.LOCATION_SOURCE_SETTINGS");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mView.getContext().startActivity(intent);
+>>>>>>> upstream/master
         return true;
     }
 
@@ -54,7 +72,11 @@ public class GPSButton extends PowerButton {
         return OBSERVED_URIS;
     }
 
+<<<<<<< HEAD
     private boolean getGpsState(Context context) {
+=======
+    private static boolean getGpsState(Context context) {
+>>>>>>> upstream/master
         ContentResolver resolver = context.getContentResolver();
         return Settings.Secure.isLocationProviderEnabled(resolver,
                 LocationManager.GPS_PROVIDER);

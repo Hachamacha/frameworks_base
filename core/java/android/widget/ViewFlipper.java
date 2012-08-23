@@ -25,8 +25,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 /**
@@ -141,6 +144,7 @@ public class ViewFlipper extends ViewAnimator {
         updateRunning();
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -153,6 +157,8 @@ public class ViewFlipper extends ViewAnimator {
         info.setClassName(ViewFlipper.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Internal method to start or stop dispatching flip {@link Message} based
      * on {@link #mRunning} and {@link #mVisible} state.

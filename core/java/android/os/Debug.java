@@ -1324,6 +1324,7 @@ href="{@docRoot}guide/developing/tools/traceview.html">Traceview: A Graphical Lo
             return false;
         }
     }
+<<<<<<< HEAD
 
     /**
      * Have the stack traces of the given native process dumped to the
@@ -1369,4 +1370,6 @@ href="{@docRoot}guide/developing/tools/traceview.html">Traceview: A Graphical Lo
     public static String getCaller() {
         return getCaller(Thread.currentThread().getStackTrace(), 0);
     }
+=======
+>>>>>>> upstream/master
 }

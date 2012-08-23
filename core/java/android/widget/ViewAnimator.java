@@ -22,8 +22,11 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -187,10 +190,13 @@ public class ViewAnimator extends FrameLayout {
         } else {
             child.setVisibility(View.GONE);
         }
+<<<<<<< HEAD
         if (index >= 0 && mWhichChild >= index) {
             // Added item above current one, increment the index of the displayed child
             setDisplayedChild(mWhichChild + 1);
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -343,6 +349,7 @@ public class ViewAnimator extends FrameLayout {
     public int getBaseline() {
         return (getCurrentView() != null) ? getCurrentView().getBaseline() : super.getBaseline();
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -355,4 +362,6 @@ public class ViewAnimator extends FrameLayout {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ViewAnimator.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

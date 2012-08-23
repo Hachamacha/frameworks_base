@@ -19,22 +19,33 @@ package com.android.internal.app;
 import com.android.internal.R;
 import com.android.internal.content.PackageMonitor;
 
+<<<<<<< HEAD
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.content.ComponentName;
 import android.content.Context;
+=======
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+>>>>>>> upstream/master
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
+<<<<<<< HEAD
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+=======
+import android.content.pm.ResolveInfo;
+>>>>>>> upstream/master
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PatternMatcher;
+<<<<<<< HEAD
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserId;
@@ -50,6 +61,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+=======
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -62,6 +84,7 @@ import java.util.Set;
  * which there is more than one matching activity, allowing the user to decide
  * which to go to.  It is not normally used directly by application developers.
  */
+<<<<<<< HEAD
 public class ResolverActivity extends AlertActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "ResolverActivity";
 
@@ -78,6 +101,15 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
     private int mMaxColumns;
 
     private boolean mRegistered;
+=======
+public class ResolverActivity extends AlertActivity implements
+        DialogInterface.OnClickListener, CheckBox.OnCheckedChangeListener {
+    private ResolveListAdapter mAdapter;
+    private CheckBox mAlwaysCheck;
+    private TextView mClearDefaultHint;
+    private PackageManager mPm;
+
+>>>>>>> upstream/master
     private final PackageMonitor mPackageMonitor = new PackageMonitor() {
         @Override public void onSomePackagesChanged() {
             mAdapter.handlePackagesChanged();
@@ -105,6 +137,7 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState, Intent intent,
             CharSequence title, Intent[] initialIntents, List<ResolveInfo> rList,
             boolean alwaysUseOption) {
+<<<<<<< HEAD
         setTheme(R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         super.onCreate(savedInstanceState);
         try {
@@ -116,11 +149,16 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
         mPm = getPackageManager();
         mAlwaysUseOption = alwaysUseOption;
         mMaxColumns = getResources().getInteger(R.integer.config_maxResolverActivityColumns);
+=======
+        super.onCreate(savedInstanceState);
+        mPm = getPackageManager();
+>>>>>>> upstream/master
         intent.setComponent(null);
 
         AlertController.AlertParams ap = mAlertParams;
 
         ap.mTitle = title;
+<<<<<<< HEAD
 
         mPackageMonitor.register(this, getMainLooper(), false);
         mRegistered = true;
@@ -208,21 +246,56 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             Log.e(TAG, "Couldn't find resources for package", e);
         }
         return ri.loadIcon(mPm);
+=======
+        ap.mOnClickListener = this;
+
+        mPackageMonitor.register(this, false);
+
+        if (alwaysUseOption) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+            ap.mView = inflater.inflate(R.layout.always_use_checkbox, null);
+            mAlwaysCheck = (CheckBox)ap.mView.findViewById(com.android.internal.R.id.alwaysUse);
+            mAlwaysCheck.setText(R.string.alwaysUse);
+            mAlwaysCheck.setOnCheckedChangeListener(this);
+            mClearDefaultHint = (TextView)ap.mView.findViewById(
+                                                        com.android.internal.R.id.clearDefaultHint);
+            mClearDefaultHint.setVisibility(View.GONE);
+        }
+        mAdapter = new ResolveListAdapter(this, intent, initialIntents, rList);
+        int count = mAdapter.getCount();
+        if (count > 1) {
+            ap.mAdapter = mAdapter;
+        } else if (count == 1) {
+            startActivity(mAdapter.intentForPosition(0));
+            finish();
+            return;
+        } else {
+            ap.mMessage = getResources().getText(com.android.internal.R.string.noApplications);
+        }
+
+        setupAlert();
+>>>>>>> upstream/master
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+<<<<<<< HEAD
         if (!mRegistered) {
             mPackageMonitor.register(this, getMainLooper(), false);
             mRegistered = true;
         }
+=======
+        mPackageMonitor.register(this, false);
+>>>>>>> upstream/master
         mAdapter.handlePackagesChanged();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+<<<<<<< HEAD
         if (mRegistered) {
             mPackageMonitor.unregister();
             mRegistered = false;
@@ -280,6 +353,16 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
         ResolveInfo ri = mAdapter.resolveInfoForPosition(which);
         Intent intent = mAdapter.intentForPosition(which);
         onIntentSelected(ri, intent, always);
+=======
+        mPackageMonitor.unregister();
+    }
+
+    public void onClick(DialogInterface dialog, int which) {
+        ResolveInfo ri = mAdapter.resolveInfoForPosition(which);
+        Intent intent = mAdapter.intentForPosition(which);
+        boolean alwaysCheck = (mAlwaysCheck != null && mAlwaysCheck.isChecked());
+        onIntentSelected(ri, intent, alwaysCheck);
+>>>>>>> upstream/master
         finish();
     }
 
@@ -369,12 +452,15 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
         }
     }
 
+<<<<<<< HEAD
     void showAppDetails(ResolveInfo ri) {
         Intent in = new Intent().setAction("android.settings.APPLICATION_DETAILS_SETTINGS")
                 .setData(Uri.fromParts("package", ri.activityInfo.packageName, null));
         startActivity(in);
     }
 
+=======
+>>>>>>> upstream/master
     private final class DisplayResolveInfo {
         ResolveInfo ri;
         CharSequence displayLabel;
@@ -395,36 +481,52 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
         private final Intent[] mInitialIntents;
         private final List<ResolveInfo> mBaseResolveList;
         private final Intent mIntent;
+<<<<<<< HEAD
         private final int mLaunchedFromUid;
+=======
+>>>>>>> upstream/master
         private final LayoutInflater mInflater;
 
         private List<ResolveInfo> mCurrentResolveList;
         private List<DisplayResolveInfo> mList;
 
         public ResolveListAdapter(Context context, Intent intent,
+<<<<<<< HEAD
                 Intent[] initialIntents, List<ResolveInfo> rList, int launchedFromUid) {
+=======
+                Intent[] initialIntents, List<ResolveInfo> rList) {
+>>>>>>> upstream/master
             mIntent = new Intent(intent);
             mIntent.setComponent(null);
             mInitialIntents = initialIntents;
             mBaseResolveList = rList;
+<<<<<<< HEAD
             mLaunchedFromUid = launchedFromUid;
+=======
+>>>>>>> upstream/master
             mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rebuildList();
         }
 
         public void handlePackagesChanged() {
+<<<<<<< HEAD
             final int oldItemCount = getCount();
+=======
+>>>>>>> upstream/master
             rebuildList();
             notifyDataSetChanged();
             if (mList.size() <= 0) {
                 // We no longer have any items...  just finish the activity.
                 finish();
             }
+<<<<<<< HEAD
 
             final int newItemCount = getCount();
             if (newItemCount != oldItemCount) {
                 resizeGrid();
             }
+=======
+>>>>>>> upstream/master
         }
 
         private void rebuildList() {
@@ -433,6 +535,7 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             } else {
                 mCurrentResolveList = mPm.queryIntentActivities(
                         mIntent, PackageManager.MATCH_DEFAULT_ONLY
+<<<<<<< HEAD
                         | (mAlwaysUseOption ? PackageManager.GET_RESOLVED_FILTER : 0));
                 // Filter out any activities that the launched uid does not
                 // have permission for.  We don't do this when we have an explicit
@@ -451,6 +554,9 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
                         }
                     }
                 }
+=======
+                        | (mAlwaysCheck != null ? PackageManager.GET_RESOLVED_FILTER : 0));
+>>>>>>> upstream/master
             }
             int N;
             if ((mCurrentResolveList != null) && ((N = mCurrentResolveList.size()) > 0)) {
@@ -514,7 +620,10 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
                 r0 = mCurrentResolveList.get(0);
                 int start = 0;
                 CharSequence r0Label =  r0.loadLabel(mPm);
+<<<<<<< HEAD
                 mShowExtended = false;
+=======
+>>>>>>> upstream/master
                 for (int i = 1; i < N; i++) {
                     if (r0Label == null) {
                         r0Label = r0.activityInfo.packageName;
@@ -545,7 +654,10 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
                 // No duplicate labels. Use label for entry at start
                 mList.add(new DisplayResolveInfo(ro, roLabel, null, null));
             } else {
+<<<<<<< HEAD
                 mShowExtended = true;
+=======
+>>>>>>> upstream/master
                 boolean usePkg = false;
                 CharSequence startApp = ro.activityInfo.applicationInfo.loadLabel(mPm);
                 if (startApp == null) {
@@ -626,11 +738,14 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             if (convertView == null) {
                 view = mInflater.inflate(
                         com.android.internal.R.layout.resolve_list_item, parent, false);
+<<<<<<< HEAD
 
                 // Fix the icon size even if we have different sized resources
                 ImageView icon = (ImageView)view.findViewById(R.id.icon);
                 ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) icon.getLayoutParams();
                 lp.width = lp.height = mIconSize;
+=======
+>>>>>>> upstream/master
             } else {
                 view = convertView;
             }
@@ -643,19 +758,28 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             TextView text2 = (TextView)view.findViewById(com.android.internal.R.id.text2);
             ImageView icon = (ImageView)view.findViewById(R.id.icon);
             text.setText(info.displayLabel);
+<<<<<<< HEAD
             if (mShowExtended) {
+=======
+            if (info.extendedInfo != null) {
+>>>>>>> upstream/master
                 text2.setVisibility(View.VISIBLE);
                 text2.setText(info.extendedInfo);
             } else {
                 text2.setVisibility(View.GONE);
             }
             if (info.displayIcon == null) {
+<<<<<<< HEAD
                 info.displayIcon = loadIconForResolveInfo(info.ri);
+=======
+                info.displayIcon = info.ri.loadIcon(mPm);
+>>>>>>> upstream/master
             }
             icon.setImageDrawable(info.displayIcon);
         }
     }
 
+<<<<<<< HEAD
     class ItemLongClickListener implements AdapterView.OnItemLongClickListener {
 
         @Override
@@ -665,6 +789,16 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             return true;
         }
 
+=======
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (mClearDefaultHint == null) return;
+
+        if(isChecked) {
+            mClearDefaultHint.setVisibility(View.VISIBLE);
+        } else {
+            mClearDefaultHint.setVisibility(View.GONE);
+        }
+>>>>>>> upstream/master
     }
 }
 

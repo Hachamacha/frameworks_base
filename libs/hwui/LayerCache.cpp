@@ -20,7 +20,10 @@
 
 #include <utils/Log.h>
 
+<<<<<<< HEAD
 #include "Caches.h"
+=======
+>>>>>>> upstream/master
 #include "Debug.h"
 #include "LayerCache.h"
 #include "Properties.h"
@@ -69,6 +72,7 @@ void LayerCache::setMaxSize(uint32_t maxSize) {
 
 void LayerCache::deleteLayer(Layer* layer) {
     if (layer) {
+<<<<<<< HEAD
         GLuint fbo = layer->getFbo();
         LAYER_LOGD("Destroying layer %dx%d, fbo %d", layer->getWidth(), layer->getHeight(), fbo);
 
@@ -77,6 +81,12 @@ void LayerCache::deleteLayer(Layer* layer) {
         if (fbo) Caches::getInstance().fboCache.put(fbo);
         layer->deleteTexture();
 
+=======
+        LAYER_LOGD("Destroying layer %dx%d", layer->getWidth(), layer->getHeight());
+        mSize -= layer->getWidth() * layer->getHeight() * 4;
+        layer->deleteFbo();
+        layer->deleteTexture();
+>>>>>>> upstream/master
         delete layer;
     }
 }
@@ -113,8 +123,13 @@ Layer* LayerCache::get(const uint32_t width, const uint32_t height) {
 
         layer->generateTexture();
         layer->bindTexture();
+<<<<<<< HEAD
         layer->setFilter(GL_NEAREST);
         layer->setWrap(GL_CLAMP_TO_EDGE, false);
+=======
+        layer->setFilter(GL_NEAREST, GL_NEAREST);
+        layer->setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, false);
+>>>>>>> upstream/master
         glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 #if DEBUG_LAYERS
@@ -145,7 +160,11 @@ bool LayerCache::resize(Layer* layer, const uint32_t width, const uint32_t heigh
     uint32_t oldWidth = layer->getWidth();
     uint32_t oldHeight = layer->getHeight();
 
+<<<<<<< HEAD
     Caches::getInstance().activeTexture(0);
+=======
+    glActiveTexture(GL_TEXTURE0);
+>>>>>>> upstream/master
     layer->bindTexture();
     layer->setSize(entry.mWidth, entry.mHeight);
     layer->allocateTexture(GL_RGBA, GL_UNSIGNED_BYTE);
@@ -178,10 +197,13 @@ bool LayerCache::put(Layer* layer) {
                     victim->layer.getHeight());
         }
 
+<<<<<<< HEAD
         layer->deferredUpdateScheduled = false;
         layer->renderer = NULL;
         layer->displayList = NULL;
 
+=======
+>>>>>>> upstream/master
         LayerEntry entry(layer);
 
         mCache.add(entry);

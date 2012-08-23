@@ -39,10 +39,13 @@ public final class MathUtils {
         return amount < low ? low : (amount > high ? high : amount);
     }
 
+<<<<<<< HEAD
     public static long constrain(long amount, long low, long high) {
         return amount < low ? low : (amount > high ? high : amount);
     }
 
+=======
+>>>>>>> upstream/master
     public static float constrain(float amount, float low, float high) {
         return amount < low ? low : (amount > high ? high : amount);
     }

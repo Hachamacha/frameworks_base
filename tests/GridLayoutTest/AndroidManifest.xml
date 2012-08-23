@@ -83,6 +83,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
         <activity android:name="LayoutInsetsTest" android:label="LayoutInsetsTest">
             <intent-filter>
@@ -90,6 +91,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+=======
+>>>>>>> upstream/master
     </application>
 
 

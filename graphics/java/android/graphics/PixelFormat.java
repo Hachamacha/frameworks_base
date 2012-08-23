@@ -39,6 +39,7 @@ public class PixelFormat
     public static final int RGB_888     = 3;
     public static final int RGB_565     = 4;
 
+<<<<<<< HEAD
     @Deprecated
     public static final int RGBA_5551   = 6;
     @Deprecated
@@ -48,6 +49,13 @@ public class PixelFormat
     @Deprecated
     public static final int LA_88       = 0xA;
     @Deprecated
+=======
+    public static final int RGBA_5551   = 6;
+    public static final int RGBA_4444   = 7;
+    public static final int A_8         = 8;
+    public static final int L_8         = 9;
+    public static final int LA_88       = 0xA;
+>>>>>>> upstream/master
     public static final int RGB_332     = 0xB;
 
 

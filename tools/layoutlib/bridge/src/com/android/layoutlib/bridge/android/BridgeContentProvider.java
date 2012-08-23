@@ -26,7 +26,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+<<<<<<< HEAD
 import android.os.ICancellationSignal;
+=======
+>>>>>>> upstream/master
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 
@@ -91,8 +94,13 @@ public final class BridgeContentProvider implements IContentProvider {
     }
 
     @Override
+<<<<<<< HEAD
     public Cursor query(Uri arg0, String[] arg1, String arg2, String[] arg3, String arg4,
             ICancellationSignal arg5) throws RemoteException {
+=======
+    public Cursor query(Uri arg0, String[] arg1, String arg2, String[] arg3, String arg4)
+            throws RemoteException {
+>>>>>>> upstream/master
         // TODO Auto-generated method stub
         return null;
     }
@@ -123,9 +131,12 @@ public final class BridgeContentProvider implements IContentProvider {
         return null;
     }
 
+<<<<<<< HEAD
     @Override
     public ICancellationSignal createCancellationSignal() throws RemoteException {
         // TODO Auto-generated method stub
         return null;
     }
+=======
+>>>>>>> upstream/master
 }

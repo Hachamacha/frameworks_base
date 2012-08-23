@@ -143,6 +143,7 @@ public class Display {
     }
 
     /**
+<<<<<<< HEAD
      * Return the range of display sizes an application can expect to encounter
      * under normal operation, as long as there is no physical change in screen
      * size.  This is basically the sizes you will see as the orientation
@@ -186,6 +187,8 @@ public class Display {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Return the maximum screen size dimension that will happen.  This is
      * mostly for wallpapers.
      * @hide
@@ -391,6 +394,7 @@ public class Display {
     }
 
     /**
+<<<<<<< HEAD
      * If the display is mirrored to an external HDMI display, returns the
      * rotation of that display relative to its natural orientation.
      * @hide
@@ -400,6 +404,8 @@ public class Display {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Gets display metrics based on an explicit assumed display size.
      * @hide
      */

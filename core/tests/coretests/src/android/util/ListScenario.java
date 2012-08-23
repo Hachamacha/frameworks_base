@@ -590,7 +590,11 @@ public abstract class ListScenario extends Activity {
     }
 
     /**
+<<<<<<< HEAD
      * Return the number of types created by the adapter. Override if your
+=======
+     * Return an the number of types created by the adapter. Override if your
+>>>>>>> upstream/master
      * adapter creates more than one type.
      */
     public int getViewTypeCount() {

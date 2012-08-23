@@ -19,8 +19,12 @@ package android.content;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
+=======
+import android.os.AsyncTask;
+>>>>>>> upstream/master
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -50,11 +54,15 @@ public class CursorLoader extends AsyncTaskLoader<Cursor> {
     String mSortOrder;
 
     Cursor mCursor;
+<<<<<<< HEAD
     CancellationSignal mCancellationSignal;
+=======
+>>>>>>> upstream/master
 
     /* Runs on a worker thread */
     @Override
     public Cursor loadInBackground() {
+<<<<<<< HEAD
         synchronized (this) {
             if (isLoadInBackgroundCanceled()) {
                 throw new OperationCanceledException();
@@ -86,6 +94,16 @@ public class CursorLoader extends AsyncTaskLoader<Cursor> {
                 mCancellationSignal.cancel();
             }
         }
+=======
+        Cursor cursor = getContext().getContentResolver().query(mUri, mProjection, mSelection,
+                mSelectionArgs, mSortOrder);
+        if (cursor != null) {
+            // Ensure the cursor window is filled
+            cursor.getCount();
+            registerContentObserver(cursor, mObserver);
+        }
+        return cursor;
+>>>>>>> upstream/master
     }
 
     /**

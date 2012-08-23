@@ -18,6 +18,7 @@ package com.android.server.am;
 
 import android.app.IActivityManager.ContentProviderHolder;
 import android.content.ComponentName;
+<<<<<<< HEAD
 import android.content.IContentProvider;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ProviderInfo;
@@ -57,6 +58,28 @@ class ContentProviderRecord {
             ApplicationInfo ai, ComponentName _name) {
         service = _service;
         info = _info;
+=======
+import android.content.pm.ApplicationInfo;
+import android.content.pm.ProviderInfo;
+import android.os.Process;
+
+import java.io.PrintWriter;
+import java.util.HashSet;
+
+class ContentProviderRecord extends ContentProviderHolder {
+    // All attached clients
+    final HashSet<ProcessRecord> clients = new HashSet<ProcessRecord>();
+    final int uid;
+    final ApplicationInfo appInfo;
+    final ComponentName name;
+    int externals;     // number of non-framework processes supported by this provider
+    ProcessRecord proc; // if non-null, hosting process.
+    ProcessRecord launchingApp; // if non-null, waiting for this app to be launched.
+    String stringName;
+    
+    public ContentProviderRecord(ProviderInfo _info, ApplicationInfo ai, ComponentName _name) {
+        super(_info);
+>>>>>>> upstream/master
         uid = ai.uid;
         appInfo = ai;
         name = _name;
@@ -64,14 +87,19 @@ class ContentProviderRecord {
     }
 
     public ContentProviderRecord(ContentProviderRecord cpr) {
+<<<<<<< HEAD
         service = cpr.service;
         info = cpr.info;
+=======
+        super(cpr.info);
+>>>>>>> upstream/master
         uid = cpr.uid;
         appInfo = cpr.appInfo;
         name = cpr.name;
         noReleaseNeeded = cpr.noReleaseNeeded;
     }
 
+<<<<<<< HEAD
     public ContentProviderHolder newHolder(ContentProviderConnection conn) {
         ContentProviderHolder holder = new ContentProviderHolder(info);
         holder.provider = provider;
@@ -80,11 +108,14 @@ class ContentProviderRecord {
         return holder;
     }
 
+=======
+>>>>>>> upstream/master
     public boolean canRunHere(ProcessRecord app) {
         return (info.multiprocess || info.processName.equals(app.processName))
                 && (uid == Process.SYSTEM_UID || uid == app.info.uid);
     }
 
+<<<<<<< HEAD
     public void addExternalProcessHandleLocked(IBinder token) {
         if (token == null) {
             externalProcessNoHandleCount++;
@@ -142,10 +173,17 @@ class ContentProviderRecord {
                     pw.print(info.applicationInfo.packageName);
                     pw.print(" process="); pw.println(info.processName);
         }
+=======
+    void dump(PrintWriter pw, String prefix) {
+        pw.print(prefix); pw.print("package=");
+                pw.print(info.applicationInfo.packageName);
+                pw.print(" process="); pw.println(info.processName);
+>>>>>>> upstream/master
         pw.print(prefix); pw.print("proc="); pw.println(proc);
         if (launchingApp != null) {
             pw.print(prefix); pw.print("launchingApp="); pw.println(launchingApp);
         }
+<<<<<<< HEAD
         if (full) {
             pw.print(prefix); pw.print("uid="); pw.print(uid);
                     pw.print(" provider="); pw.println(provider);
@@ -181,11 +219,31 @@ class ContentProviderRecord {
                     pw.print(prefix); pw.print("    *** WRONG PROVIDER: ");
                             pw.println(conn.provider);
                 }
+=======
+        pw.print(prefix); pw.print("uid="); pw.print(uid);
+                pw.print(" provider="); pw.println(provider);
+        pw.print(prefix); pw.print("name="); pw.println(info.authority);
+        if (info.isSyncable || info.multiprocess || info.initOrder != 0) {
+            pw.print(prefix); pw.print("isSyncable="); pw.print(info.isSyncable);
+                    pw.print("multiprocess="); pw.print(info.multiprocess);
+                    pw.print(" initOrder="); pw.println(info.initOrder);
+        }
+        if (externals != 0) {
+            pw.print(prefix); pw.print("externals="); pw.println(externals);
+        }
+        if (clients.size() > 0) {
+            pw.print(prefix); pw.println("Clients:");
+            for (ProcessRecord cproc : clients) {
+                pw.print(prefix); pw.print("  - "); pw.println(cproc.toShortString());
+>>>>>>> upstream/master
             }
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String toString() {
         if (stringName != null) {
             return stringName;
@@ -194,6 +252,7 @@ class ContentProviderRecord {
         sb.append("ContentProviderRecord{");
         sb.append(Integer.toHexString(System.identityHashCode(this)));
         sb.append(' ');
+<<<<<<< HEAD
         sb.append(name.flattenToShortString());
         sb.append('}');
         return stringName = sb.toString();
@@ -240,4 +299,10 @@ class ContentProviderRecord {
             }
         }
     }
+=======
+        sb.append(info.name);
+        sb.append('}');
+        return stringName = sb.toString();
+    }
+>>>>>>> upstream/master
 }

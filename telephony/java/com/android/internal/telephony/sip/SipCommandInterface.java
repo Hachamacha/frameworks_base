@@ -84,9 +84,12 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     public void getIMSI(Message result) {
     }
 
+<<<<<<< HEAD
     public void getIMSIForApp(String aid, Message result) {
     }
 
+=======
+>>>>>>> upstream/master
     public void getIMEI(Message result) {
     }
 
@@ -216,9 +219,12 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     public void iccIO (int command, int fileid, String path, int p1, int p2,
             int p3, String data, String pin2, Message result) {
     }
+<<<<<<< HEAD
     public void iccIOForApp (int command, int fileid, String path, int p1, int p2,
             int p3, String data, String pin2, String aid, Message result) {
     }
+=======
+>>>>>>> upstream/master
 
     public void getCLIR(Message result) {
     }
@@ -418,9 +424,12 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
 
     public void requestIsimAuthentication(String nonce, Message response) {
     }
+<<<<<<< HEAD
 
     public void getVoiceRadioTechnology(Message result) {
     }
 
     public boolean needsOldRilFeature(String feature) { return false; }
+=======
+>>>>>>> upstream/master
 }

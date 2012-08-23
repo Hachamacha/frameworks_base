@@ -64,6 +64,7 @@ public class ServiceState implements Parcelable {
 
     /**
      * Available radio technologies for GSM, UMTS and CDMA.
+<<<<<<< HEAD
      * Duplicates the constants from hardware/radio/include/ril.h
      * This should only be used by agents working with the ril.  Others
      * should use the equivalent TelephonyManager.NETWORK_TYPE_*
@@ -105,6 +106,41 @@ public class ServiceState implements Parcelable {
      * @hide
      */
     public static final int RIL_RADIO_TECHNOLOGY_GSM = 16;
+=======
+     */
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_UNKNOWN = 0;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_GPRS = 1;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_EDGE = 2;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_UMTS = 3;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_IS95A = 4;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_IS95B = 5;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_1xRTT = 6;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_EVDO_0 = 7;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_EVDO_A = 8;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_HSDPA = 9;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_HSUPA = 10;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_HSPA = 11;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_EVDO_B = 12;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_EHRPD = 13;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_LTE = 14;
+    /** @hide */
+    public static final int RADIO_TECHNOLOGY_HSPAP = 15;
+>>>>>>> upstream/master
 
     /**
      * Available registration states for GSM, UMTS and CDMA.
@@ -403,6 +439,7 @@ public class ServiceState implements Parcelable {
      *
      * @hide
      */
+<<<<<<< HEAD
     public static String rilRadioTechnologyToString(int rt) {
         String rtString;
 
@@ -458,17 +495,79 @@ public class ServiceState implements Parcelable {
             case RIL_RADIO_TECHNOLOGY_GSM:
                 rtString = "GSM";
                 break;
+=======
+    public static String radioTechnologyToString(int rt) {
+        String rtString;
+
+        switch(rt) {
+            case 0:
+                rtString = "Unknown";
+                break;
+            case 1:
+                rtString = "GPRS";
+                break;
+            case 2:
+                rtString = "EDGE";
+                break;
+            case 3:
+                rtString = "UMTS";
+                break;
+            case 4:
+                rtString = "CDMA-IS95A";
+                break;
+            case 5:
+                rtString = "CDMA-IS95B";
+                break;
+            case 6:
+                rtString = "1xRTT";
+                break;
+            case 7:
+                rtString = "EvDo-rev.0";
+                break;
+            case 8:
+                rtString = "EvDo-rev.A";
+                break;
+            case 9:
+                rtString = "HSDPA";
+                break;
+            case 10:
+                rtString = "HSUPA";
+                break;
+            case 11:
+                rtString = "HSPA";
+                break;
+            case 12:
+                rtString = "EvDo-rev.B";
+                break;
+            case 13:
+                rtString = "eHRPD";
+                break;
+            case 14:
+                rtString = "LTE";
+                break;
+            case 15:
+                rtString = "HSPAP";
+                break;
+>>>>>>> upstream/master
             default:
                 rtString = "Unexpected";
                 Log.w(LOG_TAG, "Unexpected radioTechnology=" + rt);
                 break;
         }
+<<<<<<< HEAD
         return rtString;
+=======
+        return rtString + ":" + rt;
+>>>>>>> upstream/master
     }
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         String radioTechnology = rilRadioTechnologyToString(mRadioTechnology);
+=======
+        String radioTechnology = radioTechnologyToString(mRadioTechnology);
+>>>>>>> upstream/master
 
         return (mState + " " + (mRoaming ? "roaming" : "home")
                 + " " + mOperatorAlphaLong
@@ -647,6 +746,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
+<<<<<<< HEAD
     public int getRilRadioTechnology() {
         return this.mRadioTechnology;
     }
@@ -690,6 +790,10 @@ public class ServiceState implements Parcelable {
         default:
             return TelephonyManager.NETWORK_TYPE_UNKNOWN;
         }
+=======
+    public int getRadioTechnology() {
+        return this.mRadioTechnology;
+>>>>>>> upstream/master
     }
 
     /** @hide */
@@ -706,6 +810,7 @@ public class ServiceState implements Parcelable {
     public int getSystemId() {
         return this.mSystemId;
     }
+<<<<<<< HEAD
 
     /** @hide */
     public static boolean isGsm(int radioTechnology) {
@@ -730,4 +835,6 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EVDO_B
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EHRPD;
     }
+=======
+>>>>>>> upstream/master
 }

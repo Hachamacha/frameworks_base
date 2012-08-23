@@ -44,12 +44,20 @@ static void blockSignals()
 
 int main(int argc, const char* const argv[])
 {
+<<<<<<< HEAD
     ALOGI("System server is starting with pid=%d.\n", getpid());
+=======
+    LOGI("System server is starting with pid=%d.\n", getpid());
+>>>>>>> upstream/master
 
     blockSignals();
     
     // You can trust me, honestly!
+<<<<<<< HEAD
     ALOGW("*** Current priority: %d\n", getpriority(PRIO_PROCESS, 0));
+=======
+    LOGW("*** Current priority: %d\n", getpriority(PRIO_PROCESS, 0));
+>>>>>>> upstream/master
     setpriority(PRIO_PROCESS, 0, -1);
 
     system_init();    

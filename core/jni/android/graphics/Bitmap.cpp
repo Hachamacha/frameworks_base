@@ -7,7 +7,10 @@
 #include "SkUnPreMultiply.h"
 
 #include <binder/Parcel.h>
+<<<<<<< HEAD
 #include "android_os_Parcel.h"
+=======
+>>>>>>> upstream/master
 #include "android_util_Binder.h"
 #include "android_nio_utils.h"
 #include "CreateJavaOutputStreamAdaptor.h"
@@ -236,7 +239,11 @@ static jobject Bitmap_creator(JNIEnv* env, jobject, jintArray jColors,
                                0, 0, width, height, bitmap);
     }
 
+<<<<<<< HEAD
     return GraphicsJNI::createBitmap(env, new SkBitmap(bitmap), buff, isMutable, NULL, NULL);
+=======
+    return GraphicsJNI::createBitmap(env, new SkBitmap(bitmap), buff, isMutable, NULL);
+>>>>>>> upstream/master
 }
 
 static jobject Bitmap_copy(JNIEnv* env, jobject, const SkBitmap* src,
@@ -248,7 +255,11 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, const SkBitmap* src,
         return NULL;
     }
 
+<<<<<<< HEAD
     return GraphicsJNI::createBitmap(env, new SkBitmap(result), allocator.getStorageObj(), isMutable, NULL, NULL);
+=======
+    return GraphicsJNI::createBitmap(env, new SkBitmap(result), allocator.getStorageObj(), isMutable, NULL);
+>>>>>>> upstream/master
 }
 
 static void Bitmap_destructor(JNIEnv* env, jobject, SkBitmap* bitmap) {
@@ -407,7 +418,11 @@ static jobject Bitmap_createFromParcel(JNIEnv* env, jobject, jobject parcel) {
     bitmap->unlockPixels();
 
     blob.release();
+<<<<<<< HEAD
     return GraphicsJNI::createBitmap(env, bitmap, buffer, isMutable, NULL, NULL, density);
+=======
+    return GraphicsJNI::createBitmap(env, bitmap, buffer, isMutable, NULL, density);
+>>>>>>> upstream/master
 }
 
 static jboolean Bitmap_writeToParcel(JNIEnv* env, jobject,
@@ -485,7 +500,11 @@ static jobject Bitmap_extractAlpha(JNIEnv* env, jobject clazz,
         env->ReleaseIntArrayElements(offsetXY, array, 0);
     }
 
+<<<<<<< HEAD
     return GraphicsJNI::createBitmap(env, dst, allocator.getStorageObj(), true, NULL, NULL);
+=======
+    return GraphicsJNI::createBitmap(env, dst, allocator.getStorageObj(), true, NULL);
+>>>>>>> upstream/master
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -20,8 +20,12 @@
 #include "SpriteController.h"
 
 #include <ui/DisplayInfo.h>
+<<<<<<< HEAD
 #include <androidfw/Input.h>
 #include <utils/BitSet.h>
+=======
+#include <ui/Input.h>
+>>>>>>> upstream/master
 #include <utils/RefBase.h>
 #include <utils/Looper.h>
 #include <utils/String8.h>

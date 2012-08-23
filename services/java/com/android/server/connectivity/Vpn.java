@@ -33,7 +33,10 @@ import android.net.INetworkManagementEventObserver;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Binder;
+<<<<<<< HEAD
 import android.os.FileUtils;
+=======
+>>>>>>> upstream/master
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
@@ -48,6 +51,10 @@ import com.android.internal.net.VpnConfig;
 import com.android.server.ConnectivityService.VpnCallback;
 
 import java.io.File;
+<<<<<<< HEAD
+=======
+import java.io.FileInputStream;
+>>>>>>> upstream/master
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charsets;
@@ -106,16 +113,28 @@ public class Vpn extends INetworkManagementEventObserver.Stub {
             return true;
         }
 
+<<<<<<< HEAD
         // Check if the caller is authorized.
         enforceControlPermission();
+=======
+        // Only system user can revoke a package.
+        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+            throw new SecurityException("Unauthorized Caller");
+        }
+>>>>>>> upstream/master
 
         // Reset the interface and hide the notification.
         if (mInterface != null) {
             jniReset(mInterface);
+<<<<<<< HEAD
             long identity = Binder.clearCallingIdentity();
             mCallback.restore();
             hideNotification();
             Binder.restoreCallingIdentity(identity);
+=======
+            mCallback.restore();
+            hideNotification();
+>>>>>>> upstream/master
             mInterface = null;
         }
 
@@ -291,6 +310,7 @@ public class Vpn extends INetworkManagementEventObserver.Stub {
     public void limitReached(String limit, String interfaze) {
     }
 
+<<<<<<< HEAD
     private void enforceControlPermission() {
         // System user is allowed to control VPN.
         if (Binder.getCallingUid() == Process.SYSTEM_UID) {
@@ -311,6 +331,8 @@ public class Vpn extends INetworkManagementEventObserver.Stub {
         throw new SecurityException("Unauthorized Caller");
     }
 
+=======
+>>>>>>> upstream/master
     private class Connection implements ServiceConnection {
         private IBinder mService;
 
@@ -388,8 +410,15 @@ public class Vpn extends INetworkManagementEventObserver.Stub {
      * Return the information of the current ongoing legacy VPN.
      */
     public synchronized LegacyVpnInfo getLegacyVpnInfo() {
+<<<<<<< HEAD
         // Check if the caller is authorized.
         enforceControlPermission();
+=======
+        // Only system user can call this method.
+        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+            throw new SecurityException("Unauthorized Caller");
+        }
+>>>>>>> upstream/master
         return (mLegacyVpnRunner == null) ? null : mLegacyVpnRunner.getInfo();
     }
 
@@ -591,7 +620,15 @@ public class Vpn extends INetworkManagementEventObserver.Stub {
                 }
 
                 // Now we are connected. Read and parse the new state.
+<<<<<<< HEAD
                 String[] parameters = FileUtils.readTextFile(state, 0, null).split("\n", -1);
+=======
+                byte[] buffer = new byte[(int) state.length()];
+                if (new FileInputStream(state).read(buffer) != buffer.length) {
+                    throw new IllegalStateException("Cannot read the state");
+                }
+                String[] parameters = new String(buffer, Charsets.UTF_8).split("\n", -1);
+>>>>>>> upstream/master
                 if (parameters.length != 6) {
                     throw new IllegalStateException("Cannot parse the state");
                 }

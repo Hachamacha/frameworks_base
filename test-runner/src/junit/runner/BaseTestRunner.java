@@ -1,5 +1,6 @@
 package junit.runner;
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,13 @@ import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestListener;
 import junit.framework.TestSuite;
+=======
+import junit.framework.*;
+import java.lang.reflect.*;
+import java.text.NumberFormat;
+import java.io.*;
+import java.util.*;
+>>>>>>> upstream/master
 
 /**
  * Base class for all test runners.
@@ -33,8 +41,13 @@ public abstract class BaseTestRunner implements TestListener {
     boolean fLoading= true;
 
     /*
+<<<<<<< HEAD
      * Implementation of TestListener
      */
+=======
+    * Implementation of TestListener
+    */
+>>>>>>> upstream/master
     public synchronized void startTest(Test test) {
         testStarted(test.toString());
     }
@@ -46,9 +59,15 @@ public abstract class BaseTestRunner implements TestListener {
     protected static Properties getPreferences() {
         if (fPreferences == null) {
             fPreferences= new Properties();
+<<<<<<< HEAD
             fPreferences.put("loading", "true");
             fPreferences.put("filterstack", "true");
             readPreferences();
+=======
+             fPreferences.put("loading", "true");
+             fPreferences.put("filterstack", "true");
+              readPreferences();
+>>>>>>> upstream/master
         }
         return fPreferences;
     }
@@ -62,9 +81,14 @@ public abstract class BaseTestRunner implements TestListener {
         }
     }
 
+<<<<<<< HEAD
     // android-changed remove 'static' qualifier for API compatibility
     public void setPreference(String key, String value) {
         getPreferences().put(key, value);
+=======
+    public void setPreference(String key, String value) {
+        getPreferences().setProperty(key, value);
+>>>>>>> upstream/master
     }
 
     public synchronized void endTest(Test test) {
@@ -112,8 +136,13 @@ public abstract class BaseTestRunner implements TestListener {
         Method suiteMethod= null;
         try {
             suiteMethod= testClass.getMethod(SUITE_METHODNAME, new Class[0]);
+<<<<<<< HEAD
         } catch(Exception e) {
             // try to extract a test suite automatically
+=======
+         } catch(Exception e) {
+             // try to extract a test suite automatically
+>>>>>>> upstream/master
             clearStatus();
             return new TestSuite(testClass);
         }
@@ -123,7 +152,11 @@ public abstract class BaseTestRunner implements TestListener {
         }
         Test test= null;
         try {
+<<<<<<< HEAD
             test= (Test)suiteMethod.invoke(null, (Object[])new Class[0]); // static method
+=======
+            test= (Test)suiteMethod.invoke(null); // static method
+>>>>>>> upstream/master
             if (test == null)
                 return test;
         }
@@ -178,7 +211,11 @@ public abstract class BaseTestRunner implements TestListener {
         fLoading= enable;
     }
     /**
+<<<<<<< HEAD
      * Extract the class name from a String in VA/Java style
+=======
+     * Extract the class name from a String
+>>>>>>> upstream/master
      */
     public String extractClassName(String className) {
         if(className.startsWith("Default package for"))
@@ -201,6 +238,7 @@ public abstract class BaseTestRunner implements TestListener {
      */
     protected abstract void runFailed(String message);
 
+<<<<<<< HEAD
     // BEGIN android-changed - add back getLoader() for API compatibility
     /**
      * Returns the loader to be used.
@@ -241,6 +279,44 @@ public abstract class BaseTestRunner implements TestListener {
         try {
             is= new FileInputStream(getPreferencesFile());
             setPreferences(new Properties(getPreferences()));
+=======
+    /**
+     * Returns the loaded Class for a suite name.
+     */
+    protected Class loadSuiteClass(String suiteClassName) throws ClassNotFoundException {
+        return getLoader().load(suiteClassName);
+    }
+
+    /**
+     * Clears the status message.
+     */
+    protected void clearStatus() { // Belongs in the GUI TestRunner class
+    }
+
+    /**
+     * Returns the loader to be used.
+     */
+    public TestSuiteLoader getLoader() {
+        if (useReloadingTestSuiteLoader())
+            return new ReloadingTestSuiteLoader();
+        return new StandardTestSuiteLoader();
+    }
+
+    protected boolean useReloadingTestSuiteLoader() {
+        return getPreference("loading").equals("true") && !inVAJava() && fLoading;
+    }
+
+    private static File getPreferencesFile() {
+         String home= System.getProperty("user.home");
+         return new File(home, "junit.properties");
+     }
+
+     private static void readPreferences() {
+         InputStream is= null;
+         try {
+             is= new FileInputStream(getPreferencesFile());
+             setPreferences(new Properties(getPreferences()));
+>>>>>>> upstream/master
             getPreferences().load(is);
         } catch (IOException e) {
             try {
@@ -249,6 +325,7 @@ public abstract class BaseTestRunner implements TestListener {
             } catch (IOException e1) {
             }
         }
+<<<<<<< HEAD
     }
 
     public static String getPreference(String key) {
@@ -265,6 +342,34 @@ public abstract class BaseTestRunner implements TestListener {
         } catch (NumberFormatException ne) {
         }
         return intValue;
+=======
+     }
+
+     public static String getPreference(String key) {
+         return getPreferences().getProperty(key);
+     }
+
+     public static int getPreference(String key, int dflt) {
+         String value= getPreference(key);
+         int intValue= dflt;
+         if (value == null)
+             return intValue;
+         try {
+             intValue= Integer.parseInt(value);
+          } catch (NumberFormatException ne) {
+         }
+         return intValue;
+     }
+
+     public static boolean inVAJava() {
+        try {
+            Class.forName("com.ibm.uvm.tools.DebugSupport");
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
+>>>>>>> upstream/master
     }
 
     /**
@@ -279,6 +384,7 @@ public abstract class BaseTestRunner implements TestListener {
         return BaseTestRunner.getFilteredTrace(trace);
     }
 
+<<<<<<< HEAD
     // BEGIN android-changed - add back this method for API compatibility
     /** @deprecated not present in JUnit4.10 */
     public static boolean inVAJava() {
@@ -286,6 +392,8 @@ public abstract class BaseTestRunner implements TestListener {
     }
     // END android-changed
 
+=======
+>>>>>>> upstream/master
     /**
      * Filters stack frames from internal JUnit classes
      */
@@ -319,6 +427,7 @@ public abstract class BaseTestRunner implements TestListener {
 
     static boolean filterLine(String line) {
         String[] patterns= new String[] {
+<<<<<<< HEAD
                 "junit.framework.TestCase",
                 "junit.framework.TestResult",
                 "junit.framework.TestSuite",
@@ -327,6 +436,16 @@ public abstract class BaseTestRunner implements TestListener {
                 "junit.awtui.TestRunner",
                 "junit.textui.TestRunner",
                 "java.lang.reflect.Method.invoke("
+=======
+            "junit.framework.TestCase",
+            "junit.framework.TestResult",
+            "junit.framework.TestSuite",
+            "junit.framework.Assert.", // don't filter AssertionFailure
+            "junit.swingui.TestRunner",
+            "junit.awtui.TestRunner",
+            "junit.textui.TestRunner",
+            "java.lang.reflect.Method.invoke("
+>>>>>>> upstream/master
         };
         for (int i= 0; i < patterns.length; i++) {
             if (line.indexOf(patterns[i]) > 0)
@@ -335,8 +454,14 @@ public abstract class BaseTestRunner implements TestListener {
         return false;
     }
 
+<<<<<<< HEAD
     static {
         fgMaxMessageLength= getPreference("maxmessage", fgMaxMessageLength);
     }
+=======
+     static {
+         fgMaxMessageLength= getPreference("maxmessage", fgMaxMessageLength);
+     }
+>>>>>>> upstream/master
 
 }

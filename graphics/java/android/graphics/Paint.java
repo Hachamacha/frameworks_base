@@ -21,8 +21,11 @@ import android.text.SpannableString;
 import android.text.SpannedString;
 import android.text.TextUtils;
 
+<<<<<<< HEAD
 import java.util.Locale;
 
+=======
+>>>>>>> upstream/master
 /**
  * The Paint class holds the style and color information about how to draw
  * geometries, text and bitmaps.
@@ -46,8 +49,11 @@ public class Paint {
     private float       mCompatScaling;
     private float       mInvCompatScaling;
 
+<<<<<<< HEAD
     private Locale      mLocale;
 
+=======
+>>>>>>> upstream/master
     /**
      * @hide
      */
@@ -352,7 +358,10 @@ public class Paint {
         // setHinting(DisplayMetrics.DENSITY_DEVICE >= DisplayMetrics.DENSITY_TV
         //        ? HINTING_OFF : HINTING_ON);
         mCompatScaling = mInvCompatScaling = 1;
+<<<<<<< HEAD
         setTextLocale(Locale.getDefault());
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -378,7 +387,10 @@ public class Paint {
         mHasCompatScaling = false;
         mCompatScaling = mInvCompatScaling = 1;
         mBidiFlags = BIDI_DEFAULT_LTR;
+<<<<<<< HEAD
         setTextLocale(Locale.getDefault());
+=======
+>>>>>>> upstream/master
     }
     
     /**
@@ -418,7 +430,10 @@ public class Paint {
         shadowColor = paint.shadowColor;
 
         mBidiFlags = paint.mBidiFlags;
+<<<<<<< HEAD
         mLocale = paint.mLocale;
+=======
+>>>>>>> upstream/master
     }
 
     /** @hide */
@@ -535,7 +550,10 @@ public class Paint {
      *
      * @return true if the lineartext bit is set in the paint's flags
      */
+<<<<<<< HEAD
     @Deprecated
+=======
+>>>>>>> upstream/master
     public final boolean isLinearText() {
         return (getFlags() & LINEAR_TEXT_FLAG) != 0;
     }
@@ -546,7 +564,10 @@ public class Paint {
      * @param linearText true to set the linearText bit in the paint's flags,
      *                   false to clear it.
      */
+<<<<<<< HEAD
     @Deprecated
+=======
+>>>>>>> upstream/master
     public native void setLinearText(boolean linearText);
 
     /**
@@ -1052,6 +1073,7 @@ public class Paint {
     }
 
     /**
+<<<<<<< HEAD
      * Get the text Locale.
      *
      * @return the paint's Locale used for drawing text, never null.
@@ -1098,6 +1120,8 @@ public class Paint {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Return the paint's text size.
      *
      * @return the paint's text size.
@@ -2197,9 +2221,14 @@ public class Paint {
     private static native void native_setTextAlign(int native_object,
                                                    int align);
 
+<<<<<<< HEAD
     private static native void native_setTextLocale(int native_object,
                                                     String locale);
 
+=======
+    private static native float native_getFontMetrics(int native_paint,
+                                                      FontMetrics metrics);
+>>>>>>> upstream/master
     private static native int native_getTextWidths(int native_object,
                             char[] text, int index, int count, float[] widths);
     private static native int native_getTextWidths(int native_object,

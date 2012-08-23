@@ -18,7 +18,11 @@
 #define LOG_TAG "9patch"
 #define LOG_NDEBUG 1
 
+<<<<<<< HEAD
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 #include <utils/Log.h>
 
 #include "SkCanvas.h"
@@ -82,7 +86,11 @@ public:
 
             if (destDensity == srcDensity || destDensity == 0
                     || srcDensity == 0) {
+<<<<<<< HEAD
                 ALOGV("Drawing unscaled 9-patch: (%g,%g)-(%g,%g)",
+=======
+                LOGV("Drawing unscaled 9-patch: (%g,%g)-(%g,%g)",
+>>>>>>> upstream/master
                         SkScalarToFloat(bounds.fLeft), SkScalarToFloat(bounds.fTop),
                         SkScalarToFloat(bounds.fRight), SkScalarToFloat(bounds.fBottom));
                 NinePatch_Draw(canvas, bounds, *bitmap, *chunk, paint, NULL);
@@ -97,7 +105,11 @@ public:
                 bounds.fBottom = SkScalarDiv(bounds.fBottom-bounds.fTop, scale);
                 bounds.fLeft = bounds.fTop = 0;
 
+<<<<<<< HEAD
                 ALOGV("Drawing scaled 9-patch: (%g,%g)-(%g,%g) srcDensity=%d destDensity=%d",
+=======
+                LOGV("Drawing scaled 9-patch: (%g,%g)-(%g,%g) srcDensity=%d destDensity=%d",
+>>>>>>> upstream/master
                         SkScalarToFloat(bounds.fLeft), SkScalarToFloat(bounds.fTop),
                         SkScalarToFloat(bounds.fRight), SkScalarToFloat(bounds.fBottom),
                         srcDensity, destDensity);

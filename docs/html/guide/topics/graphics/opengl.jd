@@ -20,7 +20,10 @@ parent.link=index.html
           <li><a href="#proj-es1">Projection and camera in ES 2.0</a></li>
         </ol>
       </li>
+<<<<<<< HEAD
       <li><a href="#faces-winding">Shape Faces and Winding</li>
+=======
+>>>>>>> upstream/master
       <li><a href="#compatibility">OpenGL Versions and Device Compatibility</a>
         <ol>
           <li><a href="#textures">Texture compression support</a></li>
@@ -34,6 +37,14 @@ parent.link=index.html
       <li>{@link android.opengl.GLSurfaceView}</li>
       <li>{@link android.opengl.GLSurfaceView.Renderer}</li>
     </ol>
+<<<<<<< HEAD
+=======
+    <h2>Related tutorials</h2>
+    <ol>
+      <li><a href="{@docRoot}resources/tutorials/opengl/opengl-es10.html">OpenGL ES 1.0</a></li>
+      <li><a href="{@docRoot}resources/tutorials/opengl/opengl-es20.html">OpenGL ES 2.0</a></li>
+    </ol>
+>>>>>>> upstream/master
     <h2>Related samples</h2>
     <ol>
       <li><a href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/graphics/GLSurfaceViewActivity.html">GLSurfaceViewActivity</a></li>
@@ -44,8 +55,13 @@ href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/graphics
     </ol>
     <h2>See also</h2>
     <ol>
+<<<<<<< HEAD
       <li><a href="{@docRoot}training/graphics/opengl/index.html">
           Displaying Graphics with OpenGL ES</a></li>
+=======
+      <li><a href="{@docRoot}resources/articles/glsurfaceview.html">Introducing
+GLSurfaceView</a></li>
+>>>>>>> upstream/master
       <li><a href="http://www.khronos.org/opengles/">OpenGL ES</a></li>
       <li><a href="http://www.khronos.org/opengles/1_X/">OpenGL ES 1.x Specification</a></li>
       <li><a href="http://www.khronos.org/opengles/2_X/">OpenGL ES 2.x specification</a></li>
@@ -69,7 +85,11 @@ OpenGL ES 2.0 API specification.</p>
 
 <p>Android supports OpenGL both through its framework API and the Native Development
 Kit (NDK). This topic focuses on the Android framework interfaces. For more information about the
+<<<<<<< HEAD
 NDK, see the <a href="{@docRoot}tools/sdk/ndk/index.html">Android NDK</a>.
+=======
+NDK, see the <a href="{@docRoot}sdk/ndk/index.html">Android NDK</a>.
+>>>>>>> upstream/master
 
 <p>There are two foundational classes in the Android framework that let you create and manipulate
 graphics with the OpenGL ES API: {@link android.opengl.GLSurfaceView} and {@link
@@ -385,6 +405,7 @@ objects to be rendered by OpenGL.
 href="{@docRoot}resources/tutorials/opengl/opengl-es20.html#projection-and-views">OpenGL ES 2.0
 tutorial</a>.</p>
 
+<<<<<<< HEAD
 <h2 id="faces-winding">Shape Faces and Winding</h2>
 
 <p>In OpenGL, the face of a shape is a surface defined by three or more points in three-dimensional
@@ -422,6 +443,8 @@ So, always define the coordinates of your OpenGL shapes in a counterclockwise dr
 <p class="note"><strong>Note:</strong> It is possible to set an OpenGL environment to treat the
 clockwise face as the front face, but doing so requires more code and is likely to confuse
 experienced OpenGL developers when you ask them for help. So don’t do that.</p>
+=======
+>>>>>>> upstream/master
 
 <h2 id="compatibility">OpenGL Versions and Device Compatibility</h2>
 
@@ -443,8 +466,12 @@ texture compression, see the <a
 href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/graphics/CompressedTextureActivity.html"
 >CompressedTextureActivity</a> code sample.</p>
 
+<<<<<<< HEAD
 <p>The ETC format is supported by most Android devices, but it not guarranteed to be available. To
 check if the ETC1 format is supported on a device, call the {@link
+=======
+<p>To check if the ETC1 format is supported on a device, call the {@link
+>>>>>>> upstream/master
 android.opengl.ETC1Util#isETC1Supported() ETC1Util.isETC1Supported()} method.</p>
 
 <p class="note"><b>Note:</b> The ETC1 texture compression format does not support textures with an

@@ -34,23 +34,41 @@ if (truncatedTicker != null && truncatedTicker.length() > maxTickerLen) {
 }
 */
 
+<<<<<<< HEAD
 /**
  * Class encapsulating a Notification. Sent by the NotificationManagerService to the IStatusBar (in System UI).
  */
 public class StatusBarNotification implements Parcelable {
+=======
+public class StatusBarNotification implements Parcelable {
+    public static int PRIORITY_JIFFY_EXPRESS = -100;
+    public static int PRIORITY_NORMAL        = 0;
+    public static int PRIORITY_ONGOING       = 100;
+    public static int PRIORITY_SYSTEM        = 200;
+
+>>>>>>> upstream/master
     public String pkg;
     public int id;
     public String tag;
     public int uid;
     public int initialPid;
     public Notification notification;
+<<<<<<< HEAD
     public int score;
     
+=======
+    public int priority = PRIORITY_NORMAL;
+
+>>>>>>> upstream/master
     public StatusBarNotification() {
     }
 
     public StatusBarNotification(String pkg, int id, String tag,
+<<<<<<< HEAD
             int uid, int initialPid, int score, Notification notification) {
+=======
+            int uid, int initialPid, Notification notification) {
+>>>>>>> upstream/master
         if (pkg == null) throw new NullPointerException();
         if (notification == null) throw new NullPointerException();
 
@@ -59,8 +77,14 @@ public class StatusBarNotification implements Parcelable {
         this.tag = tag;
         this.uid = uid;
         this.initialPid = initialPid;
+<<<<<<< HEAD
         this.score = score;
         this.notification = notification;
+=======
+        this.notification = notification;
+
+        this.priority = PRIORITY_NORMAL;
+>>>>>>> upstream/master
     }
 
     public StatusBarNotification(Parcel in) {
@@ -77,7 +101,11 @@ public class StatusBarNotification implements Parcelable {
         }
         this.uid = in.readInt();
         this.initialPid = in.readInt();
+<<<<<<< HEAD
         this.score = in.readInt();
+=======
+        this.priority = in.readInt();
+>>>>>>> upstream/master
         this.notification = new Notification(in);
     }
 
@@ -92,7 +120,11 @@ public class StatusBarNotification implements Parcelable {
         }
         out.writeInt(this.uid);
         out.writeInt(this.initialPid);
+<<<<<<< HEAD
         out.writeInt(this.score);
+=======
+        out.writeInt(this.priority);
+>>>>>>> upstream/master
         this.notification.writeToParcel(out, flags);
     }
 
@@ -116,12 +148,21 @@ public class StatusBarNotification implements Parcelable {
 
     public StatusBarNotification clone() {
         return new StatusBarNotification(this.pkg, this.id, this.tag,
+<<<<<<< HEAD
                 this.uid, this.initialPid, this.score, this.notification.clone());
     }
 
     public String toString() {
         return "StatusBarNotification(pkg=" + pkg + " id=" + id + " tag=" + tag
                 + " score=" + score + " notn=" + notification + ")";
+=======
+                this.uid, this.initialPid, this.notification.clone());
+    }
+
+    public String toString() {
+        return "StatusBarNotification(package=" + pkg + " id=" + id + " tag=" + tag
+                + " notification=" + notification + " priority=" + priority + ")";
+>>>>>>> upstream/master
     }
 
     public boolean isOngoing() {

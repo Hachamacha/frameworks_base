@@ -52,7 +52,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
 import java.util.concurrent.CopyOnWriteArrayList;
+=======
+>>>>>>> upstream/master
 
 public class TextServicesManagerService extends ITextServicesManager.Stub {
     private static final String TAG = TextServicesManagerService.class.getSimpleName();
@@ -77,7 +80,11 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
         mSystemReady = false;
         mContext = context;
         mMonitor = new TextServicesMonitor();
+<<<<<<< HEAD
         mMonitor.register(context, null, true);
+=======
+        mMonitor.register(context, true);
+>>>>>>> upstream/master
         synchronized (mSpellCheckerMap) {
             buildSpellCheckerMapLocked(context, mSpellCheckerList, mSpellCheckerMap);
         }
@@ -198,7 +205,11 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
     }
 
     // TODO: Respect allowImplicitlySelectedSubtype
+<<<<<<< HEAD
     // TODO: Save SpellCheckerSubtype by supported languages by looking at "locale".
+=======
+    // TODO: Save SpellCheckerSubtype by supported languages.
+>>>>>>> upstream/master
     @Override
     public SpellCheckerSubtype getCurrentSpellCheckerSubtype(
             String locale, boolean allowImplicitlySelectedSubtype) {
@@ -250,12 +261,23 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
             for (int i = 0; i < sci.getSubtypeCount(); ++i) {
                 final SpellCheckerSubtype scs = sci.getSubtypeAt(i);
                 if (hashCode == 0) {
+<<<<<<< HEAD
                     final String scsLocale = scs.getLocale();
                     if (candidateLocale.equals(scsLocale)) {
                         return scs;
                     } else if (candidate == null) {
                         if (candidateLocale.length() >= 2 && scsLocale.length() >= 2
                                 && candidateLocale.startsWith(scsLocale)) {
+=======
+                    if (candidateLocale.equals(locale)) {
+                        return scs;
+                    } else if (candidate == null) {
+                        final String scsLocale = scs.getLocale();
+                        if (candidateLocale.length() >= 2
+                                && scsLocale.length() >= 2
+                                && candidateLocale.substring(0, 2).equals(
+                                        scsLocale.substring(0, 2))) {
+>>>>>>> upstream/master
                             // Fall back to the applicable language
                             candidate = scs;
                         }
@@ -581,8 +603,13 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
     private class SpellCheckerBindGroup {
         private final String TAG = SpellCheckerBindGroup.class.getSimpleName();
         private final InternalServiceConnection mInternalConnection;
+<<<<<<< HEAD
         private final CopyOnWriteArrayList<InternalDeathRecipient> mListeners =
                 new CopyOnWriteArrayList<InternalDeathRecipient>();
+=======
+        private final ArrayList<InternalDeathRecipient> mListeners =
+                new ArrayList<InternalDeathRecipient>();
+>>>>>>> upstream/master
         public boolean mBound;
         public ISpellCheckerService mSpellChecker;
         public boolean mConnected;
@@ -600,6 +627,7 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
             if (DBG) {
                 Slog.d(TAG, "onServiceConnected");
             }
+<<<<<<< HEAD
 
             for (InternalDeathRecipient listener : mListeners) {
                 try {
@@ -618,6 +646,21 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
                 }
             }
             synchronized(mSpellCheckerMap) {
+=======
+            synchronized(mSpellCheckerMap) {
+                for (InternalDeathRecipient listener : mListeners) {
+                    try {
+                        final ISpellCheckerSession session = spellChecker.getISpellCheckerSession(
+                                listener.mScLocale, listener.mScListener, listener.mBundle);
+                        listener.mTsListener.onServiceConnected(session);
+                    } catch (RemoteException e) {
+                        Slog.e(TAG, "Exception in getting the spell checker session."
+                                + "Reconnect to the spellchecker. ", e);
+                        removeAll();
+                        return;
+                    }
+                }
+>>>>>>> upstream/master
                 mSpellChecker = spellChecker;
                 mConnected = true;
             }

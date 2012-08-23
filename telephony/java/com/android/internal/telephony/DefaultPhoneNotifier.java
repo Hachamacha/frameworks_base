@@ -21,7 +21,10 @@ import android.net.LinkProperties;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+<<<<<<< HEAD
 import android.telephony.CellInfo;
+=======
+>>>>>>> upstream/master
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -157,6 +160,7 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
         }
     }
 
+<<<<<<< HEAD
     public void notifyCellInfo(Phone sender, CellInfo cellInfo) {
         try {
             mRegistry.notifyCellInfo(cellInfo);
@@ -165,6 +169,8 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public void notifyOtaspChanged(Phone sender, int otaspMode) {
         try {
             mRegistry.notifyOtaspChanged(otaspMode);

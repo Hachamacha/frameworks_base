@@ -651,6 +651,7 @@ public abstract class PreferenceActivity extends ListActivity implements
     }
 
     /**
+<<<<<<< HEAD
      * Returns the Header list
      * @hide
      */
@@ -659,6 +660,8 @@ public abstract class PreferenceActivity extends ListActivity implements
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns true if this activity is showing multiple panes -- the headers
      * and a preference fragment.
      */

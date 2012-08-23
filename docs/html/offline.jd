@@ -23,6 +23,7 @@ page.title=Welcome
 <div id="qv">
   <h2>Get Started</h2>
   <ul>
+<<<<<<< HEAD
     <li>Create a <a href="{@docRoot}training/basics/firstapp/index.html">Building Your First App</a>
 application</li>
     <li>Read <a href="{@docRoot}resources/browser.html?tag=sample">Sample Code</a>,
@@ -30,6 +31,15 @@ especially <a href="{@docRoot}resources/samples/ApiDemos/index.html">API Demos</
     <li>Read the <a href="{@docRoot}guide/components/index.html">Application
 Fundamentals</a></li>
     <li>Read the <a href="{@docRoot}tools/workflow/index.html">Introduction</a> for using the SDK
+=======
+    <li>Create a <a href="{@docRoot}resources/tutorials/hello-world.html">Hello World</a>
+application</li>
+    <li>Read <a href="{@docRoot}resources/browser.html?tag=sample">Sample Code</a>,
+especially <a href="{@docRoot}resources/samples/ApiDemos/index.html">API Demos</a></li>
+    <li>Read the <a href="{@docRoot}guide/topics/fundamentals/index.html">Application
+Fundamentals</a></li>
+    <li>Read the <a href="{@docRoot}guide/developing/index.html">Introduction</a> for using the SDK
+>>>>>>> upstream/master
 tools</li>
   </ul>
 </div>
@@ -37,10 +47,17 @@ tools</li>
 
 <h3>If you've downloaded the Android SDK for the first time</h3>
 
+<<<<<<< HEAD
 <p>Follow the guide to <a href="{@docRoot}sdk/installing/index.html">Installing the Android SDK</a>, which
 will help you setup your development environment.</p>
 
 <h3>If you've installed new SDK components using the Android SDK Manager</h3>
+=======
+<p>Follow the guide to <a href="{@docRoot}sdk/installing.html">Installing the Android SDK</a>, which
+will help you setup your development environment.</p>
+
+<h3>If you've installed new SDK components using the SDK and AVD Manager</h3>
+>>>>>>> upstream/master
 
 <p>There's no additional setup.</p>
 

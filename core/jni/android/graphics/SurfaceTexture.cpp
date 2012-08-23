@@ -35,7 +35,10 @@ namespace android {
 
 static const char* const OutOfResourcesException =
     "android/graphics/SurfaceTexture$OutOfResourcesException";
+<<<<<<< HEAD
 static const char* const IllegalStateException = "java/lang/IllegalStateException";
+=======
+>>>>>>> upstream/master
 const char* const kSurfaceTextureClassPathName = "android/graphics/SurfaceTexture";
 
 struct fields_t {
@@ -113,7 +116,11 @@ JNIEnv* JNISurfaceTextureContext::getJNIEnv(bool* needsDetach) {
         JavaVM* vm = AndroidRuntime::getJavaVM();
         int result = vm->AttachCurrentThread(&env, (void*) &args);
         if (result != JNI_OK) {
+<<<<<<< HEAD
             ALOGE("thread attach failed: %#x", result);
+=======
+            LOGE("thread attach failed: %#x", result);
+>>>>>>> upstream/master
             return NULL;
         }
         *needsDetach = true;
@@ -125,7 +132,11 @@ void JNISurfaceTextureContext::detachJNI() {
     JavaVM* vm = AndroidRuntime::getJavaVM();
     int result = vm->DetachCurrentThread();
     if (result != JNI_OK) {
+<<<<<<< HEAD
         ALOGE("thread detach failed: %#x", result);
+=======
+        LOGE("thread detach failed: %#x", result);
+>>>>>>> upstream/master
     }
 }
 
@@ -137,7 +148,11 @@ JNISurfaceTextureContext::~JNISurfaceTextureContext()
         env->DeleteGlobalRef(mWeakThiz);
         env->DeleteGlobalRef(mClazz);
     } else {
+<<<<<<< HEAD
         ALOGW("leaking JNI object references");
+=======
+        LOGW("leaking JNI object references");
+>>>>>>> upstream/master
     }
     if (needsDetach) {
         detachJNI();
@@ -151,7 +166,11 @@ void JNISurfaceTextureContext::onFrameAvailable()
     if (env != NULL) {
         env->CallStaticVoidMethod(mClazz, fields.postEvent, mWeakThiz);
     } else {
+<<<<<<< HEAD
         ALOGW("onFrameAvailable event will not posted");
+=======
+        LOGW("onFrameAvailable event will not posted");
+>>>>>>> upstream/master
     }
     if (needsDetach) {
         detachJNI();
@@ -165,14 +184,22 @@ static void SurfaceTexture_classInit(JNIEnv* env, jclass clazz)
     fields.surfaceTexture = env->GetFieldID(clazz,
             ANDROID_GRAPHICS_SURFACETEXTURE_JNI_ID, "I");
     if (fields.surfaceTexture == NULL) {
+<<<<<<< HEAD
         ALOGE("can't find android/graphics/SurfaceTexture.%s",
+=======
+        LOGE("can't find android/graphics/SurfaceTexture.%s",
+>>>>>>> upstream/master
                 ANDROID_GRAPHICS_SURFACETEXTURE_JNI_ID);
     }
 
     fields.postEvent = env->GetStaticMethodID(clazz, "postEventFromNative",
             "(Ljava/lang/Object;)V");
     if (fields.postEvent == NULL) {
+<<<<<<< HEAD
         ALOGE("can't find android/graphics/SurfaceTexture.postEventFromNative");
+=======
+        LOGE("can't find android/graphics/SurfaceTexture.postEventFromNative");
+>>>>>>> upstream/master
     }
 }
 
@@ -213,6 +240,7 @@ static void SurfaceTexture_setDefaultBufferSize(
     surfaceTexture->setDefaultBufferSize(width, height);
 }
 
+<<<<<<< HEAD
 static void SurfaceTexture_updateTexImage(JNIEnv* env, jobject thiz)
 {
     sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
@@ -235,6 +263,12 @@ static jint SurfaceTexture_attachToGLContext(JNIEnv* env, jobject thiz, jint tex
 {
     sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
     return surfaceTexture->attachToContext((GLuint)tex);
+=======
+static jint SurfaceTexture_updateTexImage(JNIEnv* env, jobject thiz)
+{
+    sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
+    return surfaceTexture->updateTexImage();
+>>>>>>> upstream/master
 }
 
 static void SurfaceTexture_getTransformMatrix(JNIEnv* env, jobject thiz,
@@ -261,6 +295,7 @@ static void SurfaceTexture_release(JNIEnv* env, jobject thiz)
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gSurfaceTextureMethods[] = {
+<<<<<<< HEAD
     {"nativeClassInit",            "()V",   (void*)SurfaceTexture_classInit },
     {"nativeInit",                 "(ILjava/lang/Object;Z)V", (void*)SurfaceTexture_init },
     {"nativeFinalize",             "()V",   (void*)SurfaceTexture_finalize },
@@ -271,6 +306,16 @@ static JNINativeMethod gSurfaceTextureMethods[] = {
     {"nativeGetTransformMatrix",   "([F)V", (void*)SurfaceTexture_getTransformMatrix },
     {"nativeGetTimestamp",         "()J",   (void*)SurfaceTexture_getTimestamp },
     {"nativeRelease",              "()V",   (void*)SurfaceTexture_release },
+=======
+    {"nativeClassInit",          "()V",   (void*)SurfaceTexture_classInit },
+    {"nativeInit",               "(ILjava/lang/Object;Z)V", (void*)SurfaceTexture_init },
+    {"nativeFinalize",           "()V",   (void*)SurfaceTexture_finalize },
+    {"nativeSetDefaultBufferSize", "(II)V", (void*)SurfaceTexture_setDefaultBufferSize },
+    {"nativeUpdateTexImage",     "()I",   (void*)SurfaceTexture_updateTexImage },
+    {"nativeGetTransformMatrix", "([F)V", (void*)SurfaceTexture_getTransformMatrix },
+    {"nativeGetTimestamp",       "()J",   (void*)SurfaceTexture_getTimestamp },
+    {"nativeRelease",            "()V",   (void*)SurfaceTexture_release },
+>>>>>>> upstream/master
 };
 
 int register_android_graphics_SurfaceTexture(JNIEnv* env)

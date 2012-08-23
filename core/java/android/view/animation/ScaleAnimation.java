@@ -128,8 +128,11 @@ public class ScaleAnimation extends Animation {
         mPivotYValue = d.value;
 
         a.recycle();
+<<<<<<< HEAD
 
         initializePivotPoint();
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -180,7 +183,10 @@ public class ScaleAnimation extends Animation {
         mPivotYType = ABSOLUTE;
         mPivotXValue = pivotX;
         mPivotYValue = pivotY;
+<<<<<<< HEAD
         initializePivotPoint();
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -221,6 +227,7 @@ public class ScaleAnimation extends Animation {
         mPivotXType = pivotXType;
         mPivotYValue = pivotYValue;
         mPivotYType = pivotYType;
+<<<<<<< HEAD
         initializePivotPoint();
     }
 
@@ -235,6 +242,8 @@ public class ScaleAnimation extends Animation {
         if (mPivotYType == ABSOLUTE) {
             mPivotY = mPivotYValue;
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override

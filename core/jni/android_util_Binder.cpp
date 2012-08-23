@@ -17,9 +17,13 @@
 #define LOG_TAG "JavaBinder"
 //#define LOG_NDEBUG 0
 
+<<<<<<< HEAD
 #include "android_os_Parcel.h"
 #include "android_util_Binder.h"
 
+=======
+#include "android_util_Binder.h"
+>>>>>>> upstream/master
 #include "JNIHelp.h"
 
 #include <fcntl.h>
@@ -47,6 +51,7 @@
 
 #include <android_runtime/AndroidRuntime.h>
 
+<<<<<<< HEAD
 //#undef ALOGV
 //#define ALOGV(...) fprintf(stderr, __VA_ARGS__)
 
@@ -55,6 +60,16 @@
 #define LOGDEATH ALOGD
 #else
 #define LOGDEATH ALOGV
+=======
+//#undef LOGV
+//#define LOGV(...) fprintf(stderr, __VA_ARGS__)
+
+#define DEBUG_DEATH 0
+#if DEBUG_DEATH
+#define LOGDEATH LOGD
+#else
+#define LOGDEATH LOGV
+>>>>>>> upstream/master
 #endif
 
 using namespace android;
@@ -129,6 +144,15 @@ static struct class_offsets_t
 
 // ----------------------------------------------------------------------------
 
+<<<<<<< HEAD
+=======
+static struct parcel_offsets_t
+{
+    jfieldID mObject;
+    jfieldID mOwnObject;
+} gParcelOffsets;
+
+>>>>>>> upstream/master
 static struct log_offsets_t
 {
     // Class state.
@@ -165,7 +189,11 @@ static void incRefsCreated(JNIEnv* env)
         env->CallStaticVoidMethod(gBinderInternalOffsets.mClass,
                 gBinderInternalOffsets.mForceGc);
     } else {
+<<<<<<< HEAD
         ALOGV("Now have %d binder ops", old);
+=======
+        LOGV("Now have %d binder ops", old);
+>>>>>>> upstream/master
     }
 }
 
@@ -190,8 +218,13 @@ static void report_exception(JNIEnv* env, jthrowable excep, const char* msg)
 
     if ((tagstr == NULL) || (msgstr == NULL)) {
         env->ExceptionClear();      /* assume exception (OOM?) was thrown */
+<<<<<<< HEAD
         ALOGE("Unable to call Log.e()\n");
         ALOGE("%s", msg);
+=======
+        LOGE("Unable to call Log.e()\n");
+        LOGE("%s", msg);
+>>>>>>> upstream/master
         goto bail;
     }
 
@@ -199,7 +232,11 @@ static void report_exception(JNIEnv* env, jthrowable excep, const char* msg)
         gLogOffsets.mClass, gLogOffsets.mLogE, tagstr, msgstr, excep);
     if (env->ExceptionCheck()) {
         /* attempting to log the failure has failed */
+<<<<<<< HEAD
         ALOGW("Failed trying to log exception, msg='%s'\n", msg);
+=======
+        LOGW("Failed trying to log exception, msg='%s'\n", msg);
+>>>>>>> upstream/master
         env->ExceptionClear();
     }
 
@@ -217,7 +254,11 @@ static void report_exception(JNIEnv* env, jthrowable excep, const char* msg)
         env->Throw(excep);
         vm->DetachCurrentThread();
         sleep(60);
+<<<<<<< HEAD
         ALOGE("Forcefully exiting");
+=======
+        LOGE("Forcefully exiting");
+>>>>>>> upstream/master
         exit(1);
         *((int *) 1) = 1;
     }
@@ -228,6 +269,18 @@ bail:
     env->DeleteLocalRef(msgstr);
 }
 
+<<<<<<< HEAD
+=======
+static void set_dalvik_blockguard_policy(JNIEnv* env, jint strict_policy)
+{
+    // Call back into android.os.StrictMode#onBinderStrictModePolicyChange
+    // to sync our state back to it.  See the comments in StrictMode.java.
+    env->CallStaticVoidMethod(gStrictModeCallbackOffsets.mClass,
+                              gStrictModeCallbackOffsets.mCallback,
+                              strict_policy);
+}
+
+>>>>>>> upstream/master
 class JavaBBinderHolder;
 
 class JavaBBinder : public BBinder
@@ -236,7 +289,11 @@ public:
     JavaBBinder(JNIEnv* env, jobject object)
         : mVM(jnienv_to_javavm(env)), mObject(env->NewGlobalRef(object))
     {
+<<<<<<< HEAD
         ALOGV("Creating JavaBBinder %p\n", this);
+=======
+        LOGV("Creating JavaBBinder %p\n", this);
+>>>>>>> upstream/master
         android_atomic_inc(&gNumLocalRefs);
         incRefsCreated(env);
     }
@@ -254,7 +311,11 @@ public:
 protected:
     virtual ~JavaBBinder()
     {
+<<<<<<< HEAD
         ALOGV("Destroying JavaBBinder %p\n", this);
+=======
+        LOGV("Destroying JavaBBinder %p\n", this);
+>>>>>>> upstream/master
         android_atomic_dec(&gNumLocalRefs);
         JNIEnv* env = javavm_to_jnienv(mVM);
         env->DeleteGlobalRef(mObject);
@@ -265,7 +326,11 @@ protected:
     {
         JNIEnv* env = javavm_to_jnienv(mVM);
 
+<<<<<<< HEAD
         ALOGV("onTransact() on %p calling object %p in env %p vm %p\n", this, mObject, env, mVM);
+=======
+        LOGV("onTransact() on %p calling object %p in env %p vm %p\n", this, mObject, env, mVM);
+>>>>>>> upstream/master
 
         IPCThreadState* thread_state = IPCThreadState::self();
         const int strict_policy_before = thread_state->getStrictModePolicy();
@@ -308,12 +373,15 @@ protected:
             env->DeleteLocalRef(excep2);
         }
 
+<<<<<<< HEAD
         // Need to always call through the native implementation of
         // SYSPROPS_TRANSACTION.
         if (code == SYSPROPS_TRANSACTION) {
             BBinder::onTransact(code, data, reply, flags);
         }
 
+=======
+>>>>>>> upstream/master
         //aout << "onTransact to Java code; result=" << res << endl
         //    << "Transact from " << this << " to Java code returning "
         //    << reply << ": " << *reply << endl;
@@ -342,7 +410,11 @@ public:
         if (b == NULL) {
             b = new JavaBBinder(env, obj);
             mBinder = b;
+<<<<<<< HEAD
             ALOGV("Creating JavaBinder %p (refs %p) for Object %p, weakCount=%d\n",
+=======
+            LOGV("Creating JavaBinder %p (refs %p) for Object %p, weakCount=%d\n",
+>>>>>>> upstream/master
                  b.get(), b->getWeakRefs(), obj, b->getWeakRefs()->getWeakCount());
         }
 
@@ -456,11 +528,19 @@ public:
                     (jstring) env->CallObjectMethod(objClassRef.get(), gClassOffsets.mGetName));
             ScopedUtfChars nameUtf(env, nameRef.get());
             if (nameUtf.c_str() != NULL) {
+<<<<<<< HEAD
                 ALOGW("BinderProxy is being destroyed but the application did not call "
                         "unlinkToDeath to unlink all of its death recipients beforehand.  "
                         "Releasing leaked death recipient: %s", nameUtf.c_str());
             } else {
                 ALOGW("BinderProxy being destroyed; unable to get DR object name");
+=======
+                LOGW("BinderProxy is being destroyed but the application did not call "
+                        "unlinkToDeath to unlink all of its death recipients beforehand.  "
+                        "Releasing leaked death recipient: %s", nameUtf.c_str());
+            } else {
+                LOGW("BinderProxy being destroyed; unable to get DR object name");
+>>>>>>> upstream/master
                 env->ExceptionClear();
             }
         }
@@ -469,7 +549,11 @@ public:
 protected:
     virtual ~JavaDeathRecipient()
     {
+<<<<<<< HEAD
         //ALOGI("Removing death ref: recipient=%p\n", mObject);
+=======
+        //LOGI("Removing death ref: recipient=%p\n", mObject);
+>>>>>>> upstream/master
         android_atomic_dec(&gNumDeathRefs);
         JNIEnv* env = javavm_to_jnienv(mVM);
         if (mObject != NULL) {
@@ -572,7 +656,11 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
     if (object != NULL) {
         jobject res = env->CallObjectMethod(object, gWeakReferenceOffsets.mGet);
         if (res != NULL) {
+<<<<<<< HEAD
             ALOGV("objectForBinder %p: found existing %p!\n", val.get(), res);
+=======
+            LOGV("objectForBinder %p: found existing %p!\n", val.get(), res);
+>>>>>>> upstream/master
             return res;
         }
         LOGDEATH("Proxy object %p of IBinder %p no longer in working set!!!", object, val.get());
@@ -623,6 +711,7 @@ sp<IBinder> ibinderForJavaObject(JNIEnv* env, jobject obj)
             env->GetIntField(obj, gBinderProxyOffsets.mObject);
     }
 
+<<<<<<< HEAD
     ALOGW("ibinderForJavaObject: %p is not a Binder object", obj);
     return NULL;
 }
@@ -644,6 +733,32 @@ void set_dalvik_blockguard_policy(JNIEnv* env, jint strict_policy)
 
 void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
         bool canThrowRemoteException)
+=======
+    LOGW("ibinderForJavaObject: %p is not a Binder object", obj);
+    return NULL;
+}
+
+Parcel* parcelForJavaObject(JNIEnv* env, jobject obj)
+{
+    if (obj) {
+        Parcel* p = (Parcel*)env->GetIntField(obj, gParcelOffsets.mObject);
+        if (p != NULL) {
+            return p;
+        }
+        jniThrowException(env, "java/lang/IllegalStateException", "Parcel has been finalized!");
+    }
+    return NULL;
+}
+
+jobject newParcelFileDescriptor(JNIEnv* env, jobject fileDesc)
+{
+    return env->NewObject(
+            gParcelFileDescriptorOffsets.mClass, gParcelFileDescriptorOffsets.mConstructor, fileDesc);
+}
+
+static void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
+        bool canThrowRemoteException = false)
+>>>>>>> upstream/master
 {
     switch (err) {
         case UNKNOWN_ERROR:
@@ -689,7 +804,11 @@ void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
             jniThrowException(env, "java/lang/RuntimeException", "Unknown transaction code");
             break;
         case FAILED_TRANSACTION:
+<<<<<<< HEAD
             ALOGE("!!! FAILED BINDER TRANSACTION !!!");
+=======
+            LOGE("!!! FAILED BINDER TRANSACTION !!!");
+>>>>>>> upstream/master
             // TransactionTooLargeException is a checked exception, only throw from certain methods.
             // FIXME: Transaction too large is the most common reason for FAILED_TRANSACTION
             //        but it is not the only one.  The Binder driver can return BR_FAILED_REPLY
@@ -705,7 +824,11 @@ void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
                     "Not allowed to write file descriptors here");
             break;
         default:
+<<<<<<< HEAD
             ALOGE("Unknown binder error code. 0x%x", err);
+=======
+            LOGE("Unknown binder error code. 0x%x", err);
+>>>>>>> upstream/master
             String8 msg;
             msg.appendFormat("Unknown binder error code. 0x%x", err);
             // RemoteException is a checked exception, only throw from certain methods.
@@ -729,11 +852,14 @@ static jint android_os_Binder_getCallingUid(JNIEnv* env, jobject clazz)
     return IPCThreadState::self()->getCallingUid();
 }
 
+<<<<<<< HEAD
 static jint android_os_Binder_getOrigCallingUid(JNIEnv* env, jobject clazz)
 {
     return IPCThreadState::self()->getOrigCallingUid();
 }
 
+=======
+>>>>>>> upstream/master
 static jlong android_os_Binder_clearCallingIdentity(JNIEnv* env, jobject clazz)
 {
     return IPCThreadState::self()->clearCallingIdentity();
@@ -775,7 +901,11 @@ static void android_os_Binder_init(JNIEnv* env, jobject obj)
         jniThrowException(env, "java/lang/OutOfMemoryError", NULL);
         return;
     }
+<<<<<<< HEAD
     ALOGV("Java Binder %p: acquiring first ref on holder %p", obj, jbh);
+=======
+    LOGV("Java Binder %p: acquiring first ref on holder %p", obj, jbh);
+>>>>>>> upstream/master
     jbh->incStrong((void*)android_os_Binder_init);
     env->SetIntField(obj, gBinderOffsets.mObject, (int)jbh);
 }
@@ -786,7 +916,11 @@ static void android_os_Binder_destroy(JNIEnv* env, jobject obj)
         env->GetIntField(obj, gBinderOffsets.mObject);
     if (jbh != NULL) {
         env->SetIntField(obj, gBinderOffsets.mObject, 0);
+<<<<<<< HEAD
         ALOGV("Java Binder %p: removing ref on holder %p", obj, jbh);
+=======
+        LOGV("Java Binder %p: removing ref on holder %p", obj, jbh);
+>>>>>>> upstream/master
         jbh->decStrong((void*)android_os_Binder_init);
     } else {
         // Encountering an uninitialized binder is harmless.  All it means is that
@@ -795,7 +929,11 @@ static void android_os_Binder_destroy(JNIEnv* env, jobject obj)
         // For example, a Binder subclass constructor might have thrown an exception before
         // it could delegate to its superclass's constructor.  Consequently init() would
         // not have been called and the holder pointer would remain NULL.
+<<<<<<< HEAD
         ALOGV("Java Binder %p: ignoring uninitialized binder", obj);
+=======
+        LOGV("Java Binder %p: ignoring uninitialized binder", obj);
+>>>>>>> upstream/master
     }
 }
 
@@ -805,7 +943,10 @@ static const JNINativeMethod gBinderMethods[] = {
      /* name, signature, funcPtr */
     { "getCallingPid", "()I", (void*)android_os_Binder_getCallingPid },
     { "getCallingUid", "()I", (void*)android_os_Binder_getCallingUid },
+<<<<<<< HEAD
     { "getOrigCallingUidNative", "()I", (void*)android_os_Binder_getOrigCallingUid },
+=======
+>>>>>>> upstream/master
     { "clearCallingIdentity", "()J", (void*)android_os_Binder_clearCallingIdentity },
     { "restoreCallingIdentity", "(J)V", (void*)android_os_Binder_restoreCallingIdentity },
     { "setThreadStrictModePolicy", "(I)V", (void*)android_os_Binder_setThreadStrictModePolicy },
@@ -885,7 +1026,11 @@ static void android_os_BinderInternal_disableBackgroundScheduling(JNIEnv* env,
 
 static void android_os_BinderInternal_handleGc(JNIEnv* env, jobject clazz)
 {
+<<<<<<< HEAD
     ALOGV("Gc has executed, clearing binder ops");
+=======
+    LOGV("Gc has executed, clearing binder ops");
+>>>>>>> upstream/master
     android_atomic_and(0, &gNumRefsCreated);
 }
 
@@ -972,7 +1117,11 @@ static bool push_eventlog_string(char** pos, const char* end, const char* str) {
     jint len = strlen(str);
     int space_needed = 1 + sizeof(len) + len;
     if (end - *pos < space_needed) {
+<<<<<<< HEAD
         ALOGW("not enough space for string. remain=%d; needed=%d",
+=======
+        LOGW("not enough space for string. remain=%d; needed=%d",
+>>>>>>> upstream/master
              (end - *pos), space_needed);
         return false;
     }
@@ -988,7 +1137,11 @@ static bool push_eventlog_string(char** pos, const char* end, const char* str) {
 static bool push_eventlog_int(char** pos, const char* end, jint val) {
     int space_needed = 1 + sizeof(val);
     if (end - *pos < space_needed) {
+<<<<<<< HEAD
         ALOGW("not enough space for int.  remain=%d; needed=%d",
+=======
+        LOGW("not enough space for int.  remain=%d; needed=%d",
+>>>>>>> upstream/master
              (end - *pos), space_needed);
         return false;
     }
@@ -1074,7 +1227,11 @@ static jboolean android_os_BinderProxy_transact(JNIEnv* env, jobject obj,
         return JNI_FALSE;
     }
 
+<<<<<<< HEAD
     ALOGV("Java code calling transact on %p in Java object %p with code %d\n",
+=======
+    LOGV("Java code calling transact on %p in Java object %p with code %d\n",
+>>>>>>> upstream/master
             target, obj, code);
 
     // Only log the binder call duration for things on the Java-level main thread.
@@ -1113,7 +1270,11 @@ static void android_os_BinderProxy_linkToDeath(JNIEnv* env, jobject obj,
     IBinder* target = (IBinder*)
         env->GetIntField(obj, gBinderProxyOffsets.mObject);
     if (target == NULL) {
+<<<<<<< HEAD
         ALOGW("Binder has been finalized when calling linkToDeath() with recip=%p)\n", recipient);
+=======
+        LOGW("Binder has been finalized when calling linkToDeath() with recip=%p)\n", recipient);
+>>>>>>> upstream/master
         assert(false);
     }
 
@@ -1145,7 +1306,11 @@ static jboolean android_os_BinderProxy_unlinkToDeath(JNIEnv* env, jobject obj,
     IBinder* target = (IBinder*)
         env->GetIntField(obj, gBinderProxyOffsets.mObject);
     if (target == NULL) {
+<<<<<<< HEAD
         ALOGW("Binder has been finalized when calling linkToDeath() with recip=%p)\n", recipient);
+=======
+        LOGW("Binder has been finalized when calling linkToDeath() with recip=%p)\n", recipient);
+>>>>>>> upstream/master
         return JNI_FALSE;
     }
 
@@ -1263,6 +1428,7 @@ static int int_register_android_os_BinderProxy(JNIEnv* env)
 // ****************************************************************************
 // ****************************************************************************
 
+<<<<<<< HEAD
 int register_android_os_Binder(JNIEnv* env)
 {
     if (int_register_android_os_Binder(env) < 0)
@@ -1272,6 +1438,614 @@ int register_android_os_Binder(JNIEnv* env)
     if (int_register_android_os_BinderProxy(env) < 0)
         return -1;
 
+=======
+static jint android_os_Parcel_dataSize(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    return parcel ? parcel->dataSize() : 0;
+}
+
+static jint android_os_Parcel_dataAvail(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    return parcel ? parcel->dataAvail() : 0;
+}
+
+static jint android_os_Parcel_dataPosition(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    return parcel ? parcel->dataPosition() : 0;
+}
+
+static jint android_os_Parcel_dataCapacity(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    return parcel ? parcel->dataCapacity() : 0;
+}
+
+static void android_os_Parcel_setDataSize(JNIEnv* env, jobject clazz, jint size)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->setDataSize(size);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_setDataPosition(JNIEnv* env, jobject clazz, jint pos)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        parcel->setDataPosition(pos);
+    }
+}
+
+static void android_os_Parcel_setDataCapacity(JNIEnv* env, jobject clazz, jint size)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->setDataCapacity(size);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static jboolean android_os_Parcel_pushAllowFds(JNIEnv* env, jobject clazz, jboolean allowFds)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    jboolean ret = JNI_TRUE;
+    if (parcel != NULL) {
+        ret = (jboolean)parcel->pushAllowFds(allowFds);
+    }
+    return ret;
+}
+
+static void android_os_Parcel_restoreAllowFds(JNIEnv* env, jobject clazz, jboolean lastValue)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        parcel->restoreAllowFds((bool)lastValue);
+    }
+}
+
+static void android_os_Parcel_writeNative(JNIEnv* env, jobject clazz,
+                                          jobject data, jint offset,
+                                          jint length)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel == NULL) {
+        return;
+    }
+
+    const status_t err = parcel->writeInt32(length);
+    if (err != NO_ERROR) {
+        signalExceptionForError(env, clazz, err);
+        return;
+    }
+
+    void* dest = parcel->writeInplace(length);
+    if (dest == NULL) {
+        signalExceptionForError(env, clazz, NO_MEMORY);
+        return;
+    }
+
+    jbyte* ar = (jbyte*)env->GetPrimitiveArrayCritical((jarray)data, 0);
+    if (ar) {
+        memcpy(dest, ar + offset, length);
+        env->ReleasePrimitiveArrayCritical((jarray)data, ar, 0);
+    }
+}
+
+
+static void android_os_Parcel_writeInt(JNIEnv* env, jobject clazz, jint val)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->writeInt32(val);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeLong(JNIEnv* env, jobject clazz, jlong val)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->writeInt64(val);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeFloat(JNIEnv* env, jobject clazz, jfloat val)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->writeFloat(val);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeDouble(JNIEnv* env, jobject clazz, jdouble val)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->writeDouble(val);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeString(JNIEnv* env, jobject clazz, jstring val)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        status_t err = NO_MEMORY;
+        if (val) {
+            const jchar* str = env->GetStringCritical(val, 0);
+            if (str) {
+                err = parcel->writeString16(str, env->GetStringLength(val));
+                env->ReleaseStringCritical(val, str);
+            }
+        } else {
+            err = parcel->writeString16(NULL, 0);
+        }
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeStrongBinder(JNIEnv* env, jobject clazz, jobject object)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err = parcel->writeStrongBinder(ibinderForJavaObject(env, object));
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jobject clazz, jobject object)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const status_t err =
+                parcel->writeDupFileDescriptor(jniGetFDFromFileDescriptor(env, object));
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+    }
+}
+
+static jbyteArray android_os_Parcel_createByteArray(JNIEnv* env, jobject clazz)
+{
+    jbyteArray ret = NULL;
+
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        int32_t len = parcel->readInt32();
+
+        // sanity check the stored length against the true data size
+        if (len >= 0 && len <= (int32_t)parcel->dataAvail()) {
+            ret = env->NewByteArray(len);
+
+            if (ret != NULL) {
+                jbyte* a2 = (jbyte*)env->GetPrimitiveArrayCritical(ret, 0);
+                if (a2) {
+                    const void* data = parcel->readInplace(len);
+                    memcpy(a2, data, len);
+                    env->ReleasePrimitiveArrayCritical(ret, a2, 0);
+                }
+            }
+        }
+    }
+
+    return ret;
+}
+
+static jint android_os_Parcel_readInt(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        return parcel->readInt32();
+    }
+    return 0;
+}
+
+static jlong android_os_Parcel_readLong(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        return parcel->readInt64();
+    }
+    return 0;
+}
+
+static jfloat android_os_Parcel_readFloat(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        return parcel->readFloat();
+    }
+    return 0;
+}
+
+static jdouble android_os_Parcel_readDouble(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        return parcel->readDouble();
+    }
+    return 0;
+}
+
+static jstring android_os_Parcel_readString(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        size_t len;
+        const char16_t* str = parcel->readString16Inplace(&len);
+        if (str) {
+            return env->NewString(str, len);
+        }
+        return NULL;
+    }
+    return NULL;
+}
+
+static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        return javaObjectForIBinder(env, parcel->readStrongBinder());
+    }
+    return NULL;
+}
+
+static jobject android_os_Parcel_readFileDescriptor(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        int fd = parcel->readFileDescriptor();
+        if (fd < 0) return NULL;
+        fd = dup(fd);
+        if (fd < 0) return NULL;
+        return jniCreateFileDescriptor(env, fd);
+    }
+    return NULL;
+}
+
+static jobject android_os_Parcel_openFileDescriptor(JNIEnv* env, jobject clazz,
+                                                    jstring name, jint mode)
+{
+    if (name == NULL) {
+        jniThrowNullPointerException(env, NULL);
+        return NULL;
+    }
+    const jchar* str = env->GetStringCritical(name, 0);
+    if (str == NULL) {
+        // Whatever, whatever.
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return NULL;
+    }
+    String8 name8(str, env->GetStringLength(name));
+    env->ReleaseStringCritical(name, str);
+    int flags=0;
+    switch (mode&0x30000000) {
+        case 0:
+        case 0x10000000:
+            flags = O_RDONLY;
+            break;
+        case 0x20000000:
+            flags = O_WRONLY;
+            break;
+        case 0x30000000:
+            flags = O_RDWR;
+            break;
+    }
+
+    if (mode&0x08000000) flags |= O_CREAT;
+    if (mode&0x04000000) flags |= O_TRUNC;
+    if (mode&0x02000000) flags |= O_APPEND;
+
+    int realMode = S_IRWXU|S_IRWXG;
+    if (mode&0x00000001) realMode |= S_IROTH;
+    if (mode&0x00000002) realMode |= S_IWOTH;
+
+    int fd = open(name8.string(), flags, realMode);
+    if (fd < 0) {
+        jniThrowException(env, "java/io/FileNotFoundException", strerror(errno));
+        return NULL;
+    }
+    jobject object = jniCreateFileDescriptor(env, fd);
+    if (object == NULL) {
+        close(fd);
+    }
+    return object;
+}
+
+static jobject android_os_Parcel_dupFileDescriptor(JNIEnv* env, jobject clazz, jobject orig)
+{
+    if (orig == NULL) {
+        jniThrowNullPointerException(env, NULL);
+        return NULL;
+    }
+    int origfd = jniGetFDFromFileDescriptor(env, orig);
+    if (origfd < 0) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", "bad FileDescriptor");
+        return NULL;
+    }
+
+    int fd = dup(origfd);
+    if (fd < 0) {
+        jniThrowIOException(env, errno);
+        return NULL;
+    }
+    jobject object = jniCreateFileDescriptor(env, fd);
+    if (object == NULL) {
+        close(fd);
+    }
+    return object;
+}
+
+static void android_os_Parcel_closeFileDescriptor(JNIEnv* env, jobject clazz, jobject object)
+{
+    if (object == NULL) {
+        jniThrowNullPointerException(env, NULL);
+        return;
+    }
+    int fd = jniGetFDFromFileDescriptor(env, object);
+    if (fd >= 0) {
+        jniSetFileDescriptorOfFD(env, object, -1);
+        //LOGI("Closing ParcelFileDescriptor %d\n", fd);
+        close(fd);
+    }
+}
+
+static void android_os_Parcel_clearFileDescriptor(JNIEnv* env, jobject clazz, jobject object)
+{
+    if (object == NULL) {
+        jniThrowNullPointerException(env, NULL);
+        return;
+    }
+    int fd = jniGetFDFromFileDescriptor(env, object);
+    if (fd >= 0) {
+        jniSetFileDescriptorOfFD(env, object, -1);
+    }
+}
+
+static void android_os_Parcel_freeBuffer(JNIEnv* env, jobject clazz)
+{
+    int32_t own = env->GetIntField(clazz, gParcelOffsets.mOwnObject);
+    if (own) {
+        Parcel* parcel = parcelForJavaObject(env, clazz);
+        if (parcel != NULL) {
+            //LOGI("Parcel.freeBuffer() called for C++ Parcel %p\n", parcel);
+            parcel->freeData();
+        }
+    }
+}
+
+static void android_os_Parcel_init(JNIEnv* env, jobject clazz, jint parcelInt)
+{
+    Parcel* parcel = (Parcel*)parcelInt;
+    int own = 0;
+    if (!parcel) {
+        //LOGI("Initializing obj %p: creating new Parcel\n", clazz);
+        own = 1;
+        parcel = new Parcel;
+    } else {
+        //LOGI("Initializing obj %p: given existing Parcel %p\n", clazz, parcel);
+    }
+    if (parcel == NULL) {
+        jniThrowException(env, "java/lang/OutOfMemoryError", NULL);
+        return;
+    }
+    //LOGI("Initializing obj %p from C++ Parcel %p, own=%d\n", clazz, parcel, own);
+    env->SetIntField(clazz, gParcelOffsets.mOwnObject, own);
+    env->SetIntField(clazz, gParcelOffsets.mObject, (int)parcel);
+}
+
+static void android_os_Parcel_destroy(JNIEnv* env, jobject clazz)
+{
+    int32_t own = env->GetIntField(clazz, gParcelOffsets.mOwnObject);
+    if (own) {
+        Parcel* parcel = parcelForJavaObject(env, clazz);
+        env->SetIntField(clazz, gParcelOffsets.mObject, 0);
+        //LOGI("Destroying obj %p: deleting C++ Parcel %p\n", clazz, parcel);
+        delete parcel;
+    } else {
+        env->SetIntField(clazz, gParcelOffsets.mObject, 0);
+        //LOGI("Destroying obj %p: leaving C++ Parcel %p\n", clazz);
+    }
+}
+
+static jbyteArray android_os_Parcel_marshall(JNIEnv* env, jobject clazz)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel == NULL) {
+       return NULL;
+    }
+
+    // do not marshall if there are binder objects in the parcel
+    if (parcel->objectsCount())
+    {
+        jniThrowException(env, "java/lang/RuntimeException", "Tried to marshall a Parcel that contained Binder objects.");
+        return NULL;
+    }
+
+    jbyteArray ret = env->NewByteArray(parcel->dataSize());
+
+    if (ret != NULL)
+    {
+        jbyte* array = (jbyte*)env->GetPrimitiveArrayCritical(ret, 0);
+        if (array != NULL)
+        {
+            memcpy(array, parcel->data(), parcel->dataSize());
+            env->ReleasePrimitiveArrayCritical(ret, array, 0);
+        }
+    }
+
+    return ret;
+}
+
+static void android_os_Parcel_unmarshall(JNIEnv* env, jobject clazz, jbyteArray data, jint offset, jint length)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel == NULL || length < 0) {
+       return;
+    }
+
+    jbyte* array = (jbyte*)env->GetPrimitiveArrayCritical(data, 0);
+    if (array)
+    {
+        parcel->setDataSize(length);
+        parcel->setDataPosition(0);
+
+        void* raw = parcel->writeInplace(length);
+        memcpy(raw, (array + offset), length);
+
+        env->ReleasePrimitiveArrayCritical(data, array, 0);
+    }
+}
+
+static void android_os_Parcel_appendFrom(JNIEnv* env, jobject clazz, jobject parcel, jint offset, jint length)
+{
+    Parcel* thisParcel = parcelForJavaObject(env, clazz);
+    if (thisParcel == NULL) {
+       return;
+    }
+    Parcel* otherParcel = parcelForJavaObject(env, parcel);
+    if (otherParcel == NULL) {
+       return;
+    }
+
+    status_t err = thisParcel->appendFrom(otherParcel, offset, length);
+    if (err != NO_ERROR) {
+        signalExceptionForError(env, clazz, err);
+    }
+}
+
+static jboolean android_os_Parcel_hasFileDescriptors(JNIEnv* env, jobject clazz)
+{
+    jboolean ret = JNI_FALSE;
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        if (parcel->hasFileDescriptors()) {
+            ret = JNI_TRUE;
+        }
+    }
+    return ret;
+}
+
+static void android_os_Parcel_writeInterfaceToken(JNIEnv* env, jobject clazz, jstring name)
+{
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        // In the current implementation, the token is just the serialized interface name that
+        // the caller expects to be invoking
+        const jchar* str = env->GetStringCritical(name, 0);
+        if (str != NULL) {
+            parcel->writeInterfaceToken(String16(str, env->GetStringLength(name)));
+            env->ReleaseStringCritical(name, str);
+        }
+    }
+}
+
+static void android_os_Parcel_enforceInterface(JNIEnv* env, jobject clazz, jstring name)
+{
+    jboolean ret = JNI_FALSE;
+
+    Parcel* parcel = parcelForJavaObject(env, clazz);
+    if (parcel != NULL) {
+        const jchar* str = env->GetStringCritical(name, 0);
+        if (str) {
+            IPCThreadState* threadState = IPCThreadState::self();
+            const int32_t oldPolicy = threadState->getStrictModePolicy();
+            const bool isValid = parcel->enforceInterface(
+                String16(str, env->GetStringLength(name)),
+                threadState);
+            env->ReleaseStringCritical(name, str);
+            if (isValid) {
+                const int32_t newPolicy = threadState->getStrictModePolicy();
+                if (oldPolicy != newPolicy) {
+                    // Need to keep the Java-level thread-local strict
+                    // mode policy in sync for the libcore
+                    // enforcements, which involves an upcall back
+                    // into Java.  (We can't modify the
+                    // Parcel.enforceInterface signature, as it's
+                    // pseudo-public, and used via AIDL
+                    // auto-generation...)
+                    set_dalvik_blockguard_policy(env, newPolicy);
+                }
+                return;     // everything was correct -> return silently
+            }
+        }
+    }
+
+    // all error conditions wind up here
+    jniThrowException(env, "java/lang/SecurityException",
+            "Binder invocation to an incorrect interface");
+}
+
+// ----------------------------------------------------------------------------
+
+static const JNINativeMethod gParcelMethods[] = {
+    {"dataSize",            "()I", (void*)android_os_Parcel_dataSize},
+    {"dataAvail",           "()I", (void*)android_os_Parcel_dataAvail},
+    {"dataPosition",        "()I", (void*)android_os_Parcel_dataPosition},
+    {"dataCapacity",        "()I", (void*)android_os_Parcel_dataCapacity},
+    {"setDataSize",         "(I)V", (void*)android_os_Parcel_setDataSize},
+    {"setDataPosition",     "(I)V", (void*)android_os_Parcel_setDataPosition},
+    {"setDataCapacity",     "(I)V", (void*)android_os_Parcel_setDataCapacity},
+    {"pushAllowFds",        "(Z)Z", (void*)android_os_Parcel_pushAllowFds},
+    {"restoreAllowFds",     "(Z)V", (void*)android_os_Parcel_restoreAllowFds},
+    {"writeNative",         "([BII)V", (void*)android_os_Parcel_writeNative},
+    {"writeInt",            "(I)V", (void*)android_os_Parcel_writeInt},
+    {"writeLong",           "(J)V", (void*)android_os_Parcel_writeLong},
+    {"writeFloat",          "(F)V", (void*)android_os_Parcel_writeFloat},
+    {"writeDouble",         "(D)V", (void*)android_os_Parcel_writeDouble},
+    {"writeString",         "(Ljava/lang/String;)V", (void*)android_os_Parcel_writeString},
+    {"writeStrongBinder",   "(Landroid/os/IBinder;)V", (void*)android_os_Parcel_writeStrongBinder},
+    {"writeFileDescriptor", "(Ljava/io/FileDescriptor;)V", (void*)android_os_Parcel_writeFileDescriptor},
+    {"createByteArray",     "()[B", (void*)android_os_Parcel_createByteArray},
+    {"readInt",             "()I", (void*)android_os_Parcel_readInt},
+    {"readLong",            "()J", (void*)android_os_Parcel_readLong},
+    {"readFloat",           "()F", (void*)android_os_Parcel_readFloat},
+    {"readDouble",          "()D", (void*)android_os_Parcel_readDouble},
+    {"readString",          "()Ljava/lang/String;", (void*)android_os_Parcel_readString},
+    {"readStrongBinder",    "()Landroid/os/IBinder;", (void*)android_os_Parcel_readStrongBinder},
+    {"internalReadFileDescriptor",  "()Ljava/io/FileDescriptor;", (void*)android_os_Parcel_readFileDescriptor},
+    {"openFileDescriptor",  "(Ljava/lang/String;I)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_openFileDescriptor},
+    {"dupFileDescriptor",   "(Ljava/io/FileDescriptor;)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_dupFileDescriptor},
+    {"closeFileDescriptor", "(Ljava/io/FileDescriptor;)V", (void*)android_os_Parcel_closeFileDescriptor},
+    {"clearFileDescriptor", "(Ljava/io/FileDescriptor;)V", (void*)android_os_Parcel_clearFileDescriptor},
+    {"freeBuffer",          "()V", (void*)android_os_Parcel_freeBuffer},
+    {"init",                "(I)V", (void*)android_os_Parcel_init},
+    {"destroy",             "()V", (void*)android_os_Parcel_destroy},
+    {"marshall",            "()[B", (void*)android_os_Parcel_marshall},
+    {"unmarshall",          "([BII)V", (void*)android_os_Parcel_unmarshall},
+    {"appendFrom",          "(Landroid/os/Parcel;II)V", (void*)android_os_Parcel_appendFrom},
+    {"hasFileDescriptors",  "()Z", (void*)android_os_Parcel_hasFileDescriptors},
+    {"writeInterfaceToken", "(Ljava/lang/String;)V", (void*)android_os_Parcel_writeInterfaceToken},
+    {"enforceInterface",    "(Ljava/lang/String;)V", (void*)android_os_Parcel_enforceInterface},
+};
+
+const char* const kParcelPathName = "android/os/Parcel";
+
+static int int_register_android_os_Parcel(JNIEnv* env)
+{
+>>>>>>> upstream/master
     jclass clazz;
 
     clazz = env->FindClass("android/util/Log");
@@ -1287,6 +2061,17 @@ int register_android_os_Binder(JNIEnv* env)
     gParcelFileDescriptorOffsets.mConstructor
         = env->GetMethodID(clazz, "<init>", "(Ljava/io/FileDescriptor;)V");
 
+<<<<<<< HEAD
+=======
+    clazz = env->FindClass(kParcelPathName);
+    LOG_FATAL_IF(clazz == NULL, "Unable to find class android.os.Parcel");
+
+    gParcelOffsets.mObject
+        = env->GetFieldID(clazz, "mObject", "I");
+    gParcelOffsets.mOwnObject
+        = env->GetFieldID(clazz, "mOwnObject", "I");
+
+>>>>>>> upstream/master
     clazz = env->FindClass("android/os/StrictMode");
     LOG_FATAL_IF(clazz == NULL, "Unable to find class android.os.StrictMode");
     gStrictModeCallbackOffsets.mClass = (jclass) env->NewGlobalRef(clazz);
@@ -1295,5 +2080,23 @@ int register_android_os_Binder(JNIEnv* env)
     LOG_FATAL_IF(gStrictModeCallbackOffsets.mCallback == NULL,
                  "Unable to find strict mode callback.");
 
+<<<<<<< HEAD
+=======
+    return AndroidRuntime::registerNativeMethods(
+        env, kParcelPathName,
+        gParcelMethods, NELEM(gParcelMethods));
+}
+
+int register_android_os_Binder(JNIEnv* env)
+{
+    if (int_register_android_os_Binder(env) < 0)
+        return -1;
+    if (int_register_android_os_BinderInternal(env) < 0)
+        return -1;
+    if (int_register_android_os_BinderProxy(env) < 0)
+        return -1;
+    if (int_register_android_os_Parcel(env) < 0)
+        return -1;
+>>>>>>> upstream/master
     return 0;
 }

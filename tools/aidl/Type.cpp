@@ -11,7 +11,10 @@ Type* LONG_TYPE;
 Type* FLOAT_TYPE;
 Type* DOUBLE_TYPE;
 Type* STRING_TYPE;
+<<<<<<< HEAD
 Type* OBJECT_TYPE;
+=======
+>>>>>>> upstream/master
 Type* CHAR_SEQUENCE_TYPE;
 Type* TEXT_UTILS_TYPE;
 Type* REMOTE_EXCEPTION_TYPE;
@@ -22,6 +25,7 @@ Type* BINDER_NATIVE_TYPE;
 Type* BINDER_PROXY_TYPE;
 Type* PARCEL_TYPE;
 Type* PARCELABLE_INTERFACE_TYPE;
+<<<<<<< HEAD
 Type* CONTEXT_TYPE;
 Type* MAP_TYPE;
 Type* LIST_TYPE;
@@ -29,6 +33,11 @@ Type* CLASSLOADER_TYPE;
 Type* RPC_DATA_TYPE;
 Type* RPC_ERROR_TYPE;
 Type* EVENT_FAKE_TYPE;
+=======
+Type* MAP_TYPE;
+Type* LIST_TYPE;
+Type* CLASSLOADER_TYPE;
+>>>>>>> upstream/master
 
 Expression* NULL_VALUE;
 Expression* THIS_VALUE;
@@ -39,22 +48,32 @@ Expression* FALSE_VALUE;
 void
 register_base_types()
 {
+<<<<<<< HEAD
     VOID_TYPE = new BasicType("void",
             "XXX", "XXX", "XXX", "XXX", "XXX",
             "XXX", "XXX", "XXX", "XXX", "XXX");
+=======
+    VOID_TYPE = new BasicType("void", "XXX", "XXX", "XXX", "XXX", "XXX");
+>>>>>>> upstream/master
     NAMES.Add(VOID_TYPE);
 
     BOOLEAN_TYPE = new BooleanType();
     NAMES.Add(BOOLEAN_TYPE);
 
+<<<<<<< HEAD
     BYTE_TYPE = new BasicType("byte",
             "writeByte", "readByte", "writeByteArray", "createByteArray", "readByteArray",
             "putByte", "getByte", "putByteArray", "createByteArray", "getByteArray");
+=======
+    BYTE_TYPE = new BasicType("byte", "writeByte", "readByte",
+                "writeByteArray", "createByteArray", "readByteArray");
+>>>>>>> upstream/master
     NAMES.Add(BYTE_TYPE);
 
     CHAR_TYPE = new CharType();
     NAMES.Add(CHAR_TYPE);
 
+<<<<<<< HEAD
     INT_TYPE = new BasicType("int",
             "writeInt", "readInt", "writeIntArray", "createIntArray", "readIntArray",
             "putInteger", "getInteger", "putIntegerArray", "createIntegerArray", "getIntegerArray");
@@ -73,14 +92,33 @@ register_base_types()
     DOUBLE_TYPE = new BasicType("double",
             "writeDouble", "readDouble", "writeDoubleArray", "createDoubleArray", "readDoubleArray",
             "putDouble", "getDouble", "putDoubleArray", "createDoubleArray", "getDoubleArray");
+=======
+    INT_TYPE = new BasicType("int", "writeInt", "readInt",
+                "writeIntArray", "createIntArray", "readIntArray");
+    NAMES.Add(INT_TYPE);
+
+    LONG_TYPE = new BasicType("long", "writeLong", "readLong",
+                "writeLongArray", "createLongArray", "readLongArray");
+    NAMES.Add(LONG_TYPE);
+
+    FLOAT_TYPE = new BasicType("float", "writeFloat", "readFloat",
+                "writeFloatArray", "createFloatArray", "readFloatArray");
+    NAMES.Add(FLOAT_TYPE);
+
+    DOUBLE_TYPE = new BasicType("double", "writeDouble", "readDouble",
+                "writeDoubleArray", "createDoubleArray", "readDoubleArray");
+>>>>>>> upstream/master
     NAMES.Add(DOUBLE_TYPE);
 
     STRING_TYPE = new StringType();
     NAMES.Add(STRING_TYPE);
 
+<<<<<<< HEAD
     OBJECT_TYPE = new Type("java.lang", "Object", Type::BUILT_IN, false, false, false);
     NAMES.Add(OBJECT_TYPE);
 
+=======
+>>>>>>> upstream/master
     CHAR_SEQUENCE_TYPE = new CharSequenceType();
     NAMES.Add(CHAR_SEQUENCE_TYPE);
 
@@ -90,7 +128,12 @@ register_base_types()
     LIST_TYPE = new ListType();
     NAMES.Add(LIST_TYPE);
 
+<<<<<<< HEAD
     TEXT_UTILS_TYPE = new Type("android.text", "TextUtils", Type::BUILT_IN, false, false, false);
+=======
+    TEXT_UTILS_TYPE = new Type("android.text", "TextUtils",
+                                    Type::BUILT_IN, false, false);
+>>>>>>> upstream/master
     NAMES.Add(TEXT_UTILS_TYPE);
 
     REMOTE_EXCEPTION_TYPE = new RemoteExceptionType();
@@ -117,6 +160,7 @@ register_base_types()
     PARCELABLE_INTERFACE_TYPE = new ParcelableInterfaceType();
     NAMES.Add(PARCELABLE_INTERFACE_TYPE);
 
+<<<<<<< HEAD
     CONTEXT_TYPE = new Type("android.content", "Context", Type::BUILT_IN, false, false, false);
     NAMES.Add(CONTEXT_TYPE);
 
@@ -130,6 +174,8 @@ register_base_types()
     EVENT_FAKE_TYPE = new Type("event", Type::BUILT_IN, false, false, false);
     NAMES.Add(EVENT_FAKE_TYPE);
 
+=======
+>>>>>>> upstream/master
     CLASSLOADER_TYPE = new ClassLoaderType();
     NAMES.Add(CLASSLOADER_TYPE);
 
@@ -156,30 +202,45 @@ make_generic_type(const string& package, const string& name,
 
 // ================================================================
 
+<<<<<<< HEAD
 Type::Type(const string& name, int kind, bool canWriteToParcel, bool canWriteToRpcData,
         bool canBeOut)
+=======
+Type::Type(const string& name, int kind, bool canWriteToParcel, bool canBeOut)
+>>>>>>> upstream/master
     :m_package(),
      m_name(name),
      m_declFile(""),
      m_declLine(-1),
      m_kind(kind),
      m_canWriteToParcel(canWriteToParcel),
+<<<<<<< HEAD
      m_canWriteToRpcData(canWriteToRpcData),
+=======
+>>>>>>> upstream/master
      m_canBeOut(canBeOut)
 {
     m_qualifiedName = name;
 }
 
 Type::Type(const string& package, const string& name,
+<<<<<<< HEAD
             int kind, bool canWriteToParcel, bool canWriteToRpcData,
             bool canBeOut, const string& declFile, int declLine)
+=======
+            int kind, bool canWriteToParcel, bool canBeOut,
+            const string& declFile, int declLine)
+>>>>>>> upstream/master
     :m_package(package),
      m_name(name),
      m_declFile(declFile),
      m_declLine(declLine),
      m_kind(kind),
      m_canWriteToParcel(canWriteToParcel),
+<<<<<<< HEAD
      m_canWriteToRpcData(canWriteToRpcData),
+=======
+>>>>>>> upstream/master
      m_canBeOut(canBeOut)
 {
     if (package.length() > 0) {
@@ -212,12 +273,15 @@ Type::CreatorName() const
 }
 
 string
+<<<<<<< HEAD
 Type::RpcCreatorName() const
 {
     return "";
 }
 
 string
+=======
+>>>>>>> upstream/master
 Type::InstantiableName() const
 {
     return QualifiedName();
@@ -280,6 +344,7 @@ Type::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, 
 }
 
 void
+<<<<<<< HEAD
 Type::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
 {
@@ -300,6 +365,8 @@ Type::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v, Varia
 }
 
 void
+=======
+>>>>>>> upstream/master
 Type::SetQualifiedName(const string& qualified)
 {
     m_qualifiedName = qualified;
@@ -320,6 +387,7 @@ Type::BuildWriteToParcelFlags(int flags)
 
 // ================================================================
 
+<<<<<<< HEAD
 BasicType::BasicType(const string& name, const string& marshallParcel,
           const string& unmarshallParcel, const string& writeArrayParcel,
           const string& createArrayParcel, const string& readArrayParcel,
@@ -336,19 +404,39 @@ BasicType::BasicType(const string& name, const string& marshallParcel,
      m_writeArrayRpc(writeArrayRpc),
      m_createArrayRpc(createArrayRpc),
      m_readArrayRpc(readArrayRpc)
+=======
+BasicType::BasicType(const string& name, const string& marshallMethod,
+                     const string& unmarshallMethod,
+                     const string& writeArray, const string& createArray,
+                     const string& readArray)
+    :Type(name, BUILT_IN, true, false),
+     m_marshallMethod(marshallMethod),
+     m_unmarshallMethod(unmarshallMethod),
+     m_writeArrayMethod(writeArray),
+     m_createArrayMethod(createArray),
+     m_readArrayMethod(readArray)
+>>>>>>> upstream/master
 {
 }
 
 void
 BasicType::WriteToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
 {
+<<<<<<< HEAD
     addTo->Add(new MethodCall(parcel, m_marshallParcel, 1, v));
+=======
+    addTo->Add(new MethodCall(parcel, m_marshallMethod, 1, v));
+>>>>>>> upstream/master
 }
 
 void
 BasicType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
 {
+<<<<<<< HEAD
     addTo->Add(new Assignment(v, new MethodCall(parcel, m_unmarshallParcel)));
+=======
+    addTo->Add(new Assignment(v, new MethodCall(parcel, m_unmarshallMethod)));
+>>>>>>> upstream/master
 }
 
 bool
@@ -360,19 +448,28 @@ BasicType::CanBeArray() const
 void
 BasicType::WriteArrayToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
 {
+<<<<<<< HEAD
     addTo->Add(new MethodCall(parcel, m_writeArrayParcel, 1, v));
+=======
+    addTo->Add(new MethodCall(parcel, m_writeArrayMethod, 1, v));
+>>>>>>> upstream/master
 }
 
 void
 BasicType::CreateArrayFromParcel(StatementBlock* addTo, Variable* v,
                             Variable* parcel, Variable**)
 {
+<<<<<<< HEAD
     addTo->Add(new Assignment(v, new MethodCall(parcel, m_createArrayParcel)));
+=======
+    addTo->Add(new Assignment(v, new MethodCall(parcel, m_createArrayMethod)));
+>>>>>>> upstream/master
 }
 
 void
 BasicType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
 {
+<<<<<<< HEAD
     addTo->Add(new MethodCall(parcel, m_readArrayParcel, 1, v));
 }
 
@@ -389,11 +486,20 @@ BasicType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v, 
 {
     addTo->Add(new Assignment(v, new MethodCall(data, m_unmarshallRpc, 1, k)));
 }
+=======
+    addTo->Add(new MethodCall(parcel, m_readArrayMethod, 1, v));
+}
+
+>>>>>>> upstream/master
 
 // ================================================================
 
 BooleanType::BooleanType()
+<<<<<<< HEAD
     :Type("boolean", BUILT_IN, true, true, false)
+=======
+    :Type("boolean", BUILT_IN, true, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -437,6 +543,7 @@ BooleanType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* p
     addTo->Add(new MethodCall(parcel, "readBooleanArray", 1, v));
 }
 
+<<<<<<< HEAD
 void
 BooleanType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
@@ -450,11 +557,17 @@ BooleanType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v
 {
     addTo->Add(new Assignment(v, new MethodCall(data, "getBoolean", 1, k)));
 }
+=======
+>>>>>>> upstream/master
 
 // ================================================================
 
 CharType::CharType()
+<<<<<<< HEAD
     :Type("char", BUILT_IN, true, true, false)
+=======
+    :Type("char", BUILT_IN, true, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -496,6 +609,7 @@ CharType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* parc
     addTo->Add(new MethodCall(parcel, "readCharArray", 1, v));
 }
 
+<<<<<<< HEAD
 void
 CharType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
@@ -514,6 +628,12 @@ CharType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v, V
 
 StringType::StringType()
     :Type("java.lang", "String", BUILT_IN, true, true, false)
+=======
+// ================================================================
+
+StringType::StringType()
+    :Type("java.lang", "String", BUILT_IN, true, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -560,6 +680,7 @@ StringType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* pa
     addTo->Add(new MethodCall(parcel, "readStringArray", 1, v));
 }
 
+<<<<<<< HEAD
 void
 StringType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
@@ -578,6 +699,12 @@ StringType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
 
 CharSequenceType::CharSequenceType()
     :Type("java.lang", "CharSequence", BUILT_IN, true, true, false)
+=======
+// ================================================================
+
+CharSequenceType::CharSequenceType()
+    :Type("java.lang", "CharSequence", BUILT_IN, true, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -637,7 +764,11 @@ CharSequenceType::CreateFromParcel(StatementBlock* addTo, Variable* v,
 // ================================================================
 
 RemoteExceptionType::RemoteExceptionType()
+<<<<<<< HEAD
     :Type("android.os", "RemoteException", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "RemoteException", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -656,7 +787,11 @@ RemoteExceptionType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variab
 // ================================================================
 
 RuntimeExceptionType::RuntimeExceptionType()
+<<<<<<< HEAD
     :Type("java.lang", "RuntimeException", BUILT_IN, false, false, false)
+=======
+    :Type("java.lang", "RuntimeException", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -676,7 +811,11 @@ RuntimeExceptionType::CreateFromParcel(StatementBlock* addTo, Variable* v, Varia
 // ================================================================
 
 IBinderType::IBinderType()
+<<<<<<< HEAD
     :Type("android.os", "IBinder", BUILT_IN, true, false, false)
+=======
+    :Type("android.os", "IBinder", BUILT_IN, true, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -715,7 +854,11 @@ IBinderType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* p
 // ================================================================
 
 IInterfaceType::IInterfaceType()
+<<<<<<< HEAD
     :Type("android.os", "IInterface", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "IInterface", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -735,7 +878,11 @@ IInterfaceType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* p
 // ================================================================
 
 BinderType::BinderType()
+<<<<<<< HEAD
     :Type("android.os", "Binder", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "Binder", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -756,7 +903,11 @@ BinderType::CreateFromParcel(StatementBlock* addTo, Variable* v,
 // ================================================================
 
 BinderProxyType::BinderProxyType()
+<<<<<<< HEAD
     :Type("android.os", "BinderProxy", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "BinderProxy", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -777,7 +928,11 @@ BinderProxyType::CreateFromParcel(StatementBlock* addTo, Variable* v,
 // ================================================================
 
 ParcelType::ParcelType()
+<<<<<<< HEAD
     :Type("android.os", "Parcel", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "Parcel", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -796,7 +951,11 @@ ParcelType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* parce
 // ================================================================
 
 ParcelableInterfaceType::ParcelableInterfaceType()
+<<<<<<< HEAD
     :Type("android.os", "Parcelable", BUILT_IN, false, false, false)
+=======
+    :Type("android.os", "Parcelable", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 
@@ -815,7 +974,11 @@ ParcelableInterfaceType::CreateFromParcel(StatementBlock* addTo, Variable* v, Va
 // ================================================================
 
 MapType::MapType()
+<<<<<<< HEAD
     :Type("java.util", "Map", BUILT_IN, true, false, true)
+=======
+    :Type("java.util", "Map", BUILT_IN, true, true)
+>>>>>>> upstream/master
 {
 }
 
@@ -845,7 +1008,12 @@ MapType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, 
 }
 
 void
+<<<<<<< HEAD
 MapType::ReadFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable** cl)
+=======
+MapType::ReadFromParcel(StatementBlock* addTo, Variable* v,
+                    Variable* parcel, Variable** cl)
+>>>>>>> upstream/master
 {
     EnsureClassLoader(addTo, cl);
     addTo->Add(new MethodCall(parcel, "readMap", 2, v, *cl));
@@ -855,7 +1023,11 @@ MapType::ReadFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Va
 // ================================================================
 
 ListType::ListType()
+<<<<<<< HEAD
     :Type("java.util", "List", BUILT_IN, true, true, true)
+=======
+    :Type("java.util", "List", BUILT_IN, true, true)
+>>>>>>> upstream/master
 {
 }
 
@@ -886,6 +1058,7 @@ ListType::ReadFromParcel(StatementBlock* addTo, Variable* v,
     addTo->Add(new MethodCall(parcel, "readList", 2, v, *cl));
 }
 
+<<<<<<< HEAD
 void
 ListType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
@@ -907,15 +1080,29 @@ UserDataType::UserDataType(const string& package, const string& name,
                         const string& declFile, int declLine)
     :Type(package, name, builtIn ? BUILT_IN : USERDATA, canWriteToParcel, canWriteToRpcData,
             true, declFile, declLine)
+=======
+
+// ================================================================
+
+ParcelableType::ParcelableType(const string& package, const string& name,
+                        bool builtIn, const string& declFile, int declLine)
+    :Type(package, name, builtIn ? BUILT_IN : PARCELABLE, true, true,
+            declFile, declLine)
+>>>>>>> upstream/master
 {
 }
 
 string
+<<<<<<< HEAD
 UserDataType::CreatorName() const
+=======
+ParcelableType::CreatorName() const
+>>>>>>> upstream/master
 {
     return QualifiedName() + ".CREATOR";
 }
 
+<<<<<<< HEAD
 string
 UserDataType::RpcCreatorName() const
 {
@@ -924,6 +1111,10 @@ UserDataType::RpcCreatorName() const
 
 void
 UserDataType::WriteToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
+=======
+void
+ParcelableType::WriteToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
+>>>>>>> upstream/master
 {
     // if (v != null) {
     //     parcel.writeInt(1);
@@ -946,7 +1137,11 @@ UserDataType::WriteToParcel(StatementBlock* addTo, Variable* v, Variable* parcel
 }
 
 void
+<<<<<<< HEAD
 UserDataType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
+=======
+ParcelableType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
+>>>>>>> upstream/master
 {
     // if (0 != parcel.readInt()) {
     //     v = CLASS.CREATOR.createFromParcel(parcel)
@@ -967,7 +1162,11 @@ UserDataType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* par
 }
 
 void
+<<<<<<< HEAD
 UserDataType::ReadFromParcel(StatementBlock* addTo, Variable* v,
+=======
+ParcelableType::ReadFromParcel(StatementBlock* addTo, Variable* v,
+>>>>>>> upstream/master
                     Variable* parcel, Variable**)
 {
     // TODO: really, we don't need to have this extra check, but we
@@ -983,20 +1182,32 @@ UserDataType::ReadFromParcel(StatementBlock* addTo, Variable* v,
 }
 
 bool
+<<<<<<< HEAD
 UserDataType::CanBeArray() const
+=======
+ParcelableType::CanBeArray() const
+>>>>>>> upstream/master
 {
     return true;
 }
 
 void
+<<<<<<< HEAD
 UserDataType::WriteArrayToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
+=======
+ParcelableType::WriteArrayToParcel(StatementBlock* addTo, Variable* v, Variable* parcel, int flags)
+>>>>>>> upstream/master
 {
     addTo->Add(new MethodCall(parcel, "writeTypedArray", 2, v,
                 BuildWriteToParcelFlags(flags)));
 }
 
 void
+<<<<<<< HEAD
 UserDataType::CreateArrayFromParcel(StatementBlock* addTo, Variable* v,
+=======
+ParcelableType::CreateArrayFromParcel(StatementBlock* addTo, Variable* v,
+>>>>>>> upstream/master
                             Variable* parcel, Variable**)
 {
     string creator = v->type->QualifiedName() + ".CREATOR";
@@ -1005,13 +1216,18 @@ UserDataType::CreateArrayFromParcel(StatementBlock* addTo, Variable* v,
 }
 
 void
+<<<<<<< HEAD
 UserDataType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
+=======
+ParcelableType::ReadArrayFromParcel(StatementBlock* addTo, Variable* v, Variable* parcel, Variable**)
+>>>>>>> upstream/master
 {
     string creator = v->type->QualifiedName() + ".CREATOR";
     addTo->Add(new MethodCall(parcel, "readTypedArray", 2,
                     v, new LiteralExpression(creator)));
 }
 
+<<<<<<< HEAD
 void
 UserDataType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags)
@@ -1028,13 +1244,19 @@ UserDataType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* 
     addTo->Add(new Assignment(v, new MethodCall(data, "getFlattenable", 2, k,
                 new FieldVariable(v->type, "RPC_CREATOR"))));
 }
+=======
+>>>>>>> upstream/master
 
 // ================================================================
 
 InterfaceType::InterfaceType(const string& package, const string& name,
                         bool builtIn, bool oneway,
                         const string& declFile, int declLine)
+<<<<<<< HEAD
     :Type(package, name, builtIn ? BUILT_IN : INTERFACE, true, false, false,
+=======
+    :Type(package, name, builtIn ? BUILT_IN : INTERFACE, true, false,
+>>>>>>> upstream/master
                         declFile, declLine)
     ,m_oneway(oneway)
 {
@@ -1073,7 +1295,11 @@ InterfaceType::CreateFromParcel(StatementBlock* addTo, Variable* v, Variable* pa
 
 GenericType::GenericType(const string& package, const string& name,
                          const vector<Type*>& args)
+<<<<<<< HEAD
     :Type(package, name, BUILT_IN, true, true, true)
+=======
+    :Type(package, name, BUILT_IN, true, true)
+>>>>>>> upstream/master
 {
     m_args = args;
 
@@ -1093,12 +1319,15 @@ GenericType::GenericType(const string& package, const string& name,
     SetQualifiedName(m_importName + gen);
 }
 
+<<<<<<< HEAD
 const vector<Type*>&
 GenericType::GenericArgumentTypes() const
 {
     return m_args;
 }
 
+=======
+>>>>>>> upstream/master
 string
 GenericType::GenericArguments() const
 {
@@ -1198,6 +1427,7 @@ GenericListType::ReadFromParcel(StatementBlock* addTo, Variable* v,
     }
 }
 
+<<<<<<< HEAD
 void
 GenericListType::WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
         Variable* data, int flags)
@@ -1257,6 +1487,12 @@ RpcDataType::CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v
 
 ClassLoaderType::ClassLoaderType()
     :Type("java.lang", "ClassLoader", BUILT_IN, false, false, false)
+=======
+// ================================================================
+
+ClassLoaderType::ClassLoaderType()
+    :Type("java.lang", "ClassLoader", BUILT_IN, false, false)
+>>>>>>> upstream/master
 {
 }
 

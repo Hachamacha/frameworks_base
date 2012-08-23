@@ -58,7 +58,11 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
     int remainingHeader = flattenedHeader.headerSize - sizeof(flattenedHeader.headerSize);
 
     if (flattenedHeader.headerSize < (int)sizeof(chunk_header_v1)) {
+<<<<<<< HEAD
         ALOGW("Skipping unknown header: %d bytes", flattenedHeader.headerSize);
+=======
+        LOGW("Skipping unknown header: %d bytes", flattenedHeader.headerSize);
+>>>>>>> upstream/master
         if (remainingHeader > 0) {
             lseek(fd, remainingHeader, SEEK_CUR);
             // >0 means skip this chunk
@@ -69,13 +73,21 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
     amt = read(fd, &flattenedHeader.version,
             sizeof(chunk_header_v1)-sizeof(flattenedHeader.headerSize));
     if (amt <= 0) {
+<<<<<<< HEAD
         ALOGW("Failed reading chunk header");
+=======
+        LOGW("Failed reading chunk header");
+>>>>>>> upstream/master
         return -1;
     }
     remainingHeader -= sizeof(chunk_header_v1)-sizeof(flattenedHeader.headerSize);
 
     if (flattenedHeader.version != VERSION_1_HEADER) {
+<<<<<<< HEAD
         ALOGW("Skipping unknown header version: 0x%08x, %d bytes", flattenedHeader.version,
+=======
+        LOGW("Skipping unknown header version: 0x%08x, %d bytes", flattenedHeader.version,
+>>>>>>> upstream/master
                 flattenedHeader.headerSize);
         if (remainingHeader > 0) {
             lseek(fd, remainingHeader, SEEK_CUR);
@@ -85,23 +97,39 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
     }
 
 #if 0
+<<<<<<< HEAD
     ALOGD("chunk header:");
     ALOGD("  headerSize=%d", flattenedHeader.headerSize);
     ALOGD("  version=0x%08x", flattenedHeader.version);
     ALOGD("  dataSize=%d", flattenedHeader.dataSize);
     ALOGD("  nameLength=%d", flattenedHeader.nameLength);
+=======
+    LOGD("chunk header:");
+    LOGD("  headerSize=%d", flattenedHeader.headerSize);
+    LOGD("  version=0x%08x", flattenedHeader.version);
+    LOGD("  dataSize=%d", flattenedHeader.dataSize);
+    LOGD("  nameLength=%d", flattenedHeader.nameLength);
+>>>>>>> upstream/master
 #endif
 
     if (flattenedHeader.dataSize < 0 || flattenedHeader.nameLength < 0 ||
             remainingHeader < flattenedHeader.nameLength) {
+<<<<<<< HEAD
         ALOGW("Malformed V1 header remainingHeader=%d dataSize=%d nameLength=%d", remainingHeader,
+=======
+        LOGW("Malformed V1 header remainingHeader=%d dataSize=%d nameLength=%d", remainingHeader,
+>>>>>>> upstream/master
                 flattenedHeader.dataSize, flattenedHeader.nameLength);
         return -1;
     }
 
     buf = keyPrefix.lockBuffer(flattenedHeader.nameLength);
     if (buf == NULL) {
+<<<<<<< HEAD
         ALOGW("unable to allocate %d bytes", flattenedHeader.nameLength);
+=======
+        LOGW("unable to allocate %d bytes", flattenedHeader.nameLength);
+>>>>>>> upstream/master
         return -1;
     }
 

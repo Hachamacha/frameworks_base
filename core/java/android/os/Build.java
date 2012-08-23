@@ -167,8 +167,11 @@ public class Build {
          * medium density normal size screens unless otherwise indicated).
          * They can still explicitly specify screen support either way with the
          * supports-screens manifest tag.
+<<<<<<< HEAD
          * <li> {@link android.widget.TabHost} will use the new dark tab
          * background design.
+=======
+>>>>>>> upstream/master
          * </ul>
          */
         public static final int DONUT = 4;
@@ -210,6 +213,7 @@ public class Build {
         
         /**
          * November 2010: Android 2.3
+<<<<<<< HEAD
          *
          * <p>Applications targeting this or a later release will get these
          * new changes in behavior:</p>
@@ -217,6 +221,8 @@ public class Build {
          * <li> The application's notification icons will be shown on the new
          * dark status bar background, so must be visible in this situation.
          * </ul>
+=======
+>>>>>>> upstream/master
          */
         public static final int GINGERBREAD = 9;
         
@@ -233,6 +239,7 @@ public class Build {
          * <ul>
          * <li> The default theme for applications is now dark holographic:
          *      {@link android.R.style#Theme_Holo}.
+<<<<<<< HEAD
          * <li> On large screen devices that do not have a physical menu
          * button, the soft (compatibility) menu is disabled.
          * <li> The activity lifecycle has changed slightly as per
@@ -240,12 +247,17 @@ public class Build {
          * <li> An application will crash if it does not call through
          * to the super implementation of its
          * {@link android.app.Activity#onPause Activity.onPause()} method.
+=======
+         * <li> The activity lifecycle has changed slightly as per
+         * {@link android.app.Activity}.
+>>>>>>> upstream/master
          * <li> When an application requires a permission to access one of
          * its components (activity, receiver, service, provider), this
          * permission is no longer enforced when the application wants to
          * access its own component.  This means it can require a permission
          * on a component that it does not itself hold and still access that
          * component.
+<<<<<<< HEAD
          * <li> {@link android.content.Context#getSharedPreferences
          * Context.getSharedPreferences()} will not automatically reload
          * the preferences if they have changed on storage, unless
@@ -261,6 +273,8 @@ public class Build {
          * for selected items if they do not implement {@link android.widget.Checkable}.
          * <li> {@link android.widget.Scroller} will be constructed with
          * "flywheel" behavior enabled by default.
+=======
+>>>>>>> upstream/master
          * </ul>
          */
         public static final int HONEYCOMB = 11;
@@ -295,16 +309,23 @@ public class Build {
          * preferred over the older screen size buckets and for older devices
          * the appropriate buckets will be inferred from them.</p>
          *
+<<<<<<< HEAD
          * <p>Applications targeting this or a later release will get these
          * new changes in behavior:</p>
          * <ul>
          * <li><p>New {@link android.content.pm.PackageManager#FEATURE_SCREEN_PORTRAIT}
          * and {@link android.content.pm.PackageManager#FEATURE_SCREEN_LANDSCAPE}
          * features were introduced in this release.  Applications that target
+=======
+         * <p>New {@link android.content.pm.PackageManager#FEATURE_SCREEN_PORTRAIT}
+         * and {@link android.content.pm.PackageManager#FEATURE_SCREEN_LANDSCAPE}
+         * features are introduced in this release.  Applications that target
+>>>>>>> upstream/master
          * previous platform versions are assumed to require both portrait and
          * landscape support in the device; when targeting Honeycomb MR1 or
          * greater the application is responsible for specifying any specific
          * orientation it requires.</p>
+<<<<<<< HEAD
          * <li><p>{@link android.os.AsyncTask} will use the serial executor
          * by default when calling {@link android.os.AsyncTask#execute}.</p>
          * <li><p>{@link android.content.pm.ActivityInfo#configChanges
@@ -315,6 +336,8 @@ public class Build {
          * some developers have done absolute comparisons against this value
          * instead of correctly masking the bits they are interested in.
          * </ul>
+=======
+>>>>>>> upstream/master
          */
         public static final int HONEYCOMB_MR2 = 13;
 
@@ -348,6 +371,7 @@ public class Build {
          * <li> The fadingEdge attribute on views will be ignored (fading edges is no
          * longer a standard part of the UI).  A new requiresFadingEdge attribute allows
          * applications to still force fading edges on for special cases.
+<<<<<<< HEAD
          * <li> {@link android.content.Context#bindService Context.bindService()}
          * will not automatically add in {@link android.content.Context#BIND_WAIVE_PRIORITY}.
          * <li> App Widgets will have standard padding automatically added around
@@ -360,11 +384,14 @@ public class Build {
          * XML attributes that are defined.
          * <li> {@link android.app.ActionBar#setHomeButtonEnabled
          * ActionBar.setHomeButtonEnabled()} is false by default.
+=======
+>>>>>>> upstream/master
          * </ul>
          */
         public static final int ICE_CREAM_SANDWICH = 14;
 
         /**
+<<<<<<< HEAD
          * December 2011: Android 4.0.3.
          */
         public static final int ICE_CREAM_SANDWICH_MR1 = 15;
@@ -411,6 +438,11 @@ public class Build {
          * </ul>
          */
         public static final int JELLY_BEAN = 16;
+=======
+         * Android 4.0.3.
+         */
+        public static final int ICE_CREAM_SANDWICH_MR1 = 15;
+>>>>>>> upstream/master
     }
     
     /** The type of build, like "user" or "eng". */

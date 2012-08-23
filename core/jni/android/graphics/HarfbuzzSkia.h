@@ -47,6 +47,18 @@ static inline HB_Fixed SkScalarToHBFixed(SkScalar value) {
     return SkScalarToFloat(value) * 64.0f;
 }
 
+<<<<<<< HEAD
+=======
+typedef struct {
+    SkTypeface* typeFace;
+    SkScalar textSize;
+    SkScalar textSkewX;
+    SkScalar textScaleX;
+    uint32_t flags;
+    SkPaint::Hinting hinting;
+} FontData;
+
+>>>>>>> upstream/master
 HB_Error harfbuzzSkiaGetTable(void* voidface, const HB_Tag, HB_Byte* buffer, HB_UInt* len);
 extern const HB_FontClass harfbuzzSkiaClass;
 

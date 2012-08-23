@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 page.title=Design
+=======
+page.title=
+>>>>>>> upstream/master
 header.hide=1
 footer.hide=1
 @jd:body
@@ -10,7 +14,11 @@ footer.hide=1
 
 #text-overlay {
   position: absolute;
+<<<<<<< HEAD
   left: 0;
+=======
+  left: 10px;
+>>>>>>> upstream/master
   top: 472px;
   width: 280px;
 }

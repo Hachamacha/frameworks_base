@@ -57,7 +57,11 @@ public class Sensor {
     public static final int TYPE_GYROSCOPE = 4;
 
     /**
+<<<<<<< HEAD
      * A constant describing a light sensor type. See
+=======
+     * A constant describing an light sensor type. See
+>>>>>>> upstream/master
      * {@link android.hardware.SensorEvent#values SensorEvent.values} for more
      * details.
      */
@@ -77,7 +81,11 @@ public class Sensor {
     public static final int TYPE_TEMPERATURE = 7;
 
     /**
+<<<<<<< HEAD
      * A constant describing a proximity sensor type. See
+=======
+     * A constant describing an proximity sensor type. See
+>>>>>>> upstream/master
      * {@link android.hardware.SensorEvent#values SensorEvent.values} for more
      * details.
      */
@@ -131,6 +139,10 @@ public class Sensor {
     private float   mResolution;
     private float   mPower;
     private int     mMinDelay;
+<<<<<<< HEAD
+=======
+    private int     mLegacyType;
+>>>>>>> upstream/master
 
 
     Sensor() {
@@ -202,4 +214,15 @@ public class Sensor {
         mMaxRange = max;
         mResolution = res;
     }
+<<<<<<< HEAD
+=======
+
+    void setLegacyType(int legacyType) {
+        mLegacyType = legacyType;
+    }
+
+    int getLegacyType() {
+        return mLegacyType;
+    }
+>>>>>>> upstream/master
 }

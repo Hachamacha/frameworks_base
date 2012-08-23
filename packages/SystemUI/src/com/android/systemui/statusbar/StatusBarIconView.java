@@ -20,14 +20,20 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+<<<<<<< HEAD
 import android.database.ContentObserver;
+=======
+>>>>>>> upstream/master
 import android.graphics.drawable.Drawable;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+<<<<<<< HEAD
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.provider.Settings;
+=======
+>>>>>>> upstream/master
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Slog;
@@ -53,18 +59,25 @@ public class StatusBarIconView extends AnimatedImageView {
     private int mNumberY;
     private String mNumberText;
     private Notification mNotification;
+<<<<<<< HEAD
     private boolean mShowNotificationCount;
+=======
+>>>>>>> upstream/master
 
     public StatusBarIconView(Context context, String slot, Notification notification) {
         super(context);
         final Resources res = context.getResources();
+<<<<<<< HEAD
         final float densityMultiplier = res.getDisplayMetrics().density;
         final float scaledPx = 8 * densityMultiplier;
+=======
+>>>>>>> upstream/master
         mSlot = slot;
         mNumberPain = new Paint();
         mNumberPain.setTextAlign(Paint.Align.CENTER);
         mNumberPain.setColor(res.getColor(R.drawable.notification_number_text_color));
         mNumberPain.setAntiAlias(true);
+<<<<<<< HEAD
         mNumberPain.setTypeface(Typeface.DEFAULT_BOLD);
         mNumberPain.setTextSize(scaledPx);
         mNotification = notification;
@@ -75,6 +88,11 @@ public class StatusBarIconView extends AnimatedImageView {
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
 
+=======
+        mNotification = notification;
+        setContentDescription(notification);
+
+>>>>>>> upstream/master
         // We do not resize and scale system icons (on the right), only notification icons (on the
         // left).
         if (notification != null) {
@@ -115,15 +133,21 @@ public class StatusBarIconView extends AnimatedImageView {
         return a.equals(b);
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
     /**
      * Returns whether the set succeeded.
      */
     public boolean set(StatusBarIcon icon) {
+<<<<<<< HEAD
         return set(icon, false);
     }
 
     private boolean set(StatusBarIcon icon, boolean force) {
+=======
+>>>>>>> upstream/master
         final boolean iconEquals = mIcon != null
                 && streq(mIcon.iconPackage, icon.iconPackage)
                 && mIcon.iconId == icon.iconId;
@@ -135,20 +159,37 @@ public class StatusBarIconView extends AnimatedImageView {
                 && mIcon.number == icon.number;
         mIcon = icon.clone();
         setContentDescription(icon.contentDescription);
+<<<<<<< HEAD
         if (!iconEquals || force) {
             Drawable drawable = getIcon(icon);
             if (drawable == null) {
                 Slog.w(TAG, "No icon for slot " + mSlot);
+=======
+        if (!iconEquals) {
+            Drawable drawable = getIcon(icon);
+            if (drawable == null) {
+                Slog.w(StatusBar.TAG, "No icon for slot " + mSlot);
+>>>>>>> upstream/master
                 return false;
             }
             setImageDrawable(drawable);
         }
+<<<<<<< HEAD
         if (!levelEquals || force) {
             setImageLevel(icon.iconLevel);
         }
 
         if (!numberEquals || force) {
             if (icon.number > 0 && mShowNotificationCount) {
+=======
+        if (!levelEquals) {
+            setImageLevel(icon.iconLevel);
+        }
+
+        if (!numberEquals) {
+            if (icon.number > 0 && mContext.getResources().getBoolean(
+                        R.bool.config_statusBarShowNumber)) {
+>>>>>>> upstream/master
                 if (mNumberBackground == null) {
                     mNumberBackground = getContext().getResources().getDrawable(
                             R.drawable.ic_notification_overlay);
@@ -160,7 +201,11 @@ public class StatusBarIconView extends AnimatedImageView {
             }
             invalidate();
         }
+<<<<<<< HEAD
         if (!visibilityEquals || force) {
+=======
+        if (!visibilityEquals) {
+>>>>>>> upstream/master
             setVisibility(icon.visible ? VISIBLE : GONE);
         }
         return true;
@@ -185,7 +230,11 @@ public class StatusBarIconView extends AnimatedImageView {
             try {
                 r = context.getPackageManager().getResourcesForApplication(icon.iconPackage);
             } catch (PackageManager.NameNotFoundException ex) {
+<<<<<<< HEAD
                 Slog.e(TAG, "Icon package not found: " + icon.iconPackage);
+=======
+                Slog.e(StatusBar.TAG, "Icon package not found: " + icon.iconPackage);
+>>>>>>> upstream/master
                 return null;
             }
         } else {
@@ -199,7 +248,11 @@ public class StatusBarIconView extends AnimatedImageView {
         try {
             return r.getDrawable(icon.iconId);
         } catch (RuntimeException e) {
+<<<<<<< HEAD
             Slog.w(TAG, "Icon not found in "
+=======
+            Slog.w(StatusBar.TAG, "Icon not found in "
+>>>>>>> upstream/master
                   + (icon.iconPackage != null ? icon.iconId : "<system>")
                   + ": " + Integer.toHexString(icon.iconId));
         }
@@ -294,6 +347,7 @@ public class StatusBarIconView extends AnimatedImageView {
         return "StatusBarIconView(slot=" + mSlot + " icon=" + mIcon 
             + " notification=" + mNotification + ")";
     }
+<<<<<<< HEAD
 
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
@@ -316,4 +370,6 @@ public class StatusBarIconView extends AnimatedImageView {
         }
     }
 
+=======
+>>>>>>> upstream/master
 }

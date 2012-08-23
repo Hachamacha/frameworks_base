@@ -8,7 +8,11 @@
 
 #include "Images.h"
 
+<<<<<<< HEAD
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 #include <utils/ByteOrder.h>
 
 #include <png.h>
@@ -57,6 +61,7 @@ struct image_info
     bool is9Patch;
     Res_png_9patch info9Patch;
 
+<<<<<<< HEAD
     // Layout padding, if relevant
     bool haveLayoutBounds;
     int32_t layoutBoundsLeft;
@@ -64,6 +69,8 @@ struct image_info
     int32_t layoutBoundsRight;
     int32_t layoutBoundsBottom;
 
+=======
+>>>>>>> upstream/master
     png_uint_32 allocHeight;
     png_bytepp allocRows;
 };
@@ -136,6 +143,7 @@ static void read_png(const char* imageName,
        &interlace_type, &compression_type, NULL);
 }
 
+<<<<<<< HEAD
 #define COLOR_TRANSPARENT 0
 #define COLOR_WHITE 0xFFFFFFFF
 #define COLOR_TICK  0xFF000000
@@ -172,11 +180,28 @@ static int tick_type(png_bytep p, bool transparent, const char** outError)
             *outError = "Ticks in transparent frame must be black or red";
         }
         return TICK_TYPE_TICK;
+=======
+static bool is_tick(png_bytep p, bool transparent, const char** outError)
+{
+    if (transparent) {
+        if (p[3] == 0) {
+            return false;
+        }
+        if (p[3] != 0xff) {
+            *outError = "Frame pixels must be either solid or transparent (not intermediate alphas)";
+            return false;
+        }
+        if (p[0] != 0 || p[1] != 0 || p[2] != 0) {
+            *outError = "Ticks in transparent frame must be black";
+        }
+        return true;
+>>>>>>> upstream/master
     }
 
     if (p[3] != 0xFF) {
         *outError = "White frame must be a solid color (no alpha)";
     }
+<<<<<<< HEAD
     if (color == COLOR_WHITE) {
         return TICK_TYPE_NONE;
     }
@@ -192,6 +217,16 @@ static int tick_type(png_bytep p, bool transparent, const char** outError)
         return TICK_TYPE_NONE;
     }
     return TICK_TYPE_TICK;
+=======
+    if (p[0] == 0xFF && p[1] == 0xFF && p[2] == 0xFF) {
+        return false;
+    }
+    if (p[0] != 0 || p[1] != 0 || p[2] != 0) {
+        *outError = "Ticks in white frame must be black";
+        return false;
+    }
+    return true;
+>>>>>>> upstream/master
 }
 
 enum {
@@ -211,7 +246,11 @@ static status_t get_horizontal_ticks(
     bool found = false;
 
     for (i=1; i<width-1; i++) {
+<<<<<<< HEAD
         if (TICK_TYPE_TICK == tick_type(row+i*4, transparent, outError)) {
+=======
+        if (is_tick(row+i*4, transparent, outError)) {
+>>>>>>> upstream/master
             if (state == TICK_START ||
                 (state == TICK_OUTSIDE_1 && multipleAllowed)) {
                 *outLeft = i-1;
@@ -260,7 +299,11 @@ static status_t get_vertical_ticks(
     bool found = false;
 
     for (i=1; i<height-1; i++) {
+<<<<<<< HEAD
         if (TICK_TYPE_TICK == tick_type(rows[i]+offset, transparent, outError)) {
+=======
+        if (is_tick(rows[i]+offset, transparent, outError)) {
+>>>>>>> upstream/master
             if (state == TICK_START ||
                 (state == TICK_OUTSIDE_1 && multipleAllowed)) {
                 *outTop = i-1;
@@ -298,6 +341,7 @@ static status_t get_vertical_ticks(
     return NO_ERROR;
 }
 
+<<<<<<< HEAD
 static status_t get_horizontal_layout_bounds_ticks(
         png_bytep row, int width, bool transparent, bool required,
         int32_t* outLeft, int32_t* outRight, const char** outError)
@@ -375,6 +419,8 @@ static status_t get_vertical_layout_bounds_ticks(
 }
 
 
+=======
+>>>>>>> upstream/master
 static uint32_t get_color(
     png_bytepp rows, int left, int top, int right, int bottom)
 {
@@ -466,9 +512,12 @@ static status_t do_9patch(const char* imageName, image_info* image)
     image->info9Patch.paddingLeft = image->info9Patch.paddingRight =
         image->info9Patch.paddingTop = image->info9Patch.paddingBottom = -1;
 
+<<<<<<< HEAD
     image->layoutBoundsLeft = image->layoutBoundsRight =
         image->layoutBoundsTop = image->layoutBoundsBottom = 0;
 
+=======
+>>>>>>> upstream/master
     png_bytep p = image->rows[0];
     bool transparent = p[3] == 0;
     bool hasColor = false;
@@ -524,6 +573,7 @@ static status_t do_9patch(const char* imageName, image_info* image)
         goto getout;
     }
 
+<<<<<<< HEAD
     // Find left and right of layout padding...
     get_horizontal_layout_bounds_ticks(image->rows[H-1], W, transparent, false,
                                         &image->layoutBoundsLeft,
@@ -543,6 +593,8 @@ static status_t do_9patch(const char* imageName, image_info* image)
                 image->layoutBoundsRight, image->layoutBoundsBottom));
     }
 
+=======
+>>>>>>> upstream/master
     // Copy patch data into image
     image->info9Patch.numXDivs = numXDivs;
     image->info9Patch.numYDivs = numYDivs;
@@ -980,9 +1032,14 @@ static void write_png(const char* imageName,
     int bit_depth, interlace_type, compression_type;
     int i;
 
+<<<<<<< HEAD
     png_unknown_chunk unknowns[2];
     unknowns[0].data = NULL;
     unknowns[1].data = NULL;
+=======
+    png_unknown_chunk unknowns[1];
+    unknowns[0].data = NULL;
+>>>>>>> upstream/master
 
     png_bytepp outRows = (png_bytepp) malloc((int) imageInfo.height * png_sizeof(png_bytep));
     if (outRows == (png_bytepp) 0) {
@@ -1052,6 +1109,7 @@ static void write_png(const char* imageName,
     }
 
     if (imageInfo.is9Patch) {
+<<<<<<< HEAD
         int chunk_count = 1 + (imageInfo.haveLayoutBounds ? 1 : 0);
         int p_index = imageInfo.haveLayoutBounds ? 1 : 0;
         int b_index = 0;
@@ -1076,18 +1134,34 @@ static void write_png(const char* imageName,
         png_set_keep_unknown_chunks(write_ptr, PNG_HANDLE_CHUNK_ALWAYS,
                                     chunk_names, chunk_count);
         png_set_unknown_chunks(write_ptr, write_info, unknowns, chunk_count);
+=======
+        NOISY(printf("Adding 9-patch info...\n"));
+        strcpy((char*)unknowns[0].name, "npTc");
+        unknowns[0].data = (png_byte*)imageInfo.info9Patch.serialize();
+        unknowns[0].size = imageInfo.info9Patch.serializedSize();
+        // TODO: remove the check below when everything works
+        checkNinePatchSerialization(&imageInfo.info9Patch, unknowns[0].data);
+        png_set_keep_unknown_chunks(write_ptr, PNG_HANDLE_CHUNK_ALWAYS,
+                                    (png_byte*)"npTc", 1);
+        png_set_unknown_chunks(write_ptr, write_info, unknowns, 1);
+>>>>>>> upstream/master
         // XXX I can't get this to work without forcibly changing
         // the location to what I want...  which apparently is supposed
         // to be a private API, but everything else I have tried results
         // in the location being set to what I -last- wrote so I never
         // get written. :p
         png_set_unknown_chunk_location(write_ptr, write_info, 0, PNG_HAVE_PLTE);
+<<<<<<< HEAD
         if (imageInfo.haveLayoutBounds) {
             png_set_unknown_chunk_location(write_ptr, write_info, 1, PNG_HAVE_PLTE);
         }
     }
 
 
+=======
+    }
+
+>>>>>>> upstream/master
     png_write_info(write_ptr, write_info);
 
     png_bytepp rows;
@@ -1109,7 +1183,10 @@ static void write_png(const char* imageName,
     }
     free(outRows);
     free(unknowns[0].data);
+<<<<<<< HEAD
     free(unknowns[1].data);
+=======
+>>>>>>> upstream/master
 
     png_get_IHDR(write_ptr, write_info, &width, &height,
        &bit_depth, &color_type, &interlace_type,
@@ -1120,7 +1197,11 @@ static void write_png(const char* imageName,
                  compression_type));
 }
 
+<<<<<<< HEAD
 status_t preProcessImage(const Bundle* bundle, const sp<AaptAssets>& assets,
+=======
+status_t preProcessImage(Bundle* bundle, const sp<AaptAssets>& assets,
+>>>>>>> upstream/master
                          const sp<AaptFile>& file, String8* outNewLeafName)
 {
     String8 ext(file->getPath().getPathExtension());
@@ -1240,7 +1321,11 @@ bail:
     return error;
 }
 
+<<<<<<< HEAD
 status_t preProcessImageToCache(const Bundle* bundle, const String8& source, const String8& dest)
+=======
+status_t preProcessImageToCache(Bundle* bundle, String8 source, String8 dest)
+>>>>>>> upstream/master
 {
     png_structp read_ptr = NULL;
     png_infop read_info = NULL;

@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 #include <androidfw/KeyCharacterMap.h>
 #include <androidfw/KeyLayoutMap.h>
 #include <androidfw/VirtualKeyMap.h>
+=======
+#include <ui/KeyCharacterMap.h>
+#include <ui/KeyLayoutMap.h>
+#include <ui/VirtualKeyMap.h>
+>>>>>>> upstream/master
 #include <utils/PropertyMap.h>
 #include <utils/String8.h>
 
@@ -78,7 +84,11 @@ static bool validateFile(const char* filename) {
         return false;
 
     case FILETYPE_KEYLAYOUT: {
+<<<<<<< HEAD
         sp<KeyLayoutMap> map;
+=======
+        KeyLayoutMap* map;
+>>>>>>> upstream/master
         status_t status = KeyLayoutMap::load(String8(filename), &map);
         if (status) {
             fprintf(stderr, "Error %d parsing key layout file.\n\n", status);
@@ -88,9 +98,14 @@ static bool validateFile(const char* filename) {
     }
 
     case FILETYPE_KEYCHARACTERMAP: {
+<<<<<<< HEAD
         sp<KeyCharacterMap> map;
         status_t status = KeyCharacterMap::load(String8(filename),
                 KeyCharacterMap::FORMAT_ANY, &map);
+=======
+        KeyCharacterMap* map;
+        status_t status = KeyCharacterMap::load(String8(filename), &map);
+>>>>>>> upstream/master
         if (status) {
             fprintf(stderr, "Error %d parsing key character map file.\n\n", status);
             return false;
@@ -105,7 +120,10 @@ static bool validateFile(const char* filename) {
             fprintf(stderr, "Error %d parsing input device configuration file.\n\n", status);
             return false;
         }
+<<<<<<< HEAD
         delete map;
+=======
+>>>>>>> upstream/master
         break;
     }
 
@@ -116,7 +134,10 @@ static bool validateFile(const char* filename) {
             fprintf(stderr, "Error %d parsing virtual key definition file.\n\n", status);
             return false;
         }
+<<<<<<< HEAD
         delete map;
+=======
+>>>>>>> upstream/master
         break;
     }
     }

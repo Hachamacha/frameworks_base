@@ -19,7 +19,11 @@ static bool basic_test(uint32_t index) {
     rsDebug("tm.tm_yday", tm.tm_yday);
     rsDebug("tm.tm_isdst", tm.tm_isdst);
 
+<<<<<<< HEAD
     // Test a specific time (since we set America/Los_Angeles localtime)
+=======
+    // Test a specific time (only valid for PST localtime)
+>>>>>>> upstream/master
     curTime = 1294438893;
     rsLocaltime(&tm, &curTime);
 

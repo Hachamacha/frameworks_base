@@ -16,8 +16,11 @@
 
 package android.media.audiofx;
 
+<<<<<<< HEAD
 import android.util.Log;
 
+=======
+>>>>>>> upstream/master
 /**
  * Noise Suppressor (NS).
  * <p>Noise suppression (NS) is an audio pre-processing which removes background noise from the
@@ -29,6 +32,7 @@ import android.util.Log;
  * <p>An application creates a NoiseSuppressor object to instantiate and control an NS
  * engine in the audio framework.
  * <p>To attach the NoiseSuppressor to a particular {@link android.media.AudioRecord},
+<<<<<<< HEAD
  * specify the audio session ID of this AudioRecord when creating the NoiseSuppressor.
  * The audio session is retrieved by calling
  * {@link android.media.AudioRecord#getAudioSessionId()} on the AudioRecord instance.
@@ -38,6 +42,19 @@ import android.util.Log;
  * state on a particular AudioRecord session.
  * <p>See {@link android.media.audiofx.AudioEffect} class for more details on
  * controlling audio effects.
+=======
+ * specify the audio session ID of this AudioRecord when constructing the NoiseSuppressor.
+ * The audio session is retrieved by calling
+ * {@link android.media.AudioRecord#getAudioSessionId()} on the AudioRecord instance.
+ * <p>On some devices, NS can be inserted by default in the capture path by the platform
+ * according to the {@link android.media.MediaRecorder.AudioSource} used. The application can
+ * query which pre-processings are currently applied to an AudioRecord instance by calling
+ * {@link android.media.audiofx.AudioEffect#queryPreProcessings(int)} with the audio session of the
+ * AudioRecord.
+ * <p>See {@link android.media.audiofx.AudioEffect} class for more details on
+ * controlling audio effects.
+ * @hide
+>>>>>>> upstream/master
  */
 
 public class NoiseSuppressor extends AudioEffect {
@@ -45,6 +62,7 @@ public class NoiseSuppressor extends AudioEffect {
     private final static String TAG = "NoiseSuppressor";
 
     /**
+<<<<<<< HEAD
      * Checks if the device implements noise suppression.
      * @return true if the device implements noise suppression, false otherwise.
      */
@@ -78,11 +96,19 @@ public class NoiseSuppressor extends AudioEffect {
     /**
      * Class constructor.
      * <p> The constructor is not guarantied to succeed and throws the following exceptions:
+=======
+     * Class constructor.
+     * <p> The application must catch exceptions when creating an NoiseSuppressor as the
+     * constructor is not guarantied to succeed:
+>>>>>>> upstream/master
      * <ul>
      *  <li>IllegalArgumentException is thrown if the device does not implement an NS</li>
      *  <li>UnsupportedOperationException is thrown is the resources allocated to audio
      *  pre-procesing are currently exceeded.</li>
+<<<<<<< HEAD
      *  <li>RuntimeException is thrown if a memory allocation error occurs.</li>
+=======
+>>>>>>> upstream/master
      * </ul>
      *
      * @param audioSession system wide unique audio session identifier. The NoiseSuppressor
@@ -92,7 +118,11 @@ public class NoiseSuppressor extends AudioEffect {
      * @throws java.lang.UnsupportedOperationException
      * @throws java.lang.RuntimeException
      */
+<<<<<<< HEAD
     private NoiseSuppressor(int audioSession)
+=======
+    public NoiseSuppressor(int audioSession)
+>>>>>>> upstream/master
             throws IllegalArgumentException, UnsupportedOperationException, RuntimeException {
         super(EFFECT_TYPE_NS, EFFECT_TYPE_NULL, 0, audioSession);
     }

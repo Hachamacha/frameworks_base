@@ -66,7 +66,11 @@
     <skip />
     <!-- no translation found for status_bar_input_method_settings_configure_input_methods (3504292471512317827) -->
     <skip />
+<<<<<<< HEAD
     <!-- no translation found for status_bar_use_physical_keyboard (7551903084416057810) -->
+=======
+    <!-- no translation found for status_bar_use_physical_keyboard (3695516942412442936) -->
+>>>>>>> upstream/master
     <skip />
     <!-- no translation found for usb_device_permission_prompt (834698001271562057) -->
     <skip />
@@ -246,6 +250,7 @@
     <skip />
     <!-- no translation found for accessibility_clear_all (5235938559247164925) -->
     <skip />
+<<<<<<< HEAD
     <!-- no translation found for dreams_dock_launcher (3541196417659166245) -->
     <skip />
     <!-- no translation found for status_bar_notification_inspect_item_title (1163547729015390250) -->
@@ -260,4 +265,6 @@
     <skip />
     <!-- no translation found for accessibility_rotation_lock_on_portrait (5809367521644012115) -->
     <skip />
+=======
+>>>>>>> upstream/master
 </resources>

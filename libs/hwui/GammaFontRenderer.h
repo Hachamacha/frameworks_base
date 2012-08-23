@@ -50,7 +50,11 @@ struct GammaFontRenderer {
         FontRenderer* renderer = mRenderers[fontRenderer];
         if (!renderer) return 0;
 
+<<<<<<< HEAD
         return renderer->getCacheSize();
+=======
+        return renderer->getCacheHeight() * renderer->getCacheWidth();
+>>>>>>> upstream/master
     }
 
 private:

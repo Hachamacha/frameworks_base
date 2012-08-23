@@ -35,11 +35,15 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+=======
+import android.os.ParcelUuid;
+>>>>>>> upstream/master
 import android.provider.Settings;
 import android.util.Log;
 
@@ -76,10 +80,13 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
     private final BluetoothAdapter mAdapter;
     private int   mTargetA2dpState;
     private BluetoothDevice mPlayingA2dpDevice;
+<<<<<<< HEAD
     private IntentBroadcastHandler mIntentBroadcastHandler;
     private final WakeLock mWakeLock;
 
     private static final int MSG_CONNECTION_STATE_CHANGED = 0;
+=======
+>>>>>>> upstream/master
 
     /* AVRCP1.3 Metadata variables */
     private String mTrackName = DEFAULT_METADATA_STRING;
@@ -434,11 +441,14 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
     public BluetoothA2dpService(Context context, BluetoothService bluetoothService) {
         mContext = context;
 
+<<<<<<< HEAD
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BluetoothA2dpService");
 
         mIntentBroadcastHandler = new IntentBroadcastHandler();
 
+=======
+>>>>>>> upstream/master
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         mBluetoothService = bluetoothService;
@@ -574,7 +584,11 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
                     }
                 }
         }
+<<<<<<< HEAD
         mAudioManager.setParameters(BLUETOOTH_ENABLED+"=true");
+=======
+        mAudioManager.setParameters(BLUETOOTH_ENABLED + "=true");
+>>>>>>> upstream/master
         mAudioManager.setParameters("A2dpSuspended=false");
     }
 
@@ -724,7 +738,11 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
     public synchronized boolean suspendSink(BluetoothDevice device) {
         mContext.enforceCallingOrSelfPermission(BLUETOOTH_ADMIN_PERM,
                             "Need BLUETOOTH_ADMIN permission");
+<<<<<<< HEAD
         if (DBG) log("suspendSink(" + device + "), mTargetA2dpState: "+mTargetA2dpState);
+=======
+        if (DBG) log("suspendSink(" + device + "), mTargetA2dpState: "+ mTargetA2dpState);
+>>>>>>> upstream/master
         if (device == null || mAudioDevices == null) {
             return false;
         }
@@ -741,7 +759,11 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
     public synchronized boolean resumeSink(BluetoothDevice device) {
         mContext.enforceCallingOrSelfPermission(BLUETOOTH_ADMIN_PERM,
                             "Need BLUETOOTH_ADMIN permission");
+<<<<<<< HEAD
         if (DBG) log("resumeSink(" + device + "), mTargetA2dpState: "+mTargetA2dpState);
+=======
+        if (DBG) log("resumeSink(" + device + "), mTargetA2dpState: "+ mTargetA2dpState);
+>>>>>>> upstream/master
         if (device == null || mAudioDevices == null) {
             return false;
         }
@@ -889,6 +911,7 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
                 adjustOtherSinkPriorities(device);
             }
 
+<<<<<<< HEAD
             int delay = mAudioManager.setBluetoothA2dpDeviceConnectionState(device, state);
 
             mWakeLock.acquire();
@@ -898,6 +921,26 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
                                                             state,
                                                             device),
                                                        delay);
+=======
+            Intent intent = new Intent(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
+            intent.putExtra(BluetoothDevice.EXTRA_DEVICE, device);
+            intent.putExtra(BluetoothProfile.EXTRA_PREVIOUS_STATE, prevState);
+            intent.putExtra(BluetoothProfile.EXTRA_STATE, state);
+            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+            mContext.sendBroadcast(intent, BLUETOOTH_PERM);
+
+            if (DBG) log("A2DP state : device: " + device + " State:" + prevState + "->" + state);
+
+            mBluetoothService.sendConnectionStateChange(device, BluetoothProfile.A2DP, state,
+                                                        prevState);
+        }
+        if (prevState == BluetoothA2dp.STATE_CONNECTING &&
+             state == BluetoothA2dp.STATE_CONNECTED) {
+            for (String path: getConnectedSinksPaths()) {
+                sendMetaData(path);
+                sendEvent(path, EVENT_PLAYSTATUS_CHANGED, (long)mPlayStatus);
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -959,6 +1002,7 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
         }
     }
 
+<<<<<<< HEAD
     /** Handles A2DP connection state change intent broadcasts. */
     private class IntentBroadcastHandler extends Handler {
 
@@ -991,6 +1035,10 @@ public class BluetoothA2dpService extends IBluetoothA2dp.Stub {
     protected synchronized void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DUMP, TAG);
 
+=======
+    @Override
+    protected synchronized void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+>>>>>>> upstream/master
         if (mAudioDevices.isEmpty()) return;
         pw.println("Cached audio devices:");
         for (BluetoothDevice device : mAudioDevices.keySet()) {

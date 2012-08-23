@@ -41,11 +41,17 @@ import com.android.internal.telephony.gsm.UsimServiceTable;
 import com.android.internal.telephony.ims.IsimRecords;
 import com.android.internal.telephony.test.SimulatedRadioControl;
 import com.android.internal.telephony.gsm.SIMRecords;
+<<<<<<< HEAD
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
+=======
+import com.android.internal.telephony.gsm.SimCard;
+
+import java.util.Locale;
+>>>>>>> upstream/master
 
 
 /**
@@ -105,11 +111,14 @@ public abstract class PhoneBase extends Handler implements Phone {
     protected static final int EVENT_SET_ENHANCED_VP                = 24;
     protected static final int EVENT_EMERGENCY_CALLBACK_MODE_ENTER  = 25;
     protected static final int EVENT_EXIT_EMERGENCY_CALLBACK_RESPONSE = 26;
+<<<<<<< HEAD
     protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED = 27;
     // other
     protected static final int EVENT_SET_NETWORK_AUTOMATIC          = 28;
     protected static final int EVENT_NEW_ICC_SMS                    = 29;
     protected static final int EVENT_ICC_RECORD_EVENTS              = 30;
+=======
+>>>>>>> upstream/master
 
     // Key used to read/write current CLIR setting
     public static final String CLIR_KEY = "clir_key";
@@ -119,6 +128,10 @@ public abstract class PhoneBase extends Handler implements Phone {
 
     /* Instance Variables */
     public CommandsInterface mCM;
+<<<<<<< HEAD
+=======
+    protected IccFileHandler mIccFileHandler;
+>>>>>>> upstream/master
     boolean mDnsCheckDisabled;
     public DataConnectionTracker mDataConnectionTracker;
     boolean mDoesRilSendMultipleCallRing;
@@ -127,7 +140,11 @@ public abstract class PhoneBase extends Handler implements Phone {
     public boolean mIsTheCurrentActivePhone = true;
     boolean mIsVoiceCapable = true;
     public IccRecords mIccRecords;
+<<<<<<< HEAD
     protected AtomicReference<IccCard> mIccCard = new AtomicReference<IccCard>();
+=======
+    public IccCard mIccCard;
+>>>>>>> upstream/master
     public SmsStorageMonitor mSmsStorageMonitor;
     public SmsUsageMonitor mSmsUsageMonitor;
     public SMSDispatcher mSMS;
@@ -250,7 +267,11 @@ public abstract class PhoneBase extends Handler implements Phone {
 
         // Initialize device storage and outgoing SMS usage monitors for SMSDispatchers.
         mSmsStorageMonitor = new SmsStorageMonitor(this);
+<<<<<<< HEAD
         mSmsUsageMonitor = new SmsUsageMonitor(context);
+=======
+        mSmsUsageMonitor = new SmsUsageMonitor(context.getContentResolver());
+>>>>>>> upstream/master
     }
 
     public void dispose() {
@@ -268,10 +289,13 @@ public abstract class PhoneBase extends Handler implements Phone {
     public void removeReferences() {
         mSmsStorageMonitor = null;
         mSmsUsageMonitor = null;
+<<<<<<< HEAD
         mSMS = null;
         mIccRecords = null;
         mIccCard.set(null);
         mDataConnectionTracker = null;
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -606,7 +630,11 @@ public abstract class PhoneBase extends Handler implements Phone {
                 if (l.length() >=5) {
                     country = l.substring(3, 5);
                 }
+<<<<<<< HEAD
                 MccTable.setSystemLocale(mContext, language, country);
+=======
+                setSystemLocale(language, country, false);
+>>>>>>> upstream/master
 
                 if (!country.isEmpty()) {
                     try {
@@ -625,6 +653,65 @@ public abstract class PhoneBase extends Handler implements Phone {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Utility code to set the system locale if it's not set already
+     * @param language Two character language code desired
+     * @param country Two character country code desired
+     * @param fromMcc Indicating whether the locale is set according to MCC table.
+     *                This flag wil be ignored by default implementation.
+     *                TODO: Use a source enumeration so that source of the locale
+     *                      can be prioritized.
+     *
+     *  {@hide}
+     */
+    public void setSystemLocale(String language, String country, boolean fromMcc) {
+        String l = SystemProperties.get("persist.sys.language");
+        String c = SystemProperties.get("persist.sys.country");
+
+        if (null == language) {
+            return; // no match possible
+        }
+        language = language.toLowerCase();
+        if (null == country) {
+            country = "";
+        }
+        country = country.toUpperCase();
+
+        if((null == l || 0 == l.length()) && (null == c || 0 == c.length())) {
+            try {
+                // try to find a good match
+                String[] locales = mContext.getAssets().getLocales();
+                final int N = locales.length;
+                String bestMatch = null;
+                for(int i = 0; i < N; i++) {
+                    // only match full (lang + country) locales
+                    if (locales[i]!=null && locales[i].length() >= 5 &&
+                            locales[i].substring(0,2).equals(language)) {
+                        if (locales[i].substring(3,5).equals(country)) {
+                            bestMatch = locales[i];
+                            break;
+                        } else if (null == bestMatch) {
+                            bestMatch = locales[i];
+                        }
+                    }
+                }
+                if (null != bestMatch) {
+                    IActivityManager am = ActivityManagerNative.getDefault();
+                    Configuration config = am.getConfiguration();
+                    config.locale = new Locale(bestMatch.substring(0,2),
+                                               bestMatch.substring(3,5));
+                    config.userSetLocale = true;
+                    am.updateConfiguration(config);
+                }
+            } catch (Exception e) {
+                // Intentionally left blank
+            }
+        }
+    }
+
+    /**
+>>>>>>> upstream/master
      * Get state
      */
     public abstract Phone.State getState();
@@ -632,11 +719,15 @@ public abstract class PhoneBase extends Handler implements Phone {
     /**
      * Retrieves the IccFileHandler of the Phone instance
      */
+<<<<<<< HEAD
     public IccFileHandler getIccFileHandler(){
         IccCard iccCard = mIccCard.get();
         if (iccCard == null) return null;
         return iccCard.getIccFileHandler();
     }
+=======
+    public abstract IccFileHandler getIccFileHandler();
+>>>>>>> upstream/master
 
     /*
      * Retrieves the Handler of the Phone instance
@@ -661,7 +752,11 @@ public abstract class PhoneBase extends Handler implements Phone {
 
     @Override
     public IccCard getIccCard() {
+<<<<<<< HEAD
         return mIccCard.get();
+=======
+        return mIccCard;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -1127,6 +1222,7 @@ public abstract class PhoneBase extends Handler implements Phone {
     }
 
     /**
+<<<<<<< HEAD
      * {@hide}
      */
     @Override
@@ -1135,6 +1231,8 @@ public abstract class PhoneBase extends Handler implements Phone {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the SIM voice message waiting indicator records.
      * @param line GSM Subscriber Profile Number, one-based. Only '1' is supported
      * @param countWaiting The number of messages waiting, if known. Use
@@ -1154,6 +1252,7 @@ public abstract class PhoneBase extends Handler implements Phone {
     public UsimServiceTable getUsimServiceTable() {
         return mIccRecords.getUsimServiceTable();
     }
+<<<<<<< HEAD
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("PhoneBase:");
@@ -1193,4 +1292,6 @@ public abstract class PhoneBase extends Handler implements Phone {
         pw.println(" isDataConnectivityPossible()=" + isDataConnectivityPossible());
         pw.println(" needsOtaServiceProvisioning=" + needsOtaServiceProvisioning());
     }
+=======
+>>>>>>> upstream/master
 }

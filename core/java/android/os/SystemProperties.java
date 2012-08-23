@@ -17,10 +17,13 @@
 
 package android.os;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 import android.util.Log;
 
+=======
+>>>>>>> upstream/master
 
 /**
  * Gives access to the system properties store.  The system properties
@@ -33,7 +36,10 @@ public class SystemProperties
     public static final int PROP_NAME_MAX = 31;
     public static final int PROP_VALUE_MAX = 91;
 
+<<<<<<< HEAD
     private static final ArrayList<Runnable> sChangeCallbacks = new ArrayList<Runnable>();
+=======
+>>>>>>> upstream/master
 
     private static native String native_get(String key);
     private static native String native_get(String key, String def);
@@ -41,7 +47,10 @@ public class SystemProperties
     private static native long native_get_long(String key, long def);
     private static native boolean native_get_boolean(String key, boolean def);
     private static native void native_set(String key, String def);
+<<<<<<< HEAD
     private static native void native_add_change_callback();
+=======
+>>>>>>> upstream/master
 
     /**
      * Get the value for the given key.
@@ -133,6 +142,7 @@ public class SystemProperties
         native_set(key, val);
     }
 
+<<<<<<< HEAD
     public static void addChangeCallback(Runnable callback) {
         synchronized (sChangeCallbacks) {
             if (sChangeCallbacks.size() == 0) {
@@ -155,6 +165,8 @@ public class SystemProperties
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Get the value for the given key.
      * @return def string if the key isn't found

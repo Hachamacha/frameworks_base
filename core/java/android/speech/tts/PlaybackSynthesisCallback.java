@@ -47,34 +47,57 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
     private final float mPan;
 
     /**
+<<<<<<< HEAD
      * Guards {@link #mAudioTrackHandler}, {@link #mItem} and {@link #mStopped}.
+=======
+     * Guards {@link #mAudioTrackHandler}, {@link #mToken} and {@link #mStopped}.
+>>>>>>> upstream/master
      */
     private final Object mStateLock = new Object();
 
     // Handler associated with a thread that plays back audio requests.
     private final AudioPlaybackHandler mAudioTrackHandler;
     // A request "token", which will be non null after start() has been called.
+<<<<<<< HEAD
     private SynthesisPlaybackQueueItem mItem = null;
     // Whether this request has been stopped. This is useful for keeping
     // track whether stop() has been called before start(). In all other cases,
     // a non-null value of mItem will provide the same information.
+=======
+    private SynthesisMessageParams mToken = null;
+    // Whether this request has been stopped. This is useful for keeping
+    // track whether stop() has been called before start(). In all other cases,
+    // a non-null value of mToken will provide the same information.
+>>>>>>> upstream/master
     private boolean mStopped = false;
 
     private volatile boolean mDone = false;
 
     private final UtteranceProgressDispatcher mDispatcher;
+<<<<<<< HEAD
     private final Object mCallerIdentity;
+=======
+    private final String mCallingApp;
+>>>>>>> upstream/master
     private final EventLogger mLogger;
 
     PlaybackSynthesisCallback(int streamType, float volume, float pan,
             AudioPlaybackHandler audioTrackHandler, UtteranceProgressDispatcher dispatcher,
+<<<<<<< HEAD
             Object callerIdentity, EventLogger logger) {
+=======
+            String callingApp, EventLogger logger) {
+>>>>>>> upstream/master
         mStreamType = streamType;
         mVolume = volume;
         mPan = pan;
         mAudioTrackHandler = audioTrackHandler;
         mDispatcher = dispatcher;
+<<<<<<< HEAD
         mCallerIdentity = callerIdentity;
+=======
+        mCallingApp = callingApp;
+>>>>>>> upstream/master
         mLogger = logger;
     }
 
@@ -89,13 +112,18 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
         // Note that mLogger.mError might be true too at this point.
         mLogger.onStopped();
 
+<<<<<<< HEAD
         SynthesisPlaybackQueueItem item;
+=======
+        SynthesisMessageParams token;
+>>>>>>> upstream/master
         synchronized (mStateLock) {
             if (mStopped) {
                 Log.w(TAG, "stop() called twice");
                 return;
             }
 
+<<<<<<< HEAD
             item = mItem;
             mStopped = true;
         }
@@ -106,6 +134,23 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
             // won't worry about that because the audio playback queue will be cleared
             // soon after (see SynthHandler#stop(String).
             item.stop(wasError);
+=======
+            token = mToken;
+            mStopped = true;
+        }
+
+        if (token != null) {
+            // This might result in the synthesis thread being woken up, at which
+            // point it will write an additional buffer to the token - but we
+            // won't worry about that because the audio playback queue will be cleared
+            // soon after (see SynthHandler#stop(String).
+            token.setIsError(wasError);
+            token.clearBuffers();
+            if (wasError) {
+                // Also clean up the audio track if an error occurs.
+                mAudioTrackHandler.enqueueSynthesisDone(token);
+            }
+>>>>>>> upstream/master
         } else {
             // This happens when stop() or error() were called before start() was.
 
@@ -140,7 +185,11 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
                     + "," + channelCount + ")");
         }
 
+<<<<<<< HEAD
         int channelConfig = BlockingAudioTrack.getChannelConfig(channelCount);
+=======
+        int channelConfig = AudioPlaybackHandler.getChannelConfig(channelCount);
+>>>>>>> upstream/master
         if (channelConfig == 0) {
             Log.e(TAG, "Unsupported number of channels :" + channelCount);
             return TextToSpeech.ERROR;
@@ -151,11 +200,20 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
                 if (DBG) Log.d(TAG, "stop() called before start(), returning.");
                 return TextToSpeech.ERROR;
             }
+<<<<<<< HEAD
             SynthesisPlaybackQueueItem item = new SynthesisPlaybackQueueItem(
                     mStreamType, sampleRateInHz, audioFormat, channelCount, mVolume, mPan,
                     mDispatcher, mCallerIdentity, mLogger);
             mAudioTrackHandler.enqueue(item);
             mItem = item;
+=======
+            SynthesisMessageParams params = new SynthesisMessageParams(
+                    mStreamType, sampleRateInHz, audioFormat, channelCount, mVolume, mPan,
+                    mDispatcher, mCallingApp, mLogger);
+            mAudioTrackHandler.enqueueSynthesisStart(params);
+
+            mToken = params;
+>>>>>>> upstream/master
         }
 
         return TextToSpeech.SUCCESS;
@@ -173,17 +231,27 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
                     + length + " bytes)");
         }
 
+<<<<<<< HEAD
         SynthesisPlaybackQueueItem item = null;
         synchronized (mStateLock) {
             if (mItem == null || mStopped) {
                 return TextToSpeech.ERROR;
             }
             item = mItem;
+=======
+        SynthesisMessageParams token = null;
+        synchronized (mStateLock) {
+            if (mToken == null || mStopped) {
+                return TextToSpeech.ERROR;
+            }
+            token = mToken;
+>>>>>>> upstream/master
         }
 
         // Sigh, another copy.
         final byte[] bufferCopy = new byte[length];
         System.arraycopy(buffer, offset, bufferCopy, 0, length);
+<<<<<<< HEAD
 
         // Might block on mItem.this, if there are too many buffers waiting to
         // be consumed.
@@ -192,6 +260,12 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
         } catch (InterruptedException ie) {
             return TextToSpeech.ERROR;
         }
+=======
+        // Might block on mToken.this, if there are too many buffers waiting to
+        // be consumed.
+        token.addBuffer(bufferCopy);
+        mAudioTrackHandler.enqueueSynthesisDataAvailable(token);
+>>>>>>> upstream/master
 
         mLogger.onEngineDataReceived();
 
@@ -202,7 +276,11 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
     public int done() {
         if (DBG) Log.d(TAG, "done()");
 
+<<<<<<< HEAD
         SynthesisPlaybackQueueItem item = null;
+=======
+        SynthesisMessageParams token = null;
+>>>>>>> upstream/master
         synchronized (mStateLock) {
             if (mDone) {
                 Log.w(TAG, "Duplicate call to done()");
@@ -211,6 +289,7 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
 
             mDone = true;
 
+<<<<<<< HEAD
             if (mItem == null) {
                 return TextToSpeech.ERROR;
             }
@@ -219,6 +298,16 @@ class PlaybackSynthesisCallback extends AbstractSynthesisCallback {
         }
 
         item.done();
+=======
+            if (mToken == null) {
+                return TextToSpeech.ERROR;
+            }
+
+            token = mToken;
+        }
+
+        mAudioTrackHandler.enqueueSynthesisDone(token);
+>>>>>>> upstream/master
         mLogger.onEngineComplete();
 
         return TextToSpeech.SUCCESS;

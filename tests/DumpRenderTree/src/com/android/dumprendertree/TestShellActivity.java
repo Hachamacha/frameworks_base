@@ -22,9 +22,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+<<<<<<< HEAD
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
+=======
+import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Bitmap.Config;
+>>>>>>> upstream/master
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +42,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
+<<<<<<< HEAD
+=======
+import android.webkit.CookieManager;
+>>>>>>> upstream/master
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
@@ -42,10 +55,15 @@ import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+<<<<<<< HEAD
 import android.webkit.WebSettingsClassic;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClassic;
+=======
+import android.webkit.WebStorage;
+import android.webkit.WebView;
+>>>>>>> upstream/master
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
@@ -111,10 +129,17 @@ public class TestShellActivity extends Activity implements LayoutTestController 
             case DUMP_AS_TEXT:
                 callback.arg1 = mDumpTopFrameAsText ? 1 : 0;
                 callback.arg2 = mDumpChildFramesAsText ? 1 : 0;
+<<<<<<< HEAD
                 mWebViewClassic.documentAsText(callback);
                 break;
             case EXT_REPR:
                 mWebViewClassic.externalRepresentation(callback);
+=======
+                mWebView.documentAsText(callback);
+                break;
+            case EXT_REPR:
+                mWebView.externalRepresentation(callback);
+>>>>>>> upstream/master
                 break;
             default:
                 finished();
@@ -143,7 +168,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
 
         CookieManager.setAcceptFileSchemeCookies(true);
         mWebView = new WebView(this);
+<<<<<<< HEAD
         mWebViewClassic = WebViewClassic.fromWebView(mWebView);
+=======
+>>>>>>> upstream/master
         mEventSender = new WebViewEventSender(mWebView);
         mCallbackProxy = new CallbackProxy(mEventSender, this);
 
@@ -158,7 +186,11 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         // Expose window.gc function to JavaScript. JSC build exposes
         // this function by default, but V8 requires the flag to turn it on.
         // WebView::setJsFlags is noop in JSC build.
+<<<<<<< HEAD
         mWebViewClassic.setJsFlags("--expose_gc");
+=======
+        mWebView.setJsFlags("--expose_gc");
+>>>>>>> upstream/master
 
         mHandler = new AsyncHandler();
 
@@ -168,7 +200,11 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         }
 
         // This is asynchronous, but it gets processed by WebCore before it starts loading pages.
+<<<<<<< HEAD
         mWebViewClassic.setUseMockDeviceOrientation();
+=======
+        mWebView.useMockDeviceOrientation();
+>>>>>>> upstream/master
     }
 
     @Override
@@ -197,6 +233,11 @@ public class TestShellActivity extends Activity implements LayoutTestController 
 
         mResultFile = intent.getStringExtra(RESULT_FILE);
         mTimeoutInMillis = intent.getIntExtra(TIMEOUT_IN_MILLIS, 0);
+<<<<<<< HEAD
+=======
+        mGetDrawtime = intent.getBooleanExtra(GET_DRAW_TIME, false);
+        mSaveImagePath = intent.getStringExtra(SAVE_IMAGE);
+>>>>>>> upstream/master
         mStopOnRefError = intent.getBooleanExtra(STOP_ON_REF_ERROR, false);
         setTitle("Test " + mCurrentTestNumber + " of " + mTotalTestCount);
         float ratio = (float)mCurrentTestNumber / mTotalTestCount;
@@ -257,14 +298,22 @@ public class TestShellActivity extends Activity implements LayoutTestController 
             builder.setMessage("All tests finished. Exit?")
                    .setCancelable(false)
                    .setPositiveButton("Yes", new OnClickListener(){
+<<<<<<< HEAD
                        @Override
                     public void onClick(DialogInterface dialog, int which) {
+=======
+                       public void onClick(DialogInterface dialog, int which) {
+>>>>>>> upstream/master
                            TestShellActivity.this.finish();
                        }
                    })
                    .setNegativeButton("No", new OnClickListener(){
+<<<<<<< HEAD
                        @Override
                     public void onClick(DialogInterface dialog, int which) {
+=======
+                       public void onClick(DialogInterface dialog, int which) {
+>>>>>>> upstream/master
                            dialog.cancel();
                        }
                    });
@@ -290,7 +339,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         super.onDestroy();
         mWebView.destroy();
         mWebView = null;
+<<<<<<< HEAD
         mWebViewClassic = null;
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -308,10 +360,13 @@ public class TestShellActivity extends Activity implements LayoutTestController 
             return;
         }
 
+<<<<<<< HEAD
         if (mCallback != null) {
             mCallback.dumpResult(webkitData);
         }
 
+=======
+>>>>>>> upstream/master
         try {
             File parentDir = new File(mResultFile).getParentFile();
             if (!parentDir.exists()) {
@@ -372,7 +427,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
 
     // .......................................
     // LayoutTestController Functions
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpAsText(boolean enablePixelTests) {
         // Added after webkit update to r63859. See trac.webkit.org/changeset/63730.
         if (enablePixelTests) {
@@ -387,7 +445,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpChildFramesAsText() {
         mDumpDataType = DumpDataType.DUMP_AS_TEXT;
         mDumpChildFramesAsText = true;
@@ -397,14 +458,20 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void waitUntilDone() {
         mWaitUntilDone = true;
         String url = mWebView.getUrl();
         Log.v(LOGTAG, "waitUntilDone called: " + url);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void notifyDone() {
         String url = mWebView.getUrl();
         Log.v(LOGTAG, "notifyDone called: " + url);
@@ -416,18 +483,27 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void display() {
         mWebView.invalidate();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void clearBackForwardList() {
         mWebView.clearHistory();
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpBackForwardList() {
         //printf("\n============== Back Forward List ==============\n");
         // mWebHistory
@@ -435,25 +511,37 @@ public class TestShellActivity extends Activity implements LayoutTestController 
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpChildFrameScrollPositions() {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpEditingCallbacks() {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpSelectionRect() {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpTitleChanges() {
         if (!mDumpTitleChanges) {
             mTitleChanges = new StringBuffer();
@@ -461,7 +549,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         mDumpTitleChanges = true;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void keepWebHistory() {
         if (!mKeepWebHistory) {
             mWebHistory = new Vector();
@@ -469,71 +560,107 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         mKeepWebHistory = true;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void queueBackNavigation(int howfar) {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void queueForwardNavigation(int howfar) {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void queueLoad(String Url, String frameTarget) {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void queueReload() {
         mWebView.reload();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void queueScript(String scriptToRunInCurrentContext) {
         mWebView.loadUrl("javascript:"+scriptToRunInCurrentContext);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void repaintSweepHorizontally() {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setAcceptsEditing(boolean b) {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setMainFrameIsFirstResponder(boolean b) {
         // TODO Auto-generated method stub
 
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setWindowIsKey(boolean b) {
         // This is meant to show/hide the window. The best I can find
         // is setEnabled()
         mWebView.setEnabled(b);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void testRepaint() {
         mWebView.invalidate();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void dumpDatabaseCallbacks() {
         Log.v(LOGTAG, "dumpDatabaseCallbacks called.");
         mDumpDatabaseCallbacks = true;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setCanOpenWindows() {
         Log.v(LOGTAG, "setCanOpenWindows called.");
         mCanOpenWindows = true;
@@ -542,7 +669,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
     /**
      * Sets the Geolocation permission state to be used for all future requests.
      */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setGeolocationPermission(boolean allow) {
         mIsGeolocationPermissionSet = true;
         mGeolocationPermission = allow;
@@ -559,6 +689,7 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void setMockDeviceOrientation(boolean canProvideAlpha, double alpha,
             boolean canProvideBeta, double beta, boolean canProvideGamma, double gamma) {
@@ -567,25 +698,45 @@ public class TestShellActivity extends Activity implements LayoutTestController 
     }
 
     @Override
+=======
+    public void setMockDeviceOrientation(boolean canProvideAlpha, double alpha,
+            boolean canProvideBeta, double beta, boolean canProvideGamma, double gamma) {
+        mWebView.setMockDeviceOrientation(canProvideAlpha, alpha, canProvideBeta, beta,
+                canProvideGamma, gamma);
+    }
+
+>>>>>>> upstream/master
     public void overridePreference(String key, boolean value) {
         // TODO: We should look up the correct WebView for the frame which
         // called the layoutTestController method. Currently, we just use the
         // WebView for the main frame. EventSender suffers from the same
         // problem.
         if (WEBKIT_OFFLINE_WEB_APPLICATION_CACHE_ENABLED.equals(key)) {
+<<<<<<< HEAD
             mWebViewClassic.getSettings().setAppCacheEnabled(value);
         } else if (WEBKIT_USES_PAGE_CACHE_PREFERENCE_KEY.equals(key)) {
             // Cache the maximum possible number of pages.
             mWebViewClassic.getSettings().setPageCacheCapacity(Integer.MAX_VALUE);
+=======
+            mWebView.getSettings().setAppCacheEnabled(value);
+        } else if (WEBKIT_USES_PAGE_CACHE_PREFERENCE_KEY.equals(key)) {
+            // Cache the maximum possible number of pages.
+            mWebView.getSettings().setPageCacheCapacity(Integer.MAX_VALUE);
+>>>>>>> upstream/master
         } else {
             Log.w(LOGTAG, "LayoutTestController.overridePreference(): " +
                   "Unsupported preference '" + key + "'");
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void setXSSAuditorEnabled (boolean flag) {
         mWebViewClassic.getSettings().setXSSAuditorEnabled(flag);
+=======
+    public void setXSSAuditorEnabled (boolean flag) {
+        mWebView.getSettings().setXSSAuditorEnabled(flag);
+>>>>>>> upstream/master
     }
 
     private final WebViewClient mViewClient = new WebViewClient(){
@@ -593,6 +744,21 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         public void onPageFinished(WebView view, String url) {
             Log.v(LOGTAG, "onPageFinished, url=" + url);
             mPageFinished = true;
+<<<<<<< HEAD
+=======
+            // get page draw time
+            if (FsUtils.isTestPageUrl(url)) {
+                if (mGetDrawtime) {
+                    long[] times = new long[DRAW_RUNS];
+                    times = getDrawWebViewTime(mWebView, DRAW_RUNS);
+                    FsUtils.writeDrawTime(DRAW_TIME_LOG, url, times);
+                }
+                if (mSaveImagePath != null) {
+                    String name = FsUtils.getLastSegmentInPath(url);
+                    drawPageToFile(mSaveImagePath + "/" + name + ".png", mWebView);
+                }
+            }
+>>>>>>> upstream/master
 
             // Calling finished() will check if we've met all the conditions for completing
             // this test and move to the next one if we are ready. Otherwise we ask WebCore to
@@ -784,7 +950,10 @@ public class TestShellActivity extends Activity implements LayoutTestController 
                     && mWaitUntilDone && mStopOnRefError) {
                 Log.w(LOGTAG, "Terminating test case on uncaught ReferenceError or TypeError.");
                 mHandler.postDelayed(new Runnable() {
+<<<<<<< HEAD
                     @Override
+=======
+>>>>>>> upstream/master
                     public void run() {
                         notifyDone();
                     }
@@ -848,12 +1017,53 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         mEventSender.clearTouchMetaState();
         mPageFinished = false;
         mDumpWebKitData = false;
+<<<<<<< HEAD
+=======
+        mGetDrawtime = false;
+        mSaveImagePath = null;
+>>>>>>> upstream/master
         setDefaultWebSettings(mWebView);
         mIsGeolocationPermissionSet = false;
         mPendingGeolocationPermissionCallbacks = null;
         CookieManager.getInstance().removeAllCookie();
     }
 
+<<<<<<< HEAD
+=======
+    private long[] getDrawWebViewTime(WebView view, int count) {
+        if (count == 0)
+            return null;
+        long[] ret = new long[count];
+        long start;
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        for (int i = 0; i < count; i++) {
+            start = System.currentTimeMillis();
+            view.draw(canvas);
+            ret[i] = System.currentTimeMillis() - start;
+        }
+        return ret;
+    }
+
+    private void drawPageToFile(String fileName, WebView view) {
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(view.getContentWidth(), view.getContentHeight(),
+                Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        view.drawPage(canvas);
+        try {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            if(!bitmap.compress(CompressFormat.PNG, 90, fos)) {
+                Log.w(LOGTAG, "Failed to compress and save image.");
+            }
+        } catch (IOException ioe) {
+            Log.e(LOGTAG, "", ioe);
+        }
+        bitmap.recycle();
+    }
+
+>>>>>>> upstream/master
     private boolean canMoveToNextTest() {
         return (mDumpWebKitData && mPageFinished && !mWaitUntilDone) || mTimedOut;
     }
@@ -872,11 +1082,19 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         // single event rather than a stream of events (like what would generally happen in
         // a real use of touch events in a WebView)  and so if the WebView drops the event,
         // the test will fail as the test expects one callback for every touch it synthesizes.
+<<<<<<< HEAD
         WebViewClassic.fromWebView(webview).setTouchInterval(-1);
     }
 
     public void setDefaultWebSettings(WebView webview) {
         WebSettingsClassic settings = WebViewClassic.fromWebView(webview).getSettings();
+=======
+        webview.setTouchInterval(-1);
+    }
+
+    public void setDefaultWebSettings(WebView webview) {
+        WebSettings settings = webview.getSettings();
+>>>>>>> upstream/master
         settings.setAppCacheEnabled(true);
         settings.setAppCachePath(getApplicationContext().getCacheDir().getPath());
         settings.setAppCacheMaxSize(Long.MAX_VALUE);
@@ -890,12 +1108,20 @@ public class TestShellActivity extends Activity implements LayoutTestController 
         settings.setWorkersEnabled(false);
         settings.setXSSAuditorEnabled(false);
         settings.setPageCacheCapacity(0);
+<<<<<<< HEAD
         settings.setProperty("use_minimal_memory", "false");
         settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setAllowFileAccessFromFileURLs(true);
     }
 
     private WebViewClassic mWebViewClassic;
+=======
+        // this enables cpu upload path (as opposed to gpu upload path)
+        // and it's only meant to be a temporary workaround!
+        settings.setProperty("enable_cpu_upload_path", "true");
+    }
+
+>>>>>>> upstream/master
     private WebView mWebView;
     private WebViewEventSender mEventSender;
     private AsyncHandler mHandler;
@@ -907,7 +1133,13 @@ public class TestShellActivity extends Activity implements LayoutTestController 
     private String mResultFile;
     private int mTimeoutInMillis;
     private String mUiAutoTestPath;
+<<<<<<< HEAD
     private BufferedReader mTestListReader;
+=======
+    private String mSaveImagePath;
+    private BufferedReader mTestListReader;
+    private boolean mGetDrawtime;
+>>>>>>> upstream/master
     private int mTotalTestCount;
     private int mCurrentTestNumber;
     private boolean mStopOnRefError;

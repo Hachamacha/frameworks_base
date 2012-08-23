@@ -20,7 +20,11 @@ LOCAL_MODULE_TAGS := tests
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
+<<<<<<< HEAD
 LOCAL_STATIC_JAVA_LIBRARIES := android-common mockwebserver
+=======
+LOCAL_STATIC_JAVA_LIBRARIES := android-common frameworks-core-util-lib
+>>>>>>> upstream/master
 LOCAL_SDK_VERSION := current
 
 LOCAL_PACKAGE_NAME := DownloadManagerTestApp

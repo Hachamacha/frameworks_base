@@ -81,8 +81,12 @@ public class PackageHelperTests extends AndroidTestCase {
     public void testMountAndPullSdCard() {
         try {
             fullId = PREFIX;
+<<<<<<< HEAD
             fullId2 = PackageHelper.createSdDir(1024, fullId, "none", android.os.Process.myUid(),
                     true);
+=======
+            fullId2 = PackageHelper.createSdDir(1024, fullId, "none", android.os.Process.myUid());
+>>>>>>> upstream/master
 
             Log.d(TAG,PackageHelper.getSdDir(fullId));
             PackageHelper.unMountSdDir(fullId);

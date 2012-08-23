@@ -31,8 +31,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.android.internal.policy.PolicyManager;
@@ -594,6 +597,7 @@ public class MediaController extends FrameLayout {
         super.setEnabled(enabled);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -606,6 +610,8 @@ public class MediaController extends FrameLayout {
         info.setClassName(MediaController.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     private View.OnClickListener mRewListener = new View.OnClickListener() {
         public void onClick(View v) {
             int pos = mPlayer.getCurrentPosition();

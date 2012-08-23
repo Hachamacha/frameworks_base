@@ -16,12 +16,18 @@
 
 package com.android.server.am;
 
+<<<<<<< HEAD
 import com.android.internal.app.ResolverActivity;
+=======
+>>>>>>> upstream/master
 import com.android.server.AttributeCache;
 import com.android.server.am.ActivityStack.ActivityState;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.app.ActivityOptions;
+=======
+>>>>>>> upstream/master
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -29,7 +35,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+<<<<<<< HEAD
 import android.graphics.Rect;
+=======
+>>>>>>> upstream/master
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -37,7 +46,10 @@ import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
@@ -59,7 +71,10 @@ final class ActivityRecord {
     final IApplicationToken.Stub appToken; // window manager token
     final ActivityInfo info; // all about me
     final int launchedFromUid; // always the uid who started the activity.
+<<<<<<< HEAD
     final int userId;          // Which user is this running for?
+=======
+>>>>>>> upstream/master
     final Intent intent;    // the original intent that generated us
     final ComponentName realActivity;  // the intent component, or target of an alias.
     final String shortComponentName; // the short component name of the intent
@@ -97,7 +112,10 @@ final class ActivityRecord {
     ArrayList results;      // pending ActivityResult objs we have received
     HashSet<WeakReference<PendingIntentRecord>> pendingResults; // all pending intents for this act
     ArrayList newIntents;   // any pending new intents for single-top mode
+<<<<<<< HEAD
     ActivityOptions pendingOptions; // most recently given options
+=======
+>>>>>>> upstream/master
     HashSet<ConnectionRecord> connections; // All ConnectionRecord we hold
     UriPermissionOwner uriPermissions; // current special URI access perms.
     ProcessRecord app;      // if non-null, hosting application
@@ -129,6 +147,7 @@ final class ActivityRecord {
     private boolean inHistory;  // are we in the history stack?
 
     void dump(PrintWriter pw, String prefix) {
+<<<<<<< HEAD
         final long now = SystemClock.uptimeMillis();
         pw.print(prefix); pw.print("packageName="); pw.print(packageName);
                 pw.print(" processName="); pw.println(processName);
@@ -136,11 +155,19 @@ final class ActivityRecord {
                 pw.print(" userId="); pw.println(userId);
         pw.print(prefix); pw.print("app="); pw.println(app);
         pw.print(prefix); pw.println(intent.toInsecureStringWithClip());
+=======
+        pw.print(prefix); pw.print("packageName="); pw.print(packageName);
+                pw.print(" processName="); pw.println(processName);
+        pw.print(prefix); pw.print("launchedFromUid="); pw.print(launchedFromUid);
+                pw.print(" app="); pw.println(app);
+        pw.print(prefix); pw.println(intent.toInsecureString());
+>>>>>>> upstream/master
         pw.print(prefix); pw.print("frontOfTask="); pw.print(frontOfTask);
                 pw.print(" task="); pw.println(task);
         pw.print(prefix); pw.print("taskAffinity="); pw.println(taskAffinity);
         pw.print(prefix); pw.print("realActivity=");
                 pw.println(realActivity.flattenToShortString());
+<<<<<<< HEAD
         pw.print(prefix); pw.print("baseDir="); pw.println(baseDir);
         if (!resDir.equals(baseDir)) {
             pw.print(prefix); pw.print("resDir="); pw.println(resDir);
@@ -154,6 +181,20 @@ final class ActivityRecord {
                 pw.print(" icon=0x"); pw.print(Integer.toHexString(icon));
                 pw.print(" theme=0x"); pw.println(Integer.toHexString(theme));
         pw.print(prefix); pw.print("config="); pw.println(configuration);
+=======
+        pw.print(prefix); pw.print("base="); pw.print(baseDir);
+                if (!resDir.equals(baseDir)) pw.print(" res="); pw.print(resDir);
+                pw.print(" data="); pw.println(dataDir);
+        pw.print(prefix); pw.print("labelRes=0x");
+                pw.print(Integer.toHexString(labelRes));
+                pw.print(" icon=0x"); pw.print(Integer.toHexString(icon));
+                pw.print(" theme=0x"); pw.println(Integer.toHexString(theme));
+        pw.print(prefix); pw.print("stateNotNeeded="); pw.print(stateNotNeeded);
+                pw.print(" componentSpecified="); pw.print(componentSpecified);
+                pw.print(" isHomeActivity="); pw.println(isHomeActivity);
+        pw.print(prefix); pw.print("config="); pw.println(configuration);
+        pw.print(prefix); pw.print("compat="); pw.println(compat);
+>>>>>>> upstream/master
         if (resultTo != null || resultWho != null) {
             pw.print(prefix); pw.print("resultTo="); pw.print(resultTo);
                     pw.print(" resultWho="); pw.print(resultWho);
@@ -162,6 +203,7 @@ final class ActivityRecord {
         if (results != null) {
             pw.print(prefix); pw.print("results="); pw.println(results);
         }
+<<<<<<< HEAD
         if (pendingResults != null && pendingResults.size() > 0) {
             pw.print(prefix); pw.println("Pending Results:");
             for (WeakReference<PendingIntentRecord> wpir : pendingResults) {
@@ -189,6 +231,10 @@ final class ActivityRecord {
         }
         if (pendingOptions != null) {
             pw.print(prefix); pw.print("pendingOptions="); pw.println(pendingOptions);
+=======
+        if (pendingResults != null) {
+            pw.print(prefix); pw.print("pendingResults="); pw.println(pendingResults);
+>>>>>>> upstream/master
         }
         if (uriPermissions != null) {
             if (uriPermissions.readUriPermissions != null) {
@@ -222,6 +268,7 @@ final class ActivityRecord {
         pw.print(prefix); pw.print("thumbHolder="); pw.println(thumbHolder);
         if (launchTime != 0 || startTime != 0) {
             pw.print(prefix); pw.print("launchTime=");
+<<<<<<< HEAD
                     if (launchTime == 0) pw.print("0");
                     else TimeUtils.formatDuration(launchTime, now, pw);
                     pw.print(" startTime=");
@@ -236,6 +283,18 @@ final class ActivityRecord {
                     if (lastVisibleTime == 0) pw.print("0");
                     else TimeUtils.formatDuration(lastVisibleTime, now, pw);
                     pw.println();
+=======
+                    TimeUtils.formatDuration(launchTime, pw); pw.print(" startTime=");
+                    TimeUtils.formatDuration(startTime, pw); pw.println("");
+        }
+        if (lastVisibleTime != 0) {
+            pw.print(prefix); pw.print("lastVisibleTime=");
+                    TimeUtils.formatDuration(lastVisibleTime, pw); pw.println("");
+        }
+        if (waitingVisible || nowVisible) {
+            pw.print(prefix); pw.print("waitingVisible="); pw.print(waitingVisible);
+                    pw.print(" nowVisible="); pw.println(nowVisible);
+>>>>>>> upstream/master
         }
         if (configDestroy || configChangeFlags != 0) {
             pw.print(prefix); pw.print("configDestroy="); pw.print(configDestroy);
@@ -321,7 +380,10 @@ final class ActivityRecord {
         appToken = new Token(this);
         info = aInfo;
         launchedFromUid = _launchedFromUid;
+<<<<<<< HEAD
         userId = UserId.getUserId(aInfo.applicationInfo.uid);
+=======
+>>>>>>> upstream/master
         intent = _intent;
         shortComponentName = _intent.getComponent().flattenToShortString();
         resolvedType = _resolvedType;
@@ -416,7 +478,11 @@ final class ActivityRecord {
                         _intent.getData() == null &&
                         _intent.getType() == null &&
                         (intent.getFlags()&Intent.FLAG_ACTIVITY_NEW_TASK) != 0 &&
+<<<<<<< HEAD
                         !ResolverActivity.class.getName().equals(realActivity.getClassName())) {
+=======
+                        !"android".equals(realActivity.getClassName())) {
+>>>>>>> upstream/master
                     // This sure looks like a home activity!
                     // Note the last check is so we don't count the resolver
                     // activity as being home...  really, we don't care about
@@ -485,7 +551,10 @@ final class ActivityRecord {
             if (task != null && !finishing) {
                 task.numActivities--;
             }
+<<<<<<< HEAD
             clearOptionsLocked();
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -499,9 +568,12 @@ final class ActivityRecord {
             if (task != null && inHistory) {
                 task.numActivities--;
             }
+<<<<<<< HEAD
             if (stopped) {
                 clearOptionsLocked();
             }
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -554,6 +626,7 @@ final class ActivityRecord {
      */
     final void deliverNewIntentLocked(int callingUid, Intent intent) {
         boolean sent = false;
+<<<<<<< HEAD
         // We want to immediately deliver the intent to the activity if
         // it is currently the top resumed activity...  however, if the
         // device is sleeping, then all activities are stopped, so in that
@@ -561,6 +634,9 @@ final class ActivityRecord {
         // stack.
         if ((state == ActivityState.RESUMED || (service.mSleeping
                         && stack.topRunningActivityLocked(null) == this))
+=======
+        if (state == ActivityState.RESUMED
+>>>>>>> upstream/master
                 && app != null && app.thread != null) {
             try {
                 ArrayList<Intent> ar = new ArrayList<Intent>();
@@ -583,6 +659,7 @@ final class ActivityRecord {
         }
     }
 
+<<<<<<< HEAD
     void updateOptionsLocked(Bundle options) {
         if (options != null) {
             if (pendingOptions != null) {
@@ -643,6 +720,8 @@ final class ActivityRecord {
         }
     }
 
+=======
+>>>>>>> upstream/master
     void removeUriPermissionsLocked() {
         if (uriPermissions != null) {
             uriPermissions.removeUriPermissionsLocked();

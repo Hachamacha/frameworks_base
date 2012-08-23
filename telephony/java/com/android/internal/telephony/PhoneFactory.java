@@ -25,7 +25,10 @@ import android.os.SystemProperties;
 
 import com.android.internal.telephony.cdma.CDMAPhone;
 import com.android.internal.telephony.cdma.CDMALTEPhone;
+<<<<<<< HEAD
 import com.android.internal.telephony.cdma.CdmaSubscriptionSourceManager;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.gsm.GSMPhone;
 import com.android.internal.telephony.sip.SipPhone;
 import com.android.internal.telephony.sip.SipPhoneFactory;
@@ -48,8 +51,12 @@ public class PhoneFactory {
     static private Looper sLooper;
     static private Context sContext;
 
+<<<<<<< HEAD
     static final int preferredCdmaSubscription =
                          CdmaSubscriptionSourceManager.PREFERRED_CDMA_SUBSCRIPTION;
+=======
+    static final int preferredCdmaSubscription = RILConstants.PREFERRED_CDMA_SUBSCRIPTION;
+>>>>>>> upstream/master
 
     //***** Class Methods
 
@@ -116,11 +123,19 @@ public class PhoneFactory {
                 int lteOnCdma = BaseCommands.getLteOnCdmaModeStatic();
                 switch (lteOnCdma) {
                     case Phone.LTE_ON_CDMA_FALSE:
+<<<<<<< HEAD
                         cdmaSubscription = CdmaSubscriptionSourceManager.SUBSCRIPTION_FROM_NV;
                         Log.i(LOG_TAG, "lteOnCdma is 0 use SUBSCRIPTION_FROM_NV");
                         break;
                     case Phone.LTE_ON_CDMA_TRUE:
                         cdmaSubscription = CdmaSubscriptionSourceManager.SUBSCRIPTION_FROM_RUIM;
+=======
+                        cdmaSubscription = RILConstants.SUBSCRIPTION_FROM_NV;
+                        Log.i(LOG_TAG, "lteOnCdma is 0 use SUBSCRIPTION_FROM_NV");
+                        break;
+                    case Phone.LTE_ON_CDMA_TRUE:
+                        cdmaSubscription = RILConstants.SUBSCRIPTION_FROM_RUIM;
+>>>>>>> upstream/master
                         Log.i(LOG_TAG, "lteOnCdma is 1 use SUBSCRIPTION_FROM_RUIM");
                         break;
                     case Phone.LTE_ON_CDMA_UNKNOWN:

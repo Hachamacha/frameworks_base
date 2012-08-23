@@ -16,6 +16,7 @@
 
 package android.net;
 
+<<<<<<< HEAD
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -94,6 +95,36 @@ public class InterfaceConfiguration implements Parcelable {
 
     public void setHardwareAddress(String hwAddr) {
         mHwAddr = hwAddr;
+=======
+import android.os.Parcelable;
+import android.os.Parcel;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+/**
+ * A simple object for retrieving / setting an interfaces configuration
+ * @hide
+ */
+public class InterfaceConfiguration implements Parcelable {
+    public String hwAddr;
+    public LinkAddress addr;
+    public String interfaceFlags;
+
+    public InterfaceConfiguration() {
+        super();
+    }
+
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+
+        str.append("ipddress ");
+        str.append((addr != null) ? addr.toString() : "NULL");
+        str.append(" flags ").append(interfaceFlags);
+        str.append(" hwaddr ").append(hwAddr);
+
+        return str.toString();
+>>>>>>> upstream/master
     }
 
     /**
@@ -105,8 +136,13 @@ public class InterfaceConfiguration implements Parcelable {
      */
     public boolean isActive() {
         try {
+<<<<<<< HEAD
             if (hasFlag(FLAG_UP)) {
                 for (byte b : mAddr.getAddress().getAddress()) {
+=======
+            if(interfaceFlags.contains("up")) {
+                for (byte b : addr.getAddress().getAddress()) {
+>>>>>>> upstream/master
                     if (b != 0) return true;
                 }
             }
@@ -116,11 +152,16 @@ public class InterfaceConfiguration implements Parcelable {
         return false;
     }
 
+<<<<<<< HEAD
     /** {@inheritDoc} */
+=======
+    /** Implement the Parcelable interface {@hide} */
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
+<<<<<<< HEAD
     /** {@inheritDoc} */
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mHwAddr);
@@ -161,4 +202,35 @@ public class InterfaceConfiguration implements Parcelable {
             throw new IllegalArgumentException("flag contains space: " + flag);
         }
     }
+=======
+    /** Implement the Parcelable interface {@hide} */
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(hwAddr);
+        if (addr != null) {
+            dest.writeByte((byte)1);
+            dest.writeParcelable(addr, flags);
+        } else {
+            dest.writeByte((byte)0);
+        }
+        dest.writeString(interfaceFlags);
+    }
+
+    /** Implement the Parcelable interface {@hide} */
+    public static final Creator<InterfaceConfiguration> CREATOR =
+        new Creator<InterfaceConfiguration>() {
+            public InterfaceConfiguration createFromParcel(Parcel in) {
+                InterfaceConfiguration info = new InterfaceConfiguration();
+                info.hwAddr = in.readString();
+                if (in.readByte() == 1) {
+                    info.addr = in.readParcelable(null);
+                }
+                info.interfaceFlags = in.readString();
+                return info;
+            }
+
+            public InterfaceConfiguration[] newArray(int size) {
+                return new InterfaceConfiguration[size];
+            }
+        };
+>>>>>>> upstream/master
 }

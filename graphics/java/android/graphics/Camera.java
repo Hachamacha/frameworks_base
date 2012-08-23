@@ -100,6 +100,7 @@ public class Camera {
     public native void rotate(float x, float y, float z);
 
     /**
+<<<<<<< HEAD
      * Gets the x location of the camera.
      *
      * @see #setLocation(float, float, float)
@@ -121,6 +122,8 @@ public class Camera {
     public native float getLocationZ();
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the location of the camera. The default location is set at
      * 0, 0, -8.
      * 

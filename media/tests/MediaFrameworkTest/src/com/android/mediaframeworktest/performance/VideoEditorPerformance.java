@@ -196,6 +196,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_001
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceAddRemoveVideoItem() throws Exception {
         final String videoItemFileName = INPUT_FILE_PATH +
@@ -240,6 +244,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_002
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceAddRemoveImageItem() throws Exception {
         final String imageItemFileName = INPUT_FILE_PATH + "IMG_1600x1200.jpg";
@@ -278,6 +286,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_003
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceAddRemoveTransition() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -357,6 +369,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_004
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceExport() throws Exception {
         final int renderingMode = MediaItem.RENDERING_MODE_BLACK_BORDER;
@@ -537,6 +553,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_005
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceThumbnailVideoItem() throws Exception {
         final String videoItemFileName = INPUT_FILE_PATH
@@ -569,6 +589,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_006
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceOverlayVideoItem() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -623,6 +647,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_007
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceVideoItemProperties() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -681,6 +709,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_008
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceGeneratePreviewWithTransitions()
         throws Exception {
@@ -732,6 +764,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_009
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceWithKenBurn() throws Exception {
         final String videoItemFileName = INPUT_FILE_PATH +
@@ -786,6 +822,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_010
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceEffectOverlappingTransition() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -854,6 +894,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_011
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceTransitionWithEffectOverlapping() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -920,6 +964,10 @@ public class VideoEditorPerformance extends
     /**
      *To test ThumbnailList for H264
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_PRF_12
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailH264NonIFrame() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -950,6 +998,10 @@ public class VideoEditorPerformance extends
     /**
      *To test ThumbnailList for H264
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_PRF_13
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailH264AnIFrame() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -983,6 +1035,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_014
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceWithAudioTrack() throws Exception {
         final String videoItemFileName1 = INPUT_FILE_PATH +
@@ -1037,6 +1093,10 @@ public class VideoEditorPerformance extends
      *
      * @throws Exception
      */
+<<<<<<< HEAD
+=======
+    // TODO : remove PRF_015
+>>>>>>> upstream/master
     @LargeTest
     public void testPerformanceAddRemoveImageItem640x480() throws Exception {
         final String imageItemFileName = INPUT_FILE_PATH + "IMG_640x480.jpg";

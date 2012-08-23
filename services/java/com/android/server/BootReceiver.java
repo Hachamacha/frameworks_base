@@ -20,13 +20,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
+=======
+import android.net.Downloads;
+>>>>>>> upstream/master
 import android.os.Build;
 import android.os.DropBoxManager;
 import android.os.FileObserver;
 import android.os.FileUtils;
 import android.os.RecoverySystem;
 import android.os.SystemProperties;
+<<<<<<< HEAD
 import android.provider.Downloads;
+=======
+>>>>>>> upstream/master
 import android.util.Slog;
 
 import java.io.File;
@@ -39,10 +46,15 @@ import java.io.IOException;
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = "BootReceiver";
 
+<<<<<<< HEAD
     // Maximum size of a logged event (files get truncated if they're longer).
     // Give userdebug builds a larger max to capture extra debug, esp. for last_kmsg.
     private static final int LOG_SIZE =
         SystemProperties.getInt("ro.debuggable", 0) == 1 ? 98304 : 65536;
+=======
+    // Maximum size of a logged event (files get truncated if they're longer)
+    private static final int LOG_SIZE = 65536;
+>>>>>>> upstream/master
 
     private static final File TOMBSTONE_DIR = new File("/data/tombstones");
 
@@ -78,8 +90,14 @@ public class BootReceiver extends BroadcastReceiver {
         }.start();
     }
 
+<<<<<<< HEAD
     private void removeOldUpdatePackages(Context context) {
         Downloads.removeAllDownloadsByPackage(context, OLD_UPDATER_PACKAGE, OLD_UPDATER_CLASS);
+=======
+    private void removeOldUpdatePackages(Context ctx) {
+        Downloads.ByUri.removeAllDownloadsByPackage(
+            ctx, OLD_UPDATER_PACKAGE, OLD_UPDATER_CLASS);
+>>>>>>> upstream/master
     }
 
     private void logBootEvents(Context ctx) throws IOException {

@@ -18,8 +18,14 @@ package android.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.KeyEvent;
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 
@@ -106,6 +112,7 @@ public class Button extends TextView {
     public Button(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -118,4 +125,6 @@ public class Button extends TextView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(Button.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

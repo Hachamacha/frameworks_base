@@ -1,7 +1,11 @@
 page.title=Remaining Backward Compatible
 trainingnavtop=true
 previous.title=Storing and Searching for Data
+<<<<<<< HEAD
 previous.link=search.html
+=======
+previous.link=search.html 
+>>>>>>> upstream/master
 
 @jd:body
 

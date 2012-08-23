@@ -72,6 +72,29 @@ public abstract class BulkCursorNative extends Binder implements IBulkCursor
                     return true;
                 }
 
+<<<<<<< HEAD
+=======
+                case COUNT_TRANSACTION: {
+                    data.enforceInterface(IBulkCursor.descriptor);
+                    int count = count();
+                    reply.writeNoException();
+                    reply.writeInt(count);
+                    return true;
+                }
+
+                case GET_COLUMN_NAMES_TRANSACTION: {
+                    data.enforceInterface(IBulkCursor.descriptor);
+                    String[] columnNames = getColumnNames();
+                    reply.writeNoException();
+                    reply.writeInt(columnNames.length);
+                    int length = columnNames.length;
+                    for (int i = 0; i < length; i++) {
+                        reply.writeString(columnNames[i]);
+                    }
+                    return true;
+                }
+
+>>>>>>> upstream/master
                 case DEACTIVATE_TRANSACTION: {
                     data.enforceInterface(IBulkCursor.descriptor);
                     deactivate();
@@ -105,6 +128,17 @@ public abstract class BulkCursorNative extends Binder implements IBulkCursor
                     return true;
                 }
 
+<<<<<<< HEAD
+=======
+                case WANTS_ON_MOVE_TRANSACTION: {
+                    data.enforceInterface(IBulkCursor.descriptor);
+                    boolean result = getWantsAllOnMoveCalls();
+                    reply.writeNoException();
+                    reply.writeInt(result ? 1 : 0);
+                    return true;
+                }
+
+>>>>>>> upstream/master
                 case GET_EXTRAS_TRANSACTION: {
                     data.enforceInterface(IBulkCursor.descriptor);
                     Bundle extras = getExtras();
@@ -152,13 +186,21 @@ final class BulkCursorProxy implements IBulkCursor {
         return mRemote;
     }
 
+<<<<<<< HEAD
     public CursorWindow getWindow(int position) throws RemoteException
+=======
+    public CursorWindow getWindow(int startPos) throws RemoteException
+>>>>>>> upstream/master
     {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         try {
             data.writeInterfaceToken(IBulkCursor.descriptor);
+<<<<<<< HEAD
             data.writeInt(position);
+=======
+            data.writeInt(startPos);
+>>>>>>> upstream/master
 
             mRemote.transact(GET_CURSOR_WINDOW_TRANSACTION, data, reply, 0);
             DatabaseUtils.readExceptionFromParcel(reply);
@@ -189,6 +231,55 @@ final class BulkCursorProxy implements IBulkCursor {
         }
     }
 
+<<<<<<< HEAD
+=======
+    public int count() throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        try {
+            data.writeInterfaceToken(IBulkCursor.descriptor);
+
+            boolean result = mRemote.transact(COUNT_TRANSACTION, data, reply, 0);
+            DatabaseUtils.readExceptionFromParcel(reply);
+
+            int count;
+            if (result == false) {
+                count = -1;
+            } else {
+                count = reply.readInt();
+            }
+            return count;
+        } finally {
+            data.recycle();
+            reply.recycle();
+        }
+    }
+
+    public String[] getColumnNames() throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        try {
+            data.writeInterfaceToken(IBulkCursor.descriptor);
+
+            mRemote.transact(GET_COLUMN_NAMES_TRANSACTION, data, reply, 0);
+            DatabaseUtils.readExceptionFromParcel(reply);
+
+            String[] columnNames = null;
+            int numColumns = reply.readInt();
+            columnNames = new String[numColumns];
+            for (int i = 0; i < numColumns; i++) {
+                columnNames[i] = reply.readString();
+            }
+            return columnNames;
+        } finally {
+            data.recycle();
+            reply.recycle();
+        }
+    }
+
+>>>>>>> upstream/master
     public void deactivate() throws RemoteException
     {
         Parcel data = Parcel.obtain();
@@ -243,6 +334,26 @@ final class BulkCursorProxy implements IBulkCursor {
         }
     }
 
+<<<<<<< HEAD
+=======
+    public boolean getWantsAllOnMoveCalls() throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        try {
+            data.writeInterfaceToken(IBulkCursor.descriptor);
+
+            mRemote.transact(WANTS_ON_MOVE_TRANSACTION, data, reply, 0);
+            DatabaseUtils.readExceptionFromParcel(reply);
+
+            int result = reply.readInt();
+            return result != 0;
+        } finally {
+            data.recycle();
+            reply.recycle();
+        }
+    }
+
+>>>>>>> upstream/master
     public Bundle getExtras() throws RemoteException {
         if (mExtras == null) {
             Parcel data = Parcel.obtain();

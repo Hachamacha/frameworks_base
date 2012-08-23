@@ -78,7 +78,11 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
         super(context, layout, c);
         mTo = to;
         mOriginalFrom = from;
+<<<<<<< HEAD
         findColumns(c, from);
+=======
+        findColumns(from);
+>>>>>>> upstream/master
     }
 
     /**
@@ -104,7 +108,11 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
         super(context, layout, c, flags);
         mTo = to;
         mOriginalFrom = from;
+<<<<<<< HEAD
         findColumns(c, from);
+=======
+        findColumns(from);
+>>>>>>> upstream/master
     }
 
     /**
@@ -216,7 +224,11 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
     /**
      * Called by bindView() to set the text for a TextView but only if
      * there is no existing ViewBinder or if the existing ViewBinder cannot
+<<<<<<< HEAD
      * handle binding to a TextView.
+=======
+     * handle binding to an TextView.
+>>>>>>> upstream/master
      *
      * Intended to be overridden by Adapters that need to filter strings
      * retrieved from the database.
@@ -316,6 +328,7 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Create a map from an array of strings to an array of column-id integers in cursor c.
      * If c is null, the array will be discarded.
      *
@@ -324,13 +337,26 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
      */
     private void findColumns(Cursor c, String[] from) {
         if (c != null) {
+=======
+     * Create a map from an array of strings to an array of column-id integers in mCursor.
+     * If mCursor is null, the array will be discarded.
+     * 
+     * @param from the Strings naming the columns of interest
+     */
+    private void findColumns(String[] from) {
+        if (mCursor != null) {
+>>>>>>> upstream/master
             int i;
             int count = from.length;
             if (mFrom == null || mFrom.length != count) {
                 mFrom = new int[count];
             }
             for (i = 0; i < count; i++) {
+<<<<<<< HEAD
                 mFrom[i] = c.getColumnIndexOrThrow(from[i]);
+=======
+                mFrom[i] = mCursor.getColumnIndexOrThrow(from[i]);
+>>>>>>> upstream/master
             }
         } else {
             mFrom = null;
@@ -342,8 +368,18 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
         // super.swapCursor() will notify observers before we have
         // a valid mapping, make sure we have a mapping before this
         // happens
+<<<<<<< HEAD
         findColumns(c, mOriginalFrom);
         return super.swapCursor(c);
+=======
+        if (mFrom == null) {
+            findColumns(mOriginalFrom);
+        }
+        Cursor res = super.swapCursor(c);
+        // rescan columns in case cursor layout is different
+        findColumns(mOriginalFrom);
+        return res;
+>>>>>>> upstream/master
     }
     
     /**
@@ -363,8 +399,16 @@ public class SimpleCursorAdapter extends ResourceCursorAdapter {
         // super.changeCursor() will notify observers before we have
         // a valid mapping, make sure we have a mapping before this
         // happens
+<<<<<<< HEAD
         findColumns(c, mOriginalFrom);
         super.changeCursor(c);
+=======
+        if (mFrom == null) {
+            findColumns(mOriginalFrom);
+        }
+        super.changeCursor(c);
+        findColumns(mOriginalFrom);
+>>>>>>> upstream/master
     }
 
     /**

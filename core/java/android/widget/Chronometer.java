@@ -25,9 +25,12 @@ import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+<<<<<<< HEAD
 import android.util.Slog;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 import java.util.Formatter;
@@ -279,6 +282,7 @@ public class Chronometer extends TextView {
             mOnChronometerTickListener.onChronometerTick(this);
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -291,4 +295,6 @@ public class Chronometer extends TextView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(Chronometer.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

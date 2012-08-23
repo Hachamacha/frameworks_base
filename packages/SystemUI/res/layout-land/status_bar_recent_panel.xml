@@ -20,6 +20,7 @@
 
 <com.android.systemui.recent.RecentsPanelView
     xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/recents_root"
     android:layout_height="match_parent"
@@ -31,6 +32,12 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:visibility="invisible" />
+=======
+    android:id="@+id/recents_root"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+>>>>>>> upstream/master
     <FrameLayout
         android:id="@+id/recents_bg_protect"
         android:background="@drawable/status_bar_recents_background"
@@ -40,12 +47,15 @@
         android:clipToPadding="false"
         android:clipChildren="false">
 
+<<<<<<< HEAD
         <ImageView
             android:id="@+id/recents_transition_placeholder_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible" />
 
+=======
+>>>>>>> upstream/master
         <com.android.systemui.recent.RecentsHorizontalScrollView android:id="@+id/recents_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -54,8 +64,13 @@
             android:stackFromBottom="true"
             android:fadingEdge="horizontal"
             android:scrollbars="none"
+<<<<<<< HEAD
             android:fadingEdgeLength="@dimen/status_bar_recents_scroll_fading_edge_length"
             android:layout_gravity="bottom|right"
+=======
+            android:fadingEdgeLength="@dimen/status_bar_recents_fading_edge_length"
+            android:layout_gravity="bottom|left"
+>>>>>>> upstream/master
             android:orientation="horizontal"
             android:clipToPadding="false"
             android:clipChildren="false">

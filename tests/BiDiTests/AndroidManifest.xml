@@ -19,9 +19,13 @@
     android:versionCode="1"
     android:versionName="1.0">
 
+<<<<<<< HEAD
     <application android:label="BiDiTests"
                  android:hardwareAccelerated="true"
                  android:supportsRtl="true" >
+=======
+    <application android:label="BiDiTests" android:hardwareAccelerated="true">
+>>>>>>> upstream/master
 
         <activity android:name=".BiDiTestActivity"
             android:windowSoftInputMode="stateAlwaysHidden">

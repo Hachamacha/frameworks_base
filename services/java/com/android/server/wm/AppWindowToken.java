@@ -18,7 +18,10 @@ package com.android.server.wm;
 
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_STARTING;
 
+<<<<<<< HEAD
 import com.android.server.input.InputApplicationHandle;
+=======
+>>>>>>> upstream/master
 import com.android.server.wm.WindowManagerService.H;
 
 import android.content.pm.ActivityInfo;
@@ -28,6 +31,11 @@ import android.util.Slog;
 import android.view.IApplicationToken;
 import android.view.View;
 import android.view.WindowManager;
+<<<<<<< HEAD
+=======
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+>>>>>>> upstream/master
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -43,22 +51,33 @@ class AppWindowToken extends WindowToken {
     // All of the windows and child windows that are included in this
     // application token.  Note this list is NOT sorted!
     final ArrayList<WindowState> allAppWindows = new ArrayList<WindowState>();
+<<<<<<< HEAD
     final AppWindowAnimator mAppAnimator;
 
     final WindowAnimator mAnimator;
+=======
+>>>>>>> upstream/master
 
     int groupId = -1;
     boolean appFullscreen;
     int requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     // The input dispatching timeout for this application token in nanoseconds.
     long inputDispatchingTimeoutNanos;
 
     // These are used for determining when all windows associated with
     // an activity have been drawn, so they can be made visible together
     // at the same time.
+<<<<<<< HEAD
     // initialize so that it doesn't match mTransactionSequence which is an int.
     long lastTransactionSequence = Long.MIN_VALUE;
+=======
+    int lastTransactionSequence;
+>>>>>>> upstream/master
     int numInterestingWindows;
     int numDrawnWindows;
     boolean inPendingTransaction;
@@ -86,6 +105,21 @@ class AppWindowToken extends WindowToken {
     // Set to true when the token has been removed from the window mgr.
     boolean removed;
 
+<<<<<<< HEAD
+=======
+    // Have we been asked to have this token keep the screen frozen?
+    boolean freezingScreen;
+
+    boolean animating;
+    Animation animation;
+    boolean hasTransformation;
+    final Transformation transformation = new Transformation();
+
+    // Offset to the window of all layers in the token, for use by
+    // AppWindowToken animations.
+    int animLayerAdjustment;
+
+>>>>>>> upstream/master
     // Information about an application starting window if displayed.
     StartingData startingData;
     WindowState startingWindow;
@@ -103,8 +137,65 @@ class AppWindowToken extends WindowToken {
         appWindowToken = this;
         appToken = _token;
         mInputApplicationHandle = new InputApplicationHandle(this);
+<<<<<<< HEAD
         mAnimator = service.mAnimator;
         mAppAnimator = new AppWindowAnimator(_service, this);
+=======
+        lastTransactionSequence = service.mTransactionSequence-1;
+    }
+
+    public void setAnimation(Animation anim) {
+        if (WindowManagerService.localLOGV) Slog.v(
+            WindowManagerService.TAG, "Setting animation in " + this + ": " + anim);
+        animation = anim;
+        animating = false;
+        anim.restrictDuration(WindowManagerService.MAX_ANIMATION_DURATION);
+        anim.scaleCurrentDuration(service.mTransitionAnimationScale);
+        int zorder = anim.getZAdjustment();
+        int adj = 0;
+        if (zorder == Animation.ZORDER_TOP) {
+            adj = WindowManagerService.TYPE_LAYER_OFFSET;
+        } else if (zorder == Animation.ZORDER_BOTTOM) {
+            adj = -WindowManagerService.TYPE_LAYER_OFFSET;
+        }
+
+        if (animLayerAdjustment != adj) {
+            animLayerAdjustment = adj;
+            updateLayers();
+        }
+    }
+
+    public void setDummyAnimation() {
+        if (animation == null) {
+            if (WindowManagerService.localLOGV) Slog.v(
+                WindowManagerService.TAG, "Setting dummy animation in " + this);
+            animation = WindowManagerService.sDummyAnimation;
+        }
+    }
+
+    public void clearAnimation() {
+        if (animation != null) {
+            animation = null;
+            animating = true;
+        }
+    }
+
+    void updateLayers() {
+        final int N = allAppWindows.size();
+        final int adj = animLayerAdjustment;
+        for (int i=0; i<N; i++) {
+            WindowState w = allAppWindows.get(i);
+            w.mAnimLayer = w.mLayer + adj;
+            if (WindowManagerService.DEBUG_LAYERS) Slog.v(WindowManagerService.TAG, "Updating layer " + w + ": "
+                    + w.mAnimLayer);
+            if (w == service.mInputMethodTarget && !service.mInputMethodTargetWaitingAnim) {
+                service.setInputMethodAnimLayerAdjustment(adj);
+            }
+            if (w == service.mWallpaperTarget && service.mLowerWallpaperTarget == null) {
+                service.setWallpaperAnimLayerAdjustmentLocked(adj);
+            }
+        }
+>>>>>>> upstream/master
     }
 
     void sendAppVisibilityToClients() {
@@ -124,6 +215,97 @@ class AppWindowToken extends WindowToken {
         }
     }
 
+<<<<<<< HEAD
+=======
+    void showAllWindowsLocked() {
+        final int NW = allAppWindows.size();
+        for (int i=0; i<NW; i++) {
+            WindowState w = allAppWindows.get(i);
+            if (WindowManagerService.DEBUG_VISIBILITY) Slog.v(WindowManagerService.TAG,
+                    "performing show on: " + w);
+            w.performShowLocked();
+        }
+    }
+
+    // This must be called while inside a transaction.
+    boolean stepAnimationLocked(long currentTime, int dw, int dh) {
+        if (!service.mDisplayFrozen && service.mPolicy.isScreenOnFully()) {
+            // We will run animations as long as the display isn't frozen.
+
+            if (animation == WindowManagerService.sDummyAnimation) {
+                // This guy is going to animate, but not yet.  For now count
+                // it as not animating for purposes of scheduling transactions;
+                // when it is really time to animate, this will be set to
+                // a real animation and the next call will execute normally.
+                return false;
+            }
+
+            if ((allDrawn || animating || startingDisplayed) && animation != null) {
+                if (!animating) {
+                    if (WindowManagerService.DEBUG_ANIM) Slog.v(
+                        WindowManagerService.TAG, "Starting animation in " + this +
+                        " @ " + currentTime + ": dw=" + dw + " dh=" + dh
+                        + " scale=" + service.mTransitionAnimationScale
+                        + " allDrawn=" + allDrawn + " animating=" + animating);
+                    animation.initialize(dw, dh, dw, dh);
+                    animation.setStartTime(currentTime);
+                    animating = true;
+                }
+                transformation.clear();
+                final boolean more = animation.getTransformation(
+                    currentTime, transformation);
+                if (WindowManagerService.DEBUG_ANIM) Slog.v(
+                    WindowManagerService.TAG, "Stepped animation in " + this +
+                    ": more=" + more + ", xform=" + transformation);
+                if (more) {
+                    // we're done!
+                    hasTransformation = true;
+                    return true;
+                }
+                if (WindowManagerService.DEBUG_ANIM) Slog.v(
+                    WindowManagerService.TAG, "Finished animation in " + this +
+                    " @ " + currentTime);
+                animation = null;
+            }
+        } else if (animation != null) {
+            // If the display is frozen, and there is a pending animation,
+            // clear it and make sure we run the cleanup code.
+            animating = true;
+            animation = null;
+        }
+
+        hasTransformation = false;
+
+        if (!animating) {
+            return false;
+        }
+
+        clearAnimation();
+        animating = false;
+        if (animLayerAdjustment != 0) {
+            animLayerAdjustment = 0;
+            updateLayers();
+        }
+        if (service.mInputMethodTarget != null && service.mInputMethodTarget.mAppToken == this) {
+            service.moveInputMethodWindowsIfNeededLocked(true);
+        }
+
+        if (WindowManagerService.DEBUG_ANIM) Slog.v(
+                WindowManagerService.TAG, "Animation done in " + this
+                + ": reportedVisible=" + reportedVisible);
+
+        transformation.clear();
+
+        final int N = windows.size();
+        for (int i=0; i<N; i++) {
+            windows.get(i).finishExit();
+        }
+        updateReportedVisibilityLocked();
+
+        return false;
+    }
+
+>>>>>>> upstream/master
     void updateReportedVisibilityLocked() {
         if (appToken == null) {
             return;
@@ -134,8 +316,12 @@ class AppWindowToken extends WindowToken {
         int numDrawn = 0;
         boolean nowGone = true;
 
+<<<<<<< HEAD
         if (WindowManagerService.DEBUG_VISIBILITY) Slog.v(WindowManagerService.TAG,
                 "Update reported visibility: " + this);
+=======
+        if (WindowManagerService.DEBUG_VISIBILITY) Slog.v(WindowManagerService.TAG, "Update reported visibility: " + this);
+>>>>>>> upstream/master
         final int N = allAppWindows.size();
         for (int i=0; i<N; i++) {
             WindowState win = allAppWindows.get(i);
@@ -148,26 +334,47 @@ class AppWindowToken extends WindowToken {
             if (WindowManagerService.DEBUG_VISIBILITY) {
                 Slog.v(WindowManagerService.TAG, "Win " + win + ": isDrawn="
                         + win.isDrawnLw()
+<<<<<<< HEAD
                         + ", isAnimating=" + win.mWinAnimator.isAnimating());
                 if (!win.isDrawnLw()) {
                     Slog.v(WindowManagerService.TAG, "Not displayed: s=" + win.mWinAnimator.mSurface
                             + " pv=" + win.mPolicyVisibility
                             + " mDrawState=" + win.mWinAnimator.mDrawState
+=======
+                        + ", isAnimating=" + win.isAnimating());
+                if (!win.isDrawnLw()) {
+                    Slog.v(WindowManagerService.TAG, "Not displayed: s=" + win.mSurface
+                            + " pv=" + win.mPolicyVisibility
+                            + " dp=" + win.mDrawPending
+                            + " cdp=" + win.mCommitDrawPending
+>>>>>>> upstream/master
                             + " ah=" + win.mAttachedHidden
                             + " th="
                             + (win.mAppToken != null
                                     ? win.mAppToken.hiddenRequested : false)
+<<<<<<< HEAD
                             + " a=" + win.mWinAnimator.mAnimating);
+=======
+                            + " a=" + win.mAnimating);
+>>>>>>> upstream/master
                 }
             }
             numInteresting++;
             if (win.isDrawnLw()) {
                 numDrawn++;
+<<<<<<< HEAD
                 if (!win.mWinAnimator.isAnimating()) {
                     numVisible++;
                 }
                 nowGone = false;
             } else if (win.mWinAnimator.isAnimating()) {
+=======
+                if (!win.isAnimating()) {
+                    numVisible++;
+                }
+                nowGone = false;
+            } else if (win.isAnimating()) {
+>>>>>>> upstream/master
                 nowGone = false;
             }
         }
@@ -220,7 +427,10 @@ class AppWindowToken extends WindowToken {
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     void dump(PrintWriter pw, String prefix) {
         super.dump(pw, prefix);
         if (appToken != null) {
@@ -237,15 +447,25 @@ class AppWindowToken extends WindowToken {
                 pw.print(" willBeHidden="); pw.print(willBeHidden);
                 pw.print(" reportedDrawn="); pw.print(reportedDrawn);
                 pw.print(" reportedVisible="); pw.println(reportedVisible);
+<<<<<<< HEAD
         if (paused) {
             pw.print(prefix); pw.print("paused="); pw.println(paused);
         }
         if (numInterestingWindows != 0 || numDrawnWindows != 0
                 || allDrawn || mAppAnimator.allDrawn) {
+=======
+        if (paused || freezingScreen) {
+            pw.print(prefix); pw.print("paused="); pw.print(paused);
+                    pw.print(" freezingScreen="); pw.println(freezingScreen);
+        }
+        if (numInterestingWindows != 0 || numDrawnWindows != 0
+                || inPendingTransaction || allDrawn) {
+>>>>>>> upstream/master
             pw.print(prefix); pw.print("numInterestingWindows=");
                     pw.print(numInterestingWindows);
                     pw.print(" numDrawnWindows="); pw.print(numDrawnWindows);
                     pw.print(" inPendingTransaction="); pw.print(inPendingTransaction);
+<<<<<<< HEAD
                     pw.print(" allDrawn="); pw.print(allDrawn);
                     pw.print(" (animator="); pw.print(mAppAnimator.allDrawn);
                     pw.println(")");
@@ -253,6 +473,21 @@ class AppWindowToken extends WindowToken {
         if (inPendingTransaction) {
             pw.print(prefix); pw.print("inPendingTransaction=");
                     pw.println(inPendingTransaction);
+=======
+                    pw.print(" allDrawn="); pw.println(allDrawn);
+        }
+        if (animating || animation != null) {
+            pw.print(prefix); pw.print("animating="); pw.print(animating);
+                    pw.print(" animation="); pw.println(animation);
+        }
+        if (hasTransformation) {
+            pw.print(prefix); pw.print("XForm: ");
+                    transformation.printShortString(pw);
+                    pw.println();
+        }
+        if (animLayerAdjustment != 0) {
+            pw.print(prefix); pw.print("animLayerAdjustment="); pw.println(animLayerAdjustment);
+>>>>>>> upstream/master
         }
         if (startingData != null || removed || firstWindowDrawn) {
             pw.print(prefix); pw.print("startingData="); pw.print(startingData);
@@ -279,4 +514,8 @@ class AppWindowToken extends WindowToken {
         }
         return stringName;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> upstream/master

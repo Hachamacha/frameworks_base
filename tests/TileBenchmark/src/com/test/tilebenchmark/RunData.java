@@ -46,8 +46,12 @@ public class RunData implements Serializable {
 
         public String toString() {
             return "Tile (" + left + "," + top + ")->("
+<<<<<<< HEAD
                     + right + "," + bottom + ")"
                     + (isReady ? "ready" : "NOTready") + " at scale " + scale;
+=======
+                    + right + "," + bottom + ")";
+>>>>>>> upstream/master
         }
     }
 

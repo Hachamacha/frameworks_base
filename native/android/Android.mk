@@ -18,7 +18,10 @@ LOCAL_SRC_FILES:= \
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
+<<<<<<< HEAD
     libandroidfw \
+=======
+>>>>>>> upstream/master
     libutils \
     libbinder \
     libui \
@@ -30,7 +33,12 @@ LOCAL_STATIC_LIBRARIES := \
 
 LOCAL_C_INCLUDES += \
     frameworks/base/native/include \
+<<<<<<< HEAD
     frameworks/base/core/jni/android
+=======
+    frameworks/base/core/jni/android \
+    dalvik/libnativehelper/include/nativehelper
+>>>>>>> upstream/master
 
 LOCAL_MODULE:= libandroid
 

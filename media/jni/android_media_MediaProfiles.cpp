@@ -36,7 +36,11 @@ MediaProfiles *sProfiles = NULL;
 static void
 android_media_MediaProfiles_native_init(JNIEnv *env)
 {
+<<<<<<< HEAD
     ALOGV("native_init");
+=======
+    LOGV("native_init");
+>>>>>>> upstream/master
     Mutex::Autolock lock(sLock);
 
     if (sProfiles == NULL) {
@@ -47,14 +51,22 @@ android_media_MediaProfiles_native_init(JNIEnv *env)
 static jint
 android_media_MediaProfiles_native_get_num_file_formats(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_file_formats");
+=======
+    LOGV("native_get_num_file_formats");
+>>>>>>> upstream/master
     return sProfiles->getOutputFileFormats().size();
 }
 
 static jint
 android_media_MediaProfiles_native_get_file_format(JNIEnv *env, jobject thiz, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_file_format: %d", index);
+=======
+    LOGV("native_get_file_format: %d", index);
+>>>>>>> upstream/master
     Vector<output_format> formats = sProfiles->getOutputFileFormats();
     int nSize = formats.size();
     if (index < 0 || index >= nSize) {
@@ -67,14 +79,22 @@ android_media_MediaProfiles_native_get_file_format(JNIEnv *env, jobject thiz, ji
 static jint
 android_media_MediaProfiles_native_get_num_video_encoders(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_video_encoders");
+=======
+    LOGV("native_get_num_video_encoders");
+>>>>>>> upstream/master
     return sProfiles->getVideoEncoders().size();
 }
 
 static jobject
 android_media_MediaProfiles_native_get_video_encoder_cap(JNIEnv *env, jobject thiz, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_video_encoder_cap: %d", index);
+=======
+    LOGV("native_get_video_encoder_cap: %d", index);
+>>>>>>> upstream/master
     Vector<video_encoder> encoders = sProfiles->getVideoEncoders();
     int nSize = encoders.size();
     if (index < 0 || index >= nSize) {
@@ -118,14 +138,22 @@ android_media_MediaProfiles_native_get_video_encoder_cap(JNIEnv *env, jobject th
 static jint
 android_media_MediaProfiles_native_get_num_audio_encoders(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_audio_encoders");
+=======
+    LOGV("native_get_num_audio_encoders");
+>>>>>>> upstream/master
     return sProfiles->getAudioEncoders().size();
 }
 
 static jobject
 android_media_MediaProfiles_native_get_audio_encoder_cap(JNIEnv *env, jobject thiz, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_audio_encoder_cap: %d", index);
+=======
+    LOGV("native_get_audio_encoder_cap: %d", index);
+>>>>>>> upstream/master
     Vector<audio_encoder> encoders = sProfiles->getAudioEncoders();
     int nSize = encoders.size();
     if (index < 0 || index >= nSize) {
@@ -172,7 +200,11 @@ static bool isCamcorderQualityKnown(int quality)
 static jobject
 android_media_MediaProfiles_native_get_camcorder_profile(JNIEnv *env, jobject thiz, jint id, jint quality)
 {
+<<<<<<< HEAD
     ALOGV("native_get_camcorder_profile: %d %d", id, quality);
+=======
+    LOGV("native_get_camcorder_profile: %d %d", id, quality);
+>>>>>>> upstream/master
     if (!isCamcorderQualityKnown(quality)) {
         jniThrowException(env, "java/lang/RuntimeException", "Unknown camcorder profile quality");
         return NULL;
@@ -221,7 +253,11 @@ android_media_MediaProfiles_native_get_camcorder_profile(JNIEnv *env, jobject th
 static jboolean
 android_media_MediaProfiles_native_has_camcorder_profile(JNIEnv *env, jobject thiz, jint id, jint quality)
 {
+<<<<<<< HEAD
     ALOGV("native_has_camcorder_profile: %d %d", id, quality);
+=======
+    LOGV("native_has_camcorder_profile: %d %d", id, quality);
+>>>>>>> upstream/master
     if (!isCamcorderQualityKnown(quality)) {
         return false;
     }
@@ -233,14 +269,22 @@ android_media_MediaProfiles_native_has_camcorder_profile(JNIEnv *env, jobject th
 static jint
 android_media_MediaProfiles_native_get_num_video_decoders(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_video_decoders");
+=======
+    LOGV("native_get_num_video_decoders");
+>>>>>>> upstream/master
     return sProfiles->getVideoDecoders().size();
 }
 
 static jint
 android_media_MediaProfiles_native_get_video_decoder_type(JNIEnv *env, jobject thiz, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_video_decoder_type: %d", index);
+=======
+    LOGV("native_get_video_decoder_type: %d", index);
+>>>>>>> upstream/master
     Vector<video_decoder> decoders = sProfiles->getVideoDecoders();
     int nSize = decoders.size();
     if (index < 0 || index >= nSize) {
@@ -254,14 +298,22 @@ android_media_MediaProfiles_native_get_video_decoder_type(JNIEnv *env, jobject t
 static jint
 android_media_MediaProfiles_native_get_num_audio_decoders(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_audio_decoders");
+=======
+    LOGV("native_get_num_audio_decoders");
+>>>>>>> upstream/master
     return sProfiles->getAudioDecoders().size();
 }
 
 static jint
 android_media_MediaProfiles_native_get_audio_decoder_type(JNIEnv *env, jobject thiz, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_audio_decoder_type: %d", index);
+=======
+    LOGV("native_get_audio_decoder_type: %d", index);
+>>>>>>> upstream/master
     Vector<audio_decoder> decoders = sProfiles->getAudioDecoders();
     int nSize = decoders.size();
     if (index < 0 || index >= nSize) {
@@ -275,14 +327,22 @@ android_media_MediaProfiles_native_get_audio_decoder_type(JNIEnv *env, jobject t
 static jint
 android_media_MediaProfiles_native_get_num_image_encoding_quality_levels(JNIEnv *env, jobject thiz, jint cameraId)
 {
+<<<<<<< HEAD
     ALOGV("native_get_num_image_encoding_quality_levels");
+=======
+    LOGV("native_get_num_image_encoding_quality_levels");
+>>>>>>> upstream/master
     return sProfiles->getImageEncodingQualityLevels(cameraId).size();
 }
 
 static jint
 android_media_MediaProfiles_native_get_image_encoding_quality_level(JNIEnv *env, jobject thiz, jint cameraId, jint index)
 {
+<<<<<<< HEAD
     ALOGV("native_get_image_encoding_quality_level");
+=======
+    LOGV("native_get_image_encoding_quality_level");
+>>>>>>> upstream/master
     Vector<int> levels = sProfiles->getImageEncodingQualityLevels(cameraId);
     if (index < 0 || index >= levels.size()) {
         jniThrowException(env, "java/lang/IllegalArgumentException", "out of array boundary");
@@ -293,7 +353,11 @@ android_media_MediaProfiles_native_get_image_encoding_quality_level(JNIEnv *env,
 static jobject
 android_media_MediaProfiles_native_get_videoeditor_profile(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_get_videoeditor_profile");
+=======
+    LOGV("native_get_videoeditor_profile");
+>>>>>>> upstream/master
 
     int maxInputFrameWidth =
             sProfiles->getVideoEditorCapParamByName("videoeditor.input.width.max");
@@ -312,7 +376,11 @@ android_media_MediaProfiles_native_get_videoeditor_profile(JNIEnv *env, jobject 
             "Error retrieving videoeditor profile params");
         return NULL;
     }
+<<<<<<< HEAD
     ALOGV("native_get_videoeditor_profile \
+=======
+    LOGV("native_get_videoeditor_profile \
+>>>>>>> upstream/master
         inWidth:%d inHeight:%d,outWidth:%d, outHeight:%d",\
         maxInputFrameWidth,maxInputFrameHeight,\
         maxOutputFrameWidth,maxOutputFrameHeight);
@@ -332,7 +400,11 @@ static jint
 android_media_MediaProfiles_native_get_videoeditor_export_profile(
     JNIEnv *env, jobject thiz, jint codec)
 {
+<<<<<<< HEAD
     ALOGV("android_media_MediaProfiles_native_get_export_profile index ");
+=======
+    LOGV("android_media_MediaProfiles_native_get_export_profile index ");
+>>>>>>> upstream/master
     int profile =0;
     profile = sProfiles->getVideoEditorExportParamByName("videoeditor.export.profile", codec);
     // Check the values retrieved
@@ -348,7 +420,11 @@ static jint
 android_media_MediaProfiles_native_get_videoeditor_export_level(
     JNIEnv *env, jobject thiz, jint codec)
 {
+<<<<<<< HEAD
     ALOGV("android_media_MediaProfiles_native_get_export_level");
+=======
+    LOGV("android_media_MediaProfiles_native_get_export_level");
+>>>>>>> upstream/master
     int level =0;
     level = sProfiles->getVideoEditorExportParamByName("videoeditor.export.level", codec);
     // Check the values retrieved

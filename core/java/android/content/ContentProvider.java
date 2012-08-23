@@ -16,8 +16,11 @@
 
 package android.content;
 
+<<<<<<< HEAD
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+=======
+>>>>>>> upstream/master
 import android.content.pm.PackageManager;
 import android.content.pm.PathPermission;
 import android.content.pm.ProviderInfo;
@@ -29,6 +32,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.os.CancellationSignal;
 import android.os.ICancellationSignal;
 import android.os.OperationCanceledException;
@@ -43,6 +47,15 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+=======
+import android.os.ParcelFileDescriptor;
+import android.os.Process;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+>>>>>>> upstream/master
 import java.util.ArrayList;
 
 /**
@@ -181,6 +194,7 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             return getContentProvider().getClass().getName();
         }
 
+<<<<<<< HEAD
         @Override
         public Cursor query(Uri uri, String[] projection,
                 String selection, String[] selectionArgs, String sortOrder,
@@ -191,23 +205,42 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
         }
 
         @Override
+=======
+        public Cursor query(Uri uri, String[] projection,
+                String selection, String[] selectionArgs, String sortOrder) {
+            enforceReadPermission(uri);
+            return ContentProvider.this.query(uri, projection, selection,
+                    selectionArgs, sortOrder);
+        }
+
+>>>>>>> upstream/master
         public String getType(Uri uri) {
             return ContentProvider.this.getType(uri);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+
+>>>>>>> upstream/master
         public Uri insert(Uri uri, ContentValues initialValues) {
             enforceWritePermission(uri);
             return ContentProvider.this.insert(uri, initialValues);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int bulkInsert(Uri uri, ContentValues[] initialValues) {
             enforceWritePermission(uri);
             return ContentProvider.this.bulkInsert(uri, initialValues);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
                 throws OperationApplicationException {
             for (ContentProviderOperation operation : operations) {
@@ -222,20 +255,29 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             return ContentProvider.this.applyBatch(operations);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int delete(Uri uri, String selection, String[] selectionArgs) {
             enforceWritePermission(uri);
             return ContentProvider.this.delete(uri, selection, selectionArgs);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int update(Uri uri, ContentValues values, String selection,
                 String[] selectionArgs) {
             enforceWritePermission(uri);
             return ContentProvider.this.update(uri, values, selection, selectionArgs);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public ParcelFileDescriptor openFile(Uri uri, String mode)
                 throws FileNotFoundException {
             if (mode != null && mode.startsWith("rw")) enforceWritePermission(uri);
@@ -243,7 +285,10 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             return ContentProvider.this.openFile(uri, mode);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public AssetFileDescriptor openAssetFile(Uri uri, String mode)
                 throws FileNotFoundException {
             if (mode != null && mode.startsWith("rw")) enforceWritePermission(uri);
@@ -251,7 +296,10 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             return ContentProvider.this.openAssetFile(uri, mode);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public Bundle call(String method, String arg, Bundle extras) {
             return ContentProvider.this.call(method, arg, extras);
         }
@@ -268,6 +316,7 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             return ContentProvider.this.openTypedAssetFile(uri, mimeType, opts);
         }
 
+<<<<<<< HEAD
         @Override
         public ICancellationSignal createCancellationSignal() throws RemoteException {
             return CancellationSignal.createTransport();
@@ -396,6 +445,110 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
         }
     }
 
+=======
+        private void enforceReadPermission(Uri uri) {
+            final int uid = Binder.getCallingUid();
+            if (uid == mMyUid) {
+                return;
+            }
+            
+            final Context context = getContext();
+            final String rperm = getReadPermission();
+            final int pid = Binder.getCallingPid();
+            if (mExported && (rperm == null
+                    || context.checkPermission(rperm, pid, uid)
+                    == PackageManager.PERMISSION_GRANTED)) {
+                return;
+            }
+            
+            PathPermission[] pps = getPathPermissions();
+            if (pps != null) {
+                final String path = uri.getPath();
+                int i = pps.length;
+                while (i > 0) {
+                    i--;
+                    final PathPermission pp = pps[i];
+                    final String pprperm = pp.getReadPermission();
+                    if (pprperm != null && pp.match(path)) {
+                        if (context.checkPermission(pprperm, pid, uid)
+                                == PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                    }
+                }
+            }
+            
+            if (context.checkUriPermission(uri, pid, uid,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            
+            String msg = "Permission Denial: reading "
+                    + ContentProvider.this.getClass().getName()
+                    + " uri " + uri + " from pid=" + Binder.getCallingPid()
+                    + ", uid=" + Binder.getCallingUid()
+                    + " requires " + rperm;
+            throw new SecurityException(msg);
+        }
+
+        private boolean hasWritePermission(Uri uri) {
+            final int uid = Binder.getCallingUid();
+            if (uid == mMyUid) {
+                return true;
+            }
+            
+            final Context context = getContext();
+            final String wperm = getWritePermission();
+            final int pid = Binder.getCallingPid();
+            if (mExported && (wperm == null
+                    || context.checkPermission(wperm, pid, uid)
+                    == PackageManager.PERMISSION_GRANTED)) {
+                return true;
+            }
+            
+            PathPermission[] pps = getPathPermissions();
+            if (pps != null) {
+                final String path = uri.getPath();
+                int i = pps.length;
+                while (i > 0) {
+                    i--;
+                    final PathPermission pp = pps[i];
+                    final String ppwperm = pp.getWritePermission();
+                    if (ppwperm != null && pp.match(path)) {
+                        if (context.checkPermission(ppwperm, pid, uid)
+                                == PackageManager.PERMISSION_GRANTED) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            
+            if (context.checkUriPermission(uri, pid, uid,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        private void enforceWritePermission(Uri uri) {
+            if (hasWritePermission(uri)) {
+                return;
+            }
+            
+            String msg = "Permission Denial: writing "
+                    + ContentProvider.this.getClass().getName()
+                    + " uri " + uri + " from pid=" + Binder.getCallingPid()
+                    + ", uid=" + Binder.getCallingUid()
+                    + " requires " + getWritePermission();
+            throw new SecurityException(msg);
+        }
+    }
+
+
+>>>>>>> upstream/master
     /**
      * Retrieves the Context this provider is running in.  Only available once
      * {@link #onCreate} has been called -- this will return null in the
@@ -584,6 +737,7 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
             String selection, String[] selectionArgs, String sortOrder);
 
     /**
+<<<<<<< HEAD
      * Implement this to handle query requests from clients with support for cancellation.
      * This method can be called from multiple threads, as described in
      * <a href="{@docRoot}guide/topics/fundamentals/processes-and-threads.html#Threads">Processes
@@ -653,6 +807,8 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Implement this to handle requests for the MIME type of the data at the
      * given URI.  The returned MIME type should start with
      * <code>vnd.android.cursor.item</code> for a single record,
@@ -1127,6 +1283,7 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
         Log.w(TAG, "implement ContentProvider shutdown() to make sure all database " +
                 "connections are gracefully shutdown");
     }
+<<<<<<< HEAD
 
     /**
      * Print the Provider's state into the given stream.  This gets invoked if
@@ -1142,4 +1299,6 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         writer.println("nothing to dump");
     }
+=======
+>>>>>>> upstream/master
 }

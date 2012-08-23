@@ -14,7 +14,14 @@ import java.util.List;
 
 public class FlashlightButton extends PowerButton {
 
+<<<<<<< HEAD
     private Torch mTorch;
+=======
+	private static final String TAG = "FlashlightButton";
+    
+    private Torch mTorch;
+
+>>>>>>> upstream/master
     private static final List<Uri> OBSERVED_URIS = new ArrayList<Uri>();
     static {
         OBSERVED_URIS.add(Settings.System.getUriFor(Settings.System.TORCH_STATE));
@@ -23,19 +30,34 @@ public class FlashlightButton extends PowerButton {
     public FlashlightButton() { mType = BUTTON_FLASHLIGHT; }
 
     @Override
+<<<<<<< HEAD
     protected void updateState(Context context) {
         boolean enabled = Settings.System.getInt(context.getContentResolver(), Settings.System.TORCH_STATE, 0) == 1;
+=======
+    protected void updateState() {
+        boolean enabled = Settings.System.getInt(mView.getContext().getContentResolver(), Settings.System.TORCH_STATE, 0) == 1;
+        
+>>>>>>> upstream/master
         if(enabled) {
             mIcon = R.drawable.stat_flashlight_on;
             mState = STATE_ENABLED;
         } else {
             mIcon = R.drawable.stat_flashlight_off;
+<<<<<<< HEAD
             mState = STATE_DISABLED;
+=======
+            mState = STATE_DISABLED;              
+>>>>>>> upstream/master
         }
     }
 
     @Override
+<<<<<<< HEAD
     protected void toggleState(Context context) {
+=======
+    protected void toggleState() {
+        Context context = mView.getContext();
+>>>>>>> upstream/master
         boolean torchOn = (mState == STATE_ENABLED);
         if (torchOn) {
         	Settings.System.putInt(context.getContentResolver(), Settings.System.TORCH_STATE, 0);
@@ -50,6 +72,7 @@ public class FlashlightButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected boolean handleLongClick(Context context) {
         // it may be better to make an Intent action for the Torch
         // we may want to look at that option later
@@ -64,4 +87,14 @@ public class FlashlightButton extends PowerButton {
     protected List<Uri> getObservedUris() {
         return OBSERVED_URIS;
     }
+=======
+    protected boolean handleLongClick() {
+    	return false;
+    }
+    
+    @Override
+    protected List<Uri> getObservedUris() {
+        return OBSERVED_URIS;
+    }   
+>>>>>>> upstream/master
 }

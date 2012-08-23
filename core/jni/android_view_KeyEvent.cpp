@@ -20,7 +20,11 @@
 
 #include <android_runtime/AndroidRuntime.h>
 #include <utils/Log.h>
+<<<<<<< HEAD
 #include <androidfw/Input.h>
+=======
+#include <ui/Input.h>
+>>>>>>> upstream/master
 #include "android_view_KeyEvent.h"
 
 namespace android {
@@ -63,7 +67,11 @@ jobject android_view_KeyEvent_fromNative(JNIEnv* env, const KeyEvent* event) {
             event->getSource(),
             NULL);
     if (env->ExceptionCheck()) {
+<<<<<<< HEAD
         ALOGE("An exception occurred while obtaining a key event.");
+=======
+        LOGE("An exception occurred while obtaining a key event.");
+>>>>>>> upstream/master
         LOGE_EX(env);
         env->ExceptionClear();
         return NULL;
@@ -93,7 +101,11 @@ status_t android_view_KeyEvent_toNative(JNIEnv* env, jobject eventObj,
 status_t android_view_KeyEvent_recycle(JNIEnv* env, jobject eventObj) {
     env->CallVoidMethod(eventObj, gKeyEventClassInfo.recycle);
     if (env->ExceptionCheck()) {
+<<<<<<< HEAD
         ALOGW("An exception occurred while recycling a key event.");
+=======
+        LOGW("An exception occurred while recycling a key event.");
+>>>>>>> upstream/master
         LOGW_EX(env);
         env->ExceptionClear();
         return UNKNOWN_ERROR;

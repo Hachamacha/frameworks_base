@@ -74,8 +74,12 @@ import java.util.ArrayList;
  */
 public class RetryManager {
     static public final String LOG_TAG = "RetryManager";
+<<<<<<< HEAD
     static public final boolean DBG = true;
     static public final boolean VDBG = false;
+=======
+    static public final boolean DBG = false;
+>>>>>>> upstream/master
 
     /**
      * Retry record with times in milli-seconds
@@ -108,6 +112,7 @@ public class RetryManager {
     /** Random number generator */
     private Random rng = new Random();
 
+<<<<<<< HEAD
     private String mConfig;
 
     /** Constructor */
@@ -122,6 +127,11 @@ public class RetryManager {
             ret += "\n    " + r.mDelayTime + ":" + r.mRandomizationTime;
         }
         return ret;
+=======
+    /** Constructor */
+    public RetryManager() {
+        if (DBG) log("constructor");
+>>>>>>> upstream/master
     }
 
     /**
@@ -139,7 +149,11 @@ public class RetryManager {
     public boolean configure(int maxRetryCount, int retryTime, int randomizationTime) {
         Pair<Boolean, Integer> value;
 
+<<<<<<< HEAD
         if (VDBG) log("configure: " + maxRetryCount + ", " + retryTime + "," + randomizationTime);
+=======
+        if (DBG) log("configure: " + maxRetryCount + ", " + retryTime + "," + randomizationTime);
+>>>>>>> upstream/master
 
         if (!validateNonNegativeInt("maxRetryCount", maxRetryCount)) {
             return false;
@@ -173,13 +187,21 @@ public class RetryManager {
         if ((configStr.startsWith("\"") && configStr.endsWith("\""))) {
             configStr = configStr.substring(1, configStr.length()-1);
         }
+<<<<<<< HEAD
         if (VDBG) log("configure: '" + configStr + "'");
         mConfig = configStr;
+=======
+        if (DBG) log("configure: '" + configStr + "'");
+>>>>>>> upstream/master
 
         if (!TextUtils.isEmpty(configStr)) {
             int defaultRandomization = 0;
 
+<<<<<<< HEAD
             if (VDBG) log("configure: not empty");
+=======
+            if (DBG) log("configure: not empty");
+>>>>>>> upstream/master
 
             mMaxRetryCount = 0;
             resetRetryCount();
@@ -187,6 +209,7 @@ public class RetryManager {
 
             String strArray[] = configStr.split(",");
             for (int i = 0; i < strArray.length; i++) {
+<<<<<<< HEAD
                 if (VDBG) log("configure: strArray[" + i + "]='" + strArray[i] + "'");
                 Pair<Boolean, Integer> value;
                 String splitStr[] = strArray[i].split("=", 2);
@@ -195,6 +218,16 @@ public class RetryManager {
                 if (splitStr.length > 1) {
                     splitStr[1] = splitStr[1].trim();
                     if (VDBG) log("configure: splitStr[1]='" + splitStr[1] + "'");
+=======
+                if (DBG) log("configure: strArray[" + i + "]='" + strArray[i] + "'");
+                Pair<Boolean, Integer> value;
+                String splitStr[] = strArray[i].split("=", 2);
+                splitStr[0] = splitStr[0].trim();
+                if (DBG) log("configure: splitStr[0]='" + splitStr[0] + "'");
+                if (splitStr.length > 1) {
+                    splitStr[1] = splitStr[1].trim();
+                    if (DBG) log("configure: splitStr[1]='" + splitStr[1] + "'");
+>>>>>>> upstream/master
                     if (TextUtils.equals(splitStr[0], "default_randomization")) {
                         value = parseNonNegativeInt(splitStr[0], splitStr[1]);
                         if (!value.first) return false;
@@ -227,7 +260,11 @@ public class RetryManager {
                     // Check if optional randomization value present
                     if (splitStr.length > 1) {
                         splitStr[1] = splitStr[1].trim();
+<<<<<<< HEAD
                         if (VDBG) log("configure: splitStr[1]='" + splitStr[1] + "'");
+=======
+                        if (DBG) log("configure: splitStr[1]='" + splitStr[1] + "'");
+>>>>>>> upstream/master
                         value = parseNonNegativeInt("randomizationTime", splitStr[1]);
                         if (!value.first) return false;
                         rr.mRandomizationTime = value.second;
@@ -239,12 +276,21 @@ public class RetryManager {
             }
             if (mRetryArray.size() > mMaxRetryCount) {
                 mMaxRetryCount = mRetryArray.size();
+<<<<<<< HEAD
                 if (VDBG) log("configure: setting mMaxRetryCount=" + mMaxRetryCount);
             }
             if (VDBG) log("configure: true");
             return true;
         } else {
             if (VDBG) log("configure: false it's empty");
+=======
+                if (DBG) log("configure: setting mMaxRetryCount=" + mMaxRetryCount);
+            }
+            if (DBG) log("configure: true");
+            return true;
+        } else {
+            if (DBG) log("configure: false it's empty");
+>>>>>>> upstream/master
             return false;
         }
     }
@@ -362,7 +408,11 @@ public class RetryManager {
             Log.e(LOG_TAG, name + " bad value: " + stringValue, e);
             retVal = new Pair<Boolean, Integer>(false, 0);
         }
+<<<<<<< HEAD
         if (VDBG) log("parseNonNetativeInt: " + name + ", " + stringValue + ", "
+=======
+        if (DBG) log("parseNonNetativeInt: " + name + ", " + stringValue + ", "
+>>>>>>> upstream/master
                     + retVal.first + ", " + retVal.second);
         return retVal;
     }
@@ -382,7 +432,11 @@ public class RetryManager {
         } else {
             retVal = true;
         }
+<<<<<<< HEAD
         if (VDBG) log("validateNonNegative: " + name + ", " + value + ", " + retVal);
+=======
+        if (DBG) log("validateNonNegative: " + name + ", " + value + ", " + retVal);
+>>>>>>> upstream/master
         return retVal;
     }
 

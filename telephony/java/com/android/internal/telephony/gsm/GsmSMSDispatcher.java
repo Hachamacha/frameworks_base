@@ -26,7 +26,10 @@ import android.os.SystemProperties;
 import android.provider.Telephony.Sms;
 import android.provider.Telephony.Sms.Intents;
 import android.telephony.PhoneNumberUtils;
+<<<<<<< HEAD
 import android.telephony.SmsCbLocation;
+=======
+>>>>>>> upstream/master
 import android.telephony.SmsCbMessage;
 import android.telephony.SmsManager;
 import android.telephony.gsm.GsmCellLocation;
@@ -241,8 +244,12 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
         SmsMessage.SubmitPdu pdu = SmsMessage.getSubmitPdu(
                 scAddr, destAddr, destPort, data, (deliveryIntent != null));
         if (pdu != null) {
+<<<<<<< HEAD
             sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent,
                     destAddr);
+=======
+            sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
         } else {
             Log.e(TAG, "GsmSMSDispatcher.sendData(): getSubmitPdu() returned null");
         }
@@ -255,8 +262,12 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
         SmsMessage.SubmitPdu pdu = SmsMessage.getSubmitPdu(
                 scAddr, destAddr, text, (deliveryIntent != null));
         if (pdu != null) {
+<<<<<<< HEAD
             sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent,
                     destAddr);
+=======
+            sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
         } else {
             Log.e(TAG, "GsmSMSDispatcher.sendText(): getSubmitPdu() returned null");
         }
@@ -278,8 +289,12 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
                 message, deliveryIntent != null, SmsHeader.toByteArray(smsHeader),
                 encoding, smsHeader.languageTable, smsHeader.languageShiftTable);
         if (pdu != null) {
+<<<<<<< HEAD
             sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent,
                     destinationAddress);
+=======
+            sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
         } else {
             Log.e(TAG, "GsmSMSDispatcher.sendNewSubmitPdu(): getSubmitPdu() returned null");
         }
@@ -322,6 +337,7 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
      * concatenated message
      */
     private static final class SmsCbConcatInfo {
+<<<<<<< HEAD
 
         private final SmsCbHeader mHeader;
         private final SmsCbLocation mLocation;
@@ -329,11 +345,30 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
         public SmsCbConcatInfo(SmsCbHeader header, SmsCbLocation location) {
             mHeader = header;
             mLocation = location;
+=======
+        private final SmsCbHeader mHeader;
+
+        private final String mPlmn;
+
+        private final int mLac;
+
+        private final int mCid;
+
+        public SmsCbConcatInfo(SmsCbHeader header, String plmn, int lac, int cid) {
+            mHeader = header;
+            mPlmn = plmn;
+            mLac = lac;
+            mCid = cid;
+>>>>>>> upstream/master
         }
 
         @Override
         public int hashCode() {
+<<<<<<< HEAD
             return (mHeader.getSerialNumber() * 31) + mLocation.hashCode();
+=======
+            return mHeader.messageIdentifier * 31 + mHeader.updateNumber;
+>>>>>>> upstream/master
         }
 
         @Override
@@ -341,17 +376,32 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
             if (obj instanceof SmsCbConcatInfo) {
                 SmsCbConcatInfo other = (SmsCbConcatInfo)obj;
 
+<<<<<<< HEAD
                 // Two pages match if they have the same serial number (which includes the
                 // geographical scope and update number), and both pages belong to the same
                 // location (PLMN, plus LAC and CID if these are part of the geographical scope).
                 return mHeader.getSerialNumber() == other.mHeader.getSerialNumber()
                         && mLocation.equals(other.mLocation);
+=======
+                // Two pages match if all header attributes (except the page
+                // index) are identical, and both pages belong to the same
+                // location (which is also determined by the scope parameter)
+                if (mHeader.geographicalScope == other.mHeader.geographicalScope
+                        && mHeader.messageCode == other.mHeader.messageCode
+                        && mHeader.updateNumber == other.mHeader.updateNumber
+                        && mHeader.messageIdentifier == other.mHeader.messageIdentifier
+                        && mHeader.dataCodingScheme == other.mHeader.dataCodingScheme
+                        && mHeader.nrOfPages == other.mHeader.nrOfPages) {
+                    return matchesLocation(other.mPlmn, other.mLac, other.mCid);
+                }
+>>>>>>> upstream/master
             }
 
             return false;
         }
 
         /**
+<<<<<<< HEAD
          * Compare the location code for this message to the current location code. The match is
          * relative to the geographical scope of the message, which determines whether the LAC
          * and Cell ID are saved in mLocation or set to -1 to match all values.
@@ -363,6 +413,34 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
          */
         public boolean matchesLocation(String plmn, int lac, int cid) {
             return mLocation.isInLocationArea(plmn, lac, cid);
+=======
+         * Checks if this concatenation info matches the given location. The
+         * granularity of the match depends on the geographical scope.
+         *
+         * @param plmn PLMN
+         * @param lac Location area code
+         * @param cid Cell ID
+         * @return true if matching, false otherwise
+         */
+        public boolean matchesLocation(String plmn, int lac, int cid) {
+            switch (mHeader.geographicalScope) {
+                case SmsCbMessage.GEOGRAPHICAL_SCOPE_CELL_WIDE:
+                case SmsCbMessage.GEOGRAPHICAL_SCOPE_CELL_WIDE_IMMEDIATE:
+                    if (mCid != cid) {
+                        return false;
+                    }
+                    // deliberate fall-through
+                case SmsCbMessage.GEOGRAPHICAL_SCOPE_LA_WIDE:
+                    if (mLac != lac) {
+                        return false;
+                    }
+                    // deliberate fall-through
+                case SmsCbMessage.GEOGRAPHICAL_SCOPE_PLMN_WIDE:
+                    return mPlmn != null && mPlmn.equals(plmn);
+            }
+
+            return false;
+>>>>>>> upstream/master
         }
     }
 
@@ -398,6 +476,7 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
             int lac = cellLocation.getLac();
             int cid = cellLocation.getCid();
 
+<<<<<<< HEAD
             SmsCbLocation location;
             switch (header.getGeographicalScope()) {
                 case SmsCbMessage.GEOGRAPHICAL_SCOPE_LA_WIDE:
@@ -420,20 +499,36 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
             if (pageCount > 1) {
                 // Multi-page message
                 SmsCbConcatInfo concatInfo = new SmsCbConcatInfo(header, location);
+=======
+            byte[][] pdus;
+            if (header.nrOfPages > 1) {
+                // Multi-page message
+                SmsCbConcatInfo concatInfo = new SmsCbConcatInfo(header, plmn, lac, cid);
+>>>>>>> upstream/master
 
                 // Try to find other pages of the same message
                 pdus = mSmsCbPageMap.get(concatInfo);
 
                 if (pdus == null) {
+<<<<<<< HEAD
                     // This is the first page of this message, make room for all
                     // pages and keep until complete
                     pdus = new byte[pageCount][];
+=======
+                    // This it the first page of this message, make room for all
+                    // pages and keep until complete
+                    pdus = new byte[header.nrOfPages][];
+>>>>>>> upstream/master
 
                     mSmsCbPageMap.put(concatInfo, pdus);
                 }
 
                 // Page parameter is one-based
+<<<<<<< HEAD
                 pdus[header.getPageIndex() - 1] = receivedPdu;
+=======
+                pdus[header.pageIndex - 1] = receivedPdu;
+>>>>>>> upstream/master
 
                 for (int i = 0; i < pdus.length; i++) {
                     if (pdus[i] == null) {
@@ -450,8 +545,13 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
                 pdus[0] = receivedPdu;
             }
 
+<<<<<<< HEAD
             SmsCbMessage message = GsmSmsCbMessage.createSmsCbMessage(header, location, pdus);
             dispatchBroadcastMessage(message);
+=======
+            boolean isEmergencyMessage = SmsCbHeader.isEmergencyMessage(header.messageIdentifier);
+            dispatchBroadcastPdus(pdus, isEmergencyMessage);
+>>>>>>> upstream/master
 
             // Remove messages that are out of scope to prevent the map from
             // growing indefinitely, containing incomplete messages that were

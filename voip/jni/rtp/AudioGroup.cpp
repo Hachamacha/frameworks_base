@@ -159,7 +159,11 @@ AudioStream::~AudioStream()
     close(mSocket);
     delete mCodec;
     delete [] mBuffer;
+<<<<<<< HEAD
     ALOGD("stream[%d] is dead", mSocket);
+=======
+    LOGD("stream[%d] is dead", mSocket);
+>>>>>>> upstream/master
 }
 
 bool AudioStream::set(int mode, int socket, sockaddr_storage *remote,
@@ -218,7 +222,11 @@ bool AudioStream::set(int mode, int socket, sockaddr_storage *remote,
         }
     }
 
+<<<<<<< HEAD
     ALOGD("stream[%d] is configured as %s %dkHz %dms mode %d", mSocket,
+=======
+    LOGD("stream[%d] is configured as %s %dkHz %dms mode %d", mSocket,
+>>>>>>> upstream/master
         (codec ? codec->name : "RAW"), mSampleRate, mInterval, mMode);
     return true;
 }
@@ -269,7 +277,11 @@ void AudioStream::encode(int tick, AudioStream *chain)
         mTick += skipped * mInterval;
         mSequence += skipped;
         mTimestamp += skipped * mSampleCount;
+<<<<<<< HEAD
         ALOGV("stream[%d] skips %d packets", mSocket, skipped);
+=======
+        LOGV("stream[%d] skips %d packets", mSocket, skipped);
+>>>>>>> upstream/master
     }
 
     tick = mTick;
@@ -334,7 +346,11 @@ void AudioStream::encode(int tick, AudioStream *chain)
         memset(samples, 0, sizeof(samples));
 
         if (mMode != RECEIVE_ONLY) {
+<<<<<<< HEAD
             ALOGV("stream[%d] no data", mSocket);
+=======
+            LOGV("stream[%d] no data", mSocket);
+>>>>>>> upstream/master
         }
     }
 
@@ -350,7 +366,11 @@ void AudioStream::encode(int tick, AudioStream *chain)
     buffer[2] = mSsrc;
     int length = mCodec->encode(&buffer[3], samples);
     if (length <= 0) {
+<<<<<<< HEAD
         ALOGV("stream[%d] encoder error", mSocket);
+=======
+        LOGV("stream[%d] encoder error", mSocket);
+>>>>>>> upstream/master
         return;
     }
     sendto(mSocket, buffer, length + 12, MSG_DONTWAIT, (sockaddr *)&mRemote,
@@ -386,7 +406,11 @@ void AudioStream::decode(int tick)
         mLatencyScore = score;
         mLatencyTimer = tick;
     } else if (tick - mLatencyTimer >= MEASURE_PERIOD) {
+<<<<<<< HEAD
         ALOGV("stream[%d] reduces latency of %dms", mSocket, mLatencyScore);
+=======
+        LOGV("stream[%d] reduces latency of %dms", mSocket, mLatencyScore);
+>>>>>>> upstream/master
         mBufferTail -= mLatencyScore;
         mLatencyScore = -1;
     }
@@ -394,7 +418,11 @@ void AudioStream::decode(int tick)
     int count = (BUFFER_SIZE - (mBufferTail - mBufferHead)) * mSampleRate;
     if (count < mSampleCount) {
         // Buffer overflow. Drop the packet.
+<<<<<<< HEAD
         ALOGV("stream[%d] buffer overflow", mSocket);
+=======
+        LOGV("stream[%d] buffer overflow", mSocket);
+>>>>>>> upstream/master
         recv(mSocket, &c, 1, MSG_DONTWAIT);
         return;
     }
@@ -417,7 +445,11 @@ void AudioStream::decode(int tick)
         // reliable but at least they can be used to identify duplicates?
         if (length < 12 || length > (int)sizeof(buffer) ||
             (ntohl(*(uint32_t *)buffer) & 0xC07F0000) != mCodecMagic) {
+<<<<<<< HEAD
             ALOGV("stream[%d] malformed packet", mSocket);
+=======
+            LOGV("stream[%d] malformed packet", mSocket);
+>>>>>>> upstream/master
             return;
         }
         int offset = 12 + ((buffer[0] & 0x0F) << 2);
@@ -438,13 +470,21 @@ void AudioStream::decode(int tick)
         count = length;
     }
     if (count <= 0) {
+<<<<<<< HEAD
         ALOGV("stream[%d] decoder error", mSocket);
+=======
+        LOGV("stream[%d] decoder error", mSocket);
+>>>>>>> upstream/master
         return;
     }
 
     if (tick - mBufferTail > 0) {
         // Buffer underrun. Reset the jitter buffer.
+<<<<<<< HEAD
         ALOGV("stream[%d] buffer underrun", mSocket);
+=======
+        LOGV("stream[%d] buffer underrun", mSocket);
+>>>>>>> upstream/master
         if (mBufferTail - mBufferHead <= 0) {
             mBufferHead = tick + mInterval;
             mBufferTail = mBufferHead;
@@ -478,7 +518,11 @@ public:
     bool setMode(int mode);
     bool sendDtmf(int event);
     bool add(AudioStream *stream);
+<<<<<<< HEAD
     bool remove(AudioStream *stream);
+=======
+    bool remove(int socket);
+>>>>>>> upstream/master
     bool platformHasAec() { return mPlatformHasAec; }
 
 private:
@@ -510,7 +554,11 @@ private:
         bool start()
         {
             if (run("Network", ANDROID_PRIORITY_AUDIO) != NO_ERROR) {
+<<<<<<< HEAD
                 ALOGE("cannot start network thread");
+=======
+                LOGE("cannot start network thread");
+>>>>>>> upstream/master
                 return false;
             }
             return true;
@@ -530,7 +578,11 @@ private:
         bool start()
         {
             if (run("Device", ANDROID_PRIORITY_AUDIO) != NO_ERROR) {
+<<<<<<< HEAD
                 ALOGE("cannot start device thread");
+=======
+                LOGE("cannot start device thread");
+>>>>>>> upstream/master
                 return false;
             }
             return true;
@@ -566,14 +618,22 @@ AudioGroup::~AudioGroup()
         delete mChain;
         mChain = next;
     }
+<<<<<<< HEAD
     ALOGD("group[%d] is dead", mDeviceSocket);
+=======
+    LOGD("group[%d] is dead", mDeviceSocket);
+>>>>>>> upstream/master
 }
 
 bool AudioGroup::set(int sampleRate, int sampleCount)
 {
     mEventQueue = epoll_create(2);
     if (mEventQueue == -1) {
+<<<<<<< HEAD
         ALOGE("epoll_create: %s", strerror(errno));
+=======
+        LOGE("epoll_create: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
 
@@ -583,7 +643,11 @@ bool AudioGroup::set(int sampleRate, int sampleCount)
     // Create device socket.
     int pair[2];
     if (socketpair(AF_UNIX, SOCK_DGRAM, 0, pair)) {
+<<<<<<< HEAD
         ALOGE("socketpair: %s", strerror(errno));
+=======
+        LOGE("socketpair: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
     mDeviceSocket = pair[0];
@@ -593,7 +657,11 @@ bool AudioGroup::set(int sampleRate, int sampleCount)
     if (!mChain->set(AudioStream::NORMAL, pair[1], NULL, NULL,
         sampleRate, sampleCount, -1, -1)) {
         close(pair[1]);
+<<<<<<< HEAD
         ALOGE("cannot initialize device stream");
+=======
+        LOGE("cannot initialize device stream");
+>>>>>>> upstream/master
         return false;
     }
 
@@ -602,7 +670,11 @@ bool AudioGroup::set(int sampleRate, int sampleCount)
     tv.tv_sec = 0;
     tv.tv_usec = 1000 * sampleCount / sampleRate * 500;
     if (setsockopt(pair[0], SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv))) {
+<<<<<<< HEAD
         ALOGE("setsockopt: %s", strerror(errno));
+=======
+        LOGE("setsockopt: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
 
@@ -611,12 +683,20 @@ bool AudioGroup::set(int sampleRate, int sampleCount)
     event.events = EPOLLIN;
     event.data.ptr = mChain;
     if (epoll_ctl(mEventQueue, EPOLL_CTL_ADD, pair[1], &event)) {
+<<<<<<< HEAD
         ALOGE("epoll_ctl: %s", strerror(errno));
+=======
+        LOGE("epoll_ctl: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
 
     // Anything else?
+<<<<<<< HEAD
     ALOGD("stream[%d] joins group[%d]", pair[1], pair[0]);
+=======
+    LOGD("stream[%d] joins group[%d]", pair[1], pair[0]);
+>>>>>>> upstream/master
     return true;
 }
 
@@ -639,7 +719,11 @@ bool AudioGroup::setMode(int mode)
     }
 
     mDeviceThread->requestExitAndWait();
+<<<<<<< HEAD
     ALOGD("group[%d] switches from mode %d to %d", mDeviceSocket, mMode, mode);
+=======
+    LOGD("group[%d] switches from mode %d to %d", mDeviceSocket, mMode, mode);
+>>>>>>> upstream/master
     mMode = mode;
     return (mode == ON_HOLD) || mDeviceThread->start();
 }
@@ -675,7 +759,11 @@ bool AudioGroup::add(AudioStream *stream)
     event.events = EPOLLIN;
     event.data.ptr = stream;
     if (epoll_ctl(mEventQueue, EPOLL_CTL_ADD, stream->mSocket, &event)) {
+<<<<<<< HEAD
         ALOGE("epoll_ctl: %s", strerror(errno));
+=======
+        LOGE("epoll_ctl: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
 
@@ -687,6 +775,7 @@ bool AudioGroup::add(AudioStream *stream)
         return false;
     }
 
+<<<<<<< HEAD
     ALOGD("stream[%d] joins group[%d]", stream->mSocket, mDeviceSocket);
     return true;
 }
@@ -704,6 +793,26 @@ bool AudioGroup::remove(AudioStream *stream)
             chain->mNext = stream->mNext;
             ALOGD("stream[%d] leaves group[%d]", stream->mSocket, mDeviceSocket);
             delete stream;
+=======
+    LOGD("stream[%d] joins group[%d]", stream->mSocket, mDeviceSocket);
+    return true;
+}
+
+bool AudioGroup::remove(int socket)
+{
+    mNetworkThread->requestExitAndWait();
+
+    for (AudioStream *stream = mChain; stream->mNext; stream = stream->mNext) {
+        AudioStream *target = stream->mNext;
+        if (target->mSocket == socket) {
+            if (epoll_ctl(mEventQueue, EPOLL_CTL_DEL, socket, NULL)) {
+                LOGE("epoll_ctl: %s", strerror(errno));
+                return false;
+            }
+            stream->mNext = target->mNext;
+            LOGD("stream[%d] leaves group[%d]", socket, mDeviceSocket);
+            delete target;
+>>>>>>> upstream/master
             break;
         }
     }
@@ -748,7 +857,11 @@ bool AudioGroup::NetworkThread::threadLoop()
     epoll_event events[count];
     count = epoll_wait(mGroup->mEventQueue, events, count, deadline);
     if (count == -1) {
+<<<<<<< HEAD
         ALOGE("epoll_wait: %s", strerror(errno));
+=======
+        LOGE("epoll_wait: %s", strerror(errno));
+>>>>>>> upstream/master
         return false;
     }
     for (int i = 0; i < count; ++i) {
@@ -791,10 +904,17 @@ bool AudioGroup::DeviceThread::threadLoop()
         sampleRate) != NO_ERROR || output <= 0 ||
         AudioRecord::getMinFrameCount(&input, sampleRate,
         AUDIO_FORMAT_PCM_16_BIT, 1) != NO_ERROR || input <= 0) {
+<<<<<<< HEAD
         ALOGE("cannot compute frame count");
         return false;
     }
     ALOGD("reported frame count: output %d, input %d", output, input);
+=======
+        LOGE("cannot compute frame count");
+        return false;
+    }
+    LOGD("reported frame count: output %d, input %d", output, input);
+>>>>>>> upstream/master
 
     if (output < sampleCount * 2) {
         output = sampleCount * 2;
@@ -802,12 +922,17 @@ bool AudioGroup::DeviceThread::threadLoop()
     if (input < sampleCount * 2) {
         input = sampleCount * 2;
     }
+<<<<<<< HEAD
     ALOGD("adjusted frame count: output %d, input %d", output, input);
+=======
+    LOGD("adjusted frame count: output %d, input %d", output, input);
+>>>>>>> upstream/master
 
     // Initialize AudioTrack and AudioRecord.
     AudioTrack track;
     AudioRecord record;
     if (track.set(AUDIO_STREAM_VOICE_CALL, sampleRate, AUDIO_FORMAT_PCM_16_BIT,
+<<<<<<< HEAD
                 AUDIO_CHANNEL_OUT_MONO, output) != NO_ERROR ||
             record.set(AUDIO_SOURCE_VOICE_COMMUNICATION, sampleRate, AUDIO_FORMAT_PCM_16_BIT,
                 AUDIO_CHANNEL_IN_MONO, input) != NO_ERROR) {
@@ -815,6 +940,15 @@ bool AudioGroup::DeviceThread::threadLoop()
         return false;
     }
     ALOGD("latency: output %d, input %d", track.latency(), record.latency());
+=======
+        AUDIO_CHANNEL_OUT_MONO, output) != NO_ERROR || record.set(
+        AUDIO_SOURCE_VOICE_COMMUNICATION, sampleRate, AUDIO_FORMAT_PCM_16_BIT,
+        AUDIO_CHANNEL_IN_MONO, input) != NO_ERROR) {
+        LOGE("cannot initialize audio device");
+        return false;
+    }
+    LOGD("latency: output %d, input %d", track.latency(), record.latency());
+>>>>>>> upstream/master
 
     // Give device socket a reasonable buffer size.
     setsockopt(deviceSocket, SOL_SOCKET, SO_RCVBUF, &output, sizeof(output));
@@ -883,7 +1017,11 @@ bool AudioGroup::DeviceThread::threadLoop()
                     toWrite -= buffer.frameCount;
                     track.releaseBuffer(&buffer);
                 } else if (status != TIMED_OUT && status != WOULD_BLOCK) {
+<<<<<<< HEAD
                     ALOGE("cannot write to AudioTrack");
+=======
+                    LOGE("cannot write to AudioTrack");
+>>>>>>> upstream/master
                     goto exit;
                 }
             }
@@ -899,20 +1037,32 @@ bool AudioGroup::DeviceThread::threadLoop()
                     toRead -= buffer.frameCount;
                     record.releaseBuffer(&buffer);
                 } else if (status != TIMED_OUT && status != WOULD_BLOCK) {
+<<<<<<< HEAD
                     ALOGE("cannot read from AudioRecord");
+=======
+                    LOGE("cannot read from AudioRecord");
+>>>>>>> upstream/master
                     goto exit;
                 }
             }
         }
 
         if (chances <= 0) {
+<<<<<<< HEAD
             ALOGW("device loop timeout");
+=======
+            LOGW("device loop timeout");
+>>>>>>> upstream/master
             while (recv(deviceSocket, &c, 1, MSG_DONTWAIT) == 1);
         }
 
         if (mode != MUTED) {
             if (echo != NULL) {
+<<<<<<< HEAD
                 ALOGV("echo->run()");
+=======
+                LOGV("echo->run()");
+>>>>>>> upstream/master
                 echo->run(output, input);
             }
             send(deviceSocket, input, sizeof(input), MSG_DONTWAIT);
@@ -930,7 +1080,11 @@ exit:
 static jfieldID gNative;
 static jfieldID gMode;
 
+<<<<<<< HEAD
 int add(JNIEnv *env, jobject thiz, jint mode,
+=======
+void add(JNIEnv *env, jobject thiz, jint mode,
+>>>>>>> upstream/master
     jint socket, jstring jRemoteAddress, jint remotePort,
     jstring jCodecSpec, jint dtmfType)
 {
@@ -942,15 +1096,24 @@ int add(JNIEnv *env, jobject thiz, jint mode,
     sockaddr_storage remote;
     if (parse(env, jRemoteAddress, remotePort, &remote) < 0) {
         // Exception already thrown.
+<<<<<<< HEAD
         return 0;
     }
     if (!jCodecSpec) {
         jniThrowNullPointerException(env, "codecSpec");
         return 0;
+=======
+        return;
+    }
+    if (!jCodecSpec) {
+        jniThrowNullPointerException(env, "codecSpec");
+        return;
+>>>>>>> upstream/master
     }
     const char *codecSpec = env->GetStringUTFChars(jCodecSpec, NULL);
     if (!codecSpec) {
         // Exception already thrown.
+<<<<<<< HEAD
         return 0;
     }
     socket = dup(socket);
@@ -958,6 +1121,9 @@ int add(JNIEnv *env, jobject thiz, jint mode,
         jniThrowException(env, "java/lang/IllegalStateException",
             "cannot get stream socket");
         return 0;
+=======
+        return;
+>>>>>>> upstream/master
     }
 
     // Create audio codec.
@@ -1006,13 +1172,18 @@ int add(JNIEnv *env, jobject thiz, jint mode,
 
     // Succeed.
     env->SetIntField(thiz, gNative, (int)group);
+<<<<<<< HEAD
     return (int)stream;
+=======
+    return;
+>>>>>>> upstream/master
 
 error:
     delete group;
     delete stream;
     delete codec;
     close(socket);
+<<<<<<< HEAD
     env->SetIntField(thiz, gNative, 0);
     return 0;
 }
@@ -1024,6 +1195,18 @@ void remove(JNIEnv *env, jobject thiz, jint stream)
         if (!stream || !group->remove((AudioStream *)stream)) {
             delete group;
             env->SetIntField(thiz, gNative, 0);
+=======
+    env->SetIntField(thiz, gNative, NULL);
+}
+
+void remove(JNIEnv *env, jobject thiz, jint socket)
+{
+    AudioGroup *group = (AudioGroup *)env->GetIntField(thiz, gNative);
+    if (group) {
+        if (socket == -1 || !group->remove(socket)) {
+            delete group;
+            env->SetIntField(thiz, gNative, NULL);
+>>>>>>> upstream/master
         }
     }
 }
@@ -1045,7 +1228,11 @@ void sendDtmf(JNIEnv *env, jobject thiz, jint event)
 }
 
 JNINativeMethod gMethods[] = {
+<<<<<<< HEAD
     {"nativeAdd", "(IILjava/lang/String;ILjava/lang/String;I)I", (void *)add},
+=======
+    {"nativeAdd", "(IILjava/lang/String;ILjava/lang/String;I)V", (void *)add},
+>>>>>>> upstream/master
     {"nativeRemove", "(I)V", (void *)remove},
     {"nativeSetMode", "(I)V", (void *)setMode},
     {"nativeSendDtmf", "(I)V", (void *)sendDtmf},
@@ -1057,7 +1244,11 @@ int registerAudioGroup(JNIEnv *env)
 {
     gRandom = open("/dev/urandom", O_RDONLY);
     if (gRandom == -1) {
+<<<<<<< HEAD
         ALOGE("urandom: %s", strerror(errno));
+=======
+        LOGE("urandom: %s", strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -1066,7 +1257,11 @@ int registerAudioGroup(JNIEnv *env)
         (gNative = env->GetFieldID(clazz, "mNative", "I")) == NULL ||
         (gMode = env->GetFieldID(clazz, "mMode", "I")) == NULL ||
         env->RegisterNatives(clazz, gMethods, NELEM(gMethods)) < 0) {
+<<<<<<< HEAD
         ALOGE("JNI registration failed");
+=======
+        LOGE("JNI registration failed");
+>>>>>>> upstream/master
         return -1;
     }
     return 0;

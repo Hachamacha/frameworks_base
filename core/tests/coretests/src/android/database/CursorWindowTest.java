@@ -35,6 +35,7 @@ public class CursorWindowTest extends TestCase implements PerformanceTestCase {
     }
 
     @SmallTest
+<<<<<<< HEAD
     public void testConstructor_WithName() {
         CursorWindow window = new CursorWindow("MyWindow");
         assertEquals("MyWindow", window.getName());
@@ -74,6 +75,17 @@ public class CursorWindowTest extends TestCase implements PerformanceTestCase {
         window.close();
     }
 
+=======
+    public void testValuesLocalWindow() {
+        doTestValues(new CursorWindow(true));
+    }
+    
+    @SmallTest
+    public void testValuesRemoteWindow() {
+        doTestValues(new CursorWindow(false));
+    }
+    
+>>>>>>> upstream/master
     private void doTestValues(CursorWindow window) {
         assertTrue(window.setNumColumns(7));
         assertTrue(window.allocRow());

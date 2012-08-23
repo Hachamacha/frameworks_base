@@ -43,7 +43,10 @@ import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+<<<<<<< HEAD
 import android.os.SystemClock;
+=======
+>>>>>>> upstream/master
 import android.os.SystemProperties;
 import android.os.UEventObserver;
 import android.provider.Settings;
@@ -60,7 +63,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+<<<<<<< HEAD
 import java.util.Scanner;
+=======
+>>>>>>> upstream/master
 
 /**
  * UsbDeviceManager manages USB state in device mode.
@@ -82,6 +88,7 @@ public class UsbDeviceManager {
             "/sys/class/android_usb/android0/f_mass_storage/lun/file";
     private static final String RNDIS_ETH_ADDR_PATH =
             "/sys/class/android_usb/android0/f_rndis/ethaddr";
+<<<<<<< HEAD
     private static final String AUDIO_SOURCE_PCM_PATH =
             "/sys/class/android_usb/android0/f_audio_source/pcm";
 
@@ -94,6 +101,15 @@ public class UsbDeviceManager {
     private static final int AUDIO_MODE_NONE = 0;
     private static final int AUDIO_MODE_SOURCE = 1;
 
+=======
+
+    private static final int MSG_UPDATE_STATE = 0;
+    private static final int MSG_ENABLE_ADB = 1;
+    private static final int MSG_SET_CURRENT_FUNCTION = 2;
+    private static final int MSG_SYSTEM_READY = 3;
+    private static final int MSG_BOOT_COMPLETED = 4;
+
+>>>>>>> upstream/master
     // Delay for debouncing USB disconnects.
     // We often get rapid connect/disconnect events when enabling USB functions,
     // which need debouncing.
@@ -111,9 +127,13 @@ public class UsbDeviceManager {
     private final boolean mHasUsbAccessory;
     private boolean mUseUsbNotification;
     private boolean mAdbEnabled;
+<<<<<<< HEAD
     private boolean mAudioSourceEnabled;
     private Map<String, List<Pair<String, String>>> mOemModeMap;
     private String[] mAccessoryStrings;
+=======
+    private Map<String, List<Pair<String, String>>> mOemModeMap;
+>>>>>>> upstream/master
 
     private class AdbSettingsObserver extends ContentObserver {
         public AdbSettingsObserver() {
@@ -141,7 +161,11 @@ public class UsbDeviceManager {
                 mHandler.updateState(state);
             } else if ("START".equals(accessory)) {
                 if (DEBUG) Slog.d(TAG, "got accessory start");
+<<<<<<< HEAD
                 startAccessoryMode();
+=======
+                setCurrentFunction(UsbManager.USB_FUNCTION_ACCESSORY, false);
+>>>>>>> upstream/master
             }
         }
     };
@@ -164,7 +188,11 @@ public class UsbDeviceManager {
 
         if (nativeIsStartRequested()) {
             if (DEBUG) Slog.d(TAG, "accessory attached at boot");
+<<<<<<< HEAD
             startAccessoryMode();
+=======
+            setCurrentFunction(UsbManager.USB_FUNCTION_ACCESSORY, false);
+>>>>>>> upstream/master
         }
     }
 
@@ -181,7 +209,15 @@ public class UsbDeviceManager {
                 mContext.getSystemService(Context.STORAGE_SERVICE);
         StorageVolume[] volumes = storageManager.getVolumeList();
         if (volumes.length > 0) {
+<<<<<<< HEAD
             massStorageSupported = volumes[0].allowMassStorage();
+=======
+            if (Settings.Secure.getInt(mContentResolver, Settings.Secure.USB_MASS_STORAGE_ENABLED, 0) == 1 ) {
+		massStorageSupported = volumes[0].allowMassStorage();
+	    } else {
+		massStorageSupported = false;
+	    }
+>>>>>>> upstream/master
         }
         mUseUsbNotification = !massStorageSupported;
 
@@ -191,6 +227,7 @@ public class UsbDeviceManager {
         mHandler.sendEmptyMessage(MSG_SYSTEM_READY);
     }
 
+<<<<<<< HEAD
     private void startAccessoryMode() {
         mAccessoryStrings = nativeGetAccessoryStrings();
         boolean enableAudio = (nativeGetAudioMode() == AUDIO_MODE_SOURCE);
@@ -214,6 +251,8 @@ public class UsbDeviceManager {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private static void initRndisAddress() {
         // configure RNDIS ethernet address based on our serial number using the same algorithm
         // we had been previously using in kernel board files
@@ -238,9 +277,12 @@ public class UsbDeviceManager {
     }
 
      private static String addFunction(String functions, String function) {
+<<<<<<< HEAD
          if ("none".equals(functions)) {
              return function;
          }
+=======
+>>>>>>> upstream/master
         if (!containsFunction(functions, function)) {
             if (functions.length() > 0) {
                 functions += ",";
@@ -257,9 +299,12 @@ public class UsbDeviceManager {
                 split[i] = null;
             }
         }
+<<<<<<< HEAD
         if (split.length == 1 && split[0] == null) {
             return "none";
         }
+=======
+>>>>>>> upstream/master
         StringBuilder builder = new StringBuilder();
          for (int i = 0; i < split.length; i++) {
             String s = split[i];
@@ -403,7 +448,15 @@ public class UsbDeviceManager {
             for (int i = 0; i < 20; i++) {
                 // State transition is done when sys.usb.state is set to the new configuration
                 if (state.equals(SystemProperties.get("sys.usb.state"))) return true;
+<<<<<<< HEAD
                 SystemClock.sleep(50);
+=======
+                try {
+                    // try again in 50ms
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                }
+>>>>>>> upstream/master
             }
             Slog.e(TAG, "waitForState(" + state + ") FAILED");
             return false;
@@ -492,8 +545,14 @@ public class UsbDeviceManager {
             if (!mHasUsbAccessory) return;
 
             if (mConfigured) {
+<<<<<<< HEAD
                 if (mAccessoryStrings != null) {
                     mCurrentAccessory = new UsbAccessory(mAccessoryStrings);
+=======
+                String[] strings = nativeGetAccessoryStrings();
+                if (strings != null) {
+                    mCurrentAccessory = new UsbAccessory(strings);
+>>>>>>> upstream/master
                     Slog.d(TAG, "entering USB accessory mode: " + mCurrentAccessory);
                     // defer accessoryAttached if system is not ready
                     if (mBootCompleted) {
@@ -513,7 +572,10 @@ public class UsbDeviceManager {
                         mSettingsManager.accessoryDetached(mCurrentAccessory);
                     }
                     mCurrentAccessory = null;
+<<<<<<< HEAD
                     mAccessoryStrings = null;
+=======
+>>>>>>> upstream/master
                 }
             }
         }
@@ -535,6 +597,7 @@ public class UsbDeviceManager {
             mContext.sendStickyBroadcast(intent);
         }
 
+<<<<<<< HEAD
         private void updateAudioSourceFunction() {
             boolean enabled = containsFunction(mCurrentFunctions,
                     UsbManager.USB_FUNCTION_AUDIO_SOURCE);
@@ -560,6 +623,8 @@ public class UsbDeviceManager {
             }
         }
 
+=======
+>>>>>>> upstream/master
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -579,22 +644,35 @@ public class UsbDeviceManager {
                     }
                     if (mBootCompleted) {
                         updateUsbState();
+<<<<<<< HEAD
                         updateAudioSourceFunction();
+=======
+>>>>>>> upstream/master
                     }
                     break;
                 case MSG_ENABLE_ADB:
                     setAdbEnabled(msg.arg1 == 1);
                     break;
+<<<<<<< HEAD
                 case MSG_SET_CURRENT_FUNCTIONS:
                     String functions = (String)msg.obj;
                     boolean makeDefault = (msg.arg1 == 1);
                     setEnabledFunctions(functions, makeDefault);
+=======
+                case MSG_SET_CURRENT_FUNCTION:
+                    String function = (String)msg.obj;
+                    boolean makeDefault = (msg.arg1 == 1);
+                    setEnabledFunctions(function, makeDefault);
+>>>>>>> upstream/master
                     break;
                 case MSG_SYSTEM_READY:
                     updateUsbNotification();
                     updateAdbNotification();
                     updateUsbState();
+<<<<<<< HEAD
                     updateAudioSourceFunction();
+=======
+>>>>>>> upstream/master
                     break;
                 case MSG_BOOT_COMPLETED:
                     mBootCompleted = true;
@@ -618,9 +696,16 @@ public class UsbDeviceManager {
                     id = com.android.internal.R.string.usb_mtp_notification_title;
                 } else if (containsFunction(mCurrentFunctions, UsbManager.USB_FUNCTION_PTP)) {
                     id = com.android.internal.R.string.usb_ptp_notification_title;
+<<<<<<< HEAD
                 } else if (containsFunction(mCurrentFunctions,
                         UsbManager.USB_FUNCTION_MASS_STORAGE)) {
                     id = com.android.internal.R.string.usb_cd_installer_notification_title;
+=======
+                } /* else if (containsFunction(mCurrentFunctions,
+                     UsbManager.USB_FUNCTION_MASS_STORAGE)) { // Disable this as it causes double USB settings menues when in UMS mode.
+                     id = com.android.internal.R.string.usb_cd_installer_notification_title; 
+                     } */ else if (containsFunction(mCurrentFunctions, UsbManager.USB_FUNCTION_ACCESSORY)) {
+>>>>>>> upstream/master
                 } else if (containsFunction(mCurrentFunctions, UsbManager.USB_FUNCTION_ACCESSORY)) {
                     id = com.android.internal.R.string.usb_accessory_notification_title;
                 } else {
@@ -649,7 +734,10 @@ public class UsbDeviceManager {
                     notification.defaults = 0; // please be quiet
                     notification.sound = null;
                     notification.vibrate = null;
+<<<<<<< HEAD
                     notification.priority = Notification.PRIORITY_MIN;
+=======
+>>>>>>> upstream/master
 
                     Intent intent = Intent.makeRestartActivityTask(
                             new ComponentName("com.android.settings",
@@ -683,7 +771,10 @@ public class UsbDeviceManager {
                     notification.defaults = 0; // please be quiet
                     notification.sound = null;
                     notification.vibrate = null;
+<<<<<<< HEAD
                     notification.priority = Notification.PRIORITY_LOW;
+=======
+>>>>>>> upstream/master
 
                     Intent intent = Intent.makeRestartActivityTask(
                             new ComponentName("com.android.settings",
@@ -741,9 +832,15 @@ public class UsbDeviceManager {
         return nativeOpenAccessory();
     }
 
+<<<<<<< HEAD
     public void setCurrentFunctions(String functions, boolean makeDefault) {
         if (DEBUG) Slog.d(TAG, "setCurrentFunctions(" + functions + ") default: " + makeDefault);
         mHandler.sendMessage(MSG_SET_CURRENT_FUNCTIONS, functions, makeDefault);
+=======
+    public void setCurrentFunction(String function, boolean makeDefault) {
+        if (DEBUG) Slog.d(TAG, "setCurrentFunction(" + function + ") default: " + makeDefault);
+        mHandler.sendMessage(MSG_SET_CURRENT_FUNCTION, function, makeDefault);
+>>>>>>> upstream/master
     }
 
     public void setMassStorageBackingFile(String path) {
@@ -811,5 +908,8 @@ public class UsbDeviceManager {
     private native String[] nativeGetAccessoryStrings();
     private native ParcelFileDescriptor nativeOpenAccessory();
     private native boolean nativeIsStartRequested();
+<<<<<<< HEAD
     private native int nativeGetAudioMode();
+=======
+>>>>>>> upstream/master
 }

@@ -17,10 +17,15 @@
 package android.accessibilityservice;
 
 import android.app.Service;
+<<<<<<< HEAD
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Looper;
+=======
+import android.content.Intent;
+import android.os.IBinder;
+>>>>>>> upstream/master
 import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
@@ -37,6 +42,7 @@ import com.android.internal.os.HandlerCaller;
  * etc. Such a service can optionally request the capability for querying the content
  * of the active window. Development of an accessibility service requires extending this
  * class and implementing its abstract methods.
+<<<<<<< HEAD
  *
  * <div class="special reference">
  * <h3>Developer Guides</h3>
@@ -45,6 +51,8 @@ import com.android.internal.os.HandlerCaller;
  * developer guide.</p>
  * </div>
  *
+=======
+>>>>>>> upstream/master
  * <h3>Lifecycle</h3>
  * <p>
  * The lifecycle of an accessibility service is managed exclusively by the system and
@@ -59,6 +67,7 @@ import com.android.internal.os.HandlerCaller;
  * An accessibility is declared as any other service in an AndroidManifest.xml but it
  * must also specify that it handles the "android.accessibilityservice.AccessibilityService"
  * {@link android.content.Intent}. Failure to declare this intent will cause the system to
+<<<<<<< HEAD
  * ignore the accessibility service. Additionally an accessibility service must request the
  * {@link android.Manifest.permission#BIND_ACCESSIBILITY_SERVICE} permission to ensure
  * that only the system
@@ -67,6 +76,11 @@ import com.android.internal.os.HandlerCaller;
  * </p>
  * <pre> &lt;service android:name=".MyAccessibilityService"
  *         android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE&gt;
+=======
+ * ignore the accessibility service. Following is an example declaration:
+ * </p>
+ * <pre> &lt;service android:name=".MyAccessibilityService"&gt;
+>>>>>>> upstream/master
  *     &lt;intent-filter&gt;
  *         &lt;action android:name="android.accessibilityservice.AccessibilityService" /&gt;
  *     &lt;/intent-filter&gt;
@@ -117,7 +131,11 @@ import com.android.internal.os.HandlerCaller;
  * </ul>
  * <h3>Retrieving window content</h3>
  * <p>
+<<<<<<< HEAD
  * A service can specify in its declaration that it can retrieve the active window
+=======
+ * An service can specify in its declaration that it can retrieve the active window
+>>>>>>> upstream/master
  * content which is represented as a tree of {@link AccessibilityNodeInfo}. Note that
  * declaring this capability requires that the service declares its configuration via
  * an XML resource referenced by {@link #SERVICE_META_DATA}.
@@ -207,6 +225,7 @@ import com.android.internal.os.HandlerCaller;
  * @see android.view.accessibility.AccessibilityManager
  */
 public abstract class AccessibilityService extends Service {
+<<<<<<< HEAD
 
     /**
      * The user has performed a swipe up gesture on the touch screen.
@@ -288,6 +307,8 @@ public abstract class AccessibilityService extends Service {
      */
     public static final int GESTURE_SWIPE_DOWN_AND_RIGHT = 16;
 
+=======
+>>>>>>> upstream/master
     /**
      * The {@link Intent} that must be declared as handled by the service.
      */
@@ -312,6 +333,7 @@ public abstract class AccessibilityService extends Service {
      */
     public static final String SERVICE_META_DATA = "android.accessibilityservice";
 
+<<<<<<< HEAD
     /**
      * Action to go back.
      */
@@ -346,6 +368,14 @@ public abstract class AccessibilityService extends Service {
 
     private AccessibilityServiceInfo mInfo;
 
+=======
+    private static final String LOG_TAG = "AccessibilityService";
+
+    private AccessibilityServiceInfo mInfo;
+
+    private int mConnectionId;
+
+>>>>>>> upstream/master
     /**
      * Callback for {@link android.view.accessibility.AccessibilityEvent}s.
      *
@@ -371,6 +401,7 @@ public abstract class AccessibilityService extends Service {
     }
 
     /**
+<<<<<<< HEAD
      * Called by the system when the user performs a specific gesture on the
      * touch screen.
      *
@@ -465,6 +496,8 @@ public abstract class AccessibilityService extends Service {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the {@link AccessibilityServiceInfo} that describes this service.
      * <p>
      * Note: You can call this method any time but the info will be picked up after
@@ -488,8 +521,11 @@ public abstract class AccessibilityService extends Service {
         if (mInfo != null && connection != null) {
             try {
                 connection.setServiceInfo(mInfo);
+<<<<<<< HEAD
                 mInfo = null;
                 AccessibilityInteractionClient.getInstance().clearCache();
+=======
+>>>>>>> upstream/master
             } catch (RemoteException re) {
                 Log.w(LOG_TAG, "Error while setting AccessibilityServiceInfo", re);
             }
@@ -502,6 +538,7 @@ public abstract class AccessibilityService extends Service {
      */
     @Override
     public final IBinder onBind(Intent intent) {
+<<<<<<< HEAD
         return new IAccessibilityServiceClientWrapper(this, getMainLooper(), new Callbacks() {
             @Override
             public void onServiceConnected() {
@@ -552,6 +589,29 @@ public abstract class AccessibilityService extends Service {
                 Callbacks callback) {
             mCallback = callback;
             mCaller = new HandlerCaller(context, looper, this);
+=======
+        return new IEventListenerWrapper(this);
+    }
+
+    /**
+     * Implements the internal {@link IEventListener} interface to convert
+     * incoming calls to it back to calls on an {@link AccessibilityService}.
+     */
+    class IEventListenerWrapper extends IEventListener.Stub
+            implements HandlerCaller.Callback {
+
+        private static final int DO_SET_SET_CONNECTION = 10;
+        private static final int DO_ON_INTERRUPT = 20;
+        private static final int DO_ON_ACCESSIBILITY_EVENT = 30;
+
+        private final HandlerCaller mCaller;
+
+        private final AccessibilityService mTarget;
+
+        public IEventListenerWrapper(AccessibilityService context) {
+            mTarget = context;
+            mCaller = new HandlerCaller(context, this);
+>>>>>>> upstream/master
         }
 
         public void setConnection(IAccessibilityServiceConnection connection, int connectionId) {
@@ -570,23 +630,34 @@ public abstract class AccessibilityService extends Service {
             mCaller.sendMessage(message);
         }
 
+<<<<<<< HEAD
         public void onGesture(int gestureId) {
             Message message = mCaller.obtainMessageI(DO_ON_GESTURE, gestureId);
             mCaller.sendMessage(message);
         }
 
+=======
+>>>>>>> upstream/master
         public void executeMessage(Message message) {
             switch (message.what) {
                 case DO_ON_ACCESSIBILITY_EVENT :
                     AccessibilityEvent event = (AccessibilityEvent) message.obj;
                     if (event != null) {
+<<<<<<< HEAD
                         AccessibilityInteractionClient.getInstance().onAccessibilityEvent(event);
                         mCallback.onAccessibilityEvent(event);
+=======
+                        mTarget.onAccessibilityEvent(event);
+>>>>>>> upstream/master
                         event.recycle();
                     }
                     return;
                 case DO_ON_INTERRUPT :
+<<<<<<< HEAD
                     mCallback.onInterrupt();
+=======
+                    mTarget.onInterrupt();
+>>>>>>> upstream/master
                     return;
                 case DO_SET_SET_CONNECTION :
                     final int connectionId = message.arg1;
@@ -595,6 +666,7 @@ public abstract class AccessibilityService extends Service {
                     if (connection != null) {
                         AccessibilityInteractionClient.getInstance().addConnection(connectionId,
                                 connection);
+<<<<<<< HEAD
                         mCallback.onSetConnectionId(connectionId);
                         mCallback.onServiceConnected();
                     } else {
@@ -606,6 +678,16 @@ public abstract class AccessibilityService extends Service {
                     final int gestureId = message.arg1;
                     mCallback.onGesture(gestureId);
                     return;
+=======
+                        mConnectionId = connectionId;
+                        mTarget.onServiceConnected();
+                    } else {
+                        AccessibilityInteractionClient.getInstance().removeConnection(connectionId);
+                        mConnectionId = AccessibilityInteractionClient.NO_ID;
+                        // TODO: Do we need a onServiceDisconnected callback?
+                    }
+                    return;
+>>>>>>> upstream/master
                 default :
                     Log.w(LOG_TAG, "Unknown message type " + message.what);
             }

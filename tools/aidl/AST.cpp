@@ -111,6 +111,7 @@ LiteralExpression::Write(FILE* to)
     fprintf(to, "%s", this->value.c_str());
 }
 
+<<<<<<< HEAD
 StringLiteralExpression::StringLiteralExpression(const string& v)
     :value(v)
 {
@@ -126,6 +127,8 @@ StringLiteralExpression::Write(FILE* to)
     fprintf(to, "\"%s\"", this->value.c_str());
 }
 
+=======
+>>>>>>> upstream/master
 Variable::Variable()
     :type(NULL),
      name(),
@@ -292,6 +295,7 @@ MethodCall::MethodCall(const string& n)
 {
 }
 
+<<<<<<< HEAD
 MethodCall::MethodCall(const string& n, int argc = 0, ...)
     :obj(NULL),
      clazz(NULL),
@@ -303,6 +307,8 @@ MethodCall::MethodCall(const string& n, int argc = 0, ...)
   va_end(args);
 }
 
+=======
+>>>>>>> upstream/master
 MethodCall::MethodCall(Expression* o, const string& n)
     :obj(o),
      clazz(NULL),
@@ -393,6 +399,7 @@ NewExpression::NewExpression(Type* t)
 {
 }
 
+<<<<<<< HEAD
 NewExpression::NewExpression(Type* t, int argc = 0, ...)
     :type(t)
 {
@@ -402,11 +409,14 @@ NewExpression::NewExpression(Type* t, int argc = 0, ...)
   va_end(args);
 }
 
+=======
+>>>>>>> upstream/master
 NewExpression::~NewExpression()
 {
 }
 
 void
+<<<<<<< HEAD
 NewExpression::init(int n, va_list args)
 {
     for (int i=0; i<n; i++) {
@@ -416,6 +426,8 @@ NewExpression::init(int n, va_list args)
 }
 
 void
+=======
+>>>>>>> upstream/master
 NewExpression::Write(FILE* to)
 {
     fprintf(to, "new %s(", this->type->InstantiableName().c_str());
@@ -680,6 +692,7 @@ SwitchStatement::Write(FILE* to)
     fprintf(to, "}\n");
 }
 
+<<<<<<< HEAD
 Break::Break()
 {
 }
@@ -694,6 +707,8 @@ Break::Write(FILE* to)
     fprintf(to, "break;\n");
 }
 
+=======
+>>>>>>> upstream/master
 Method::Method()
     :ClassElement(),
      modifiers(0),
@@ -736,7 +751,11 @@ Method::Write(FILE* to)
         fprintf(to, "%s\n", this->comment.c_str());
     }
 
+<<<<<<< HEAD
     WriteModifiers(to, this->modifiers, SCOPE_MASK | STATIC | ABSTRACT | FINAL | OVERRIDE);
+=======
+    WriteModifiers(to, this->modifiers, SCOPE_MASK | STATIC | FINAL | OVERRIDE);
+>>>>>>> upstream/master
 
     if (this->returnType != NULL) {
         string dim;

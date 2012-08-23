@@ -239,7 +239,13 @@ public class VolumePreference extends SeekBarDialogPreference implements
             public void onChange(boolean selfChange) {
                 super.onChange(selfChange);
                 if (mSeekBar != null && mAudioManager != null) {
+<<<<<<< HEAD
                     int volume = mAudioManager.getStreamVolume(mStreamType);
+=======
+                    int volume = mAudioManager.isStreamMute(mStreamType) ?
+                            mAudioManager.getLastAudibleStreamVolume(mStreamType)
+                            : mAudioManager.getStreamVolume(mStreamType);
+>>>>>>> upstream/master
                     mSeekBar.setProgress(volume);
                 }
             }

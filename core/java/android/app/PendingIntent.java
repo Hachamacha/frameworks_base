@@ -188,6 +188,7 @@ public final class PendingIntent implements Parcelable {
      */
     public static PendingIntent getActivity(Context context, int requestCode,
             Intent intent, int flags) {
+<<<<<<< HEAD
         return getActivity(context, requestCode, intent, flags, null);
     }
 
@@ -217,6 +218,8 @@ public final class PendingIntent implements Parcelable {
      */
     public static PendingIntent getActivity(Context context, int requestCode,
             Intent intent, int flags, Bundle options) {
+=======
+>>>>>>> upstream/master
         String packageName = context.getPackageName();
         String resolvedType = intent != null ? intent.resolveTypeIfNeeded(
                 context.getContentResolver()) : null;
@@ -224,10 +227,16 @@ public final class PendingIntent implements Parcelable {
             intent.setAllowFds(false);
             IIntentSender target =
                 ActivityManagerNative.getDefault().getIntentSender(
+<<<<<<< HEAD
                     ActivityManager.INTENT_SENDER_ACTIVITY, packageName,
                     null, null, requestCode, new Intent[] { intent },
                     resolvedType != null ? new String[] { resolvedType } : null,
                     flags, options);
+=======
+                    IActivityManager.INTENT_SENDER_ACTIVITY, packageName,
+                    null, null, requestCode, new Intent[] { intent },
+                    resolvedType != null ? new String[] { resolvedType } : null, flags);
+>>>>>>> upstream/master
             return target != null ? new PendingIntent(target) : null;
         } catch (RemoteException e) {
         }
@@ -277,6 +286,7 @@ public final class PendingIntent implements Parcelable {
      */
     public static PendingIntent getActivities(Context context, int requestCode,
             Intent[] intents, int flags) {
+<<<<<<< HEAD
         return getActivities(context, requestCode, intents, flags, null);
     }
 
@@ -323,6 +333,8 @@ public final class PendingIntent implements Parcelable {
      */
     public static PendingIntent getActivities(Context context, int requestCode,
             Intent[] intents, int flags, Bundle options) {
+=======
+>>>>>>> upstream/master
         String packageName = context.getPackageName();
         String[] resolvedTypes = new String[intents.length];
         for (int i=0; i<intents.length; i++) {
@@ -332,8 +344,13 @@ public final class PendingIntent implements Parcelable {
         try {
             IIntentSender target =
                 ActivityManagerNative.getDefault().getIntentSender(
+<<<<<<< HEAD
                     ActivityManager.INTENT_SENDER_ACTIVITY, packageName,
                     null, null, requestCode, intents, resolvedTypes, flags, options);
+=======
+                    IActivityManager.INTENT_SENDER_ACTIVITY, packageName,
+                    null, null, requestCode, intents, resolvedTypes, flags);
+>>>>>>> upstream/master
             return target != null ? new PendingIntent(target) : null;
         } catch (RemoteException e) {
         }
@@ -368,10 +385,16 @@ public final class PendingIntent implements Parcelable {
             intent.setAllowFds(false);
             IIntentSender target =
                 ActivityManagerNative.getDefault().getIntentSender(
+<<<<<<< HEAD
                     ActivityManager.INTENT_SENDER_BROADCAST, packageName,
                     null, null, requestCode, new Intent[] { intent },
                     resolvedType != null ? new String[] { resolvedType } : null,
                     flags, null);
+=======
+                    IActivityManager.INTENT_SENDER_BROADCAST, packageName,
+                    null, null, requestCode, new Intent[] { intent },
+                    resolvedType != null ? new String[] { resolvedType } : null, flags);
+>>>>>>> upstream/master
             return target != null ? new PendingIntent(target) : null;
         } catch (RemoteException e) {
         }
@@ -407,10 +430,16 @@ public final class PendingIntent implements Parcelable {
             intent.setAllowFds(false);
             IIntentSender target =
                 ActivityManagerNative.getDefault().getIntentSender(
+<<<<<<< HEAD
                     ActivityManager.INTENT_SENDER_SERVICE, packageName,
                     null, null, requestCode, new Intent[] { intent },
                     resolvedType != null ? new String[] { resolvedType } : null,
                     flags, null);
+=======
+                    IActivityManager.INTENT_SENDER_SERVICE, packageName,
+                    null, null, requestCode, new Intent[] { intent },
+                    resolvedType != null ? new String[] { resolvedType } : null, flags);
+>>>>>>> upstream/master
             return target != null ? new PendingIntent(target) : null;
         } catch (RemoteException e) {
         }
@@ -429,7 +458,11 @@ public final class PendingIntent implements Parcelable {
 
     /**
      * Cancel a currently active PendingIntent.  Only the original application
+<<<<<<< HEAD
      * owning a PendingIntent can cancel it.
+=======
+     * owning an PendingIntent can cancel it.
+>>>>>>> upstream/master
      */
     public void cancel() {
         try {
@@ -631,6 +664,7 @@ public final class PendingIntent implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * @hide
      * Check whether this PendingIntent will launch an Activity.
      */
@@ -645,6 +679,8 @@ public final class PendingIntent implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Comparison operator on two PendingIntent objects, such that true
      * is returned then they both represent the same operation from the
      * same package.  This allows you to use {@link #getActivity},

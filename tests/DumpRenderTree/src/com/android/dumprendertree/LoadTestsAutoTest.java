@@ -19,7 +19,10 @@ package com.android.dumprendertree;
 import com.android.dumprendertree.forwarder.AdbUtils;
 import com.android.dumprendertree.forwarder.ForwardServer;
 
+<<<<<<< HEAD
 import android.app.Activity;
+=======
+>>>>>>> upstream/master
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
@@ -107,7 +110,12 @@ public class LoadTestsAutoTest extends ActivityInstrumentationTestCase2<TestShel
         freeMem();
 
         // Run tests
+<<<<<<< HEAD
         runTestAndWaitUntilDone(activity, runner.mTestPath, runner.mTimeoutInMillis);
+=======
+        runTestAndWaitUntilDone(activity, runner.mTestPath, runner.mTimeoutInMillis,
+                runner.mGetDrawTime, runner.mSaveImagePath);
+>>>>>>> upstream/master
 
         getInstrumentation().runOnMainSync(new Runnable() {
 
@@ -215,9 +223,15 @@ public class LoadTestsAutoTest extends ActivityInstrumentationTestCase2<TestShel
     }
 
     // A convenient method to be called by another activity.
+<<<<<<< HEAD
     private void runTestAndWaitUntilDone(TestShellActivity activity, String url, int timeout) {
         activity.setCallback(new TestShellCallback() {
             @Override
+=======
+    private void runTestAndWaitUntilDone(TestShellActivity activity, String url, int timeout,
+            boolean getDrawTime, String saveImagePath) {
+        activity.setCallback(new TestShellCallback() {
+>>>>>>> upstream/master
             public void finished() {
                 synchronized (LoadTestsAutoTest.this) {
                     mFinished = true;
@@ -225,6 +239,7 @@ public class LoadTestsAutoTest extends ActivityInstrumentationTestCase2<TestShel
                 }
             }
 
+<<<<<<< HEAD
             @Override
             public void timedOut(String url) {
             }
@@ -248,6 +263,10 @@ public class LoadTestsAutoTest extends ActivityInstrumentationTestCase2<TestShel
                     }
                 }
             }
+=======
+            public void timedOut(String url) {
+            }
+>>>>>>> upstream/master
         });
 
         mFinished = false;
@@ -257,6 +276,12 @@ public class LoadTestsAutoTest extends ActivityInstrumentationTestCase2<TestShel
         intent.putExtra(TestShellActivity.TEST_URL, url);
         intent.putExtra(TestShellActivity.TIMEOUT_IN_MILLIS, timeout);
         intent.putExtra(TestShellActivity.RESULT_FILE, LOAD_TEST_RESULT);
+<<<<<<< HEAD
+=======
+        intent.putExtra(TestShellActivity.GET_DRAW_TIME, getDrawTime);
+        if (saveImagePath != null)
+            intent.putExtra(TestShellActivity.SAVE_IMAGE, saveImagePath);
+>>>>>>> upstream/master
         activity.startActivity(intent);
 
         // Wait until done.

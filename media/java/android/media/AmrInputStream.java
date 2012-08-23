@@ -44,7 +44,11 @@ public final class AmrInputStream extends InputStream
     private int mGae;
     
     // result amr stream
+<<<<<<< HEAD
     private final byte[] mBuf = new byte[SAMPLES_PER_FRAME * 2];
+=======
+    private byte[] mBuf = new byte[SAMPLES_PER_FRAME * 2];
+>>>>>>> upstream/master
     private int mBufIn = 0;
     private int mBufOut = 0;
     

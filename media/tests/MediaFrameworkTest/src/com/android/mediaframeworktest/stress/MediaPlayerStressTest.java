@@ -43,6 +43,7 @@ import android.test.InstrumentationTestCase;
 /**
  * Junit / Instrumentation test case for the media player
  */
+<<<<<<< HEAD
 public class MediaPlayerStressTest extends ActivityInstrumentationTestCase2<MediaFrameworkTest> {
     private String TAG = "MediaPlayerStressTest";
 
@@ -55,6 +56,15 @@ public class MediaPlayerStressTest extends ActivityInstrumentationTestCase2<Medi
         //the workaround for the race condition of requesting the updated surface.
         Thread.sleep(2000);
         getActivity();
+=======
+public class MediaPlayerStressTest extends InstrumentationTestCase {
+    private String TAG = "MediaPlayerStressTest";
+
+    public MediaPlayerStressTest() {
+    }
+
+    protected void setUp() throws Exception {
+>>>>>>> upstream/master
         super.setUp();
     }
 

@@ -30,8 +30,11 @@ import android.view.ContextMenu;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.ExpandableListConnector.PositionMetadata;
 
 import java.util.ArrayList;
@@ -326,6 +329,10 @@ public class ExpandableListView extends ListView {
                     indicator.draw(canvas);
                 }
             }
+<<<<<<< HEAD
+=======
+            
+>>>>>>> upstream/master
             pos.recycle();
         }
 
@@ -612,10 +619,15 @@ public class ExpandableListView extends ListView {
      *         was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPos, boolean animate) {
+<<<<<<< HEAD
         ExpandableListPosition elGroupPos = ExpandableListPosition.obtain(
                 ExpandableListPosition.GROUP, groupPos, -1, -1);
         PositionMetadata pm = mConnector.getFlattenedPos(elGroupPos);
         elGroupPos.recycle();
+=======
+        PositionMetadata pm = mConnector.getFlattenedPos(ExpandableListPosition.obtain(
+                ExpandableListPosition.GROUP, groupPos, -1, -1));
+>>>>>>> upstream/master
         boolean retValue = mConnector.expandGroup(pm);
 
         if (mOnGroupExpandListener != null) {
@@ -741,7 +753,11 @@ public class ExpandableListView extends ListView {
     
     /**
      * Converts a flat list position (the raw position of an item (child or group)
+<<<<<<< HEAD
      * in the list) to a group and/or child position (represented in a
+=======
+     * in the list) to an group and/or child position (represented in a
+>>>>>>> upstream/master
      * packed position). This is useful in situations where the caller needs to
      * use the underlying {@link ListView}'s methods. Use
      * {@link ExpandableListView#getPackedPositionType} ,
@@ -777,10 +793,15 @@ public class ExpandableListView extends ListView {
      * @return The flat list position for the given child or group.
      */
     public int getFlatListPosition(long packedPosition) {
+<<<<<<< HEAD
         ExpandableListPosition elPackedPos = ExpandableListPosition
                 .obtainPosition(packedPosition);
         PositionMetadata pm = mConnector.getFlattenedPos(elPackedPos);
         elPackedPos.recycle();
+=======
+        PositionMetadata pm = mConnector.getFlattenedPos(ExpandableListPosition
+                .obtainPosition(packedPosition));
+>>>>>>> upstream/master
         final int flatListPosition = pm.position.flatListPos;
         pm.recycle();
         return getAbsoluteFlatPosition(flatListPosition);
@@ -991,11 +1012,19 @@ public class ExpandableListView extends ListView {
         final int adjustedPosition = getFlatPositionForConnector(flatListPosition);
         PositionMetadata pm = mConnector.getUnflattenedPos(adjustedPosition);
         ExpandableListPosition pos = pm.position;
+<<<<<<< HEAD
         
         id = getChildOrGroupId(pos);
         long packedPosition = pos.getPackedPosition();
 
         pm.recycle();
+=======
+        pm.recycle();
+        
+        id = getChildOrGroupId(pos);
+        long packedPosition = pos.getPackedPosition();
+        pos.recycle();
+>>>>>>> upstream/master
         
         return new ExpandableListContextMenuInfo(view, packedPosition, id);
     }
@@ -1172,6 +1201,7 @@ public class ExpandableListView extends ListView {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -1183,4 +1213,6 @@ public class ExpandableListView extends ListView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ExpandableListView.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

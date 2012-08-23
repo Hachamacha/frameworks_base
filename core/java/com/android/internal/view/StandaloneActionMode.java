@@ -72,6 +72,7 @@ public class StandaloneActionMode extends ActionMode implements MenuBuilder.Call
     }
 
     @Override
+<<<<<<< HEAD
     public void setTitleOptionalHint(boolean titleOptional) {
         super.setTitleOptionalHint(titleOptional);
         mContextView.setTitleOptional(titleOptional);
@@ -83,6 +84,8 @@ public class StandaloneActionMode extends ActionMode implements MenuBuilder.Call
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public void setCustomView(View view) {
         mContextView.setCustomView(view);
         mCustomView = view != null ? new WeakReference<View>(view) : null;

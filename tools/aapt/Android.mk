@@ -38,7 +38,10 @@ LOCAL_C_INCLUDES += build/libs/host/include
 #LOCAL_WHOLE_STATIC_LIBRARIES := 
 LOCAL_STATIC_LIBRARIES := \
 	libhost \
+<<<<<<< HEAD
 	libandroidfw \
+=======
+>>>>>>> upstream/master
 	libutils \
 	libcutils \
 	libexpat \

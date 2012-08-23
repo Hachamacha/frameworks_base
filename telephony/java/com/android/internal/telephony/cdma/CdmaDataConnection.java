@@ -25,9 +25,12 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.RetryManager;
 
+<<<<<<< HEAD
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
+=======
+>>>>>>> upstream/master
 /**
  * {@hide}
  */
@@ -89,7 +92,11 @@ public class CdmaDataConnection extends DataConnection {
         Message msg = obtainMessage(EVENT_SETUP_DATA_CONNECTION_DONE, cp);
         msg.obj = cp;
         phone.mCM.setupDataCall(
+<<<<<<< HEAD
                 Integer.toString(getRilRadioTechnology(RILConstants.SETUP_DATA_TECH_CDMA)),
+=======
+                Integer.toString(getRadioTechnology(RILConstants.SETUP_DATA_TECH_CDMA)),
+>>>>>>> upstream/master
                 Integer.toString(dataProfile),
                 null, null, null,
                 Integer.toString(RILConstants.SETUP_DATA_AUTH_PAP_CHAP),
@@ -117,10 +124,13 @@ public class CdmaDataConnection extends DataConnection {
     protected void log(String s) {
         Log.d(LOG_TAG, "[" + getName() + "] " + s);
     }
+<<<<<<< HEAD
 
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("CdmaDataConnection extends:");
         super.dump(fd, pw, args);
     }
+=======
+>>>>>>> upstream/master
 }

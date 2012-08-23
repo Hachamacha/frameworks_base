@@ -137,12 +137,16 @@ public final class NdefFormatable extends BasicTagTechnology {
                     throw new IOException();
             }
             // Now check and see if the format worked
+<<<<<<< HEAD
             if (!tagService.isNdef(serviceHandle)) {
                 throw new IOException();
             }
 
             // Write a message, if one was provided
             if (firstMessage != null) {
+=======
+            if (tagService.isNdef(serviceHandle)) {
+>>>>>>> upstream/master
                 errorCode = tagService.ndefWrite(serviceHandle, firstMessage);
                 switch (errorCode) {
                     case ErrorCodes.SUCCESS:
@@ -155,8 +159,14 @@ public final class NdefFormatable extends BasicTagTechnology {
                         // Should not happen
                         throw new IOException();
                 }
+<<<<<<< HEAD
             }
 
+=======
+            } else {
+                throw new IOException();
+            }
+>>>>>>> upstream/master
             // optionally make read-only
             if (makeReadOnly) {
                 errorCode = tagService.ndefMakeReadOnly(serviceHandle);

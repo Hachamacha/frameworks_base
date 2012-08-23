@@ -22,7 +22,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android.internal.statusbar.StatusBarNotification;
+<<<<<<< HEAD
 import com.android.systemui.R;
+=======
+>>>>>>> upstream/master
 
 import java.util.Comparator;
 import java.util.ArrayList;
@@ -39,13 +42,17 @@ public class NotificationData {
         public View content; // takes the click events and sends the PendingIntent
         public View expanded; // the inflated RemoteViews
         public ImageView largeIcon;
+<<<<<<< HEAD
         protected View expandedLarge;
+=======
+>>>>>>> upstream/master
         public Entry() {}
         public Entry(IBinder key, StatusBarNotification n, StatusBarIconView ic) {
             this.key = key;
             this.notification = n;
             this.icon = ic;
         }
+<<<<<<< HEAD
         public void setLargeView(View expandedLarge) {
             this.expandedLarge = expandedLarge;
             writeBooleanTag(row, R.id.expandable_tag, expandedLarge != null);
@@ -81,6 +88,17 @@ public class NotificationData {
             int d = na.score - nb.score;
             return (d != 0)
                 ? d
+=======
+    }
+    private final ArrayList<Entry> mEntries = new ArrayList<Entry>();
+    private final Comparator<Entry> mEntryCmp = new Comparator<Entry>() {
+        public int compare(Entry a, Entry b) {
+            final StatusBarNotification na = a.notification;
+            final StatusBarNotification nb = b.notification;
+            int priDiff = na.priority - nb.priority;
+            return (priDiff != 0)
+                ? priDiff
+>>>>>>> upstream/master
                 : (int)(na.notification.when - nb.notification.when);
         }
     };
@@ -136,7 +154,11 @@ public class NotificationData {
     }
 
     public void clear() {
+<<<<<<< HEAD
         mEntries.clear();
+=======
+	mEntries.clear();
+>>>>>>> upstream/master
     }
 
     /**
@@ -164,6 +186,7 @@ public class NotificationData {
         }
         return false;
     }
+<<<<<<< HEAD
 
     protected static boolean readBooleanTag(View view, int id)  {
         if (view != null) {
@@ -201,4 +224,6 @@ public class NotificationData {
     public static boolean setUserExpanded(View row, boolean userExpanded) {
         return writeBooleanTag(row, R.id.user_expanded_tag, userExpanded);
     }
+=======
+>>>>>>> upstream/master
 }

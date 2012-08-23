@@ -33,11 +33,19 @@ extern int parse(JNIEnv *env, jstring jAddress, int port, sockaddr_storage *ss);
 
 namespace {
 
+<<<<<<< HEAD
 jfieldID gSocket;
 
 jint create(JNIEnv *env, jobject thiz, jstring jAddress)
 {
     env->SetIntField(thiz, gSocket, -1);
+=======
+jfieldID gNative;
+
+jint create(JNIEnv *env, jobject thiz, jstring jAddress)
+{
+    env->SetIntField(thiz, gNative, -1);
+>>>>>>> upstream/master
 
     sockaddr_storage ss;
     if (parse(env, jAddress, 0, &ss) < 0) {
@@ -58,7 +66,11 @@ jint create(JNIEnv *env, jobject thiz, jstring jAddress)
         &((sockaddr_in *)&ss)->sin_port : &((sockaddr_in6 *)&ss)->sin6_port;
     uint16_t port = ntohs(*p);
     if ((port & 1) == 0) {
+<<<<<<< HEAD
         env->SetIntField(thiz, gSocket, socket);
+=======
+        env->SetIntField(thiz, gNative, socket);
+>>>>>>> upstream/master
         return port;
     }
     ::close(socket);
@@ -75,7 +87,11 @@ jint create(JNIEnv *env, jobject thiz, jstring jAddress)
             *p = htons(port);
 
             if (bind(socket, (sockaddr *)&ss, sizeof(ss)) == 0) {
+<<<<<<< HEAD
                 env->SetIntField(thiz, gSocket, socket);
+=======
+                env->SetIntField(thiz, gNative, socket);
+>>>>>>> upstream/master
                 return port;
             }
         }
@@ -86,15 +102,36 @@ jint create(JNIEnv *env, jobject thiz, jstring jAddress)
     return -1;
 }
 
+<<<<<<< HEAD
 void close(JNIEnv *env, jobject thiz)
 {
     int socket = env->GetIntField(thiz, gSocket);
     ::close(socket);
     env->SetIntField(thiz, gSocket, -1);
+=======
+jint dup(JNIEnv *env, jobject thiz)
+{
+    int socket = ::dup(env->GetIntField(thiz, gNative));
+    if (socket == -1) {
+        jniThrowException(env, "java/lang/IllegalStateException", strerror(errno));
+    }
+    return socket;
+}
+
+void close(JNIEnv *env, jobject thiz)
+{
+    int socket = env->GetIntField(thiz, gNative);
+    ::close(socket);
+    env->SetIntField(thiz, gNative, -1);
+>>>>>>> upstream/master
 }
 
 JNINativeMethod gMethods[] = {
     {"create", "(Ljava/lang/String;)I", (void *)create},
+<<<<<<< HEAD
+=======
+    {"dup", "()I", (void *)dup},
+>>>>>>> upstream/master
     {"close", "()V", (void *)close},
 };
 
@@ -104,9 +141,15 @@ int registerRtpStream(JNIEnv *env)
 {
     jclass clazz;
     if ((clazz = env->FindClass("android/net/rtp/RtpStream")) == NULL ||
+<<<<<<< HEAD
         (gSocket = env->GetFieldID(clazz, "mSocket", "I")) == NULL ||
         env->RegisterNatives(clazz, gMethods, NELEM(gMethods)) < 0) {
         ALOGE("JNI registration failed");
+=======
+        (gNative = env->GetFieldID(clazz, "mNative", "I")) == NULL ||
+        env->RegisterNatives(clazz, gMethods, NELEM(gMethods)) < 0) {
+        LOGE("JNI registration failed");
+>>>>>>> upstream/master
         return -1;
     }
     return 0;

@@ -22,7 +22,10 @@ import android.os.Message;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellLocation;
+<<<<<<< HEAD
 import android.telephony.CellInfo;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 
 import com.android.internal.telephony.IPhoneStateListener;
@@ -157,6 +160,7 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_OTASP_CHANGED                            = 0x00000200;
 
+<<<<<<< HEAD
     /**
      * Listen for changes to observed cell info.
      *
@@ -165,6 +169,8 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_CELL_INFO = 0x00000400;
 
+=======
+>>>>>>> upstream/master
     public PhoneStateListener() {
     }
 
@@ -285,6 +291,7 @@ public class PhoneStateListener {
     }
 
     /**
+<<<<<<< HEAD
      * Callback invoked when a observed cell info gets changed.
      *
      * A notification should be sent when:
@@ -299,6 +306,8 @@ public class PhoneStateListener {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * The callback methods need to be called on the handler thread where
      * this object was created.  If the binder did that for us it'd be nice.
      */
@@ -346,10 +355,13 @@ public class PhoneStateListener {
         public void onOtaspChanged(int otaspMode) {
             Message.obtain(mHandler, LISTEN_OTASP_CHANGED, otaspMode, 0).sendToTarget();
         }
+<<<<<<< HEAD
 
         public void onCellInfoChanged(CellInfo cellInfo) {
             Message.obtain(mHandler, LISTEN_CELL_INFO, 0, 0).sendToTarget();
         }
+=======
+>>>>>>> upstream/master
     };
 
     Handler mHandler = new Handler() {
@@ -387,8 +399,11 @@ public class PhoneStateListener {
                 case LISTEN_OTASP_CHANGED:
                     PhoneStateListener.this.onOtaspChanged(msg.arg1);
                     break;
+<<<<<<< HEAD
                 case LISTEN_CELL_INFO:
                     PhoneStateListener.this.onCellInfoChanged((CellInfo)msg.obj);
+=======
+>>>>>>> upstream/master
             }
         }
     };

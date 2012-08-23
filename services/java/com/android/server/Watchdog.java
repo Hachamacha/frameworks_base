@@ -67,12 +67,15 @@ public class Watchdog extends Thread {
 
     static final String REBOOT_ACTION = "com.android.service.Watchdog.REBOOT";
 
+<<<<<<< HEAD
     static final String[] NATIVE_STACKS_OF_INTEREST = new String[] {
         "/system/bin/mediaserver",
         "/system/bin/sdcard",
         "/system/bin/surfaceflinger"
     };
 
+=======
+>>>>>>> upstream/master
     static Watchdog sWatchdog;
 
     /* This handler will be used to post message back onto the main thread */
@@ -420,8 +423,12 @@ public class Watchdog extends Thread {
                     // trace and wait another half.
                     ArrayList<Integer> pids = new ArrayList<Integer>();
                     pids.add(Process.myPid());
+<<<<<<< HEAD
                     ActivityManagerService.dumpStackTraces(true, pids, null, null,
                             NATIVE_STACKS_OF_INTEREST);
+=======
+                    ActivityManagerService.dumpStackTraces(true, pids, null, null);
+>>>>>>> upstream/master
                     waitedHalf = true;
                     continue;
                 }
@@ -441,7 +448,11 @@ public class Watchdog extends Thread {
             // Pass !waitedHalf so that just in case we somehow wind up here without having
             // dumped the halfway stacks, we properly re-initialize the trace file.
             final File stack = ActivityManagerService.dumpStackTraces(
+<<<<<<< HEAD
                     !waitedHalf, pids, null, null, NATIVE_STACKS_OF_INTEREST);
+=======
+                    !waitedHalf, pids, null, null);
+>>>>>>> upstream/master
 
             // Give some extra time to make sure the stack traces get written.
             // The system's been hanging for a minute, another second or two won't hurt much.

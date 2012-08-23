@@ -405,6 +405,7 @@ public final class BluetoothAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Get a {@link BluetoothDevice} object for the given Bluetooth hardware
      * address.
      * <p>Valid Bluetooth hardware addresses must be 6 bytes. This method
@@ -424,6 +425,8 @@ public final class BluetoothAdapter {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Return true if Bluetooth is currently enabled and ready for use.
      * <p>Equivalent to:
      * <code>getBluetoothState() == STATE_ON</code>
@@ -1232,6 +1235,7 @@ public final class BluetoothAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Enable the Bluetooth Adapter, but don't auto-connect devices
      * and don't persist state. Only for use by system applications.
      * @hide
@@ -1244,6 +1248,8 @@ public final class BluetoothAdapter {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Enable control of the Bluetooth Adapter for a single application.
      *
      * <p>Some applications need to use Bluetooth for short periods of time to
@@ -1318,7 +1324,11 @@ public final class BluetoothAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Validate a String Bluetooth address, such as "00:43:A8:23:10:F0"
+=======
+     * Validate a Bluetooth address, such as "00:43:A8:23:10:F0"
+>>>>>>> upstream/master
      * <p>Alphabetic characters must be uppercase to be valid.
      *
      * @param address Bluetooth address as string

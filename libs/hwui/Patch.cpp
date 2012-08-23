@@ -197,8 +197,12 @@ void Patch::updateVertices(const float bitmapWidth, const float bitmapHeight,
     }
 
     if (verticesCount > 0) {
+<<<<<<< HEAD
         Caches& caches = Caches::getInstance();
         caches.bindMeshBuffer(meshBuffer);
+=======
+        Caches::getInstance().bindMeshBuffer(meshBuffer);
+>>>>>>> upstream/master
         if (!mUploaded) {
             glBufferData(GL_ARRAY_BUFFER, sizeof(TextureVertex) * verticesCount,
                     mVertices, GL_DYNAMIC_DRAW);
@@ -207,7 +211,10 @@ void Patch::updateVertices(const float bitmapWidth, const float bitmapHeight,
             glBufferSubData(GL_ARRAY_BUFFER, 0,
                     sizeof(TextureVertex) * verticesCount, mVertices);
         }
+<<<<<<< HEAD
         caches.resetVertexPointers();
+=======
+>>>>>>> upstream/master
     }
 
     PATCH_LOGD("    patch: new vertices count = %d", verticesCount);

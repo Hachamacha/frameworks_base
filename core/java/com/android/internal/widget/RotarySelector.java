@@ -74,9 +74,12 @@ public class RotarySelector extends View {
     // current offset of rotary widget along the x axis
     private int mRotaryOffsetX = 0;
 
+<<<<<<< HEAD
     // controls to hide the arrows
     private boolean mHideArrows = false;
 
+=======
+>>>>>>> upstream/master
     // state of the animation used to bring the handle back to its start position when
     // the user lets go before triggering an action
     private boolean mAnimating = false;
@@ -312,6 +315,7 @@ public class RotarySelector extends View {
         canvas.drawBitmap(mBackground, mBgMatrix, mPaint);
 
         // Draw the correct arrow(s) depending on the current state:
+<<<<<<< HEAD
         if (!mHideArrows) {
             mArrowMatrix.reset();
             switch (mGrabbedState) {
@@ -338,6 +342,32 @@ public class RotarySelector extends View {
                 default:
                     throw new IllegalStateException("invalid mGrabbedState: " + mGrabbedState);
             }
+=======
+        mArrowMatrix.reset();
+        switch (mGrabbedState) {
+            case NOTHING_GRABBED:
+                //mArrowShortLeftAndRight;
+                break;
+            case LEFT_HANDLE_GRABBED:
+                mArrowMatrix.setTranslate(0, 0);
+                if (!isHoriz()) {
+                    mArrowMatrix.preRotate(-90, 0, 0);
+                    mArrowMatrix.postTranslate(0, height);
+                }
+                canvas.drawBitmap(mArrowLongLeft, mArrowMatrix, mPaint);
+                break;
+            case RIGHT_HANDLE_GRABBED:
+                mArrowMatrix.setTranslate(0, 0);
+                if (!isHoriz()) {
+                    mArrowMatrix.preRotate(-90, 0, 0);
+                    // since bg width is > height of screen in landscape mode...
+                    mArrowMatrix.postTranslate(0, height + (mBackgroundWidth - height));
+                }
+                canvas.drawBitmap(mArrowLongRight, mArrowMatrix, mPaint);
+                break;
+            default:
+                throw new IllegalStateException("invalid mGrabbedState: " + mGrabbedState);
+>>>>>>> upstream/master
         }
 
         final int bgHeight = mBackgroundHeight;
@@ -660,7 +690,11 @@ public class RotarySelector extends View {
         invalidate();
     }
 
+<<<<<<< HEAD
     public void reset() {
+=======
+    private void reset() {
+>>>>>>> upstream/master
         mAnimating = false;
         mRotaryOffsetX = 0;
         mDimplesOfFling = 0;
@@ -762,10 +796,13 @@ public class RotarySelector extends View {
         void onGrabbedStateChange(View v, int grabbedState);
     }
 
+<<<<<<< HEAD
     // Use this to set arrows hidden or not
     public void hideArrows(boolean changeMe) {
         mHideArrows = changeMe;
     }
+=======
+>>>>>>> upstream/master
 
     // Debugging / testing code
 

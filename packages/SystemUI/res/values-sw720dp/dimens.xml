@@ -21,6 +21,7 @@
 
     <!-- opacity at which Notification icons will be drawn in the status bar -->
     <item type="dimen" name="status_bar_icon_drawing_alpha">100%</item>
+<<<<<<< HEAD
 
     <!-- The width of the view containing non-menu status bar icons -->
     <dimen name="navigation_key_width">80dip</dimen>
@@ -81,5 +82,7 @@
     <!-- Where to place the app icon over the thumbnail -->
     <dimen name="status_bar_recents_app_icon_left_margin">0dp</dimen>
     <dimen name="status_bar_recents_app_icon_top_margin">8dp</dimen>
+=======
+>>>>>>> upstream/master
 </resources>
 

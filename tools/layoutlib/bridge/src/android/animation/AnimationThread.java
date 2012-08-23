@@ -23,10 +23,18 @@ import com.android.ide.common.rendering.api.Result.Status;
 import com.android.layoutlib.bridge.Bridge;
 import com.android.layoutlib.bridge.impl.RenderSessionImpl;
 
+<<<<<<< HEAD
 import android.os.Handler;
 import android.os.Handler_Delegate;
 import android.os.Handler_Delegate.IHandlerCallback;
 import android.os.Message;
+=======
+import android.animation.ValueAnimator;
+import android.os.Handler;
+import android.os.Handler_Delegate;
+import android.os.Message;
+import android.os.Handler_Delegate.IHandlerCallback;
+>>>>>>> upstream/master
 
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -56,7 +64,10 @@ public abstract class AnimationThread extends Thread {
             mUptimeMillis = uptimeMillis;
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public int compareTo(MessageBundle bundle) {
             if (mUptimeMillis < bundle.mUptimeMillis) {
                 return -1;
@@ -84,12 +95,16 @@ public abstract class AnimationThread extends Thread {
     public void run() {
         Bridge.prepareThread();
         try {
+<<<<<<< HEAD
             /* FIXME: The ANIMATION_FRAME message no longer exists.  Instead, the
              * animation timing loop is completely based on a Choreographer objects
              * that schedules animation and drawing frames.  The animation handler is
              * no longer even a handler; it is just a Runnable enqueued on the Choreographer.
             Handler_Delegate.setCallback(new IHandlerCallback() {
                 @Override
+=======
+            Handler_Delegate.setCallback(new IHandlerCallback() {
+>>>>>>> upstream/master
                 public void sendMessageAtTime(Handler handler, Message msg, long uptimeMillis) {
                     if (msg.what == ValueAnimator.ANIMATION_START ||
                             msg.what == ValueAnimator.ANIMATION_FRAME) {
@@ -99,7 +114,10 @@ public abstract class AnimationThread extends Thread {
                     }
                 }
             });
+<<<<<<< HEAD
             */
+=======
+>>>>>>> upstream/master
 
             // call out to the pre-animation work, which should start an animation or more.
             Result result = preAnimation();

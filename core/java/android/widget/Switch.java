@@ -29,15 +29,21 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+<<<<<<< HEAD
 import android.text.method.AllCapsTransformationMethod;
 import android.text.method.TransformationMethod2;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import com.android.internal.R;
 
@@ -93,7 +99,10 @@ public class Switch extends CompoundButton {
     private ColorStateList mTextColors;
     private Layout mOnLayout;
     private Layout mOffLayout;
+<<<<<<< HEAD
     private TransformationMethod2 mSwitchTransformationMethod;
+=======
+>>>>>>> upstream/master
 
     @SuppressWarnings("hiding")
     private final Rect mTempRect = new Rect();
@@ -172,8 +181,11 @@ public class Switch extends CompoundButton {
     /**
      * Sets the switch text color, size, style, hint color, and highlight color
      * from the specified TextAppearance resource.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#Switch_switchTextAppearance
+=======
+>>>>>>> upstream/master
      */
     public void setSwitchTextAppearance(Context context, int resid) {
         TypedArray appearance =
@@ -210,6 +222,7 @@ public class Switch extends CompoundButton {
 
         setSwitchTypefaceByIndex(typefaceIndex, styleIndex);
 
+<<<<<<< HEAD
         boolean allCaps = appearance.getBoolean(com.android.internal.R.styleable.
                 TextAppearance_textAllCaps, false);
         if (allCaps) {
@@ -219,6 +232,8 @@ public class Switch extends CompoundButton {
             mSwitchTransformationMethod = null;
         }
 
+=======
+>>>>>>> upstream/master
         appearance.recycle();
     }
 
@@ -288,6 +303,7 @@ public class Switch extends CompoundButton {
     }
 
     /**
+<<<<<<< HEAD
      * Set the amount of horizontal padding between the switch and the associated text.
      *
      * @param pixels Amount of padding in pixels
@@ -433,6 +449,9 @@ public class Switch extends CompoundButton {
      * Returns the text displayed when the button is in the checked state.
      *
      * @attr ref android.R.styleable#Switch_textOn
+=======
+     * Returns the text displayed when the button is in the checked state.
+>>>>>>> upstream/master
      */
     public CharSequence getTextOn() {
         return mTextOn;
@@ -440,8 +459,11 @@ public class Switch extends CompoundButton {
 
     /**
      * Sets the text displayed when the button is in the checked state.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#Switch_textOn
+=======
+>>>>>>> upstream/master
      */
     public void setTextOn(CharSequence textOn) {
         mTextOn = textOn;
@@ -450,8 +472,11 @@ public class Switch extends CompoundButton {
 
     /**
      * Returns the text displayed when the button is not in the checked state.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#Switch_textOff
+=======
+>>>>>>> upstream/master
      */
     public CharSequence getTextOff() {
         return mTextOff;
@@ -459,8 +484,11 @@ public class Switch extends CompoundButton {
 
     /**
      * Sets the text displayed when the button is not in the checked state.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#Switch_textOff
+=======
+>>>>>>> upstream/master
      */
     public void setTextOff(CharSequence textOff) {
         mTextOff = textOff;
@@ -531,19 +559,38 @@ public class Switch extends CompoundButton {
     @Override
     public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
         super.onPopulateAccessibilityEvent(event);
+<<<<<<< HEAD
         CharSequence text = isChecked() ? mOnLayout.getText() : mOffLayout.getText();
         if (!TextUtils.isEmpty(text)) {
+=======
+        if (isChecked()) {
+            CharSequence text = mOnLayout.getText();
+            if (TextUtils.isEmpty(text)) {
+                text = mContext.getString(R.string.switch_on);
+            }
+            event.getText().add(text);
+        } else {
+            CharSequence text = mOffLayout.getText();
+            if (TextUtils.isEmpty(text)) {
+                text = mContext.getString(R.string.switch_off);
+            }
+>>>>>>> upstream/master
             event.getText().add(text);
         }
     }
 
     private Layout makeLayout(CharSequence text) {
+<<<<<<< HEAD
         final CharSequence transformed = (mSwitchTransformationMethod != null)
                     ? mSwitchTransformationMethod.getTransformation(text, this)
                     : text;
 
         return new StaticLayout(transformed, mTextPaint,
                 (int) Math.ceil(Layout.getDesiredWidth(transformed, mTextPaint)),
+=======
+        return new StaticLayout(text, mTextPaint,
+                (int) Math.ceil(Layout.getDesiredWidth(text, mTextPaint)),
+>>>>>>> upstream/master
                 Layout.Alignment.ALIGN_NORMAL, 1.f, 0, true);
     }
 
@@ -811,6 +858,7 @@ public class Switch extends CompoundButton {
         mThumbDrawable.jumpToCurrentState();
         mTrackDrawable.jumpToCurrentState();
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -834,4 +882,6 @@ public class Switch extends CompoundButton {
             }
         }
     }
+=======
+>>>>>>> upstream/master
 }

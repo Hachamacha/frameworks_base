@@ -155,6 +155,7 @@ public class KeyStore {
         return mError == KEY_NOT_FOUND;
     }
 
+<<<<<<< HEAD
     private boolean generate(byte[] key) {
         execute('a', key);
         return mError == NO_ERROR;
@@ -227,6 +228,8 @@ public class KeyStore {
         return ungrant(getBytes(key), Integer.toString(uid).getBytes());
     }
 
+=======
+>>>>>>> upstream/master
     public int getLastError() {
         return mError;
     }

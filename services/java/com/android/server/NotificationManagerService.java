@@ -16,15 +16,23 @@
 
 package com.android.server;
 
+<<<<<<< HEAD
 import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
 import static org.xmlpull.v1.XmlPullParser.END_TAG;
 import static org.xmlpull.v1.XmlPullParser.START_TAG;
+=======
+import com.android.internal.statusbar.StatusBarNotification;
+>>>>>>> upstream/master
 
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.app.INotificationManager;
 import android.app.ITransientNotification;
 import android.app.Notification;
+<<<<<<< HEAD
+=======
+import android.app.NotificationManager;
+>>>>>>> upstream/master
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
@@ -38,17 +46,26 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.media.AudioManager;
+<<<<<<< HEAD
 import android.media.IAudioService;
 import android.media.IRingtonePlayer;
 import android.net.Uri;
 import android.os.Binder;
+=======
+import android.net.Uri;
+import android.os.Binder;
+import android.os.Bundle;
+>>>>>>> upstream/master
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+<<<<<<< HEAD
 import android.os.ServiceManager;
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -56,11 +73,15 @@ import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
+<<<<<<< HEAD
 import android.util.Xml;
+=======
+>>>>>>> upstream/master
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.android.internal.os.AtomicFile;
 import com.android.internal.statusbar.StatusBarNotification;
 import com.android.internal.util.FastXmlSerializer;
@@ -78,14 +99,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+=======
+import com.android.internal.app.ThemeUtils;
+
+import java.io.FileDescriptor;
+>>>>>>> upstream/master
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+<<<<<<< HEAD
 import java.util.HashSet;
 
 import libcore.io.IoUtils;
 
+=======
+>>>>>>> upstream/master
 
 /** {@hide} */
 public class NotificationManagerService extends INotificationManager.Stub
@@ -104,6 +133,7 @@ public class NotificationManagerService extends INotificationManager.Stub
     private static final long[] DEFAULT_VIBRATE_PATTERN = {0, 250, 250, 250};
 
     private static final int DEFAULT_STREAM_TYPE = AudioManager.STREAM_NOTIFICATION;
+<<<<<<< HEAD
     private static final boolean SCORE_ONGOING_HIGHER = false;
 
     private static final int JUNK_SCORE = -1000;
@@ -112,6 +142,8 @@ public class NotificationManagerService extends INotificationManager.Stub
 
     private static final boolean ENABLE_BLOCKED_NOTIFICATIONS = true;
     private static final boolean ENABLE_BLOCKED_TOASTS = true;
+=======
+>>>>>>> upstream/master
 
     final Context mContext;
     Context mUiContext;
@@ -127,6 +159,7 @@ public class NotificationManagerService extends INotificationManager.Stub
     private int mDefaultNotificationLedOn;
     private int mDefaultNotificationLedOff;
 
+<<<<<<< HEAD
     private boolean mSystemReady;
     private int mDisabledNotifications;
 
@@ -135,6 +168,15 @@ public class NotificationManagerService extends INotificationManager.Stub
 
     private IAudioService mAudioService;
     private Vibrator mVibrator;
+=======
+    private NotificationRecord mSoundNotification;
+    private NotificationPlayer mSound;
+    private boolean mSystemReady;
+    private int mDisabledNotifications;
+
+    private NotificationRecord mVibrateNotification;
+    private Vibrator mVibrator = new Vibrator();
+>>>>>>> upstream/master
 
     // for enabling and disabling notification pulse behavior
     private boolean mScreenOn = true;
@@ -161,6 +203,7 @@ public class NotificationManagerService extends INotificationManager.Stub
     // Dim LED if hardware supports it.
     private boolean mQuietHoursDim = true;
 
+<<<<<<< HEAD
     // Notification control database. For now just contains disabled packages.
     private AtomicFile mPolicyFile;
     private HashSet<String> mBlockedPackages = new HashSet<String>();
@@ -299,6 +342,8 @@ public class NotificationManagerService extends INotificationManager.Stub
     }
 
 
+=======
+>>>>>>> upstream/master
     private static String idDebugString(Context baseContext, String packageName, int id) {
         Context c = null;
 
@@ -331,18 +376,31 @@ public class NotificationManagerService extends INotificationManager.Stub
         final int id;
         final int uid;
         final int initialPid;
+<<<<<<< HEAD
         final Notification notification;
         final int score;
         IBinder statusBarKey;
 
         NotificationRecord(String pkg, String tag, int id, int uid, int initialPid, int score, Notification notification)
+=======
+        final int priority;
+        final Notification notification;
+        IBinder statusBarKey;
+
+        NotificationRecord(String pkg, String tag, int id, int uid, int initialPid, int priority,
+                Notification notification)
+>>>>>>> upstream/master
         {
             this.pkg = pkg;
             this.tag = tag;
             this.id = id;
             this.uid = uid;
             this.initialPid = initialPid;
+<<<<<<< HEAD
             this.score = score;
+=======
+            this.priority = priority;
+>>>>>>> upstream/master
             this.notification = notification;
         }
 
@@ -350,13 +408,19 @@ public class NotificationManagerService extends INotificationManager.Stub
             pw.println(prefix + this);
             pw.println(prefix + "  icon=0x" + Integer.toHexString(notification.icon)
                     + " / " + idDebugString(baseContext, this.pkg, notification.icon));
+<<<<<<< HEAD
             pw.println(prefix + "  pri=" + notification.priority);
             pw.println(prefix + "  score=" + this.score);
+=======
+>>>>>>> upstream/master
             pw.println(prefix + "  contentIntent=" + notification.contentIntent);
             pw.println(prefix + "  deleteIntent=" + notification.deleteIntent);
             pw.println(prefix + "  tickerText=" + notification.tickerText);
             pw.println(prefix + "  contentView=" + notification.contentView);
+<<<<<<< HEAD
             pw.println(prefix + "  uid=" + uid);
+=======
+>>>>>>> upstream/master
             pw.println(prefix + "  defaults=0x" + Integer.toHexString(notification.defaults));
             pw.println(prefix + "  flags=0x" + Integer.toHexString(notification.flags));
             pw.println(prefix + "  sound=" + notification.sound);
@@ -374,7 +438,11 @@ public class NotificationManagerService extends INotificationManager.Stub
                 + " pkg=" + pkg
                 + " id=" + Integer.toHexString(id)
                 + " tag=" + tag 
+<<<<<<< HEAD
                 + " score=" + score
+=======
+                + " pri=" + priority 
+>>>>>>> upstream/master
                 + "}";
         }
     }
@@ -423,19 +491,30 @@ public class NotificationManagerService extends INotificationManager.Stub
                     // cancel whatever's going on
                     long identity = Binder.clearCallingIdentity();
                     try {
+<<<<<<< HEAD
                         final IRingtonePlayer player = mAudioService.getRingtonePlayer();
                         if (player != null) {
                             player.stopAsync();
                         }
                     } catch (RemoteException e) {
                     } finally {
+=======
+                        mSound.stop();
+                    }
+                    finally {
+>>>>>>> upstream/master
                         Binder.restoreCallingIdentity(identity);
                     }
 
                     identity = Binder.clearCallingIdentity();
                     try {
                         mVibrator.cancel();
+<<<<<<< HEAD
                     } finally {
+=======
+                    }
+                    finally {
+>>>>>>> upstream/master
                         Binder.restoreCallingIdentity(identity);
                     }
                 }
@@ -461,6 +540,7 @@ public class NotificationManagerService extends INotificationManager.Stub
             synchronized (mNotificationList) {
                 // sound
                 mSoundNotification = null;
+<<<<<<< HEAD
 
                 long identity = Binder.clearCallingIdentity();
                 try {
@@ -470,6 +550,13 @@ public class NotificationManagerService extends INotificationManager.Stub
                     }
                 } catch (RemoteException e) {
                 } finally {
+=======
+                long identity = Binder.clearCallingIdentity();
+                try {
+                    mSound.stop();
+                }
+                finally {
+>>>>>>> upstream/master
                     Binder.restoreCallingIdentity(identity);
                 }
 
@@ -478,7 +565,12 @@ public class NotificationManagerService extends INotificationManager.Stub
                 identity = Binder.clearCallingIdentity();
                 try {
                     mVibrator.cancel();
+<<<<<<< HEAD
                 } finally {
+=======
+                }
+                finally {
+>>>>>>> upstream/master
                     Binder.restoreCallingIdentity(identity);
                 }
 
@@ -518,11 +610,18 @@ public class NotificationManagerService extends INotificationManager.Stub
             String action = intent.getAction();
 
             boolean queryRestart = false;
+<<<<<<< HEAD
             boolean packageChanged = false;
             
             if (action.equals(Intent.ACTION_PACKAGE_REMOVED)
                     || action.equals(Intent.ACTION_PACKAGE_RESTARTED)
                     || (packageChanged=action.equals(Intent.ACTION_PACKAGE_CHANGED))
+=======
+            
+            if (action.equals(Intent.ACTION_PACKAGE_REMOVED)
+                    || action.equals(Intent.ACTION_PACKAGE_RESTARTED)
+                    || action.equals(Intent.ACTION_PACKAGE_CHANGED)
+>>>>>>> upstream/master
                     || (queryRestart=action.equals(Intent.ACTION_QUERY_PACKAGE_RESTART))
                     || action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE)) {
                 String pkgList[] = null;
@@ -539,6 +638,7 @@ public class NotificationManagerService extends INotificationManager.Stub
                     if (pkgName == null) {
                         return;
                     }
+<<<<<<< HEAD
                     if (packageChanged) {
                         // We cancel notifications for packages which have just been disabled
                         final int enabled = mContext.getPackageManager()
@@ -548,6 +648,8 @@ public class NotificationManagerService extends INotificationManager.Stub
                             return;
                         }
                     }
+=======
+>>>>>>> upstream/master
                     pkgList = new String[]{pkgName};
                 }
                 if (pkgList != null && (pkgList.length > 0)) {
@@ -581,6 +683,15 @@ public class NotificationManagerService extends INotificationManager.Stub
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NOTIFICATION_LIGHT_PULSE), false, this);
+<<<<<<< HEAD
+=======
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIFICATION_LIGHT_OFF), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIFICATION_LIGHT_ON), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIFICATION_LIGHT_COLOR), false, this);
+>>>>>>> upstream/master
             update();
         }
 
@@ -596,10 +707,33 @@ public class NotificationManagerService extends INotificationManager.Stub
                 mNotificationPulseEnabled = pulseEnabled;
                 updateNotificationPulse();
             }
+<<<<<<< HEAD
         }
     }
 
 class QuietHoursSettingsObserver extends ContentObserver {
+=======
+            Resources resources = mContext.getResources();
+            mDefaultNotificationColor = Settings.System
+                    .getInt(mContext.getContentResolver(),
+                            Settings.System.NOTIFICATION_LIGHT_COLOR,
+                            resources.getColor(
+                                    com.android.internal.R.color.config_defaultNotificationColor));
+            mDefaultNotificationLedOff = Settings.System
+                    .getInt(mContext.getContentResolver(),
+                            Settings.System.NOTIFICATION_LIGHT_OFF,
+                            resources
+                                    .getInteger(com.android.internal.R.integer.config_defaultNotificationLedOff));
+            mDefaultNotificationLedOn = Settings.System
+                    .getInt(mContext.getContentResolver(),
+                            Settings.System.NOTIFICATION_LIGHT_ON,
+                            resources
+                                    .getInteger(com.android.internal.R.integer.config_defaultNotificationLedOn));
+        }
+    }
+
+    class QuietHoursSettingsObserver extends ContentObserver {
+>>>>>>> upstream/master
         QuietHoursSettingsObserver(Handler handler) {
             super(handler);
         }
@@ -648,6 +782,7 @@ class QuietHoursSettingsObserver extends ContentObserver {
     {
         super();
         mContext = context;
+<<<<<<< HEAD
         mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         mAm = ActivityManagerNative.getDefault();
         mToastQueue = new ArrayList<ToastRecord>();
@@ -655,6 +790,14 @@ class QuietHoursSettingsObserver extends ContentObserver {
 
         loadBlockDb();
 
+=======
+        mAm = ActivityManagerNative.getDefault();
+        mSound = new NotificationPlayer(TAG);
+        mSound.setUsesWakeLock(context);
+        mToastQueue = new ArrayList<ToastRecord>();
+        mHandler = new WorkerHandler();
+
+>>>>>>> upstream/master
         mStatusBar = statusBar;
         statusBar.setNotificationCallbacks(mNotificationCallbacks);
 
@@ -695,18 +838,26 @@ class QuietHoursSettingsObserver extends ContentObserver {
         IntentFilter sdFilter = new IntentFilter(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
         mContext.registerReceiver(mIntentReceiver, sdFilter);
 
+<<<<<<< HEAD
         SettingsObserver observer = new SettingsObserver(mHandler);
         observer.observe();
 
+=======
+	SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
+>>>>>>> upstream/master
         QuietHoursSettingsObserver qhObserver = new QuietHoursSettingsObserver(mHandler);
         qhObserver.observe();
         ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
     }
 
     void systemReady() {
+<<<<<<< HEAD
         mAudioService = IAudioService.Stub.asInterface(
                 ServiceManager.getService(Context.AUDIO_SERVICE));
 
+=======
+>>>>>>> upstream/master
         // no beeping until we're basically done booting
         mSystemReady = true;
     }
@@ -722,6 +873,7 @@ class QuietHoursSettingsObserver extends ContentObserver {
             return ;
         }
 
+<<<<<<< HEAD
         final boolean isSystemToast = ("android".equals(pkg));
 
         if (ENABLE_BLOCKED_TOASTS && !isSystemToast && !areNotificationsEnabledForPackageInt(pkg)) {
@@ -729,6 +881,8 @@ class QuietHoursSettingsObserver extends ContentObserver {
             return;
         }
 
+=======
+>>>>>>> upstream/master
         synchronized (mToastQueue) {
             int callingPid = Binder.getCallingPid();
             long callingId = Binder.clearCallingIdentity();
@@ -743,7 +897,11 @@ class QuietHoursSettingsObserver extends ContentObserver {
                 } else {
                     // Limit the number of toasts that any given package except the android
                     // package can enqueue.  Prevents DOS attacks and deals with leaks.
+<<<<<<< HEAD
                     if (!isSystemToast) {
+=======
+                    if (!"android".equals(pkg)) {
+>>>>>>> upstream/master
                         int count = 0;
                         final int N = mToastQueue.size();
                         for (int i=0; i<N; i++) {
@@ -928,17 +1086,29 @@ class QuietHoursSettingsObserver extends ContentObserver {
         enqueueNotificationInternal(pkg, Binder.getCallingUid(), Binder.getCallingPid(),
                 tag, id, notification, idOut);
     }
+<<<<<<< HEAD
     
     private final static int clamp(int x, int low, int high) {
         return (x < low) ? low : ((x > high) ? high : x);
     }
 
     
+=======
+
+    public void enqueueNotificationWithTagPriority(String pkg, String tag, int id, int priority,
+            Notification notification, int[] idOut)
+    {
+        enqueueNotificationInternal(pkg, Binder.getCallingUid(), Binder.getCallingPid(),
+                tag, id, priority, notification, idOut);
+    }
+
+>>>>>>> upstream/master
     // Not exposed via Binder; for system use only (otherwise malicious apps could spoof the
     // uid/pid of another application)
     public void enqueueNotificationInternal(String pkg, int callingUid, int callingPid,
             String tag, int id, Notification notification, int[] idOut)
     {
+<<<<<<< HEAD
         if (DBG) {
             Slog.v(TAG, "enqueueNotificationInternal: pkg=" + pkg + " id=" + id + " notification=" + notification);
         }
@@ -948,6 +1118,22 @@ class QuietHoursSettingsObserver extends ContentObserver {
         // Limit the number of notifications that any given package except the android
         // package can enqueue.  Prevents DOS attacks and deals with leaks.
         if (!isSystemNotification) {
+=======
+        enqueueNotificationInternal(pkg, callingUid, callingPid, tag, id, 
+                ((notification.flags & Notification.FLAG_ONGOING_EVENT) != 0)
+                    ? StatusBarNotification.PRIORITY_ONGOING
+                    : StatusBarNotification.PRIORITY_NORMAL,
+                notification, idOut);
+    }
+    public void enqueueNotificationInternal(String pkg, int callingUid, int callingPid,
+            String tag, int id, int priority, Notification notification, int[] idOut)
+    {
+        checkIncomingCall(pkg);
+
+        // Limit the number of notifications that any given package except the android
+        // package can enqueue.  Prevents DOS attacks and deals with leaks.
+        if (!"android".equals(pkg)) {
+>>>>>>> upstream/master
             synchronized (mNotificationList) {
                 int count = 0;
                 final int N = mNotificationList.size();
@@ -984,6 +1170,7 @@ class QuietHoursSettingsObserver extends ContentObserver {
             }
         }
 
+<<<<<<< HEAD
         // === Scoring ===
 
         // 0. Sanitize inputs
@@ -1017,12 +1204,18 @@ class QuietHoursSettingsObserver extends ContentObserver {
             return;
         }
 
+=======
+>>>>>>> upstream/master
         synchronized (mNotificationList) {
 	    final boolean inQuietHours = inQuietHours();
 
             NotificationRecord r = new NotificationRecord(pkg, tag, id, 
                     callingUid, callingPid, 
+<<<<<<< HEAD
                     score,
+=======
+                    priority,
+>>>>>>> upstream/master
                     notification);
             NotificationRecord old = null;
 
@@ -1048,7 +1241,13 @@ class QuietHoursSettingsObserver extends ContentObserver {
 
             if (notification.icon != 0) {
                 StatusBarNotification n = new StatusBarNotification(pkg, id, tag,
+<<<<<<< HEAD
                         r.uid, r.initialPid, score, notification);
+=======
+                        r.uid, r.initialPid, notification);
+                n.priority = r.priority;
+
+>>>>>>> upstream/master
                 if (old != null && old.statusBarKey != null) {
                     r.statusBarKey = old.statusBarKey;
                     long identity = Binder.clearCallingIdentity();
@@ -1114,6 +1313,7 @@ class QuietHoursSettingsObserver extends ContentObserver {
                     // do not play notifications if stream volume is 0
                     // (typically because ringer mode is silent).
                     if (audioManager.getStreamVolume(audioStreamType) != 0) {
+<<<<<<< HEAD
                         final long identity = Binder.clearCallingIdentity();
                         try {
                             final IRingtonePlayer player = mAudioService.getRingtonePlayer();
@@ -1122,6 +1322,13 @@ class QuietHoursSettingsObserver extends ContentObserver {
                             }
                         } catch (RemoteException e) {
                         } finally {
+=======
+                        long identity = Binder.clearCallingIdentity();
+                        try {
+                            mSound.play(mContext, uri, looping, audioStreamType);
+                        }
+                        finally {
+>>>>>>> upstream/master
                             Binder.restoreCallingIdentity(identity);
                         }
                     }
@@ -1132,7 +1339,11 @@ class QuietHoursSettingsObserver extends ContentObserver {
                     (notification.defaults & Notification.DEFAULT_VIBRATE) != 0;
                 if (!(inQuietHours && mQuietHoursStill)
                         && (useDefaultVibrate || notification.vibrate != null)
+<<<<<<< HEAD
                         && !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+=======
+                        && audioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_NOTIFICATION)) {
+>>>>>>> upstream/master
                     mVibrateNotification = r;
 
                     mVibrator.vibrate(useDefaultVibrate ? DEFAULT_VIBRATE_PATTERN
@@ -1228,6 +1439,7 @@ class QuietHoursSettingsObserver extends ContentObserver {
         // sound
         if (mSoundNotification == r) {
             mSoundNotification = null;
+<<<<<<< HEAD
             final long identity = Binder.clearCallingIdentity();
             try {
                 final IRingtonePlayer player = mAudioService.getRingtonePlayer();
@@ -1236,6 +1448,13 @@ class QuietHoursSettingsObserver extends ContentObserver {
                 }
             } catch (RemoteException e) {
             } finally {
+=======
+            long identity = Binder.clearCallingIdentity();
+            try {
+                mSound.stop();
+            }
+            finally {
+>>>>>>> upstream/master
                 Binder.restoreCallingIdentity(identity);
             }
         }
@@ -1331,7 +1550,11 @@ class QuietHoursSettingsObserver extends ContentObserver {
     }
 
     public void cancelNotificationWithTag(String pkg, String tag, int id) {
+<<<<<<< HEAD
         checkCallerIsSystemOrSameApp(pkg);
+=======
+        checkIncomingCall(pkg);
+>>>>>>> upstream/master
         // Don't allow client applications to cancel foreground service notis.
         cancelNotification(pkg, tag, id, 0,
                 Binder.getCallingUid() == Process.SYSTEM_UID
@@ -1339,13 +1562,18 @@ class QuietHoursSettingsObserver extends ContentObserver {
     }
 
     public void cancelAllNotifications(String pkg) {
+<<<<<<< HEAD
         checkCallerIsSystemOrSameApp(pkg);
+=======
+        checkIncomingCall(pkg);
+>>>>>>> upstream/master
 
         // Calling from user space, don't allow the canceling of actively
         // running foreground services.
         cancelAllNotificationsInt(pkg, 0, Notification.FLAG_FOREGROUND_SERVICE, true);
     }
 
+<<<<<<< HEAD
     void checkCallerIsSystem() {
         int uid = Binder.getCallingUid();
         if (uid == Process.SYSTEM_UID || uid == 0) {
@@ -1355,6 +1583,9 @@ class QuietHoursSettingsObserver extends ContentObserver {
     }
 
     void checkCallerIsSystemOrSameApp(String pkg) {
+=======
+    void checkIncomingCall(String pkg) {
+>>>>>>> upstream/master
         int uid = Binder.getCallingUid();
         if (uid == Process.SYSTEM_UID || uid == 0) {
             return;
@@ -1362,7 +1593,11 @@ class QuietHoursSettingsObserver extends ContentObserver {
         try {
             ApplicationInfo ai = mContext.getPackageManager().getApplicationInfo(
                     pkg, 0);
+<<<<<<< HEAD
             if (!UserId.isSameApp(ai.uid, uid)) {
+=======
+            if (ai.uid != uid) {
+>>>>>>> upstream/master
                 throw new SecurityException("Calling uid " + uid + " gave package"
                         + pkg + " which is owned by uid " + ai.uid);
             }
@@ -1401,7 +1636,11 @@ class QuietHoursSettingsObserver extends ContentObserver {
         }
 
         // Don't flash while we are in a call or screen is on
+<<<<<<< HEAD
         if (mLedNotification == null || mInCall || mScreenOn || (inQuietHours() && mQuietHoursDim)) {
+=======
+	if (mLedNotification == null || mInCall || mScreenOn || (inQuietHours() && mQuietHoursDim)) {
+>>>>>>> upstream/master
             mNotificationLight.turnOff();
         } else {
             int ledARGB = mLedNotification.notification.ledARGB;
@@ -1503,6 +1742,10 @@ class QuietHoursSettingsObserver extends ContentObserver {
             }
 
             pw.println("  mSoundNotification=" + mSoundNotification);
+<<<<<<< HEAD
+=======
+            pw.println("  mSound=" + mSound);
+>>>>>>> upstream/master
             pw.println("  mVibrateNotification=" + mVibrateNotification);
             pw.println("  mDisabledNotifications=0x" + Integer.toHexString(mDisabledNotifications));
             pw.println("  mSystemReady=" + mSystemReady);

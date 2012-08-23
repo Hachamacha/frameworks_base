@@ -58,9 +58,33 @@ public class LayoutTestsAutoRunner extends InstrumentationTestRunner {
             }
         }
 
+<<<<<<< HEAD
         String r = icicle.getString("rebaseline");
         this.mRebaseline = (r != null && r.toLowerCase().equals("true"));
 
+=======
+        String delay_str = (String) icicle.get("delay");
+        if(delay_str != null) {
+            try {
+                this.mDelay = Integer.parseInt(delay_str);
+            } catch (Exception e) {
+            }
+        }
+
+        String r = icicle.getString("rebaseline");
+        this.mRebaseline = (r != null && r.toLowerCase().equals("true"));
+
+        String logtime = icicle.getString("logtime");
+        this.mLogtime = (logtime != null
+                && logtime.toLowerCase().equals("true"));
+
+        String drawTime = icicle.getString("drawtime");
+        this.mGetDrawTime = (drawTime != null
+                && drawTime.toLowerCase().equals("true"));
+
+        mSaveImagePath = icicle.getString("saveimage");
+
+>>>>>>> upstream/master
         mJsEngine = icicle.getString("jsengine");
 
         mPageCyclerSuite = icicle.getString("suite");
@@ -74,7 +98,16 @@ public class LayoutTestsAutoRunner extends InstrumentationTestRunner {
     String mPageCyclerForwardHost;
     String mPageCyclerIteration;
     String mTestPath;
+<<<<<<< HEAD
     int mTimeoutInMillis = 0;
     boolean mRebaseline;
+=======
+    String mSaveImagePath;
+    int mTimeoutInMillis;
+    int mDelay;
+    boolean mRebaseline;
+    boolean mLogtime;
+    boolean mGetDrawTime;
+>>>>>>> upstream/master
     String mJsEngine;
 }

@@ -24,8 +24,11 @@ import static android.net.NetworkStatsHistory.FIELD_TX_BYTES;
 import static android.net.NetworkStatsHistory.DataStreamUtils.readVarLong;
 import static android.net.NetworkStatsHistory.DataStreamUtils.writeVarLong;
 import static android.net.NetworkStatsHistory.Entry.UNKNOWN;
+<<<<<<< HEAD
 import static android.net.TrafficStats.GB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
+=======
+>>>>>>> upstream/master
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -52,6 +55,13 @@ public class NetworkStatsHistoryTest extends AndroidTestCase {
 
     private static final long TEST_START = 1194220800000L;
 
+<<<<<<< HEAD
+=======
+    private static final long KB_IN_BYTES = 1024;
+    private static final long MB_IN_BYTES = KB_IN_BYTES * 1024;
+    private static final long GB_IN_BYTES = MB_IN_BYTES * 1024;
+
+>>>>>>> upstream/master
     private NetworkStatsHistory stats;
 
     @Override

@@ -19,6 +19,7 @@ package com.android.mediaframeworktest.functional.audio;
 import com.android.mediaframeworktest.MediaFrameworkTest;
 import android.content.Context;
 import android.media.AudioManager;
+<<<<<<< HEAD
 import android.media.MediaPlayer;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Looper;
@@ -26,6 +27,10 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
+=======
+import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.MediumTest;
+>>>>>>> upstream/master
 
 /**
  * Junit / Instrumentation test case for the media AudioManager api
@@ -33,6 +38,7 @@ import android.util.Log;
 
 public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<MediaFrameworkTest> {
 
+<<<<<<< HEAD
     private final static String TAG = "MediaAudioManagerTest";
     // the AudioManager used throughout the test
     private AudioManager mAudioManager;
@@ -40,6 +46,10 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
     private Looper mAudioManagerLooper;
     private final Object mLooperLock = new Object();
     private final static int WAIT_FOR_LOOPER_TO_INITIALIZE_MS = 60000;  // 60s
+=======
+    private String TAG = "MediaAudioManagerTest";
+    private AudioManager mAudioManager;
+>>>>>>> upstream/master
     private int[] ringtoneMode = {AudioManager.RINGER_MODE_NORMAL,
              AudioManager.RINGER_MODE_SILENT, AudioManager.RINGER_MODE_VIBRATE};
 
@@ -47,6 +57,7 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
         super("com.android.mediaframeworktest", MediaFrameworkTest.class);
     }
 
+<<<<<<< HEAD
     private void initializeAudioManagerWithLooper() {
         new Thread() {
             @Override
@@ -73,11 +84,18 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
                 assertTrue("initializeAudioManagerWithLooper() failed to complete in time", false);
             }
         }
+=======
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+>>>>>>> upstream/master
      }
 
      @Override
      protected void tearDown() throws Exception {
          super.tearDown();
+<<<<<<< HEAD
          synchronized(mLooperLock) {
              if (mAudioManagerLooper != null) {
                  mAudioManagerLooper.quit();
@@ -89,6 +107,10 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
      //      Ringer Mode
      //----------------------------------
 
+=======
+     }
+
+>>>>>>> upstream/master
      public boolean validateSetRingTone(int i) {
          int getRingtone = mAudioManager.getRingerMode();
          if (i != getRingtone)
@@ -108,6 +130,7 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
              assertTrue("SetRingtoneMode : " + ringtoneMode[i], result);
          }
      }
+<<<<<<< HEAD
 
     //-----------------------------------------------------------------
     //      AudioFocus
@@ -240,4 +263,6 @@ public class MediaAudioManagerTest extends ActivityInstrumentationTestCase2<Medi
         mAudioManager.abandonAudioFocus(mAudioFocusListener);
         mAudioManager.unregisterAudioFocusListener(mAudioFocusListener);
     }
+=======
+>>>>>>> upstream/master
  }

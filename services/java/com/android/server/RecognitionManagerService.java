@@ -65,7 +65,11 @@ public class RecognitionManagerService extends Binder {
     RecognitionManagerService(Context context) {
         mContext = context;
         mMonitor = new MyPackageMonitor();
+<<<<<<< HEAD
         mMonitor.register(context, null, true);
+=======
+        mMonitor.register(context, true);
+>>>>>>> upstream/master
     }
     
     public void systemReady() {
@@ -75,10 +79,14 @@ public class RecognitionManagerService extends Binder {
             try {
                 mContext.getPackageManager().getServiceInfo(comp, 0);
             } catch (NameNotFoundException e) {
+<<<<<<< HEAD
                 comp = findAvailRecognizer(null);
                 if (comp != null) {
                     setCurRecognizer(comp);
                 }
+=======
+                setCurRecognizer(null);
+>>>>>>> upstream/master
             }
         } else {
             comp = findAvailRecognizer(null);

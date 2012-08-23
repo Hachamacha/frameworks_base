@@ -18,12 +18,17 @@ package com.android.internal.policy.impl;
 
 import com.android.internal.R;
 
+<<<<<<< HEAD
 import com.android.internal.app.ThemeUtils;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+=======
+import android.app.ActivityManager;
+import android.content.Context;
+>>>>>>> upstream/master
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
@@ -50,7 +55,10 @@ public class KeyguardViewManager implements KeyguardWindowController {
     private static String TAG = "KeyguardViewManager";
 
     private final Context mContext;
+<<<<<<< HEAD
     private Context mUiContext;
+=======
+>>>>>>> upstream/master
     private final ViewManager mViewManager;
     private final KeyguardViewCallback mCallback;
     private final KeyguardViewProperties mKeyguardViewProperties;
@@ -78,12 +86,15 @@ public class KeyguardViewManager implements KeyguardWindowController {
             KeyguardViewCallback callback, KeyguardViewProperties keyguardViewProperties,
             KeyguardUpdateMonitor updateMonitor) {
         mContext = context;
+<<<<<<< HEAD
         ThemeUtils.registerThemeChangeReceiver(mContext, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 mUiContext = null;
             }
         });
+=======
+>>>>>>> upstream/master
         mViewManager = viewManager;
         mCallback = callback;
         mKeyguardViewProperties = keyguardViewProperties;
@@ -91,6 +102,7 @@ public class KeyguardViewManager implements KeyguardWindowController {
         mUpdateMonitor = updateMonitor;
     }
 
+<<<<<<< HEAD
     private Context getUiContext() {
         if (mUiContext == null) {
             mUiContext = ThemeUtils.createUiContext(mContext);
@@ -98,6 +110,8 @@ public class KeyguardViewManager implements KeyguardWindowController {
         return mUiContext != null ? mUiContext : mContext;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Helper class to host the keyguard view.
      */
@@ -123,19 +137,31 @@ public class KeyguardViewManager implements KeyguardWindowController {
     public synchronized void show() {
         if (DEBUG) Log.d(TAG, "show(); mKeyguardView==" + mKeyguardView);
 
+<<<<<<< HEAD
         Resources res = getUiContext().getResources();
+=======
+        Resources res = mContext.getResources();
+>>>>>>> upstream/master
         boolean enableScreenRotation =
                 SystemProperties.getBoolean("lockscreen.rot_override",false)
                 || res.getBoolean(R.bool.config_enableLockScreenRotation);
         if (mKeyguardHost == null) {
             if (DEBUG) Log.d(TAG, "keyguard host is null, creating it...");
 
+<<<<<<< HEAD
             mKeyguardHost = new KeyguardViewHost(getUiContext(), mCallback);
+=======
+            mKeyguardHost = new KeyguardViewHost(mContext, mCallback);
+>>>>>>> upstream/master
 
             final int stretch = ViewGroup.LayoutParams.MATCH_PARENT;
             int flags = WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
                     | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
+<<<<<<< HEAD
                     | WindowManager.LayoutParams.FLAG_SLIPPERY
+=======
+                    | WindowManager.LayoutParams.FLAG_KEEP_SURFACE_WHILE_ANIMATING
+>>>>>>> upstream/master
                     /*| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                     | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR*/ ;
             if (!mNeedsInput) {
@@ -175,9 +201,15 @@ public class KeyguardViewManager implements KeyguardWindowController {
 
         if (mKeyguardView == null) {
             if (DEBUG) Log.d(TAG, "keyguard view is null, creating it...");
+<<<<<<< HEAD
             mKeyguardView = mKeyguardViewProperties.createKeyguardView(getUiContext(), mCallback,
                     mUpdateMonitor, this);
             mKeyguardView.setId(R.id.lock_screen);
+=======
+            mKeyguardView = mKeyguardViewProperties.createKeyguardView(mContext, mUpdateMonitor, this);
+            mKeyguardView.setId(R.id.lock_screen);
+            mKeyguardView.setCallback(mCallback);
+>>>>>>> upstream/master
 
             final ViewGroup.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -198,7 +230,10 @@ public class KeyguardViewManager implements KeyguardWindowController {
                 ( View.STATUS_BAR_DISABLE_BACK
                 | View.STATUS_BAR_DISABLE_HOME
                 );
+<<<<<<< HEAD
         Log.v(TAG, "KGVM: Set visibility on " + mKeyguardHost + " to " + visFlags);
+=======
+>>>>>>> upstream/master
         mKeyguardHost.setSystemUiVisibility(visFlags);
 
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);

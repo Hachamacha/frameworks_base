@@ -16,11 +16,19 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/find_prev"
+<<<<<<< HEAD
         android:icon="?android:attr/findOnPagePreviousDrawable"
         android:showAsAction="always"
         />
     <item android:id="@+id/find_next"
         android:icon="?android:attr/findOnPageNextDrawable"
+=======
+        android:icon="@drawable/ic_find_previous_holo_dark"
+        android:showAsAction="always"
+        />
+    <item android:id="@+id/find_next"
+        android:icon="@drawable/ic_find_next_holo_dark"
+>>>>>>> upstream/master
         android:showAsAction="always"
         />
 </menu>

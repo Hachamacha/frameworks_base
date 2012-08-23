@@ -22,9 +22,14 @@ import android.os.Parcel;
 import java.util.EnumMap;
 
 /**
+<<<<<<< HEAD
  * Describes the status of a network interface.
  * <p>Use {@link ConnectivityManager#getActiveNetworkInfo()} to get an instance that represents
  * the current network connection.
+=======
+ * Describes the status of a network interface of a given type
+ * (currently either Mobile or Wifi).
+>>>>>>> upstream/master
  */
 public class NetworkInfo implements Parcelable {
 
@@ -39,7 +44,11 @@ public class NetworkInfo implements Parcelable {
      * <tr><td><code>SCANNING</code></td><td><code>CONNECTING</code></td></tr>
      * <tr><td><code>CONNECTING</code></td><td><code>CONNECTING</code></td></tr>
      * <tr><td><code>AUTHENTICATING</code></td><td><code>CONNECTING</code></td></tr>
+<<<<<<< HEAD
      * <tr><td><code>CONNECTED</code></td><td><code>CONNECTED</code></td></tr>
+=======
+     * <tr><td><code>CONNECTED</code></td><td<code>CONNECTED</code></td></tr>
+>>>>>>> upstream/master
      * <tr><td><code>DISCONNECTING</code></td><td><code>DISCONNECTING</code></td></tr>
      * <tr><td><code>DISCONNECTED</code></td><td><code>DISCONNECTED</code></td></tr>
      * <tr><td><code>UNAVAILABLE</code></td><td><code>DISCONNECTED</code></td></tr>
@@ -77,9 +86,13 @@ public class NetworkInfo implements Parcelable {
         /** Attempt to connect failed. */
         FAILED,
         /** Access to this network is blocked. */
+<<<<<<< HEAD
         BLOCKED,
         /** Link has poor connectivity. */
         VERIFYING_POOR_LINK
+=======
+        BLOCKED
+>>>>>>> upstream/master
     }
 
     /**
@@ -96,7 +109,10 @@ public class NetworkInfo implements Parcelable {
         stateMap.put(DetailedState.CONNECTING, State.CONNECTING);
         stateMap.put(DetailedState.AUTHENTICATING, State.CONNECTING);
         stateMap.put(DetailedState.OBTAINING_IPADDR, State.CONNECTING);
+<<<<<<< HEAD
         stateMap.put(DetailedState.VERIFYING_POOR_LINK, State.CONNECTING);
+=======
+>>>>>>> upstream/master
         stateMap.put(DetailedState.CONNECTED, State.CONNECTED);
         stateMap.put(DetailedState.SUSPENDED, State.SUSPENDED);
         stateMap.put(DetailedState.DISCONNECTING, State.DISCONNECTING);
@@ -163,12 +179,18 @@ public class NetworkInfo implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Reports the type of network to which the
      * info in this {@code NetworkInfo} pertains.
      * @return one of {@link ConnectivityManager#TYPE_MOBILE}, {@link
      * ConnectivityManager#TYPE_WIFI}, {@link ConnectivityManager#TYPE_WIMAX}, {@link
      * ConnectivityManager#TYPE_ETHERNET},  {@link ConnectivityManager#TYPE_BLUETOOTH}, or other
      * types defined by {@link ConnectivityManager}
+=======
+     * Reports the type of network (currently mobile or Wi-Fi) to which the
+     * info in this object pertains.
+     * @return the network type
+>>>>>>> upstream/master
      */
     public int getType() {
         synchronized (this) {
@@ -233,7 +255,10 @@ public class NetworkInfo implements Parcelable {
     /**
      * Indicates whether network connectivity exists and it is possible to establish
      * connections and pass data.
+<<<<<<< HEAD
      * <p>Always call this before attempting to perform data transactions.
+=======
+>>>>>>> upstream/master
      * @return {@code true} if network connectivity exists, {@code false} otherwise.
      */
     public boolean isConnected() {
@@ -354,6 +379,7 @@ public class NetworkInfo implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Set the extraInfo field.
      * @param extraInfo an optional {@code String} providing addditional network state
      * information passed up from the lower networking layers.
@@ -366,6 +392,8 @@ public class NetworkInfo implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Report the reason an attempt to establish connectivity failed,
      * if one is available.
      * @return the reason for failure, or null if not available

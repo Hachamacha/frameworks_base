@@ -24,8 +24,11 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import java.util.Calendar;
 
@@ -128,6 +131,7 @@ public class DigitalClock extends TextView {
             setFormat();
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -140,4 +144,6 @@ public class DigitalClock extends TextView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(DigitalClock.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

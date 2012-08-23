@@ -386,7 +386,11 @@ public class AudioEffect {
             default:
                 throw (new RuntimeException(
                         "Cannot initialize effect engine for type: " + type
+<<<<<<< HEAD
                                 + " Error: " + initResult));
+=======
+                                + "Error: " + initResult));
+>>>>>>> upstream/master
             }
         }
         mId = id[0];
@@ -452,6 +456,7 @@ public class AudioEffect {
         return (Descriptor[]) native_query_pre_processing(audioSession);
     }
 
+<<<<<<< HEAD
     /**
      * Checks if the device implements the specified effect type.
      * @param type the requested effect type.
@@ -468,6 +473,8 @@ public class AudioEffect {
         return false;
     }
 
+=======
+>>>>>>> upstream/master
     // --------------------------------------------------------------------------
     // Control methods
     // --------------------

@@ -57,7 +57,20 @@ public final class SuggestionsInfo implements Parcelable {
      * @param suggestions from the text service
      */
     public SuggestionsInfo(int suggestionsAttributes, String[] suggestions) {
+<<<<<<< HEAD
         this(suggestionsAttributes, suggestions, 0, 0);
+=======
+        mSuggestionsAttributes = suggestionsAttributes;
+        if (suggestions == null) {
+            mSuggestions = EMPTY;
+            mSuggestionsAvailable = false;
+        } else {
+            mSuggestions = suggestions;
+            mSuggestionsAvailable = true;
+        }
+        mCookie = 0;
+        mSequence = 0;
+>>>>>>> upstream/master
     }
 
     /**

@@ -126,7 +126,11 @@ bool PointerController::getBoundsLocked(float* outMinX, float* outMinY,
 
 void PointerController::move(float deltaX, float deltaY) {
 #if DEBUG_POINTER_UPDATES
+<<<<<<< HEAD
     ALOGD("Move pointer by deltaX=%0.3f, deltaY=%0.3f", deltaX, deltaY);
+=======
+    LOGD("Move pointer by deltaX=%0.3f, deltaY=%0.3f", deltaX, deltaY);
+>>>>>>> upstream/master
 #endif
     if (deltaX == 0.0f && deltaY == 0.0f) {
         return;
@@ -139,7 +143,11 @@ void PointerController::move(float deltaX, float deltaY) {
 
 void PointerController::setButtonState(int32_t buttonState) {
 #if DEBUG_POINTER_UPDATES
+<<<<<<< HEAD
     ALOGD("Set button state 0x%08x", buttonState);
+=======
+    LOGD("Set button state 0x%08x", buttonState);
+>>>>>>> upstream/master
 #endif
     AutoMutex _l(mLock);
 
@@ -156,7 +164,11 @@ int32_t PointerController::getButtonState() const {
 
 void PointerController::setPosition(float x, float y) {
 #if DEBUG_POINTER_UPDATES
+<<<<<<< HEAD
     ALOGD("Set pointer position to x=%0.3f, y=%0.3f", x, y);
+=======
+    LOGD("Set pointer position to x=%0.3f, y=%0.3f", x, y);
+>>>>>>> upstream/master
 #endif
     AutoMutex _l(mLock);
 
@@ -243,12 +255,20 @@ void PointerController::setPresentation(Presentation presentation) {
 void PointerController::setSpots(const PointerCoords* spotCoords,
         const uint32_t* spotIdToIndex, BitSet32 spotIdBits) {
 #if DEBUG_POINTER_UPDATES
+<<<<<<< HEAD
     ALOGD("setSpots: idBits=%08x", spotIdBits.value);
+=======
+    LOGD("setSpots: idBits=%08x", spotIdBits.value);
+>>>>>>> upstream/master
     for (BitSet32 idBits(spotIdBits); !idBits.isEmpty(); ) {
         uint32_t id = idBits.firstMarkedBit();
         idBits.clearBit(id);
         const PointerCoords& c = spotCoords[spotIdToIndex[id]];
+<<<<<<< HEAD
         ALOGD(" spot %d: position=(%0.3f, %0.3f), pressure=%0.3f", id,
+=======
+        LOGD(" spot %d: position=(%0.3f, %0.3f), pressure=%0.3f", id,
+>>>>>>> upstream/master
                 c.getAxisValue(AMOTION_EVENT_AXIS_X),
                 c.getAxisValue(AMOTION_EVENT_AXIS_Y),
                 c.getAxisValue(AMOTION_EVENT_AXIS_PRESSURE));
@@ -290,7 +310,11 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
 
 void PointerController::clearSpots() {
 #if DEBUG_POINTER_UPDATES
+<<<<<<< HEAD
     ALOGD("clearSpots");
+=======
+    LOGD("clearSpots");
+>>>>>>> upstream/master
 #endif
 
     AutoMutex _l(mLock);

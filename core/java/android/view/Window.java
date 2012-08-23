@@ -75,6 +75,7 @@ public abstract class Window {
      * over how the Action Bar is displayed, such as letting application content scroll beneath
      * an Action Bar with a transparent background or otherwise displaying a transparent/translucent
      * Action Bar over application content.
+<<<<<<< HEAD
      *
      * <p>This mode is especially useful with {@link View#SYSTEM_UI_FLAG_FULLSCREEN
      * View.SYSTEM_UI_FLAG_FULLSCREEN}, which allows you to seamlessly hide the
@@ -85,6 +86,8 @@ public abstract class Window {
      * {@link View#fitSystemWindows(android.graphics.Rect) View.fitSystemWindows(Rect)}
      * to include the content covered by the action bar, so you can do layout within
      * that space.
+=======
+>>>>>>> upstream/master
      */
     public static final int FEATURE_ACTION_BAR_OVERLAY = 9;
     /**
@@ -751,6 +754,12 @@ public abstract class Window {
      * @param mask Which of the window flag bits to modify.
      */
     public void setFlags(int flags, int mask) {
+<<<<<<< HEAD
+=======
+        if ((flags & mask & WindowManager.LayoutParams.PREVENT_POWER_KEY) != 0){
+            mContext.enforceCallingOrSelfPermission("android.permission.PREVENT_POWER_KEY", "No permission to prevent power key");
+        }
+>>>>>>> upstream/master
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.flags = (attrs.flags&~mask) | (flags&mask);
         if ((mask&WindowManager.LayoutParams.FLAG_NEEDS_MENU_KEY) != 0) {
@@ -790,6 +799,12 @@ public abstract class Window {
      *          current values.
      */
     public void setAttributes(WindowManager.LayoutParams a) {
+<<<<<<< HEAD
+=======
+        if ((a.flags & WindowManager.LayoutParams.PREVENT_POWER_KEY) != 0){
+            mContext.enforceCallingOrSelfPermission("android.permission.PREVENT_POWER_KEY", "No permission to prevent power key");
+        }
+>>>>>>> upstream/master
         mWindowAttributes.copyFrom(a);
         if (mCallback != null) {
             mCallback.onWindowAttributesChanged(mWindowAttributes);

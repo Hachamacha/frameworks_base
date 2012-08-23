@@ -19,8 +19,14 @@ package android.net;
 import android.text.TextUtils;
 import android.util.Log;
 
+<<<<<<< HEAD
 import java.net.Inet4Address;
 import java.net.InetAddress;
+=======
+import java.net.InetAddress;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,11 +47,14 @@ public class DhcpInfoInternal {
     public String serverAddress;
     public int leaseDuration;
 
+<<<<<<< HEAD
     /**
      * Vendor specific information (from RFC 2132).
      */
     public String vendorInfo;
 
+=======
+>>>>>>> upstream/master
     private Collection<RouteInfo> mRoutes;
 
     public DhcpInfoInternal() {
@@ -142,6 +151,7 @@ public class DhcpInfoInternal {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Test if this DHCP lease includes vendor hint that network link is
      * metered, and sensitive to heavy data transfers.
@@ -154,6 +164,8 @@ public class DhcpInfoInternal {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public String toString() {
         String routeString = "";
         for (RouteInfo route : mRoutes) routeString += route.toString() + " | ";

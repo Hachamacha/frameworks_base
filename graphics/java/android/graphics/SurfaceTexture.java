@@ -155,6 +155,7 @@ public class SurfaceTexture {
 
     /**
      * Update the texture image to the most recent frame from the image stream.  This may only be
+<<<<<<< HEAD
      * called while the OpenGL ES context that owns the texture is current on the calling thread.
      * It will implicitly bind its texture to the GL_TEXTURE_EXTERNAL_OES texture target.
      */
@@ -197,6 +198,15 @@ public class SurfaceTexture {
         int err = nativeAttachToGLContext(texName);
         if (err != 0) {
             throw new RuntimeException("Error during detachFromGLContext (see logcat for details)");
+=======
+     * called while the OpenGL ES context that owns the texture is bound to the thread.  It will
+     * implicitly bind its texture to the GL_TEXTURE_EXTERNAL_OES texture target.
+     */
+    public void updateTexImage() {
+        int err = nativeUpdateTexImage(); 
+        if (err != 0) {
+            throw new RuntimeException("Error during updateTexImage (see logs)");
+>>>>>>> upstream/master
         }
     }
 
@@ -303,9 +313,13 @@ public class SurfaceTexture {
     private native void nativeGetTransformMatrix(float[] mtx);
     private native long nativeGetTimestamp();
     private native void nativeSetDefaultBufferSize(int width, int height);
+<<<<<<< HEAD
     private native void nativeUpdateTexImage();
     private native int nativeDetachFromGLContext();
     private native int nativeAttachToGLContext(int texName);
+=======
+    private native int nativeUpdateTexImage();
+>>>>>>> upstream/master
     private native int nativeGetQueuedCount();
     private native void nativeRelease();
 

@@ -18,11 +18,19 @@ package android.net;
 
 import android.os.SystemProperties;
 import android.util.Log;
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.cert.X509Certificate;
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 import javax.net.SocketFactory;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -34,6 +42,10 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 import org.apache.harmony.xnet.provider.jsse.OpenSSLContextImpl;
 import org.apache.harmony.xnet.provider.jsse.OpenSSLSocketImpl;
 import org.apache.harmony.xnet.provider.jsse.SSLClientSessionCache;
@@ -86,7 +98,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     private SSLSocketFactory mSecureFactory = null;
     private TrustManager[] mTrustManagers = null;
     private KeyManager[] mKeyManagers = null;
+<<<<<<< HEAD
     private byte[] mNpnProtocols = null;
+=======
+>>>>>>> upstream/master
 
     private final int mHandshakeTimeoutMillis;
     private final SSLClientSessionCache mSessionCache;
@@ -249,6 +264,7 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Sets the <a href="http://technotes.googlecode.com/git/nextprotoneg.html">Next
      * Protocol Negotiation (NPN)</a> protocols that this peer is interested in.
      *
@@ -306,6 +322,8 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the {@link KeyManager}s to be used for connections made by this factory.
      */
     public void setKeyManagers(KeyManager[] keyManagers) {
@@ -326,7 +344,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket(Socket k, String host, int port, boolean close) throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket(k, host, port, close);
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         if (mSecure) {
             verifyHostname(s, host);
@@ -345,7 +366,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket() throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket();
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         return s;
     }
@@ -362,7 +386,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
             throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket(
                 addr, port, localAddr, localPort);
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         return s;
     }
@@ -377,7 +404,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket(InetAddress addr, int port) throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket(addr, port);
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         return s;
     }
@@ -393,7 +423,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
             throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket(
                 host, port, localAddr, localPort);
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         if (mSecure) {
             verifyHostname(s, host);
@@ -410,7 +443,10 @@ public class SSLCertificateSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket(String host, int port) throws IOException {
         OpenSSLSocketImpl s = (OpenSSLSocketImpl) getDelegate().createSocket(host, port);
+<<<<<<< HEAD
         s.setNpnProtocols(mNpnProtocols);
+=======
+>>>>>>> upstream/master
         s.setHandshakeTimeout(mHandshakeTimeoutMillis);
         if (mSecure) {
             verifyHostname(s, host);

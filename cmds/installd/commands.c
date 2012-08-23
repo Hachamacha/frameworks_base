@@ -30,21 +30,34 @@ int install(const char *pkgname, uid_t uid, gid_t gid)
     char libdir[PKG_PATH_MAX];
 
     if ((uid < AID_SYSTEM) || (gid < AID_SYSTEM)) {
+<<<<<<< HEAD
         ALOGE("invalid uid/gid: %d %d\n", uid, gid);
+=======
+        LOGE("invalid uid/gid: %d %d\n", uid, gid);
+>>>>>>> upstream/master
         return -1;
     }
 
     if (create_pkg_path(pkgdir, pkgname, PKG_DIR_POSTFIX, 0)) {
+<<<<<<< HEAD
         ALOGE("cannot create package path\n");
+=======
+        LOGE("cannot create package path\n");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (create_pkg_path(libdir, pkgname, PKG_LIB_POSTFIX, 0)) {
+<<<<<<< HEAD
         ALOGE("cannot create package lib path\n");
+=======
+        LOGE("cannot create package lib path\n");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (mkdir(pkgdir, 0751) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot create dir '%s': %s\n", pkgdir, strerror(errno));
         return -errno;
     }
@@ -67,13 +80,40 @@ int install(const char *pkgname, uid_t uid, gid_t gid)
     }
     if (chown(libdir, AID_SYSTEM, AID_SYSTEM) < 0) {
         ALOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+=======
+        LOGE("cannot create dir '%s': %s\n", pkgdir, strerror(errno));
+        return -errno;
+    }
+    if (chmod(pkgdir, 0751) < 0) {
+        LOGE("cannot chmod dir '%s': %s\n", pkgdir, strerror(errno));
+        unlink(pkgdir);
+        return -errno;
+    }
+    if (chown(pkgdir, uid, gid) < 0) {
+        LOGE("cannot chown dir '%s': %s\n", pkgdir, strerror(errno));
+        unlink(pkgdir);
+        return -errno;
+    }
+    if (mkdir(libdir, 0755) < 0) {
+        LOGE("cannot create dir '%s': %s\n", libdir, strerror(errno));
+        unlink(pkgdir);
+        return -errno;
+    }
+    if (chmod(libdir, 0755) < 0) {
+        LOGE("cannot chmod dir '%s': %s\n", libdir, strerror(errno));
+>>>>>>> upstream/master
         unlink(libdir);
         unlink(pkgdir);
         return -errno;
     }
+<<<<<<< HEAD
 
     if (chown(pkgdir, uid, gid) < 0) {
         ALOGE("cannot chown dir '%s': %s\n", pkgdir, strerror(errno));
+=======
+    if (chown(libdir, AID_SYSTEM, AID_SYSTEM) < 0) {
+        LOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+>>>>>>> upstream/master
         unlink(libdir);
         unlink(pkgdir);
         return -errno;
@@ -103,6 +143,7 @@ int renamepkg(const char *oldpkgname, const char *newpkgname)
         return -1;
 
     if (rename(oldpkgdir, newpkgdir) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot rename dir '%s' to '%s': %s\n", oldpkgdir, newpkgdir, strerror(errno));
         return -errno;
     }
@@ -143,6 +184,11 @@ int fix_uid(const char *pkgname, uid_t uid, gid_t gid)
         return -errno;
     }
 
+=======
+        LOGE("cannot rename dir '%s' to '%s': %s\n", oldpkgdir, newpkgdir, strerror(errno));
+        return -errno;
+    }
+>>>>>>> upstream/master
     return 0;
 }
 
@@ -167,11 +213,19 @@ int make_user_data(const char *pkgname, uid_t uid, uid_t persona)
         return -1;
     }
     if (mkdir(pkgdir, 0751) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot create dir '%s': %s\n", pkgdir, strerror(errno));
         return -errno;
     }
     if (chown(pkgdir, uid, uid) < 0) {
         ALOGE("cannot chown dir '%s': %s\n", pkgdir, strerror(errno));
+=======
+        LOGE("cannot create dir '%s': %s\n", pkgdir, strerror(errno));
+        return -errno;
+    }
+    if (chown(pkgdir, uid, uid) < 0) {
+        LOGE("cannot chown dir '%s': %s\n", pkgdir, strerror(errno));
+>>>>>>> upstream/master
         unlink(pkgdir);
         return -errno;
     }
@@ -188,6 +242,7 @@ int delete_persona(uid_t persona)
     return delete_dir_contents(pkgdir, 1, NULL);
 }
 
+<<<<<<< HEAD
 int clone_persona_data(uid_t src_persona, uid_t target_persona, int copy)
 {
     char src_data_dir[PKG_PATH_MAX];
@@ -230,6 +285,8 @@ int clone_persona_data(uid_t src_persona, uid_t target_persona, int copy)
     return 0;
 }
 
+=======
+>>>>>>> upstream/master
 int delete_cache(const char *pkgname)
 {
     char cachedir[PKG_PATH_MAX];
@@ -247,7 +304,11 @@ static int64_t disk_free()
     if (statfs(android_data_dir.path, &sfs) == 0) {
         return sfs.f_bavail * sfs.f_bsize;
     } else {
+<<<<<<< HEAD
         ALOGE("Couldn't statfs %s: %s\n", android_data_dir.path, strerror(errno));
+=======
+        LOGE("Couldn't statfs %s: %s\n", android_data_dir.path, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 }
@@ -271,17 +332,29 @@ int free_cache(int64_t free_size)
     avail = disk_free();
     if (avail < 0) return -1;
 
+<<<<<<< HEAD
     ALOGI("free_cache(%" PRId64 ") avail %" PRId64 "\n", free_size, avail);
     if (avail >= free_size) return 0;
 
     if (create_persona_path(datadir, 0)) {
         ALOGE("couldn't get directory for persona 0");
+=======
+    LOGI("free_cache(%" PRId64 ") avail %" PRId64 "\n", free_size, avail);
+    if (avail >= free_size) return 0;
+
+    if (create_persona_path(datadir, 0)) {
+        LOGE("couldn't get directory for persona 0");
+>>>>>>> upstream/master
         return -1;
     }
 
     d = opendir(datadir);
     if (d == NULL) {
+<<<<<<< HEAD
         ALOGE("cannot open %s: %s\n", datadir, strerror(errno));
+=======
+        LOGE("cannot open %s: %s\n", datadir, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
     dfd = dirfd(d);
@@ -325,9 +398,15 @@ int move_dex(const char *src, const char *dst)
     if (create_cache_path(src_dex, src)) return -1;
     if (create_cache_path(dst_dex, dst)) return -1;
 
+<<<<<<< HEAD
     ALOGV("move %s -> %s\n", src_dex, dst_dex);
     if (rename(src_dex, dst_dex) < 0) {
         ALOGE("Couldn't move %s: %s\n", src_dex, strerror(errno));
+=======
+    LOGV("move %s -> %s\n", src_dex, dst_dex);
+    if (rename(src_dex, dst_dex) < 0) {
+        LOGE("Couldn't move %s: %s\n", src_dex, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     } else {
         return 0;
@@ -341,9 +420,15 @@ int rm_dex(const char *path)
     if (validate_apk_path(path)) return -1;
     if (create_cache_path(dex_path, path)) return -1;
 
+<<<<<<< HEAD
     ALOGV("unlink %s\n", dex_path);
     if (unlink(dex_path) < 0) {
         ALOGE("Couldn't unlink %s: %s\n", dex_path, strerror(errno));
+=======
+    LOGV("unlink %s\n", dex_path);
+    if (unlink(dex_path) < 0) {
+        LOGE("Couldn't unlink %s: %s\n", dex_path, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     } else {
         return 0;
@@ -363,12 +448,20 @@ int protect(char *pkgname, gid_t gid)
     if (stat(pkgpath, &s) < 0) return -1;
 
     if (chown(pkgpath, s.st_uid, gid) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chgrp '%s': %s\n", pkgpath, strerror(errno));
+=======
+        LOGE("failed to chgrp '%s': %s\n", pkgpath, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
     if (chmod(pkgpath, S_IRUSR|S_IWUSR|S_IRGRP) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chmod '%s': %s\n", pkgpath, strerror(errno));
+=======
+        LOGE("failed to chmod '%s': %s\n", pkgpath, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -525,7 +618,11 @@ static void run_dexopt(int zip_fd, int odex_fd, const char* input_file_name,
 
     execl(DEX_OPT_BIN, DEX_OPT_BIN, "--zip", zip_num, odex_num, input_file_name,
         dexopt_flags, (char*) NULL);
+<<<<<<< HEAD
     ALOGE("execl(%s) failed: %s\n", DEX_OPT_BIN, strerror(errno));
+=======
+    LOGE("execl(%s) failed: %s\n", DEX_OPT_BIN, strerror(errno));
+>>>>>>> upstream/master
 }
 
 static int wait_dexopt(pid_t pid, const char* apk_path)
@@ -545,16 +642,27 @@ static int wait_dexopt(pid_t pid, const char* apk_path)
         }
     }
     if (got_pid != pid) {
+<<<<<<< HEAD
         ALOGW("waitpid failed: wanted %d, got %d: %s\n",
+=======
+        LOGW("waitpid failed: wanted %d, got %d: %s\n",
+>>>>>>> upstream/master
             (int) pid, (int) got_pid, strerror(errno));
         return 1;
     }
 
     if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+<<<<<<< HEAD
         ALOGV("DexInv: --- END '%s' (success) ---\n", apk_path);
         return 0;
     } else {
         ALOGW("DexInv: --- END '%s' --- status=0x%04x, process failed\n",
+=======
+        LOGV("DexInv: --- END '%s' (success) ---\n", apk_path);
+        return 0;
+    } else {
+        LOGW("DexInv: --- END '%s' --- status=0x%04x, process failed\n",
+>>>>>>> upstream/master
             apk_path, status);
         return status;      /* always nonzero */
     }
@@ -597,34 +705,55 @@ int dexopt(const char *apk_path, uid_t uid, int is_public)
 
     zip_fd = open(apk_path, O_RDONLY, 0);
     if (zip_fd < 0) {
+<<<<<<< HEAD
         ALOGE("dexopt cannot open '%s' for input\n", apk_path);
+=======
+        LOGE("dexopt cannot open '%s' for input\n", apk_path);
+>>>>>>> upstream/master
         return -1;
     }
 
     unlink(dex_path);
     odex_fd = open(dex_path, O_RDWR | O_CREAT | O_EXCL, 0644);
     if (odex_fd < 0) {
+<<<<<<< HEAD
         ALOGE("dexopt cannot open '%s' for output\n", dex_path);
         goto fail;
     }
     if (fchown(odex_fd, AID_SYSTEM, uid) < 0) {
         ALOGE("dexopt cannot chown '%s'\n", dex_path);
+=======
+        LOGE("dexopt cannot open '%s' for output\n", dex_path);
+        goto fail;
+    }
+    if (fchown(odex_fd, AID_SYSTEM, uid) < 0) {
+        LOGE("dexopt cannot chown '%s'\n", dex_path);
+>>>>>>> upstream/master
         goto fail;
     }
     if (fchmod(odex_fd,
                S_IRUSR|S_IWUSR|S_IRGRP |
                (is_public ? S_IROTH : 0)) < 0) {
+<<<<<<< HEAD
         ALOGE("dexopt cannot chmod '%s'\n", dex_path);
         goto fail;
     }
 
     ALOGV("DexInv: --- BEGIN '%s' ---\n", apk_path);
+=======
+        LOGE("dexopt cannot chmod '%s'\n", dex_path);
+        goto fail;
+    }
+
+    LOGV("DexInv: --- BEGIN '%s' ---\n", apk_path);
+>>>>>>> upstream/master
 
     pid_t pid;
     pid = fork();
     if (pid == 0) {
         /* child -- drop privileges before continuing */
         if (setgid(uid) != 0) {
+<<<<<<< HEAD
             ALOGE("setgid(%d) failed during dexopt\n", uid);
             exit(64);
         }
@@ -634,6 +763,17 @@ int dexopt(const char *apk_path, uid_t uid, int is_public)
         }
         if (flock(odex_fd, LOCK_EX | LOCK_NB) != 0) {
             ALOGE("flock(%s) failed: %s\n", dex_path, strerror(errno));
+=======
+            LOGE("setgid(%d) failed during dexopt\n", uid);
+            exit(64);
+        }
+        if (setuid(uid) != 0) {
+            LOGE("setuid(%d) during dexopt\n", uid);
+            exit(65);
+        }
+        if (flock(odex_fd, LOCK_EX | LOCK_NB) != 0) {
+            LOGE("flock(%s) failed: %s\n", dex_path, strerror(errno));
+>>>>>>> upstream/master
             exit(66);
         }
 
@@ -642,7 +782,11 @@ int dexopt(const char *apk_path, uid_t uid, int is_public)
     } else {
         res = wait_dexopt(pid, apk_path);
         if (res != 0) {
+<<<<<<< HEAD
             ALOGE("dexopt failed on '%s' res = %d\n", dex_path, res);
+=======
+            LOGE("dexopt failed on '%s' res = %d\n", dex_path, res);
+>>>>>>> upstream/master
             goto fail;
         }
     }
@@ -673,11 +817,19 @@ void mkinnerdirs(char* path, int basepos, mode_t mode, int uid, int gid,
         if (path[basepos] == '/') {
             path[basepos] = 0;
             if (lstat(path, statbuf) < 0) {
+<<<<<<< HEAD
                 ALOGV("Making directory: %s\n", path);
                 if (mkdir(path, mode) == 0) {
                     chown(path, uid, gid);
                 } else {
                     ALOGW("Unable to make directory %s: %s\n", path, strerror(errno));
+=======
+                LOGV("Making directory: %s\n", path);
+                if (mkdir(path, mode) == 0) {
+                    chown(path, uid, gid);
+                } else {
+                    LOGW("Unable to make directory %s: %s\n", path, strerror(errno));
+>>>>>>> upstream/master
                 }
             }
             path[basepos] = '/';
@@ -698,22 +850,37 @@ int movefileordir(char* srcpath, char* dstpath, int dstbasepos,
     int dstend = strlen(dstpath);
     
     if (lstat(srcpath, statbuf) < 0) {
+<<<<<<< HEAD
         ALOGW("Unable to stat %s: %s\n", srcpath, strerror(errno));
+=======
+        LOGW("Unable to stat %s: %s\n", srcpath, strerror(errno));
+>>>>>>> upstream/master
         return 1;
     }
     
     if ((statbuf->st_mode&S_IFDIR) == 0) {
         mkinnerdirs(dstpath, dstbasepos, S_IRWXU|S_IRWXG|S_IXOTH,
                 dstuid, dstgid, statbuf);
+<<<<<<< HEAD
         ALOGV("Renaming %s to %s (uid %d)\n", srcpath, dstpath, dstuid);
         if (rename(srcpath, dstpath) >= 0) {
             if (chown(dstpath, dstuid, dstgid) < 0) {
                 ALOGE("cannot chown %s: %s\n", dstpath, strerror(errno));
+=======
+        LOGV("Renaming %s to %s (uid %d)\n", srcpath, dstpath, dstuid);
+        if (rename(srcpath, dstpath) >= 0) {
+            if (chown(dstpath, dstuid, dstgid) < 0) {
+                LOGE("cannot chown %s: %s\n", dstpath, strerror(errno));
+>>>>>>> upstream/master
                 unlink(dstpath);
                 return 1;
             }
         } else {
+<<<<<<< HEAD
             ALOGW("Unable to rename %s to %s: %s\n",
+=======
+            LOGW("Unable to rename %s to %s: %s\n",
+>>>>>>> upstream/master
                 srcpath, dstpath, strerror(errno));
             return 1;
         }
@@ -722,7 +889,11 @@ int movefileordir(char* srcpath, char* dstpath, int dstbasepos,
 
     d = opendir(srcpath);
     if (d == NULL) {
+<<<<<<< HEAD
         ALOGW("Unable to opendir %s: %s\n", srcpath, strerror(errno));
+=======
+        LOGW("Unable to opendir %s: %s\n", srcpath, strerror(errno));
+>>>>>>> upstream/master
         return 1;
     }
 
@@ -737,12 +908,20 @@ int movefileordir(char* srcpath, char* dstpath, int dstbasepos,
         }
         
         if ((srcend+strlen(name)) >= (PKG_PATH_MAX-2)) {
+<<<<<<< HEAD
             ALOGW("Source path too long; skipping: %s/%s\n", srcpath, name);
+=======
+            LOGW("Source path too long; skipping: %s/%s\n", srcpath, name);
+>>>>>>> upstream/master
             continue;
         }
         
         if ((dstend+strlen(name)) >= (PKG_PATH_MAX-2)) {
+<<<<<<< HEAD
             ALOGW("Destination path too long; skipping: %s/%s\n", dstpath, name);
+=======
+            LOGW("Destination path too long; skipping: %s/%s\n", dstpath, name);
+>>>>>>> upstream/master
             continue;
         }
         
@@ -798,7 +977,11 @@ int movefiles()
         } else {
             subfd = openat(dfd, name, O_RDONLY);
             if (subfd < 0) {
+<<<<<<< HEAD
                 ALOGW("Unable to open update commands at %s%s\n",
+=======
+                LOGW("Unable to open update commands at %s%s\n",
+>>>>>>> upstream/master
                         UPDATE_COMMANDS_DIR_PREFIX, name);
                 continue;
             }
@@ -814,7 +997,11 @@ int movefiles()
                 }
                 if (bufi < bufe) {
                     buf[bufi] = 0;
+<<<<<<< HEAD
                     ALOGV("Processing line: %s\n", buf+bufp);
+=======
+                    LOGV("Processing line: %s\n", buf+bufp);
+>>>>>>> upstream/master
                     hasspace = 0;
                     while (bufp < bufi && isspace(buf[bufp])) {
                         hasspace = 1;
@@ -824,12 +1011,20 @@ int movefiles()
                         // skip comments and empty lines.
                     } else if (hasspace) {
                         if (dstpkg[0] == 0) {
+<<<<<<< HEAD
                             ALOGW("Path before package line in %s%s: %s\n",
+=======
+                            LOGW("Path before package line in %s%s: %s\n",
+>>>>>>> upstream/master
                                     UPDATE_COMMANDS_DIR_PREFIX, name, buf+bufp);
                         } else if (srcpkg[0] == 0) {
                             // Skip -- source package no longer exists.
                         } else {
+<<<<<<< HEAD
                             ALOGV("Move file: %s (from %s to %s)\n", buf+bufp, srcpkg, dstpkg);
+=======
+                            LOGV("Move file: %s (from %s to %s)\n", buf+bufp, srcpkg, dstpkg);
+>>>>>>> upstream/master
                             if (!create_move_path(srcpath, srcpkg, buf+bufp, 0) &&
                                     !create_move_path(dstpath, dstpkg, buf+bufp, 0)) {
                                 movefileordir(srcpath, dstpath,
@@ -840,7 +1035,11 @@ int movefiles()
                     } else {
                         char* div = strchr(buf+bufp, ':');
                         if (div == NULL) {
+<<<<<<< HEAD
                             ALOGW("Bad package spec in %s%s; no ':' sep: %s\n",
+=======
+                            LOGW("Bad package spec in %s%s; no ':' sep: %s\n",
+>>>>>>> upstream/master
                                     UPDATE_COMMANDS_DIR_PREFIX, name, buf+bufp);
                         } else {
                             *div = 0;
@@ -849,14 +1048,22 @@ int movefiles()
                                 strcpy(dstpkg, buf+bufp);
                             } else {
                                 srcpkg[0] = dstpkg[0] = 0;
+<<<<<<< HEAD
                                 ALOGW("Package name too long in %s%s: %s\n",
+=======
+                                LOGW("Package name too long in %s%s: %s\n",
+>>>>>>> upstream/master
                                         UPDATE_COMMANDS_DIR_PREFIX, name, buf+bufp);
                             }
                             if (strlen(div) < PKG_NAME_MAX) {
                                 strcpy(srcpkg, div);
                             } else {
                                 srcpkg[0] = dstpkg[0] = 0;
+<<<<<<< HEAD
                                 ALOGW("Package name too long in %s%s: %s\n",
+=======
+                                LOGW("Package name too long in %s%s: %s\n",
+>>>>>>> upstream/master
                                         UPDATE_COMMANDS_DIR_PREFIX, name, div);
                             }
                             if (srcpkg[0] != 0) {
@@ -867,7 +1074,11 @@ int movefiles()
                                     }
                                 } else {
                                     srcpkg[0] = 0;
+<<<<<<< HEAD
                                     ALOGW("Can't create path %s in %s%s\n",
+=======
+                                    LOGW("Can't create path %s in %s%s\n",
+>>>>>>> upstream/master
                                             div, UPDATE_COMMANDS_DIR_PREFIX, name);
                                 }
                                 if (srcpkg[0] != 0) {
@@ -884,11 +1095,19 @@ int movefiles()
                                         }
                                     } else {
                                         srcpkg[0] = 0;
+<<<<<<< HEAD
                                         ALOGW("Can't create path %s in %s%s\n",
                                                 div, UPDATE_COMMANDS_DIR_PREFIX, name);
                                     }
                                 }
                                 ALOGV("Transfering from %s to %s: uid=%d\n",
+=======
+                                        LOGW("Can't create path %s in %s%s\n",
+                                                div, UPDATE_COMMANDS_DIR_PREFIX, name);
+                                    }
+                                }
+                                LOGV("Transfering from %s to %s: uid=%d\n",
+>>>>>>> upstream/master
                                     srcpkg, dstpkg, dstuid);
                             }
                         }
@@ -897,7 +1116,11 @@ int movefiles()
                 } else {
                     if (bufp == 0) {
                         if (bufp < bufe) {
+<<<<<<< HEAD
                             ALOGW("Line too long in %s%s, skipping: %s\n",
+=======
+                            LOGW("Line too long in %s%s, skipping: %s\n",
+>>>>>>> upstream/master
                                     UPDATE_COMMANDS_DIR_PREFIX, name, buf);
                         }
                     } else if (bufp < bufe) {
@@ -907,7 +1130,11 @@ int movefiles()
                     }
                     readlen = read(subfd, buf+bufe, PKG_PATH_MAX-bufe);
                     if (readlen < 0) {
+<<<<<<< HEAD
                         ALOGW("Failure reading update commands in %s%s: %s\n",
+=======
+                        LOGW("Failure reading update commands in %s%s: %s\n",
+>>>>>>> upstream/master
                                 UPDATE_COMMANDS_DIR_PREFIX, name, strerror(errno));
                         break;
                     } else if (readlen == 0) {
@@ -915,7 +1142,11 @@ int movefiles()
                     }
                     bufe += readlen;
                     buf[bufe] = 0;
+<<<<<<< HEAD
                     ALOGV("Read buf: %s\n", buf);
+=======
+                    LOGV("Read buf: %s\n", buf);
+>>>>>>> upstream/master
                 }
             }
             close(subfd);
@@ -934,30 +1165,50 @@ int linklib(const char* dataDir, const char* asecLibDir)
 
     const size_t libdirLen = strlen(dataDir) + strlen(PKG_LIB_POSTFIX);
     if (libdirLen >= PKG_PATH_MAX) {
+<<<<<<< HEAD
         ALOGE("library dir len too large");
+=======
+        LOGE("library dir len too large");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (snprintf(libdir, sizeof(libdir), "%s%s", dataDir, PKG_LIB_POSTFIX) != (ssize_t)libdirLen) {
+<<<<<<< HEAD
         ALOGE("library dir not written successfully: %s\n", strerror(errno));
+=======
+        LOGE("library dir not written successfully: %s\n", strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
     if (stat(dataDir, &s) < 0) return -1;
 
     if (chown(dataDir, 0, 0) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chown '%s': %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chown '%s': %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
     if (chmod(dataDir, 0700) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         rc = -1;
         goto out;
     }
 
     if (lstat(libdir, &libStat) < 0) {
+<<<<<<< HEAD
         ALOGE("couldn't stat lib dir: %s\n", strerror(errno));
+=======
+        LOGE("couldn't stat lib dir: %s\n", strerror(errno));
+>>>>>>> upstream/master
         rc = -1;
         goto out;
     }
@@ -975,13 +1226,21 @@ int linklib(const char* dataDir, const char* asecLibDir)
     }
 
     if (symlink(asecLibDir, libdir) < 0) {
+<<<<<<< HEAD
         ALOGE("couldn't symlink directory '%s' -> '%s': %s\n", libdir, asecLibDir, strerror(errno));
+=======
+        LOGE("couldn't symlink directory '%s' -> '%s': %s\n", libdir, asecLibDir, strerror(errno));
+>>>>>>> upstream/master
         rc = -errno;
         goto out;
     }
 
     if (lchown(libdir, AID_SYSTEM, AID_SYSTEM) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+=======
+        LOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+>>>>>>> upstream/master
         unlink(libdir);
         rc = -errno;
         goto out;
@@ -989,12 +1248,21 @@ int linklib(const char* dataDir, const char* asecLibDir)
 
 out:
     if (chmod(dataDir, s.st_mode) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
         rc = -errno;
     }
 
     if (chown(dataDir, s.st_uid, s.st_gid) < 0) {
         ALOGE("failed to chown '%s' : %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+        return -errno;
+    }
+
+    if (chown(dataDir, s.st_uid, s.st_gid) < 0) {
+        LOGE("failed to chown '%s' : %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         return -errno;
     }
 
@@ -1013,28 +1281,48 @@ int unlinklib(const char* dataDir)
     }
 
     if (snprintf(libdir, sizeof(libdir), "%s%s", dataDir, PKG_LIB_POSTFIX) != (ssize_t)libdirLen) {
+<<<<<<< HEAD
         ALOGE("library dir not written successfully: %s\n", strerror(errno));
+=======
+        LOGE("library dir not written successfully: %s\n", strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
     if (stat(dataDir, &s) < 0) {
+<<<<<<< HEAD
         ALOGE("couldn't state data dir");
+=======
+        LOGE("couldn't state data dir");
+>>>>>>> upstream/master
         return -1;
     }
 
     if (chown(dataDir, 0, 0) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chown '%s': %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chown '%s': %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 
     if (chmod(dataDir, 0700) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         rc = -1;
         goto out;
     }
 
     if (lstat(libdir, &libStat) < 0) {
+<<<<<<< HEAD
         ALOGE("couldn't stat lib dir: %s\n", strerror(errno));
+=======
+        LOGE("couldn't stat lib dir: %s\n", strerror(errno));
+>>>>>>> upstream/master
         rc = -1;
         goto out;
     }
@@ -1052,13 +1340,21 @@ int unlinklib(const char* dataDir)
     }
 
     if (mkdir(libdir, 0755) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot create dir '%s': %s\n", libdir, strerror(errno));
+=======
+        LOGE("cannot create dir '%s': %s\n", libdir, strerror(errno));
+>>>>>>> upstream/master
         rc = -errno;
         goto out;
     }
 
     if (chown(libdir, AID_SYSTEM, AID_SYSTEM) < 0) {
+<<<<<<< HEAD
         ALOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+=======
+        LOGE("cannot chown dir '%s': %s\n", libdir, strerror(errno));
+>>>>>>> upstream/master
         unlink(libdir);
         rc = -errno;
         goto out;
@@ -1066,12 +1362,21 @@ int unlinklib(const char* dataDir)
 
 out:
     if (chmod(dataDir, s.st_mode) < 0) {
+<<<<<<< HEAD
         ALOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
         rc = -1;
     }
 
     if (chown(dataDir, s.st_uid, s.st_gid) < 0) {
         ALOGE("failed to chown '%s' : %s\n", dataDir, strerror(errno));
+=======
+        LOGE("failed to chmod '%s': %s\n", dataDir, strerror(errno));
+        return -1;
+    }
+
+    if (chown(dataDir, s.st_uid, s.st_gid) < 0) {
+        LOGE("failed to chown '%s' : %s\n", dataDir, strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 

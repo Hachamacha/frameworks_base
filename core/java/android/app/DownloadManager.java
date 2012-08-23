@@ -51,9 +51,12 @@ import java.util.List;
  * Apps that request downloads through this API should register a broadcast receiver for
  * {@link #ACTION_NOTIFICATION_CLICKED} to appropriately handle when the user clicks on a running
  * download in a notification or from the downloads UI.
+<<<<<<< HEAD
  *
  * Note that the application must have the {@link android.Manifest.permission#INTERNET}
  * permission to use this class.
+=======
+>>>>>>> upstream/master
  */
 public class DownloadManager {
 
@@ -350,9 +353,14 @@ public class DownloadManager {
         private CharSequence mTitle;
         private CharSequence mDescription;
         private String mMimeType;
+<<<<<<< HEAD
         private int mAllowedNetworkTypes = ~0; // default to all network types allowed
         private boolean mRoamingAllowed = true;
         private boolean mMeteredAllowed = true;
+=======
+        private boolean mRoamingAllowed = true;
+        private int mAllowedNetworkTypes = ~0; // default to all network types allowed
+>>>>>>> upstream/master
         private boolean mIsVisibleInDownloadsUi = true;
         private boolean mScannable = false;
         private boolean mUseSystemCache = false;
@@ -613,11 +621,16 @@ public class DownloadManager {
         }
 
         /**
+<<<<<<< HEAD
          * Restrict the types of networks over which this download may proceed.
          * By default, all network types are allowed. Consider using
          * {@link #setAllowedOverMetered(boolean)} instead, since it's more
          * flexible.
          *
+=======
+         * Restrict the types of networks over which this download may proceed.  By default, all
+         * network types are allowed.
+>>>>>>> upstream/master
          * @param flags any combination of the NETWORK_* bit flags.
          * @return this object
          */
@@ -638,6 +651,7 @@ public class DownloadManager {
         }
 
         /**
+<<<<<<< HEAD
          * Set whether this download may proceed over a metered network
          * connection. By default, metered networks are allowed.
          *
@@ -649,6 +663,8 @@ public class DownloadManager {
         }
 
         /**
+=======
+>>>>>>> upstream/master
          * Set whether this download should be displayed in the system's Downloads UI. True by
          * default.
          * @param isVisible whether to display this download in the Downloads UI
@@ -693,7 +709,10 @@ public class DownloadManager {
             values.put(Downloads.Impl.COLUMN_VISIBILITY, mNotificationVisibility);
             values.put(Downloads.Impl.COLUMN_ALLOWED_NETWORK_TYPES, mAllowedNetworkTypes);
             values.put(Downloads.Impl.COLUMN_ALLOW_ROAMING, mRoamingAllowed);
+<<<<<<< HEAD
             values.put(Downloads.Impl.COLUMN_ALLOW_METERED, mMeteredAllowed);
+=======
+>>>>>>> upstream/master
             values.put(Downloads.Impl.COLUMN_IS_VISIBLE_IN_DOWNLOADS_UI, mIsVisibleInDownloadsUi);
 
             return values;
@@ -1116,6 +1135,7 @@ public class DownloadManager {
         }
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public static boolean isActiveNetworkExpensive(Context context) {
         // TODO: connect to NetworkPolicyManager
@@ -1128,6 +1148,8 @@ public class DownloadManager {
         return -1;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Adds a file to the downloads database system, so it could appear in Downloads App
      * (and thus become eligible for management by the Downloads App).
@@ -1158,7 +1180,11 @@ public class DownloadManager {
         validateArgumentIsNonEmpty("description", description);
         validateArgumentIsNonEmpty("path", path);
         validateArgumentIsNonEmpty("mimeType", mimeType);
+<<<<<<< HEAD
         if (length < 0) {
+=======
+        if (length <= 0) {
+>>>>>>> upstream/master
             throw new IllegalArgumentException(" invalid value for param: totalBytes");
         }
 
@@ -1343,6 +1369,12 @@ public class DownloadManager {
                 case Downloads.Impl.STATUS_FILE_ALREADY_EXISTS_ERROR:
                     return ERROR_FILE_ALREADY_EXISTS;
 
+<<<<<<< HEAD
+=======
+                case Downloads.Impl.STATUS_BLOCKED:
+                    return ERROR_BLOCKED;
+
+>>>>>>> upstream/master
                 default:
                     return ERROR_UNKNOWN;
             }

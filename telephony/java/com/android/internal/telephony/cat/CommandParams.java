@@ -34,11 +34,14 @@ class CommandParams {
     }
 
     boolean setIcon(Bitmap icon) { return true; }
+<<<<<<< HEAD
 
     @Override
     public String toString() {
         return cmdDet.toString();
     }
+=======
+>>>>>>> upstream/master
 }
 
 class DisplayTextParams extends CommandParams {

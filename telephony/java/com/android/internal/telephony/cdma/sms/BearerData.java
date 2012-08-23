@@ -16,6 +16,7 @@
 
 package com.android.internal.telephony.cdma.sms;
 
+<<<<<<< HEAD
 import android.content.res.Resources;
 import android.telephony.SmsCbCmasInfo;
 import android.telephony.SmsCbMessage;
@@ -39,6 +40,30 @@ import java.util.TimeZone;
 import static android.telephony.SmsMessage.ENCODING_16BIT;
 import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES;
 import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES_WITH_HEADER;
+=======
+import static android.telephony.SmsMessage.ENCODING_16BIT;
+import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES;
+import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES_WITH_HEADER;
+
+import android.util.Log;
+
+import android.telephony.SmsMessage;
+
+import android.text.format.Time;
+
+import com.android.internal.telephony.IccUtils;
+import com.android.internal.telephony.GsmAlphabet;
+import com.android.internal.telephony.SmsHeader;
+import com.android.internal.telephony.SmsMessageBase.TextEncodingDetails;
+
+import com.android.internal.util.BitwiseInputStream;
+import com.android.internal.util.BitwiseOutputStream;
+
+import android.content.res.Resources;
+
+import java.util.TimeZone;
+
+>>>>>>> upstream/master
 
 /**
  * An object to encode and decode CDMA SMS bearer data.
@@ -69,8 +94,13 @@ public final class BearerData {
     private final static byte SUBPARAM_MESSAGE_DISPLAY_MODE             = 0x0F;
     //private final static byte SUBPARAM_MULTIPLE_ENCODING_USER_DATA      = 0x10;
     private final static byte SUBPARAM_MESSAGE_DEPOSIT_INDEX            = 0x11;
+<<<<<<< HEAD
     private final static byte SUBPARAM_SERVICE_CATEGORY_PROGRAM_DATA    = 0x12;
     private final static byte SUBPARAM_SERVICE_CATEGORY_PROGRAM_RESULTS = 0x13;
+=======
+    //private final static byte SUBPARAM_SERVICE_CATEGORY_PROGRAM_DATA    = 0x12;
+    //private final static byte SUBPARAM_SERVICE_CATEGORY_PROGRAM_RESULTS = 0x13;
+>>>>>>> upstream/master
     private final static byte SUBPARAM_MESSAGE_STATUS                   = 0x14;
     //private final static byte SUBPARAM_TP_FAILURE_CAUSE                 = 0x15;
     //private final static byte SUBPARAM_ENHANCED_VMN                     = 0x16;
@@ -340,6 +370,7 @@ public final class BearerData {
      */
     public CdmaSmsAddress callbackNumber;
 
+<<<<<<< HEAD
     /**
      * CMAS warning notification information.
      * @see #decodeCmasUserData(BearerData, int)
@@ -355,12 +386,15 @@ public final class BearerData {
      */
     public List<CdmaSmsCbProgramData> serviceCategoryProgramData;
 
+=======
+>>>>>>> upstream/master
     private static class CodingException extends Exception {
         public CodingException(String s) {
             super(s);
         }
     }
 
+<<<<<<< HEAD
     /**
      * Returns the language indicator as a two-character ISO 639 string.
      * @return a two character ISO 639 language code
@@ -402,6 +436,8 @@ public final class BearerData {
         }
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -973,9 +1009,12 @@ public final class BearerData {
     private static String decodeUtf8(byte[] data, int offset, int numFields)
         throws CodingException
     {
+<<<<<<< HEAD
         if (numFields < 0 || (numFields + offset) > data.length) {
             throw new CodingException("UTF-8 decode failed: offset or length out of range");
         }
+=======
+>>>>>>> upstream/master
         try {
             return new String(data, offset, numFields, "UTF-8");
         } catch (java.io.UnsupportedEncodingException ex) {
@@ -986,12 +1025,20 @@ public final class BearerData {
     private static String decodeUtf16(byte[] data, int offset, int numFields)
         throws CodingException
     {
+<<<<<<< HEAD
         int byteCount = numFields * 2;
         if (byteCount < 0 || (byteCount + offset) > data.length) {
             throw new CodingException("UTF-16 decode failed: offset or length out of range");
         }
         try {
             return new String(data, offset, byteCount, "utf-16be");
+=======
+        // Start reading from the next 16-bit aligned boundary after offset.
+        int padding = offset % 2;
+        numFields -= (offset + padding) / 2;
+        try {
+            return new String(data, offset, numFields * 2, "utf-16be");
+>>>>>>> upstream/master
         } catch (java.io.UnsupportedEncodingException ex) {
             throw new CodingException("UTF-16 decode failed: " + ex);
         }
@@ -1049,11 +1096,16 @@ public final class BearerData {
     private static String decodeLatin(byte[] data, int offset, int numFields)
         throws CodingException
     {
+<<<<<<< HEAD
         if (numFields < 0 || (numFields + offset) > data.length) {
             throw new CodingException("ISO-8859-1 decode failed: offset or length out of range");
         }
         try {
             return new String(data, offset, numFields, "ISO-8859-1");
+=======
+        try {
+            return new String(data, offset, numFields - offset, "ISO-8859-1");
+>>>>>>> upstream/master
         } catch (java.io.UnsupportedEncodingException ex) {
             throw new CodingException("ISO-8859-1 decode failed: " + ex);
         }
@@ -1096,7 +1148,10 @@ public final class BearerData {
                 userData.payloadStr = decodeUtf8(userData.payload, offset, userData.numFields);
             }
             break;
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         case UserData.ENCODING_IA5:
         case UserData.ENCODING_7BIT_ASCII:
             userData.payloadStr = decode7bitAscii(userData.payload, offset, userData.numFields);
@@ -1179,9 +1234,14 @@ public final class BearerData {
         BitwiseInputStream inStream = new BitwiseInputStream(bData.userData.payload);
         int dataLen = inStream.available() / 6;  // 6-bit packed character encoding.
         int numFields = bData.userData.numFields;
+<<<<<<< HEAD
         // dataLen may be > 14 characters due to octet padding
         if ((numFields > 14) || (dataLen < numFields)) {
             throw new CodingException("IS-91 short message decoding failed");
+=======
+        if ((dataLen > 14) || (dataLen < numFields)) {
+            throw new CodingException("IS-91 voicemail status decoding failed");
+>>>>>>> upstream/master
         }
         StringBuffer strbuf = new StringBuffer(dataLen);
         for (int i = 0; i < numFields; i++) {
@@ -1605,7 +1665,11 @@ public final class BearerData {
             bData.userResponseCode = inStream.read(8);
         }
         if ((! decodeSuccess) || (paramBits > 0)) {
+<<<<<<< HEAD
             Log.d(LOG_TAG, "USER_RESPONSE_CODE decode " +
+=======
+            Log.d(LOG_TAG, "USER_REPONSE_CODE decode " +
+>>>>>>> upstream/master
                       (decodeSuccess ? "succeeded" : "failed") +
                       " (extra bits = " + paramBits + ")");
         }
@@ -1614,6 +1678,7 @@ public final class BearerData {
         return decodeSuccess;
     }
 
+<<<<<<< HEAD
     private static boolean decodeServiceCategoryProgramData(BearerData bData,
             BitwiseInputStream inStream) throws BitwiseInputStream.AccessException, CodingException
     {
@@ -1811,11 +1876,14 @@ public final class BearerData {
                 urgency, certainty);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Create BearerData object from serialized representation.
      * (See 3GPP2 C.R1001-F, v1.0, section 4.5 for layout details)
      *
      * @param smsData byte array of raw encoded SMS bearer data.
+<<<<<<< HEAD
      * @return an instance of BearerData.
      */
     public static BearerData decode(byte[] smsData) {
@@ -1836,18 +1904,31 @@ public final class BearerData {
      * @return an instance of BearerData.
      */
     public static BearerData decode(byte[] smsData, int serviceCategory) {
+=======
+     *
+     * @return an instance of BearerData.
+     */
+    public static BearerData decode(byte[] smsData) {
+>>>>>>> upstream/master
         try {
             BitwiseInputStream inStream = new BitwiseInputStream(smsData);
             BearerData bData = new BearerData();
             int foundSubparamMask = 0;
             while (inStream.available() > 0) {
+<<<<<<< HEAD
+=======
+                boolean decodeSuccess = false;
+>>>>>>> upstream/master
                 int subparamId = inStream.read(8);
                 int subparamIdBit = 1 << subparamId;
                 if ((foundSubparamMask & subparamIdBit) != 0) {
                     throw new CodingException("illegal duplicate subparameter (" +
                                               subparamId + ")");
                 }
+<<<<<<< HEAD
                 boolean decodeSuccess;
+=======
+>>>>>>> upstream/master
                 switch (subparamId) {
                 case SUBPARAM_MESSAGE_IDENTIFIER:
                     decodeSuccess = decodeMessageId(bData, inStream);
@@ -1903,9 +1984,12 @@ public final class BearerData {
                 case SUBPARAM_MESSAGE_DEPOSIT_INDEX:
                     decodeSuccess = decodeDepositIndex(bData, inStream);
                     break;
+<<<<<<< HEAD
                 case SUBPARAM_SERVICE_CATEGORY_PROGRAM_DATA:
                     decodeSuccess = decodeServiceCategoryProgramData(bData, inStream);
                     break;
+=======
+>>>>>>> upstream/master
                 default:
                     throw new CodingException("unsupported bearer data subparameter ("
                                               + subparamId + ")");
@@ -1916,9 +2000,13 @@ public final class BearerData {
                 throw new CodingException("missing MESSAGE_IDENTIFIER subparam");
             }
             if (bData.userData != null) {
+<<<<<<< HEAD
                 if (isCmasAlertCategory(serviceCategory)) {
                     decodeCmasUserData(bData, serviceCategory);
                 } else if (bData.userData.msgEncoding == UserData.ENCODING_IS91_EXTENDED_PROTOCOL) {
+=======
+                if (bData.userData.msgEncoding == UserData.ENCODING_IS91_EXTENDED_PROTOCOL) {
+>>>>>>> upstream/master
                     if ((foundSubparamMask ^
                              (1 << SUBPARAM_MESSAGE_IDENTIFIER) ^
                              (1 << SUBPARAM_USER_DATA))

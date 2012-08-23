@@ -17,7 +17,11 @@
 #ifndef _ANDROID_APP_NATIVEACTIVITY_H
 #define _ANDROID_APP_NATIVEACTIVITY_H
 
+<<<<<<< HEAD
 #include <androidfw/InputTransport.h>
+=======
+#include <ui/InputTransport.h>
+>>>>>>> upstream/master
 #include <utils/Looper.h>
 
 #include <android/native_activity.h>
@@ -65,7 +69,11 @@ extern void android_NativeActivity_hideSoftInput(
  *      b. Java sends event through default key handler.
  *      c. event is finished.
  */
+<<<<<<< HEAD
 struct AInputQueue {
+=======
+struct AInputQueue : public android::InputEventFactoryInterface {
+>>>>>>> upstream/master
 public:
     /* Creates a consumer associated with an input channel. */
     explicit AInputQueue(const android::sp<android::InputChannel>& channel, int workWrite);
@@ -96,16 +104,26 @@ public:
     android::KeyEvent* consumeUnhandledEvent();
     android::KeyEvent* consumePreDispatchingEvent(int* outSeq);
 
+<<<<<<< HEAD
     android::KeyEvent* createKeyEvent();
+=======
+    virtual android::KeyEvent* createKeyEvent();
+    virtual android::MotionEvent* createMotionEvent();
+>>>>>>> upstream/master
 
     int mWorkWrite;
 
 private:
     void doUnhandledKey(android::KeyEvent* keyEvent);
     bool preDispatchKey(android::KeyEvent* keyEvent);
+<<<<<<< HEAD
     void wakeupDispatchLocked();
 
     android::PooledInputEventFactory mPooledInputEventFactory;
+=======
+    void wakeupDispatch();
+
+>>>>>>> upstream/master
     android::InputConsumer mConsumer;
     android::sp<android::Looper> mLooper;
 
@@ -114,8 +132,13 @@ private:
 
     struct in_flight_event {
         android::InputEvent* event;
+<<<<<<< HEAD
         int seq; // internal sequence number for synthetic pre-dispatch events
         uint32_t finishSeq; // sequence number for sendFinishedSignal, or 0 if finish not required
+=======
+        int seq;
+        bool doFinish;
+>>>>>>> upstream/master
     };
 
     struct finish_pre_dispatch {
@@ -127,6 +150,14 @@ private:
 
     int mSeq;
 
+<<<<<<< HEAD
+=======
+    // Cache of previously allocated key events.
+    android::Vector<android::KeyEvent*> mAvailKeyEvents;
+    // Cache of previously allocated motion events.
+    android::Vector<android::MotionEvent*> mAvailMotionEvents;
+
+>>>>>>> upstream/master
     // All input events that are actively being processed.
     android::Vector<in_flight_event> mInFlightEvents;
 

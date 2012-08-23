@@ -22,6 +22,7 @@
     <ImageButton android:id="@+id/increment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:background="@android:drawable/numberpicker_up_btn"
         android:paddingTop="22dip"
         android:paddingBottom="22dip"
@@ -35,13 +36,27 @@
         android:gravity="center"
         android:singleLine="true"
         android:background="@drawable/numberpicker_input" />
+=======
+        style="?android:attr/numberPickerUpButtonStyle"
+        android:contentDescription="@string/number_picker_increment_button" />
+
+    <view class="android.widget.NumberPicker$CustomEditText"
+        android:id="@+id/numberpicker_input"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/numberPickerInputTextStyle" />
+>>>>>>> upstream/master
 
     <ImageButton android:id="@+id/decrement"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:background="@android:drawable/numberpicker_down_btn"
         android:paddingTop="22dip"
         android:paddingBottom="22dip"
+=======
+        style="?android:attr/numberPickerDownButtonStyle"
+>>>>>>> upstream/master
         android:contentDescription="@string/number_picker_decrement_button" />
 
 </merge>

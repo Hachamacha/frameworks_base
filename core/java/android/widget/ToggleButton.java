@@ -23,7 +23,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import com.android.internal.R;
 
@@ -154,6 +157,7 @@ public class ToggleButton extends CompoundButton {
     }
 
     @Override
+<<<<<<< HEAD
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(ToggleButton.class.getName());
@@ -163,5 +167,14 @@ public class ToggleButton extends CompoundButton {
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ToggleButton.class.getName());
+=======
+    public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
+        super.onPopulateAccessibilityEvent(event);
+        if (isChecked()) {
+            event.getText().add(mContext.getString(R.string.togglebutton_pressed));
+        } else {
+            event.getText().add(mContext.getString(R.string.togglebutton_not_pressed));
+        }
+>>>>>>> upstream/master
     }
 }

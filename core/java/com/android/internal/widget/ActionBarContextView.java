@@ -56,7 +56,10 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
     private int mTitleStyleRes;
     private int mSubtitleStyleRes;
     private Drawable mSplitBackground;
+<<<<<<< HEAD
     private boolean mTitleOptional;
+=======
+>>>>>>> upstream/master
 
     private Animator mCurrentAnimation;
     private boolean mAnimateInOnLayout;
@@ -355,6 +358,7 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
         }
 
         if (mTitleLayout != null && mCustomView == null) {
+<<<<<<< HEAD
             if (mTitleOptional) {
                 final int titleWidthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
                 mTitleLayout.measure(titleWidthSpec, childSpecHeight);
@@ -367,6 +371,9 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
             } else {
                 availableWidth = measureChildView(mTitleLayout, availableWidth, childSpecHeight, 0);
             }
+=======
+            availableWidth = measureChildView(mTitleLayout, availableWidth, childSpecHeight, 0);
+>>>>>>> upstream/master
         }
 
         if (mCustomView != null) {
@@ -472,7 +479,11 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
             }
         }
 
+<<<<<<< HEAD
         if (mTitleLayout != null && mCustomView == null && mTitleLayout.getVisibility() != GONE) {
+=======
+        if (mTitleLayout != null && mCustomView == null) {
+>>>>>>> upstream/master
             x += positionChild(mTitleLayout, x, y, contentHeight);
         }
         
@@ -524,6 +535,7 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
             super.onInitializeAccessibilityEvent(event);
         }
     }
+<<<<<<< HEAD
 
     public void setTitleOptional(boolean titleOptional) {
         if (titleOptional != mTitleOptional) {
@@ -535,4 +547,6 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
     public boolean isTitleOptional() {
         return mTitleOptional;
     }
+=======
+>>>>>>> upstream/master
 }

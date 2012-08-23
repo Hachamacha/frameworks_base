@@ -2,6 +2,7 @@ page.title=Menu Design Guidelines
 parent.title=UI Guidelines
 parent.link=index.html
 @jd:body
+<<<<<<< HEAD
 
 
 
@@ -34,6 +35,9 @@ onclick="$('#naMessage').hide();$('#deprecatedSticker').show()" />
 
 
 
+=======
+	
+>>>>>>> upstream/master
 <div id="qv-wrapper">
 <div id="qv">
 			

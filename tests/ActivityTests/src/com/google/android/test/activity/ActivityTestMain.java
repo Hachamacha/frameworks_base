@@ -22,7 +22,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityThread;
+<<<<<<< HEAD
 import android.app.AlertDialog;
+=======
+>>>>>>> upstream/master
 import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.os.Bundle;
@@ -36,8 +39,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ScrollView;
 import android.view.LayoutInflater;
+<<<<<<< HEAD
 import android.view.Menu;
 import android.view.MenuItem;
+=======
+>>>>>>> upstream/master
 import android.view.View;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -104,6 +110,7 @@ public class ActivityTestMain extends Activity {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add("Animate!").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -118,6 +125,8 @@ public class ActivityTestMain extends Activity {
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     protected void onStart() {
         super.onStart();
         buildUi();

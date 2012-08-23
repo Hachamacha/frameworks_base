@@ -19,7 +19,11 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+<<<<<<< HEAD
     <!-- Resources for GlowPadView in LockScreen -->
+=======
+    <!-- Resources for MultiWaveView in LockScreen -->
+>>>>>>> upstream/master
     <array name="lockscreen_targets_when_silent">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@null</item>
@@ -57,14 +61,22 @@
 
     <array name="lockscreen_targets_with_camera">
         <item>@drawable/ic_lockscreen_unlock</item>
+<<<<<<< HEAD
         <item>@drawable/ic_action_assist_generic</item>
+=======
+        <item>@null</item>
+>>>>>>> upstream/master
         <item>@drawable/ic_lockscreen_camera</item>
         <item>@null</item>
     </array>
 
     <array name="lockscreen_target_descriptions_with_camera">
         <item>@string/description_target_unlock</item>
+<<<<<<< HEAD
         <item>@string/description_target_search</item>
+=======
+        <item>@null</item>
+>>>>>>> upstream/master
         <item>@string/description_target_camera</item>
         <item>@null</item>
     </array>

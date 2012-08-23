@@ -33,9 +33,15 @@ LOCAL_STATIC_LIBRARIES :=
 
 LOCAL_C_INCLUDES += \
     $(JNI_H_INCLUDE) \
+<<<<<<< HEAD
     $(TOP)/frameworks/av/drm/libdrmframework/include \
     $(TOP)/frameworks/av/drm/libdrmframework/plugins/common/include \
     $(TOP)/frameworks/av/include
+=======
+    $(TOP)/frameworks/base/drm/libdrmframework/include \
+    $(TOP)/frameworks/base/drm/libdrmframework/plugins/common/include \
+    $(TOP)/frameworks/base/include
+>>>>>>> upstream/master
 
 
 

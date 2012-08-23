@@ -18,9 +18,12 @@ page.title=Content Providers
     <li>
         <a href="{@docRoot}guide/topics/providers/calendar-provider.html">Calendar Provider</a>
     </li>
+<<<<<<< HEAD
     <li>
         <a href="{@docRoot}guide/topics/providers/contacts-provider.html">Contacts Provider</a>
     </li>
+=======
+>>>>>>> upstream/master
 </ol>
 
     <!-- Related Samples -->
@@ -41,10 +44,13 @@ page.title=Content Providers
         href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/view/List7.html">
         &quot;Cursor (Phones)&quot;</a>
         </li>
+<<<<<<< HEAD
         <li>
             <a href="{@docRoot}resources/samples/SampleSyncAdapter/index.html">
             Sample Sync Adapter</a>
         </li>
+=======
+>>>>>>> upstream/master
     </ol>
 </div>
 </div>
@@ -100,6 +106,7 @@ page.title=Content Providers
     <dd>
         How to access the Calendar Provider that is part of the Android platform.
     </dd>
+<<<<<<< HEAD
     <dt>
         <strong><a href="{@docRoot}guide/topics/providers/contacts-provider.html">
         Contacts Provider</a></strong>
@@ -107,4 +114,6 @@ page.title=Content Providers
     <dd>
         How to access the Contacts Provider that is part of the Android platform.
     </dd>
+=======
+>>>>>>> upstream/master
 </dl>

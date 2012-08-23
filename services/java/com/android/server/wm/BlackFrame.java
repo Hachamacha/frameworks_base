@@ -16,8 +16,11 @@
 
 package com.android.server.wm;
 
+<<<<<<< HEAD
 import java.io.PrintWriter;
 
+=======
+>>>>>>> upstream/master
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -32,13 +35,17 @@ public class BlackFrame {
     class BlackSurface {
         final int left;
         final int top;
+<<<<<<< HEAD
         final int layer;
+=======
+>>>>>>> upstream/master
         final Surface surface;
 
         BlackSurface(SurfaceSession session, int layer, int l, int t, int r, int b)
                 throws Surface.OutOfResourcesException {
             left = l;
             top = t;
+<<<<<<< HEAD
             this.layer = layer;
             int w = r-l;
             int h = b-t;
@@ -56,6 +63,17 @@ public class BlackFrame {
             if (WindowManagerService.SHOW_TRANSACTIONS ||
                     WindowManagerService.SHOW_SURFACE_ALLOC) Slog.i(WindowManagerService.TAG,
                             "  BLACK " + surface + ": CREATE layer=" + layer);
+=======
+            int w = r-l;
+            int h = b-t;
+            surface = new Surface(session, 0, "BlackSurface",
+                    -1, w, h, PixelFormat.OPAQUE, Surface.FX_SURFACE_DIM);
+            if (WindowManagerService.SHOW_TRANSACTIONS ||
+                    WindowManagerService.SHOW_SURFACE_ALLOC) Slog.i(WindowManagerService.TAG,
+                            "  BLACK " + surface + ": CREATE layer=" + layer);
+            surface.setAlpha(1.0f);
+            surface.setLayer(layer);
+>>>>>>> upstream/master
         }
 
         void setMatrix(Matrix matrix) {
@@ -83,12 +101,16 @@ public class BlackFrame {
         }
     }
 
+<<<<<<< HEAD
     final Rect mOuterRect;
     final Rect mInnerRect;
+=======
+>>>>>>> upstream/master
     final Matrix mTmpMatrix = new Matrix();
     final float[] mTmpFloats = new float[9];
     final BlackSurface[] mBlackSurfaces = new BlackSurface[4];
 
+<<<<<<< HEAD
     public void printTo(String prefix, PrintWriter pw) {
         pw.print(prefix); pw.print("Outer: "); mOuterRect.printShortString(pw);
                 pw.print(" / Inner: "); mInnerRect.printShortString(pw);
@@ -102,12 +124,17 @@ public class BlackFrame {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public BlackFrame(SurfaceSession session, Rect outer, Rect inner,
             int layer) throws Surface.OutOfResourcesException {
         boolean success = false;
 
+<<<<<<< HEAD
         mOuterRect = new Rect(outer);
         mInnerRect = new Rect(inner);
+=======
+>>>>>>> upstream/master
         try {
             if (outer.top < inner.top) {
                 mBlackSurfaces[0] = new BlackSurface(session, layer,

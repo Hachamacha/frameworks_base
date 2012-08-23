@@ -73,12 +73,18 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
 
     private final HashMap<Integer, HashSet<Uri>> mMessageBoxes;
     private final HashMap<Long, HashSet<Uri>> mThreads;
+<<<<<<< HEAD
     private final HashSet<Uri> mUpdating;
+=======
+>>>>>>> upstream/master
 
     private PduCache() {
         mMessageBoxes = new HashMap<Integer, HashSet<Uri>>();
         mThreads = new HashMap<Long, HashSet<Uri>>();
+<<<<<<< HEAD
         mUpdating = new HashSet<Uri>();
+=======
+>>>>>>> upstream/master
     }
 
     synchronized public static final PduCache getInstance() {
@@ -113,6 +119,7 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
             msgBox.add(finalKey);
             thread.add(finalKey);
         }
+<<<<<<< HEAD
         setUpdating(uri, false);
         return result;
     }
@@ -129,6 +136,11 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
         return mUpdating.contains(uri);
     }
 
+=======
+        return result;
+    }
+
+>>>>>>> upstream/master
     @Override
     synchronized public PduCacheEntry purge(Uri uri) {
         int match = URI_MATCHER.match(uri);
@@ -161,7 +173,10 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
     }
 
     private PduCacheEntry purgeSingleEntry(Uri key) {
+<<<<<<< HEAD
         mUpdating.remove(key);
+=======
+>>>>>>> upstream/master
         PduCacheEntry entry = super.purge(key);
         if (entry != null) {
             removeFromThreads(key, entry);
@@ -177,7 +192,10 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
 
         mMessageBoxes.clear();
         mThreads.clear();
+<<<<<<< HEAD
         mUpdating.clear();
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -218,7 +236,10 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
             HashSet<Uri> msgBox = mMessageBoxes.remove(msgBoxId);
             if (msgBox != null) {
                 for (Uri key : msgBox) {
+<<<<<<< HEAD
                     mUpdating.remove(key);
+=======
+>>>>>>> upstream/master
                     PduCacheEntry entry = super.purge(key);
                     if (entry != null) {
                         removeFromThreads(key, entry);
@@ -243,7 +264,10 @@ public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
         HashSet<Uri> thread = mThreads.remove(threadId);
         if (thread != null) {
             for (Uri key : thread) {
+<<<<<<< HEAD
                 mUpdating.remove(key);
+=======
+>>>>>>> upstream/master
                 PduCacheEntry entry = super.purge(key);
                 if (entry != null) {
                     removeFromMessageBoxes(key, entry);

@@ -52,7 +52,10 @@ import java.io.PrintWriter;
 public class Loader<D> {
     int mId;
     OnLoadCompleteListener<D> mListener;
+<<<<<<< HEAD
     OnLoadCanceledListener<D> mOnLoadCanceledListener;
+=======
+>>>>>>> upstream/master
     Context mContext;
     boolean mStarted = false;
     boolean mAbandoned = false;
@@ -101,6 +104,7 @@ public class Loader<D> {
     }
 
     /**
+<<<<<<< HEAD
      * Interface that is implemented to discover when a Loader has been canceled
      * before it finished loading its data.  You do not normally need to implement
      * this yourself; it is used in the implementation of {@link android.app.LoaderManager}
@@ -118,6 +122,8 @@ public class Loader<D> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Stores away the application context associated with context.
      * Since Loaders can be used across multiple activities it's dangerous to
      * store the context directly; always use {@link #getContext()} to retrieve
@@ -145,6 +151,7 @@ public class Loader<D> {
     }
 
     /**
+<<<<<<< HEAD
      * Informs the registered {@link OnLoadCanceledListener} that the load has been canceled.
      * Should only be called by subclasses.
      *
@@ -157,6 +164,8 @@ public class Loader<D> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @return an application context retrieved from the Context passed to the constructor.
      */
     public Context getContext() {
@@ -201,6 +210,7 @@ public class Loader<D> {
     }
 
     /**
+<<<<<<< HEAD
      * Registers a listener that will receive callbacks when a load is canceled.
      * The callback will be called on the process's main thread so it's safe to
      * pass the results to widgets.
@@ -235,6 +245,8 @@ public class Loader<D> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Return whether this load has been started.  That is, its {@link #startLoading()}
      * has been called and no calls to {@link #stopLoading()} or
      * {@link #reset()} have yet been made.
@@ -298,6 +310,7 @@ public class Loader<D> {
     }
 
     /**
+<<<<<<< HEAD
      * Attempt to cancel the current load task.
      * Must be called on the main thread of the process.
      *
@@ -335,6 +348,8 @@ public class Loader<D> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Force an asynchronous load. Unlike {@link #startLoading()} this will ignore a previously
      * loaded data set and load a new one.  This simply calls through to the
      * implementation's {@link #onForceLoad()}.  You generally should only call this

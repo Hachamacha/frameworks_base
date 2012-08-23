@@ -42,7 +42,18 @@ class DebugFlags {
     public static final boolean WEB_BACK_FORWARD_LIST = false;
     public static final boolean WEB_SETTINGS = false;
     public static final boolean WEB_SYNC_MANAGER = false;
+<<<<<<< HEAD
     public static final boolean WEB_VIEW = false;
     public static final boolean WEB_VIEW_CORE = false;
     public static final boolean MEASURE_PAGE_SWAP_FPS = false;
+=======
+    public static final boolean WEB_TEXT_VIEW = false;
+    public static final boolean WEB_VIEW = false;
+    public static final boolean WEB_VIEW_CORE = false;
+    /*
+     * Set to true to allow the WebTextView to draw on top of the web page in a
+     * different color with no background so you can see how the two line up.
+     */
+    public static final boolean DRAW_WEBTEXTVIEW = false;
+>>>>>>> upstream/master
 }

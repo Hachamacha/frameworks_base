@@ -37,7 +37,10 @@ import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 /**
@@ -105,11 +108,19 @@ public class ImageView extends View {
         super(context);
         initImageView();
     }
+<<<<<<< HEAD
 
     public ImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+=======
+    
+    public ImageView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+    
+>>>>>>> upstream/master
     public ImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initImageView();
@@ -203,8 +214,22 @@ public class ImageView extends View {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean hasOverlappingRendering() {
         return (getBackground() != null);
+=======
+    protected boolean onSetAlpha(int alpha) {
+        if (getBackground() == null) {
+            int scale = alpha + (alpha >> 7);
+            if (mViewAlphaScale != scale) {
+                mViewAlphaScale = scale;
+                mColorMod = true;
+                applyColorMod();
+            }
+            return true;
+        }
+        return false;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -217,6 +242,7 @@ public class ImageView extends View {
     }
 
     /**
+<<<<<<< HEAD
      * True when ImageView is adjusting its bounds
      * to preserve the aspect ratio of its drawable
      *
@@ -232,13 +258,18 @@ public class ImageView extends View {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set this to true if you want the ImageView to adjust its bounds
      * to preserve the aspect ratio of its drawable.
      * @param adjustViewBounds Whether to adjust the bounds of this view
      * to presrve the original aspect ratio of the drawable
      * 
+<<<<<<< HEAD
      * @see #getAdjustViewBounds()
      *
+=======
+>>>>>>> upstream/master
      * @attr ref android.R.styleable#ImageView_adjustViewBounds
      */
     @android.view.RemotableViewMethod
@@ -248,6 +279,7 @@ public class ImageView extends View {
             setScaleType(ScaleType.FIT_CENTER);
         }
     }
+<<<<<<< HEAD
 
     /**
      * The maximum width of this view.
@@ -262,6 +294,9 @@ public class ImageView extends View {
         return mMaxWidth;
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * An optional argument to supply a maximum width for this view. Only valid if
      * {@link #setAdjustViewBounds(boolean)} has been set to true. To set an image to be a maximum
@@ -277,15 +312,20 @@ public class ImageView extends View {
      * </p>
      * 
      * @param maxWidth maximum width for this view
+<<<<<<< HEAD
      *
      * @see #getMaxWidth()
      *
+=======
+     * 
+>>>>>>> upstream/master
      * @attr ref android.R.styleable#ImageView_maxWidth
      */
     @android.view.RemotableViewMethod
     public void setMaxWidth(int maxWidth) {
         mMaxWidth = maxWidth;
     }
+<<<<<<< HEAD
 
     /**
      * The maximum height of this view.
@@ -300,6 +340,9 @@ public class ImageView extends View {
         return mMaxHeight;
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * An optional argument to supply a maximum height for this view. Only valid if
      * {@link #setAdjustViewBounds(boolean)} has been set to true. To set an image to be a
@@ -315,9 +358,13 @@ public class ImageView extends View {
      * </p>
      * 
      * @param maxHeight maximum height for this view
+<<<<<<< HEAD
      *
      * @see #getMaxHeight()
      *
+=======
+     * 
+>>>>>>> upstream/master
      * @attr ref android.R.styleable#ImageView_maxHeight
      */
     @android.view.RemotableViewMethod
@@ -563,6 +610,7 @@ public class ImageView extends View {
             invalidate();
         }
     }
+<<<<<<< HEAD
 
     /**
      * Return whether this ImageView crops to padding.
@@ -594,6 +642,9 @@ public class ImageView extends View {
         }
     }
 
+=======
+    
+>>>>>>> upstream/master
     private void resolveUri() {
         if (mDrawable != null) {
             return;
@@ -1068,6 +1119,7 @@ public class ImageView extends View {
     public final void clearColorFilter() {
         setColorFilter(null);
     }
+<<<<<<< HEAD
 
     /**
      * Returns the active color filter for this ImageView.
@@ -1080,12 +1132,18 @@ public class ImageView extends View {
         return mColorFilter;
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Apply an arbitrary colorfilter to the image.
      *
      * @param cf the colorfilter to apply (may be null)
+<<<<<<< HEAD
      *
      * @see #getColorFilter()
+=======
+>>>>>>> upstream/master
      */
     public void setColorFilter(ColorFilter cf) {
         if (mColorFilter != cf) {
@@ -1096,6 +1154,7 @@ public class ImageView extends View {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Returns the alpha that will be applied to the drawable of this ImageView.
      *
@@ -1127,6 +1186,8 @@ public class ImageView extends View {
      * @deprecated use #setImageAlpha(int) instead
      */
     @Deprecated
+=======
+>>>>>>> upstream/master
     @RemotableViewMethod
     public void setAlpha(int alpha) {
         alpha &= 0xFF;          // keep it legal
@@ -1173,6 +1234,7 @@ public class ImageView extends View {
             mDrawable.setVisible(false, false);
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -1185,4 +1247,6 @@ public class ImageView extends View {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ImageView.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

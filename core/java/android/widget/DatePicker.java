@@ -29,9 +29,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+<<<<<<< HEAD
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
+>>>>>>> upstream/master
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.NumberPicker.OnValueChangeListener;
@@ -162,7 +167,11 @@ public class DatePicker extends FrameLayout {
         int endYear = attributesArray.getInt(R.styleable.DatePicker_endYear, DEFAULT_END_YEAR);
         String minDate = attributesArray.getString(R.styleable.DatePicker_minDate);
         String maxDate = attributesArray.getString(R.styleable.DatePicker_maxDate);
+<<<<<<< HEAD
         int layoutResourceId = attributesArray.getResourceId(R.styleable.DatePicker_internalLayout,
+=======
+        int layoutResourceId = attributesArray.getResourceId(R.styleable.DatePicker_layout,
+>>>>>>> upstream/master
                 R.layout.date_picker);
         attributesArray.recycle();
 
@@ -279,12 +288,18 @@ public class DatePicker extends FrameLayout {
         // re-order the number spinners to match the current date format
         reorderSpinners();
 
+<<<<<<< HEAD
         // accessibility
         setContentDescriptions();
 
         // If not explicitly specified this view is important for accessibility.
         if (getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+=======
+        // set content descriptions
+        if (AccessibilityManager.getInstance(mContext).isEnabled()) {
+            setContentDescriptions();
+>>>>>>> upstream/master
         }
     }
 
@@ -395,6 +410,7 @@ public class DatePicker extends FrameLayout {
     }
 
     @Override
+<<<<<<< HEAD
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(DatePicker.class.getName());
@@ -407,6 +423,8 @@ public class DatePicker extends FrameLayout {
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setCurrentLocale(newConfig.locale);
@@ -720,6 +738,7 @@ public class DatePicker extends FrameLayout {
 
     private void setContentDescriptions() {
         // Day
+<<<<<<< HEAD
         trySetContentDescription(mDaySpinner, R.id.increment,
                 R.string.date_picker_increment_day_button);
         trySetContentDescription(mDaySpinner, R.id.decrement,
@@ -741,6 +760,22 @@ public class DatePicker extends FrameLayout {
         if (target != null) {
             target.setContentDescription(mContext.getString(contDescResId));
         }
+=======
+        String text = mContext.getString(R.string.date_picker_increment_day_button);
+        mDaySpinner.findViewById(R.id.increment).setContentDescription(text);
+        text = mContext.getString(R.string.date_picker_decrement_day_button);
+        mDaySpinner.findViewById(R.id.decrement).setContentDescription(text);
+        // Month
+        text = mContext.getString(R.string.date_picker_increment_month_button);
+        mMonthSpinner.findViewById(R.id.increment).setContentDescription(text);
+        text = mContext.getString(R.string.date_picker_decrement_month_button);
+        mMonthSpinner.findViewById(R.id.decrement).setContentDescription(text);
+        // Year
+        text = mContext.getString(R.string.date_picker_increment_year_button);
+        mYearSpinner.findViewById(R.id.increment).setContentDescription(text);
+        text = mContext.getString(R.string.date_picker_decrement_year_button);
+        mYearSpinner.findViewById(R.id.decrement).setContentDescription(text);
+>>>>>>> upstream/master
     }
 
     private void updateInputState() {

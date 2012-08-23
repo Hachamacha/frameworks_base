@@ -16,8 +16,11 @@
 
 package android.media.audiofx;
 
+<<<<<<< HEAD
 import android.util.Log;
 
+=======
+>>>>>>> upstream/master
 /**
  * Acoustic Echo Canceler (AEC).
  * <p>Acoustic Echo Canceler (AEC) is an audio pre-processing which removes the contribution of the
@@ -28,6 +31,7 @@ import android.util.Log;
  * <p>An application creates an AcousticEchoCanceler object to instantiate and control an AEC
  * engine in the audio capture path.
  * <p>To attach the AcousticEchoCanceler to a particular {@link android.media.AudioRecord},
+<<<<<<< HEAD
  * specify the audio session ID of this AudioRecord when creating the AcousticEchoCanceler.
  * The audio session is retrieved by calling
  * {@link android.media.AudioRecord#getAudioSessionId()} on the AudioRecord instance.
@@ -37,6 +41,19 @@ import android.util.Log;
  * state on a particular AudioRecord session.
  * <p>See {@link android.media.audiofx.AudioEffect} class for more details on
  * controlling audio effects.
+=======
+ * specify the audio session ID of this AudioRecord when constructing the AcousticEchoCanceler.
+ * The audio session is retrieved by calling
+ * {@link android.media.AudioRecord#getAudioSessionId()} on the AudioRecord instance.
+ * <p>On some devices, an AEC can be inserted by default in the capture path by the platform
+ * according to the {@link android.media.MediaRecorder.AudioSource} used. The application can
+ * query which pre-processings are currently applied to an AudioRecord instance by calling
+ * {@link android.media.audiofx.AudioEffect#queryPreProcessings(int)} with the audio session of the
+ * AudioRecord.
+ * <p>See {@link android.media.audiofx.AudioEffect} class for more details on
+ * controlling audio effects.
+ * @hide
+>>>>>>> upstream/master
  */
 
 public class AcousticEchoCanceler extends AudioEffect {
@@ -44,6 +61,7 @@ public class AcousticEchoCanceler extends AudioEffect {
     private final static String TAG = "AcousticEchoCanceler";
 
     /**
+<<<<<<< HEAD
      * Checks if the device implements acoustic echo cancellation.
      * @return true if the device implements acoustic echo cancellation, false otherwise.
      */
@@ -76,11 +94,19 @@ public class AcousticEchoCanceler extends AudioEffect {
     /**
      * Class constructor.
      * <p> The constructor is not guarantied to succeed and throws the following exceptions:
+=======
+     * Class constructor.
+     * <p> The application must catch exceptions when creating an AcousticEchoCanceler as the
+     * constructor is not guarantied to succeed:
+>>>>>>> upstream/master
      * <ul>
      *  <li>IllegalArgumentException is thrown if the device does not implement an AEC</li>
      *  <li>UnsupportedOperationException is thrown is the resources allocated to audio
      *  pre-procesing are currently exceeded.</li>
+<<<<<<< HEAD
      *  <li>RuntimeException is thrown if a memory allocation error occurs.</li>
+=======
+>>>>>>> upstream/master
      * </ul>
      *
      * @param audioSession system wide unique audio session identifier. The AcousticEchoCanceler
@@ -90,7 +116,11 @@ public class AcousticEchoCanceler extends AudioEffect {
      * @throws java.lang.UnsupportedOperationException
      * @throws java.lang.RuntimeException
      */
+<<<<<<< HEAD
     private AcousticEchoCanceler(int audioSession)
+=======
+    public AcousticEchoCanceler(int audioSession)
+>>>>>>> upstream/master
             throws IllegalArgumentException, UnsupportedOperationException, RuntimeException {
         super(EFFECT_TYPE_AEC, EFFECT_TYPE_NULL, 0, audioSession);
     }

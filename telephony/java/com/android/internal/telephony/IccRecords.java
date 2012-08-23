@@ -16,7 +16,10 @@
 
 package com.android.internal.telephony;
 
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +36,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     protected static final boolean DBG = true;
     // ***** Instance Variables
+<<<<<<< HEAD
     protected boolean mDestroyed = false; // set to true once this object needs to be disposed of
     protected Context mContext;
     protected CommandsInterface mCi;
@@ -43,6 +47,11 @@ public abstract class IccRecords extends Handler implements IccConstants {
     protected RegistrantList mRecordsEventsRegistrants = new RegistrantList();
     protected RegistrantList mNewSmsRegistrants = new RegistrantList();
     protected RegistrantList mNetworkSelectionModeAutomaticRegistrants = new RegistrantList();
+=======
+
+    protected PhoneBase phone;
+    protected RegistrantList recordsLoadedRegistrants = new RegistrantList();
+>>>>>>> upstream/master
 
     protected int recordsToLoad;  // number of pending load requests
 
@@ -79,9 +88,12 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     // ***** Event Constants
     protected static final int EVENT_SET_MSISDN_DONE = 30;
+<<<<<<< HEAD
     public static final int EVENT_MWI = 0;
     public static final int EVENT_CFI = 1;
     public static final int EVENT_SPN = 2;
+=======
+>>>>>>> upstream/master
 
     public static final int EVENT_GET_ICC_RECORD_DONE = 100;
 
@@ -102,16 +114,23 @@ public abstract class IccRecords extends Handler implements IccConstants {
     }
 
     // ***** Constructor
+<<<<<<< HEAD
     public IccRecords(IccCard card, Context c, CommandsInterface ci) {
         mContext = c;
         mCi = ci;
         mFh = card.getIccFileHandler();
         mParentCard = card;
+=======
+
+    public IccRecords(PhoneBase p) {
+        this.phone = p;
+>>>>>>> upstream/master
     }
 
     /**
      * Call when the IccRecords object is no longer going to be used.
      */
+<<<<<<< HEAD
     public void dispose() {
         mDestroyed = true;
         mParentCard = null;
@@ -122,12 +141,18 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     protected abstract void onRadioOffOrNotAvailable();
     public abstract void onReady();
+=======
+    public abstract void dispose();
+
+    protected abstract void onRadioOffOrNotAvailable();
+>>>>>>> upstream/master
 
     //***** Public Methods
     public AdnRecordCache getAdnCache() {
         return adnCache;
     }
 
+<<<<<<< HEAD
     public IccCard getIccCard() {
         return mParentCard;
     }
@@ -137,6 +162,9 @@ public abstract class IccRecords extends Handler implements IccConstants {
             return;
         }
 
+=======
+    public void registerForRecordsLoaded(Handler h, int what, Object obj) {
+>>>>>>> upstream/master
         Registrant r = new Registrant(h, what, obj);
         recordsLoadedRegistrants.add(r);
 
@@ -144,10 +172,15 @@ public abstract class IccRecords extends Handler implements IccConstants {
             r.notifyRegistrant(new AsyncResult(null, null, null));
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     public void unregisterForRecordsLoaded(Handler h) {
         recordsLoadedRegistrants.remove(h);
     }
 
+<<<<<<< HEAD
     public void registerForRecordsEvents(Handler h, int what, Object obj) {
         Registrant r = new Registrant (h, what, obj);
         mRecordsEventsRegistrants.add(r);
@@ -173,6 +206,8 @@ public abstract class IccRecords extends Handler implements IccConstants {
         mNetworkSelectionModeAutomaticRegistrants.remove(h);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Get the International Mobile Subscriber ID (IMSI) on a SIM
      * for GSM, UMTS and like networks. Default is null if IMSI is
@@ -214,7 +249,11 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
         AdnRecord adn = new AdnRecord(msisdnTag, msisdn);
 
+<<<<<<< HEAD
         new AdnRecordLoader(mFh).updateEF(adn, EF_MSISDN, EF_EXT1, 1, null,
+=======
+        new AdnRecordLoader(phone).updateEF(adn, EF_MSISDN, EF_EXT1, 1, null,
+>>>>>>> upstream/master
                 obtainMessage(EVENT_SET_MSISDN_DONE, onComplete));
     }
 

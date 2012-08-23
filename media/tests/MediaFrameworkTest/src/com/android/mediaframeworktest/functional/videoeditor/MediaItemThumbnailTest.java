@@ -82,6 +82,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H.263 QCIF.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_001
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH263QCIF() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -103,6 +107,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on MPEG4 VGA .
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_002
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMPEG4VGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -122,6 +130,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on MPEG4 NTSC.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_003
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMPEG4NTSC() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -141,6 +153,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on MPEG4 WVGA.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_004
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMPEG4WVGA() throws Exception {
 
@@ -161,6 +177,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on MPEG4 QCIF.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_005
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMPEG4QCIF() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -181,6 +201,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 QCIF.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_006
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264QCIF() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -201,6 +225,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 VGA.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_007
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264VGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -221,6 +249,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 WVGA.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_008
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264WVGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -240,6 +272,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 854x480.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_009
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264854_480() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -260,6 +296,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 960x720.
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_010
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264HD960() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -280,6 +320,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on H264 1080x720 .
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_011
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264HD1080() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -299,6 +343,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail / frame extraction precision at 0,100 and 200 ms
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_012
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForH264VGADifferentDuration() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -333,6 +381,10 @@ public class MediaItemThumbnailTest extends
      *Check the thumbnail / frame extraction precision at
      * FileDuration,FileDuration/2 + 100 andFileDuration/2 + 200 ms
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_013
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMP4VGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -366,6 +418,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail / frame extraction on JPEG file
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_014
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForImage() throws Exception {
         final String imageItemFilename = INPUT_FILE_PATH + "IMG_640x480.jpg";
@@ -388,6 +444,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H263 QCIF
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_015
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListH263QCIF() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -417,6 +477,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for MPEG4 QCIF
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_016
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListMPEG4QCIF() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -447,6 +511,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 VGA
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_017
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListH264VGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -475,6 +543,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 WVGA
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_018
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListH264WVGA() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -503,6 +575,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 VGA ,Time exceeding file duration
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_019
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailH264VGAExceedingFileDuration() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -528,6 +604,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for VGA Image
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_020
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListVGAImage() throws Exception {
         final String imageItemFilename = INPUT_FILE_PATH + "IMG_640x480.jpg";
@@ -556,6 +636,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for Invalid file path
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_021
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForInvalidFilePath() throws Exception {
         final String imageItemFileName = INPUT_FILE_PATH + "/sdcard/abc.jpg";
@@ -575,6 +659,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction with setBoundaries
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_022
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForMPEG4WVGAWithSetBoundaries() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -598,6 +686,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 WVGA with setExtractboundaries
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_023
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListForH264WVGAWithSetBoundaries() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -629,6 +721,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 WVGA with count > frame available
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_024
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListForH264WVGAWithCount() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -660,6 +756,10 @@ public class MediaItemThumbnailTest extends
     /**
      *To test ThumbnailList for H264 WVGA with startTime > End Time
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_025
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListH264WVGAWithStartGreaterEnd() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -685,8 +785,14 @@ public class MediaItemThumbnailTest extends
     }
 
     /**
+<<<<<<< HEAD
      *To test ThumbnailList for H264 WVGA with startTime = End Time
      */
+=======
+     *To test ThumbnailList TC_TN_026 for H264 WVGA with startTime = End Time
+     */
+    // TODO : TC_TN_026
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailListH264WVGAWithStartEqualEnd() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -712,9 +818,16 @@ public class MediaItemThumbnailTest extends
     }
 
     /**
+<<<<<<< HEAD
      *To test ThumbnailList for file where video duration is less
      * than file duration.
      */
+=======
+     *To test ThumbnailList TC_TN_027 for file where video duration is less
+     * than file duration.
+     */
+    // TODO : TC_TN_027
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailForVideoDurationLessFileDuration() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -733,8 +846,14 @@ public class MediaItemThumbnailTest extends
     }
 
     /**
+<<<<<<< HEAD
      *To test ThumbnailList for file which has video part corrupted
      */
+=======
+     *To test ThumbnailList TC_TN_028 for file which has video part corrupted
+     */
+    // TODO : TC_TN_028
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithCorruptedVideoPart() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH +
@@ -759,6 +878,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail / frame list extraction for Height as Negative Value
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_029
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithNegativeHeight() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -786,6 +909,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail for Height as Zero
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_030
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithHeightAsZero() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -809,6 +936,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail for Height = 10
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_031
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithHeight() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -828,6 +959,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail / frame list extraction for Width as Negative Value
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_032
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithNegativeWidth() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -855,6 +990,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail / frame list extraction for Width zero
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_033
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithWidthAsZero() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -878,6 +1017,10 @@ public class MediaItemThumbnailTest extends
     /**
      * Check the thumbnail for Width = 10
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_034
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailWithWidth() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH
@@ -897,6 +1040,10 @@ public class MediaItemThumbnailTest extends
     /**
      * To test thumbnail / frame extraction on MPEG4 (time beyond file duration).
      */
+<<<<<<< HEAD
+=======
+    // TODO : TC_TN_035
+>>>>>>> upstream/master
     @LargeTest
     public void testThumbnailMPEG4withMorethanFileDuration() throws Exception {
         final String videoItemFilename = INPUT_FILE_PATH

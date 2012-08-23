@@ -27,7 +27,11 @@ import android.util.AttributeSet;
  * Mock version of the SurfaceView.
  * Only non override public methods from the real SurfaceView have been added in there.
  * Methods that take an unknown class as parameter or as return object, have been removed for now.
+<<<<<<< HEAD
  *
+=======
+ * 
+>>>>>>> upstream/master
  * TODO: generate automatically.
  *
  */
@@ -36,7 +40,11 @@ public class SurfaceView extends MockView {
     public SurfaceView(Context context) {
         this(context, null);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     public SurfaceView(Context context, AttributeSet attrs) {
         this(context, attrs , 0);
     }
@@ -44,18 +52,27 @@ public class SurfaceView extends MockView {
     public SurfaceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     public SurfaceHolder getHolder() {
         return mSurfaceHolder;
     }
 
     private SurfaceHolder mSurfaceHolder = new SurfaceHolder() {
+<<<<<<< HEAD
 
         @Override
+=======
+        
+>>>>>>> upstream/master
         public boolean isCreating() {
             return false;
         }
 
+<<<<<<< HEAD
         @Override
         public void addCallback(Callback callback) {
         }
@@ -85,25 +102,60 @@ public class SurfaceView extends MockView {
         }
 
         @Override
+=======
+        public void addCallback(Callback callback) {
+        }
+
+        public void removeCallback(Callback callback) {
+        }
+        
+        public void setFixedSize(int width, int height) {
+        }
+
+        public void setSizeFromLayout() {
+        }
+
+        public void setFormat(int format) {
+        }
+
+        public void setType(int type) {
+        }
+
+        public void setKeepScreenOn(boolean screenOn) {
+        }
+        
+>>>>>>> upstream/master
         public Canvas lockCanvas() {
             return null;
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public Canvas lockCanvas(Rect dirty) {
             return null;
         }
 
+<<<<<<< HEAD
         @Override
         public void unlockCanvasAndPost(Canvas canvas) {
         }
 
         @Override
+=======
+        public void unlockCanvasAndPost(Canvas canvas) {
+        }
+
+>>>>>>> upstream/master
         public Surface getSurface() {
             return null;
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public Rect getSurfaceFrame() {
             return null;
         }

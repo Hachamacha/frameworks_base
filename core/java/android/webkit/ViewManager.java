@@ -16,7 +16,10 @@
 
 package android.webkit;
 
+<<<<<<< HEAD
 import android.util.DisplayMetrics;
+=======
+>>>>>>> upstream/master
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,11 @@ import android.widget.AbsoluteLayout;
 import java.util.ArrayList;
 
 class ViewManager {
+<<<<<<< HEAD
     private final WebViewClassic mWebView;
+=======
+    private final WebView mWebView;
+>>>>>>> upstream/master
     private final ArrayList<ChildView> mChildren = new ArrayList<ChildView>();
     private boolean mHidden;
     private boolean mReadyToDraw;
@@ -75,7 +82,11 @@ class ViewManager {
         }
 
         private void attachViewOnUIThread() {
+<<<<<<< HEAD
             mWebView.getWebView().addView(mView);
+=======
+            mWebView.addView(mView);
+>>>>>>> upstream/master
             mChildren.add(this);
             if (!mReadyToDraw) {
                 mView.setVisibility(View.GONE);
@@ -94,15 +105,27 @@ class ViewManager {
         }
 
         private void removeViewOnUIThread() {
+<<<<<<< HEAD
             mWebView.getWebView().removeView(mView);
+=======
+            mWebView.removeView(mView);
+>>>>>>> upstream/master
             mChildren.remove(this);
         }
     }
 
+<<<<<<< HEAD
     ViewManager(WebViewClassic w) {
         mWebView = w;
         DisplayMetrics metrics = w.getWebView().getResources().getDisplayMetrics();
         int pixelArea = metrics.widthPixels * metrics.heightPixels;
+=======
+    ViewManager(WebView w) {
+        mWebView = w;
+
+        int pixelArea = w.getResources().getDisplayMetrics().widthPixels *
+                        w.getResources().getDisplayMetrics().heightPixels;
+>>>>>>> upstream/master
         /* set the threshold to be 275% larger than the screen size. The
            percentage is simply an estimation and is not based on anything but
            basic trial-and-error tests run on multiple devices.

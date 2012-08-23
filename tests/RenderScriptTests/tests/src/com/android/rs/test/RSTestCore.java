@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (C) 2008-2012 The Android Open Source Project
+=======
+ * Copyright (C) 2008-2011 The Android Open Source Project
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +69,7 @@ public class RSTestCore {
         unitTests = new ArrayList<UnitTest>();
 
         unitTests.add(new UT_primitives(this, mRes, mCtx));
+<<<<<<< HEAD
         unitTests.add(new UT_constant(this, mRes, mCtx));
         unitTests.add(new UT_vector(this, mRes, mCtx));
         unitTests.add(new UT_array_init(this, mRes, mCtx));
@@ -73,12 +78,16 @@ public class RSTestCore {
         unitTests.add(new UT_clamp_relaxed(this, mRes, mCtx));
         unitTests.add(new UT_convert(this, mRes, mCtx));
         unitTests.add(new UT_convert_relaxed(this, mRes, mCtx));
+=======
+        unitTests.add(new UT_vector(this, mRes, mCtx));
+>>>>>>> upstream/master
         unitTests.add(new UT_rsdebug(this, mRes, mCtx));
         unitTests.add(new UT_rstime(this, mRes, mCtx));
         unitTests.add(new UT_rstypes(this, mRes, mCtx));
         unitTests.add(new UT_alloc(this, mRes, mCtx));
         unitTests.add(new UT_refcount(this, mRes, mCtx));
         unitTests.add(new UT_foreach(this, mRes, mCtx));
+<<<<<<< HEAD
         unitTests.add(new UT_noroot(this, mRes, mCtx));
         unitTests.add(new UT_atomic(this, mRes, mCtx));
         unitTests.add(new UT_struct(this, mRes, mCtx));
@@ -91,6 +100,10 @@ public class RSTestCore {
         unitTests.add(new UT_mesh(this, mRes, mCtx));
         unitTests.add(new UT_fp_mad(this, mRes, mCtx));
 
+=======
+        unitTests.add(new UT_math(this, mRes, mCtx));
+        unitTests.add(new UT_fp_mad(this, mRes, mCtx));
+>>>>>>> upstream/master
         /*
         unitTests.add(new UnitTest(null, "<Pass>", 1));
         unitTests.add(new UnitTest());
@@ -108,7 +121,11 @@ public class RSTestCore {
         for (int i = 0; i < uta.length; i++) {
             ScriptField_ListAllocs_s.Item listElem = new ScriptField_ListAllocs_s.Item();
             listElem.text = Allocation.createFromString(mRS, uta[i].name, Allocation.USAGE_SCRIPT);
+<<<<<<< HEAD
             listElem.result = uta[i].getResult();
+=======
+            listElem.result = uta[i].result;
+>>>>>>> upstream/master
             mListAllocs.set(listElem, i, false);
             uta[i].setItem(listElem);
         }

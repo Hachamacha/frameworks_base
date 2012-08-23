@@ -230,10 +230,13 @@ public class SlidingTab extends ViewGroup {
             text.setText(resId);
         }
 
+<<<<<<< HEAD
 	void setHintText(CharSequence charText) {
  	 text.setText(charText);
  	 }
 
+=======
+>>>>>>> upstream/master
         void hide() {
             boolean horiz = alignment == ALIGN_LEFT || alignment == ALIGN_RIGHT;
             int dx = horiz ? (alignment == ALIGN_LEFT ? alignment_value - tab.getRight()
@@ -420,7 +423,11 @@ public class SlidingTab extends ViewGroup {
         }
 
         /**
+<<<<<<< HEAD
          * Start animating the slider. Note we need two animations since a ValueAnimator
+=======
+         * Start animating the slider. Note we need two animations since an ValueAnimator
+>>>>>>> upstream/master
          * keeps internal state of the invalidation region which is just the view being animated.
          *
          * @param anim1
@@ -806,12 +813,15 @@ public class SlidingTab extends ViewGroup {
         }
     }
 
+<<<<<<< HEAD
     public void setRightHintText(CharSequence charText) {
  	if (isHorizontal()) {
  	mRightSlider.setHintText(charText);
  	}
     }
 
+=======
+>>>>>>> upstream/master
     public void setHoldAfterTrigger(boolean holdLeft, boolean holdRight) {
         mHoldLeftOnTransition = holdLeft;
         mHoldRightOnTransition = holdRight;

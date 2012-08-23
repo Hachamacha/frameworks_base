@@ -173,7 +173,12 @@ public abstract class EventsTest
                 // This should only be called on an animation that has been started and not
                 // yet canceled or ended
                 assertFalse(mCanceled);
+<<<<<<< HEAD
                 assertTrue(mRunning || mStarted);
+=======
+                assertTrue(mRunning);
+                assertTrue(mStarted);
+>>>>>>> upstream/master
                 mCanceled = true;
             }
 
@@ -181,7 +186,12 @@ public abstract class EventsTest
             public void onAnimationEnd(Animator animation) {
                 // This should only be called on an animation that has been started and not
                 // yet ended
+<<<<<<< HEAD
                 assertTrue(mRunning || mStarted);
+=======
+                assertTrue(mRunning);
+                assertTrue(mStarted);
+>>>>>>> upstream/master
                 mRunning = false;
                 mStarted = false;
                 super.onAnimationEnd(animation);
@@ -208,12 +218,19 @@ public abstract class EventsTest
     }
 
     /**
+<<<<<<< HEAD
      * Verify that calling end on an unstarted animator starts/ends an animator.
+=======
+     * Verify that calling end on an unstarted animator does nothing.
+>>>>>>> upstream/master
      */
     @UiThreadTest
     @SmallTest
     public void testEnd() throws Exception {
+<<<<<<< HEAD
         mRunning = true; // end() implicitly starts an unstarted animator
+=======
+>>>>>>> upstream/master
         mAnimator.end();
     }
 
@@ -495,7 +512,10 @@ public abstract class EventsTest
                     mRunning = true;
                     mAnimator.start();
                     mAnimator.end();
+<<<<<<< HEAD
                     mRunning = true; // end() implicitly starts an unstarted animator
+=======
+>>>>>>> upstream/master
                     mAnimator.end();
                     mFuture.release();
                 } catch (junit.framework.AssertionFailedError e) {
@@ -544,7 +564,10 @@ public abstract class EventsTest
                     mRunning = true;
                     mAnimator.start();
                     mAnimator.end();
+<<<<<<< HEAD
                     mRunning = true; // end() implicitly starts an unstarted animator
+=======
+>>>>>>> upstream/master
                     mAnimator.end();
                     mFuture.release();
                 } catch (junit.framework.AssertionFailedError e) {

@@ -18,6 +18,10 @@ package android.nfc.tech;
 
 import android.nfc.ErrorCodes;
 import android.nfc.Tag;
+<<<<<<< HEAD
+=======
+import android.nfc.TagLostException;
+>>>>>>> upstream/master
 import android.nfc.TransceiveResult;
 import android.os.RemoteException;
 import android.util.Log;
@@ -27,6 +31,7 @@ import java.io.IOException;
 /**
  * A base class for tag technologies that are built on top of transceive().
  */
+<<<<<<< HEAD
 abstract class BasicTagTechnology implements TagTechnology {
     private static final String TAG = "NFC";
 
@@ -34,6 +39,14 @@ abstract class BasicTagTechnology implements TagTechnology {
 
     boolean mIsConnected;
     int mSelectedTechnology;
+=======
+/* package */ abstract class BasicTagTechnology implements TagTechnology {
+    private static final String TAG = "NFC";
+
+    /*package*/ final Tag mTag;
+    /*package*/ boolean mIsConnected;
+    /*package*/ int mSelectedTechnology;
+>>>>>>> upstream/master
 
     BasicTagTechnology(Tag tag, int tech) throws RemoteException {
         mTag = tag;
@@ -139,7 +152,11 @@ abstract class BasicTagTechnology implements TagTechnology {
         }
     }
     /** Internal transceive */
+<<<<<<< HEAD
     byte[] transceive(byte[] data, boolean raw) throws IOException {
+=======
+    /*package*/ byte[] transceive(byte[] data, boolean raw) throws IOException {
+>>>>>>> upstream/master
         checkConnected();
 
         try {

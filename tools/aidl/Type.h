@@ -13,7 +13,11 @@ public:
     // kinds
     enum {
         BUILT_IN,
+<<<<<<< HEAD
         USERDATA,
+=======
+        PARCELABLE,
+>>>>>>> upstream/master
         INTERFACE,
         GENERATED
     };
@@ -24,9 +28,15 @@ public:
     };
 
                     Type(const string& name, int kind, bool canWriteToParcel,
+<<<<<<< HEAD
                             bool canWriteToRpcData, bool canBeOut);
                     Type(const string& package, const string& name,
                             int kind, bool canWriteToParcel, bool canWriteToRpcData, bool canBeOut,
+=======
+                            bool canBeOut);
+                    Type(const string& package, const string& name,
+                            int kind, bool canWriteToParcel, bool canBeOut,
+>>>>>>> upstream/master
                             const string& declFile = "", int declLine = -1);
     virtual         ~Type();
 
@@ -36,13 +46,20 @@ public:
     inline int      Kind() const                { return m_kind; }
     inline string   DeclFile() const            { return m_declFile; }
     inline int      DeclLine() const            { return m_declLine; }
+<<<<<<< HEAD
     inline bool     CanWriteToParcel() const    { return m_canWriteToParcel; }
     inline bool     CanWriteToRpcData() const   { return m_canWriteToRpcData; }
+=======
+    inline bool     CanBeMarshalled() const     { return m_canWriteToParcel; }
+>>>>>>> upstream/master
     inline bool     CanBeOutParameter() const   { return m_canBeOut; }
     
     virtual string  ImportType() const;
     virtual string  CreatorName() const;
+<<<<<<< HEAD
     virtual string  RpcCreatorName() const;
+=======
+>>>>>>> upstream/master
     virtual string  InstantiableName() const;
 
     virtual void    WriteToParcel(StatementBlock* addTo, Variable* v,
@@ -61,11 +78,14 @@ public:
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
 
+<<<<<<< HEAD
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
 
+=======
+>>>>>>> upstream/master
 protected:
     void SetQualifiedName(const string& qualified);
     Expression* BuildWriteToParcelFlags(int flags);
@@ -81,13 +101,17 @@ private:
     int m_declLine;
     int m_kind;
     bool m_canWriteToParcel;
+<<<<<<< HEAD
     bool m_canWriteToRpcData;
+=======
+>>>>>>> upstream/master
     bool m_canBeOut;
 };
 
 class BasicType : public Type
 {
 public:
+<<<<<<< HEAD
                     BasicType(const string& name,
                               const string& marshallParcel,
                               const string& unmarshallParcel,
@@ -99,6 +123,13 @@ public:
                               const string& writeArrayRpc,
                               const string& createArrayRpc,
                               const string& readArrayRpc);
+=======
+                    BasicType(const string& name, const string& marshallMethod,
+                              const string& unmarshallMethod,
+                              const string& writeArray,
+                              const string& createArray,
+                              const string& readArray);
+>>>>>>> upstream/master
 
     virtual void    WriteToParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, int flags);
@@ -114,6 +145,7 @@ public:
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
 
+<<<<<<< HEAD
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
@@ -130,6 +162,14 @@ private:
     string m_writeArrayRpc;
     string m_createArrayRpc;
     string m_readArrayRpc;
+=======
+private:
+    string m_marshallMethod;
+    string m_unmarshallMethod;
+    string m_writeArrayMethod;
+    string m_createArrayMethod;
+    string m_readArrayMethod;
+>>>>>>> upstream/master
 };
 
 class BooleanType : public Type
@@ -150,11 +190,14 @@ public:
                                     Variable* parcel, Variable** cl);
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
+<<<<<<< HEAD
 
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
+=======
+>>>>>>> upstream/master
 };
 
 class CharType : public Type
@@ -175,11 +218,14 @@ public:
                                     Variable* parcel, Variable** cl);
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
+<<<<<<< HEAD
 
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
+=======
+>>>>>>> upstream/master
 };
 
 
@@ -203,11 +249,14 @@ public:
                                     Variable* parcel, Variable** cl);
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
+<<<<<<< HEAD
 
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
+=======
+>>>>>>> upstream/master
 };
 
 class CharSequenceType : public Type
@@ -344,6 +393,7 @@ public:
                                     Variable* parcel, Variable** cl);
     virtual void    ReadFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
+<<<<<<< HEAD
 
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
@@ -360,6 +410,17 @@ public:
 
     virtual string  CreatorName() const;
     virtual string  RpcCreatorName() const;
+=======
+};
+
+class ParcelableType : public Type
+{
+public:
+                    ParcelableType(const string& package, const string& name,
+                            bool builtIn, const string& declFile, int declLine);
+
+    virtual string  CreatorName() const;
+>>>>>>> upstream/master
 
     virtual void    WriteToParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, int flags);
@@ -376,11 +437,14 @@ public:
                                     Variable* parcel, Variable** cl);
     virtual void    ReadArrayFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
+<<<<<<< HEAD
 
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
+=======
+>>>>>>> upstream/master
 };
 
 class InterfaceType : public Type
@@ -408,7 +472,10 @@ public:
                     GenericType(const string& package, const string& name,
                                  const vector<Type*>& args);
 
+<<<<<<< HEAD
     const vector<Type*>& GenericArgumentTypes() const;
+=======
+>>>>>>> upstream/master
     string          GenericArguments() const;
 
     virtual string  ImportType() const;
@@ -426,6 +493,7 @@ private:
     vector<Type*> m_args;
 };
 
+<<<<<<< HEAD
 class RpcDataType : public UserDataType
 {
 public:
@@ -442,6 +510,8 @@ class ClassLoaderType : public Type
 public:
                     ClassLoaderType();
 };
+=======
+>>>>>>> upstream/master
 
 class GenericListType : public GenericType
 {
@@ -459,15 +529,27 @@ public:
     virtual void    ReadFromParcel(StatementBlock* addTo, Variable* v,
                                     Variable* parcel, Variable** cl);
 
+<<<<<<< HEAD
     virtual void    WriteToRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, int flags);
     virtual void    CreateFromRpcData(StatementBlock* addTo, Expression* k, Variable* v,
                                     Variable* data, Variable** cl);
     
+=======
+>>>>>>> upstream/master
 private:
     string m_creator;
 };
 
+<<<<<<< HEAD
+=======
+class ClassLoaderType : public Type
+{
+public:
+                    ClassLoaderType();
+};
+
+>>>>>>> upstream/master
 class Namespace
 {
 public:
@@ -505,13 +587,19 @@ extern Namespace NAMES;
 
 extern Type* VOID_TYPE;
 extern Type* BOOLEAN_TYPE;
+<<<<<<< HEAD
 extern Type* BYTE_TYPE;
+=======
+>>>>>>> upstream/master
 extern Type* CHAR_TYPE;
 extern Type* INT_TYPE;
 extern Type* LONG_TYPE;
 extern Type* FLOAT_TYPE;
 extern Type* DOUBLE_TYPE;
+<<<<<<< HEAD
 extern Type* OBJECT_TYPE;
+=======
+>>>>>>> upstream/master
 extern Type* STRING_TYPE;
 extern Type* CHAR_SEQUENCE_TYPE;
 extern Type* TEXT_UTILS_TYPE;
@@ -524,6 +612,7 @@ extern Type* BINDER_PROXY_TYPE;
 extern Type* PARCEL_TYPE;
 extern Type* PARCELABLE_INTERFACE_TYPE;
 
+<<<<<<< HEAD
 extern Type* CONTEXT_TYPE;
 
 extern Type* RPC_DATA_TYPE;
@@ -531,6 +620,8 @@ extern Type* RPC_ERROR_TYPE;
 extern Type* RPC_CONTEXT_TYPE;
 extern Type* EVENT_FAKE_TYPE;
 
+=======
+>>>>>>> upstream/master
 extern Expression* NULL_VALUE;
 extern Expression* THIS_VALUE;
 extern Expression* SUPER_VALUE;

@@ -98,7 +98,11 @@ public class ExifInterface {
     private static SimpleDateFormat sFormatter;
 
     static {
+<<<<<<< HEAD
         System.loadLibrary("exif_jni");
+=======
+        System.loadLibrary("exif");
+>>>>>>> upstream/master
         sFormatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
         sFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
@@ -111,7 +115,11 @@ public class ExifInterface {
     // there can only be one user at a time for the native functions (and
     // they cannot keep state in the native code across function calls). We
     // use sLock to serialize the accesses.
+<<<<<<< HEAD
     private static final Object sLock = new Object();
+=======
+    private static Object sLock = new Object();
+>>>>>>> upstream/master
 
     /**
      * Reads Exif tags from the specified JPEG file.

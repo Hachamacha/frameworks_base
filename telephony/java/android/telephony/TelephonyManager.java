@@ -23,6 +23,10 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+<<<<<<< HEAD
+=======
+import android.util.Log;
+>>>>>>> upstream/master
 
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
@@ -84,10 +88,13 @@ public class TelephonyManager {
         return sInstance;
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public static TelephonyManager from(Context context) {
         return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
+=======
+>>>>>>> upstream/master
 
     //
     // Broadcast Intent actions
@@ -713,6 +720,7 @@ public class TelephonyManager {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Return if the current radio is LTE on GSM
      * @hide
@@ -728,6 +736,8 @@ public class TelephonyManager {
         }
     }
 
+=======
+>>>>>>> upstream/master
     //
     //
     // Subscriber Info
@@ -1167,6 +1177,7 @@ public class TelephonyManager {
         return sContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_sms_capable);
     }
+<<<<<<< HEAD
 
     /**
      * Returns all observed cell information of the device.
@@ -1187,4 +1198,6 @@ public class TelephonyManager {
             return null;
         }
     }
+=======
+>>>>>>> upstream/master
 }

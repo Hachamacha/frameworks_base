@@ -957,7 +957,11 @@ int register_android_net_LocalSocketImpl(JNIEnv *env)
         "android/net/LocalSocketImpl", gMethods, NELEM(gMethods));
 
 error:
+<<<<<<< HEAD
     ALOGE("Error registering android.net.LocalSocketImpl");
+=======
+    LOGE("Error registering android.net.LocalSocketImpl");
+>>>>>>> upstream/master
     return -1;
 }
 

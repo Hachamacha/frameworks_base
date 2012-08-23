@@ -22,10 +22,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.CacheRequest;
 import java.net.CacheResponse;
+<<<<<<< HEAD
 import java.net.ExtendedResponseCache;
 import java.net.HttpURLConnection;
 import java.net.ResponseCache;
 import java.net.ResponseSource;
+=======
+import java.net.HttpURLConnection;
+import java.net.ResponseCache;
+>>>>>>> upstream/master
 import java.net.URI;
 import java.net.URLConnection;
 import java.util.List;
@@ -138,6 +143,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *         int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
  *         connection.addRequestProperty("Cache-Control", "max-stale=" + maxStale);
  * }</pre>
+<<<<<<< HEAD
  *
  * <h3>Working With Earlier Releases</h3>
  * This class was added in Android 4.0 (Ice Cream Sandwich). Use reflection to
@@ -153,6 +159,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public final class HttpResponseCache extends ResponseCache
         implements Closeable, ExtendedResponseCache {
+=======
+ */
+public final class HttpResponseCache extends ResponseCache implements Closeable {
+>>>>>>> upstream/master
 
     private final libcore.net.http.HttpResponseCache delegate;
 
@@ -263,6 +273,7 @@ public final class HttpResponseCache extends ResponseCache
         return delegate.getRequestCount();
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override public void trackResponse(ResponseSource source) {
         delegate.trackResponse(source);
@@ -278,6 +289,8 @@ public final class HttpResponseCache extends ResponseCache
         delegate.update(conditionalCacheHit, connection);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Uninstalls the cache and releases any active resources. Stored contents
      * will remain on the filesystem.

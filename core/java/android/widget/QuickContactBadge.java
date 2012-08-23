@@ -36,8 +36,11 @@ import android.provider.ContactsContract.RawContacts;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 /**
  * Widget used to show an image with the standard QuickContact badge
@@ -230,6 +233,7 @@ public class QuickContactBadge extends ImageView implements OnClickListener {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -242,6 +246,8 @@ public class QuickContactBadge extends ImageView implements OnClickListener {
         info.setClassName(QuickContactBadge.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Set a list of specific MIME-types to exclude and not display. For
      * example, this can be used to hide the {@link Contacts#CONTENT_ITEM_TYPE}

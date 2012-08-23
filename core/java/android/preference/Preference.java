@@ -497,6 +497,7 @@ public class Preference implements Comparable<Preference>, OnDependencyChangeLis
      * @see #onCreateView(ViewGroup)
      */
     protected void onBindView(View view) {
+<<<<<<< HEAD
         final TextView titleView = (TextView) view.findViewById(
                 com.android.internal.R.id.title);
         if (titleView != null) {
@@ -521,6 +522,29 @@ public class Preference implements Comparable<Preference>, OnDependencyChangeLis
             }
         }
 
+=======
+        TextView textView = (TextView) view.findViewById(com.android.internal.R.id.title); 
+        if (textView != null) {
+            textView.setText(getTitle());
+        }
+        
+        textView = (TextView) view.findViewById(com.android.internal.R.id.summary);
+        if (textView != null) {
+            final CharSequence summary = getSummary();
+            if (!TextUtils.isEmpty(summary)) {
+                if (textView.getVisibility() != View.VISIBLE) {
+                    textView.setVisibility(View.VISIBLE);
+                }
+                
+                textView.setText(getSummary());
+            } else {
+                if (textView.getVisibility() != View.GONE) {
+                    textView.setVisibility(View.GONE);
+                }
+            }
+        }
+        
+>>>>>>> upstream/master
         ImageView imageView = (ImageView) view.findViewById(com.android.internal.R.id.icon);
         if (imageView != null) {
             if (mIconResId != 0 || mIcon != null) {

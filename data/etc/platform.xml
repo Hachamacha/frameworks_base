@@ -54,10 +54,13 @@
         <group gid="log" />
     </permission>
 
+<<<<<<< HEAD
     <permission name="android.permission.READ_EXTERNAL_STORAGE" >
         <group gid="sdcard_r" />
     </permission>
 
+=======
+>>>>>>> upstream/master
     <permission name="android.permission.WRITE_EXTERNAL_STORAGE" >
         <group gid="sdcard_rw" />
     </permission>
@@ -167,7 +170,10 @@
     <assign-permission name="android.permission.BACKUP" uid="shell" />
     <assign-permission name="android.permission.FORCE_STOP_PACKAGES" uid="shell" />
     <assign-permission name="android.permission.STOP_APP_SWITCHES" uid="shell" />
+<<<<<<< HEAD
     <assign-permission name="android.permission.ACCESS_CONTENT_PROVIDERS_EXTERNALLY" uid="shell" />
+=======
+>>>>>>> upstream/master
 
     <assign-permission name="android.permission.MODIFY_AUDIO_SETTINGS" uid="media" />
     <assign-permission name="android.permission.ACCESS_DRM" uid="media" />

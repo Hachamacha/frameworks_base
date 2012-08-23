@@ -59,11 +59,19 @@ class UriPermission {
         if ((modeFlagsToClear&Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != 0) {
             globalModeFlags &= ~Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
             modeFlags &= ~Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+<<<<<<< HEAD
             if (writeOwners.size() > 0) {
                 for (UriPermissionOwner r : writeOwners) {
                     r.removeWritePermission(this);
                 }
                 writeOwners.clear();
+=======
+            if (readOwners.size() > 0) {
+                for (UriPermissionOwner r : writeOwners) {
+                    r.removeWritePermission(this);
+                }
+                readOwners.clear();
+>>>>>>> upstream/master
             }
         }
     }

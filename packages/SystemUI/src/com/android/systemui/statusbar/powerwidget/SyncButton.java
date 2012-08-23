@@ -18,9 +18,13 @@ public class SyncButton extends PowerButton {
     private SyncStatusObserver mSyncObserver = new SyncStatusObserver() {
             public void onStatusChanged(int which) {
                 // update state/view if something happened
+<<<<<<< HEAD
                 if (mView != null) {
                     update(mView.getContext());
                 }
+=======
+                update();
+>>>>>>> upstream/master
             }
         };
     private Object mSyncObserverHandle = null;
@@ -40,8 +44,13 @@ public class SyncButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected void updateState(Context context) {
         if (getSyncState(context)) {
+=======
+    protected void updateState() {
+        if (getSyncState(mView.getContext())) {
+>>>>>>> upstream/master
             mIcon = R.drawable.stat_sync_on;
             mState = STATE_ENABLED;
         } else {
@@ -51,9 +60,16 @@ public class SyncButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected void toggleState(Context context) {
         ConnectivityManager connManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+=======
+    protected void toggleState() {
+        Context context = mView.getContext();
+        ConnectivityManager connManager = (ConnectivityManager)context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+>>>>>>> upstream/master
         boolean backgroundData = getBackgroundDataState(context);
         boolean sync = ContentResolver.getMasterSyncAutomatically();
 
@@ -83,6 +99,7 @@ public class SyncButton extends PowerButton {
     }
 
     @Override
+<<<<<<< HEAD
     protected boolean handleLongClick(Context context) {
         Intent intent = new Intent("android.settings.SYNC_SETTINGS");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -98,6 +115,23 @@ public class SyncButton extends PowerButton {
     }
 
     private boolean getSyncState(Context context) {
+=======
+    protected boolean handleLongClick() {
+        Intent intent = new Intent("android.settings.SYNC_SETTINGS");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mView.getContext().startActivity(intent);
+        return true;
+    }
+
+    private static boolean getBackgroundDataState(Context context) {
+        ConnectivityManager connManager = (ConnectivityManager) context
+        .getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connManager.getBackgroundDataSetting();
+    }
+
+    private static boolean getSyncState(Context context) {
+>>>>>>> upstream/master
         boolean backgroundData = getBackgroundDataState(context);
         boolean sync = ContentResolver.getMasterSyncAutomatically();
         return backgroundData && sync;

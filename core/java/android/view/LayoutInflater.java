@@ -583,6 +583,7 @@ public abstract class LayoutInflater {
 
             Object[] args = mConstructorArgs;
             args[1] = attrs;
+<<<<<<< HEAD
 
             final View view = constructor.newInstance(args);
             if (view instanceof ViewStub) {
@@ -591,6 +592,9 @@ public abstract class LayoutInflater {
                 viewStub.setLayoutInflater(this);
             }
             return view;
+=======
+            return constructor.newInstance(args);
+>>>>>>> upstream/master
 
         } catch (NoSuchMethodException e) {
             InflateException ie = new InflateException(attrs.getPositionDescription()

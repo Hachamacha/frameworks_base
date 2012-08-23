@@ -16,6 +16,10 @@
 
 package com.android.tools.layoutlib.create;
 
+<<<<<<< HEAD
+=======
+import org.objectweb.asm.ClassAdapter;
+>>>>>>> upstream/master
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -27,7 +31,11 @@ import java.util.Set;
 /**
  * Class adapter that can stub some or all of the methods of the class.
  */
+<<<<<<< HEAD
 class TransformClassAdapter extends ClassVisitor {
+=======
+class TransformClassAdapter extends ClassAdapter {
+>>>>>>> upstream/master
 
     /** True if all methods should be stubbed, false if only native ones must be stubbed. */
     private final boolean mStubAll;
@@ -53,7 +61,11 @@ class TransformClassAdapter extends ClassVisitor {
     public TransformClassAdapter(Log logger, Set<String> stubMethods,
             Set<String> deleteReturns, String className, ClassVisitor cv,
             boolean stubNativesOnly, boolean hasNative) {
+<<<<<<< HEAD
         super(Opcodes.ASM4, cv);
+=======
+        super(cv);
+>>>>>>> upstream/master
         mLog = logger;
         mStubMethods = stubMethods;
         mClassName = className;

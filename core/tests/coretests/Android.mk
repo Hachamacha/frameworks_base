@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ACTUAL_LOCAL_PATH := $(call my-dir)
 
 # this var will hold all the test apk module names later.
@@ -9,6 +10,9 @@ include $(call all-makefiles-under,$(ACTUAL_LOCAL_PATH))
 
 LOCAL_PATH := $(ACTUAL_LOCAL_PATH)
 
+=======
+LOCAL_PATH:= $(call my-dir)
+>>>>>>> upstream/master
 include $(CLEAR_VARS)
 
 # We only want this apk build for tests.
@@ -22,12 +26,17 @@ LOCAL_SRC_FILES := \
 	$(call all-java-files-under, EnabledTestApp/src)
 
 LOCAL_DX_FLAGS := --core-library
+<<<<<<< HEAD
 LOCAL_STATIC_JAVA_LIBRARIES := core-tests android-common frameworks-core-util-lib mockwebserver guava littlemock
+=======
+LOCAL_STATIC_JAVA_LIBRARIES := core-tests android-common frameworks-core-util-lib mockwebserver guava
+>>>>>>> upstream/master
 LOCAL_JAVA_LIBRARIES := android.test.runner
 LOCAL_PACKAGE_NAME := FrameworksCoreTests
 
 LOCAL_CERTIFICATE := platform
 
+<<<<<<< HEAD
 # intermediate dir to include all the test apks as raw resource
 FrameworkCoreTests_intermediates := $(call intermediates-dir-for,APPS,$(LOCAL_PACKAGE_NAME))/test_apks/res
 LOCAL_RESOURCE_DIR := $(FrameworkCoreTests_intermediates) $(LOCAL_PATH)/res
@@ -46,3 +55,8 @@ $(R_file_stamp) : $(FrameworkCoreTests_all_apks_res)
 FrameworkCoreTests_all_apks :=
 FrameworkCoreTests_intermediates :=
 FrameworkCoreTests_all_apks_res :=
+=======
+include $(BUILD_PACKAGE)
+
+include $(call all-makefiles-under,$(LOCAL_PATH))
+>>>>>>> upstream/master

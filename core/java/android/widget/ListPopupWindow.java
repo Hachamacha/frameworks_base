@@ -1017,7 +1017,11 @@ public class ListPopupWindow {
 
             View hintView = mPromptView;
             if (hintView != null) {
+<<<<<<< HEAD
                 // if a hint has been specified, we accomodate more space for it and
+=======
+                // if an hint has been specified, we accomodate more space for it and
+>>>>>>> upstream/master
                 // add a text view in the drop down menu, at the bottom of the list
                 LinearLayout hintContainer = new LinearLayout(context);
                 hintContainer.setOrientation(LinearLayout.VERTICAL);
@@ -1080,8 +1084,11 @@ public class ListPopupWindow {
             if (!mDropDownVerticalOffsetSet) {
                 mDropDownVerticalOffset = -mTempRect.top;
             }
+<<<<<<< HEAD
         } else {
             mTempRect.setEmpty();
+=======
+>>>>>>> upstream/master
         }
 
         // Max height available on the screen for a popup.
@@ -1094,6 +1101,7 @@ public class ListPopupWindow {
             return maxHeight + padding;
         }
 
+<<<<<<< HEAD
         final int childWidthSpec;
         switch (mDropDownWidth) {
             case ViewGroup.LayoutParams.WRAP_CONTENT:
@@ -1113,6 +1121,9 @@ public class ListPopupWindow {
                 break;
         }
         final int listContent = mDropDownList.measureHeightOfChildren(childWidthSpec,
+=======
+        final int listContent = mDropDownList.measureHeightOfChildren(MeasureSpec.UNSPECIFIED,
+>>>>>>> upstream/master
                 0, ListView.NO_POSITION, maxHeight - otherHeights, -1);
         // add padding only if the list has items in it, that way we don't show
         // the popup if it is not needed

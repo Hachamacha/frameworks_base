@@ -22,6 +22,7 @@
 #include "android/graphics/GraphicsJNI.h"
 
 #include <binder/IMemory.h>
+<<<<<<< HEAD
 
 #include <gui/Surface.h>
 #include <gui/SurfaceComposerClient.h>
@@ -29,6 +30,13 @@
 
 #include <ui/Rect.h>
 #include <ui/Region.h>
+=======
+#include <gui/SurfaceTexture.h>
+#include <surfaceflinger/SurfaceComposerClient.h>
+#include <surfaceflinger/Surface.h>
+#include <ui/Region.h>
+#include <ui/Rect.h>
+>>>>>>> upstream/master
 
 #include <EGL/egl.h>
 
@@ -198,7 +206,11 @@ sp<Surface> Surface_getSurface(JNIEnv* env, jobject clazz) {
     return surface;
 }
 
+<<<<<<< HEAD
 void setSurface(JNIEnv* env, jobject clazz, const sp<Surface>& surface)
+=======
+static void setSurface(JNIEnv* env, jobject clazz, const sp<Surface>& surface)
+>>>>>>> upstream/master
 {
     Surface* const p = (Surface*)env->GetIntField(clazz, so.surface);
     if (surface.get()) {
@@ -251,6 +263,7 @@ static void Surface_init(
 static void Surface_initFromSurfaceTexture(
         JNIEnv* env, jobject clazz, jobject jst)
 {
+<<<<<<< HEAD
     sp<SurfaceTexture> st(SurfaceTexture_getSurfaceTexture(env, jst));
 
     if (st == NULL) {
@@ -261,6 +274,10 @@ static void Surface_initFromSurfaceTexture(
     sp<ISurfaceTexture> bq = st->getBufferQueue();
 
     sp<Surface> surface(new Surface(bq));
+=======
+    sp<ISurfaceTexture> st(SurfaceTexture_getSurfaceTexture(env, jst));
+    sp<Surface> surface(new Surface(st));
+>>>>>>> upstream/master
     if (surface == NULL) {
         jniThrowException(env, OutOfResourcesException, NULL);
         return;
@@ -316,6 +333,7 @@ static jboolean Surface_isValid(JNIEnv* env, jobject clazz)
     return Surface::isValid(surface) ? JNI_TRUE : JNI_FALSE;
 }
 
+<<<<<<< HEAD
 static jboolean Surface_isConsumerRunningBehind(JNIEnv* env, jobject clazz)
 {
     int value = 0;
@@ -329,6 +347,8 @@ static jboolean Surface_isConsumerRunningBehind(JNIEnv* env, jobject clazz)
     return (jboolean)value;
 }
 
+=======
+>>>>>>> upstream/master
 static inline SkBitmap::Config convertPixelFormat(PixelFormat format)
 {
     /* note: if PIXEL_FORMAT_RGBX_8888 means that all alpha bytes are 0xFF, then
@@ -595,7 +615,11 @@ static jobject Surface_screenshotAll(JNIEnv* env, jobject clazz, jint width, jin
 }
 
 static jobject Surface_screenshot(JNIEnv* env, jobject clazz, jint width, jint height,
+<<<<<<< HEAD
         jint minLayer, jint maxLayer)
+=======
+        jint minLayer, jint maxLayer, bool allLayers)
+>>>>>>> upstream/master
 {
     return doScreenshot(env, clazz, width, height, minLayer, maxLayer, false);
 }
@@ -747,6 +771,7 @@ static void Surface_setFreezeTint(
     }
 }
 
+<<<<<<< HEAD
 static void Surface_setWindowCrop(JNIEnv* env, jobject thiz, jobject crop)
 {
     const sp<SurfaceControl>& surface(getSurfaceControl(env, thiz));
@@ -769,6 +794,8 @@ static void Surface_setWindowCrop(JNIEnv* env, jobject thiz, jobject crop)
     }
 }
 
+=======
+>>>>>>> upstream/master
 // ----------------------------------------------------------------------------
 
 static void Surface_copyFrom(
@@ -910,8 +937,11 @@ static JNINativeMethod gSurfaceMethods[] = {
     {"setFreezeTint",       "(I)V",  (void*)Surface_setFreezeTint },
     {"readFromParcel",      "(Landroid/os/Parcel;)V", (void*)Surface_readFromParcel },
     {"writeToParcel",       "(Landroid/os/Parcel;I)V", (void*)Surface_writeToParcel },
+<<<<<<< HEAD
     {"isConsumerRunningBehind", "()Z", (void*)Surface_isConsumerRunningBehind },
     {"setWindowCrop",       "(Landroid/graphics/Rect;)V", (void*)Surface_setWindowCrop },
+=======
+>>>>>>> upstream/master
 };
 
 void nativeClassInit(JNIEnv* env, jclass clazz)
@@ -933,7 +963,11 @@ void nativeClassInit(JNIEnv* env, jclass clazz)
     no.native_region = env->GetFieldID(region, "mNativeRegion", "I");
 
     jclass parcel = env->FindClass("android/os/Parcel");
+<<<<<<< HEAD
     no.native_parcel = env->GetFieldID(parcel, "mNativePtr", "I");
+=======
+    no.native_parcel = env->GetFieldID(parcel, "mObject", "I");
+>>>>>>> upstream/master
 
     jclass rect = env->FindClass("android/graphics/Rect");
     ro.l = env->GetFieldID(rect, "left", "I");

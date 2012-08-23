@@ -143,7 +143,11 @@ public class FieldPacker {
 
     public void addObj(BaseObj obj) {
         if (obj != null) {
+<<<<<<< HEAD
             addI32(obj.getID(null));
+=======
+            addI32(obj.getID());
+>>>>>>> upstream/master
         } else {
             addI32(0);
         }

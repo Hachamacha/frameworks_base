@@ -31,12 +31,17 @@ import android.os.AsyncResult;
 import android.os.Message;
 import android.os.SystemProperties;
 import android.text.TextUtils;
+<<<<<<< HEAD
 import android.util.TimeUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+=======
+
+import java.util.ArrayList;
+>>>>>>> upstream/master
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,7 +74,11 @@ public abstract class DataConnection extends StateMachine {
     protected static int mCount;
     protected AsyncChannel mAc;
 
+<<<<<<< HEAD
     protected List<ApnContext> mApnList = null;
+=======
+    private List<ApnContext> mApnList = null;
+>>>>>>> upstream/master
     PendingIntent mReconnectIntent = null;
 
     private DataConnectionTracker mDataConnectionTracker = null;
@@ -210,6 +219,7 @@ public abstract class DataConnection extends StateMachine {
     protected static final int EVENT_RIL_CONNECTED = BASE + 5;
     protected static final int EVENT_DISCONNECT_ALL = BASE + 6;
 
+<<<<<<< HEAD
     private static final int CMD_TO_STRING_COUNT = EVENT_DISCONNECT_ALL - BASE + 1;
     private static String[] sCmdToString = new String[CMD_TO_STRING_COUNT];
     static {
@@ -231,6 +241,8 @@ public abstract class DataConnection extends StateMachine {
         }
     }
 
+=======
+>>>>>>> upstream/master
     //***** Tag IDs for EventLog
     protected static final int EVENT_LOG_BAD_DNS_ADDRESS = 50100;
 
@@ -247,7 +259,11 @@ public abstract class DataConnection extends StateMachine {
     protected FailCause lastFailCause;
     protected int mRetryOverride = -1;
     protected static final String NULL_IP = "0.0.0.0";
+<<<<<<< HEAD
     protected int mRefCount;
+=======
+    private int mRefCount;
+>>>>>>> upstream/master
     Object userData;
 
     //***** Abstract methods
@@ -265,7 +281,10 @@ public abstract class DataConnection extends StateMachine {
     protected DataConnection(PhoneBase phone, String name, int id, RetryManager rm,
             DataConnectionTracker dct) {
         super(name);
+<<<<<<< HEAD
         setProcessedMessagesSize(100);
+=======
+>>>>>>> upstream/master
         if (DBG) log("DataConnection constructor E");
         this.phone = phone;
         this.mDataConnectionTracker = dct;
@@ -381,6 +400,7 @@ public abstract class DataConnection extends StateMachine {
         if (DBG) log("NotifyDisconnectCompleted DisconnectParams=" + dp);
     }
 
+<<<<<<< HEAD
     protected int getRilRadioTechnology(int defaultRilRadioTechnology) {
         int rilRadioTechnology;
         if (mRilVersion < 6) {
@@ -389,6 +409,16 @@ public abstract class DataConnection extends StateMachine {
             rilRadioTechnology = phone.getServiceState().getRilRadioTechnology() + 2;
         }
         return rilRadioTechnology;
+=======
+    protected int getRadioTechnology(int defaultRadioTechnology) {
+        int radioTechnology;
+        if (mRilVersion < 6) {
+            radioTechnology = defaultRadioTechnology;
+        } else {
+            radioTechnology = phone.getServiceState().getRadioTechnology() + 2;
+        }
+        return radioTechnology;
+>>>>>>> upstream/master
     }
 
     /*
@@ -600,8 +630,14 @@ public abstract class DataConnection extends StateMachine {
         result.newLp.setHttpProxy(mLinkProperties.getHttpProxy());
 
         if (DBG && (! result.oldLp.equals(result.newLp))) {
+<<<<<<< HEAD
             log("updateLinkProperty old LP=" + result.oldLp);
             log("updateLinkProperty new LP=" + result.newLp);
+=======
+            if (DBG) log("updateLinkProperty old != new");
+            if (VDBG) log("updateLinkProperty old LP=" + result.oldLp);
+            if (VDBG) log("updateLinkProperty new LP=" + result.newLp);
+>>>>>>> upstream/master
         }
         mLinkProperties = result.newLp;
 
@@ -1210,6 +1246,7 @@ public abstract class DataConnection extends StateMachine {
         sendMessage(obtainMessage(EVENT_DISCONNECT_ALL,
                 new DisconnectParams(reason, onCompletedMsg)));
     }
+<<<<<<< HEAD
 
     /**
      * @return the string for msg.what as our info.
@@ -1258,4 +1295,6 @@ public abstract class DataConnection extends StateMachine {
         if (mRetryMgr != null) pw.println(" " + mRetryMgr);
         pw.flush();
     }
+=======
+>>>>>>> upstream/master
 }

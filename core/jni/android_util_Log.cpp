@@ -27,7 +27,10 @@
 #include "JNIHelp.h"
 #include "utils/misc.h"
 #include "android_runtime/AndroidRuntime.h"
+<<<<<<< HEAD
 #include "android_util_Log.h"
+=======
+>>>>>>> upstream/master
 
 #define MIN(a,b) ((a<b)?a:b)
 
@@ -57,6 +60,7 @@ static int toLevel(const char* value)
     return levels.info;
 }
 
+<<<<<<< HEAD
 static jboolean isLoggable(const char* tag, jint level) {
     String8 key;
     key.append(LOG_NAMESPACE);
@@ -73,21 +77,37 @@ static jboolean isLoggable(const char* tag, jint level) {
 
 static jboolean android_util_Log_isLoggable(JNIEnv* env, jobject clazz, jstring tag, jint level)
 {
+=======
+static jboolean android_util_Log_isLoggable(JNIEnv* env, jobject clazz, jstring tag, jint level)
+{
+    int len;
+    char key[PROPERTY_KEY_MAX];
+    char buf[PROPERTY_VALUE_MAX];
+
+>>>>>>> upstream/master
     if (tag == NULL) {
         return false;
     }
 
+<<<<<<< HEAD
     const char* chars = env->GetStringUTFChars(tag, NULL);
     if (!chars) {
         return false;
     }
 
     jboolean result = false;
+=======
+    jboolean result = false;
+
+    const char* chars = env->GetStringUTFChars(tag, NULL);
+
+>>>>>>> upstream/master
     if ((strlen(chars)+sizeof(LOG_NAMESPACE)) > PROPERTY_KEY_MAX) {
         char buf2[200];
         snprintf(buf2, sizeof(buf2), "Log tag \"%s\" exceeds limit of %d characters\n",
                 chars, PROPERTY_KEY_MAX - sizeof(LOG_NAMESPACE));
 
+<<<<<<< HEAD
         jniThrowException(env, "java/lang/IllegalArgumentException", buf2);
     } else {
         result = isLoggable(chars, level);
@@ -99,6 +119,23 @@ static jboolean android_util_Log_isLoggable(JNIEnv* env, jobject clazz, jstring 
 
 bool android_util_Log_isVerboseLogEnabled(const char* tag) {
     return isLoggable(tag, levels.verbose);
+=======
+        // release the chars!
+        env->ReleaseStringUTFChars(tag, chars);
+
+        jniThrowException(env, "java/lang/IllegalArgumentException", buf2);
+        return false;
+    } else {
+        strncpy(key, LOG_NAMESPACE, sizeof(LOG_NAMESPACE)-1);
+        strcpy(key + sizeof(LOG_NAMESPACE) - 1, chars);
+    }
+
+    env->ReleaseStringUTFChars(tag, chars);
+
+    len = property_get(key, buf, "");
+    int logLevel = toLevel(buf);
+    return (logLevel >= 0 && level >= logLevel) ? true : false;
+>>>>>>> upstream/master
 }
 
 /*
@@ -148,7 +185,11 @@ int register_android_util_Log(JNIEnv* env)
     jclass clazz = env->FindClass("android/util/Log");
 
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/util/Log");
+=======
+        LOGE("Can't find android/util/Log");
+>>>>>>> upstream/master
         return -1;
     }
 

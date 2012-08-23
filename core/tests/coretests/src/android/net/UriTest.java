@@ -16,15 +16,27 @@
 
 package android.net;
 
+<<<<<<< HEAD
 import android.content.ContentUris;
 import android.os.Parcel;
 import android.test.suitebuilder.annotation.SmallTest;
+=======
+import android.net.Uri;
+import android.content.ContentUris;
+import android.os.Parcel;
+import android.test.suitebuilder.annotation.SmallTest;
+import junit.framework.TestCase;
+
+>>>>>>> upstream/master
 import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+<<<<<<< HEAD
 import junit.framework.TestCase;
+=======
+>>>>>>> upstream/master
 
 public class UriTest extends TestCase {
 
@@ -193,7 +205,11 @@ public class UriTest extends TestCase {
         Uri b = a.buildUpon().fragment("new").build();
         assertEquals("new", b.getFragment());
         assertEquals("bar", b.getSchemeSpecificPart());
+<<<<<<< HEAD
         assertEquals("foo", b.getScheme());
+=======
+        assertEquals("foo", b.getScheme());        
+>>>>>>> upstream/master
     }
 
     @SmallTest
@@ -722,7 +738,11 @@ public class UriTest extends TestCase {
         String value = uri.getQueryParameter("a b");
         assertEquals("foo", value);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     public void testClearQueryParameters() {
         Uri uri = Uri.parse("http://www.google.com/?a=x&b=y&c=z").buildUpon()
             .clearQuery().appendQueryParameter("foo", "bar").build();
@@ -746,10 +766,13 @@ public class UriTest extends TestCase {
         assertEquals(Arrays.asList("a", "", ""),
                 Uri.parse("http://foo/path?abc=a&abc=&abc=").getQueryParameters("abc"));
     }
+<<<<<<< HEAD
 
     // http://code.google.com/p/android/issues/detail?id=21064
     public void testPlusCharacterInQuery() {
         assertEquals("d e", Uri.parse("http://a/b?c=d%20e").getQueryParameter("c"));
         assertEquals("d e", Uri.parse("http://a/b?c=d+e").getQueryParameter("c"));
     }
+=======
+>>>>>>> upstream/master
 }

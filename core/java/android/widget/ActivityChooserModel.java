@@ -23,6 +23,10 @@ import android.content.pm.ResolveInfo;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.os.AsyncTask;
+<<<<<<< HEAD
+=======
+import android.os.Handler;
+>>>>>>> upstream/master
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -41,8 +45,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+>>>>>>> upstream/master
 
 /**
  * <p>
@@ -236,7 +247,11 @@ public class ActivityChooserModel extends DataSetObservable {
     /**
      * List of activities that can handle the current intent.
      */
+<<<<<<< HEAD
     private final List<ActivityResolveInfo> mActivities = new ArrayList<ActivityResolveInfo>();
+=======
+    private final List<ActivityResolveInfo> mActivites = new ArrayList<ActivityResolveInfo>();
+>>>>>>> upstream/master
 
     /**
      * List with historical choice records.
@@ -275,18 +290,30 @@ public class ActivityChooserModel extends DataSetObservable {
 
     /**
      * Flag whether choice history can be read. In general many clients can
+<<<<<<< HEAD
      * share the same data model and {@link #readHistoricalDataIfNeeded()} may be called
      * by arbitrary of them any number of times. Therefore, this class guarantees
      * that the very first read succeeds and subsequent reads can be performed
      * only after a call to {@link #persistHistoricalDataIfNeeded()} followed by change
+=======
+     * share the same data model and {@link #readHistoricalData()} may be called
+     * by arbitrary of them any number of times. Therefore, this class guarantees
+     * that the very first read succeeds and subsequent reads can be performed
+     * only after a call to {@link #persistHistoricalData()} followed by change
+>>>>>>> upstream/master
      * of the share records.
      */
     private boolean mCanReadHistoricalData = true;
 
     /**
      * Flag whether the choice history was read. This is used to enforce that
+<<<<<<< HEAD
      * before calling {@link #persistHistoricalDataIfNeeded()} a call to
      * {@link #persistHistoricalDataIfNeeded()} has been made. This aims to avoid a
+=======
+     * before calling {@link #persistHistoricalData()} a call to
+     * {@link #persistHistoricalData()} has been made. This aims to avoid a
+>>>>>>> upstream/master
      * scenario in which a choice history file exits, it is not read yet and
      * it is overwritten. Note that always all historical records are read in
      * full and the file is rewritten. This is necessary since we need to
@@ -296,16 +323,26 @@ public class ActivityChooserModel extends DataSetObservable {
 
     /**
      * Flag whether the choice records have changed. In general many clients can
+<<<<<<< HEAD
      * share the same data model and {@link #persistHistoricalDataIfNeeded()} may be called
+=======
+     * share the same data model and {@link #persistHistoricalData()} may be called
+>>>>>>> upstream/master
      * by arbitrary of them any number of times. Therefore, this class guarantees
      * that choice history will be persisted only if it has changed.
      */
     private boolean mHistoricalRecordsChanged = true;
 
     /**
+<<<<<<< HEAD
      * Flag whether to reload the activities for the current intent.
      */
     private boolean mReloadActivities = false;
+=======
+     * Hander for scheduling work on client tread.
+     */
+    private final Handler mHandler = new Handler();
+>>>>>>> upstream/master
 
     /**
      * Policy for controlling how the model handles chosen activities.
@@ -343,6 +380,10 @@ public class ActivityChooserModel extends DataSetObservable {
                 dataModel = new ActivityChooserModel(context, historyFileName);
                 sDataModelRegistry.put(historyFileName, dataModel);
             }
+<<<<<<< HEAD
+=======
+            dataModel.readHistoricalData();
+>>>>>>> upstream/master
             return dataModel;
         }
     }
@@ -361,7 +402,11 @@ public class ActivityChooserModel extends DataSetObservable {
         } else {
             mHistoryFileName = historyFileName;
         }
+<<<<<<< HEAD
         mPackageMonitor.register(mContext, null, true);
+=======
+        mPackageMonitor.register(mContext, true);
+>>>>>>> upstream/master
     }
 
     /**
@@ -379,8 +424,12 @@ public class ActivityChooserModel extends DataSetObservable {
                 return;
             }
             mIntent = intent;
+<<<<<<< HEAD
             mReloadActivities = true;
             ensureConsistentState();
+=======
+            loadActivitiesLocked();
+>>>>>>> upstream/master
         }
     }
 
@@ -404,8 +453,12 @@ public class ActivityChooserModel extends DataSetObservable {
      */
     public int getActivityCount() {
         synchronized (mInstanceLock) {
+<<<<<<< HEAD
             ensureConsistentState();
             return mActivities.size();
+=======
+            return mActivites.size();
+>>>>>>> upstream/master
         }
     }
 
@@ -419,8 +472,12 @@ public class ActivityChooserModel extends DataSetObservable {
      */
     public ResolveInfo getActivity(int index) {
         synchronized (mInstanceLock) {
+<<<<<<< HEAD
             ensureConsistentState();
             return mActivities.get(index).resolveInfo;
+=======
+            return mActivites.get(index).resolveInfo;
+>>>>>>> upstream/master
         }
     }
 
@@ -432,6 +489,7 @@ public class ActivityChooserModel extends DataSetObservable {
      * @return The index if found, -1 otherwise.
      */
     public int getActivityIndex(ResolveInfo activity) {
+<<<<<<< HEAD
         synchronized (mInstanceLock) {
             ensureConsistentState();
             List<ActivityResolveInfo> activities = mActivities;
@@ -444,6 +502,17 @@ public class ActivityChooserModel extends DataSetObservable {
             }
             return INVALID_INDEX;
         }
+=======
+        List<ActivityResolveInfo> activities = mActivites;
+        final int activityCount = activities.size();
+        for (int i = 0; i < activityCount; i++) {
+            ActivityResolveInfo currentActivity = activities.get(i);
+            if (currentActivity.resolveInfo == activity) {
+                return i;
+            }
+        }
+        return INVALID_INDEX;
+>>>>>>> upstream/master
     }
 
     /**
@@ -464,6 +533,7 @@ public class ActivityChooserModel extends DataSetObservable {
      * @see OnChooseActivityListener
      */
     public Intent chooseActivity(int index) {
+<<<<<<< HEAD
         synchronized (mInstanceLock) {
             ensureConsistentState();
 
@@ -492,6 +562,32 @@ public class ActivityChooserModel extends DataSetObservable {
 
             return choiceIntent;
         }
+=======
+        ActivityResolveInfo chosenActivity = mActivites.get(index);
+
+        ComponentName chosenName = new ComponentName(
+                chosenActivity.resolveInfo.activityInfo.packageName,
+                chosenActivity.resolveInfo.activityInfo.name);
+
+        Intent choiceIntent = new Intent(mIntent);
+        choiceIntent.setComponent(chosenName);
+
+        if (mActivityChoserModelPolicy != null) {
+            // Do not allow the policy to change the intent.
+            Intent choiceIntentCopy = new Intent(choiceIntent);
+            final boolean handled = mActivityChoserModelPolicy.onChooseActivity(this,
+                    choiceIntentCopy);
+            if (handled) {
+                return null;
+            }
+        }
+
+        HistoricalRecord historicalRecord = new HistoricalRecord(chosenName,
+                System.currentTimeMillis(), DEFAULT_HISTORICAL_RECORD_WEIGHT);
+        addHisoricalRecord(historicalRecord);
+
+        return choiceIntent;
+>>>>>>> upstream/master
     }
 
     /**
@@ -500,9 +596,13 @@ public class ActivityChooserModel extends DataSetObservable {
      * @param listener The listener.
      */
     public void setOnChooseActivityListener(OnChooseActivityListener listener) {
+<<<<<<< HEAD
         synchronized (mInstanceLock) {
             mActivityChoserModelPolicy = listener;
         }
+=======
+        mActivityChoserModelPolicy = listener;
+>>>>>>> upstream/master
     }
 
     /**
@@ -516,9 +616,14 @@ public class ActivityChooserModel extends DataSetObservable {
      */
     public ResolveInfo getDefaultActivity() {
         synchronized (mInstanceLock) {
+<<<<<<< HEAD
             ensureConsistentState();
             if (!mActivities.isEmpty()) {
                 return mActivities.get(0).resolveInfo;
+=======
+            if (!mActivites.isEmpty()) {
+                return mActivites.get(0).resolveInfo;
+>>>>>>> upstream/master
             }
         }
         return null;
@@ -535,6 +640,7 @@ public class ActivityChooserModel extends DataSetObservable {
      * @param index The index of the activity to set as default.
      */
     public void setDefaultActivity(int index) {
+<<<<<<< HEAD
         synchronized (mInstanceLock) {
             ensureConsistentState();
 
@@ -556,16 +662,64 @@ public class ActivityChooserModel extends DataSetObservable {
             HistoricalRecord historicalRecord = new HistoricalRecord(defaultName,
                     System.currentTimeMillis(), weight);
             addHisoricalRecord(historicalRecord);
+=======
+        ActivityResolveInfo newDefaultActivity = mActivites.get(index);
+        ActivityResolveInfo oldDefaultActivity = mActivites.get(0);
+
+        final float weight;
+        if (oldDefaultActivity != null) {
+            // Add a record with weight enough to boost the chosen at the top.
+            weight = oldDefaultActivity.weight - newDefaultActivity.weight
+                + DEFAULT_ACTIVITY_INFLATION;
+        } else {
+            weight = DEFAULT_HISTORICAL_RECORD_WEIGHT;
+        }
+
+        ComponentName defaultName = new ComponentName(
+                newDefaultActivity.resolveInfo.activityInfo.packageName,
+                newDefaultActivity.resolveInfo.activityInfo.name);
+        HistoricalRecord historicalRecord = new HistoricalRecord(defaultName,
+                System.currentTimeMillis(), weight);
+        addHisoricalRecord(historicalRecord);
+    }
+
+    /**
+     * Reads the history data from the backing file if the latter
+     * was provided. Calling this method more than once before a call
+     * to {@link #persistHistoricalData()} has been made has no effect.
+     * <p>
+     * <strong>Note:</strong> Historical data is read asynchronously and
+     *       as soon as the reading is completed any registered
+     *       {@link DataSetObserver}s will be notified. Also no historical
+     *       data is read until this method is invoked.
+     * <p>
+     */
+    private void readHistoricalData() {
+        synchronized (mInstanceLock) {
+            if (!mCanReadHistoricalData || !mHistoricalRecordsChanged) {
+                return;
+            }
+            mCanReadHistoricalData = false;
+            mReadShareHistoryCalled = true;
+            if (!TextUtils.isEmpty(mHistoryFileName)) {
+                AsyncTask.SERIAL_EXECUTOR.execute(new HistoryLoader());
+            }
+>>>>>>> upstream/master
         }
     }
 
     /**
      * Persists the history data to the backing file if the latter
+<<<<<<< HEAD
      * was provided. Calling this method before a call to {@link #readHistoricalDataIfNeeded()}
+=======
+     * was provided. Calling this method before a call to {@link #readHistoricalData()}
+>>>>>>> upstream/master
      * throws an exception. Calling this method more than one without choosing an
      * activity has not effect.
      *
      * @throws IllegalStateException If this method is called before a call to
+<<<<<<< HEAD
      *         {@link #readHistoricalDataIfNeeded()}.
      */
     private void persistHistoricalDataIfNeeded() {
@@ -579,6 +733,23 @@ public class ActivityChooserModel extends DataSetObservable {
         if (!TextUtils.isEmpty(mHistoryFileName)) {
             new PersistHistoryAsyncTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,
                     new ArrayList<HistoricalRecord>(mHistoricalRecords), mHistoryFileName);
+=======
+     *         {@link #readHistoricalData()}.
+     */
+    private void persistHistoricalData() {
+        synchronized (mInstanceLock) {
+            if (!mReadShareHistoryCalled) {
+                throw new IllegalStateException("No preceding call to #readHistoricalData");
+            }
+            if (!mHistoricalRecordsChanged) {
+                return;
+            }
+            mHistoricalRecordsChanged = false;
+            mCanReadHistoricalData = true;
+            if (!TextUtils.isEmpty(mHistoryFileName)) {
+                AsyncTask.SERIAL_EXECUTOR.execute(new HistoryPersister());
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -595,7 +766,25 @@ public class ActivityChooserModel extends DataSetObservable {
                 return;
             }
             mActivitySorter = activitySorter;
+<<<<<<< HEAD
             if (sortActivitiesIfNeeded()) {
+=======
+            sortActivities();
+        }
+    }
+
+    /**
+     * Sorts the activities based on history and an intent. If
+     * a sorter is not specified this a default implementation is used.
+     *
+     * @see #setActivitySorter(ActivitySorter)
+     */
+    private void sortActivities() {
+        synchronized (mInstanceLock) {
+            if (mActivitySorter != null && !mActivites.isEmpty()) {
+                mActivitySorter.sort(mIntent, mActivites,
+                        Collections.unmodifiableList(mHistoricalRecords));
+>>>>>>> upstream/master
                 notifyChanged();
             }
         }
@@ -620,10 +809,15 @@ public class ActivityChooserModel extends DataSetObservable {
                 return;
             }
             mHistoryMaxSize = historyMaxSize;
+<<<<<<< HEAD
             pruneExcessiveHistoricalRecordsIfNeeded();
             if (sortActivitiesIfNeeded()) {
                 notifyChanged();
             }
+=======
+            pruneExcessiveHistoricalRecordsLocked();
+            sortActivities();
+>>>>>>> upstream/master
         }
     }
 
@@ -645,7 +839,10 @@ public class ActivityChooserModel extends DataSetObservable {
      */
     public int getHistorySize() {
         synchronized (mInstanceLock) {
+<<<<<<< HEAD
             ensureConsistentState();
+=======
+>>>>>>> upstream/master
             return mHistoricalRecords.size();
         }
     }
@@ -657,6 +854,7 @@ public class ActivityChooserModel extends DataSetObservable {
     }
 
     /**
+<<<<<<< HEAD
      * Ensures the model is in a consistent state which is the
      * activities for the current intent have been loaded, the
      * most recent history has been read, and the activities
@@ -669,10 +867,28 @@ public class ActivityChooserModel extends DataSetObservable {
         if (stateChanged) {
             sortActivitiesIfNeeded();
             notifyChanged();
+=======
+     * Adds a historical record.
+     *
+     * @param historicalRecord The record to add.
+     * @return True if the record was added.
+     */
+    private boolean addHisoricalRecord(HistoricalRecord historicalRecord) {
+        synchronized (mInstanceLock) {
+            final boolean added = mHistoricalRecords.add(historicalRecord);
+            if (added) {
+                mHistoricalRecordsChanged = true;
+                pruneExcessiveHistoricalRecordsLocked();
+                persistHistoricalData();
+                sortActivities();
+            }
+            return added;
+>>>>>>> upstream/master
         }
     }
 
     /**
+<<<<<<< HEAD
      * Sorts the activities if necessary which is if there is a
      * sorter, there are some activities to sort, and there is some
      * historical data.
@@ -761,6 +977,65 @@ public class ActivityChooserModel extends DataSetObservable {
             if (DEBUG) {
                 Log.i(LOG_TAG, "Pruned: " + prunedRecord);
             }
+=======
+     * Prunes older excessive records to guarantee {@link #mHistoryMaxSize}.
+     */
+    private void pruneExcessiveHistoricalRecordsLocked() {
+        List<HistoricalRecord> choiceRecords = mHistoricalRecords;
+        final int pruneCount = choiceRecords.size() - mHistoryMaxSize;
+        if (pruneCount <= 0) {
+            return;
+        }
+        mHistoricalRecordsChanged = true;
+        for (int i = 0; i < pruneCount; i++) {
+            HistoricalRecord prunedRecord = choiceRecords.remove(0);
+            if (DEBUG) {
+                Log.i(LOG_TAG, "Pruned: " + prunedRecord);
+            }
+        }
+    }
+
+    /**
+     * Loads the activities.
+     */
+    private void loadActivitiesLocked() {
+        mActivites.clear();
+        if (mIntent != null) {
+            List<ResolveInfo> resolveInfos =
+                mContext.getPackageManager().queryIntentActivities(mIntent, 0);
+            final int resolveInfoCount = resolveInfos.size();
+            for (int i = 0; i < resolveInfoCount; i++) {
+                ResolveInfo resolveInfo = resolveInfos.get(i);
+                mActivites.add(new ActivityResolveInfo(resolveInfo));
+            }
+            sortActivities();
+        } else {
+            notifyChanged();
+        }
+    }
+
+    /**
+     * Prunes historical records for a package that goes away.
+     *
+     * @param packageName The name of the package that goes away.
+     */
+    private void pruneHistoricalRecordsForPackageLocked(String packageName) {
+        boolean recordsRemoved = false;
+
+        List<HistoricalRecord> historicalRecords = mHistoricalRecords;
+        for (int i = 0; i < historicalRecords.size(); i++) {
+            HistoricalRecord historicalRecord = historicalRecords.get(i);
+            String recordPackageName = historicalRecord.activity.getPackageName();
+            if (recordPackageName.equals(packageName)) {
+                historicalRecords.remove(historicalRecord);
+                recordsRemoved = true;
+            }
+        }
+
+        if (recordsRemoved) {
+            mHistoricalRecordsChanged = true;
+            sortActivities();
+>>>>>>> upstream/master
         }
     }
 
@@ -968,6 +1243,7 @@ public class ActivityChooserModel extends DataSetObservable {
     /**
      * Command for reading the historical records from a file off the UI thread.
      */
+<<<<<<< HEAD
     private void readHistoricalDataImpl() {
         FileInputStream fis = null;
         try {
@@ -1034,6 +1310,114 @@ public class ActivityChooserModel extends DataSetObservable {
                     fis.close();
                 } catch (IOException ioe) {
                     /* ignore */
+=======
+    private final class HistoryLoader implements Runnable {
+
+       public void run() {
+            FileInputStream fis = null;
+            try {
+                fis = mContext.openFileInput(mHistoryFileName);
+            } catch (FileNotFoundException fnfe) {
+                if (DEBUG) {
+                    Log.i(LOG_TAG, "Could not open historical records file: " + mHistoryFileName);
+                }
+                return;
+            }
+            try {
+                XmlPullParser parser = Xml.newPullParser();
+                parser.setInput(fis, null);
+
+                int type = XmlPullParser.START_DOCUMENT;
+                while (type != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
+                    type = parser.next();
+                }
+
+                if (!TAG_HISTORICAL_RECORDS.equals(parser.getName())) {
+                    throw new XmlPullParserException("Share records file does not start with "
+                            + TAG_HISTORICAL_RECORDS + " tag.");
+                }
+
+                List<HistoricalRecord> readRecords = new ArrayList<HistoricalRecord>();
+
+                while (true) {
+                    type = parser.next();
+                    if (type == XmlPullParser.END_DOCUMENT) {
+                        break;
+                    }
+                    if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
+                        continue;
+                    }
+                    String nodeName = parser.getName();
+                    if (!TAG_HISTORICAL_RECORD.equals(nodeName)) {
+                        throw new XmlPullParserException("Share records file not well-formed.");
+                    }
+
+                    String activity = parser.getAttributeValue(null, ATTRIBUTE_ACTIVITY);
+                    final long time =
+                        Long.parseLong(parser.getAttributeValue(null, ATTRIBUTE_TIME));
+                    final float weight =
+                        Float.parseFloat(parser.getAttributeValue(null, ATTRIBUTE_WEIGHT));
+
+                    HistoricalRecord readRecord = new HistoricalRecord(activity, time,
+                            weight);
+                    readRecords.add(readRecord);
+
+                    if (DEBUG) {
+                        Log.i(LOG_TAG, "Read " + readRecord.toString());
+                    }
+                }
+
+                if (DEBUG) {
+                    Log.i(LOG_TAG, "Read " + readRecords.size() + " historical records.");
+                }
+
+                synchronized (mInstanceLock) {
+                    Set<HistoricalRecord> uniqueShareRecords =
+                        new LinkedHashSet<HistoricalRecord>(readRecords);
+
+                    // Make sure no duplicates. Example: Read a file with
+                    // one record, add one record, persist the two records,
+                    // add a record, read the persisted records - the
+                    // read two records should not be added again.
+                    List<HistoricalRecord> historicalRecords = mHistoricalRecords;
+                    final int historicalRecordsCount = historicalRecords.size();
+                    for (int i = historicalRecordsCount - 1; i >= 0; i--) {
+                        HistoricalRecord historicalRecord = historicalRecords.get(i);
+                        uniqueShareRecords.add(historicalRecord);
+                    }
+
+                    if (historicalRecords.size() == uniqueShareRecords.size()) {
+                        return;
+                    }
+
+                    // Make sure the oldest records go to the end.
+                    historicalRecords.clear();
+                    historicalRecords.addAll(uniqueShareRecords);
+
+                    mHistoricalRecordsChanged = true;
+
+                    // Do this on the client thread since the client may be on the UI
+                    // thread, wait for data changes which happen during sorting, and
+                    // perform UI modification based on the data change.
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            pruneExcessiveHistoricalRecordsLocked();
+                            sortActivities();
+                        }
+                    });
+                }
+            } catch (XmlPullParserException xppe) {
+                Log.e(LOG_TAG, "Error reading historical recrod file: " + mHistoryFileName, xppe);
+            } catch (IOException ioe) {
+                Log.e(LOG_TAG, "Error reading historical recrod file: " + mHistoryFileName, ioe);
+            } finally {
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException ioe) {
+                        /* ignore */
+                    }
+>>>>>>> upstream/master
                 }
             }
         }
@@ -1042,6 +1426,7 @@ public class ActivityChooserModel extends DataSetObservable {
     /**
      * Command for persisting the historical records to a file off the UI thread.
      */
+<<<<<<< HEAD
     private final class PersistHistoryAsyncTask extends AsyncTask<Object, Void, Void> {
 
         @Override
@@ -1057,6 +1442,23 @@ public class ActivityChooserModel extends DataSetObservable {
             } catch (FileNotFoundException fnfe) {
                 Log.e(LOG_TAG, "Error writing historical recrod file: " + hostoryFileName, fnfe);
                 return null;
+=======
+    private final class HistoryPersister implements Runnable {
+
+        public void run() {
+            FileOutputStream fos = null;
+            List<HistoricalRecord> records = null;
+
+            synchronized (mInstanceLock) {
+                records = new ArrayList<HistoricalRecord>(mHistoricalRecords);
+            }
+
+            try {
+                fos = mContext.openFileOutput(mHistoryFileName, Context.MODE_PRIVATE);
+            } catch (FileNotFoundException fnfe) {
+                Log.e(LOG_TAG, "Error writing historical recrod file: " + mHistoryFileName, fnfe);
+                return;
+>>>>>>> upstream/master
             }
 
             XmlSerializer serializer = Xml.newSerializer();
@@ -1066,12 +1468,20 @@ public class ActivityChooserModel extends DataSetObservable {
                 serializer.startDocument("UTF-8", true);
                 serializer.startTag(null, TAG_HISTORICAL_RECORDS);
 
+<<<<<<< HEAD
                 final int recordCount = historicalRecords.size();
                 for (int i = 0; i < recordCount; i++) {
                     HistoricalRecord record = historicalRecords.remove(0);
                     serializer.startTag(null, TAG_HISTORICAL_RECORD);
                     serializer.attribute(null, ATTRIBUTE_ACTIVITY,
                             record.activity.flattenToString());
+=======
+                final int recordCount = records.size();
+                for (int i = 0; i < recordCount; i++) {
+                    HistoricalRecord record = records.remove(0);
+                    serializer.startTag(null, TAG_HISTORICAL_RECORD);
+                    serializer.attribute(null, ATTRIBUTE_ACTIVITY, record.activity.flattenToString());
+>>>>>>> upstream/master
                     serializer.attribute(null, ATTRIBUTE_TIME, String.valueOf(record.time));
                     serializer.attribute(null, ATTRIBUTE_WEIGHT, String.valueOf(record.weight));
                     serializer.endTag(null, TAG_HISTORICAL_RECORD);
@@ -1093,7 +1503,10 @@ public class ActivityChooserModel extends DataSetObservable {
             } catch (IOException ioe) {
                 Log.e(LOG_TAG, "Error writing historical recrod file: " + mHistoryFileName, ioe);
             } finally {
+<<<<<<< HEAD
                 mCanReadHistoricalData = true;
+=======
+>>>>>>> upstream/master
                 if (fos != null) {
                     try {
                         fos.close();
@@ -1102,7 +1515,10 @@ public class ActivityChooserModel extends DataSetObservable {
                     }
                 }
             }
+<<<<<<< HEAD
             return null;
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -1112,8 +1528,38 @@ public class ActivityChooserModel extends DataSetObservable {
     private final class DataModelPackageMonitor extends PackageMonitor {
 
         @Override
+<<<<<<< HEAD
         public void onSomePackagesChanged() {
             mReloadActivities = true;
+=======
+        public void onPackageAdded(String packageName, int uid) {
+            synchronized (mInstanceLock) {
+                loadActivitiesLocked();
+            }
+        }
+
+        @Override
+        public void onPackageAppeared(String packageName, int reason) {
+            synchronized (mInstanceLock) {
+                loadActivitiesLocked();
+            }
+        }
+
+        @Override
+        public void onPackageRemoved(String packageName, int uid) {
+            synchronized (mInstanceLock) {
+                pruneHistoricalRecordsForPackageLocked(packageName);
+                loadActivitiesLocked();
+            }
+        }
+
+        @Override
+        public void onPackageDisappeared(String packageName, int reason) {
+            synchronized (mInstanceLock) {
+                pruneHistoricalRecordsForPackageLocked(packageName);
+                loadActivitiesLocked();
+            }
+>>>>>>> upstream/master
         }
     }
 }

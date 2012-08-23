@@ -18,7 +18,11 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
+<<<<<<< HEAD
               android:paddingRight="8dip"
+=======
+              android:paddingRight="16dip"
+>>>>>>> upstream/master
               android:background="?android:attr/actionBarItemBackground"
               android:enabled="false">
 

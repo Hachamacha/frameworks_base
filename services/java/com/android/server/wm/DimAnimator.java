@@ -41,6 +41,7 @@ class DimAnimator {
 
     DimAnimator (SurfaceSession session) {
         if (mDimSurface == null) {
+<<<<<<< HEAD
             try {
                 if (WindowManagerService.DEBUG_SURFACE_TRACE) {
                     mDimSurface = new WindowStateAnimator.SurfaceTrace(session, 0,
@@ -56,6 +57,16 @@ class DimAnimator {
                 if (WindowManagerService.SHOW_TRANSACTIONS ||
                         WindowManagerService.SHOW_SURFACE_ALLOC) Slog.i(WindowManagerService.TAG,
                                 "  DIM " + mDimSurface + ": CREATE");
+=======
+            if (WindowManagerService.SHOW_TRANSACTIONS ||
+                    WindowManagerService.SHOW_SURFACE_ALLOC) Slog.i(WindowManagerService.TAG,
+                            "  DIM " + mDimSurface + ": CREATE");
+            try {
+                mDimSurface = new Surface(session, 0,
+                        "DimAnimator",
+                        -1, 16, 16, PixelFormat.OPAQUE,
+                        Surface.FX_SURFACE_DIM);
+>>>>>>> upstream/master
                 mDimSurface.setAlpha(0.0f);
             } catch (Exception e) {
                 Slog.e(WindowManagerService.TAG, "Exception creating Dim surface", e);
@@ -64,6 +75,7 @@ class DimAnimator {
     }
 
     /**
+<<<<<<< HEAD
      * Set's the dim surface's layer and update dim parameters that will be used in
      * {@link #updateSurface} after all windows are examined.
      */
@@ -77,12 +89,24 @@ class DimAnimator {
         if (!mDimShown) {
             if (WindowManagerService.SHOW_TRANSACTIONS) Slog.i(WindowManagerService.TAG,
                 "  DIM " + mDimSurface + ": SHOW pos=(0,0) (" + dw + "x" + dh + ")");
+=======
+     * Show the dim surface.
+     */
+    void show(int dw, int dh) {
+        if (!mDimShown) {
+            if (WindowManagerService.SHOW_TRANSACTIONS) Slog.i(WindowManagerService.TAG, "  DIM " + mDimSurface + ": SHOW pos=(0,0) (" +
+                    dw + "x" + dh + ")");
+>>>>>>> upstream/master
             mDimShown = true;
             try {
                 mLastDimWidth = dw;
                 mLastDimHeight = dh;
+<<<<<<< HEAD
                 // back off position so mDimXXX/4 is before and mDimXXX/4 is after
                 mDimSurface.setPosition(-1 * dw / 6, -1 * dh /6);
+=======
+                mDimSurface.setPosition(0, 0);
+>>>>>>> upstream/master
                 mDimSurface.setSize(dw, dh);
                 mDimSurface.show();
             } catch (RuntimeException e) {
@@ -92,6 +116,7 @@ class DimAnimator {
             mLastDimWidth = dw;
             mLastDimHeight = dh;
             mDimSurface.setSize(dw, dh);
+<<<<<<< HEAD
             // back off position so mDimXXX/4 is before and mDimXXX/4 is after
             mDimSurface.setPosition(-1 * dw / 6, -1 * dh /6);
         }
@@ -100,19 +125,43 @@ class DimAnimator {
 
         if (WindowManagerService.SHOW_TRANSACTIONS) Slog.i(WindowManagerService.TAG, "  DIM "
                 + mDimSurface + ": layer=" + (winAnimator.mAnimLayer-1) + " target=" + target);
+=======
+        }
+    }
+
+    /**
+     * Set's the dim surface's layer and update dim parameters that will be used in
+     * {@link updateSurface} after all windows are examined.
+     */
+    void updateParameters(Resources res, WindowState w, long currentTime) {
+        mDimSurface.setLayer(w.mAnimLayer - WindowManagerService.LAYER_OFFSET_DIM);
+
+        final float target = w.mExiting ? 0 : w.mAttrs.dimAmount;
+        if (WindowManagerService.SHOW_TRANSACTIONS) Slog.i(WindowManagerService.TAG, "  DIM " + mDimSurface
+                + ": layer=" + (w.mAnimLayer-1) + " target=" + target);
+>>>>>>> upstream/master
         if (mDimTargetAlpha != target) {
             // If the desired dim level has changed, then
             // start an animation to it.
             mLastDimAnimTime = currentTime;
+<<<<<<< HEAD
             long duration = (winAnimator.mAnimating && winAnimator.mAnimation != null)
                     ? winAnimator.mAnimation.computeDurationHint()
+=======
+            long duration = (w.mAnimating && w.mAnimation != null)
+                    ? w.mAnimation.computeDurationHint()
+>>>>>>> upstream/master
                     : WindowManagerService.DEFAULT_DIM_DURATION;
             if (target > mDimTargetAlpha) {
                 TypedValue tv = new TypedValue();
                 res.getValue(com.android.internal.R.fraction.config_dimBehindFadeDuration,
                         tv, true);
                 if (tv.type == TypedValue.TYPE_FRACTION) {
+<<<<<<< HEAD
                     duration = (long)tv.getFraction(duration, duration);
+=======
+                    duration = (long)tv.getFraction((float)duration, (float)duration);
+>>>>>>> upstream/master
                 } else if (tv.type >= TypedValue.TYPE_FIRST_INT
                         && tv.type <= TypedValue.TYPE_LAST_INT) {
                     duration = tv.data;
@@ -140,6 +189,7 @@ class DimAnimator {
             }
         }
 
+<<<<<<< HEAD
         boolean animating = mLastDimAnimTime != 0;
         if (animating) {
             mDimCurrentAlpha += mDimDeltaPerMs
@@ -161,10 +211,38 @@ class DimAnimator {
 
             // Do we need to continue animating?
             if (animating) {
+=======
+        boolean animating = false;
+        if (mLastDimAnimTime != 0) {
+            mDimCurrentAlpha += mDimDeltaPerMs
+                    * (currentTime-mLastDimAnimTime);
+            boolean more = true;
+            if (displayFrozen) {
+                // If the display is frozen, there is no reason to animate.
+                more = false;
+            } else if (mDimDeltaPerMs > 0) {
+                if (mDimCurrentAlpha > mDimTargetAlpha) {
+                    more = false;
+                }
+            } else if (mDimDeltaPerMs < 0) {
+                if (mDimCurrentAlpha < mDimTargetAlpha) {
+                    more = false;
+                }
+            } else {
+                more = false;
+            }
+
+            // Do we need to continue animating?
+            if (more) {
+>>>>>>> upstream/master
                 if (WindowManagerService.SHOW_TRANSACTIONS) Slog.i(WindowManagerService.TAG, "  DIM "
                         + mDimSurface + ": alpha=" + mDimCurrentAlpha);
                 mLastDimAnimTime = currentTime;
                 mDimSurface.setAlpha(mDimCurrentAlpha);
+<<<<<<< HEAD
+=======
+                animating = true;
+>>>>>>> upstream/master
             } else {
                 mDimCurrentAlpha = mDimTargetAlpha;
                 mLastDimAnimTime = 0;
@@ -198,6 +276,7 @@ class DimAnimator {
         pw.print(" delta="); pw.print(mDimDeltaPerMs);
         pw.print(" lastAnimTime="); pw.println(mLastDimAnimTime);
     }
+<<<<<<< HEAD
 
     static class Parameters {
         final WindowStateAnimator mDimWinAnimator;
@@ -212,4 +291,6 @@ class DimAnimator {
             mDimTarget = dimTarget;
         }
     }
+=======
+>>>>>>> upstream/master
 }

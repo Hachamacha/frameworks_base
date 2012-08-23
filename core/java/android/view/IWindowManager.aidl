@@ -58,14 +58,32 @@ interface IWindowManager
     void getDisplaySize(out Point size);
     void getRealDisplaySize(out Point size);
     int getMaximumSizeDimension();
+<<<<<<< HEAD
     void getCurrentSizeRange(out Point smallestSize, out Point largestSize);
+=======
+>>>>>>> upstream/master
 
     void setForcedDisplaySize(int longDimen, int shortDimen);
     void clearForcedDisplaySize();
 
+<<<<<<< HEAD
     // Is the device configured to have a full system bar for larger screens?
     boolean hasSystemNavBar();
 
+=======
+    // Is device configured with a hideable status bar or a tablet system bar?
+    boolean canStatusBarHide();
+
+    // These can only be called when injecting events to your own window,
+    // or by holding the INJECT_EVENTS permission.  These methods may block
+    // until pending input events are finished being dispatched even when 'sync' is false.
+    // Avoid calling these methods on your UI thread or use the 'NoWait' version instead.
+    boolean injectKeyEvent(in KeyEvent ev, boolean sync);
+    boolean injectPointerEvent(in MotionEvent ev, boolean sync);
+    boolean injectTrackballEvent(in MotionEvent ev, boolean sync);
+    boolean injectInputEventNoWait(in InputEvent ev);
+    
+>>>>>>> upstream/master
     // These can only be called when holding the MANAGE_APP_TOKENS permission.
     void pauseKeyDispatching(IBinder token);
     void resumeKeyDispatching(IBinder token);
@@ -80,12 +98,16 @@ interface IWindowManager
     void setFocusedApp(IBinder token, boolean moveFocusNow);
     void prepareAppTransition(int transit, boolean alwaysKeepCurrent);
     int getPendingAppTransition();
+<<<<<<< HEAD
     void overridePendingAppTransition(String packageName, int enterAnim, int exitAnim,
             IRemoteCallback startedCallback);
     void overridePendingAppTransitionScaleUp(int startX, int startY, int startWidth,
             int startHeight);
     void overridePendingAppTransitionThumb(in Bitmap srcThumb, int startX, int startY,
             IRemoteCallback startedCallback, boolean delayed);
+=======
+    void overridePendingAppTransition(String packageName, int enterAnim, int exitAnim);
+>>>>>>> upstream/master
     void executeAppTransition();
     void setAppStartingWindow(IBinder token, String pkg, int theme,
             in CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel, int labelRes,
@@ -123,6 +145,29 @@ interface IWindowManager
     void setAnimationScale(int which, float scale);
     void setAnimationScales(in float[] scales);
     
+<<<<<<< HEAD
+=======
+    // These require the READ_INPUT_STATE permission.
+    int getSwitchState(int sw);
+    int getSwitchStateForDevice(int devid, int sw);
+    int getScancodeState(int sw);
+    int getScancodeStateForDevice(int devid, int sw);
+    int getTrackballScancodeState(int sw);
+    int getDPadScancodeState(int sw);
+    int getKeycodeState(int sw);
+    int getKeycodeStateForDevice(int devid, int sw);
+    int getTrackballKeycodeState(int sw);
+    int getDPadKeycodeState(int sw);
+    InputChannel monitorInput(String inputChannelName);
+
+    // Report whether the hardware supports the given keys; returns true if successful
+    boolean hasKeys(in int[] keycodes, inout boolean[] keyExists);
+    
+    // Get input device information.
+    InputDevice getInputDevice(int deviceId);
+    int[] getInputDeviceIds();
+    
+>>>>>>> upstream/master
     // For testing
     void setInTouchMode(boolean showFocus);
 
@@ -146,10 +191,15 @@ interface IWindowManager
      * @param alwaysSendConfiguration Flag to force a new configuration to
      * be evaluated.  This can be used when there are other parameters in
      * configuration that are changing.
+<<<<<<< HEAD
      * @param forceRelayout If true, the window manager will always do a relayout
      * of its windows even if the rotation hasn't changed.
      */
     void updateRotation(boolean alwaysSendConfiguration, boolean forceRelayout);
+=======
+     */
+    void updateRotation(boolean alwaysSendConfiguration);
+>>>>>>> upstream/master
 
     /**
      * Retrieve the current screen orientation, constants as per
@@ -195,6 +245,14 @@ interface IWindowManager
     void statusBarVisibilityChanged(int visibility);
 
     /**
+<<<<<<< HEAD
+=======
+     * Called by the settings application to temporarily set the pointer speed.
+     */
+    void setPointerSpeed(int speed);
+
+    /**
+>>>>>>> upstream/master
      * Block until the given window has been drawn to the screen.
      */
     void waitForWindowDrawn(IBinder token, in IRemoteCallback callback);

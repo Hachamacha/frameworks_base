@@ -27,7 +27,11 @@ package android.media;
  */
 public class AudioSystem
 {
+<<<<<<< HEAD
     /* These values must be kept in sync with AudioSystem.h */
+=======
+    /* FIXME: Need to finalize this and correlate with native layer */
+>>>>>>> upstream/master
     /*
      * If these are modified, please also update Settings.System.VOLUME_SETTINGS
      * and attrs.xml and AudioManager.java.
@@ -183,7 +187,10 @@ public class AudioSystem
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     /*
      * AudioPolicyService methods
      */
@@ -202,6 +209,7 @@ public class AudioSystem
     public static final int DEVICE_OUT_AUX_DIGITAL = 0x400;
     public static final int DEVICE_OUT_ANLG_DOCK_HEADSET = 0x800;
     public static final int DEVICE_OUT_DGTL_DOCK_HEADSET = 0x1000;
+<<<<<<< HEAD
     public static final int DEVICE_OUT_USB_ACCESSORY = 0x2000;
     public static final int DEVICE_OUT_USB_DEVICE = 0x4000;
 
@@ -231,6 +239,9 @@ public class AudioSystem
     public static final int DEVICE_OUT_ALL_USB = (DEVICE_OUT_USB_ACCESSORY |
                                                   DEVICE_OUT_USB_DEVICE);
 
+=======
+    public static final int DEVICE_OUT_DEFAULT = 0x8000;
+>>>>>>> upstream/master
     // input devices
     public static final int DEVICE_IN_COMMUNICATION = 0x10000;
     public static final int DEVICE_IN_AMBIENT = 0x20000;
@@ -247,6 +258,7 @@ public class AudioSystem
     public static final int DEVICE_STATE_AVAILABLE = 1;
     private static final int NUM_DEVICE_STATES = 1;
 
+<<<<<<< HEAD
     public static final String DEVICE_OUT_EARPIECE_NAME = "earpiece";
     public static final String DEVICE_OUT_SPEAKER_NAME = "speaker";
     public static final String DEVICE_OUT_WIRED_HEADSET_NAME = "headset";
@@ -302,6 +314,8 @@ public class AudioSystem
         }
     }
 
+=======
+>>>>>>> upstream/master
     // phone state, match audio_mode???
     public static final int PHONE_STATE_OFFCALL = 0;
     public static final int PHONE_STATE_RINGING = 1;
@@ -318,8 +332,12 @@ public class AudioSystem
     public static final int FORCE_BT_DESK_DOCK = 7;
     public static final int FORCE_ANALOG_DOCK = 8;
     public static final int FORCE_DIGITAL_DOCK = 9;
+<<<<<<< HEAD
     public static final int FORCE_NO_BT_A2DP = 10;
     private static final int NUM_FORCE_CONFIG = 11;
+=======
+    private static final int NUM_FORCE_CONFIG = 10;
+>>>>>>> upstream/master
     public static final int FORCE_DEFAULT = FORCE_NONE;
 
     // usage for setForceUse, must match AudioSystem::force_use
@@ -329,6 +347,7 @@ public class AudioSystem
     public static final int FOR_DOCK = 3;
     private static final int NUM_FORCE_USE = 4;
 
+<<<<<<< HEAD
     // usage for AudioRecord.startRecordingSync(), must match AudioSystem::sync_event_t
     public static final int SYNC_EVENT_NONE = 0;
     public static final int SYNC_EVENT_PRESENTATION_COMPLETE = 1;
@@ -345,5 +364,16 @@ public class AudioSystem
     public static native float getMasterVolume();
     public static native int setMasterMute(boolean mute);
     public static native boolean getMasterMute();
+=======
+    public static native int setDeviceConnectionState(int device, int state, String device_address);
+    public static native int getDeviceConnectionState(int device, String device_address);
+    public static native int setPhoneState(int state);
+    public static native int setRingerMode(int mode, int mask);
+    public static native int setForceUse(int usage, int config);
+    public static native int getForceUse(int usage);
+    public static native int initStreamVolume(int stream, int indexMin, int indexMax);
+    public static native int setStreamVolumeIndex(int stream, int index);
+    public static native int getStreamVolumeIndex(int stream);
+>>>>>>> upstream/master
     public static native int getDevicesForStream(int stream);
 }

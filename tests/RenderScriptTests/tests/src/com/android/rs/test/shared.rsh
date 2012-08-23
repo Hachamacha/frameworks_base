@@ -32,6 +32,7 @@ do { \
 \
 } while (0)
 
+<<<<<<< HEAD
 static const int iposinf = 0x7f800000;
 static const int ineginf = 0xff800000;
 
@@ -74,6 +75,8 @@ static bool iszero(float f) {
     return isposzero(f) || isnegzero(f);
 }
 
+=======
+>>>>>>> upstream/master
 /* These constants must match those in UnitTest.java */
 static const int RS_MSG_TEST_PASSED = 100;
 static const int RS_MSG_TEST_FAILED = 101;

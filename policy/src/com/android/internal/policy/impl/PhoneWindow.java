@@ -79,7 +79,10 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+<<<<<<< HEAD
 import android.view.ViewParent;
+=======
+>>>>>>> upstream/master
 import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
@@ -116,10 +119,13 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
 
     final TypedValue mMinWidthMajor = new TypedValue();
     final TypedValue mMinWidthMinor = new TypedValue();
+<<<<<<< HEAD
     TypedValue mFixedWidthMajor;
     TypedValue mFixedWidthMinor;
     TypedValue mFixedHeightMajor;
     TypedValue mFixedHeightMinor;
+=======
+>>>>>>> upstream/master
 
     // This is the top-level view of the window, containing the window decor.
     private DecorView mDecor;
@@ -583,10 +589,14 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             st.decorView.setWindowBackground(getContext().getResources().getDrawable(
                     backgroundResId));
 
+<<<<<<< HEAD
             ViewParent shownPanelParent = st.shownPanelView.getParent();
             if (shownPanelParent != null && shownPanelParent instanceof ViewGroup) {
                 ((ViewGroup) shownPanelParent).removeView(st.shownPanelView);
             }
+=======
+
+>>>>>>> upstream/master
             st.decorView.addView(st.shownPanelView, lp);
 
             /*
@@ -1424,7 +1434,11 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 // doesn't have one of these.  In this case, we execute it here and
                 // eat the event instead, because we have mVolumeControlStreamType
                 // and they don't.
+<<<<<<< HEAD
                 getAudioManager().handleKeyDown(event, mVolumeControlStreamType);
+=======
+                getAudioManager().handleKeyDown(keyCode, mVolumeControlStreamType);
+>>>>>>> upstream/master
                 return true;
             }
 
@@ -1486,7 +1500,11 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 // doesn't have one of these.  In this case, we execute it here and
                 // eat the event instead, because we have mVolumeControlStreamType
                 // and they don't.
+<<<<<<< HEAD
                 getAudioManager().handleKeyUp(event, mVolumeControlStreamType);
+=======
+                getAudioManager().handleKeyUp(keyCode, mVolumeControlStreamType);
+>>>>>>> upstream/master
                 return true;
             }
 
@@ -1630,12 +1648,16 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         if (mActionBar != null) {
             SparseArray<Parcelable> actionBarStates =
                     savedInstanceState.getSparseParcelableArray(ACTION_BAR_TAG);
+<<<<<<< HEAD
             if (actionBarStates != null) {
                 mActionBar.restoreHierarchyState(actionBarStates);
             } else {
                 Log.w(TAG, "Missing saved instance states for action bar views! " +
                         "State will not be restored.");
             }
+=======
+            mActionBar.restoreHierarchyState(actionBarStates);
+>>>>>>> upstream/master
         }
     }
 
@@ -2101,6 +2123,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             final boolean isPortrait = metrics.widthPixels < metrics.heightPixels;
 
             final int widthMode = getMode(widthMeasureSpec);
+<<<<<<< HEAD
             final int heightMode = getMode(heightMeasureSpec);
 
             boolean fixedWidth = false;
@@ -2144,6 +2167,8 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     }
                 }
             }
+=======
+>>>>>>> upstream/master
 
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
@@ -2152,6 +2177,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
 
             widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, EXACTLY);
 
+<<<<<<< HEAD
             if (!fixedWidth && widthMode == AT_MOST) {
                 final TypedValue tv = isPortrait ? mMinWidthMinor : mMinWidthMajor;
                 if (tv.type != TypedValue.TYPE_NULL) {
@@ -2168,6 +2194,23 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                         widthMeasureSpec = MeasureSpec.makeMeasureSpec(min, EXACTLY);
                         measure = true;
                     }
+=======
+            final TypedValue tv = isPortrait ? mMinWidthMinor : mMinWidthMajor;
+
+            if (widthMode == AT_MOST && tv.type != TypedValue.TYPE_NULL) {
+                final int min;
+                if (tv.type == TypedValue.TYPE_DIMENSION) {
+                    min = (int)tv.getDimension(metrics);
+                } else if (tv.type == TypedValue.TYPE_FRACTION) {
+                    min = (int)tv.getFraction(metrics.widthPixels, metrics.widthPixels);
+                } else {
+                    min = 0;
+                }
+
+                if (width < min) {
+                    widthMeasureSpec = MeasureSpec.makeMeasureSpec(min, EXACTLY);
+                    measure = true;
+>>>>>>> upstream/master
                 }
             }
 
@@ -2628,6 +2671,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
 
         a.getValue(com.android.internal.R.styleable.Window_windowMinWidthMajor, mMinWidthMajor);
         a.getValue(com.android.internal.R.styleable.Window_windowMinWidthMinor, mMinWidthMinor);
+<<<<<<< HEAD
         if (a.hasValue(com.android.internal.R.styleable.Window_windowFixedWidthMajor)) {
             if (mFixedWidthMajor == null) mFixedWidthMajor = new TypedValue();
             a.getValue(com.android.internal.R.styleable.Window_windowFixedWidthMajor,
@@ -2648,6 +2692,8 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             a.getValue(com.android.internal.R.styleable.Window_windowFixedHeightMinor,
                     mFixedHeightMinor);
         }
+=======
+>>>>>>> upstream/master
 
         final Context context = getContext();
         final int targetSdk = context.getApplicationInfo().targetSdkVersion;
@@ -2843,9 +2889,12 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         if (mContentParent == null) {
             mContentParent = generateLayout(mDecor);
 
+<<<<<<< HEAD
             // Set up decor part of UI to ignore fitsSystemWindows if appropriate.
             mDecor.makeOptionalFitsSystemWindows();
 
+=======
+>>>>>>> upstream/master
             mTitleView = (TextView)findViewById(com.android.internal.R.id.title);
             if (mTitleView != null) {
                 if ((getLocalFeatures() & (1 << FEATURE_NO_TITLE)) != 0) {

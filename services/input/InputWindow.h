@@ -17,8 +17,13 @@
 #ifndef _UI_INPUT_WINDOW_H
 #define _UI_INPUT_WINDOW_H
 
+<<<<<<< HEAD
 #include <androidfw/Input.h>
 #include <androidfw/InputTransport.h>
+=======
+#include <ui/Input.h>
+#include <ui/InputTransport.h>
+>>>>>>> upstream/master
 #include <utils/RefBase.h>
 #include <utils/Timers.h>
 #include <utils/String8.h>

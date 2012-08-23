@@ -215,9 +215,13 @@ public class AccessPointParserHelper {
                         config.phase2.setValue("");
                         config.ca_cert.setValue("");
                         config.client_cert.setValue("");
+<<<<<<< HEAD
                         config.engine.setValue("");
                         config.engine_id.setValue("");
                         config.key_id.setValue("");
+=======
+                        config.private_key.setValue("");
+>>>>>>> upstream/master
                         config.identity.setValue("");
                         config.anonymous_identity.setValue("");
                         break;

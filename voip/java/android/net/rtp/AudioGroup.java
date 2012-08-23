@@ -142,6 +142,7 @@ public class AudioGroup {
     private native void nativeSetMode(int mode);
 
     // Package-private method used by AudioStream.join().
+<<<<<<< HEAD
     synchronized void add(AudioStream stream) {
         if (!mStreams.containsKey(stream)) {
             try {
@@ -152,17 +153,34 @@ public class AudioGroup {
                         stream.getRemoteAddress().getHostAddress(),
                         stream.getRemotePort(), codecSpec, stream.getDtmfType());
                 mStreams.put(stream, id);
+=======
+    synchronized void add(AudioStream stream, AudioCodec codec, int dtmfType) {
+        if (!mStreams.containsKey(stream)) {
+            try {
+                int socket = stream.dup();
+                String codecSpec = String.format("%d %s %s", codec.type,
+                        codec.rtpmap, codec.fmtp);
+                nativeAdd(stream.getMode(), socket,
+                        stream.getRemoteAddress().getHostAddress(),
+                        stream.getRemotePort(), codecSpec, dtmfType);
+                mStreams.put(stream, socket);
+>>>>>>> upstream/master
             } catch (NullPointerException e) {
                 throw new IllegalStateException(e);
             }
         }
     }
 
+<<<<<<< HEAD
     private native int nativeAdd(int mode, int socket, String remoteAddress,
+=======
+    private native void nativeAdd(int mode, int socket, String remoteAddress,
+>>>>>>> upstream/master
             int remotePort, String codecSpec, int dtmfType);
 
     // Package-private method used by AudioStream.join().
     synchronized void remove(AudioStream stream) {
+<<<<<<< HEAD
         Integer id = mStreams.remove(stream);
         if (id != null) {
             nativeRemove(id);
@@ -170,6 +188,15 @@ public class AudioGroup {
     }
 
     private native void nativeRemove(int id);
+=======
+        Integer socket = mStreams.remove(stream);
+        if (socket != null) {
+            nativeRemove(socket);
+        }
+    }
+
+    private native void nativeRemove(int socket);
+>>>>>>> upstream/master
 
     /**
      * Sends a DTMF digit to every {@link AudioStream} in this group. Currently
@@ -192,14 +219,24 @@ public class AudioGroup {
      * Removes every {@link AudioStream} in this group.
      */
     public void clear() {
+<<<<<<< HEAD
         for (AudioStream stream : getStreams()) {
             stream.join(null);
+=======
+        synchronized (this) {
+            mStreams.clear();
+            nativeRemove(-1);
+>>>>>>> upstream/master
         }
     }
 
     @Override
     protected void finalize() throws Throwable {
+<<<<<<< HEAD
         nativeRemove(0);
+=======
+        clear();
+>>>>>>> upstream/master
         super.finalize();
     }
 }

@@ -54,8 +54,11 @@ public class MediaRecorderTest extends ActivityInstrumentationTestCase2<MediaFra
 
     private int MIN_VIDEO_FPS = 5;
 
+<<<<<<< HEAD
     private static final int CAMERA_ID = 0;
 
+=======
+>>>>>>> upstream/master
     Context mContext;
     Camera mCamera;
   
@@ -249,7 +252,11 @@ public class MediaRecorderTest extends ActivityInstrumentationTestCase2<MediaFra
     public void testPortraitH263() throws Exception {
         boolean videoRecordedResult = false;
         try {
+<<<<<<< HEAD
             mCamera = Camera.open(CAMERA_ID);
+=======
+            mCamera = Camera.open();
+>>>>>>> upstream/master
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(352, 288);
             parameters.set("orientation", "portrait");

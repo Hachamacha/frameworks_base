@@ -22,7 +22,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+<<<<<<< HEAD
 import android.content.pm.ContainerEncryptionParams;
+=======
+>>>>>>> upstream/master
 import android.content.pm.FeatureInfo;
 import android.content.pm.IPackageInstallObserver;
 import android.content.pm.IPackageDeleteObserver;
@@ -51,8 +54,13 @@ import android.content.IntentSender;
  *  {@hide}
  */
 interface IPackageManager {
+<<<<<<< HEAD
     PackageInfo getPackageInfo(String packageName, int flags, int userId);
     int getPackageUid(String packageName, int userId);
+=======
+    PackageInfo getPackageInfo(String packageName, int flags);
+    int getPackageUid(String packageName);
+>>>>>>> upstream/master
     int[] getPackageGids(String packageName);
     
     String[] currentToCanonicalPackageNames(in String[] names);
@@ -66,6 +74,7 @@ interface IPackageManager {
     
     List<PermissionGroupInfo> getAllPermissionGroups(int flags);
     
+<<<<<<< HEAD
     ApplicationInfo getApplicationInfo(String packageName, int flags ,int userId);
 
     ActivityInfo getActivityInfo(in ComponentName className, int flags, int userId);
@@ -75,6 +84,17 @@ interface IPackageManager {
     ServiceInfo getServiceInfo(in ComponentName className, int flags, int userId);
 
     ProviderInfo getProviderInfo(in ComponentName className, int flags, int userId);
+=======
+    ApplicationInfo getApplicationInfo(String packageName, int flags);
+
+    ActivityInfo getActivityInfo(in ComponentName className, int flags);
+
+    ActivityInfo getReceiverInfo(in ComponentName className, int flags);
+
+    ServiceInfo getServiceInfo(in ComponentName className, int flags);
+
+    ProviderInfo getProviderInfo(in ComponentName className, int flags);
+>>>>>>> upstream/master
 
     int checkPermission(String permName, String pkgName);
     
@@ -83,11 +103,15 @@ interface IPackageManager {
     boolean addPermission(in PermissionInfo info);
     
     void removePermission(String name);
+<<<<<<< HEAD
 
     void grantPermission(String packageName, String permissionName);
 
     void revokePermission(String packageName, String permissionName);
 
+=======
+    
+>>>>>>> upstream/master
     boolean isProtectedBroadcast(String actionName);
     
     int checkSignatures(String pkg1, String pkg2);
@@ -100,14 +124,22 @@ interface IPackageManager {
     
     int getUidForSharedUser(String sharedUserName);
     
+<<<<<<< HEAD
     ResolveInfo resolveIntent(in Intent intent, String resolvedType, int flags, int userId);
 
     List<ResolveInfo> queryIntentActivities(in Intent intent, 
             String resolvedType, int flags, int userId);
+=======
+    ResolveInfo resolveIntent(in Intent intent, String resolvedType, int flags);
+
+    List<ResolveInfo> queryIntentActivities(in Intent intent, 
+            String resolvedType, int flags);
+>>>>>>> upstream/master
 
     List<ResolveInfo> queryIntentActivityOptions(
             in ComponentName caller, in Intent[] specifics,
             in String[] specificTypes, in Intent intent,
+<<<<<<< HEAD
             String resolvedType, int flags, int userId);
 
     List<ResolveInfo> queryIntentReceivers(in Intent intent,
@@ -118,6 +150,18 @@ interface IPackageManager {
 
     List<ResolveInfo> queryIntentServices(in Intent intent,
             String resolvedType, int flags, int userId);
+=======
+            String resolvedType, int flags);
+
+    List<ResolveInfo> queryIntentReceivers(in Intent intent,
+            String resolvedType, int flags);
+
+    ResolveInfo resolveService(in Intent intent,
+            String resolvedType, int flags);
+
+    List<ResolveInfo> queryIntentServices(in Intent intent,
+            String resolvedType, int flags);
+>>>>>>> upstream/master
 
     /**
      * This implements getInstalledPackages via a "last returned row"
@@ -135,7 +179,11 @@ interface IPackageManager {
      * limit that kicks in when flags are included that bloat up the data
      * returned.
      */
+<<<<<<< HEAD
     ParceledListSlice getInstalledApplications(int flags, in String lastRead, int userId);
+=======
+    ParceledListSlice getInstalledApplications(int flags, in String lastRead);
+>>>>>>> upstream/master
 
     /**
      * Retrieve all applications that are marked as persistent.
@@ -145,7 +193,11 @@ interface IPackageManager {
      */
     List<ApplicationInfo> getPersistentApplications(int flags);
 
+<<<<<<< HEAD
     ProviderInfo resolveContentProvider(String name, int flags, int userId);
+=======
+    ProviderInfo resolveContentProvider(String name, int flags);
+>>>>>>> upstream/master
 
     /**
      * Retrieve sync information for all content providers.
@@ -216,28 +268,48 @@ interface IPackageManager {
      * As per {@link android.content.pm.PackageManager#setComponentEnabledSetting}.
      */
     void setComponentEnabledSetting(in ComponentName componentName,
+<<<<<<< HEAD
             in int newState, in int flags, int userId);
+=======
+            in int newState, in int flags);
+>>>>>>> upstream/master
 
     /**
      * As per {@link android.content.pm.PackageManager#getComponentEnabledSetting}.
      */
+<<<<<<< HEAD
     int getComponentEnabledSetting(in ComponentName componentName, int userId);
+=======
+    int getComponentEnabledSetting(in ComponentName componentName);
+>>>>>>> upstream/master
     
     /**
      * As per {@link android.content.pm.PackageManager#setApplicationEnabledSetting}.
      */
+<<<<<<< HEAD
     void setApplicationEnabledSetting(in String packageName, in int newState, int flags, int userId);
+=======
+    void setApplicationEnabledSetting(in String packageName, in int newState, int flags);
+>>>>>>> upstream/master
     
     /**
      * As per {@link android.content.pm.PackageManager#getApplicationEnabledSetting}.
      */
+<<<<<<< HEAD
     int getApplicationEnabledSetting(in String packageName, int userId);
+=======
+    int getApplicationEnabledSetting(in String packageName);
+>>>>>>> upstream/master
     
     /**
      * Set whether the given package should be considered stopped, making
      * it not visible to implicit intents that filter out stopped packages.
      */
+<<<<<<< HEAD
     void setPackageStoppedState(String packageName, boolean stopped, int userId);
+=======
+    void setPackageStoppedState(String packageName, boolean stopped);
+>>>>>>> upstream/master
 
     /**
      * Free storage by deleting LRU sorted list of cache files across
@@ -300,7 +372,11 @@ interface IPackageManager {
      * files need to be deleted
      * @param observer a callback used to notify when the operation is completed.
      */
+<<<<<<< HEAD
     void clearApplicationUserData(in String packageName, IPackageDataObserver observer, int userId);
+=======
+    void clearApplicationUserData(in String packageName, IPackageDataObserver observer);
+>>>>>>> upstream/master
     
    /**
      * Get package statistics including the code, data and cache size for
@@ -362,17 +438,25 @@ interface IPackageManager {
 
     UserInfo createUser(in String name, int flags);
     boolean removeUser(int userId);
+<<<<<<< HEAD
     void updateUserName(int userId, String name);
 
     void installPackageWithVerification(in Uri packageURI, in IPackageInstallObserver observer,
             int flags, in String installerPackageName, in Uri verificationURI,
             in ManifestDigest manifestDigest, in ContainerEncryptionParams encryptionParams);
+=======
+
+    void installPackageWithVerification(in Uri packageURI, in IPackageInstallObserver observer,
+            int flags, in String installerPackageName, in Uri verificationURI,
+            in ManifestDigest manifestDigest);
+>>>>>>> upstream/master
 
     void verifyPendingInstall(int id, int verificationCode);
 
     VerifierDeviceIdentity getVerifierDeviceIdentity();
 
     boolean isFirstBoot();
+<<<<<<< HEAD
 
     List<UserInfo> getUsers();
     UserInfo getUser(int userId);
@@ -382,4 +466,6 @@ interface IPackageManager {
 
     /** Reflects current DeviceStorageMonitorService state */
     boolean isStorageLow();
+=======
+>>>>>>> upstream/master
 }

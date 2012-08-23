@@ -49,7 +49,10 @@ public class Binder implements IBinder {
     private static final boolean FIND_POTENTIAL_LEAKS = false;
     private static final String TAG = "Binder";
 
+<<<<<<< HEAD
     /* mObject is used by native code, do not remove or rename */
+=======
+>>>>>>> upstream/master
     private int mObject;
     private IInterface mOwner;
     private String mDescriptor;
@@ -71,6 +74,7 @@ public class Binder implements IBinder {
      * incoming transaction, then its own uid is returned.
      */
     public static final native int getCallingUid();
+<<<<<<< HEAD
 
     /**
      * Return the original ID of the user assigned to the process that sent you the current
@@ -100,6 +104,9 @@ public class Binder implements IBinder {
         return UserId.getUserId(getOrigCallingUid());
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Reset the identity of the incoming IPC on the current thread.  This can
      * be useful if, while handling an incoming call, you will be calling
@@ -366,16 +373,25 @@ public class Binder implements IBinder {
         try {
             res = onTransact(code, data, reply, flags);
         } catch (RemoteException e) {
+<<<<<<< HEAD
             reply.setDataPosition(0);
             reply.writeException(e);
             res = true;
         } catch (RuntimeException e) {
             reply.setDataPosition(0);
+=======
+            reply.writeException(e);
+            res = true;
+        } catch (RuntimeException e) {
+>>>>>>> upstream/master
             reply.writeException(e);
             res = true;
         } catch (OutOfMemoryError e) {
             RuntimeException re = new RuntimeException("Out of memory", e);
+<<<<<<< HEAD
             reply.setDataPosition(0);
+=======
+>>>>>>> upstream/master
             reply.writeException(re);
             res = true;
         }

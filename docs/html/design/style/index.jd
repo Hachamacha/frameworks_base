@@ -10,7 +10,11 @@ footer.hide=1
 
 #text-overlay {
   position: absolute;
+<<<<<<< HEAD
   left: 0;
+=======
+  left: 10px;
+>>>>>>> upstream/master
   top: 402px;
   width: 220px;
 }

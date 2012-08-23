@@ -47,7 +47,10 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
     private boolean jpegPictureCallbackResult = false;
     
     private static int WAIT_FOR_COMMAND_TO_COMPLETE = 10000;  // Milliseconds.
+<<<<<<< HEAD
     private static final int CAMERA_ID = 0;
+=======
+>>>>>>> upstream/master
     
     private RawPreviewCallback mRawPreviewCallback = new RawPreviewCallback();
     private TestShutterCallback mShutterCallback = new TestShutterCallback();
@@ -86,7 +89,11 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
                 // Save the looper so that we can terminate this thread 
                 // after we are done with it.
                 mLooper = Looper.myLooper();
+<<<<<<< HEAD
                 mCamera = Camera.open(CAMERA_ID);
+=======
+                mCamera = Camera.open();
+>>>>>>> upstream/master
                 startDone.open();
                 Looper.loop();  // Blocks forever until Looper.quit() is called.
                 Log.v(TAG, "initializeMessageLooper: quit.");

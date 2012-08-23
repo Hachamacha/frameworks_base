@@ -60,7 +60,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+<<<<<<< HEAD
 import android.os.PowerManager;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -76,11 +79,21 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+>>>>>>> upstream/master
 
 /**
  * Custom implementation of Context/Activity to handle non compiled resources.
@@ -245,18 +258,27 @@ public final class BridgeContext extends Context {
 
     public boolean resolveThemeAttribute(int resid, TypedValue outValue, boolean resolveRefs) {
         Pair<ResourceType, String> resourceInfo = Bridge.resolveResourceId(resid);
+<<<<<<< HEAD
         boolean isFrameworkRes = true;
         if (resourceInfo == null) {
             resourceInfo = mProjectCallback.resolveResourceId(resid);
             isFrameworkRes = false;
+=======
+        if (resourceInfo == null) {
+            resourceInfo = mProjectCallback.resolveResourceId(resid);
+>>>>>>> upstream/master
         }
 
         if (resourceInfo == null) {
             return false;
         }
 
+<<<<<<< HEAD
         ResourceValue value = mRenderResources.findItemInTheme(resourceInfo.getSecond(),
                 isFrameworkRes);
+=======
+        ResourceValue value = mRenderResources.findItemInTheme(resourceInfo.getSecond());
+>>>>>>> upstream/master
         if (resolveRefs) {
             value = mRenderResources.resolveResValue(value);
         }
@@ -316,7 +338,16 @@ public final class BridgeContext extends Context {
 
         if (isPlatformLayout == false && skipCallbackParser == false) {
             // check if the project callback can provide us with a custom parser.
+<<<<<<< HEAD
             ILayoutPullParser parser = getParser(resource);
+=======
+            ILayoutPullParser parser;
+            if (resource instanceof ResourceValue) {
+                parser = mProjectCallback.getParser((ResourceValue) resource);
+            } else {
+                parser = mProjectCallback.getParser(resource.getName());
+            }
+>>>>>>> upstream/master
 
             if (parser != null) {
                 BridgeXmlBlockParser blockParser = new BridgeXmlBlockParser(parser,
@@ -389,6 +420,7 @@ public final class BridgeContext extends Context {
         return Pair.of(null, false);
     }
 
+<<<<<<< HEAD
     @SuppressWarnings("deprecation")
     private ILayoutPullParser getParser(ResourceReference resource) {
         ILayoutPullParser parser;
@@ -400,6 +432,8 @@ public final class BridgeContext extends Context {
         return parser;
     }
 
+=======
+>>>>>>> upstream/master
     // ------------ Context methods
 
     @Override
@@ -439,10 +473,13 @@ public final class BridgeContext extends Context {
             return null;
         }
 
+<<<<<<< HEAD
         if (POWER_SERVICE.equals(service)) {
             return new PowerManager(new BridgePowerManager(), new Handler());
         }
 
+=======
+>>>>>>> upstream/master
         throw new UnsupportedOperationException("Unsupported Service: " + service);
     }
 
@@ -531,10 +568,19 @@ public final class BridgeContext extends Context {
             return null;
         }
 
+<<<<<<< HEAD
         List<Pair<String, Boolean>> attributeList = searchAttrs(attrs);
 
         BridgeTypedArray ta = ((BridgeResources) mSystemResources).newTypeArray(attrs.length,
                 isPlatformFile);
+=======
+        AtomicBoolean frameworkAttributes = new AtomicBoolean();
+        AtomicReference<String> attrName = new AtomicReference<String>();
+        TreeMap<Integer, String> styleNameMap = searchAttrs(attrs, frameworkAttributes, attrName);
+
+        BridgeTypedArray ta = ((BridgeResources) mSystemResources).newTypeArray(attrs.length,
+                isPlatformFile, frameworkAttributes.get(), attrName.get());
+>>>>>>> upstream/master
 
         // look for a custom style.
         String customStyle = null;
@@ -560,6 +606,7 @@ public final class BridgeContext extends Context {
 
         if (defStyleAttr != 0) {
             // get the name from the int.
+<<<<<<< HEAD
             Pair<String, Boolean> defStyleAttribute = searchAttr(defStyleAttr);
 
             if (defaultPropMap != null) {
@@ -567,12 +614,21 @@ public final class BridgeContext extends Context {
                 if (defStyleAttribute.getSecond()) {
                     defStyleName = "android:" + defStyleName;
                 }
+=======
+            String defStyleName = searchAttr(defStyleAttr);
+
+            if (defaultPropMap != null) {
+>>>>>>> upstream/master
                 defaultPropMap.put("style", defStyleName);
             }
 
             // look for the style in the current theme, and its parent:
+<<<<<<< HEAD
             ResourceValue item = mRenderResources.findItemInTheme(defStyleAttribute.getFirst(),
                     defStyleAttribute.getSecond());
+=======
+            ResourceValue item = mRenderResources.findItemInTheme(defStyleName);
+>>>>>>> upstream/master
 
             if (item != null) {
                 // item is a reference to a style entry. Search for it.
@@ -583,6 +639,7 @@ public final class BridgeContext extends Context {
                     defStyleValues = (StyleResourceValue)item;
                 }
             } else {
+<<<<<<< HEAD
                 Bridge.getLog().error(LayoutLog.TAG_RESOURCES_RESOLVE_THEME_ATTR,
                         String.format(
                                 "Failed to find style '%s' in current theme",
@@ -595,13 +652,28 @@ public final class BridgeContext extends Context {
             if (value == null) {
                 value = mProjectCallback.resolveResourceId(defStyleRes);
                 isFrameworkRes = false;
+=======
+                Bridge.getLog().error(null,
+                        String.format(
+                                "Failed to find style '%s' in current theme", defStyleName),
+                        null /*data*/);
+            }
+        } else if (defStyleRes != 0) {
+            Pair<ResourceType, String> value = Bridge.resolveResourceId(defStyleRes);
+            if (value == null) {
+                value = mProjectCallback.resolveResourceId(defStyleRes);
+>>>>>>> upstream/master
             }
 
             if (value != null) {
                 if (value.getFirst() == ResourceType.STYLE) {
                     // look for the style in the current theme, and its parent:
+<<<<<<< HEAD
                     ResourceValue item = mRenderResources.findItemInTheme(value.getSecond(),
                             isFrameworkRes);
+=======
+                    ResourceValue item = mRenderResources.findItemInTheme(value.getSecond());
+>>>>>>> upstream/master
                     if (item != null) {
                         if (item instanceof StyleResourceValue) {
                             if (defaultPropMap != null) {
@@ -633,6 +705,7 @@ public final class BridgeContext extends Context {
             }
         }
 
+<<<<<<< HEAD
         String appNamespace = mProjectCallback.getNamespace();
 
         if (attributeList != null) {
@@ -655,6 +728,28 @@ public final class BridgeContext extends Context {
                     // new res-auto namespace as well
                     if (frameworkAttr == false && value == null) {
                         value = set.getAttributeValue(BridgeConstants.NS_APP_RES_AUTO, attrName);
+=======
+        String namespace = BridgeConstants.NS_RESOURCES;
+        boolean useFrameworkNS = frameworkAttributes.get();
+        if (useFrameworkNS == false) {
+            // need to use the application namespace
+            namespace = mProjectCallback.getNamespace();
+        }
+
+        if (styleNameMap != null) {
+            for (Entry<Integer, String> styleAttribute : styleNameMap.entrySet()) {
+                int index = styleAttribute.getKey().intValue();
+
+                String name = styleAttribute.getValue();
+                String value = null;
+                if (set != null) {
+                    value = set.getAttributeValue(namespace, name);
+
+                    // if this is an app attribute, and the first get fails, try with the
+                    // new res-auto namespace as well
+                    if (useFrameworkNS == false && value == null) {
+                        value = set.getAttributeValue(BridgeConstants.NS_APP_RES_AUTO, name);
+>>>>>>> upstream/master
                     }
                 }
 
@@ -665,20 +760,32 @@ public final class BridgeContext extends Context {
 
                     // look for the value in the custom style first (and its parent if needed)
                     if (customStyleValues != null) {
+<<<<<<< HEAD
                         resValue = mRenderResources.findItemInStyle(customStyleValues,
                                 attrName, frameworkAttr);
+=======
+                        resValue = mRenderResources.findItemInStyle(customStyleValues, name);
+>>>>>>> upstream/master
                     }
 
                     // then look for the value in the default Style (and its parent if needed)
                     if (resValue == null && defStyleValues != null) {
+<<<<<<< HEAD
                         resValue = mRenderResources.findItemInStyle(defStyleValues,
                                 attrName, frameworkAttr);
+=======
+                        resValue = mRenderResources.findItemInStyle(defStyleValues, name);
+>>>>>>> upstream/master
                     }
 
                     // if the item is not present in the defStyle, we look in the main theme (and
                     // its parent themes)
                     if (resValue == null) {
+<<<<<<< HEAD
                         resValue = mRenderResources.findItemInTheme(attrName, frameworkAttr);
+=======
+                        resValue = mRenderResources.findItemInTheme(name);
+>>>>>>> upstream/master
                     }
 
                     // if we found a value, we make sure this doesn't reference another value.
@@ -686,18 +793,31 @@ public final class BridgeContext extends Context {
                     if (resValue != null) {
                         // put the first default value, before the resolution.
                         if (defaultPropMap != null) {
+<<<<<<< HEAD
                             defaultPropMap.put(attrName, resValue.getValue());
+=======
+                            defaultPropMap.put(name, resValue.getValue());
+>>>>>>> upstream/master
                         }
 
                         resValue = mRenderResources.resolveResValue(resValue);
                     }
 
+<<<<<<< HEAD
                     ta.bridgeSetValue(index, attrName, frameworkAttr, resValue);
                 } else {
                     // there is a value in the XML, but we need to resolve it in case it's
                     // referencing another resource or a theme value.
                     ta.bridgeSetValue(index, attrName, frameworkAttr,
                             mRenderResources.resolveValue(null, attrName, value, isPlatformFile));
+=======
+                    ta.bridgeSetValue(index, name, resValue);
+                } else {
+                    // there is a value in the XML, but we need to resolve it in case it's
+                    // referencing another resource or a theme value.
+                    ta.bridgeSetValue(index, name,
+                            mRenderResources.resolveValue(null, name, value, isPlatformFile));
+>>>>>>> upstream/master
                 }
             }
         }
@@ -723,6 +843,7 @@ public final class BridgeContext extends Context {
     private BridgeTypedArray createStyleBasedTypedArray(StyleResourceValue style, int[] attrs)
             throws Resources.NotFoundException {
 
+<<<<<<< HEAD
         List<Pair<String, Boolean>> attributes = searchAttrs(attrs);
 
         BridgeTypedArray ta = ((BridgeResources) mSystemResources).newTypeArray(attrs.length,
@@ -740,6 +861,25 @@ public final class BridgeContext extends Context {
                 // resolve it to make sure there are no references left.
                 ta.bridgeSetValue(i, attribute.getFirst(), attribute.getSecond(),
                         mRenderResources.resolveResValue(resValue));
+=======
+        BridgeTypedArray ta = ((BridgeResources) mSystemResources).newTypeArray(attrs.length,
+                false, true, null);
+
+        // for each attribute, get its name so that we can search it in the style
+        for (int i = 0 ; i < attrs.length ; i++) {
+            Pair<ResourceType, String> resolvedResource = Bridge.resolveResourceId(attrs[i]);
+            if (resolvedResource != null) {
+                String attrName = resolvedResource.getSecond();
+                // look for the value in the given style
+                ResourceValue resValue = mRenderResources.findItemInStyle(style, attrName);
+
+                if (resValue != null) {
+                    // resolve it to make sure there are no references left.
+                    ta.bridgeSetValue(i, attrName, mRenderResources.resolveResValue(resValue));
+
+                    resValue = mRenderResources.resolveResValue(resValue);
+                }
+>>>>>>> upstream/master
             }
         }
 
@@ -750,6 +890,7 @@ public final class BridgeContext extends Context {
 
 
     /**
+<<<<<<< HEAD
      * The input int[] attrs is a list of attributes. The returns a list of information about
      * each attributes. The information is (name, isFramework)
      * <p/>
@@ -778,12 +919,82 @@ public final class BridgeContext extends Context {
         }
 
         return results;
+=======
+     * The input int[] attrs is one of com.android.internal.R.styleable fields where the name
+     * of the field is the style being referenced and the array contains one index per attribute.
+     * <p/>
+     * searchAttrs() finds all the names of the attributes referenced so for example if
+     * attrs == com.android.internal.R.styleable.View, this returns the list of the "xyz" where
+     * there's a field com.android.internal.R.styleable.View_xyz and the field value is the index
+     * that is used to reference the attribute later in the TypedArray.
+     *
+     * @param attrs An attribute array reference given to obtainStyledAttributes.
+     * @param outFrameworkFlag out value indicating if the attr array is a framework value
+     * @param outAttrName out value for the resolved attr name.
+     * @return A sorted map Attribute-Value to Attribute-Name for all attributes declared by the
+     *         attribute array. Returns null if nothing is found.
+     */
+    private TreeMap<Integer,String> searchAttrs(int[] attrs, AtomicBoolean outFrameworkFlag,
+            AtomicReference<String> outAttrName) {
+        // get the name of the array from the framework resources
+        String arrayName = Bridge.resolveResourceId(attrs);
+        if (arrayName != null) {
+            // if we found it, get the name of each of the int in the array.
+            TreeMap<Integer,String> attributes = new TreeMap<Integer, String>();
+            for (int i = 0 ; i < attrs.length ; i++) {
+                Pair<ResourceType, String> info = Bridge.resolveResourceId(attrs[i]);
+                if (info != null) {
+                    attributes.put(i, info.getSecond());
+                } else {
+                    // FIXME Not sure what we should be doing here...
+                    attributes.put(i, null);
+                }
+            }
+
+            if (outFrameworkFlag != null) {
+                outFrameworkFlag.set(true);
+            }
+            if (outAttrName != null) {
+                outAttrName.set(arrayName);
+            }
+
+            return attributes;
+        }
+
+        // if the name was not found in the framework resources, look in the project
+        // resources
+        arrayName = mProjectCallback.resolveResourceId(attrs);
+        if (arrayName != null) {
+            TreeMap<Integer,String> attributes = new TreeMap<Integer, String>();
+            for (int i = 0 ; i < attrs.length ; i++) {
+                Pair<ResourceType, String> info = mProjectCallback.resolveResourceId(attrs[i]);
+                if (info != null) {
+                    attributes.put(i, info.getSecond());
+                } else {
+                    // FIXME Not sure what we should be doing here...
+                    attributes.put(i, null);
+                }
+            }
+
+            if (outFrameworkFlag != null) {
+                outFrameworkFlag.set(false);
+            }
+            if (outAttrName != null) {
+                outAttrName.set(arrayName);
+            }
+
+            return attributes;
+        }
+
+        return null;
+>>>>>>> upstream/master
     }
 
     /**
      * Searches for the attribute referenced by its internal id.
      *
      * @param attr An attribute reference given to obtainStyledAttributes such as defStyle.
+<<<<<<< HEAD
      * @return A (name, isFramework) pair describing the attribute if found. Returns null
      *         if nothing is found.
      */
@@ -791,11 +1002,24 @@ public final class BridgeContext extends Context {
         Pair<ResourceType, String> info = Bridge.resolveResourceId(attr);
         if (info != null) {
             return Pair.of(info.getSecond(), Boolean.TRUE);
+=======
+     * @return The unique name of the attribute, if found, e.g. "buttonStyle". Returns null
+     *         if nothing is found.
+     */
+    public String searchAttr(int attr) {
+        Pair<ResourceType, String> info = Bridge.resolveResourceId(attr);
+        if (info != null) {
+            return info.getSecond();
+>>>>>>> upstream/master
         }
 
         info = mProjectCallback.resolveResourceId(attr);
         if (info != null) {
+<<<<<<< HEAD
             return Pair.of(info.getSecond(), Boolean.FALSE);
+=======
+            return info.getSecond();
+>>>>>>> upstream/master
         }
 
         return null;
@@ -855,149 +1079,245 @@ public final class BridgeContext extends Context {
 
     @Override
     public boolean bindService(Intent arg0, ServiceConnection arg1, int arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return false;
     }
 
     @Override
     public int checkCallingOrSelfPermission(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkCallingOrSelfUriPermission(Uri arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkCallingPermission(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkCallingUriPermission(Uri arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkPermission(String arg0, int arg1, int arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkUriPermission(Uri arg0, int arg1, int arg2, int arg3) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public int checkUriPermission(Uri arg0, String arg1, String arg2, int arg3,
             int arg4, int arg5) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return 0;
     }
 
     @Override
     public void clearWallpaper() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public Context createPackageContext(String arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public String[] databaseList() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public boolean deleteDatabase(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return false;
     }
 
     @Override
     public boolean deleteFile(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return false;
     }
 
     @Override
     public void enforceCallingOrSelfPermission(String arg0, String arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforceCallingOrSelfUriPermission(Uri arg0, int arg1,
             String arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforceCallingPermission(String arg0, String arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforceCallingUriPermission(Uri arg0, int arg1, String arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforcePermission(String arg0, int arg1, int arg2, String arg3) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforceUriPermission(Uri arg0, int arg1, int arg2, int arg3,
             String arg4) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void enforceUriPermission(Uri arg0, String arg1, String arg2,
             int arg3, int arg4, int arg5, String arg6) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public String[] fileList() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public AssetManager getAssets() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getCacheDir() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getExternalCacheDir() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
@@ -1011,49 +1331,81 @@ public final class BridgeContext extends Context {
 
     @Override
     public File getDatabasePath(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getDir(String arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getFileStreamPath(String arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getFilesDir() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getExternalFilesDir(String type) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public String getPackageCodePath() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public PackageManager getPackageManager() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public String getPackageName() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
@@ -1064,25 +1416,41 @@ public final class BridgeContext extends Context {
 
     @Override
     public String getPackageResourcePath() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public File getSharedPrefsFile(String name) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public SharedPreferences getSharedPreferences(String arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public Drawable getWallpaper() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
@@ -1098,81 +1466,133 @@ public final class BridgeContext extends Context {
 
     @Override
     public void grantUriPermission(String arg0, Uri arg1, int arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public FileInputStream openFileInput(String arg0) throws FileNotFoundException {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public FileOutputStream openFileOutput(String arg0, int arg1) throws FileNotFoundException {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public SQLiteDatabase openOrCreateDatabase(String arg0, int arg1, CursorFactory arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public SQLiteDatabase openOrCreateDatabase(String arg0, int arg1,
             CursorFactory arg2, DatabaseErrorHandler arg3) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public Drawable peekWallpaper() {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public Intent registerReceiver(BroadcastReceiver arg0, IntentFilter arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public Intent registerReceiver(BroadcastReceiver arg0, IntentFilter arg1,
             String arg2, Handler arg3) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public void removeStickyBroadcast(Intent arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void revokeUriPermission(Uri arg0, int arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void sendBroadcast(Intent arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void sendBroadcast(Intent arg0, String arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void sendOrderedBroadcast(Intent arg0, String arg1) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
@@ -1180,13 +1600,21 @@ public final class BridgeContext extends Context {
     public void sendOrderedBroadcast(Intent arg0, String arg1,
             BroadcastReceiver arg2, Handler arg3, int arg4, String arg5,
             Bundle arg6) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void sendStickyBroadcast(Intent arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
@@ -1194,41 +1622,63 @@ public final class BridgeContext extends Context {
     public void sendStickyOrderedBroadcast(Intent intent,
             BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData,
            Bundle initialExtras) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
     }
 
     @Override
     public void setTheme(int arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void setWallpaper(Bitmap arg0) throws IOException {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void setWallpaper(InputStream arg0) throws IOException {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void startActivity(Intent arg0) {
+<<<<<<< HEAD
         // pass
     }
 
     @Override
     public void startActivity(Intent arg0, Bundle arg1) {
         // pass
+=======
+        // TODO Auto-generated method stub
+
+>>>>>>> upstream/master
     }
 
     @Override
     public void startIntentSender(IntentSender intent,
             Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)
             throws IntentSender.SendIntentException {
+<<<<<<< HEAD
         // pass
     }
 
@@ -1237,36 +1687,59 @@ public final class BridgeContext extends Context {
             Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags,
             Bundle options) throws IntentSender.SendIntentException {
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
     }
 
     @Override
     public boolean startInstrumentation(ComponentName arg0, String arg1,
             Bundle arg2) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return false;
     }
 
     @Override
     public ComponentName startService(Intent arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return null;
     }
 
     @Override
     public boolean stopService(Intent arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return false;
     }
 
     @Override
     public void unbindService(ServiceConnection arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
     @Override
     public void unregisterReceiver(BroadcastReceiver arg0) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 
@@ -1277,6 +1750,7 @@ public final class BridgeContext extends Context {
 
     @Override
     public void startActivities(Intent[] arg0) {
+<<<<<<< HEAD
         // pass
 
     }
@@ -1284,6 +1758,9 @@ public final class BridgeContext extends Context {
     @Override
     public void startActivities(Intent[] arg0, Bundle arg1) {
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
 
     }
 

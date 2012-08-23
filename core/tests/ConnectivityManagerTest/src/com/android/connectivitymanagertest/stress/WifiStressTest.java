@@ -16,6 +16,13 @@
 
 package com.android.connectivitymanagertest.stress;
 
+<<<<<<< HEAD
+=======
+import com.android.connectivitymanagertest.ConnectivityManagerStressTestRunner;
+import com.android.connectivitymanagertest.ConnectivityManagerTestActivity;
+import com.android.connectivitymanagertest.UtilHelper;
+
+>>>>>>> upstream/master
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo.State;
@@ -27,6 +34,7 @@ import android.net.wifi.WifiConfiguration.ProxySettings;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.PowerManager;
+<<<<<<< HEAD
 import android.provider.Settings;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -34,6 +42,16 @@ import android.util.Log;
 
 import com.android.connectivitymanagertest.ConnectivityManagerStressTestRunner;
 import com.android.connectivitymanagertest.ConnectivityManagerTestActivity;
+=======
+import android.os.IPowerManager;
+import android.os.SystemClock;
+import android.os.ServiceManager;
+import android.provider.Settings;
+import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.LargeTest;
+
+import android.util.Log;
+>>>>>>> upstream/master
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -74,7 +92,10 @@ public class WifiStressTest
     private String mPassword;
     private ConnectivityManagerStressTestRunner mRunner;
     private BufferedWriter mOutputWriter = null;
+<<<<<<< HEAD
     private boolean mWifiOnlyFlag;
+=======
+>>>>>>> upstream/master
 
     public WifiStressTest() {
         super(ConnectivityManagerTestActivity.class);
@@ -83,7 +104,10 @@ public class WifiStressTest
     @Override
     public void setUp() throws Exception {
         super.setUp();
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         mAct = getActivity();
         mRunner = (ConnectivityManagerStressTestRunner) getInstrumentation();
         mReconnectIterations = mRunner.mReconnectIterations;
@@ -91,7 +115,10 @@ public class WifiStressTest
         mPassword = mRunner.mReconnectPassword;
         mScanIterations = mRunner.mScanIterations;
         mWifiSleepTime = mRunner.mSleepTime;
+<<<<<<< HEAD
         mWifiOnlyFlag = mRunner.mWifiOnlyFlag;
+=======
+>>>>>>> upstream/master
         log(String.format("mReconnectIterations(%d), mSsid(%s), mPassword(%s),"
             + "mScanIterations(%d), mWifiSleepTime(%d)", mReconnectIterations, mSsid,
             mPassword, mScanIterations, mWifiSleepTime));
@@ -269,7 +296,11 @@ public class WifiStressTest
             assertTrue("Wait for Wi-Fi to idle timeout",
                     mAct.waitForNetworkState(ConnectivityManager.TYPE_WIFI, State.DISCONNECTED,
                     6 * ConnectivityManagerTestActivity.SHORT_TIMEOUT));
+<<<<<<< HEAD
             if (!mWifiOnlyFlag) {
+=======
+            if (!UtilHelper.isWifiOnly()) {
+>>>>>>> upstream/master
                 // use long timeout as the pppd startup may take several retries.
                 assertTrue("Wait for cellular connection timeout",
                         mAct.waitForNetworkState(ConnectivityManager.TYPE_MOBILE, State.CONNECTED,
@@ -280,7 +311,11 @@ public class WifiStressTest
             assertEquals("Wi-Fi is reconnected", State.DISCONNECTED,
                     mAct.mCM.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState());
 
+<<<<<<< HEAD
             if (!mWifiOnlyFlag) {
+=======
+            if (!UtilHelper.isWifiOnly()) {
+>>>>>>> upstream/master
                 assertEquals("Cellular connection is down", State.CONNECTED,
                              mAct.mCM.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState());
                 assertTrue("Mobile is connected, but no data connection.", mAct.pingTest(null));

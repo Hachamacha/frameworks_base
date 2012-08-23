@@ -179,7 +179,14 @@ easier.
         <!-- PreferenceFrameLayout attributes -->
         <item name="preferenceFrameLayoutStyle">@android:style/Widget.DeviceDefault.PreferenceFrameLayout</item>
 
+<<<<<<< HEAD
         <!-- NumberPicker style-->
+=======
+        <!-- NumberPicker styles-->
+        <item name="numberPickerUpButtonStyle">@style/Widget.DeviceDefault.ImageButton.NumberPickerUpButton</item>
+        <item name="numberPickerDownButtonStyle">@style/Widget.DeviceDefault.ImageButton.NumberPickerDownButton</item>
+        <item name="numberPickerInputTextStyle">@style/Widget.DeviceDefault.EditText.NumberPickerInputText</item>
+>>>>>>> upstream/master
         <item name="numberPickerStyle">@style/Widget.DeviceDefault.NumberPicker</item>
 
         <!-- CalendarView style-->
@@ -190,8 +197,11 @@ easier.
 
         <!-- DatePicker style -->
         <item name="datePickerStyle">@style/Widget.DeviceDefault.DatePicker</item>
+<<<<<<< HEAD
 
         <item name="mediaRouteButtonStyle">@android:style/Widget.DeviceDefault.MediaRouteButton</item>
+=======
+>>>>>>> upstream/master
     </style>
 
     <!-- Variant of {@link #Theme_DeviceDefault} with no action bar -->
@@ -328,7 +338,14 @@ easier.
 
         <item name="searchDialogTheme">@style/Theme.DeviceDefault.Light.SearchBar</item>
 
+<<<<<<< HEAD
         <!-- NumberPicker style -->
+=======
+        <!-- NumberPicker attributes and styles-->
+        <item name="numberPickerUpButtonStyle">@style/Widget.DeviceDefault.Light.ImageButton.NumberPickerUpButton</item>
+        <item name="numberPickerDownButtonStyle">@style/Widget.DeviceDefault.Light.ImageButton.NumberPickerDownButton</item>
+        <item name="numberPickerInputTextStyle">@style/Widget.DeviceDefault.Light.EditText.NumberPickerInputText</item>
+>>>>>>> upstream/master
         <item name="numberPickerStyle">@style/Widget.DeviceDefault.Light.NumberPicker</item>
 
         <!-- CalendarView style-->
@@ -339,8 +356,11 @@ easier.
 
         <!-- DatePicker style -->
         <item name="datePickerStyle">@style/Widget.DeviceDefault.Light.DatePicker</item>
+<<<<<<< HEAD
 
         <item name="mediaRouteButtonStyle">@android:style/Widget.DeviceDefault.Light.MediaRouteButton</item>
+=======
+>>>>>>> upstream/master
     </style>
     <!-- Variant of {@link #Theme_DeviceDefault_Light} with no action bar -->
     <style name="Theme.DeviceDefault.Light.NoActionBar" parent="Theme.Holo.Light.NoActionBar" >
@@ -377,6 +397,7 @@ easier.
     <style name="Theme.DeviceDefault.Dialog.NoActionBar.MinWidth" parent="Theme.Holo.Dialog.NoActionBar.MinWidth" >
 
     </style>
+<<<<<<< HEAD
 
     <!-- Variant of Theme.DeviceDefault.Dialog that has a fixed size. -->
     <style name="Theme.DeviceDefault.Dialog.FixedSize">
@@ -394,6 +415,8 @@ easier.
         <item name="windowFixedHeightMinor">@android:dimen/dialog_fixed_height_minor</item>
     </style>
 
+=======
+>>>>>>> upstream/master
     <!-- DeviceDefault light theme for dialog windows and activities. This changes the window to be
     floating (not fill the entire screen), and puts a frame around its contents. You can set this
     theme on an activity if you would like to make an activity that looks like a Dialog.-->
@@ -421,6 +444,7 @@ easier.
     <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth" parent="Theme.Holo.Light.Dialog.NoActionBar.MinWidth" >
 
     </style>
+<<<<<<< HEAD
 
     <!-- Variant of Theme.DeviceDefault.Dialog that has a fixed size. -->
     <style name="Theme.DeviceDefault.Light.Dialog.FixedSize">
@@ -438,6 +462,8 @@ easier.
         <item name="windowFixedHeightMinor">@android:dimen/dialog_fixed_height_minor</item>
     </style>
 
+=======
+>>>>>>> upstream/master
     <!-- DeviceDefault theme for a window that will be displayed either full-screen on smaller
     screens (small, normal) or as a dialog on larger screens (large, xlarge). -->
     <style name="Theme.DeviceDefault.DialogWhenLarge" parent="Theme.Holo.DialogWhenLarge" >

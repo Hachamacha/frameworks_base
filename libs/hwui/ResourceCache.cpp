@@ -26,12 +26,21 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 void ResourceCache::logCache() {
+<<<<<<< HEAD
     ALOGD("ResourceCache: cacheReport:");
     for (size_t i = 0; i < mCache->size(); ++i) {
         ResourceReference* ref = mCache->valueAt(i);
         ALOGD("  ResourceCache: mCache(%d): resource, ref = 0x%p, 0x%p",
                 i, mCache->keyAt(i), mCache->valueAt(i));
         ALOGD("  ResourceCache: mCache(%d): refCount, recycled, destroyed, type = %d, %d, %d, %d",
+=======
+    LOGD("ResourceCache: cacheReport:");
+    for (size_t i = 0; i < mCache->size(); ++i) {
+        ResourceReference* ref = mCache->valueAt(i);
+        LOGD("  ResourceCache: mCache(%d): resource, ref = 0x%p, 0x%p",
+                i, mCache->keyAt(i), mCache->valueAt(i));
+        LOGD("  ResourceCache: mCache(%d): refCount, recycled, destroyed, type = %d, %d, %d, %d",
+>>>>>>> upstream/master
                 i, ref->refCount, ref->recycled, ref->destroyed, ref->resourceType);
     }
 }
@@ -59,11 +68,19 @@ void ResourceCache::incrementRefcount(void* resource, ResourceType resourceType)
 void ResourceCache::incrementRefcount(SkBitmap* bitmapResource) {
     SkSafeRef(bitmapResource->pixelRef());
     SkSafeRef(bitmapResource->getColorTable());
+<<<<<<< HEAD
     incrementRefcount((void*) bitmapResource, kBitmap);
 }
 
 void ResourceCache::incrementRefcount(SkPath* pathResource) {
     incrementRefcount((void*) pathResource, kPath);
+=======
+    incrementRefcount((void*)bitmapResource, kBitmap);
+}
+
+void ResourceCache::incrementRefcount(SkPath* pathResource) {
+    incrementRefcount((void*)pathResource, kPath);
+>>>>>>> upstream/master
 }
 
 void ResourceCache::incrementRefcount(SkiaShader* shaderResource) {

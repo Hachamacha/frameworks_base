@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (C) 2011-2012 The Android Open Source Project
+=======
+ * Copyright (C) 2011 The Android Open Source Project
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +27,26 @@
 #include <math.h>
 #include <utils/misc.h>
 
+<<<<<<< HEAD
+=======
+#include <surfaceflinger/Surface.h>
+
+>>>>>>> upstream/master
 #include <core/SkBitmap.h>
 #include <core/SkPixelRef.h>
 #include <core/SkStream.h>
 #include <core/SkTemplates.h>
 #include <images/SkImageDecoder.h>
 
+<<<<<<< HEAD
 #include <androidfw/Asset.h>
 #include <androidfw/AssetManager.h>
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/Asset.h>
+#include <utils/AssetManager.h>
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 
 #include "jni.h"
 #include "JNIHelp.h"
@@ -39,25 +54,44 @@
 #include "android_runtime/android_view_Surface.h"
 #include "android_runtime/android_util_AssetManager.h"
 
+<<<<<<< HEAD
 #include <rs.h>
 #include <rsEnv.h>
 #include <gui/Surface.h>
+=======
+#include <RenderScript.h>
+#include <RenderScriptEnv.h>
+>>>>>>> upstream/master
 #include <gui/SurfaceTexture.h>
 #include <gui/SurfaceTextureClient.h>
 #include <android_runtime/android_graphics_SurfaceTexture.h>
 
+<<<<<<< HEAD
 //#define LOG_API ALOGE
+=======
+//#define LOG_API LOGE
+>>>>>>> upstream/master
 #define LOG_API(...)
 
 using namespace android;
 
 class AutoJavaStringToUTF8 {
 public:
+<<<<<<< HEAD
     AutoJavaStringToUTF8(JNIEnv* env, jstring str) : fEnv(env), fJStr(str) {
         fCStr = env->GetStringUTFChars(str, NULL);
         fLength = env->GetStringUTFLength(str);
     }
     ~AutoJavaStringToUTF8() {
+=======
+    AutoJavaStringToUTF8(JNIEnv* env, jstring str) : fEnv(env), fJStr(str)
+    {
+        fCStr = env->GetStringUTFChars(str, NULL);
+        fLength = env->GetStringUTFLength(str);
+    }
+    ~AutoJavaStringToUTF8()
+    {
+>>>>>>> upstream/master
         fEnv->ReleaseStringUTFChars(fJStr, fCStr);
     }
     const char* c_str() const { return fCStr; }
@@ -70,6 +104,7 @@ private:
     jsize       fLength;
 };
 
+<<<<<<< HEAD
 class AutoJavaStringArrayToUTF8 {
 public:
     AutoJavaStringArrayToUTF8(JNIEnv* env, jobjectArray strings, jsize stringsLength)
@@ -106,6 +141,8 @@ private:
     jsize        mStringsLength;
 };
 
+=======
+>>>>>>> upstream/master
 // ---------------------------------------------------------------------------
 
 static jfieldID gContextId = 0;
@@ -295,7 +332,11 @@ nContextGetErrorMessage(JNIEnv *_env, jobject _this, RsContext con)
                                  &receiveLen, sizeof(receiveLen),
                                  &subID, sizeof(subID));
     if (!id && receiveLen) {
+<<<<<<< HEAD
         ALOGV("message receive buffer too small.  %i", receiveLen);
+=======
+        LOGV("message receive buffer too small.  %i", receiveLen);
+>>>>>>> upstream/master
     }
     return _env->NewStringUTF(buf);
 }
@@ -313,7 +354,11 @@ nContextGetUserMessage(JNIEnv *_env, jobject _this, RsContext con, jintArray dat
                                  &receiveLen, sizeof(receiveLen),
                                  &subID, sizeof(subID));
     if (!id && receiveLen) {
+<<<<<<< HEAD
         ALOGV("message receive buffer too small.  %i", receiveLen);
+=======
+        LOGV("message receive buffer too small.  %i", receiveLen);
+>>>>>>> upstream/master
     }
     _env->ReleaseIntArrayElements(data, ptr, 0);
     return id;
@@ -355,27 +400,53 @@ nElementCreate(JNIEnv *_env, jobject _this, RsContext con, jint type, jint kind,
 }
 
 static jint
+<<<<<<< HEAD
 nElementCreate2(JNIEnv *_env, jobject _this, RsContext con,
                 jintArray _ids, jobjectArray _names, jintArray _arraySizes)
+=======
+nElementCreate2(JNIEnv *_env, jobject _this, RsContext con, jintArray _ids, jobjectArray _names, jintArray _arraySizes)
+>>>>>>> upstream/master
 {
     int fieldCount = _env->GetArrayLength(_ids);
     LOG_API("nElementCreate2, con(%p)", con);
 
     jint *ids = _env->GetIntArrayElements(_ids, NULL);
     jint *arraySizes = _env->GetIntArrayElements(_arraySizes, NULL);
+<<<<<<< HEAD
 
     AutoJavaStringArrayToUTF8 names(_env, _names, fieldCount);
 
     const char **nameArray = names.c_str();
     size_t *sizeArray = names.c_str_len();
 
+=======
+    const char ** nameArray = (const char **)calloc(fieldCount, sizeof(char *));
+    size_t* sizeArray = (size_t*)calloc(fieldCount, sizeof(size_t));
+
+    for (int ct=0; ct < fieldCount; ct++) {
+        jstring s = (jstring)_env->GetObjectArrayElement(_names, ct);
+        nameArray[ct] = _env->GetStringUTFChars(s, NULL);
+        sizeArray[ct] = _env->GetStringUTFLength(s);
+    }
+>>>>>>> upstream/master
     jint id = (jint)rsElementCreate2(con,
                                      (RsElement *)ids, fieldCount,
                                      nameArray, fieldCount * sizeof(size_t),  sizeArray,
                                      (const uint32_t *)arraySizes, fieldCount);
+<<<<<<< HEAD
 
     _env->ReleaseIntArrayElements(_ids, ids, JNI_ABORT);
     _env->ReleaseIntArrayElements(_arraySizes, arraySizes, JNI_ABORT);
+=======
+    for (int ct=0; ct < fieldCount; ct++) {
+        jstring s = (jstring)_env->GetObjectArrayElement(_names, ct);
+        _env->ReleaseStringUTFChars(s, nameArray[ct]);
+    }
+    _env->ReleaseIntArrayElements(_ids, ids, JNI_ABORT);
+    _env->ReleaseIntArrayElements(_arraySizes, arraySizes, JNI_ABORT);
+    free(nameArray);
+    free(sizeArray);
+>>>>>>> upstream/master
     return (jint)id;
 }
 
@@ -457,10 +528,17 @@ nTypeGetNativeData(JNIEnv *_env, jobject _this, RsContext con, jint id, jintArra
 // -----------------------------------
 
 static jint
+<<<<<<< HEAD
 nAllocationCreateTyped(JNIEnv *_env, jobject _this, RsContext con, jint type, jint mips, jint usage, jint pointer)
 {
     LOG_API("nAllocationCreateTyped, con(%p), type(%p), mip(%i), usage(%i), ptr(%p)", con, (RsElement)type, mips, usage, (void *)pointer);
     return (jint) rsAllocationCreateTyped(con, (RsType)type, (RsAllocationMipmapControl)mips, (uint32_t)usage, (uint32_t)pointer);
+=======
+nAllocationCreateTyped(JNIEnv *_env, jobject _this, RsContext con, jint type, jint mips, jint usage)
+{
+    LOG_API("nAllocationCreateTyped, con(%p), type(%p), mip(%i), usage(%i)", con, (RsElement)type, mips, usage);
+    return (jint) rsAllocationCreateTyped(con, (RsType)type, (RsAllocationMipmapControl)mips, (uint32_t)usage);
+>>>>>>> upstream/master
 }
 
 static void
@@ -470,6 +548,7 @@ nAllocationSyncAll(JNIEnv *_env, jobject _this, RsContext con, jint a, jint bits
     rsAllocationSyncAll(con, (RsAllocation)a, (RsAllocationUsageType)bits);
 }
 
+<<<<<<< HEAD
 static jint
 nAllocationGetSurfaceTextureID(JNIEnv *_env, jobject _this, RsContext con, jint a)
 {
@@ -515,6 +594,8 @@ nAllocationIoReceive(JNIEnv *_env, jobject _this, RsContext con, RsAllocation al
 }
 
 
+=======
+>>>>>>> upstream/master
 static void
 nAllocationGenerateMipmaps(JNIEnv *_env, jobject _this, RsContext con, jint alloc)
 {
@@ -639,7 +720,11 @@ nAllocationElementData1D(JNIEnv *_env, jobject _this, RsContext con, jint alloc,
     jint len = _env->GetArrayLength(data);
     LOG_API("nAllocationElementData1D, con(%p), alloc(%p), offset(%i), comp(%i), len(%i), sizeBytes(%i)", con, (RsAllocation)alloc, offset, compIdx, len, sizeBytes);
     jbyte *ptr = _env->GetByteArrayElements(data, NULL);
+<<<<<<< HEAD
     rsAllocation1DElementData(con, (RsAllocation)alloc, offset, lod, ptr, sizeBytes, compIdx);
+=======
+    rsAllocation1DElementData(con, (RsAllocation)alloc, offset, lod, ptr, compIdx, sizeBytes);
+>>>>>>> upstream/master
     _env->ReleaseByteArrayElements(data, ptr, JNI_ABORT);
 }
 
@@ -695,7 +780,11 @@ nAllocationData2D_alloc(JNIEnv *_env, jobject _this, RsContext con,
                         jint srcAlloc, jint srcXoff, jint srcYoff,
                         jint srcMip, jint srcFace)
 {
+<<<<<<< HEAD
     LOG_API("nAllocation2DData_s, con(%p), dstAlloc(%p), dstXoff(%i), dstYoff(%i),"
+=======
+    LOG_API("nAllocation2DData_s, con(%p), dstAlloc(%p), dstXoff, dstYoff,"
+>>>>>>> upstream/master
             " dstMip(%i), dstFace(%i), width(%i), height(%i),"
             " srcAlloc(%p), srcXoff(%i), srcYoff(%i), srcMip(%i), srcFace(%i)",
             con, (RsAllocation)dstAlloc, dstXoff, dstYoff, dstMip, dstFace,
@@ -781,7 +870,11 @@ nAllocationResize2D(JNIEnv *_env, jobject _this, RsContext con, jint alloc, jint
 static int
 nFileA3DCreateFromAssetStream(JNIEnv *_env, jobject _this, RsContext con, jint native_asset)
 {
+<<<<<<< HEAD
     ALOGV("______nFileA3D %u", (uint32_t) native_asset);
+=======
+    LOGV("______nFileA3D %u", (uint32_t) native_asset);
+>>>>>>> upstream/master
 
     Asset* asset = reinterpret_cast<Asset*>(native_asset);
 
@@ -827,7 +920,11 @@ nFileA3DGetNumIndexEntries(JNIEnv *_env, jobject _this, RsContext con, jint file
 static void
 nFileA3DGetIndexEntries(JNIEnv *_env, jobject _this, RsContext con, jint fileA3D, jint numEntries, jintArray _ids, jobjectArray _entries)
 {
+<<<<<<< HEAD
     ALOGV("______nFileA3D %u", (uint32_t) fileA3D);
+=======
+    LOGV("______nFileA3D %u", (uint32_t) fileA3D);
+>>>>>>> upstream/master
     RsFileIndexEntry *fileEntries = (RsFileIndexEntry*)malloc((uint32_t)numEntries * sizeof(RsFileIndexEntry));
 
     rsaFileA3DGetIndexEntries(con, fileEntries, (uint32_t)numEntries, (RsFile)fileA3D);
@@ -843,7 +940,11 @@ nFileA3DGetIndexEntries(JNIEnv *_env, jobject _this, RsContext con, jint fileA3D
 static int
 nFileA3DGetEntryByIndex(JNIEnv *_env, jobject _this, RsContext con, jint fileA3D, jint index)
 {
+<<<<<<< HEAD
     ALOGV("______nFileA3D %u", (uint32_t) fileA3D);
+=======
+    LOGV("______nFileA3D %u", (uint32_t) fileA3D);
+>>>>>>> upstream/master
     jint id = (jint)rsaFileA3DGetEntryByIndex(con, (uint32_t)index, (RsFile)fileA3D);
     return id;
 }
@@ -953,6 +1054,7 @@ nScriptSetVarV(JNIEnv *_env, jobject _this, RsContext con, jint script, jint slo
     _env->ReleaseByteArrayElements(data, ptr, JNI_ABORT);
 }
 
+<<<<<<< HEAD
 static void
 nScriptSetVarVE(JNIEnv *_env, jobject _this, RsContext con, jint script, jint slot, jbyteArray data, jint elem, jintArray dims)
 {
@@ -967,6 +1069,8 @@ nScriptSetVarVE(JNIEnv *_env, jobject _this, RsContext con, jint script, jint sl
     _env->ReleaseIntArrayElements(dims, dimsPtr, JNI_ABORT);
 }
 
+=======
+>>>>>>> upstream/master
 
 static void
 nScriptSetTimeZone(JNIEnv *_env, jobject _this, RsContext con, jint script, jbyteArray timeZone)
@@ -1112,13 +1216,18 @@ nProgramBindSampler(JNIEnv *_env, jobject _this, RsContext con, jint vpf, jint s
 // ---------------------------------------------------------------------------
 
 static jint
+<<<<<<< HEAD
 nProgramFragmentCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader,
                        jobjectArray texNames, jintArray params)
+=======
+nProgramFragmentCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader, jintArray params)
+>>>>>>> upstream/master
 {
     AutoJavaStringToUTF8 shaderUTF(_env, shader);
     jint *paramPtr = _env->GetIntArrayElements(params, NULL);
     jint paramLen = _env->GetArrayLength(params);
 
+<<<<<<< HEAD
     int texCount = _env->GetArrayLength(texNames);
     AutoJavaStringArrayToUTF8 names(_env, texNames, texCount);
     const char ** nameArray = names.c_str();
@@ -1130,6 +1239,11 @@ nProgramFragmentCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shade
                                              nameArray, texCount, sizeArray,
                                              (uint32_t *)paramPtr, paramLen);
 
+=======
+    LOG_API("nProgramFragmentCreate, con(%p), paramLen(%i)", con, paramLen);
+
+    jint ret = (jint)rsProgramFragmentCreate(con, shaderUTF.c_str(), shaderUTF.length(), (uint32_t *)paramPtr, paramLen);
+>>>>>>> upstream/master
     _env->ReleaseIntArrayElements(params, paramPtr, JNI_ABORT);
     return ret;
 }
@@ -1138,8 +1252,12 @@ nProgramFragmentCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shade
 // ---------------------------------------------------------------------------
 
 static jint
+<<<<<<< HEAD
 nProgramVertexCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader,
                      jobjectArray texNames, jintArray params)
+=======
+nProgramVertexCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader, jintArray params)
+>>>>>>> upstream/master
 {
     AutoJavaStringToUTF8 shaderUTF(_env, shader);
     jint *paramPtr = _env->GetIntArrayElements(params, NULL);
@@ -1147,6 +1265,7 @@ nProgramVertexCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader,
 
     LOG_API("nProgramVertexCreate, con(%p), paramLen(%i)", con, paramLen);
 
+<<<<<<< HEAD
     int texCount = _env->GetArrayLength(texNames);
     AutoJavaStringArrayToUTF8 names(_env, texNames, texCount);
     const char ** nameArray = names.c_str();
@@ -1156,6 +1275,9 @@ nProgramVertexCreate(JNIEnv *_env, jobject _this, RsContext con, jstring shader,
                                            nameArray, texCount, sizeArray,
                                            (uint32_t *)paramPtr, paramLen);
 
+=======
+    jint ret = (jint)rsProgramVertexCreate(con, shaderUTF.c_str(), shaderUTF.length(), (uint32_t *)paramPtr, paramLen);
+>>>>>>> upstream/master
     _env->ReleaseIntArrayElements(params, paramPtr, JNI_ABORT);
     return ret;
 }
@@ -1226,6 +1348,7 @@ nSamplerCreate(JNIEnv *_env, jobject _this, RsContext con, jint magFilter, jint 
 
 // ---------------------------------------------------------------------------
 
+<<<<<<< HEAD
 //native int  rsnPathCreate(int con, int prim, boolean isStatic, int vtx, int loop, float q);
 static jint
 nPathCreate(JNIEnv *_env, jobject _this, RsContext con, jint prim, jboolean isStatic, jint _vtx, jint _loop, jfloat q) {
@@ -1237,6 +1360,8 @@ nPathCreate(JNIEnv *_env, jobject _this, RsContext con, jint prim, jboolean isSt
     return id;
 }
 
+=======
+>>>>>>> upstream/master
 static jint
 nMeshCreate(JNIEnv *_env, jobject _this, RsContext con, jintArray _vtx, jintArray _idx, jintArray _prim)
 {
@@ -1365,7 +1490,11 @@ static JNINativeMethod methods[] = {
 {"rsnTypeCreate",                    "(IIIIIZZ)I",                            (void*)nTypeCreate },
 {"rsnTypeGetNativeData",             "(II[I)V",                               (void*)nTypeGetNativeData },
 
+<<<<<<< HEAD
 {"rsnAllocationCreateTyped",         "(IIIII)I",                               (void*)nAllocationCreateTyped },
+=======
+{"rsnAllocationCreateTyped",         "(IIII)I",                               (void*)nAllocationCreateTyped },
+>>>>>>> upstream/master
 {"rsnAllocationCreateFromBitmap",    "(IIILandroid/graphics/Bitmap;I)I",      (void*)nAllocationCreateFromBitmap },
 {"rsnAllocationCubeCreateFromBitmap","(IIILandroid/graphics/Bitmap;I)I",      (void*)nAllocationCubeCreateFromBitmap },
 
@@ -1373,11 +1502,14 @@ static JNINativeMethod methods[] = {
 {"rsnAllocationCopyToBitmap",        "(IILandroid/graphics/Bitmap;)V",        (void*)nAllocationCopyToBitmap },
 
 {"rsnAllocationSyncAll",             "(III)V",                                (void*)nAllocationSyncAll },
+<<<<<<< HEAD
 {"rsnAllocationGetSurfaceTextureID", "(II)I",                                 (void*)nAllocationGetSurfaceTextureID },
 {"rsnAllocationGetSurfaceTextureID2","(IILandroid/graphics/SurfaceTexture;)V",(void*)nAllocationGetSurfaceTextureID2 },
 {"rsnAllocationSetSurface",          "(IILandroid/view/Surface;)V",           (void*)nAllocationSetSurface },
 {"rsnAllocationIoSend",              "(II)V",                                 (void*)nAllocationIoSend },
 {"rsnAllocationIoReceive",           "(II)V",                                 (void*)nAllocationIoReceive },
+=======
+>>>>>>> upstream/master
 {"rsnAllocationData1D",              "(IIIII[II)V",                           (void*)nAllocationData1D_i },
 {"rsnAllocationData1D",              "(IIIII[SI)V",                           (void*)nAllocationData1D_s },
 {"rsnAllocationData1D",              "(IIIII[BI)V",                           (void*)nAllocationData1D_b },
@@ -1408,7 +1540,10 @@ static JNINativeMethod methods[] = {
 {"rsnScriptSetVarF",                 "(IIIF)V",                               (void*)nScriptSetVarF },
 {"rsnScriptSetVarD",                 "(IIID)V",                               (void*)nScriptSetVarD },
 {"rsnScriptSetVarV",                 "(III[B)V",                              (void*)nScriptSetVarV },
+<<<<<<< HEAD
 {"rsnScriptSetVarVE",                "(III[BI[I)V",                           (void*)nScriptSetVarVE },
+=======
+>>>>>>> upstream/master
 {"rsnScriptSetVarObj",               "(IIII)V",                               (void*)nScriptSetVarObj },
 
 {"rsnScriptCCreate",                 "(ILjava/lang/String;Ljava/lang/String;[BI)I",  (void*)nScriptCCreate },
@@ -1419,9 +1554,15 @@ static JNINativeMethod methods[] = {
 {"rsnProgramBindTexture",            "(IIII)V",                               (void*)nProgramBindTexture },
 {"rsnProgramBindSampler",            "(IIII)V",                               (void*)nProgramBindSampler },
 
+<<<<<<< HEAD
 {"rsnProgramFragmentCreate",         "(ILjava/lang/String;[Ljava/lang/String;[I)I",              (void*)nProgramFragmentCreate },
 {"rsnProgramRasterCreate",           "(IZI)I",                                (void*)nProgramRasterCreate },
 {"rsnProgramVertexCreate",           "(ILjava/lang/String;[Ljava/lang/String;[I)I",              (void*)nProgramVertexCreate },
+=======
+{"rsnProgramFragmentCreate",         "(ILjava/lang/String;[I)I",              (void*)nProgramFragmentCreate },
+{"rsnProgramRasterCreate",           "(IZI)I",                                (void*)nProgramRasterCreate },
+{"rsnProgramVertexCreate",           "(ILjava/lang/String;[I)I",              (void*)nProgramVertexCreate },
+>>>>>>> upstream/master
 
 {"rsnContextBindRootScript",         "(II)V",                                 (void*)nContextBindRootScript },
 {"rsnContextBindProgramStore",       "(II)V",                                 (void*)nContextBindProgramStore },
@@ -1431,7 +1572,10 @@ static JNINativeMethod methods[] = {
 
 {"rsnSamplerCreate",                 "(IIIIIIF)I",                            (void*)nSamplerCreate },
 
+<<<<<<< HEAD
 {"rsnPathCreate",                    "(IIZIIF)I",                             (void*)nPathCreate },
+=======
+>>>>>>> upstream/master
 {"rsnMeshCreate",                    "(I[I[I[I)I",                            (void*)nMeshCreate },
 
 {"rsnMeshGetVertexBufferCount",      "(II)I",                                 (void*)nMeshGetVertexBufferCount },
@@ -1455,13 +1599,21 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
     jint result = -1;
 
     if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+<<<<<<< HEAD
         ALOGE("ERROR: GetEnv failed\n");
+=======
+        LOGE("ERROR: GetEnv failed\n");
+>>>>>>> upstream/master
         goto bail;
     }
     assert(env != NULL);
 
     if (registerFuncs(env) < 0) {
+<<<<<<< HEAD
         ALOGE("ERROR: MediaPlayer native registration failed\n");
+=======
+        LOGE("ERROR: MediaPlayer native registration failed\n");
+>>>>>>> upstream/master
         goto bail;
     }
 

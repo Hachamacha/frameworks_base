@@ -218,8 +218,11 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
      *
      * @param hint the text to be displayed to the user
      *
+<<<<<<< HEAD
      * @see #getCompletionHint()
      *
+=======
+>>>>>>> upstream/master
      * @attr ref android.R.styleable#AutoCompleteTextView_completionHint
      */
     public void setCompletionHint(CharSequence hint) {
@@ -239,6 +242,7 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
             mHintView = null;
         }
     }
+<<<<<<< HEAD
 
     /**
      * Gets the optional hint text displayed at the bottom of the the matching list.
@@ -253,6 +257,9 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
         return mHintText;
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * <p>Returns the current width for the auto-complete drop down list. This can
      * be a fixed width, or {@link ViewGroup.LayoutParams#MATCH_PARENT} to fill the screen, or
@@ -483,8 +490,11 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
      * @return the minimum number of characters to type to show the drop down
      *
      * @see #setThreshold(int)
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#AutoCompleteTextView_completionThreshold
+=======
+>>>>>>> upstream/master
      */
     public int getThreshold() {
         return mThreshold;
@@ -1048,9 +1058,13 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
     public void ensureImeVisible(boolean visible) {
         mPopup.setInputMethodMode(visible
                 ? ListPopupWindow.INPUT_METHOD_NEEDED : ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
+<<<<<<< HEAD
         if (mPopup.isDropDownAlwaysVisible() || (mFilter != null && enoughToFilter())) {
             showDropDown();
         }
+=======
+        showDropDown();
+>>>>>>> upstream/master
     }
 
     /**
@@ -1104,11 +1118,18 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
 
                 for (int i = 0; i < count; i++) {
                     if (adapter.isEnabled(i)) {
+<<<<<<< HEAD
                         Object item = adapter.getItem(i);
                         long id = adapter.getItemId(i);
                         completions[realCount] = new CompletionInfo(id, realCount,
                                 convertSelectionToString(item));
                         realCount++;
+=======
+                        realCount++;
+                        Object item = adapter.getItem(i);
+                        long id = adapter.getItemId(i);
+                        completions[i] = new CompletionInfo(id, i, convertSelectionToString(item));
+>>>>>>> upstream/master
                     }
                 }
                 

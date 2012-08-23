@@ -53,8 +53,12 @@ public:
         storage array (may be null).
     */
     static jobject createBitmap(JNIEnv* env, SkBitmap* bitmap, jbyteArray buffer,
+<<<<<<< HEAD
                                 bool isMutable, jbyteArray ninepatch, jintArray layoutbounds,
                                 int density = -1);
+=======
+                                bool isMutable, jbyteArray ninepatch, int density = -1);
+>>>>>>> upstream/master
 
     static jobject createBitmap(JNIEnv* env, SkBitmap* bitmap, bool isMutable,
                                 jbyteArray ninepatch, int density = -1);

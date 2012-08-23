@@ -16,6 +16,7 @@
 
 package com.android.internal.telephony.gsm;
 
+<<<<<<< HEAD
 import android.telephony.SmsCbCmasInfo;
 import android.telephony.SmsCbEtwsInfo;
 
@@ -37,21 +38,42 @@ class SmsCbHeader {
      * Length of SMS-CB header
      */
     static final int PDU_HEADER_LENGTH = 6;
+=======
+import android.telephony.SmsCbConstants;
+
+public class SmsCbHeader implements SmsCbConstants {
+    /**
+     * Length of SMS-CB header
+     */
+    public static final int PDU_HEADER_LENGTH = 6;
+>>>>>>> upstream/master
 
     /**
      * GSM pdu format, as defined in 3gpp TS 23.041, section 9.4.1
      */
+<<<<<<< HEAD
     static final int FORMAT_GSM = 1;
+=======
+    public static final int FORMAT_GSM = 1;
+>>>>>>> upstream/master
 
     /**
      * UMTS pdu format, as defined in 3gpp TS 23.041, section 9.4.2
      */
+<<<<<<< HEAD
     static final int FORMAT_UMTS = 2;
+=======
+    public static final int FORMAT_UMTS = 2;
+>>>>>>> upstream/master
 
     /**
      * GSM pdu format, as defined in 3gpp TS 23.041, section 9.4.1.3
      */
+<<<<<<< HEAD
     static final int FORMAT_ETWS_PRIMARY = 3;
+=======
+    public static final int FORMAT_ETWS_PRIMARY = 3;
+>>>>>>> upstream/master
 
     /**
      * Message type value as defined in 3gpp TS 25.324, section 11.1.
@@ -61,11 +83,16 @@ class SmsCbHeader {
     /**
      * Length of GSM pdus
      */
+<<<<<<< HEAD
     private static final int PDU_LENGTH_GSM = 88;
+=======
+    public static final int PDU_LENGTH_GSM = 88;
+>>>>>>> upstream/master
 
     /**
      * Maximum length of ETWS primary message GSM pdus
      */
+<<<<<<< HEAD
     private static final int PDU_LENGTH_ETWS = 56;
 
     private final int geographicalScope;
@@ -89,6 +116,31 @@ class SmsCbHeader {
 
     /** CMAS warning notification info. */
     private final SmsCbCmasInfo mCmasInfo;
+=======
+    public static final int PDU_LENGTH_ETWS = 56;
+
+    public final int geographicalScope;
+
+    public final int messageCode;
+
+    public final int updateNumber;
+
+    public final int messageIdentifier;
+
+    public final int dataCodingScheme;
+
+    public final int pageIndex;
+
+    public final int nrOfPages;
+
+    public final int format;
+
+    public final boolean etwsEmergencyUserAlert;
+
+    public final boolean etwsPopup;
+
+    public final int etwsWarningType;
+>>>>>>> upstream/master
 
     public SmsCbHeader(byte[] pdu) throws IllegalArgumentException {
         if (pdu == null || pdu.length < PDU_HEADER_LENGTH) {
@@ -97,12 +149,19 @@ class SmsCbHeader {
 
         if (pdu.length <= PDU_LENGTH_ETWS) {
             format = FORMAT_ETWS_PRIMARY;
+<<<<<<< HEAD
             geographicalScope = (pdu[0] & 0xc0) >> 6;
             serialNumber = ((pdu[0] & 0xff) << 8) | (pdu[1] & 0xff);
+=======
+            geographicalScope = -1; //not applicable
+            messageCode = -1;
+            updateNumber = -1;
+>>>>>>> upstream/master
             messageIdentifier = ((pdu[2] & 0xff) << 8) | (pdu[3] & 0xff);
             dataCodingScheme = -1;
             pageIndex = -1;
             nrOfPages = -1;
+<<<<<<< HEAD
             boolean emergencyUserAlert = (pdu[4] & 0x1) != 0;
             boolean activatePopup = (pdu[5] & 0x80) != 0;
             int warningType = (pdu[4] & 0xfe) >> 1;
@@ -117,11 +176,21 @@ class SmsCbHeader {
                     warningSecurityInfo);
             mCmasInfo = null;
             return;     // skip the ETWS/CMAS initialization code for regular notifications
+=======
+            etwsEmergencyUserAlert = (pdu[4] & 0x1) != 0;
+            etwsPopup = (pdu[5] & 0x80) != 0;
+            etwsWarningType = (pdu[4] & 0xfe) >> 1;
+>>>>>>> upstream/master
         } else if (pdu.length <= PDU_LENGTH_GSM) {
             // GSM pdus are no more than 88 bytes
             format = FORMAT_GSM;
             geographicalScope = (pdu[0] & 0xc0) >> 6;
+<<<<<<< HEAD
             serialNumber = ((pdu[0] & 0xff) << 8) | (pdu[1] & 0xff);
+=======
+            messageCode = ((pdu[0] & 0x3f) << 4) | ((pdu[1] & 0xf0) >> 4);
+            updateNumber = pdu[1] & 0x0f;
+>>>>>>> upstream/master
             messageIdentifier = ((pdu[2] & 0xff) << 8) | (pdu[3] & 0xff);
             dataCodingScheme = pdu[4] & 0xff;
 
@@ -136,6 +205,12 @@ class SmsCbHeader {
 
             this.pageIndex = pageIndex;
             this.nrOfPages = nrOfPages;
+<<<<<<< HEAD
+=======
+            etwsEmergencyUserAlert = false;
+            etwsPopup = false;
+            etwsWarningType = -1;
+>>>>>>> upstream/master
         } else {
             // UMTS pdus are always at least 90 bytes since the payload includes
             // a number-of-pages octet and also one length octet per page
@@ -149,7 +224,12 @@ class SmsCbHeader {
 
             messageIdentifier = ((pdu[1] & 0xff) << 8) | pdu[2] & 0xff;
             geographicalScope = (pdu[3] & 0xc0) >> 6;
+<<<<<<< HEAD
             serialNumber = ((pdu[3] & 0xff) << 8) | (pdu[4] & 0xff);
+=======
+            messageCode = ((pdu[3] & 0x3f) << 4) | ((pdu[4] & 0xf0) >> 4);
+            updateNumber = pdu[4] & 0x0f;
+>>>>>>> upstream/master
             dataCodingScheme = pdu[5] & 0xff;
 
             // We will always consider a UMTS message as having one single page
@@ -157,6 +237,7 @@ class SmsCbHeader {
             // actual payload may contain several pages.
             pageIndex = 1;
             nrOfPages = 1;
+<<<<<<< HEAD
         }
 
         if (isEtwsMessage()) {
@@ -396,12 +477,82 @@ class SmsCbHeader {
             default:
                 return SmsCbCmasInfo.CMAS_CERTAINTY_UNKNOWN;
         }
+=======
+            etwsEmergencyUserAlert = false;
+            etwsPopup = false;
+            etwsWarningType = -1;
+        }
+    }
+
+    /**
+     * Return whether the specified message ID is an emergency (PWS) message type.
+     * This method is static and takes an argument so that it can be used by
+     * CellBroadcastReceiver, which stores message ID's in SQLite rather than PDU.
+     * @param id the message identifier to check
+     * @return true if the message is emergency type; false otherwise
+     */
+    public static boolean isEmergencyMessage(int id) {
+        return id >= MESSAGE_ID_PWS_FIRST_IDENTIFIER && id <= MESSAGE_ID_PWS_LAST_IDENTIFIER;
+    }
+
+    /**
+     * Return whether the specified message ID is an ETWS emergency message type.
+     * This method is static and takes an argument so that it can be used by
+     * CellBroadcastReceiver, which stores message ID's in SQLite rather than PDU.
+     * @param id the message identifier to check
+     * @return true if the message is ETWS emergency type; false otherwise
+     */
+    public static boolean isEtwsMessage(int id) {
+        return (id & MESSAGE_ID_ETWS_TYPE_MASK) == MESSAGE_ID_ETWS_TYPE;
+    }
+
+    /**
+     * Return whether the specified message ID is a CMAS emergency message type.
+     * This method is static and takes an argument so that it can be used by
+     * CellBroadcastReceiver, which stores message ID's in SQLite rather than PDU.
+     * @param id the message identifier to check
+     * @return true if the message is CMAS emergency type; false otherwise
+     */
+    public static boolean isCmasMessage(int id) {
+        return id >= MESSAGE_ID_CMAS_FIRST_IDENTIFIER && id <= MESSAGE_ID_CMAS_LAST_IDENTIFIER;
+    }
+
+    /**
+     * Return whether the specified message code indicates an ETWS popup alert.
+     * This method is static and takes an argument so that it can be used by
+     * CellBroadcastReceiver, which stores message codes in SQLite rather than PDU.
+     * This method assumes that the message ID has already been checked for ETWS type.
+     *
+     * @param messageCode the message code to check
+     * @return true if the message code indicates a popup alert should be displayed
+     */
+    public static boolean isEtwsPopupAlert(int messageCode) {
+        return (messageCode & MESSAGE_CODE_ETWS_ACTIVATE_POPUP) != 0;
+    }
+
+    /**
+     * Return whether the specified message code indicates an ETWS emergency user alert.
+     * This method is static and takes an argument so that it can be used by
+     * CellBroadcastReceiver, which stores message codes in SQLite rather than PDU.
+     * This method assumes that the message ID has already been checked for ETWS type.
+     *
+     * @param messageCode the message code to check
+     * @return true if the message code indicates an emergency user alert
+     */
+    public static boolean isEtwsEmergencyUserAlert(int messageCode) {
+        return (messageCode & MESSAGE_CODE_ETWS_EMERGENCY_USER_ALERT) != 0;
+>>>>>>> upstream/master
     }
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "SmsCbHeader{GS=" + geographicalScope + ", serialNumber=0x" +
                 Integer.toHexString(serialNumber) +
+=======
+        return "SmsCbHeader{GS=" + geographicalScope + ", messageCode=0x" +
+                Integer.toHexString(messageCode) + ", updateNumber=" + updateNumber +
+>>>>>>> upstream/master
                 ", messageIdentifier=0x" + Integer.toHexString(messageIdentifier) +
                 ", DCS=0x" + Integer.toHexString(dataCodingScheme) +
                 ", page " + pageIndex + " of " + nrOfPages + '}';

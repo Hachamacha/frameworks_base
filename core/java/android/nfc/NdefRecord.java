@@ -16,6 +16,7 @@
 
 package android.nfc;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcel;
@@ -88,10 +89,42 @@ public final class NdefRecord implements Parcelable {
     /**
      * Indicates the record is empty.<p>
      * Type, id and payload fields are empty in a {@literal TNF_EMPTY} record.
+=======
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.lang.UnsupportedOperationException;
+import java.nio.charset.Charset;
+import java.nio.charset.Charsets;
+import java.util.Arrays;
+
+/**
+ * Represents a logical (unchunked) NDEF (NFC Data Exchange Format) record.
+ * <p>An NDEF record always contains:
+ * <ul>
+ * <li>3-bit TNF (Type Name Format) field: Indicates how to interpret the type field
+ * <li>Variable length type: Describes the record format
+ * <li>Variable length ID: A unique identifier for the record
+ * <li>Variable length payload: The actual data payload
+ * </ul>
+ * <p>The underlying record
+ * representation may be chunked across several NDEF records when the payload is
+ * large.
+ * <p>This is an immutable data class.
+ */
+public final class NdefRecord implements Parcelable {
+    /**
+     * Indicates no type, id, or payload is associated with this NDEF Record.
+     * <p>
+     * Type, id and payload fields must all be empty to be a valid TNF_EMPTY
+     * record.
+>>>>>>> upstream/master
      */
     public static final short TNF_EMPTY = 0x00;
 
     /**
+<<<<<<< HEAD
      * Indicates the type field contains a well-known RTD type name.<p>
      * Use this tnf with RTD types such as {@link #RTD_TEXT}, {@link #RTD_URI}.
      * <p>
@@ -101,20 +134,31 @@ public final class NdefRecord implements Parcelable {
      * @see #RTD_TEXT
      * @see #RTD_SMART_POSTER
      * @see #createUri
+=======
+     * Indicates the type field uses the RTD type name format.
+     * <p>
+     * Use this TNF with RTD types such as RTD_TEXT, RTD_URI.
+>>>>>>> upstream/master
      */
     public static final short TNF_WELL_KNOWN = 0x01;
 
     /**
+<<<<<<< HEAD
      * Indicates the type field contains a media-type BNF
      * construct, defined by RFC 2046.<p>
      * Use this with MIME type names such as {@literal "image/jpeg"}, or
      * using the helper {@link #createMime}.
      *
      * @see #createMime
+=======
+     * Indicates the type field contains a value that follows the media-type BNF
+     * construct defined by RFC 2046.
+>>>>>>> upstream/master
      */
     public static final short TNF_MIME_MEDIA = 0x02;
 
     /**
+<<<<<<< HEAD
      * Indicates the type field contains an absolute-URI
      * BNF construct defined by RFC 3986.<p>
      * When creating new records prefer {@link #createUri},
@@ -122,10 +166,15 @@ public final class NdefRecord implements Parcelable {
      * ({@literal #RTD_URI} allows compression of common URI prefixes).
      *
      * @see #createUri
+=======
+     * Indicates the type field contains a value that follows the absolute-URI
+     * BNF construct defined by RFC 3986.
+>>>>>>> upstream/master
      */
     public static final short TNF_ABSOLUTE_URI = 0x03;
 
     /**
+<<<<<<< HEAD
      * Indicates the type field contains an external type name.<p>
      * Used to encode custom payloads. When creating new records
      * use the helper {@link #createExternal}.<p>
@@ -135,25 +184,49 @@ public final class NdefRecord implements Parcelable {
      * Those are well known RTD constants, not external RTD constants.
      *
      * @see #createExternal
+=======
+     * Indicates the type field contains a value that follows the RTD external
+     * name specification.
+     * <p>
+     * Note this TNF should not be used with RTD_TEXT or RTD_URI constants.
+     * Those are well known RTD constants, not external RTD constants.
+>>>>>>> upstream/master
      */
     public static final short TNF_EXTERNAL_TYPE = 0x04;
 
     /**
+<<<<<<< HEAD
      * Indicates the payload type is unknown.<p>
      * NFC Forum explains this should be treated similarly to the
      * "application/octet-stream" MIME type. The payload
      * type is not explicitly encoded within the record.
      * <p>
      * The type field is empty in an {@literal TNF_UNKNOWN} record.
+=======
+     * Indicates the payload type is unknown.
+     * <p>
+     * This is similar to the "application/octet-stream" MIME type. The payload
+     * type is not explicitly encoded within the NDEF Message.
+     * <p>
+     * The type field must be empty to be a valid TNF_UNKNOWN record.
+>>>>>>> upstream/master
      */
     public static final short TNF_UNKNOWN = 0x05;
 
     /**
      * Indicates the payload is an intermediate or final chunk of a chunked
+<<<<<<< HEAD
      * NDEF Record.<p>
      * {@literal TNF_UNCHANGED} can not be used with this class
      * since all {@link NdefRecord}s are already unchunked, however they
      * may appear in the binary format.
+=======
+     * NDEF Record.
+     * <p>
+     * The payload type is specified in the first chunk, and subsequent chunks
+     * must use TNF_UNCHANGED with an empty type field. TNF_UNCHANGED must not
+     * be used in any other situation.
+>>>>>>> upstream/master
      */
     public static final short TNF_UNCHANGED = 0x06;
 
@@ -167,49 +240,81 @@ public final class NdefRecord implements Parcelable {
     public static final short TNF_RESERVED = 0x07;
 
     /**
+<<<<<<< HEAD
      * RTD Text type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Text type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_TEXT = {0x54};  // "T"
 
     /**
+<<<<<<< HEAD
      * RTD URI type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD URI type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_URI = {0x55};   // "U"
 
     /**
+<<<<<<< HEAD
      * RTD Smart Poster type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Smart Poster type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_SMART_POSTER = {0x53, 0x70};  // "Sp"
 
     /**
+<<<<<<< HEAD
      * RTD Alternative Carrier type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Alternative Carrier type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_ALTERNATIVE_CARRIER = {0x61, 0x63};  // "ac"
 
     /**
+<<<<<<< HEAD
      * RTD Handover Carrier type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Handover Carrier type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_HANDOVER_CARRIER = {0x48, 0x63};  // "Hc"
 
     /**
+<<<<<<< HEAD
      * RTD Handover Request type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Handover Request type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_HANDOVER_REQUEST = {0x48, 0x72};  // "Hr"
 
     /**
+<<<<<<< HEAD
      * RTD Handover Select type. For use with {@literal TNF_WELL_KNOWN}.
      * @see #TNF_WELL_KNOWN
+=======
+     * RTD Handover Select type. For use with TNF_WELL_KNOWN.
+>>>>>>> upstream/master
      */
     public static final byte[] RTD_HANDOVER_SELECT = {0x48, 0x73}; // "Hs"
 
     /**
+<<<<<<< HEAD
      * RTD Android app type. For use with {@literal TNF_EXTERNAL}.
+=======
+     * RTD Android app type. For use with TNF_EXTERNAL.
+>>>>>>> upstream/master
      * <p>
      * The payload of a record with type RTD_ANDROID_APP
      * should be the package name identifying an application.
@@ -229,7 +334,12 @@ public final class NdefRecord implements Parcelable {
     private static final byte FLAG_IL = (byte) 0x08;
 
     /**
+<<<<<<< HEAD
      * NFC Forum "URI Record Type Definition"<p>
+=======
+     * NFC Forum "URI Record Type Definition"
+     *
+>>>>>>> upstream/master
      * This is a mapping of "URI Identifier Codes" to URI string prefixes,
      * per section 3.2.2 of the NFC Forum URI Record Type Definition document.
      */
@@ -271,16 +381,21 @@ public final class NdefRecord implements Parcelable {
             "urn:epc:", // 0x22
     };
 
+<<<<<<< HEAD
     private static final int MAX_PAYLOAD_SIZE = 10 * (1 << 20);  // 10 MB payload limit
 
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
+=======
+    private final byte mFlags;
+>>>>>>> upstream/master
     private final short mTnf;
     private final byte[] mType;
     private final byte[] mId;
     private final byte[] mPayload;
 
     /**
+<<<<<<< HEAD
      * Create a new Android Application Record (AAR).
      * <p>
      * This record indicates to other Android devices the package
@@ -557,6 +672,79 @@ public final class NdefRecord implements Parcelable {
         mType = rs[0].mType;
         mId = rs[0].mId;
         mPayload = rs[0].mPayload;
+=======
+     * Construct an NDEF Record.
+     * <p>
+     * Applications should not attempt to manually chunk NDEF Records - the
+     * implementation of android.nfc will automatically chunk an NDEF Record
+     * when necessary (and only present a single logical NDEF Record to the
+     * application). So applications should not use TNF_UNCHANGED.
+     *
+     * @param tnf  a 3-bit TNF constant
+     * @param type byte array, containing zero to 255 bytes, must not be null
+     * @param id   byte array, containing zero to 255 bytes, must not be null
+     * @param payload byte array, containing zero to (2 ** 32 - 1) bytes,
+     *                must not be null
+     */
+    public NdefRecord(short tnf, byte[] type, byte[] id, byte[] payload) {
+        /* New NDEF records created by applications will have FLAG_MB|FLAG_ME
+         * set by default; when multiple records are stored in a
+         * {@link NdefMessage}, these flags will be corrected when the {@link NdefMessage}
+         * is serialized to bytes.
+         */
+        this(tnf, type, id, payload, (byte)(FLAG_MB|FLAG_ME));
+    }
+
+    /**
+     * @hide
+     */
+    /*package*/ NdefRecord(short tnf, byte[] type, byte[] id, byte[] payload, byte flags) {
+        /* check arguments */
+        if ((type == null) || (id == null) || (payload == null)) {
+            throw new IllegalArgumentException("Illegal null argument");
+        }
+
+        if (tnf < 0 || tnf > 0x07) {
+            throw new IllegalArgumentException("TNF out of range " + tnf);
+        }
+
+        /* Determine if it is a short record */
+        if(payload.length < 0xFF) {
+            flags |= FLAG_SR;
+        }
+
+        /* Determine if an id is present */
+        if(id.length != 0) {
+            flags |= FLAG_IL;
+        }
+
+        mFlags = flags;
+        mTnf = tnf;
+        mType = type.clone();
+        mId = id.clone();
+        mPayload = payload.clone();
+    }
+
+    /**
+     * Construct an NDEF Record from raw bytes.
+     * <p>
+     * Validation is performed to make sure the header is valid, and that
+     * the id, type and payload sizes appear to be valid.
+     *
+     * @throws FormatException if the data is not a valid NDEF record
+     */
+    public NdefRecord(byte[] data) throws FormatException {
+        /* Prevent compiler to complain about unassigned final fields */
+        mFlags = 0;
+        mTnf = 0;
+        mType = null;
+        mId = null;
+        mPayload = null;
+        /* Perform actual parsing */
+        if (parseNdefRecord(data) == -1) {
+            throw new FormatException("Error while parsing NDEF record");
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -573,9 +761,12 @@ public final class NdefRecord implements Parcelable {
      * <p>
      * This should be used in conjunction with the TNF field to determine the
      * payload format.
+<<<<<<< HEAD
      * <p>
      * Returns an empty byte array if this record
      * does not have a type field.
+=======
+>>>>>>> upstream/master
      */
     public byte[] getType() {
         return mType.clone();
@@ -583,9 +774,12 @@ public final class NdefRecord implements Parcelable {
 
     /**
      * Returns the variable length ID.
+<<<<<<< HEAD
      * <p>
      * Returns an empty byte array if this record
      * does not have an id field.
+=======
+>>>>>>> upstream/master
      */
     public byte[] getId() {
         return mId.clone();
@@ -593,15 +787,19 @@ public final class NdefRecord implements Parcelable {
 
     /**
      * Returns the variable length payload.
+<<<<<<< HEAD
      * <p>
      * Returns an empty byte array if this record
      * does not have a payload field.
+=======
+>>>>>>> upstream/master
      */
     public byte[] getPayload() {
         return mPayload.clone();
     }
 
     /**
+<<<<<<< HEAD
      * Return this NDEF Record as a byte array.<p>
      * This method is deprecated, use {@link NdefMessage#toByteArray}
      * instead. This is because the NDEF binary format is not defined for
@@ -930,12 +1128,126 @@ public final class NdefRecord implements Parcelable {
     }
 
     @Override
+=======
+     * Helper to return the NdefRecord as a URI.
+     * TODO: Consider making a member method instead of static
+     * TODO: Consider more validation that this is a URI record
+     * TODO: Make a public API
+     * @hide
+     */
+    public static Uri parseWellKnownUriRecord(NdefRecord record) throws FormatException {
+        byte[] payload = record.getPayload();
+        if (payload.length < 2) {
+            throw new FormatException("Payload is not a valid URI (missing prefix)");
+        }
+
+        /*
+         * payload[0] contains the URI Identifier Code, per the
+         * NFC Forum "URI Record Type Definition" section 3.2.2.
+         *
+         * payload[1]...payload[payload.length - 1] contains the rest of
+         * the URI.
+         */
+        int prefixIndex = (payload[0] & 0xff);
+        if (prefixIndex < 0 || prefixIndex >= URI_PREFIX_MAP.length) {
+            throw new FormatException("Payload is not a valid URI (invalid prefix)");
+        }
+        String prefix = URI_PREFIX_MAP[prefixIndex];
+        byte[] fullUri = concat(prefix.getBytes(Charsets.UTF_8),
+                Arrays.copyOfRange(payload, 1, payload.length));
+        return Uri.parse(new String(fullUri, Charsets.UTF_8));
+    }
+
+    /**
+     * Creates an Android application NDEF record.
+     * <p>
+     * This record indicates to other Android devices the package
+     * that should be used to handle the rest of the NDEF message.
+     * You can embed this record anywhere into your NDEF message
+     * to ensure that the intended package receives the message.
+     * <p>
+     * When an Android device dispatches an {@link NdefMessage}
+     * containing one or more Android application records,
+     * the applications contained in those records will be the
+     * preferred target for the NDEF_DISCOVERED intent, in
+     * the order in which they appear in the {@link NdefMessage}.
+     * This dispatch behavior was first added to Android in
+     * Ice Cream Sandwich.
+     * <p>
+     * If none of the applications are installed on the device,
+     * a Google Play link to the first application will be opened.
+     * <p>
+     * Note that Android application records do not overrule
+     * applications that have called
+     * {@link NfcAdapter#enableForegroundDispatch}.
+     *
+     * @param packageName Android package name
+     * @return Android application NDEF record
+     */
+    public static NdefRecord createApplicationRecord(String packageName) {
+        return new NdefRecord(TNF_EXTERNAL_TYPE, RTD_ANDROID_APP, new byte[] {},
+                packageName.getBytes(Charsets.US_ASCII));
+    }
+
+    /**
+     * Creates an NDEF record of well known type URI.
+     */
+    public static NdefRecord createUri(Uri uri) {
+        return createUri(uri.toString());
+    }
+
+    /**
+     * Creates an NDEF record of well known type URI.
+     */
+    public static NdefRecord createUri(String uriString) {
+        byte prefix = 0x0;
+        for (int i = 1; i < URI_PREFIX_MAP.length; i++) {
+            if (uriString.startsWith(URI_PREFIX_MAP[i])) {
+                prefix = (byte) i;
+                uriString = uriString.substring(URI_PREFIX_MAP[i].length());
+                break;
+            }
+        }
+        byte[] uriBytes = uriString.getBytes(Charsets.UTF_8);
+        byte[] recordBytes = new byte[uriBytes.length + 1];
+        recordBytes[0] = prefix;
+        System.arraycopy(uriBytes, 0, recordBytes, 1, uriBytes.length);
+        return new NdefRecord(TNF_WELL_KNOWN, RTD_URI, new byte[0], recordBytes);
+    }
+
+    private static byte[] concat(byte[]... arrays) {
+        int length = 0;
+        for (byte[] array : arrays) {
+            length += array.length;
+        }
+        byte[] result = new byte[length];
+        int pos = 0;
+        for (byte[] array : arrays) {
+            System.arraycopy(array, 0, result, pos, array.length);
+            pos += array.length;
+        }
+        return result;
+    }
+
+    /**
+     * Returns this entire NDEF Record as a byte array.
+     */
+    public byte[] toByteArray() {
+        return generate(mFlags, mTnf, mType, mId, mPayload);
+    }
+
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
+<<<<<<< HEAD
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+=======
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mFlags);
+>>>>>>> upstream/master
         dest.writeInt(mTnf);
         dest.writeInt(mType.length);
         dest.writeByteArray(mType);
@@ -947,8 +1259,13 @@ public final class NdefRecord implements Parcelable {
 
     public static final Parcelable.Creator<NdefRecord> CREATOR =
             new Parcelable.Creator<NdefRecord>() {
+<<<<<<< HEAD
         @Override
         public NdefRecord createFromParcel(Parcel in) {
+=======
+        public NdefRecord createFromParcel(Parcel in) {
+            byte flags = (byte)in.readInt();
+>>>>>>> upstream/master
             short tnf = (short)in.readInt();
             int typeLength = in.readInt();
             byte[] type = new byte[typeLength];
@@ -960,14 +1277,20 @@ public final class NdefRecord implements Parcelable {
             byte[] payload = new byte[payloadLength];
             in.readByteArray(payload);
 
+<<<<<<< HEAD
             return new NdefRecord(tnf, type, id, payload);
         }
         @Override
+=======
+            return new NdefRecord(tnf, type, id, payload, flags);
+        }
+>>>>>>> upstream/master
         public NdefRecord[] newArray(int size) {
             return new NdefRecord[size];
         }
     };
 
+<<<<<<< HEAD
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -1011,4 +1334,8 @@ public final class NdefRecord implements Parcelable {
         }
         return s;
     }
+=======
+    private native int parseNdefRecord(byte[] data);
+    private native byte[] generate(short flags, short tnf, byte[] type, byte[] id, byte[] data);
+>>>>>>> upstream/master
 }

@@ -20,7 +20,10 @@ import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+<<<<<<< HEAD
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+=======
+>>>>>>> upstream/master
 
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.JournaledFile;
@@ -32,7 +35,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+<<<<<<< HEAD
 import android.app.AppGlobals;
+=======
+>>>>>>> upstream/master
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -41,14 +47,20 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageParser;
 import android.content.pm.PermissionInfo;
 import android.content.pm.Signature;
+<<<<<<< HEAD
 import android.content.pm.UserInfo;
+=======
+>>>>>>> upstream/master
 import android.content.pm.VerifierDeviceIdentity;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Process;
+<<<<<<< HEAD
 import android.os.RemoteException;
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -67,8 +79,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
+=======
+>>>>>>> upstream/master
 
 import libcore.io.IoUtils;
 
@@ -80,6 +95,7 @@ final class Settings {
 
     private static final boolean DEBUG_STOPPED = false;
 
+<<<<<<< HEAD
     private static final String TAG_READ_EXTERNAL_STORAGE = "read-external-storage";
     private static final String ATTR_ENFORCEMENT = "enforcement";
 
@@ -94,6 +110,8 @@ final class Settings {
     private static final String ATTR_ENABLED = "enabled";
     private static final String ATTR_STOPPED = "stopped";
 
+=======
+>>>>>>> upstream/master
     private final File mSettingsFilename;
     private final File mBackupSettingsFilename;
     private final File mPackageListFilename;
@@ -102,7 +120,11 @@ final class Settings {
     final HashMap<String, PackageSetting> mPackages =
             new HashMap<String, PackageSetting>();
     // List of replaced system applications
+<<<<<<< HEAD
     private final HashMap<String, PackageSetting> mDisabledSysPackages =
+=======
+    final HashMap<String, PackageSetting> mDisabledSysPackages =
+>>>>>>> upstream/master
         new HashMap<String, PackageSetting>();
 
     // These are the last platform API version we were using for
@@ -111,8 +133,11 @@ final class Settings {
     int mInternalSdkPlatform;
     int mExternalSdkPlatform;
 
+<<<<<<< HEAD
     Boolean mReadExternalStorageEnforced;
 
+=======
+>>>>>>> upstream/master
     /** Device identity for the purpose of package verification. */
     private VerifierDeviceIdentity mVerifierDeviceIdentity;
 
@@ -169,6 +194,7 @@ final class Settings {
      */
     private final ArrayList<PendingPackage> mPendingPackages = new ArrayList<PendingPackage>();
 
+<<<<<<< HEAD
     private final File mSystemDir;
     Settings() {
         this(Environment.getDataDirectory());
@@ -187,6 +213,21 @@ final class Settings {
         // Deprecated: Needed for migration
         mStoppedPackagesFilename = new File(mSystemDir, "packages-stopped.xml");
         mBackupStoppedPackagesFilename = new File(mSystemDir, "packages-stopped-backup.xml");
+=======
+    Settings() {
+        File dataDir = Environment.getDataDirectory();
+        File systemDir = new File(dataDir, "system");
+        systemDir.mkdirs();
+        FileUtils.setPermissions(systemDir.toString(),
+                FileUtils.S_IRWXU|FileUtils.S_IRWXG
+                |FileUtils.S_IROTH|FileUtils.S_IXOTH,
+                -1, -1);
+        mSettingsFilename = new File(systemDir, "packages.xml");
+        mBackupSettingsFilename = new File(systemDir, "packages-backup.xml");
+        mPackageListFilename = new File(systemDir, "packages.list");
+        mStoppedPackagesFilename = new File(systemDir, "packages-stopped.xml");
+        mBackupStoppedPackagesFilename = new File(systemDir, "packages-stopped-backup.xml");
+>>>>>>> upstream/master
     }
 
     PackageSetting getPackageLPw(PackageParser.Package pkg, PackageSetting origPackage,
@@ -227,7 +268,15 @@ final class Settings {
                 return null;
             }
             s = new SharedUserSetting(name, pkgFlags);
+<<<<<<< HEAD
             s.userId = newUserIdLPw(s);
+=======
+            if (PackageManagerService.MULTIPLE_APPLICATION_UIDS) {
+                s.userId = newUserIdLPw(s);
+            } else {
+                s.userId = PackageManagerService.FIRST_APPLICATION_UID;
+            }
+>>>>>>> upstream/master
             Log.i(PackageManagerService.TAG, "New shared user " + name + ": id=" + s.userId);
             // < 0 means we couldn't assign a userid; fall out and return
             // s, which is currently null
@@ -275,11 +324,16 @@ final class Settings {
             p.pkg.applicationInfo.flags &= ~ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
         }
         PackageSetting ret = addPackageLPw(name, p.realName, p.codePath, p.resourcePath,
+<<<<<<< HEAD
                 p.nativeLibraryPathString, p.appId, p.versionCode, p.pkgFlags);
+=======
+                p.nativeLibraryPathString, p.userId, p.versionCode, p.pkgFlags);
+>>>>>>> upstream/master
         mDisabledSysPackages.remove(name);
         return ret;
     }
 
+<<<<<<< HEAD
     boolean isDisabledSystemPackageLPr(String name) {
         return mDisabledSysPackages.containsKey(name);
     }
@@ -288,11 +342,17 @@ final class Settings {
         mDisabledSysPackages.remove(name);
     }
 
+=======
+>>>>>>> upstream/master
     PackageSetting addPackageLPw(String name, String realName, File codePath, File resourcePath,
             String nativeLibraryPathString, int uid, int vc, int pkgFlags) {
         PackageSetting p = mPackages.get(name);
         if (p != null) {
+<<<<<<< HEAD
             if (p.appId == uid) {
+=======
+            if (p.userId == uid) {
+>>>>>>> upstream/master
                 return p;
             }
             PackageManagerService.reportSettingsProblem(Log.ERROR,
@@ -301,7 +361,11 @@ final class Settings {
         }
         p = new PackageSetting(name, realName, codePath, resourcePath, nativeLibraryPathString,
                 vc, pkgFlags);
+<<<<<<< HEAD
         p.appId = uid;
+=======
+        p.userId = uid;
+>>>>>>> upstream/master
         if (addUserIdLPw(uid, p, name)) {
             mPackages.put(name, p);
             return p;
@@ -352,7 +416,11 @@ final class Settings {
             }
         }
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     private PackageSetting getPackageLPw(String name, PackageSetting origPackage,
             String realName, SharedUserSetting sharedUser, File codePath, File resourcePath,
             String nativeLibraryPathString, int vc, int pkgFlags, boolean create, boolean add) {
@@ -364,6 +432,7 @@ final class Settings {
                     // This is an updated system app with versions in both system
                     // and data partition. Just let the most recent version
                     // take precedence.
+<<<<<<< HEAD
                     Slog.w(PackageManagerService.TAG, "Trying to update system app code path from "
                             + p.codePathString + " to " + codePath.toString());
                 } else {
@@ -371,6 +440,15 @@ final class Settings {
                     // let's log a message about it.
                     Slog.i(PackageManagerService.TAG, "Package " + name + " codePath changed from "
                             + p.codePath + " to " + codePath + "; Retaining data and using new");
+=======
+                    Slog.w(PackageManagerService.TAG, "Trying to update system app code path from " +
+                            p.codePathString + " to " + codePath.toString());
+                } else {
+                    // Just a change in the code path is not an issue, but
+                    // let's log a message about it.
+                    Slog.i(PackageManagerService.TAG, "Package " + name + " codePath changed from " + p.codePath
+                            + " to " + codePath + "; Retaining data and using new");
+>>>>>>> upstream/master
                     /*
                      * Since we've changed paths, we need to prefer the new
                      * native library path over the one stored in the
@@ -407,15 +485,24 @@ final class Settings {
                 // We are consuming the data from an existing package.
                 p = new PackageSetting(origPackage.name, name, codePath, resourcePath,
                         nativeLibraryPathString, vc, pkgFlags);
+<<<<<<< HEAD
                 if (PackageManagerService.DEBUG_UPGRADE) Log.v(PackageManagerService.TAG, "Package "
                         + name + " is adopting original package " + origPackage.name);
+=======
+                if (PackageManagerService.DEBUG_UPGRADE) Log.v(PackageManagerService.TAG, "Package " + name
+                        + " is adopting original package " + origPackage.name);
+>>>>>>> upstream/master
                 // Note that we will retain the new package's signature so
                 // that we can keep its data.
                 PackageSignatures s = p.signatures;
                 p.copyFrom(origPackage);
                 p.signatures = s;
                 p.sharedUser = origPackage.sharedUser;
+<<<<<<< HEAD
                 p.appId = origPackage.appId;
+=======
+                p.userId = origPackage.userId;
+>>>>>>> upstream/master
                 p.origPackage = origPackage;
                 mRenamedPackages.put(name, origPackage.name);
                 name = origPackage.name;
@@ -433,6 +520,7 @@ final class Settings {
                         e.fillInStackTrace();
                         Slog.i(PackageManagerService.TAG, "Stopping package " + name, e);
                     }
+<<<<<<< HEAD
                     List<UserInfo> users = getAllUsers();
                     if (users != null) {
                         for (UserInfo user : users) {
@@ -445,6 +533,14 @@ final class Settings {
                 if (sharedUser != null) {
                     p.appId = sharedUser.userId;
                 } else {
+=======
+                    p.stopped = true;
+                    p.notLaunched = true;
+                }
+                if (sharedUser != null) {
+                    p.userId = sharedUser.userId;
+                } else if (PackageManagerService.MULTIPLE_APPLICATION_UIDS) {
+>>>>>>> upstream/master
                     // Clone the setting here for disabled system packages
                     PackageSetting dis = mDisabledSysPackages.get(name);
                     if (dis != null) {
@@ -455,6 +551,7 @@ final class Settings {
                         if (dis.signatures.mSignatures != null) {
                             p.signatures.mSignatures = dis.signatures.mSignatures.clone();
                         }
+<<<<<<< HEAD
                         p.appId = dis.appId;
                         // Clone permissions
                         p.grantedPermissions = new HashSet<String>(dis.grantedPermissions);
@@ -480,6 +577,25 @@ final class Settings {
                 }
             }
             if (p.appId < 0) {
+=======
+                        p.userId = dis.userId;
+                        // Clone permissions
+                        p.grantedPermissions = new HashSet<String>(dis.grantedPermissions);
+                        // Clone component info
+                        p.disabledComponents = new HashSet<String>(dis.disabledComponents);
+                        p.enabledComponents = new HashSet<String>(dis.enabledComponents);
+                        // Add new setting to list of user ids
+                        addUserIdLPw(p.userId, p, name);
+                    } else {
+                        // Assign new user id
+                        p.userId = newUserIdLPw(p);
+                    }
+                } else {
+                    p.userId = PackageManagerService.FIRST_APPLICATION_UID;
+                }
+            }
+            if (p.userId < 0) {
+>>>>>>> upstream/master
                 PackageManagerService.reportSettingsProblem(Log.WARN,
                         "Package " + name + " could not be assigned a valid uid");
                 return null;
@@ -495,8 +611,13 @@ final class Settings {
 
     void insertPackageSettingLPw(PackageSetting p, PackageParser.Package pkg) {
         p.pkg = pkg;
+<<<<<<< HEAD
         // pkg.mSetEnabled = p.getEnabled(userId);
         // pkg.mSetStopped = p.getStopped(userId);
+=======
+        pkg.mSetEnabled = p.enabled;
+        pkg.mSetStopped = p.stopped;
+>>>>>>> upstream/master
         final String codePath = pkg.applicationInfo.sourceDir;
         final String resourcePath = pkg.applicationInfo.publicSourceDir;
         // Update code path if needed
@@ -520,6 +641,7 @@ final class Settings {
             p.nativeLibraryPathString = nativeLibraryPath;
         }
         // Update version code if needed
+<<<<<<< HEAD
         if (pkg.mVersionCode != p.versionCode) {
             p.versionCode = pkg.mVersionCode;
         }
@@ -532,6 +654,20 @@ final class Settings {
         if (p.sharedUser != null && p.sharedUser.signatures.mSignatures == null) {
             p.sharedUser.signatures.assignSignatures(pkg.mSignatures);
         }
+=======
+         if (pkg.mVersionCode != p.versionCode) {
+            p.versionCode = pkg.mVersionCode;
+        }
+         // Update signatures if needed.
+         if (p.signatures.mSignatures == null) {
+             p.signatures.assignSignatures(pkg.mSignatures);
+         }
+         // If this app defines a shared user id initialize
+         // the shared user signatures as well.
+         if (p.sharedUser != null && p.sharedUser.signatures.mSignatures == null) {
+             p.sharedUser.signatures.assignSignatures(pkg.mSignatures);
+         }
+>>>>>>> upstream/master
         addPackageSettingLPw(p, pkg.packageName, p.sharedUser);
     }
 
@@ -547,9 +683,15 @@ final class Settings {
                         + p.sharedUser + " but is now " + sharedUser
                         + "; I am not changing its files so it will probably fail!");
                 p.sharedUser.packages.remove(p);
+<<<<<<< HEAD
             } else if (p.appId != sharedUser.userId) {
                 PackageManagerService.reportSettingsProblem(Log.ERROR,
                     "Package " + p.name + " was user id " + p.appId
+=======
+            } else if (p.userId != sharedUser.userId) {
+                PackageManagerService.reportSettingsProblem(Log.ERROR,
+                    "Package " + p.name + " was user id " + p.userId
+>>>>>>> upstream/master
                     + " but is now user " + sharedUser
                     + " with id " + sharedUser.userId
                     + "; I am not changing its files so it will probably fail!");
@@ -557,7 +699,11 @@ final class Settings {
 
             sharedUser.packages.add(p);
             p.sharedUser = sharedUser;
+<<<<<<< HEAD
             p.appId = sharedUser.userId;
+=======
+            p.userId = sharedUser.userId;
+>>>>>>> upstream/master
         }
     }
 
@@ -622,8 +768,13 @@ final class Settings {
                     return p.sharedUser.userId;
                 }
             } else {
+<<<<<<< HEAD
                 removeUserIdLPw(p.appId);
                 return p.appId;
+=======
+                removeUserIdLPw(p.userId);
+                return p.userId;
+>>>>>>> upstream/master
             }
         }
         return -1;
@@ -636,13 +787,18 @@ final class Settings {
                 p.sharedUser.packages.remove(p);
                 p.sharedUser.packages.add(newp);
             } else {
+<<<<<<< HEAD
                 replaceUserIdLPw(p.appId, newp);
+=======
+                replaceUserIdLPw(p.userId, newp);
+>>>>>>> upstream/master
             }
         }
         mPackages.put(name, newp);
     }
 
     private boolean addUserIdLPw(int uid, Object obj, Object name) {
+<<<<<<< HEAD
         if (uid > Process.LAST_APPLICATION_UID) {
             return false;
         }
@@ -650,6 +806,15 @@ final class Settings {
         if (uid >= Process.FIRST_APPLICATION_UID) {
             int N = mUserIds.size();
             final int index = uid - Process.FIRST_APPLICATION_UID;
+=======
+        if (uid >= PackageManagerService.FIRST_APPLICATION_UID + PackageManagerService.MAX_APPLICATION_UIDS) {
+            return false;
+        }
+
+        if (uid >= PackageManagerService.FIRST_APPLICATION_UID) {
+            int N = mUserIds.size();
+            final int index = uid - PackageManagerService.FIRST_APPLICATION_UID;
+>>>>>>> upstream/master
             while (index >= N) {
                 mUserIds.add(null);
                 N++;
@@ -674,9 +839,15 @@ final class Settings {
     }
 
     public Object getUserIdLPr(int uid) {
+<<<<<<< HEAD
         if (uid >= Process.FIRST_APPLICATION_UID) {
             final int N = mUserIds.size();
             final int index = uid - Process.FIRST_APPLICATION_UID;
+=======
+        if (uid >= PackageManagerService.FIRST_APPLICATION_UID) {
+            final int N = mUserIds.size();
+            final int index = uid - PackageManagerService.FIRST_APPLICATION_UID;
+>>>>>>> upstream/master
             return index < N ? mUserIds.get(index) : null;
         } else {
             return mOtherUserIds.get(uid);
@@ -684,9 +855,15 @@ final class Settings {
     }
 
     private void removeUserIdLPw(int uid) {
+<<<<<<< HEAD
         if (uid >= Process.FIRST_APPLICATION_UID) {
             final int N = mUserIds.size();
             final int index = uid - Process.FIRST_APPLICATION_UID;
+=======
+        if (uid >= PackageManagerService.FIRST_APPLICATION_UID) {
+            final int N = mUserIds.size();
+            final int index = uid - PackageManagerService.FIRST_APPLICATION_UID;
+>>>>>>> upstream/master
             if (index < N) mUserIds.set(index, null);
         } else {
             mOtherUserIds.remove(uid);
@@ -694,15 +871,22 @@ final class Settings {
     }
 
     private void replaceUserIdLPw(int uid, Object obj) {
+<<<<<<< HEAD
         if (uid >= Process.FIRST_APPLICATION_UID) {
             final int N = mUserIds.size();
             final int index = uid - Process.FIRST_APPLICATION_UID;
+=======
+        if (uid >= PackageManagerService.FIRST_APPLICATION_UID) {
+            final int N = mUserIds.size();
+            final int index = uid - PackageManagerService.FIRST_APPLICATION_UID;
+>>>>>>> upstream/master
             if (index < N) mUserIds.set(index, obj);
         } else {
             mOtherUserIds.put(uid, obj);
         }
     }
 
+<<<<<<< HEAD
     private File getUserPackagesStateFile(int userId) {
         return new File(mSystemDir,
                 "users/" + userId + "/package-restrictions.xml");
@@ -893,31 +1077,55 @@ final class Settings {
         File backupFile = getUserPackagesStateBackupFile(userId);
         new File(userPackagesStateFile.getParent()).mkdirs();
         if (userPackagesStateFile.exists()) {
+=======
+    void writeStoppedLPr() {
+        // Keep the old stopped packages around until we know the new ones have
+        // been successfully written.
+        if (mStoppedPackagesFilename.exists()) {
+>>>>>>> upstream/master
             // Presence of backup settings file indicates that we failed
             // to persist packages earlier. So preserve the older
             // backup for future reference since the current packages
             // might have been corrupted.
+<<<<<<< HEAD
             if (!backupFile.exists()) {
                 if (!userPackagesStateFile.renameTo(backupFile)) {
                     Log.wtf(PackageManagerService.TAG, "Unable to backup user packages state file, "
+=======
+            if (!mBackupStoppedPackagesFilename.exists()) {
+                if (!mStoppedPackagesFilename.renameTo(mBackupStoppedPackagesFilename)) {
+                    Log.wtf(PackageManagerService.TAG, "Unable to backup package manager stopped packages, "
+>>>>>>> upstream/master
                             + "current changes will be lost at reboot");
                     return;
                 }
             } else {
+<<<<<<< HEAD
                 userPackagesStateFile.delete();
+=======
+                mStoppedPackagesFilename.delete();
+>>>>>>> upstream/master
                 Slog.w(PackageManagerService.TAG, "Preserving older stopped packages backup");
             }
         }
 
         try {
+<<<<<<< HEAD
             final FileOutputStream fstr = new FileOutputStream(userPackagesStateFile);
             final BufferedOutputStream str = new BufferedOutputStream(fstr);
 
+=======
+            final FileOutputStream fstr = new FileOutputStream(mStoppedPackagesFilename);
+            final BufferedOutputStream str = new BufferedOutputStream(fstr);
+
+            //XmlSerializer serializer = XmlUtils.serializerInstance();
+>>>>>>> upstream/master
             final XmlSerializer serializer = new FastXmlSerializer();
             serializer.setOutput(str, "utf-8");
             serializer.startDocument(null, true);
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 
+<<<<<<< HEAD
             serializer.startTag(null, TAG_PACKAGE_RESTRICTIONS);
 
             for (final PackageSetting pkg : mPackages.values()) {
@@ -966,6 +1174,22 @@ final class Settings {
             }
 
             serializer.endTag(null, TAG_PACKAGE_RESTRICTIONS);
+=======
+            serializer.startTag(null, "stopped-packages");
+
+            for (final PackageSetting pkg : mPackages.values()) {
+                if (pkg.stopped) {
+                    serializer.startTag(null, "pkg");
+                    serializer.attribute(null, "name", pkg.name);
+                    if (pkg.notLaunched) {
+                        serializer.attribute(null, "nl", "1");
+                    }
+                    serializer.endTag(null, "pkg");
+                }
+            }
+
+            serializer.endTag(null, "stopped-packages");
+>>>>>>> upstream/master
 
             serializer.endDocument();
 
@@ -975,39 +1199,64 @@ final class Settings {
 
             // New settings successfully written, old ones are no longer
             // needed.
+<<<<<<< HEAD
             backupFile.delete();
             FileUtils.setPermissions(userPackagesStateFile.toString(),
                     FileUtils.S_IRUSR|FileUtils.S_IWUSR
                     |FileUtils.S_IRGRP|FileUtils.S_IWGRP,
+=======
+            mBackupStoppedPackagesFilename.delete();
+            FileUtils.setPermissions(mStoppedPackagesFilename.toString(),
+                    FileUtils.S_IRUSR|FileUtils.S_IWUSR
+                    |FileUtils.S_IRGRP|FileUtils.S_IWGRP
+                    |FileUtils.S_IROTH,
+>>>>>>> upstream/master
                     -1, -1);
 
             // Done, all is good!
             return;
         } catch(java.io.IOException e) {
+<<<<<<< HEAD
             Log.wtf(PackageManagerService.TAG,
                     "Unable to write package manager user packages state, "
+=======
+            Log.wtf(PackageManagerService.TAG, "Unable to write package manager stopped packages, "
+>>>>>>> upstream/master
                     + " current changes will be lost at reboot", e);
         }
 
         // Clean up partially written files
+<<<<<<< HEAD
         if (userPackagesStateFile.exists()) {
             if (!userPackagesStateFile.delete()) {
                 Log.i(PackageManagerService.TAG, "Failed to clean up mangled file: "
                         + mStoppedPackagesFilename);
+=======
+        if (mStoppedPackagesFilename.exists()) {
+            if (!mStoppedPackagesFilename.delete()) {
+                Log.i(PackageManagerService.TAG, "Failed to clean up mangled file: " + mStoppedPackagesFilename);
+>>>>>>> upstream/master
             }
         }
     }
 
     // Note: assumed "stopped" field is already cleared in all packages.
+<<<<<<< HEAD
     // Legacy reader, used to read in the old file format after an upgrade. Not used after that.
+=======
+>>>>>>> upstream/master
     void readStoppedLPw() {
         FileInputStream str = null;
         if (mBackupStoppedPackagesFilename.exists()) {
             try {
                 str = new FileInputStream(mBackupStoppedPackagesFilename);
                 mReadMessages.append("Reading from backup stopped packages file\n");
+<<<<<<< HEAD
                 PackageManagerService.reportSettingsProblem(Log.INFO,
                         "Need to read from backup stopped packages file");
+=======
+                PackageManagerService.reportSettingsProblem(Log.INFO, "Need to read from backup stopped packages file");
+>>>>>>> upstream/master
                 if (mSettingsFilename.exists()) {
                     // If both the backup and normal file exist, we
                     // ignore the normal one since it might have been
@@ -1025,14 +1274,24 @@ final class Settings {
             if (str == null) {
                 if (!mStoppedPackagesFilename.exists()) {
                     mReadMessages.append("No stopped packages file found\n");
+<<<<<<< HEAD
                     PackageManagerService.reportSettingsProblem(Log.INFO,
                             "No stopped packages file file; assuming all started");
+=======
+                    PackageManagerService.reportSettingsProblem(Log.INFO, "No stopped packages file file; "
+                            + "assuming all started");
+>>>>>>> upstream/master
                     // At first boot, make sure no packages are stopped.
                     // We usually want to have third party apps initialize
                     // in the stopped state, but not at first boot.
                     for (PackageSetting pkg : mPackages.values()) {
+<<<<<<< HEAD
                         pkg.setStopped(false, 0);
                         pkg.setNotLaunched(false, 0);
+=======
+                        pkg.stopped = false;
+                        pkg.notLaunched = false;
+>>>>>>> upstream/master
                     }
                     return;
                 }
@@ -1064,6 +1323,7 @@ final class Settings {
                 }
 
                 String tagName = parser.getName();
+<<<<<<< HEAD
                 if (tagName.equals(TAG_PACKAGE)) {
                     String name = parser.getAttributeValue(null, ATTR_NAME);
                     PackageSetting ps = mPackages.get(name);
@@ -1075,6 +1335,18 @@ final class Settings {
                     } else {
                         Slog.w(PackageManagerService.TAG,
                                 "No package known for stopped package: " + name);
+=======
+                if (tagName.equals("pkg")) {
+                    String name = parser.getAttributeValue(null, "name");
+                    PackageSetting ps = mPackages.get(name);
+                    if (ps != null) {
+                        ps.stopped = true;
+                        if ("1".equals(parser.getAttributeValue(null, "nl"))) {
+                            ps.notLaunched = true;
+                        }
+                    } else {
+                        Slog.w(PackageManagerService.TAG, "No package known for stopped package: " + name);
+>>>>>>> upstream/master
                     }
                     XmlUtils.skipCurrentTag(parser);
                 } else {
@@ -1086,6 +1358,7 @@ final class Settings {
 
             str.close();
 
+<<<<<<< HEAD
         } catch (XmlPullParserException e) {
             mReadMessages.append("Error reading: " + e.toString());
             PackageManagerService.reportSettingsProblem(Log.ERROR,
@@ -1093,6 +1366,14 @@ final class Settings {
             Log.wtf(PackageManagerService.TAG, "Error reading package manager stopped packages", e);
 
         } catch (java.io.IOException e) {
+=======
+        } catch(XmlPullParserException e) {
+            mReadMessages.append("Error reading: " + e.toString());
+            PackageManagerService.reportSettingsProblem(Log.ERROR, "Error reading stopped packages: " + e);
+            Log.wtf(PackageManagerService.TAG, "Error reading package manager stopped packages", e);
+
+        } catch(java.io.IOException e) {
+>>>>>>> upstream/master
             mReadMessages.append("Error reading: " + e.toString());
             PackageManagerService.reportSettingsProblem(Log.ERROR, "Error reading settings: " + e);
             Log.wtf(PackageManagerService.TAG, "Error reading package manager stopped packages", e);
@@ -1140,13 +1421,18 @@ final class Settings {
             serializer.attribute(null, "internal", Integer.toString(mInternalSdkPlatform));
             serializer.attribute(null, "external", Integer.toString(mExternalSdkPlatform));
             serializer.endTag(null, "last-platform-version");
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> upstream/master
             if (mVerifierDeviceIdentity != null) {
                 serializer.startTag(null, "verifier");
                 serializer.attribute(null, "device", mVerifierDeviceIdentity.toString());
                 serializer.endTag(null, "verifier");
             }
 
+<<<<<<< HEAD
             if (mReadExternalStorageEnforced != null) {
                 serializer.startTag(null, TAG_READ_EXTERNAL_STORAGE);
                 serializer.attribute(
@@ -1154,6 +1440,8 @@ final class Settings {
                 serializer.endTag(null, TAG_READ_EXTERNAL_STORAGE);
             }
 
+=======
+>>>>>>> upstream/master
             serializer.startTag(null, "permission-trees");
             for (BasePermission bp : mPermissionTrees.values()) {
                 writePermissionLPr(serializer, bp);
@@ -1174,19 +1462,39 @@ final class Settings {
                 writeDisabledSysPackageLPr(serializer, pkg);
             }
 
+<<<<<<< HEAD
             writePreferredActivitiesLPr(serializer);
 
             for (final SharedUserSetting usr : mSharedUsers.values()) {
                 serializer.startTag(null, "shared-user");
                 serializer.attribute(null, ATTR_NAME, usr.name);
+=======
+            serializer.startTag(null, "preferred-activities");
+            for (final PreferredActivity pa : mPreferredActivities.filterSet()) {
+                serializer.startTag(null, "item");
+                pa.writeToXml(serializer);
+                serializer.endTag(null, "item");
+            }
+            serializer.endTag(null, "preferred-activities");
+
+            for (final SharedUserSetting usr : mSharedUsers.values()) {
+                serializer.startTag(null, "shared-user");
+                serializer.attribute(null, "name", usr.name);
+>>>>>>> upstream/master
                 serializer.attribute(null, "userId",
                         Integer.toString(usr.userId));
                 usr.signatures.writeXml(serializer, "sigs", mPastSignatures);
                 serializer.startTag(null, "perms");
                 for (String name : usr.grantedPermissions) {
+<<<<<<< HEAD
                     serializer.startTag(null, TAG_ITEM);
                     serializer.attribute(null, ATTR_NAME, name);
                     serializer.endTag(null, TAG_ITEM);
+=======
+                    serializer.startTag(null, "item");
+                    serializer.attribute(null, "name", name);
+                    serializer.endTag(null, "item");
+>>>>>>> upstream/master
                 }
                 serializer.endTag(null, "perms");
                 serializer.endTag(null, "shared-user");
@@ -1195,13 +1503,21 @@ final class Settings {
             if (mPackagesToBeCleaned.size() > 0) {
                 for (int i=0; i<mPackagesToBeCleaned.size(); i++) {
                     serializer.startTag(null, "cleaning-package");
+<<<<<<< HEAD
                     serializer.attribute(null, ATTR_NAME, mPackagesToBeCleaned.get(i));
+=======
+                    serializer.attribute(null, "name", mPackagesToBeCleaned.get(i));
+>>>>>>> upstream/master
                     serializer.endTag(null, "cleaning-package");
                 }
             }
             
             if (mRenamedPackages.size() > 0) {
+<<<<<<< HEAD
                 for (Map.Entry<String, String> e : mRenamedPackages.entrySet()) {
+=======
+                for (HashMap.Entry<String, String> e : mRenamedPackages.entrySet()) {
+>>>>>>> upstream/master
                     serializer.startTag(null, "renamed-package");
                     serializer.attribute(null, "new", e.getKey());
                     serializer.attribute(null, "old", e.getValue());
@@ -1222,7 +1538,12 @@ final class Settings {
             mBackupSettingsFilename.delete();
             FileUtils.setPermissions(mSettingsFilename.toString(),
                     FileUtils.S_IRUSR|FileUtils.S_IWUSR
+<<<<<<< HEAD
                     |FileUtils.S_IRGRP|FileUtils.S_IWGRP,
+=======
+                    |FileUtils.S_IRGRP|FileUtils.S_IWGRP
+                    |FileUtils.S_IROTH,
+>>>>>>> upstream/master
                     -1, -1);
 
             // Write package list file now, use a JournaledFile.
@@ -1277,10 +1598,19 @@ final class Settings {
 
             FileUtils.setPermissions(mPackageListFilename.toString(),
                     FileUtils.S_IRUSR|FileUtils.S_IWUSR
+<<<<<<< HEAD
                     |FileUtils.S_IRGRP|FileUtils.S_IWGRP,
                     -1, -1);
 
             writeAllUsersPackageRestrictionsLPr();
+=======
+                    |FileUtils.S_IRGRP|FileUtils.S_IWGRP
+                    |FileUtils.S_IROTH,
+                    -1, -1);
+
+            writeStoppedLPr();
+
+>>>>>>> upstream/master
             return;
 
         } catch(XmlPullParserException e) {
@@ -1293,13 +1623,18 @@ final class Settings {
         // Clean up partially written files
         if (mSettingsFilename.exists()) {
             if (!mSettingsFilename.delete()) {
+<<<<<<< HEAD
                 Log.wtf(PackageManagerService.TAG, "Failed to clean up mangled file: "
                         + mSettingsFilename);
+=======
+                Log.wtf(PackageManagerService.TAG, "Failed to clean up mangled file: " + mSettingsFilename);
+>>>>>>> upstream/master
             }
         }
         //Debug.stopMethodTracing();
     }
 
+<<<<<<< HEAD
     void writePreferredActivitiesLPr(XmlSerializer serializer)
             throws IllegalArgumentException, IllegalStateException, IOException {
         serializer.startTag(null, "preferred-activities");
@@ -1315,6 +1650,12 @@ final class Settings {
             throws java.io.IOException {
         serializer.startTag(null, "updated-package");
         serializer.attribute(null, ATTR_NAME, pkg.name);
+=======
+    void writeDisabledSysPackageLPr(XmlSerializer serializer, final PackageSetting pkg)
+            throws java.io.IOException {
+        serializer.startTag(null, "updated-package");
+        serializer.attribute(null, "name", pkg.name);
+>>>>>>> upstream/master
         if (pkg.realName != null) {
             serializer.attribute(null, "realName", pkg.realName);
         }
@@ -1330,9 +1671,15 @@ final class Settings {
             serializer.attribute(null, "nativeLibraryPath", pkg.nativeLibraryPathString);
         }
         if (pkg.sharedUser == null) {
+<<<<<<< HEAD
             serializer.attribute(null, "userId", Integer.toString(pkg.appId));
         } else {
             serializer.attribute(null, "sharedUserId", Integer.toString(pkg.appId));
+=======
+            serializer.attribute(null, "userId", Integer.toString(pkg.userId));
+        } else {
+            serializer.attribute(null, "sharedUserId", Integer.toString(pkg.userId));
+>>>>>>> upstream/master
         }
         serializer.startTag(null, "perms");
         if (pkg.sharedUser == null) {
@@ -1347,9 +1694,15 @@ final class Settings {
                     // this wont
                     // match the semantics of grantedPermissions. So write all
                     // permissions.
+<<<<<<< HEAD
                     serializer.startTag(null, TAG_ITEM);
                     serializer.attribute(null, ATTR_NAME, name);
                     serializer.endTag(null, TAG_ITEM);
+=======
+                    serializer.startTag(null, "item");
+                    serializer.attribute(null, "name", name);
+                    serializer.endTag(null, "item");
+>>>>>>> upstream/master
                 }
             }
         }
@@ -1360,7 +1713,11 @@ final class Settings {
     void writePackageLPr(XmlSerializer serializer, final PackageSetting pkg)
             throws java.io.IOException {
         serializer.startTag(null, "package");
+<<<<<<< HEAD
         serializer.attribute(null, ATTR_NAME, pkg.name);
+=======
+        serializer.attribute(null, "name", pkg.name);
+>>>>>>> upstream/master
         if (pkg.realName != null) {
             serializer.attribute(null, "realName", pkg.realName);
         }
@@ -1377,13 +1734,25 @@ final class Settings {
         serializer.attribute(null, "ut", Long.toHexString(pkg.lastUpdateTime));
         serializer.attribute(null, "version", String.valueOf(pkg.versionCode));
         if (pkg.sharedUser == null) {
+<<<<<<< HEAD
             serializer.attribute(null, "userId", Integer.toString(pkg.appId));
         } else {
             serializer.attribute(null, "sharedUserId", Integer.toString(pkg.appId));
+=======
+            serializer.attribute(null, "userId", Integer.toString(pkg.userId));
+        } else {
+            serializer.attribute(null, "sharedUserId", Integer.toString(pkg.userId));
+>>>>>>> upstream/master
         }
         if (pkg.uidError) {
             serializer.attribute(null, "uidError", "true");
         }
+<<<<<<< HEAD
+=======
+        if (pkg.enabled != COMPONENT_ENABLED_STATE_DEFAULT) {
+            serializer.attribute(null, "enabled", Integer.toString(pkg.enabled));
+        }
+>>>>>>> upstream/master
         if (pkg.installStatus == PackageSettingBase.PKG_INSTALL_INCOMPLETE) {
             serializer.attribute(null, "installStatus", "false");
         }
@@ -1399,13 +1768,40 @@ final class Settings {
                 // empty permissions list so permissionsFixed will
                 // be set.
                 for (final String name : pkg.grantedPermissions) {
+<<<<<<< HEAD
                     serializer.startTag(null, TAG_ITEM);
                     serializer.attribute(null, ATTR_NAME, name);
                     serializer.endTag(null, TAG_ITEM);
+=======
+                    serializer.startTag(null, "item");
+                    serializer.attribute(null, "name", name);
+                    serializer.endTag(null, "item");
+>>>>>>> upstream/master
                 }
             }
             serializer.endTag(null, "perms");
         }
+<<<<<<< HEAD
+=======
+        if (pkg.disabledComponents.size() > 0) {
+            serializer.startTag(null, "disabled-components");
+            for (final String name : pkg.disabledComponents) {
+                serializer.startTag(null, "item");
+                serializer.attribute(null, "name", name);
+                serializer.endTag(null, "item");
+            }
+            serializer.endTag(null, "disabled-components");
+        }
+        if (pkg.enabledComponents.size() > 0) {
+            serializer.startTag(null, "enabled-components");
+            for (final String name : pkg.enabledComponents) {
+                serializer.startTag(null, "item");
+                serializer.attribute(null, "name", name);
+                serializer.endTag(null, "item");
+            }
+            serializer.endTag(null, "enabled-components");
+        }
+>>>>>>> upstream/master
 
         serializer.endTag(null, "package");
     }
@@ -1413,8 +1809,13 @@ final class Settings {
     void writePermissionLPr(XmlSerializer serializer, BasePermission bp)
             throws XmlPullParserException, java.io.IOException {
         if (bp.type != BasePermission.TYPE_BUILTIN && bp.sourcePackage != null) {
+<<<<<<< HEAD
             serializer.startTag(null, TAG_ITEM);
             serializer.attribute(null, ATTR_NAME, bp.name);
+=======
+            serializer.startTag(null, "item");
+            serializer.attribute(null, "name", bp.name);
+>>>>>>> upstream/master
             serializer.attribute(null, "package", bp.sourcePackage);
             if (bp.protectionLevel != PermissionInfo.PROTECTION_NORMAL) {
                 serializer.attribute(null, "protection", Integer.toString(bp.protectionLevel));
@@ -1434,7 +1835,11 @@ final class Settings {
                     }
                 }
             }
+<<<<<<< HEAD
             serializer.endTag(null, TAG_ITEM);
+=======
+            serializer.endTag(null, "item");
+>>>>>>> upstream/master
         }
     }
 
@@ -1452,7 +1857,11 @@ final class Settings {
         return ret;
     }
 
+<<<<<<< HEAD
     boolean readLPw(List<UserInfo> users) {
+=======
+    boolean readLPw() {
+>>>>>>> upstream/master
         FileInputStream str = null;
         if (mBackupSettingsFilename.exists()) {
             try {
@@ -1482,7 +1891,10 @@ final class Settings {
                     mReadMessages.append("No settings file found\n");
                     PackageManagerService.reportSettingsProblem(Log.INFO,
                             "No settings file; creating initial state");
+<<<<<<< HEAD
                     readDefaultPreferredAppsLPw();
+=======
+>>>>>>> upstream/master
                     return false;
                 }
                 str = new FileInputStream(mSettingsFilename);
@@ -1528,7 +1940,11 @@ final class Settings {
                 } else if (tagName.equals("updated-package")) {
                     readDisabledSysPackageLPw(parser);
                 } else if (tagName.equals("cleaning-package")) {
+<<<<<<< HEAD
                     String name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+                    String name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
                     if (name != null) {
                         mPackagesToBeCleaned.add(name);
                     }
@@ -1559,9 +1975,12 @@ final class Settings {
                         Slog.w(PackageManagerService.TAG, "Discard invalid verifier device id: "
                                 + e.getMessage());
                     }
+<<<<<<< HEAD
                 } else if (TAG_READ_EXTERNAL_STORAGE.equals(tagName)) {
                     final String enforcement = parser.getAttributeValue(null, ATTR_ENFORCEMENT);
                     mReadExternalStorageEnforced = "1".equals(enforcement);
+=======
+>>>>>>> upstream/master
                 } else {
                     Slog.w(PackageManagerService.TAG, "Unknown element under <packages>: "
                             + parser.getName());
@@ -1618,12 +2037,17 @@ final class Settings {
         final Iterator<PackageSetting> disabledIt = mDisabledSysPackages.values().iterator();
         while (disabledIt.hasNext()) {
             final PackageSetting disabledPs = disabledIt.next();
+<<<<<<< HEAD
             final Object id = getUserIdLPr(disabledPs.appId);
+=======
+            final Object id = getUserIdLPr(disabledPs.userId);
+>>>>>>> upstream/master
             if (id != null && id instanceof SharedUserSetting) {
                 disabledPs.sharedUser = (SharedUserSetting) id;
             }
         }
 
+<<<<<<< HEAD
         if (mBackupStoppedPackagesFilename.exists()
                 || mStoppedPackagesFilename.exists()) {
             // Read old file
@@ -1641,12 +2065,17 @@ final class Settings {
                 }
             }
         }
+=======
+        readStoppedLPw();
+
+>>>>>>> upstream/master
         mReadMessages.append("Read completed successfully: " + mPackages.size() + " packages, "
                 + mSharedUsers.size() + " shared uids\n");
 
         return true;
     }
 
+<<<<<<< HEAD
     private void readDefaultPreferredAppsLPw() {
         // Read preferred apps from .../etc/preferred-apps directory.
         File preferredDir = new File(Environment.getRootDirectory(), "etc/preferred-apps");
@@ -1706,6 +2135,8 @@ final class Settings {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private int readInt(XmlPullParser parser, String ns, String name, int defValue) {
         String v = parser.getAttributeValue(ns, name);
         try {
@@ -1733,8 +2164,13 @@ final class Settings {
             }
 
             final String tagName = parser.getName();
+<<<<<<< HEAD
             if (tagName.equals(TAG_ITEM)) {
                 final String name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+            if (tagName.equals("item")) {
+                final String name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
                 final String sourcePackage = parser.getAttributeValue(null, "package");
                 final String ptype = parser.getAttributeValue(null, "type");
                 if (name != null && sourcePackage != null) {
@@ -1743,7 +2179,10 @@ final class Settings {
                             dynamic ? BasePermission.TYPE_DYNAMIC : BasePermission.TYPE_NORMAL);
                     bp.protectionLevel = readInt(parser, null, "protection",
                             PermissionInfo.PROTECTION_NORMAL);
+<<<<<<< HEAD
                     bp.protectionLevel = PermissionInfo.fixProtectionLevel(bp.protectionLevel);
+=======
+>>>>>>> upstream/master
                     if (dynamic) {
                         PermissionInfo pi = new PermissionInfo();
                         pi.packageName = sourcePackage.intern();
@@ -1770,7 +2209,11 @@ final class Settings {
 
     private void readDisabledSysPackageLPw(XmlPullParser parser) throws XmlPullParserException,
             IOException {
+<<<<<<< HEAD
         String name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+        String name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
         String realName = parser.getAttributeValue(null, "realName");
         String codePathStr = parser.getAttributeValue(null, "codePath");
         String resourcePathStr = parser.getAttributeValue(null, "resourcePath");
@@ -1823,10 +2266,17 @@ final class Settings {
             }
         }
         String idStr = parser.getAttributeValue(null, "userId");
+<<<<<<< HEAD
         ps.appId = idStr != null ? Integer.parseInt(idStr) : 0;
         if (ps.appId <= 0) {
             String sharedIdStr = parser.getAttributeValue(null, "sharedUserId");
             ps.appId = sharedIdStr != null ? Integer.parseInt(sharedIdStr) : 0;
+=======
+        ps.userId = idStr != null ? Integer.parseInt(idStr) : 0;
+        if (ps.userId <= 0) {
+            String sharedIdStr = parser.getAttributeValue(null, "sharedUserId");
+            ps.userId = sharedIdStr != null ? Integer.parseInt(sharedIdStr) : 0;
+>>>>>>> upstream/master
         }
         int outerDepth = parser.getDepth();
         int type;
@@ -1867,7 +2317,11 @@ final class Settings {
         String version = null;
         int versionCode = 0;
         try {
+<<<<<<< HEAD
             name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+            name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
             realName = parser.getAttributeValue(null, "realName");
             idStr = parser.getAttributeValue(null, "userId");
             uidError = parser.getAttributeValue(null, "uidError");
@@ -1998,6 +2452,7 @@ final class Settings {
             packageSetting.uidError = "true".equals(uidError);
             packageSetting.installerPackageName = installerPackageName;
             packageSetting.nativeLibraryPathString = nativeLibraryPathStr;
+<<<<<<< HEAD
             // Handle legacy string here for single-user mode
             final String enabledStr = parser.getAttributeValue(null, ATTR_ENABLED);
             if (enabledStr != null) {
@@ -2010,6 +2465,19 @@ final class Settings {
                         packageSetting.setEnabled(COMPONENT_ENABLED_STATE_DISABLED, 0);
                     } else if (enabledStr.equalsIgnoreCase("default")) {
                         packageSetting.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT, 0);
+=======
+            final String enabledStr = parser.getAttributeValue(null, "enabled");
+            if (enabledStr != null) {
+                try {
+                    packageSetting.enabled = Integer.parseInt(enabledStr);
+                } catch (NumberFormatException e) {
+                    if (enabledStr.equalsIgnoreCase("true")) {
+                        packageSetting.enabled = COMPONENT_ENABLED_STATE_ENABLED;
+                    } else if (enabledStr.equalsIgnoreCase("false")) {
+                        packageSetting.enabled = COMPONENT_ENABLED_STATE_DISABLED;
+                    } else if (enabledStr.equalsIgnoreCase("default")) {
+                        packageSetting.enabled = COMPONENT_ENABLED_STATE_DEFAULT;
+>>>>>>> upstream/master
                     } else {
                         PackageManagerService.reportSettingsProblem(Log.WARN,
                                 "Error in package manager settings: package " + name
@@ -2018,9 +2486,14 @@ final class Settings {
                     }
                 }
             } else {
+<<<<<<< HEAD
                 packageSetting.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT, 0);
             }
 
+=======
+                packageSetting.enabled = COMPONENT_ENABLED_STATE_DEFAULT;
+            }
+>>>>>>> upstream/master
             final String installStatusStr = parser.getAttributeValue(null, "installStatus");
             if (installStatusStr != null) {
                 if (installStatusStr.equalsIgnoreCase("false")) {
@@ -2039,11 +2512,18 @@ final class Settings {
                 }
 
                 String tagName = parser.getName();
+<<<<<<< HEAD
                 // Legacy 
                 if (tagName.equals(TAG_DISABLED_COMPONENTS)) {
                     readDisabledComponentsLPw(packageSetting, parser, 0);
                 } else if (tagName.equals(TAG_ENABLED_COMPONENTS)) {
                     readEnabledComponentsLPw(packageSetting, parser, 0);
+=======
+                if (tagName.equals("disabled-components")) {
+                    readDisabledComponentsLPw(packageSetting, parser);
+                } else if (tagName.equals("enabled-components")) {
+                    readEnabledComponentsLPw(packageSetting, parser);
+>>>>>>> upstream/master
                 } else if (tagName.equals("sigs")) {
                     packageSetting.signatures.readXml(parser, mPastSignatures);
                 } else if (tagName.equals("perms")) {
@@ -2060,8 +2540,13 @@ final class Settings {
         }
     }
 
+<<<<<<< HEAD
     private void readDisabledComponentsLPw(PackageSettingBase packageSetting, XmlPullParser parser,
             int userId) throws IOException, XmlPullParserException {
+=======
+    private void readDisabledComponentsLPw(PackageSettingBase packageSetting, XmlPullParser parser)
+            throws IOException, XmlPullParserException {
+>>>>>>> upstream/master
         int outerDepth = parser.getDepth();
         int type;
         while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
@@ -2071,10 +2556,17 @@ final class Settings {
             }
 
             String tagName = parser.getName();
+<<<<<<< HEAD
             if (tagName.equals(TAG_ITEM)) {
                 String name = parser.getAttributeValue(null, ATTR_NAME);
                 if (name != null) {
                     packageSetting.addDisabledComponent(name.intern(), userId);
+=======
+            if (tagName.equals("item")) {
+                String name = parser.getAttributeValue(null, "name");
+                if (name != null) {
+                    packageSetting.disabledComponents.add(name.intern());
+>>>>>>> upstream/master
                 } else {
                     PackageManagerService.reportSettingsProblem(Log.WARN,
                             "Error in package manager settings: <disabled-components> has"
@@ -2088,8 +2580,13 @@ final class Settings {
         }
     }
 
+<<<<<<< HEAD
     private void readEnabledComponentsLPw(PackageSettingBase packageSetting, XmlPullParser parser,
             int userId) throws IOException, XmlPullParserException {
+=======
+    private void readEnabledComponentsLPw(PackageSettingBase packageSetting, XmlPullParser parser)
+            throws IOException, XmlPullParserException {
+>>>>>>> upstream/master
         int outerDepth = parser.getDepth();
         int type;
         while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
@@ -2099,10 +2596,17 @@ final class Settings {
             }
 
             String tagName = parser.getName();
+<<<<<<< HEAD
             if (tagName.equals(TAG_ITEM)) {
                 String name = parser.getAttributeValue(null, ATTR_NAME);
                 if (name != null) {
                     packageSetting.addEnabledComponent(name.intern(), userId);
+=======
+            if (tagName.equals("item")) {
+                String name = parser.getAttributeValue(null, "name");
+                if (name != null) {
+                    packageSetting.enabledComponents.add(name.intern());
+>>>>>>> upstream/master
                 } else {
                     PackageManagerService.reportSettingsProblem(Log.WARN,
                             "Error in package manager settings: <enabled-components> has"
@@ -2116,13 +2620,21 @@ final class Settings {
         }
     }
 
+<<<<<<< HEAD
     private void readSharedUserLPw(XmlPullParser parser) throws XmlPullParserException,IOException {
+=======
+    private void readSharedUserLPw(XmlPullParser parser) throws XmlPullParserException, IOException {
+>>>>>>> upstream/master
         String name = null;
         String idStr = null;
         int pkgFlags = 0;
         SharedUserSetting su = null;
         try {
+<<<<<<< HEAD
             name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+            name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
             idStr = parser.getAttributeValue(null, "userId");
             int userId = idStr != null ? Integer.parseInt(idStr) : 0;
             if ("true".equals(parser.getAttributeValue(null, "system"))) {
@@ -2188,8 +2700,13 @@ final class Settings {
             }
 
             String tagName = parser.getName();
+<<<<<<< HEAD
             if (tagName.equals(TAG_ITEM)) {
                 String name = parser.getAttributeValue(null, ATTR_NAME);
+=======
+            if (tagName.equals("item")) {
+                String name = parser.getAttributeValue(null, "name");
+>>>>>>> upstream/master
                 if (name != null) {
                     outPerms.add(name.intern());
                 } else {
@@ -2216,7 +2733,11 @@ final class Settings {
             }
 
             String tagName = parser.getName();
+<<<<<<< HEAD
             if (tagName.equals(TAG_ITEM)) {
+=======
+            if (tagName.equals("item")) {
+>>>>>>> upstream/master
                 PreferredActivity pa = new PreferredActivity(parser);
                 if (pa.mPref.getParseError() == null) {
                     mPreferredActivities.addFilter(pa);
@@ -2234,6 +2755,7 @@ final class Settings {
         }
     }
 
+<<<<<<< HEAD
     void removeUserLPr(int userId) {
         File file = getUserPackagesStateFile(userId);
         file.delete();
@@ -2241,6 +2763,8 @@ final class Settings {
         file.delete();
     }
 
+=======
+>>>>>>> upstream/master
     // Returns -1 if we could not find an available UserId to assign
     private int newUserIdLPw(Object obj) {
         // Let's be stupidly inefficient for now...
@@ -2248,17 +2772,29 @@ final class Settings {
         for (int i = 0; i < N; i++) {
             if (mUserIds.get(i) == null) {
                 mUserIds.set(i, obj);
+<<<<<<< HEAD
                 return Process.FIRST_APPLICATION_UID + i;
+=======
+                return PackageManagerService.FIRST_APPLICATION_UID + i;
+>>>>>>> upstream/master
             }
         }
 
         // None left?
+<<<<<<< HEAD
         if (N > (Process.LAST_APPLICATION_UID-Process.FIRST_APPLICATION_UID)) {
+=======
+        if (N >= PackageManagerService.MAX_APPLICATION_UIDS) {
+>>>>>>> upstream/master
             return -1;
         }
 
         mUserIds.add(obj);
+<<<<<<< HEAD
         return Process.FIRST_APPLICATION_UID + N;
+=======
+        return PackageManagerService.FIRST_APPLICATION_UID + N;
+>>>>>>> upstream/master
     }
 
     public VerifierDeviceIdentity getVerifierDeviceIdentityLPw() {
@@ -2276,6 +2812,7 @@ final class Settings {
         return ps;
     }
 
+<<<<<<< HEAD
     boolean isEnabledLPr(ComponentInfo componentInfo, int flags, int userId) {
         if ((flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
             return true;
@@ -2289,10 +2826,25 @@ final class Settings {
                     + Arrays.toString(packageSettings.getEnabledComponents(userId).toArray()));
             Log.v(PackageManagerService.TAG, "disabledComponents: "
                     + Arrays.toString(packageSettings.getDisabledComponents(userId).toArray()));
+=======
+    boolean isEnabledLPr(ComponentInfo componentInfo, int flags) {
+        if ((flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
+            return true;
+        }
+        final PackageSetting packageSettings = mPackages.get(componentInfo.packageName);
+        if (PackageManagerService.DEBUG_SETTINGS) {
+            Log.v(PackageManagerService.TAG, "isEnabledLock - packageName = " + componentInfo.packageName
+                       + " componentName = " + componentInfo.name);
+            Log.v(PackageManagerService.TAG, "enabledComponents: "
+                       + Arrays.toString(packageSettings.enabledComponents.toArray()));
+            Log.v(PackageManagerService.TAG, "disabledComponents: "
+                       + Arrays.toString(packageSettings.disabledComponents.toArray()));
+>>>>>>> upstream/master
         }
         if (packageSettings == null) {
             return false;
         }
+<<<<<<< HEAD
         final int enabled = packageSettings.getEnabled(userId);
         if (enabled == COMPONENT_ENABLED_STATE_DISABLED
                 || enabled == COMPONENT_ENABLED_STATE_DISABLED_USER
@@ -2304,6 +2856,18 @@ final class Settings {
             return true;
         }
         if (packageSettings.getDisabledComponents(userId).contains(componentInfo.name)) {
+=======
+        if (packageSettings.enabled == COMPONENT_ENABLED_STATE_DISABLED
+                || packageSettings.enabled == COMPONENT_ENABLED_STATE_DISABLED_USER
+                || (packageSettings.pkg != null && !packageSettings.pkg.applicationInfo.enabled
+                        && packageSettings.enabled == COMPONENT_ENABLED_STATE_DEFAULT)) {
+            return false;
+        }
+        if (packageSettings.enabledComponents.contains(componentInfo.name)) {
+            return true;
+        }
+        if (packageSettings.disabledComponents.contains(componentInfo.name)) {
+>>>>>>> upstream/master
             return false;
         }
         return componentInfo.enabled;
@@ -2317,36 +2881,63 @@ final class Settings {
         return pkg.installerPackageName;
     }
 
+<<<<<<< HEAD
     int getApplicationEnabledSettingLPr(String packageName, int userId) {
+=======
+    int getApplicationEnabledSettingLPr(String packageName) {
+>>>>>>> upstream/master
         final PackageSetting pkg = mPackages.get(packageName);
         if (pkg == null) {
             throw new IllegalArgumentException("Unknown package: " + packageName);
         }
+<<<<<<< HEAD
         return pkg.getEnabled(userId);
     }
 
     int getComponentEnabledSettingLPr(ComponentName componentName, int userId) {
+=======
+        return pkg.enabled;
+    }
+
+    int getComponentEnabledSettingLPr(ComponentName componentName) {
+>>>>>>> upstream/master
         final String packageName = componentName.getPackageName();
         final PackageSetting pkg = mPackages.get(packageName);
         if (pkg == null) {
             throw new IllegalArgumentException("Unknown component: " + componentName);
         }
         final String classNameStr = componentName.getClassName();
+<<<<<<< HEAD
         return pkg.getCurrentEnabledStateLPr(classNameStr, userId);
     }
 
     boolean setPackageStoppedStateLPw(String packageName, boolean stopped,
             boolean allowedByPermission, int uid, int userId) {
         int appId = UserId.getAppId(uid);
+=======
+        return pkg.getCurrentEnabledStateLPr(classNameStr);
+    }
+    
+    boolean setPackageStoppedStateLPw(String packageName, boolean stopped,
+            boolean allowedByPermission, int uid) {
+>>>>>>> upstream/master
         final PackageSetting pkgSetting = mPackages.get(packageName);
         if (pkgSetting == null) {
             throw new IllegalArgumentException("Unknown package: " + packageName);
         }
+<<<<<<< HEAD
         if (!allowedByPermission && (appId != pkgSetting.appId)) {
             throw new SecurityException(
                     "Permission Denial: attempt to change stopped state from pid="
                     + Binder.getCallingPid()
                     + ", uid=" + uid + ", package uid=" + pkgSetting.appId);
+=======
+        if (!allowedByPermission && (uid != pkgSetting.userId)) {
+            throw new SecurityException(
+                    "Permission Denial: attempt to change stopped state from pid="
+                    + Binder.getCallingPid()
+                    + ", uid=" + uid + ", package uid=" + pkgSetting.userId);
+>>>>>>> upstream/master
         }
         if (DEBUG_STOPPED) {
             if (stopped) {
@@ -2355,6 +2946,7 @@ final class Settings {
                 Slog.i(TAG, "Stopping package " + packageName, e);
             }
         }
+<<<<<<< HEAD
         if (pkgSetting.getStopped(userId) != stopped) {
             pkgSetting.setStopped(stopped, userId);
             // pkgSetting.pkg.mSetStopped = stopped;
@@ -2365,12 +2957,25 @@ final class Settings {
                             pkgSetting.installerPackageName, null, userId);
                 }
                 pkgSetting.setNotLaunched(false, userId);
+=======
+        if (pkgSetting.stopped != stopped) {
+            pkgSetting.stopped = stopped;
+            pkgSetting.pkg.mSetStopped = stopped;
+            if (pkgSetting.notLaunched) {
+                if (pkgSetting.installerPackageName != null) {
+                    PackageManagerService.sendPackageBroadcast(Intent.ACTION_PACKAGE_FIRST_LAUNCH,
+                            pkgSetting.name, null, null,
+                            pkgSetting.installerPackageName, null);
+                }
+                pkgSetting.notLaunched = false;
+>>>>>>> upstream/master
             }
             return true;
         }
         return false;
     }
 
+<<<<<<< HEAD
     private List<UserInfo> getAllUsers() {
         long id = Binder.clearCallingIdentity();
         try {
@@ -2418,11 +3023,16 @@ final class Settings {
         ApplicationInfo.FLAG_CANT_SAVE_STATE, "CANT_SAVE_STATE",
     };
 
+=======
+>>>>>>> upstream/master
     void dumpPackagesLPr(PrintWriter pw, String packageName, DumpState dumpState) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         final Date date = new Date();
         boolean printedSomething = false;
+<<<<<<< HEAD
         List<UserInfo> users = getAllUsers();
+=======
+>>>>>>> upstream/master
         for (final PackageSetting ps : mPackages.values()) {
             if (packageName != null && !packageName.equals(ps.realName)
                     && !packageName.equals(ps.name)) {
@@ -2450,7 +3060,11 @@ final class Settings {
                 pw.println(ps.name);
             }
 
+<<<<<<< HEAD
             pw.print("    userId="); pw.print(ps.appId);
+=======
+            pw.print("    userId="); pw.print(ps.userId);
+>>>>>>> upstream/master
             pw.print(" gids="); pw.println(PackageManagerService.arrayToString(ps.gids));
             pw.print("    sharedUser="); pw.println(ps.sharedUser);
             pw.print("    pkg="); pw.println(ps.pkg);
@@ -2459,8 +3073,11 @@ final class Settings {
             pw.print("    nativeLibraryPath="); pw.println(ps.nativeLibraryPathString);
             pw.print("    versionCode="); pw.println(ps.versionCode);
             if (ps.pkg != null) {
+<<<<<<< HEAD
                 pw.print("    applicationInfo="); pw.println(ps.pkg.applicationInfo.toString());
                 pw.print("    flags="); printFlags(pw, ps.pkg.applicationInfo.flags, FLAG_DUMP_SPEC); pw.println();
+=======
+>>>>>>> upstream/master
                 pw.print("    versionName="); pw.println(ps.pkg.mVersionName);
                 pw.print("    dataDir="); pw.println(ps.pkg.applicationInfo.dataDir);
                 pw.print("    targetSdk="); pw.println(ps.pkg.applicationInfo.targetSdkVersion);
@@ -2524,6 +3141,7 @@ final class Settings {
             pw.print(" haveGids="); pw.println(ps.haveGids);
             pw.print("    pkgFlags=0x"); pw.print(Integer.toHexString(ps.pkgFlags));
             pw.print(" installStatus="); pw.print(ps.installStatus);
+<<<<<<< HEAD
             for (UserInfo user : users) {
                 pw.print(" User "); pw.print(user.id); pw.print(": ");
                 pw.print(" stopped=");
@@ -2541,6 +3159,20 @@ final class Settings {
                     for (String s : ps.getEnabledComponents(user.id)) {
                         pw.print("      "); pw.println(s);
                     }
+=======
+            pw.print(" stopped="); pw.print(ps.stopped);
+            pw.print(" enabled="); pw.println(ps.enabled);
+            if (ps.disabledComponents.size() > 0) {
+                pw.println("    disabledComponents:");
+                for (String s : ps.disabledComponents) {
+                    pw.print("      "); pw.println(s);
+                }
+            }
+            if (ps.enabledComponents.size() > 0) {
+                pw.println("    enabledComponents:");
+                for (String s : ps.enabledComponents) {
+                    pw.print("      "); pw.println(s);
+>>>>>>> upstream/master
                 }
             }
             if (ps.grantedPermissions.size() > 0) {
@@ -2553,7 +3185,11 @@ final class Settings {
 
         printedSomething = false;
         if (mRenamedPackages.size() > 0) {
+<<<<<<< HEAD
             for (final Map.Entry<String, String> e : mRenamedPackages.entrySet()) {
+=======
+            for (final HashMap.Entry<String, String> e : mRenamedPackages.entrySet()) {
+>>>>>>> upstream/master
                 if (packageName != null && !packageName.equals(e.getKey())
                         && !packageName.equals(e.getValue())) {
                     continue;
@@ -2593,12 +3229,17 @@ final class Settings {
                     pw.print("    compat name=");
                     pw.println(ps.name);
                 }
+<<<<<<< HEAD
                 if (ps.pkg != null && ps.pkg.applicationInfo != null) {
                     pw.print("    applicationInfo=");
                     pw.println(ps.pkg.applicationInfo.toString());
                 }
                 pw.print("    userId=");
                 pw.println(ps.appId);
+=======
+                pw.print("    userId=");
+                pw.println(ps.userId);
+>>>>>>> upstream/master
                 pw.print("    sharedUser=");
                 pw.println(ps.sharedUser);
                 pw.print("    codePath=");
@@ -2608,7 +3249,11 @@ final class Settings {
             }
         }
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     void dumpPermissionsLPr(PrintWriter pw, String packageName, DumpState dumpState) {
         boolean printedSomething = false;
         for (BasePermission p : mPermissions.values()) {
@@ -2628,14 +3273,19 @@ final class Settings {
             pw.print("    uid="); pw.print(p.uid);
                     pw.print(" gids="); pw.print(PackageManagerService.arrayToString(p.gids));
                     pw.print(" type="); pw.print(p.type);
+<<<<<<< HEAD
                     pw.print(" prot=");
                     pw.println(PermissionInfo.protectionToString(p.protectionLevel));
+=======
+                    pw.print(" prot="); pw.println(p.protectionLevel);
+>>>>>>> upstream/master
             if (p.packageSetting != null) {
                 pw.print("    packageSetting="); pw.println(p.packageSetting);
             }
             if (p.perm != null) {
                 pw.print("    perm="); pw.println(p.perm);
             }
+<<<<<<< HEAD
             if (READ_EXTERNAL_STORAGE.equals(p.name)) {
                 pw.print("    enforced=");
                 pw.println(mReadExternalStorageEnforced);
@@ -2643,6 +3293,11 @@ final class Settings {
         }
     }
 
+=======
+        }
+    }
+    
+>>>>>>> upstream/master
     void dumpSharedUsersLPr(PrintWriter pw, String packageName, DumpState dumpState) {
         boolean printedSomething = false;
         for (SharedUserSetting su : mSharedUsers.values()) {

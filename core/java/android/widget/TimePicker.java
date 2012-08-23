@@ -27,7 +27,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.NumberPicker.OnValueChangeListener;
@@ -136,7 +139,11 @@ public class TimePicker extends FrameLayout {
         TypedArray attributesArray = context.obtainStyledAttributes(
                 attrs, R.styleable.TimePicker, defStyle, 0);
         int layoutResourceId = attributesArray.getResourceId(
+<<<<<<< HEAD
                 R.styleable.TimePicker_internalLayout, R.layout.time_picker);
+=======
+                R.styleable.TimePicker_layout, R.layout.time_picker);
+>>>>>>> upstream/master
         attributesArray.recycle();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
@@ -213,7 +220,10 @@ public class TimePicker extends FrameLayout {
                     button.requestFocus();
                     mIsAm = !mIsAm;
                     updateAmPmControl();
+<<<<<<< HEAD
                     onTimeChanged();
+=======
+>>>>>>> upstream/master
                 }
             });
         } else {
@@ -228,7 +238,10 @@ public class TimePicker extends FrameLayout {
                     picker.requestFocus();
                     mIsAm = !mIsAm;
                     updateAmPmControl();
+<<<<<<< HEAD
                     onTimeChanged();
+=======
+>>>>>>> upstream/master
                 }
             });
             mAmPmSpinnerInput = (EditText) mAmPmSpinner.findViewById(R.id.numberpicker_input);
@@ -251,11 +264,14 @@ public class TimePicker extends FrameLayout {
 
         // set the content descriptions
         setContentDescriptions();
+<<<<<<< HEAD
 
         // If not explicitly specified this view is important for accessibility.
         if (getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -484,6 +500,7 @@ public class TimePicker extends FrameLayout {
         event.getText().add(selectedDateUtterance);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -496,6 +513,8 @@ public class TimePicker extends FrameLayout {
         info.setClassName(TimePicker.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     private void updateHourControl() {
         if (is24HourView()) {
             mHourSpinner.setMinValue(0);
@@ -537,6 +556,7 @@ public class TimePicker extends FrameLayout {
 
     private void setContentDescriptions() {
         // Minute
+<<<<<<< HEAD
         trySetContentDescription(mMinuteSpinner, R.id.increment,
                 R.string.time_picker_increment_minute_button);
         trySetContentDescription(mMinuteSpinner, R.id.decrement,
@@ -559,6 +579,23 @@ public class TimePicker extends FrameLayout {
         View target = root.findViewById(viewId);
         if (target != null) {
             target.setContentDescription(mContext.getString(contDescResId));
+=======
+        String text = mContext.getString(R.string.time_picker_increment_minute_button);
+        mMinuteSpinner.findViewById(R.id.increment).setContentDescription(text);
+        text = mContext.getString(R.string.time_picker_decrement_minute_button);
+        mMinuteSpinner.findViewById(R.id.decrement).setContentDescription(text);
+        // Hour
+        text = mContext.getString(R.string.time_picker_increment_hour_button);
+        mHourSpinner.findViewById(R.id.increment).setContentDescription(text);
+        text = mContext.getString(R.string.time_picker_decrement_hour_button);
+        mHourSpinner.findViewById(R.id.decrement).setContentDescription(text);
+        // AM/PM
+        if (mAmPmSpinner != null) {
+            text = mContext.getString(R.string.time_picker_increment_set_pm_button);
+            mAmPmSpinner.findViewById(R.id.increment).setContentDescription(text);
+            text = mContext.getString(R.string.time_picker_decrement_set_am_button);
+            mAmPmSpinner.findViewById(R.id.decrement).setContentDescription(text);
+>>>>>>> upstream/master
         }
     }
 

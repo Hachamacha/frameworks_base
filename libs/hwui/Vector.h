@@ -103,7 +103,11 @@ struct Vector2 {
     }
 
     void dump() {
+<<<<<<< HEAD
         ALOGD("Vector2[%.2f, %.2f]", x, y);
+=======
+        LOGD("Vector2[%.2f, %.2f]", x, y);
+>>>>>>> upstream/master
     }
 }; // class Vector2
 

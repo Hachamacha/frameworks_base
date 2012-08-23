@@ -179,6 +179,7 @@ public final class IsoDep extends BasicTagTechnology {
     public int getMaxTransceiveLength() {
         return getMaxTransceiveLengthInternal();
     }
+<<<<<<< HEAD
 
     /**
      * <p>Standard APDUs have a 1-byte length field, allowing a maximum of
@@ -202,4 +203,6 @@ public final class IsoDep extends BasicTagTechnology {
             return false;
         }
     }
+=======
+>>>>>>> upstream/master
 }

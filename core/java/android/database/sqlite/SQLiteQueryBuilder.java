@@ -18,8 +18,11 @@ package android.database.sqlite;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+<<<<<<< HEAD
 import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
+=======
+>>>>>>> upstream/master
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.Log;
@@ -139,9 +142,14 @@ public class SQLiteQueryBuilder
     /**
      * Sets the cursor factory to be used for the query.  You can use
      * one factory for all queries on a database but it is normally
+<<<<<<< HEAD
      * easier to specify the factory when doing this query.
      *
      * @param factory the factory to use.
+=======
+     * easier to specify the factory when doing this query.  @param
+     * factory the factor to use
+>>>>>>> upstream/master
      */
     public void setCursorFactory(SQLiteDatabase.CursorFactory factory) {
         mFactory = factory;
@@ -292,7 +300,11 @@ public class SQLiteQueryBuilder
             String selection, String[] selectionArgs, String groupBy,
             String having, String sortOrder) {
         return query(db, projectionIn, selection, selectionArgs, groupBy, having, sortOrder,
+<<<<<<< HEAD
                 null /* limit */, null /* cancellationSignal */);
+=======
+                null /* limit */);
+>>>>>>> upstream/master
     }
 
     /**
@@ -330,6 +342,7 @@ public class SQLiteQueryBuilder
     public Cursor query(SQLiteDatabase db, String[] projectionIn,
             String selection, String[] selectionArgs, String groupBy,
             String having, String sortOrder, String limit) {
+<<<<<<< HEAD
         return query(db, projectionIn, selection, selectionArgs,
                 groupBy, having, sortOrder, limit, null);
     }
@@ -372,6 +385,8 @@ public class SQLiteQueryBuilder
     public Cursor query(SQLiteDatabase db, String[] projectionIn,
             String selection, String[] selectionArgs, String groupBy,
             String having, String sortOrder, String limit, CancellationSignal cancellationSignal) {
+=======
+>>>>>>> upstream/master
         if (mTables == null) {
             return null;
         }
@@ -386,8 +401,12 @@ public class SQLiteQueryBuilder
             // in both the wrapped and original forms.
             String sqlForValidation = buildQuery(projectionIn, "(" + selection + ")", groupBy,
                     having, sortOrder, limit);
+<<<<<<< HEAD
             validateQuerySql(db, sqlForValidation,
                     cancellationSignal); // will throw if query is invalid
+=======
+            validateSql(db, sqlForValidation); // will throw if query is invalid
+>>>>>>> upstream/master
         }
 
         String sql = buildQuery(
@@ -399,6 +418,7 @@ public class SQLiteQueryBuilder
         }
         return db.rawQueryWithFactory(
                 mFactory, sql, selectionArgs,
+<<<<<<< HEAD
                 SQLiteDatabase.findEditTable(mTables),
                 cancellationSignal); // will throw if query is invalid
     }
@@ -411,6 +431,22 @@ public class SQLiteQueryBuilder
             CancellationSignal cancellationSignal) {
         db.getThreadSession().prepare(sql,
                 db.getThreadDefaultConnectionFlags(true /*readOnly*/), cancellationSignal, null);
+=======
+                SQLiteDatabase.findEditTable(mTables)); // will throw if query is invalid
+    }
+
+    /**
+     * Verifies that a SQL statement is valid by compiling it.
+     * If the SQL statement is not valid, this method will throw a {@link SQLiteException}.
+     */
+    private void validateSql(SQLiteDatabase db, String sql) {
+        db.lock(sql);
+        try {
+            new SQLiteCompiledSql(db, sql).releaseSqlStatement();
+        } finally {
+            db.unlock();
+        }
+>>>>>>> upstream/master
     }
 
     /**

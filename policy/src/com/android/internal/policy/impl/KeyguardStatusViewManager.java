@@ -19,10 +19,15 @@ package com.android.internal.policy.impl;
 import com.android.internal.R;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccCard.State;
+<<<<<<< HEAD
 import com.android.internal.widget.DigitalClock;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.TransportControlView;
 import com.android.internal.policy.impl.KeyguardUpdateMonitor.InfoCallbackImpl;
+=======
+import com.android.internal.widget.LockPatternUtils;
+import com.android.internal.widget.TransportControlView;
+>>>>>>> upstream/master
 import com.android.internal.policy.impl.KeyguardUpdateMonitor.SimStateCallback;
 
 import java.util.ArrayList;
@@ -107,7 +112,10 @@ class KeyguardStatusViewManager implements OnClickListener {
     private CharSequence mPlmn;
     private CharSequence mSpn;
     protected int mPhoneState;
+<<<<<<< HEAD
     private DigitalClock mDigitalClock;
+=======
+>>>>>>> upstream/master
 
     private class TransientTextManager {
         private TextView mTextView;
@@ -184,7 +192,10 @@ class KeyguardStatusViewManager implements OnClickListener {
         mTransportView = (TransportControlView) findViewById(R.id.transport);
         mEmergencyCallButton = (Button) findViewById(R.id.emergencyCallButton);
         mEmergencyCallButtonEnabledInScreen = emergencyButtonEnabledInScreen;
+<<<<<<< HEAD
         mDigitalClock = (DigitalClock) findViewById(R.id.time);
+=======
+>>>>>>> upstream/master
 
         // Hide transport control view until we know we need to show it.
         if (mTransportView != null) {
@@ -294,6 +305,7 @@ class KeyguardStatusViewManager implements OnClickListener {
     /** {@inheritDoc} */
     public void onResume() {
         if (DEBUG) Log.v(TAG, "onResume()");
+<<<<<<< HEAD
 
         // First update the clock, if present.
         if (mDigitalClock != null) {
@@ -309,6 +321,11 @@ class KeyguardStatusViewManager implements OnClickListener {
         if (mUpdateMonitor.getMaxBiometricUnlockAttemptsReached()) {
             setInstructionText(getContext().getString(R.string.faceunlock_multiple_failures));
         }
+=======
+        mUpdateMonitor.registerInfoCallback(mInfoCallback);
+        mUpdateMonitor.registerSimStateCallback(mSimStateCallback);
+        resetStatusInfo();
+>>>>>>> upstream/master
     }
 
     void resetStatusInfo() {
@@ -509,8 +526,12 @@ class KeyguardStatusViewManager implements OnClickListener {
                 break;
 
             case SimPermDisabled:
+<<<<<<< HEAD
                 carrierText = getContext().getText(
                         R.string.lockscreen_permanent_disabled_sim_message_short);
+=======
+                carrierText = getContext().getText(R.string.lockscreen_missing_sim_message_short);
+>>>>>>> upstream/master
                 carrierHelpTextId = R.string.lockscreen_permanent_disabled_sim_instructions;
                 mEmergencyButtonEnabledBecauseSimLocked = true;
                 break;
@@ -541,7 +562,19 @@ class KeyguardStatusViewManager implements OnClickListener {
                 break;
         }
 
+<<<<<<< HEAD
         setCarrierText(carrierText);
+=======
+	String customLabel = null;
+        customLabel = Settings.System.getString(getContext().getContentResolver(),
+                Settings.System.CUSTOM_CARRIER_LABEL);
+        
+        if(customLabel == null)        
+            setCarrierText(carrierText);
+        else
+            setCarrierText(customLabel);
+        
+>>>>>>> upstream/master
         setCarrierHelpText(carrierHelpTextId);
         updateEmergencyCallButtonState(mPhoneState);
     }
@@ -629,9 +662,15 @@ class KeyguardStatusViewManager implements OnClickListener {
         }
     }
 
+<<<<<<< HEAD
     private InfoCallbackImpl mInfoCallback = new InfoCallbackImpl() {
 
         @Override
+=======
+    private KeyguardUpdateMonitor.InfoCallback mInfoCallback
+            = new KeyguardUpdateMonitor.InfoCallback() {
+
+>>>>>>> upstream/master
         public void onRefreshBatteryInfo(boolean showBatteryInfo, boolean pluggedIn,
                 int batteryLevel) {
             mShowingBatteryInfo = showBatteryInfo;
@@ -641,24 +680,48 @@ class KeyguardStatusViewManager implements OnClickListener {
             update(BATTERY_INFO, getAltTextMessage(tmpIcon));
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public void onTimeChanged() {
             refreshDate();
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) {
             mPlmn = plmn;
             mSpn = spn;
             updateCarrierStateWithSimStatus(mSimState);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+        public void onRingerModeChanged(int state) {
+
+        }
+
+>>>>>>> upstream/master
         public void onPhoneStateChanged(int phoneState) {
             mPhoneState = phoneState;
             updateEmergencyCallButtonState(phoneState);
         }
 
+<<<<<<< HEAD
+=======
+        /** {@inheritDoc} */
+        public void onClockVisibilityChanged() {
+            // ignored
+        }
+
+        public void onDeviceProvisioned() {
+            // ignored
+        }
+>>>>>>> upstream/master
     };
 
     private SimStateCallback mSimStateCallback = new SimStateCallback() {

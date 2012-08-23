@@ -7,7 +7,11 @@ parent.link=available-resources.html
   <div id="qv">
     <h2>See also</h2>
     <ol>
+<<<<<<< HEAD
       <li><a href="{@docRoot}guide/topics/ui/declaring-layout.html">Layouts</a></li>
+=======
+      <li><a href="{@docRoot}guide/topics/ui/declaring-layout.html">XML Layouts</a></li>
+>>>>>>> upstream/master
     </ol>
   </div>
 </div>
@@ -128,7 +132,11 @@ or {@code "wrap_content"}). See the <a href="#layoutvalues">valid values</a> bel
       <p>More attributes are supported by the {@link android.view.View}
       base class, and many more are supported by each implementation of
       {@link android.view.View}. Read <a
+<<<<<<< HEAD
 href="{@docRoot}guide/topics/ui/declaring-layout.html">Layouts</a> for more information. For
+=======
+href="{@docRoot}guide/topics/ui/declaring-layout.html">XML Layouts</a> for more information. For
+>>>>>>> upstream/master
 a reference of all available attributes,
       see the corresponding reference documentation (for example, the <a
       href="{@docRoot}reference/android/widget/TextView.html#lattrs">TextView XML attributes</a>).</p>
@@ -275,7 +283,11 @@ public void onCreate(Bundle savedInstanceState) {
 <dt>see also:</dt>
 <dd>
 <ul>
+<<<<<<< HEAD
   <li><a href="{@docRoot}guide/topics/ui/declaring-layout.html">Layouts</a></li>
+=======
+  <li><a href="{@docRoot}guide/topics/ui/declaring-layout.html">XML Layouts</a></li>
+>>>>>>> upstream/master
   <li>{@link android.view.View}</li>
   <li>{@link android.view.ViewGroup}</li>
 </ul>

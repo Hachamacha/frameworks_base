@@ -150,7 +150,10 @@ public final class MifareClassic extends BasicTagTechnology {
         mIsEmulated = false;
 
         switch (a.getSak()) {
+<<<<<<< HEAD
         case 0x01:
+=======
+>>>>>>> upstream/master
         case 0x08:
             mType = TYPE_CLASSIC;
             mSize = SIZE_1K;

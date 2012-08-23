@@ -25,6 +25,11 @@
 #include <utils/Log.h>
 #include <utils/threads.h>
 
+<<<<<<< HEAD
+=======
+#include <surfaceflinger/ISurfaceComposer.h>
+
+>>>>>>> upstream/master
 #if defined(HAVE_PTHREADS)
 # include <pthread.h>
 # include <sys/resource.h>
@@ -45,7 +50,11 @@ int main(int argc, char** argv)
     char value[PROPERTY_VALUE_MAX];
     property_get("debug.sf.nobootanimation", value, "0");
     int noBootAnimation = atoi(value);
+<<<<<<< HEAD
     ALOGI_IF(noBootAnimation,  "boot animation disabled");
+=======
+    LOGI_IF(noBootAnimation,  "boot animation disabled");
+>>>>>>> upstream/master
     if (!noBootAnimation) {
 
         sp<ProcessState> proc(ProcessState::self());

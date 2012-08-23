@@ -82,7 +82,11 @@ following table shows the core gesture set that is supported in Android.</p>
   </div>
   <div class="layout-content-col span-4">
 
+<<<<<<< HEAD
     <img src="{@docRoot}design/media/gesture_pinchopen.png" style="margin-left:-4px">
+=======
+    <img src="{@docRoot}design/media/gesture_pinchopen.png">
+>>>>>>> upstream/master
 
 <h4>Pinch open</h4>
 <p>Zooms into content.</p>

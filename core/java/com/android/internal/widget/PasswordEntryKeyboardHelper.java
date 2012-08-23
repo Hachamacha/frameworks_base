@@ -147,7 +147,11 @@ public class PasswordEntryKeyboardHelper implements OnKeyboardActionListener {
     }
 
     private void sendKeyEventsToTarget(int character) {
+<<<<<<< HEAD
         ViewRootImpl viewRootImpl = mTargetView.getViewRootImpl();
+=======
+        Handler handler = mTargetView.getHandler();
+>>>>>>> upstream/master
         KeyEvent[] events = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD).getEvents(
                 new char[] { (char) character });
         if (events != null) {
@@ -156,13 +160,18 @@ public class PasswordEntryKeyboardHelper implements OnKeyboardActionListener {
                 KeyEvent event = events[i];
                 event = KeyEvent.changeFlags(event, event.getFlags()
                         | KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE);
+<<<<<<< HEAD
                 viewRootImpl.dispatchKey(event);
+=======
+                handler.sendMessage(handler.obtainMessage(ViewRootImpl.DISPATCH_KEY, event));
+>>>>>>> upstream/master
             }
         }
     }
 
     public void sendDownUpKeyEvents(int keyEventCode) {
         long eventTime = SystemClock.uptimeMillis();
+<<<<<<< HEAD
         ViewRootImpl viewRootImpl = mTargetView.getViewRootImpl();
         viewRootImpl.dispatchKeyFromIme(
                 new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0,
@@ -172,6 +181,17 @@ public class PasswordEntryKeyboardHelper implements OnKeyboardActionListener {
                 new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyEventCode, 0, 0,
                         KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                         KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE));
+=======
+        Handler handler = mTargetView.getHandler();
+        handler.sendMessage(handler.obtainMessage(ViewRootImpl.DISPATCH_KEY_FROM_IME,
+                new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0,
+                        KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+                    KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE)));
+        handler.sendMessage(handler.obtainMessage(ViewRootImpl.DISPATCH_KEY_FROM_IME,
+                new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyEventCode, 0, 0,
+                        KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+                        KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE)));
+>>>>>>> upstream/master
     }
 
     public void onKey(int primaryCode, int[] keyCodes) {

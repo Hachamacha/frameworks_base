@@ -101,7 +101,11 @@ jfieldID get_field(JNIEnv *env, jclass clazz, const char *member,
                    const char *mtype) {
     jfieldID field = env->GetFieldID(clazz, member, mtype);
     if (field == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find member %s", member);
+=======
+        LOGE("Can't find member %s", member);
+>>>>>>> upstream/master
     }
     return field;
 }
@@ -158,13 +162,21 @@ static dbus_bool_t dbus_func_args_async_valist(JNIEnv *env,
     msg = dbus_message_new_method_call(BLUEZ_DBUS_BASE_IFC, path, ifc, func);
 
     if (msg == NULL) {
+<<<<<<< HEAD
         ALOGE("Could not allocate D-Bus message object!");
+=======
+        LOGE("Could not allocate D-Bus message object!");
+>>>>>>> upstream/master
         goto done;
     }
 
     /* append arguments */
     if (!dbus_message_append_args_valist(msg, first_arg_type, args)) {
+<<<<<<< HEAD
         ALOGE("Could not append argument to method call!");
+=======
+        LOGE("Could not append argument to method call!");
+>>>>>>> upstream/master
         goto done;
     }
 
@@ -219,7 +231,11 @@ dbus_bool_t dbus_func_args_async(JNIEnv *env,
     return ret;
 }
 
+<<<<<<< HEAD
 // If err is NULL, then any errors will be ALOGE'd, and free'd and the reply
+=======
+// If err is NULL, then any errors will be LOGE'd, and free'd and the reply
+>>>>>>> upstream/master
 // will be NULL.
 // If err is not NULL, then it is assumed that dbus_error_init was already
 // called, and error's will be returned to the caller without logging. The
@@ -248,13 +264,21 @@ DBusMessage * dbus_func_args_timeout_valist(JNIEnv *env,
     msg = dbus_message_new_method_call(BLUEZ_DBUS_BASE_IFC, path, ifc, func);
 
     if (msg == NULL) {
+<<<<<<< HEAD
         ALOGE("Could not allocate D-Bus message object!");
+=======
+        LOGE("Could not allocate D-Bus message object!");
+>>>>>>> upstream/master
         goto done;
     }
 
     /* append arguments */
     if (!dbus_message_append_args_valist(msg, first_arg_type, args)) {
+<<<<<<< HEAD
         ALOGE("Could not append argument to method call!");
+=======
+        LOGE("Could not append argument to method call!");
+>>>>>>> upstream/master
         goto done;
     }
 
@@ -464,7 +488,11 @@ jobjectArray dbus_returns_array_of_strings(JNIEnv *env, DBusMessage *reply) {
         jclass stringClass;
         jstring classNameStr;
 
+<<<<<<< HEAD
         //ALOGV("%s: there are %d elements in string array!", __FUNCTION__, len);
+=======
+        //LOGV("%s: there are %d elements in string array!", __FUNCTION__, len);
+>>>>>>> upstream/master
 
         stringClass = env->FindClass("java/lang/String");
         strArray = env->NewObjectArray(len, stringClass, NULL);
@@ -490,7 +518,11 @@ jbyteArray dbus_returns_array_of_bytes(JNIEnv *env, DBusMessage *reply) {
     if (dbus_message_get_args(reply, &err,
                               DBUS_TYPE_ARRAY, DBUS_TYPE_BYTE, &list, &len,
                               DBUS_TYPE_INVALID)) {
+<<<<<<< HEAD
         //ALOGV("%s: there are %d elements in byte array!", __FUNCTION__, len);
+=======
+        //LOGV("%s: there are %d elements in byte array!", __FUNCTION__, len);
+>>>>>>> upstream/master
         byteArray = env->NewByteArray(len);
         if (byteArray)
             env->SetByteArrayRegion(byteArray, 0, len, list);
@@ -587,7 +619,11 @@ int get_property(DBusMessageIter iter, Properties *properties,
     dbus_message_iter_recurse(&iter, &prop_val);
     type = properties[*prop_index].type;
     if (dbus_message_iter_get_arg_type(&prop_val) != type) {
+<<<<<<< HEAD
         ALOGE("Property type mismatch in get_property: %d, expected:%d, index:%d",
+=======
+        LOGE("Property type mismatch in get_property: %d, expected:%d, index:%d",
+>>>>>>> upstream/master
              dbus_message_iter_get_arg_type(&prop_val), type, *prop_index);
         return -1;
     }
@@ -855,7 +891,11 @@ bool debug_no_encrypt() {
     property_get("debug.bt.no_encrypt", value, "");
     if (!strncmp("true", value, PROPERTY_VALUE_MAX) ||
         !strncmp("1", value, PROPERTY_VALUE_MAX)) {
+<<<<<<< HEAD
         ALOGD("mandatory bluetooth encryption disabled");
+=======
+        LOGD("mandatory bluetooth encryption disabled");
+>>>>>>> upstream/master
         return true;
     } else {
         return false;

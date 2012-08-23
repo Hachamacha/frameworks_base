@@ -28,12 +28,20 @@ key A {
     label:                              'A'
     base:                               'a'
     shift, capslock:                    'A'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key B {
     label:                              'B'
     base:                               'b'
     shift, capslock:                    'B'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key C {
@@ -42,12 +50,20 @@ key C {
     shift, capslock:                    'C'
     alt:                                '\u00e7'
     shift+alt:                          '\u00c7'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key D {
     label:                              'D'
     base:                               'd'
     shift, capslock:                    'D'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key E {
@@ -55,24 +71,40 @@ key E {
     base:                               'e'
     shift, capslock:                    'E'
     alt:                                '\u0301'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key F {
     label:                              'F'
     base:                               'f'
     shift, capslock:                    'F'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key G {
     label:                              'G'
     base:                               'g'
     shift, capslock:                    'G'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key H {
     label:                              'H'
     base:                               'h'
     shift, capslock:                    'H'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key I {
@@ -80,30 +112,50 @@ key I {
     base:                               'i'
     shift, capslock:                    'I'
     alt:                                '\u0302'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key J {
     label:                              'J'
     base:                               'j'
     shift, capslock:                    'J'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key K {
     label:                              'K'
     base:                               'k'
     shift, capslock:                    'K'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key L {
     label:                              'L'
     base:                               'l'
     shift, capslock:                    'L'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key M {
     label:                              'M'
     base:                               'm'
     shift, capslock:                    'M'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key N {
@@ -111,30 +163,50 @@ key N {
     base:                               'n'
     shift, capslock:                    'N'
     alt:                                '\u0303'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key O {
     label:                              'O'
     base:                               'o'
     shift, capslock:                    'O'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key P {
     label:                              'P'
     base:                               'p'
     shift, capslock:                    'P'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key Q {
     label:                              'Q'
     base:                               'q'
     shift, capslock:                    'Q'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key R {
     label:                              'R'
     base:                               'r'
     shift, capslock:                    'R'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key S {
@@ -142,12 +214,20 @@ key S {
     base:                               's'
     shift, capslock:                    'S'
     alt:                                '\u00df'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key T {
     label:                              'T'
     base:                               't'
     shift, capslock:                    'T'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key U {
@@ -155,36 +235,57 @@ key U {
     base:                               'u'
     shift, capslock:                    'U'
     alt:                                '\u0308'
+<<<<<<< HEAD
+=======
+    ctrl, meta:                         none
+>>>>>>> upstream/master
 }
 
 key V {
     label:                              'V'
     base:                               'v'
     shift, capslock:                    'V'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key W {
     label:                              'W'
     base:                               'w'
     shift, capslock:                    'W'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key X {
     label:                              'X'
     base:                               'x'
     shift, capslock:                    'X'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key Y {
     label:                              'Y'
     base:                               'y'
     shift, capslock:                    'Y'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key Z {
     label:                              'Z'
     base:                               'z'
     shift, capslock:                    'Z'
+<<<<<<< HEAD
 }
 
 key 0 {
@@ -227,10 +328,63 @@ key 6 {
     label:                              '6'
     base:                               '6'
     shift:                              '^'
+=======
+    ctrl, alt, meta:                    none
+}
+
+key 0 {
+    label, number:                      '0'
+    base:                               '0'
+    shift:                              ')'
+    ctrl, alt, meta:                    none
+}
+
+key 1 {
+    label, number:                      '1'
+    base:                               '1'
+    shift:                              '!'
+    ctrl, alt, meta:                    none
+}
+
+key 2 {
+    label, number:                      '2'
+    base:                               '2'
+    shift:                              '@'
+    ctrl, alt, meta:                    none
+}
+
+key 3 {
+    label, number:                      '3'
+    base:                               '3'
+    shift:                              '#'
+    ctrl, alt, meta:                    none
+}
+
+key 4 {
+    label, number:                      '4'
+    base:                               '4'
+    shift:                              '$'
+    ctrl, alt, meta:                    none
+}
+
+key 5 {
+    label, number:                      '5'
+    base:                               '5'
+    shift:                              '%'
+    ctrl, alt, meta:                    none
+}
+
+key 6 {
+    label, number:                      '6'
+    base:                               '6'
+    shift:                              '^'
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
     alt+shift:                          '\u0302'
 }
 
 key 7 {
+<<<<<<< HEAD
     label:                              '7'
     base:                               '7'
     shift:                              '&'
@@ -246,23 +400,53 @@ key 9 {
     label:                              '9'
     base:                               '9'
     shift:                              '('
+=======
+    label, number:                      '7'
+    base:                               '7'
+    shift:                              '&'
+    ctrl, alt, meta:                    none
+}
+
+key 8 {
+    label, number:                      '8'
+    base:                               '8'
+    shift:                              '*'
+    ctrl, alt, meta:                    none
+}
+
+key 9 {
+    label, number:                      '9'
+    base:                               '9'
+    shift:                              '('
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key SPACE {
     label:                              ' '
     base:                               ' '
+<<<<<<< HEAD
     alt, meta:                          fallback SEARCH
     ctrl:                               fallback LANGUAGE_SWITCH
+=======
+    ctrl:                               none
+    alt, meta:                          fallback SEARCH
+>>>>>>> upstream/master
 }
 
 key ENTER {
     label:                              '\n'
     base:                               '\n'
+<<<<<<< HEAD
+=======
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key TAB {
     label:                              '\t'
     base:                               '\t'
+<<<<<<< HEAD
 }
 
 key COMMA {
@@ -285,10 +469,39 @@ key SLASH {
 
 key GRAVE {
     label:                              '`'
+=======
+    ctrl, alt, meta:                    none
+}
+
+key COMMA {
+    label, number:                      ','
+    base:                               ','
+    shift:                              '<'
+    ctrl, alt, meta:                    none
+}
+
+key PERIOD {
+    label, number:                      '.'
+    base:                               '.'
+    shift:                              '>'
+    ctrl, alt, meta:                    none
+}
+
+key SLASH {
+    label, number:                      '/'
+    base:                               '/'
+    shift:                              '?'
+    ctrl, alt, meta:                    none
+}
+
+key GRAVE {
+    label, number:                      '`'
+>>>>>>> upstream/master
     base:                               '`'
     shift:                              '~'
     alt:                                '\u0300'
     alt+shift:                          '\u0303'
+<<<<<<< HEAD
 }
 
 key MINUS {
@@ -331,11 +544,64 @@ key APOSTROPHE {
     label:                              '\''
     base:                               '\''
     shift:                              '"'
+=======
+    ctrl, meta:                         none
+}
+
+key MINUS {
+    label, number:                      '-'
+    base:                               '-'
+    shift:                              '_'
+    ctrl, alt, meta:                    none
+}
+
+key EQUALS {
+    label, number:                      '='
+    base:                               '='
+    shift:                              '+'
+    ctrl, alt, meta:                    none
+}
+
+key LEFT_BRACKET {
+    label, number:                      '['
+    base:                               '['
+    shift:                              '{'
+    ctrl, alt, meta:                    none
+}
+
+key RIGHT_BRACKET {
+    label, number:                      ']'
+    base:                               ']'
+    shift:                              '}'
+    ctrl, alt, meta:                    none
+}
+
+key BACKSLASH {
+    label, number:                      '\\'
+    base:                               '\\'
+    shift:                              '|'
+    ctrl, alt, meta:                    none
+}
+
+key SEMICOLON {
+    label, number:                      ';'
+    base:                               ';'
+    shift:                              ':'
+    ctrl, alt, meta:                    none
+}
+
+key APOSTROPHE {
+    label, number:                      '\''
+    base:                               '\''
+    shift:                              '"'
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 ### Numeric keypad ###
 
 key NUMPAD_0 {
+<<<<<<< HEAD
     label:                              '0'
     base:                               fallback INSERT
     numlock:                            '0'
@@ -439,6 +705,130 @@ key NUMPAD_COMMA {
 key NUMPAD_EQUALS {
     label:                              '='
     base:                               '='
+=======
+    label, number:                      '0'
+    base:                               fallback INSERT
+    numlock:                            '0'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_1 {
+    label, number:                      '1'
+    base:                               fallback MOVE_END
+    numlock:                            '1'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_2 {
+    label, number:                      '2'
+    base:                               fallback DPAD_DOWN
+    numlock:                            '2'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_3 {
+    label, number:                      '3'
+    base:                               fallback PAGE_DOWN
+    numlock:                            '3'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_4 {
+    label, number:                      '4'
+    base:                               fallback DPAD_LEFT
+    numlock:                            '4'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_5 {
+    label, number:                      '5'
+    base:                               fallback DPAD_CENTER
+    numlock:                            '5'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_6 {
+    label, number:                      '6'
+    base:                               fallback DPAD_RIGHT
+    numlock:                            '6'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_7 {
+    label, number:                      '7'
+    base:                               fallback MOVE_HOME
+    numlock:                            '7'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_8 {
+    label, number:                      '8'
+    base:                               fallback DPAD_UP
+    numlock:                            '8'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_9 {
+    label, number:                      '9'
+    base:                               fallback PAGE_UP
+    numlock:                            '9'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_LEFT_PAREN {
+    label, number:                      '('
+    base:                               '('
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_RIGHT_PAREN {
+    label, number:                      ')'
+    base:                               ')'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_DIVIDE {
+    label, number:                      '/'
+    base:                               '/'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_MULTIPLY {
+    label, number:                      '*'
+    base:                               '*'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_SUBTRACT {
+    label, number:                      '-'
+    base:                               '-'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_ADD {
+    label, number:                      '+'
+    base:                               '+'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_DOT {
+    label, number:                      '.'
+    base:                               fallback FORWARD_DEL
+    numlock:                            '.'
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_COMMA {
+    label, number:                      ','
+    base:                               ','
+    ctrl, alt, meta:                    none
+}
+
+key NUMPAD_EQUALS {
+    label, number:                      '='
+    base:                               '='
+    ctrl, alt, meta:                    none
+>>>>>>> upstream/master
 }
 
 key NUMPAD_ENTER {
@@ -450,22 +840,38 @@ key NUMPAD_ENTER {
 ### Special keys on phones ###
 
 key AT {
+<<<<<<< HEAD
     label:                              '@'
+=======
+    label, number:                      '@'
+>>>>>>> upstream/master
     base:                               '@'
 }
 
 key STAR {
+<<<<<<< HEAD
     label:                              '*'
+=======
+    label, number:                      '*'
+>>>>>>> upstream/master
     base:                               '*'
 }
 
 key POUND {
+<<<<<<< HEAD
     label:                              '#'
+=======
+    label, number:                      '#'
+>>>>>>> upstream/master
     base:                               '#'
 }
 
 key PLUS {
+<<<<<<< HEAD
     label:                              '+'
+=======
+    label, number:                      '+'
+>>>>>>> upstream/master
     base:                               '+'
 }
 

@@ -18,7 +18,10 @@ package android.media;
 
 import android.app.PendingIntent;
 import android.content.ComponentName;
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,11 +30,17 @@ import android.graphics.RectF;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+=======
+import android.os.Looper;
+import android.os.Message;
+import android.os.RemoteException;
+>>>>>>> upstream/master
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -134,6 +143,7 @@ public class RemoteControlClient
     public final static int PLAYSTATE_NONE               = 0;
 
     /**
+<<<<<<< HEAD
      * @hide
      * The default playback type, "local", indicating the presentation of the media is happening on
      * the same device (e.g. a phone, a tablet) as where it is controlled from.
@@ -216,6 +226,8 @@ public class RemoteControlClient
 
 
     /**
+=======
+>>>>>>> upstream/master
      * Flag indicating a RemoteControlClient makes use of the "previous" media key.
      *
      * @see #setTransportControlFlags(int)
@@ -601,8 +613,11 @@ public class RemoteControlClient
 
                 // send to remote control display if conditions are met
                 sendPlaybackState_syncCacheLock();
+<<<<<<< HEAD
                 // update AudioService
                 sendAudioServiceNewPlaybackInfo_syncCacheLock(PLAYBACKINFO_PLAYSTATE, state);
+=======
+>>>>>>> upstream/master
             }
         }
     }
@@ -629,6 +644,7 @@ public class RemoteControlClient
         }
     }
 
+<<<<<<< HEAD
     /** @hide */
     public final static int DEFAULT_PLAYBACK_VOLUME_HANDLING = PLAYBACK_VOLUME_VARIABLE;
     /** @hide */
@@ -745,6 +761,8 @@ public class RemoteControlClient
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Lock for all cached data
      */
@@ -779,7 +797,10 @@ public class RemoteControlClient
     /**
      * Cache for the metadata strings.
      * Access synchronized on mCacheLock
+<<<<<<< HEAD
      * This is re-initialized in apply() and so cannot be final.
+=======
+>>>>>>> upstream/master
      */
     private Bundle mMetadata = new Bundle();
 
@@ -825,7 +846,11 @@ public class RemoteControlClient
     /**
      * The IRemoteControlClient implementation
      */
+<<<<<<< HEAD
     private final IRemoteControlClient mIRCC = new IRemoteControlClient.Stub() {
+=======
+    private IRemoteControlClient mIRCC = new IRemoteControlClient.Stub() {
+>>>>>>> upstream/master
 
         public void onInformationRequested(int clientGeneration, int infoFlags,
                 int artWidth, int artHeight) {
@@ -878,6 +903,7 @@ public class RemoteControlClient
         }
     };
 
+<<<<<<< HEAD
     /**
      * @hide
      * Default value for the unique identifier
@@ -906,6 +932,8 @@ public class RemoteControlClient
         return mRcseId;
     }
 
+=======
+>>>>>>> upstream/master
     private EventHandler mEventHandler;
     private final static int MSG_REQUEST_PLAYBACK_STATE = 1;
     private final static int MSG_REQUEST_METADATA = 2;
@@ -962,9 +990,12 @@ public class RemoteControlClient
         }
     }
 
+<<<<<<< HEAD
     //===========================================================
     // Communication with IRemoteControlDisplay
 
+=======
+>>>>>>> upstream/master
     private void detachFromDisplay_syncCacheLock() {
         mRcDisplay = null;
         mArtworkExpectedWidth = ARTWORK_INVALID_SIZE;
@@ -1036,6 +1067,7 @@ public class RemoteControlClient
         }
     }
 
+<<<<<<< HEAD
     //===========================================================
     // Communication with AudioService
 
@@ -1067,6 +1099,8 @@ public class RemoteControlClient
     //===========================================================
     // Message handlers
 
+=======
+>>>>>>> upstream/master
     private void onNewInternalClientGen(Integer clientGeneration, int artWidth, int artHeight) {
         synchronized (mCacheLock) {
             // this remote control client is told it is the "focused" one:
@@ -1101,9 +1135,12 @@ public class RemoteControlClient
         }
     }
 
+<<<<<<< HEAD
     //===========================================================
     // Internal utilities
 
+=======
+>>>>>>> upstream/master
     /**
      * Scale a bitmap to fit the smallest dimension by uniformly scaling the incoming bitmap.
      * If the bitmap fits, then do nothing and return the original.
@@ -1122,11 +1159,15 @@ public class RemoteControlClient
                 float scale = Math.min((float) maxWidth / width, (float) maxHeight / height);
                 int newWidth = Math.round(scale * width);
                 int newHeight = Math.round(scale * height);
+<<<<<<< HEAD
                 Bitmap.Config newConfig = bitmap.getConfig();
                 if (newConfig == null) {
                     newConfig = Bitmap.Config.ARGB_8888;
                 }
                 Bitmap outBitmap = Bitmap.createBitmap(newWidth, newHeight, newConfig);
+=======
+                Bitmap outBitmap = Bitmap.createBitmap(newWidth, newHeight, bitmap.getConfig());
+>>>>>>> upstream/master
                 Canvas canvas = new Canvas(outBitmap);
                 Paint paint = new Paint();
                 paint.setAntiAlias(true);

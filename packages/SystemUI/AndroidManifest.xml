@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.android.systemui"
+<<<<<<< HEAD
         coreApp="true">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -58,13 +59,31 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
+=======
+        coreApp="true"
+        android:sharedUserId="android.uid.system"
+        android:process="system"
+        >
+
+    <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.MANAGE_USB" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+>>>>>>> upstream/master
     <application
         android:persistent="true"
         android:allowClearUserData="false"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:label="@string/app_label"
+<<<<<<< HEAD
         android:icon="@*android:drawable/platlogo">
+=======
+        android:icon="@drawable/ic_launcher_settings">
+>>>>>>> upstream/master
 
         <!-- Broadcast receiver that gets the broadcast at boot time and starts
              up everything else.
@@ -93,6 +112,7 @@
             </intent-filter>
         </receiver>
 
+<<<<<<< HEAD
         <!-- should you need to launch the screensaver, this is a good way to do it -->
         <activity android:name=".DreamsDockLauncher"
                 android:theme="@android:style/Theme.Dialog"
@@ -113,6 +133,8 @@
         </receiver>
 
 
+=======
+>>>>>>> upstream/master
         <activity android:name=".usb.UsbStorageActivity"
                   android:label="@*android:string/usb_storage_activity_title"
                   android:excludeFromRecents="true">
@@ -122,11 +144,14 @@
                 android:excludeFromRecents="true">
         </activity>
 
+<<<<<<< HEAD
 	<!-- Flashlight Toggle Activity -->
 	<activity
  	    android:name="com.android.systemui.statusbar.powerwidget.Torch">
  	</activity>
 
+=======
+>>>>>>> upstream/master
         <!-- started from UsbDeviceSettingsManager -->
         <activity android:name=".usb.UsbConfirmActivity"
             android:exported="true"
@@ -176,20 +201,37 @@
 
         <!-- started from ... somewhere -->
         <activity
+<<<<<<< HEAD
             android:name=".BeanBag"
             android:exported="true"
             android:label="BeanBag"
             android:icon="@drawable/redbeandroid"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
+=======
+            android:name=".Nyandroid"
+            android:exported="true"
+            android:label="Nyandroid"
+            android:icon="@drawable/nyandroid04"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+>>>>>>> upstream/master
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
+<<<<<<< HEAD
                 <category android:name="com.android.internal.category.PLATLOGO" />
 <!--            <category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
+=======
+<!--                <category android:name="android.intent.category.DREAM" />-->
+            </intent-filter>
+        </activity>
+	<activity
+	    android:name="com.android.systemui.statusbar.powerwidget.Torch">
+	</activity>
+>>>>>>> upstream/master
     </application>
 </manifest>

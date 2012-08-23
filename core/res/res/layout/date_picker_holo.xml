@@ -41,10 +41,15 @@
             android:id="@+id/month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginTop="16dip"
             android:layout_marginBottom="16dip"
             android:layout_marginLeft="8dip"
             android:layout_marginRight="8dip"
+=======
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+>>>>>>> upstream/master
             android:focusable="true"
             android:focusableInTouchMode="true"
             />
@@ -54,10 +59,15 @@
             android:id="@+id/day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginTop="16dip"
             android:layout_marginBottom="16dip"
             android:layout_marginLeft="8dip"
             android:layout_marginRight="8dip"
+=======
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+>>>>>>> upstream/master
             android:focusable="true"
             android:focusableInTouchMode="true"
             />
@@ -67,9 +77,13 @@
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginTop="16dip"
             android:layout_marginBottom="16dip"
             android:layout_marginLeft="8dip"
+=======
+            android:layout_marginLeft="16dip"
+>>>>>>> upstream/master
             android:layout_marginRight="16dip"
             android:focusable="true"
             android:focusableInTouchMode="true"

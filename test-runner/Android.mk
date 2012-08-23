@@ -20,7 +20,11 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
+<<<<<<< HEAD
 LOCAL_JAVA_LIBRARIES := core core-junit framework framework2
+=======
+LOCAL_JAVA_LIBRARIES := core core-junit framework
+>>>>>>> upstream/master
 
 LOCAL_MODULE:= android.test.runner
 

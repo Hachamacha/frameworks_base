@@ -268,11 +268,14 @@ class BluetoothEventLoop {
      */
     private void onDeviceCreated(String deviceObjectPath) {
         String address = mBluetoothService.getAddressFromObjectPath(deviceObjectPath);
+<<<<<<< HEAD
         if (address == null) {
             Log.e(TAG, "onDeviceCreated: device address null!" + " deviceObjectPath: " +
                   deviceObjectPath);
             return;
         }
+=======
+>>>>>>> upstream/master
         if (!mBluetoothService.isRemoteDeviceInCache(address)) {
             // Incoming connection, we haven't seen this device, add to cache.
             String[] properties = mBluetoothService.getRemoteDeviceProperties(address);
@@ -280,6 +283,10 @@ class BluetoothEventLoop {
                 addDevice(address, properties);
             }
         }
+<<<<<<< HEAD
+=======
+        return;
+>>>>>>> upstream/master
     }
 
     /**
@@ -409,10 +416,13 @@ class BluetoothEventLoop {
             mContext.sendBroadcast(intent, BLUETOOTH_PERM);
         } else if (name.equals("Alias")) {
             mBluetoothService.setRemoteDeviceProperty(address, name, propValues[1]);
+<<<<<<< HEAD
             Intent intent = new Intent(BluetoothDevice.ACTION_ALIAS_CHANGED);
             intent.putExtra(BluetoothDevice.EXTRA_DEVICE, device);
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
             mContext.sendBroadcast(intent, BLUETOOTH_PERM);
+=======
+>>>>>>> upstream/master
         } else if (name.equals("Class")) {
             mBluetoothService.setRemoteDeviceProperty(address, name, propValues[1]);
             Intent intent = new Intent(BluetoothDevice.ACTION_CLASS_CHANGED);

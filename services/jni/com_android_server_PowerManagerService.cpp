@@ -24,6 +24,7 @@
 #include <limits.h>
 
 #include <android_runtime/AndroidRuntime.h>
+<<<<<<< HEAD
 #include <gui/ISurfaceComposer.h>
 #include <utils/Timers.h>
 #include <utils/misc.h>
@@ -34,6 +35,11 @@
 #include <suspend/autosuspend.h>
 
 #include <private/gui/ComposerService.h>
+=======
+#include <utils/Timers.h>
+#include <surfaceflinger/ISurfaceComposer.h>
+#include <surfaceflinger/SurfaceComposerClient.h>
+>>>>>>> upstream/master
 
 #include "com_android_server_PowerManagerService.h"
 
@@ -49,7 +55,10 @@ static struct {
 // ----------------------------------------------------------------------------
 
 static jobject gPowerManagerServiceObj;
+<<<<<<< HEAD
 static struct power_module* gPowerModule;
+=======
+>>>>>>> upstream/master
 
 static Mutex gPowerManagerLock;
 static bool gScreenOn;
@@ -64,7 +73,11 @@ static const nsecs_t MIN_TIME_BETWEEN_USERACTIVITIES = 500 * 1000000L; // 500ms
 
 static bool checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
     if (env->ExceptionCheck()) {
+<<<<<<< HEAD
         ALOGE("An exception was thrown by callback '%s'.", methodName);
+=======
+        LOGE("An exception was thrown by callback '%s'.", methodName);
+>>>>>>> upstream/master
         LOGE_EX(env);
         env->ExceptionClear();
         return true;
@@ -83,11 +96,14 @@ bool android_server_PowerManagerService_isScreenBright() {
 }
 
 void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType) {
+<<<<<<< HEAD
     // Tell the power HAL when user activity occurs.
     if (gPowerModule && gPowerModule->powerHint) {
         gPowerModule->powerHint(gPowerModule, POWER_HINT_INTERACTION, NULL);
     }
 
+=======
+>>>>>>> upstream/master
     if (gPowerManagerServiceObj) {
         // Throttle calls into user activity by event type.
         // We're a little conservative about argument checking here in case the caller
@@ -124,6 +140,7 @@ void android_server_PowerManagerService_goToSleep(nsecs_t eventTime) {
 
 // ----------------------------------------------------------------------------
 
+<<<<<<< HEAD
 static void nativeInit(JNIEnv* env, jobject obj) {
     gPowerManagerServiceObj = env->NewGlobalRef(obj);
 
@@ -137,18 +154,30 @@ static void nativeInit(JNIEnv* env, jobject obj) {
 }
 
 static void nativeSetPowerState(JNIEnv* env,
+=======
+static void android_server_PowerManagerService_nativeInit(JNIEnv* env, jobject obj) {
+    gPowerManagerServiceObj = env->NewGlobalRef(obj);
+}
+
+static void android_server_PowerManagerService_nativeSetPowerState(JNIEnv* env,
+>>>>>>> upstream/master
         jobject serviceObj, jboolean screenOn, jboolean screenBright) {
     AutoMutex _l(gPowerManagerLock);
     gScreenOn = screenOn;
     gScreenBright = screenBright;
 }
 
+<<<<<<< HEAD
 static void nativeStartSurfaceFlingerAnimation(JNIEnv* env,
+=======
+static void android_server_PowerManagerService_nativeStartSurfaceFlingerAnimation(JNIEnv* env,
+>>>>>>> upstream/master
         jobject obj, jint mode) {
     sp<ISurfaceComposer> s(ComposerService::getComposerService());
     s->turnElectronBeamOff(mode);
 }
 
+<<<<<<< HEAD
 static void nativeAcquireWakeLock(JNIEnv *env, jobject clazz, jint lock, jstring idObj) {
     if (idObj == NULL) {
         jniThrowNullPointerException(env, "id is null");
@@ -208,11 +237,14 @@ static void nativeReboot(JNIEnv *env, jobject clazz, jstring reason) {
 }
 
 
+=======
+>>>>>>> upstream/master
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gPowerManagerServiceMethods[] = {
     /* name, signature, funcPtr */
     { "nativeInit", "()V",
+<<<<<<< HEAD
             (void*) nativeInit },
     { "nativeSetPowerState", "(ZZ)V",
             (void*) nativeSetPowerState },
@@ -228,6 +260,13 @@ static JNINativeMethod gPowerManagerServiceMethods[] = {
             (void*) nativeShutdown },
     { "nativeReboot", "(Ljava/lang/String;)V",
             (void*) nativeReboot },
+=======
+            (void*) android_server_PowerManagerService_nativeInit },
+    { "nativeSetPowerState", "(ZZ)V",
+            (void*) android_server_PowerManagerService_nativeSetPowerState },
+    { "nativeStartSurfaceFlingerAnimation", "(I)V",
+            (void*) android_server_PowerManagerService_nativeStartSurfaceFlingerAnimation },
+>>>>>>> upstream/master
 };
 
 #define FIND_CLASS(var, className) \
@@ -264,8 +303,11 @@ int register_android_server_PowerManagerService(JNIEnv* env) {
     }
     gScreenOn = true;
     gScreenBright = true;
+<<<<<<< HEAD
     gPowerManagerServiceObj = NULL;
     gPowerModule = NULL;
+=======
+>>>>>>> upstream/master
     return 0;
 }
 

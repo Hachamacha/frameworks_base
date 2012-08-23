@@ -26,12 +26,18 @@ import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+>>>>>>> upstream/master
 
 
 /**
@@ -41,13 +47,21 @@ import android.view.accessibility.AccessibilityNodeInfo;
  *
  * <p>See the <a href="{@docRoot}resources/tutorials/views/hello-spinner.html">Spinner
  * tutorial</a>.</p>
+<<<<<<< HEAD
  *
+=======
+ * 
+>>>>>>> upstream/master
  * @attr ref android.R.styleable#Spinner_prompt
  */
 @Widget
 public class Spinner extends AbsSpinner implements OnClickListener {
     private static final String TAG = "Spinner";
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     // Only measure this many items to get a decent max width.
     private static final int MAX_ITEMS_MEASURED = 15;
 
@@ -55,7 +69,11 @@ public class Spinner extends AbsSpinner implements OnClickListener {
      * Use a dialog window for selecting spinner options.
      */
     public static final int MODE_DIALOG = 0;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Use a dropdown anchored to the Spinner for selecting spinner options.
      */
@@ -203,6 +221,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Set the background drawable for the spinner's popup window of choices.
      * Only valid in {@link #MODE_DROPDOWN}; this method is a no-op in other modes.
@@ -327,6 +346,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         return mDropDownWidth;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
@@ -356,6 +377,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Describes how the selected item view is positioned. The default is determined by the
      * current theme.
@@ -366,6 +388,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         return mGravity;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
         super.setAdapter(adapter);
@@ -417,6 +441,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         throw new RuntimeException("setOnItemClickListener cannot be used with a spinner.");
     }
 
+<<<<<<< HEAD
     /**
      * @hide internal use only
      */
@@ -424,6 +449,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         super.setOnItemClickListener(l);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -600,12 +627,17 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
         return handled;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     public void onClick(DialogInterface dialog, int which) {
         setSelection(which);
         dialog.dismiss();
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -618,6 +650,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         info.setClassName(Spinner.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Sets the prompt to display when the dialog is shown.
      * @param prompt the prompt to set
@@ -810,6 +844,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
          */
         public void setPromptText(CharSequence hintText);
         public CharSequence getHintText();
+<<<<<<< HEAD
 
         public void setBackgroundDrawable(Drawable bg);
         public void setVerticalOffset(int px);
@@ -817,6 +852,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         public Drawable getBackground();
         public int getVerticalOffset();
         public int getHorizontalOffset();
+=======
+>>>>>>> upstream/master
     }
     
     private class DialogPopup implements SpinnerPopup, DialogInterface.OnClickListener {
@@ -856,6 +893,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         
         public void onClick(DialogInterface dialog, int which) {
             setSelection(which);
+<<<<<<< HEAD
             if (mOnItemClickListener != null) {
                 performItemClick(null, which, mListAdapter.getItemId(which));
             }
@@ -891,6 +929,10 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         public int getHorizontalOffset() {
             return 0;
         }
+=======
+            dismiss();
+        }
+>>>>>>> upstream/master
     }
     
     private class DropdownPopup extends ListPopupWindow implements SpinnerPopup {
@@ -906,9 +948,12 @@ public class Spinner extends AbsSpinner implements OnClickListener {
             setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView parent, View v, int position, long id) {
                     Spinner.this.setSelection(position);
+<<<<<<< HEAD
                     if (mOnItemClickListener != null) {
                         Spinner.this.performItemClick(v, position, mAdapter.getItemId(position));
                     }
+=======
+>>>>>>> upstream/master
                     dismiss();
                 }
             });
@@ -931,6 +976,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
         @Override
         public void show() {
+<<<<<<< HEAD
             final Drawable background = getBackground();
             int bgOffset = 0;
             if (background != null) {
@@ -940,10 +986,13 @@ public class Spinner extends AbsSpinner implements OnClickListener {
                 mTempRect.left = mTempRect.right = 0;
             }
 
+=======
+>>>>>>> upstream/master
             final int spinnerPaddingLeft = Spinner.this.getPaddingLeft();
             if (mDropDownWidth == WRAP_CONTENT) {
                 final int spinnerWidth = Spinner.this.getWidth();
                 final int spinnerPaddingRight = Spinner.this.getPaddingRight();
+<<<<<<< HEAD
 
                 int contentWidth =  measureContentWidth(
                         (SpinnerAdapter) mAdapter, getBackground());
@@ -955,6 +1004,11 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
                 setContentWidth(Math.max(
                        contentWidth, spinnerWidth - spinnerPaddingLeft - spinnerPaddingRight));
+=======
+                setContentWidth(Math.max(
+                        measureContentWidth((SpinnerAdapter) mAdapter, getBackground()),
+                        spinnerWidth - spinnerPaddingLeft - spinnerPaddingRight));
+>>>>>>> upstream/master
             } else if (mDropDownWidth == MATCH_PARENT) {
                 final int spinnerWidth = Spinner.this.getWidth();
                 final int spinnerPaddingRight = Spinner.this.getPaddingRight();
@@ -962,6 +1016,15 @@ public class Spinner extends AbsSpinner implements OnClickListener {
             } else {
                 setContentWidth(mDropDownWidth);
             }
+<<<<<<< HEAD
+=======
+            final Drawable background = getBackground();
+            int bgOffset = 0;
+            if (background != null) {
+                background.getPadding(mTempRect);
+                bgOffset = -mTempRect.left;
+            }
+>>>>>>> upstream/master
             setHorizontalOffset(bgOffset + spinnerPaddingLeft);
             setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
             super.show();

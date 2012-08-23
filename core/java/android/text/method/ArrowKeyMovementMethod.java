@@ -280,6 +280,11 @@ public class ArrowKeyMovementMethod extends BaseMovementMethod implements Moveme
                 if (isSelecting(buffer)) {
                     buffer.removeSpan(LAST_TAP_DOWN);
                     Selection.extendSelection(buffer, offset);
+<<<<<<< HEAD
+=======
+                } else if (!widget.shouldIgnoreActionUpEvent()) {
+                    Selection.setSelection(buffer, offset);
+>>>>>>> upstream/master
                 }
 
                 MetaKeyKeyListener.adjustMetaAfterKeypress(buffer);

@@ -24,7 +24,11 @@ LOCAL_SRC_FILES := \
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := backup_helper_test
 LOCAL_MODULE_PATH := $(TARGET_OUT_DATA_APPS)
+<<<<<<< HEAD
 LOCAL_SHARED_LIBRARIES := libandroidfw libutils
+=======
+LOCAL_SHARED_LIBRARIES := libutils
+>>>>>>> upstream/master
 
 include $(BUILD_EXECUTABLE)
 

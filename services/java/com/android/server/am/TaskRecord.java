@@ -19,8 +19,12 @@ package com.android.server.am;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+<<<<<<< HEAD
 import android.os.UserId;
 import android.util.Slog;
+=======
+import android.graphics.Bitmap;
+>>>>>>> upstream/master
 
 import java.io.PrintWriter;
 
@@ -38,7 +42,10 @@ class TaskRecord extends ThumbnailHolder {
     boolean askedCompatMode;// Have asked the user about compat mode for this task.
 
     String stringName;      // caching of toString() result.
+<<<<<<< HEAD
     int userId;             // user for which this task was created
+=======
+>>>>>>> upstream/master
     
     TaskRecord(int _taskId, ActivityInfo info, Intent _intent) {
         taskId = _taskId;
@@ -62,6 +69,7 @@ class TaskRecord extends ThumbnailHolder {
                 // If this Intent has a selector, we want to clear it for the
                 // recent task since it is not relevant if the user later wants
                 // to re-launch the app.
+<<<<<<< HEAD
                 if (_intent.getSelector() != null || _intent.getSourceBounds() != null) {
                     _intent = new Intent(_intent);
                     _intent.setSelector(null);
@@ -70,6 +78,13 @@ class TaskRecord extends ThumbnailHolder {
             }
             if (ActivityManagerService.DEBUG_TASKS) Slog.v(ActivityManagerService.TAG,
                     "Setting Intent of " + this + " to " + _intent);
+=======
+                if (_intent.getSelector() != null) {
+                    _intent = new Intent(_intent);
+                    _intent.setSelector(null);
+                }
+            }
+>>>>>>> upstream/master
             intent = _intent;
             realActivity = _intent != null ? _intent.getComponent() : null;
             origActivity = null;
@@ -80,9 +95,12 @@ class TaskRecord extends ThumbnailHolder {
                 Intent targetIntent = new Intent(_intent);
                 targetIntent.setComponent(targetComponent);
                 targetIntent.setSelector(null);
+<<<<<<< HEAD
                 targetIntent.setSourceBounds(null);
                 if (ActivityManagerService.DEBUG_TASKS) Slog.v(ActivityManagerService.TAG,
                         "Setting Intent of " + this + " to target " + targetIntent);
+=======
+>>>>>>> upstream/master
                 intent = targetIntent;
                 realActivity = targetComponent;
                 origActivity = _intent.getComponent();
@@ -92,13 +110,18 @@ class TaskRecord extends ThumbnailHolder {
                 origActivity = new ComponentName(info.packageName, info.name);
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         if (intent != null &&
                 (intent.getFlags()&Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED) != 0) {
             // Once we are set to an Intent with this flag, we count this
             // task as having a true root activity.
             rootWasReset = true;
         }
+<<<<<<< HEAD
 
         if (info.applicationInfo != null) {
             userId = UserId.getUserId(info.applicationInfo.uid);
@@ -110,6 +133,14 @@ class TaskRecord extends ThumbnailHolder {
             pw.print(prefix); pw.print("numActivities="); pw.print(numActivities);
                     pw.print(" rootWasReset="); pw.print(rootWasReset);
                     pw.print(" userId="); pw.println(userId);
+=======
+    }
+    
+    void dump(PrintWriter pw, String prefix) {
+        if (numActivities != 0 || rootWasReset) {
+            pw.print(prefix); pw.print("numActivities="); pw.print(numActivities);
+                    pw.print(" rootWasReset="); pw.println(rootWasReset);
+>>>>>>> upstream/master
         }
         if (affinity != null) {
             pw.print(prefix); pw.print("affinity="); pw.println(affinity);
@@ -117,14 +148,22 @@ class TaskRecord extends ThumbnailHolder {
         if (intent != null) {
             StringBuilder sb = new StringBuilder(128);
             sb.append(prefix); sb.append("intent={");
+<<<<<<< HEAD
             intent.toShortString(sb, false, true, false, true);
+=======
+            intent.toShortString(sb, false, true, false);
+>>>>>>> upstream/master
             sb.append('}');
             pw.println(sb.toString());
         }
         if (affinityIntent != null) {
             StringBuilder sb = new StringBuilder(128);
             sb.append(prefix); sb.append("affinityIntent={");
+<<<<<<< HEAD
             affinityIntent.toShortString(sb, false, true, false, true);
+=======
+            affinityIntent.toShortString(sb, false, true, false);
+>>>>>>> upstream/master
             sb.append('}');
             pw.println(sb.toString());
         }
@@ -167,8 +206,11 @@ class TaskRecord extends ThumbnailHolder {
         } else {
             sb.append(" ??");
         }
+<<<<<<< HEAD
         sb.append(" U ");
         sb.append(userId);
+=======
+>>>>>>> upstream/master
         sb.append('}');
         return stringName = sb.toString();
     }

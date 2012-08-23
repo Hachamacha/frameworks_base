@@ -27,7 +27,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.os.Looper;
+=======
+>>>>>>> upstream/master
 import android.os.Message;
 import android.util.Log;
 import android.util.TypedValue;
@@ -104,6 +107,10 @@ public class Dialog implements DialogInterface, Window.Callback,
     private boolean mShowing = false;
     private boolean mCanceled = false;
 
+<<<<<<< HEAD
+=======
+    private final Thread mUiThread;
+>>>>>>> upstream/master
     private final Handler mHandler = new Handler();
 
     private static final int DISMISS = 0x43;
@@ -162,6 +169,10 @@ public class Dialog implements DialogInterface, Window.Callback,
         w.setCallback(this);
         w.setWindowManager(mWindowManager, null, null);
         w.setGravity(Gravity.CENTER);
+<<<<<<< HEAD
+=======
+        mUiThread = Thread.currentThread();
+>>>>>>> upstream/master
         mListenersHandler = new ListenersHandler(this);
     }
     
@@ -298,10 +309,18 @@ public class Dialog implements DialogInterface, Window.Callback,
      * that in {@link #onStop}.
      */
     public void dismiss() {
+<<<<<<< HEAD
         if (Looper.myLooper() == mHandler.getLooper()) {
             dismissDialog();
         } else {
             mHandler.post(mDismissAction);
+=======
+        if (Thread.currentThread() != mUiThread) {
+            mHandler.post(mDismissAction);
+        } else {
+            mHandler.removeCallbacks(mDismissAction);
+            mDismissAction.run();
+>>>>>>> upstream/master
         }
     }
 
@@ -589,7 +608,11 @@ public class Dialog implements DialogInterface, Window.Callback,
     }
 
     /**
+<<<<<<< HEAD
      * Called when a key shortcut event is not handled by any of the views in the Dialog.
+=======
+     * Called when an key shortcut event is not handled by any of the views in the Dialog.
+>>>>>>> upstream/master
      * Override this method to implement global key shortcuts for the Dialog.
      * Key shortcuts can also be implemented by setting the
      * {@link MenuItem#setShortcut(char, char) shortcut} property of menu items.

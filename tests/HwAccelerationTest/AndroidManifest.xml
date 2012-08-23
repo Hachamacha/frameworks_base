@@ -30,6 +30,7 @@
         android:label="HwUi"
         android:hardwareAccelerated="true">
 
+<<<<<<< HEAD
         <meta-data android:name="android.graphics.renderThread" android:value="true" />
 
         <activity
@@ -59,6 +60,8 @@
             </intent-filter>
         </activity>
         
+=======
+>>>>>>> upstream/master
         <activity
                 android:name="DisplayListLayersActivity"
                 android:label="__DisplayListLayers">
@@ -67,6 +70,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
         <activity
                 android:name="MatrixActivity"
@@ -76,6 +80,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+=======
+>>>>>>> upstream/master
         
         <activity
                 android:name="TextFadeActivity"
@@ -504,6 +510,7 @@
         </activity>
 
         <activity
+<<<<<<< HEAD
                 android:name="PosTextActivity"
                 android:label="_PosText"
                 android:theme="@android:style/Theme.NoTitleBar">
@@ -514,6 +521,8 @@
         </activity>
 
         <activity
+=======
+>>>>>>> upstream/master
                 android:name="ListActivity"
                 android:label="__List">
             <intent-filter>
@@ -577,6 +586,7 @@
         </activity>
 
         <activity
+<<<<<<< HEAD
                 android:name="TextOnPathActivity"
                 android:label="_TextOnPath">
             <intent-filter>
@@ -595,6 +605,8 @@
         </activity>
 
         <activity
+=======
+>>>>>>> upstream/master
                 android:name="PointsActivity"
                 android:label="_Points">
             <intent-filter>
@@ -647,6 +659,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+        
+>>>>>>> upstream/master
 
         <activity
                 android:name="StackActivity"
@@ -657,6 +673,7 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity
                 android:name="PathDestructionActivity"
                 android:label="_PathDestruction">
@@ -693,5 +710,7 @@
             </intent-filter>
         </activity>
 
+=======
+>>>>>>> upstream/master
     </application>
 </manifest>

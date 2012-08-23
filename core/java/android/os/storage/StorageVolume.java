@@ -16,7 +16,10 @@
 
 package android.os.storage;
 
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -29,7 +32,11 @@ public class StorageVolume implements Parcelable {
     //private static final String TAG = "StorageVolume";
 
     private final String mPath;
+<<<<<<< HEAD
     private final int mDescriptionId;
+=======
+    private final String mDescription;
+>>>>>>> upstream/master
     private final boolean mRemovable;
     private final boolean mEmulated;
     private final int mMtpReserveSpace;
@@ -43,10 +50,17 @@ public class StorageVolume implements Parcelable {
     // ACTION_MEDIA_BAD_REMOVAL, ACTION_MEDIA_UNMOUNTABLE and ACTION_MEDIA_EJECT broadcasts.
     public static final String EXTRA_STORAGE_VOLUME = "storage_volume";
 
+<<<<<<< HEAD
     public StorageVolume(String path, int descriptionId, boolean removable,
             boolean emulated, int mtpReserveSpace, boolean allowMassStorage, long maxFileSize) {
         mPath = path;
         mDescriptionId = descriptionId;
+=======
+    public StorageVolume(String path, String description, boolean removable,
+            boolean emulated, int mtpReserveSpace, boolean allowMassStorage, long maxFileSize) {
+        mPath = path;
+        mDescription = description;
+>>>>>>> upstream/master
         mRemovable = removable;
         mEmulated = emulated;
         mMtpReserveSpace = mtpReserveSpace;
@@ -55,11 +69,19 @@ public class StorageVolume implements Parcelable {
     }
 
     // for parcelling only
+<<<<<<< HEAD
     private StorageVolume(String path, int descriptionId, boolean removable,
             boolean emulated, int mtpReserveSpace, int storageId,
             boolean allowMassStorage, long maxFileSize) {
         mPath = path;
         mDescriptionId = descriptionId;
+=======
+    private StorageVolume(String path, String description, boolean removable,
+            boolean emulated, int mtpReserveSpace, int storageId,
+            boolean allowMassStorage, long maxFileSize) {
+        mPath = path;
+        mDescription = description;
+>>>>>>> upstream/master
         mRemovable = removable;
         mEmulated = emulated;
         mMtpReserveSpace = mtpReserveSpace;
@@ -82,12 +104,17 @@ public class StorageVolume implements Parcelable {
      *
      * @return the volume description
      */
+<<<<<<< HEAD
     public String getDescription(Context context) {
         return context.getResources().getString(mDescriptionId);
     }
 
     public int getDescriptionId() {
         return mDescriptionId;
+=======
+    public String getDescription() {
+        return mDescription;
+>>>>>>> upstream/master
     }
 
     /**
@@ -177,8 +204,13 @@ public class StorageVolume implements Parcelable {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "StorageVolume [mAllowMassStorage=" + mAllowMassStorage + ", mDescriptionId="
                 + mDescriptionId + ", mEmulated=" + mEmulated + ", mMaxFileSize=" + mMaxFileSize
+=======
+        return "StorageVolume [mAllowMassStorage=" + mAllowMassStorage + ", mDescription="
+                + mDescription + ", mEmulated=" + mEmulated + ", mMaxFileSize=" + mMaxFileSize
+>>>>>>> upstream/master
                 + ", mMtpReserveSpace=" + mMtpReserveSpace + ", mPath=" + mPath + ", mRemovable="
                 + mRemovable + ", mStorageId=" + mStorageId + "]";
     }
@@ -187,14 +219,22 @@ public class StorageVolume implements Parcelable {
         new Parcelable.Creator<StorageVolume>() {
         public StorageVolume createFromParcel(Parcel in) {
             String path = in.readString();
+<<<<<<< HEAD
             int descriptionId = in.readInt();
+=======
+            String description = in.readString();
+>>>>>>> upstream/master
             int removable = in.readInt();
             int emulated = in.readInt();
             int storageId = in.readInt();
             int mtpReserveSpace = in.readInt();
             int allowMassStorage = in.readInt();
             long maxFileSize = in.readLong();
+<<<<<<< HEAD
             return new StorageVolume(path, descriptionId,
+=======
+            return new StorageVolume(path, description,
+>>>>>>> upstream/master
                     removable == 1, emulated == 1, mtpReserveSpace,
                     storageId, allowMassStorage == 1, maxFileSize);
         }
@@ -210,7 +250,11 @@ public class StorageVolume implements Parcelable {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mPath);
+<<<<<<< HEAD
         parcel.writeInt(mDescriptionId);
+=======
+        parcel.writeString(mDescription);
+>>>>>>> upstream/master
         parcel.writeInt(mRemovable ? 1 : 0);
         parcel.writeInt(mEmulated ? 1 : 0);
         parcel.writeInt(mStorageId);

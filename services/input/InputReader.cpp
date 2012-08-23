@@ -36,6 +36,7 @@
 // Log debug messages about gesture detection.
 #define DEBUG_GESTURES 0
 
+<<<<<<< HEAD
 // Log debug messages about the vibrator.
 #define DEBUG_VIBRATOR 0
 
@@ -44,6 +45,13 @@
 #include <cutils/log.h>
 #include <androidfw/Keyboard.h>
 #include <androidfw/VirtualKeyMap.h>
+=======
+#include "InputReader.h"
+
+#include <cutils/log.h>
+#include <ui/Keyboard.h>
+#include <ui/VirtualKeyMap.h>
+>>>>>>> upstream/master
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -240,8 +248,12 @@ InputReader::InputReader(const sp<EventHubInterface>& eventHub,
         const sp<InputReaderPolicyInterface>& policy,
         const sp<InputListenerInterface>& listener) :
         mContext(this), mEventHub(eventHub), mPolicy(policy),
+<<<<<<< HEAD
         mGlobalMetaState(0), mGeneration(1),
         mDisableVirtualKeysTimeout(LLONG_MIN), mNextTimeout(LLONG_MAX),
+=======
+        mGlobalMetaState(0), mDisableVirtualKeysTimeout(LLONG_MIN), mNextTimeout(LLONG_MAX),
+>>>>>>> upstream/master
         mConfigurationChangesToRefresh(0) {
     mQueuedListener = new QueuedInputListener(listener);
 
@@ -250,6 +262,10 @@ InputReader::InputReader(const sp<EventHubInterface>& eventHub,
 
         refreshConfigurationLocked(0);
         updateGlobalMetaStateLocked();
+<<<<<<< HEAD
+=======
+        updateInputConfigurationLocked();
+>>>>>>> upstream/master
     } // release lock
 }
 
@@ -260,6 +276,7 @@ InputReader::~InputReader() {
 }
 
 void InputReader::loopOnce() {
+<<<<<<< HEAD
     int32_t oldGeneration;
     int32_t timeoutMillis;
     bool inputDevicesChanged = false;
@@ -276,6 +293,20 @@ void InputReader::loopOnce() {
             timeoutMillis = 0;
             refreshConfigurationLocked(changes);
         } else if (mNextTimeout != LLONG_MAX) {
+=======
+    int32_t timeoutMillis;
+    { // acquire lock
+        AutoMutex _l(mLock);
+
+        uint32_t changes = mConfigurationChangesToRefresh;
+        if (changes) {
+            mConfigurationChangesToRefresh = 0;
+            refreshConfigurationLocked(changes);
+        }
+
+        timeoutMillis = -1;
+        if (mNextTimeout != LLONG_MAX) {
+>>>>>>> upstream/master
             nsecs_t now = systemTime(SYSTEM_TIME_MONOTONIC);
             timeoutMillis = toMillisecondTimeoutDelay(now, mNextTimeout);
         }
@@ -285,11 +316,15 @@ void InputReader::loopOnce() {
 
     { // acquire lock
         AutoMutex _l(mLock);
+<<<<<<< HEAD
         mReaderIsAliveCondition.broadcast();
+=======
+>>>>>>> upstream/master
 
         if (count) {
             processEventsLocked(mEventBuffer, count);
         }
+<<<<<<< HEAD
 
         if (mNextTimeout != LLONG_MAX) {
             nsecs_t now = systemTime(SYSTEM_TIME_MONOTONIC);
@@ -313,6 +348,18 @@ void InputReader::loopOnce() {
         mPolicy->notifyInputDevicesChanged(inputDevices);
     }
 
+=======
+        if (!count || timeoutMillis == 0) {
+            nsecs_t now = systemTime(SYSTEM_TIME_MONOTONIC);
+#if DEBUG_RAW_EVENTS
+            LOGD("Timeout expired, latency=%0.3fms", (now - mNextTimeout) * 0.000001f);
+#endif
+            mNextTimeout = LLONG_MAX;
+            timeoutExpiredLocked(now);
+        }
+    } // release lock
+
+>>>>>>> upstream/master
     // Flush queued events out to the listener.
     // This must happen outside of the lock because the listener could potentially call
     // back into the InputReader's methods, such as getScanCodeState, or become blocked
@@ -337,7 +384,11 @@ void InputReader::processEventsLocked(const RawEvent* rawEvents, size_t count) {
                 batchSize += 1;
             }
 #if DEBUG_RAW_EVENTS
+<<<<<<< HEAD
             ALOGD("BatchSize: %d Count: %d", batchSize, count);
+=======
+            LOGD("BatchSize: %d Count: %d", batchSize, count);
+>>>>>>> upstream/master
 #endif
             processEventsForDeviceLocked(deviceId, rawEvent, batchSize);
         } else {
@@ -352,7 +403,11 @@ void InputReader::processEventsLocked(const RawEvent* rawEvents, size_t count) {
                 handleConfigurationChangedLocked(rawEvent->when);
                 break;
             default:
+<<<<<<< HEAD
                 ALOG_ASSERT(false); // can't happen
+=======
+                LOG_ASSERT(false); // can't happen
+>>>>>>> upstream/master
                 break;
             }
         }
@@ -362,6 +417,7 @@ void InputReader::processEventsLocked(const RawEvent* rawEvents, size_t count) {
 }
 
 void InputReader::addDeviceLocked(nsecs_t when, int32_t deviceId) {
+<<<<<<< HEAD
     ssize_t deviceIndex = mDevices.indexOfKey(deviceId);
     if (deviceIndex >= 0) {
         ALOGW("Ignoring spurious device added event for deviceId %d.", deviceId);
@@ -372,10 +428,17 @@ void InputReader::addDeviceLocked(nsecs_t when, int32_t deviceId) {
     uint32_t classes = mEventHub->getDeviceClasses(deviceId);
 
     InputDevice* device = createDeviceLocked(deviceId, identifier, classes);
+=======
+    String8 name = mEventHub->getDeviceName(deviceId);
+    uint32_t classes = mEventHub->getDeviceClasses(deviceId);
+
+    InputDevice* device = createDeviceLocked(deviceId, name, classes);
+>>>>>>> upstream/master
     device->configure(when, &mConfig, 0);
     device->reset(when);
 
     if (device->isIgnored()) {
+<<<<<<< HEAD
         ALOGI("Device added: id=%d, name='%s' (ignored non-input device)", deviceId,
                 identifier.name.string());
     } else {
@@ -385,11 +448,28 @@ void InputReader::addDeviceLocked(nsecs_t when, int32_t deviceId) {
 
     mDevices.add(deviceId, device);
     bumpGenerationLocked();
+=======
+        LOGI("Device added: id=%d, name='%s' (ignored non-input device)", deviceId, name.string());
+    } else {
+        LOGI("Device added: id=%d, name='%s', sources=0x%08x", deviceId, name.string(),
+                device->getSources());
+    }
+
+    ssize_t deviceIndex = mDevices.indexOfKey(deviceId);
+    if (deviceIndex < 0) {
+        mDevices.add(deviceId, device);
+    } else {
+        LOGW("Ignoring spurious device added event for deviceId %d.", deviceId);
+        delete device;
+        return;
+    }
+>>>>>>> upstream/master
 }
 
 void InputReader::removeDeviceLocked(nsecs_t when, int32_t deviceId) {
     InputDevice* device = NULL;
     ssize_t deviceIndex = mDevices.indexOfKey(deviceId);
+<<<<<<< HEAD
     if (deviceIndex < 0) {
         ALOGW("Ignoring spurious device removed event for deviceId %d.", deviceId);
         return;
@@ -404,6 +484,21 @@ void InputReader::removeDeviceLocked(nsecs_t when, int32_t deviceId) {
                 device->getId(), device->getName().string());
     } else {
         ALOGI("Device removed: id=%d, name='%s', sources=0x%08x",
+=======
+    if (deviceIndex >= 0) {
+        device = mDevices.valueAt(deviceIndex);
+        mDevices.removeItemsAt(deviceIndex, 1);
+    } else {
+        LOGW("Ignoring spurious device removed event for deviceId %d.", deviceId);
+        return;
+    }
+
+    if (device->isIgnored()) {
+        LOGI("Device removed: id=%d, name='%s' (ignored non-input device)",
+                device->getId(), device->getName().string());
+    } else {
+        LOGI("Device removed: id=%d, name='%s', sources=0x%08x",
+>>>>>>> upstream/master
                 device->getId(), device->getName().string(), device->getSources());
     }
 
@@ -412,9 +507,14 @@ void InputReader::removeDeviceLocked(nsecs_t when, int32_t deviceId) {
 }
 
 InputDevice* InputReader::createDeviceLocked(int32_t deviceId,
+<<<<<<< HEAD
         const InputDeviceIdentifier& identifier, uint32_t classes) {
     InputDevice* device = new InputDevice(&mContext, deviceId, bumpGenerationLocked(),
             identifier, classes);
+=======
+        const String8& name, uint32_t classes) {
+    InputDevice* device = new InputDevice(&mContext, deviceId, name, classes);
+>>>>>>> upstream/master
 
     // External devices.
     if (classes & INPUT_DEVICE_CLASS_EXTERNAL) {
@@ -426,11 +526,14 @@ InputDevice* InputReader::createDeviceLocked(int32_t deviceId,
         device->addMapper(new SwitchInputMapper(device));
     }
 
+<<<<<<< HEAD
     // Vibrator-like devices.
     if (classes & INPUT_DEVICE_CLASS_VIBRATOR) {
         device->addMapper(new VibratorInputMapper(device));
     }
 
+=======
+>>>>>>> upstream/master
     // Keyboard-like devices.
     uint32_t keyboardSource = 0;
     int32_t keyboardType = AINPUT_KEYBOARD_TYPE_NON_ALPHABETIC;
@@ -475,13 +578,21 @@ void InputReader::processEventsForDeviceLocked(int32_t deviceId,
         const RawEvent* rawEvents, size_t count) {
     ssize_t deviceIndex = mDevices.indexOfKey(deviceId);
     if (deviceIndex < 0) {
+<<<<<<< HEAD
         ALOGW("Discarding event for unknown deviceId %d.", deviceId);
+=======
+        LOGW("Discarding event for unknown deviceId %d.", deviceId);
+>>>>>>> upstream/master
         return;
     }
 
     InputDevice* device = mDevices.valueAt(deviceIndex);
     if (device->isIgnored()) {
+<<<<<<< HEAD
         //ALOGD("Discarding event for ignored deviceId %d.", deviceId);
+=======
+        //LOGD("Discarding event for ignored deviceId %d.", deviceId);
+>>>>>>> upstream/master
         return;
     }
 
@@ -501,6 +612,12 @@ void InputReader::handleConfigurationChangedLocked(nsecs_t when) {
     // Reset global meta state because it depends on the list of all configured devices.
     updateGlobalMetaStateLocked();
 
+<<<<<<< HEAD
+=======
+    // Update input configuration.
+    updateInputConfigurationLocked();
+
+>>>>>>> upstream/master
     // Enqueue configuration changed.
     NotifyConfigurationChangedArgs args(when);
     mQueuedListener->notifyConfigurationChanged(&args);
@@ -511,7 +628,11 @@ void InputReader::refreshConfigurationLocked(uint32_t changes) {
     mEventHub->setExcludedDevices(mConfig.excludedDeviceNames);
 
     if (changes) {
+<<<<<<< HEAD
         ALOGI("Reconfiguring input devices.  changes=0x%08x", changes);
+=======
+        LOGI("Reconfiguring input devices.  changes=0x%08x", changes);
+>>>>>>> upstream/master
         nsecs_t now = systemTime(SYSTEM_TIME_MONOTONIC);
 
         if (changes & InputReaderConfiguration::CHANGE_MUST_REOPEN) {
@@ -538,6 +659,37 @@ int32_t InputReader::getGlobalMetaStateLocked() {
     return mGlobalMetaState;
 }
 
+<<<<<<< HEAD
+=======
+void InputReader::updateInputConfigurationLocked() {
+    int32_t touchScreenConfig = InputConfiguration::TOUCHSCREEN_NOTOUCH;
+    int32_t keyboardConfig = InputConfiguration::KEYBOARD_NOKEYS;
+    int32_t navigationConfig = InputConfiguration::NAVIGATION_NONAV;
+    InputDeviceInfo deviceInfo;
+    for (size_t i = 0; i < mDevices.size(); i++) {
+        InputDevice* device = mDevices.valueAt(i);
+        device->getDeviceInfo(& deviceInfo);
+        uint32_t sources = deviceInfo.getSources();
+
+        if ((sources & AINPUT_SOURCE_TOUCHSCREEN) == AINPUT_SOURCE_TOUCHSCREEN) {
+            touchScreenConfig = InputConfiguration::TOUCHSCREEN_FINGER;
+        }
+        if ((sources & AINPUT_SOURCE_TRACKBALL) == AINPUT_SOURCE_TRACKBALL) {
+            navigationConfig = InputConfiguration::NAVIGATION_TRACKBALL;
+        } else if ((sources & AINPUT_SOURCE_DPAD) == AINPUT_SOURCE_DPAD) {
+            navigationConfig = InputConfiguration::NAVIGATION_DPAD;
+        }
+        if (deviceInfo.getKeyboardType() == AINPUT_KEYBOARD_TYPE_ALPHABETIC) {
+            keyboardConfig = InputConfiguration::KEYBOARD_QWERTY;
+        }
+    }
+
+    mInputConfiguration.touchScreen = touchScreenConfig;
+    mInputConfiguration.keyboard = keyboardConfig;
+    mInputConfiguration.navigation = navigationConfig;
+}
+
+>>>>>>> upstream/master
 void InputReader::disableVirtualKeysUntilLocked(nsecs_t time) {
     mDisableVirtualKeysTimeout = time;
 }
@@ -545,7 +697,11 @@ void InputReader::disableVirtualKeysUntilLocked(nsecs_t time) {
 bool InputReader::shouldDropVirtualKeyLocked(nsecs_t now,
         InputDevice* device, int32_t keyCode, int32_t scanCode) {
     if (now < mDisableVirtualKeysTimeout) {
+<<<<<<< HEAD
         ALOGI("Dropping virtual key from device %s because virtual keys are "
+=======
+        LOGI("Dropping virtual key from device %s because virtual keys are "
+>>>>>>> upstream/master
                 "temporarily disabled for the next %0.3fms.  keyCode=%d, scanCode=%d",
                 device->getName().string(),
                 (mDisableVirtualKeysTimeout - now) * 0.000001,
@@ -566,6 +722,7 @@ void InputReader::fadePointerLocked() {
 void InputReader::requestTimeoutAtTimeLocked(nsecs_t when) {
     if (when < mNextTimeout) {
         mNextTimeout = when;
+<<<<<<< HEAD
         mEventHub->wake();
     }
 }
@@ -581,13 +738,49 @@ void InputReader::getInputDevices(Vector<InputDeviceInfo>& outInputDevices) {
 
 void InputReader::getInputDevicesLocked(Vector<InputDeviceInfo>& outInputDevices) {
     outInputDevices.clear();
+=======
+    }
+}
+
+void InputReader::getInputConfiguration(InputConfiguration* outConfiguration) {
+    AutoMutex _l(mLock);
+
+    *outConfiguration = mInputConfiguration;
+}
+
+status_t InputReader::getInputDeviceInfo(int32_t deviceId, InputDeviceInfo* outDeviceInfo) {
+    AutoMutex _l(mLock);
+
+    ssize_t deviceIndex = mDevices.indexOfKey(deviceId);
+    if (deviceIndex < 0) {
+        return NAME_NOT_FOUND;
+    }
+
+    InputDevice* device = mDevices.valueAt(deviceIndex);
+    if (device->isIgnored()) {
+        return NAME_NOT_FOUND;
+    }
+
+    device->getDeviceInfo(outDeviceInfo);
+    return OK;
+}
+
+void InputReader::getInputDeviceIds(Vector<int32_t>& outDeviceIds) {
+    AutoMutex _l(mLock);
+
+    outDeviceIds.clear();
+>>>>>>> upstream/master
 
     size_t numDevices = mDevices.size();
     for (size_t i = 0; i < numDevices; i++) {
         InputDevice* device = mDevices.valueAt(i);
         if (!device->isIgnored()) {
+<<<<<<< HEAD
             outInputDevices.push();
             device->getDeviceInfo(&outInputDevices.editTop());
+=======
+            outDeviceIds.add(device->getId());
+>>>>>>> upstream/master
         }
     }
 }
@@ -628,6 +821,7 @@ int32_t InputReader::getStateLocked(int32_t deviceId, uint32_t sourceMask, int32
         for (size_t i = 0; i < numDevices; i++) {
             InputDevice* device = mDevices.valueAt(i);
             if (! device->isIgnored() && sourcesMatchMask(device->getSources(), sourceMask)) {
+<<<<<<< HEAD
                 // If any device reports AKEY_STATE_DOWN or AKEY_STATE_VIRTUAL, return that
                 // value.  Otherwise, return AKEY_STATE_UP as long as one device reports it.
                 int32_t currentResult = (device->*getStateFunc)(sourceMask, code);
@@ -635,6 +829,11 @@ int32_t InputReader::getStateLocked(int32_t deviceId, uint32_t sourceMask, int32
                     return currentResult;
                 } else if (currentResult == AKEY_STATE_UP) {
                     result = currentResult;
+=======
+                result = (device->*getStateFunc)(sourceMask, code);
+                if (result >= AKEY_STATE_DOWN) {
+                    return result;
+>>>>>>> upstream/master
                 }
             }
         }
@@ -688,6 +887,7 @@ void InputReader::requestRefreshConfiguration(uint32_t changes) {
     }
 }
 
+<<<<<<< HEAD
 void InputReader::vibrate(int32_t deviceId, const nsecs_t* pattern, size_t patternSize,
         ssize_t repeat, int32_t token) {
     AutoMutex _l(mLock);
@@ -709,6 +909,8 @@ void InputReader::cancelVibrate(int32_t deviceId, int32_t token) {
     }
 }
 
+=======
+>>>>>>> upstream/master
 void InputReader::dump(String8& dump) {
     AutoMutex _l(mLock);
 
@@ -777,8 +979,11 @@ void InputReader::dump(String8& dump) {
 void InputReader::monitor() {
     // Acquire and release the lock to ensure that the reader has not deadlocked.
     mLock.lock();
+<<<<<<< HEAD
     mEventHub->wake();
     mReaderIsAliveCondition.wait(mLock);
+=======
+>>>>>>> upstream/master
     mLock.unlock();
 
     // Check the EventHub
@@ -823,11 +1028,14 @@ void InputReader::ContextImpl::requestTimeoutAtTime(nsecs_t when) {
     mReader->requestTimeoutAtTimeLocked(when);
 }
 
+<<<<<<< HEAD
 int32_t InputReader::ContextImpl::bumpGeneration() {
     // lock is already held by the input loop
     return mReader->bumpGenerationLocked();
 }
 
+=======
+>>>>>>> upstream/master
 InputReaderPolicyInterface* InputReader::ContextImpl::getPolicy() {
     return mReader->mPolicy.get();
 }
@@ -858,10 +1066,16 @@ bool InputReaderThread::threadLoop() {
 
 // --- InputDevice ---
 
+<<<<<<< HEAD
 InputDevice::InputDevice(InputReaderContext* context, int32_t id, int32_t generation,
         const InputDeviceIdentifier& identifier, uint32_t classes) :
         mContext(context), mId(id), mGeneration(generation),
         mIdentifier(identifier), mClasses(classes),
+=======
+InputDevice::InputDevice(InputReaderContext* context, int32_t id, const String8& name,
+        uint32_t classes) :
+        mContext(context), mId(id), mName(name), mClasses(classes),
+>>>>>>> upstream/master
         mSources(0), mIsExternal(false), mDropUntilNextSync(false) {
 }
 
@@ -878,8 +1092,12 @@ void InputDevice::dump(String8& dump) {
     getDeviceInfo(& deviceInfo);
 
     dump.appendFormat(INDENT "Device %d: %s\n", deviceInfo.getId(),
+<<<<<<< HEAD
             deviceInfo.getDisplayName().string());
     dump.appendFormat(INDENT2 "Generation: %d\n", mGeneration);
+=======
+            deviceInfo.getName().string());
+>>>>>>> upstream/master
     dump.appendFormat(INDENT2 "IsExternal: %s\n", toString(mIsExternal));
     dump.appendFormat(INDENT2 "Sources: 0x%08x\n", deviceInfo.getSources());
     dump.appendFormat(INDENT2 "KeyboardType: %d\n", deviceInfo.getKeyboardType());
@@ -922,6 +1140,7 @@ void InputDevice::configure(nsecs_t when, const InputReaderConfiguration* config
             mContext->getEventHub()->getConfiguration(mId, &mConfiguration);
         }
 
+<<<<<<< HEAD
         if (!changes || (changes & InputReaderConfiguration::CHANGE_KEYBOARD_LAYOUTS)) {
             if (!(mClasses & INPUT_DEVICE_CLASS_VIRTUAL)) {
                 sp<KeyCharacterMap> keyboardLayout =
@@ -942,6 +1161,8 @@ void InputDevice::configure(nsecs_t when, const InputReaderConfiguration* config
             }
         }
 
+=======
+>>>>>>> upstream/master
         size_t numMappers = mMappers.size();
         for (size_t i = 0; i < numMappers; i++) {
             InputMapper* mapper = mMappers[i];
@@ -972,6 +1193,7 @@ void InputDevice::process(const RawEvent* rawEvents, size_t count) {
     size_t numMappers = mMappers.size();
     for (const RawEvent* rawEvent = rawEvents; count--; rawEvent++) {
 #if DEBUG_RAW_EVENTS
+<<<<<<< HEAD
         ALOGD("Input event: device=%d type=0x%04x code=0x%04x value=0x%08x",
                 rawEvent->deviceId, rawEvent->type, rawEvent->code, rawEvent->value);
 #endif
@@ -989,6 +1211,27 @@ void InputDevice::process(const RawEvent* rawEvents, size_t count) {
             }
         } else if (rawEvent->type == EV_SYN && rawEvent->code == SYN_DROPPED) {
             ALOGI("Detected input event buffer overrun for device %s.", getName().string());
+=======
+        LOGD("Input event: device=%d type=0x%04x scancode=0x%04x "
+                "keycode=0x%04x value=0x%08x flags=0x%08x",
+                rawEvent->deviceId, rawEvent->type, rawEvent->scanCode, rawEvent->keyCode,
+                rawEvent->value, rawEvent->flags);
+#endif
+
+        if (mDropUntilNextSync) {
+            if (rawEvent->type == EV_SYN && rawEvent->scanCode == SYN_REPORT) {
+                mDropUntilNextSync = false;
+#if DEBUG_RAW_EVENTS
+                LOGD("Recovered from input event buffer overrun.");
+#endif
+            } else {
+#if DEBUG_RAW_EVENTS
+                LOGD("Dropped input event while waiting for next input sync.");
+#endif
+            }
+        } else if (rawEvent->type == EV_SYN && rawEvent->scanCode == SYN_DROPPED) {
+            LOGI("Detected input event buffer overrun for device %s.", mName.string());
+>>>>>>> upstream/master
             mDropUntilNextSync = true;
             reset(rawEvent->when);
         } else {
@@ -1009,7 +1252,11 @@ void InputDevice::timeoutExpired(nsecs_t when) {
 }
 
 void InputDevice::getDeviceInfo(InputDeviceInfo* outDeviceInfo) {
+<<<<<<< HEAD
     outDeviceInfo->initialize(mId, mGeneration, mIdentifier, mAlias, mIsExternal);
+=======
+    outDeviceInfo->initialize(mId, mName);
+>>>>>>> upstream/master
 
     size_t numMappers = mMappers.size();
     for (size_t i = 0; i < numMappers; i++) {
@@ -1036,6 +1283,7 @@ int32_t InputDevice::getState(uint32_t sourceMask, int32_t code, GetStateFunc ge
     for (size_t i = 0; i < numMappers; i++) {
         InputMapper* mapper = mMappers[i];
         if (sourcesMatchMask(mapper->getSources(), sourceMask)) {
+<<<<<<< HEAD
             // If any mapper reports AKEY_STATE_DOWN or AKEY_STATE_VIRTUAL, return that
             // value.  Otherwise, return AKEY_STATE_UP as long as one mapper reports it.
             int32_t currentResult = (mapper->*getStateFunc)(sourceMask, code);
@@ -1043,6 +1291,11 @@ int32_t InputDevice::getState(uint32_t sourceMask, int32_t code, GetStateFunc ge
                 return currentResult;
             } else if (currentResult == AKEY_STATE_UP) {
                 result = currentResult;
+=======
+            result = (mapper->*getStateFunc)(sourceMask, code);
+            if (result >= AKEY_STATE_DOWN) {
+                return result;
+>>>>>>> upstream/master
             }
         }
     }
@@ -1062,6 +1315,7 @@ bool InputDevice::markSupportedKeyCodes(uint32_t sourceMask, size_t numCodes,
     return result;
 }
 
+<<<<<<< HEAD
 void InputDevice::vibrate(const nsecs_t* pattern, size_t patternSize, ssize_t repeat,
         int32_t token) {
     size_t numMappers = mMappers.size();
@@ -1079,6 +1333,8 @@ void InputDevice::cancelVibrate(int32_t token) {
     }
 }
 
+=======
+>>>>>>> upstream/master
 int32_t InputDevice::getMetaState() {
     int32_t result = 0;
     size_t numMappers = mMappers.size();
@@ -1097,10 +1353,13 @@ void InputDevice::fadePointer() {
     }
 }
 
+<<<<<<< HEAD
 void InputDevice::bumpGeneration() {
     mGeneration = mContext->bumpGeneration();
 }
 
+=======
+>>>>>>> upstream/master
 void InputDevice::notifyReset(nsecs_t when) {
     NotifyDeviceResetArgs args(when, mId);
     mContext->getListener()->notifyDeviceReset(&args);
@@ -1137,7 +1396,11 @@ void CursorButtonAccumulator::clearButtons() {
 
 void CursorButtonAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_KEY) {
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case BTN_LEFT:
             mBtnLeft = rawEvent->value;
             break;
@@ -1204,7 +1467,11 @@ void CursorMotionAccumulator::clearRelativeAxes() {
 
 void CursorMotionAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_REL) {
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case REL_X:
             mRelX = rawEvent->value;
             break;
@@ -1243,7 +1510,11 @@ void CursorScrollAccumulator::clearRelativeAxes() {
 
 void CursorScrollAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_REL) {
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case REL_WHEEL:
             mRelWheel = rawEvent->value;
             break;
@@ -1262,17 +1533,24 @@ void CursorScrollAccumulator::finishSync() {
 // --- TouchButtonAccumulator ---
 
 TouchButtonAccumulator::TouchButtonAccumulator() :
+<<<<<<< HEAD
         mHaveBtnTouch(false), mHaveStylus(false) {
+=======
+        mHaveBtnTouch(false) {
+>>>>>>> upstream/master
     clearButtons();
 }
 
 void TouchButtonAccumulator::configure(InputDevice* device) {
     mHaveBtnTouch = device->hasKey(BTN_TOUCH);
+<<<<<<< HEAD
     mHaveStylus = device->hasKey(BTN_TOOL_PEN)
             || device->hasKey(BTN_TOOL_RUBBER)
             || device->hasKey(BTN_TOOL_BRUSH)
             || device->hasKey(BTN_TOOL_PENCIL)
             || device->hasKey(BTN_TOOL_AIRBRUSH);
+=======
+>>>>>>> upstream/master
 }
 
 void TouchButtonAccumulator::reset(InputDevice* device) {
@@ -1311,7 +1589,11 @@ void TouchButtonAccumulator::clearButtons() {
 
 void TouchButtonAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_KEY) {
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case BTN_TOUCH:
             mBtnTouch = rawEvent->value;
             break;
@@ -1396,10 +1678,13 @@ bool TouchButtonAccumulator::isHovering() const {
     return mHaveBtnTouch && !mBtnTouch;
 }
 
+<<<<<<< HEAD
 bool TouchButtonAccumulator::hasStylus() const {
     return mHaveStylus;
 }
 
+=======
+>>>>>>> upstream/master
 
 // --- RawPointerAxes ---
 
@@ -1521,7 +1806,11 @@ void SingleTouchMotionAccumulator::clearAbsoluteAxes() {
 
 void SingleTouchMotionAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_ABS) {
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case ABS_X:
             mAbsX = rawEvent->value;
             break;
@@ -1551,19 +1840,29 @@ void SingleTouchMotionAccumulator::process(const RawEvent* rawEvent) {
 // --- MultiTouchMotionAccumulator ---
 
 MultiTouchMotionAccumulator::MultiTouchMotionAccumulator() :
+<<<<<<< HEAD
         mCurrentSlot(-1), mSlots(NULL), mSlotCount(0), mUsingSlotsProtocol(false),
         mHaveStylus(false) {
+=======
+        mCurrentSlot(-1), mSlots(NULL), mSlotCount(0), mUsingSlotsProtocol(false) {
+>>>>>>> upstream/master
 }
 
 MultiTouchMotionAccumulator::~MultiTouchMotionAccumulator() {
     delete[] mSlots;
 }
 
+<<<<<<< HEAD
 void MultiTouchMotionAccumulator::configure(InputDevice* device,
         size_t slotCount, bool usingSlotsProtocol) {
     mSlotCount = slotCount;
     mUsingSlotsProtocol = usingSlotsProtocol;
     mHaveStylus = device->hasAbsoluteAxis(ABS_MT_TOOL_TYPE);
+=======
+void MultiTouchMotionAccumulator::configure(size_t slotCount, bool usingSlotsProtocol) {
+    mSlotCount = slotCount;
+    mUsingSlotsProtocol = usingSlotsProtocol;
+>>>>>>> upstream/master
 
     delete[] mSlots;
     mSlots = new Slot[slotCount];
@@ -1586,7 +1885,11 @@ void MultiTouchMotionAccumulator::reset(InputDevice* device) {
         status_t status = device->getEventHub()->getAbsoluteAxisValue(device->getId(),
                 ABS_MT_SLOT, &initialSlot);
         if (status) {
+<<<<<<< HEAD
             ALOGD("Could not retrieve current multitouch slot index.  status=%d", status);
+=======
+            LOGD("Could not retrieve current multitouch slot index.  status=%d", status);
+>>>>>>> upstream/master
             initialSlot = -1;
         }
         clearSlots(initialSlot);
@@ -1608,7 +1911,11 @@ void MultiTouchMotionAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_ABS) {
         bool newSlot = false;
         if (mUsingSlotsProtocol) {
+<<<<<<< HEAD
             if (rawEvent->code == ABS_MT_SLOT) {
+=======
+            if (rawEvent->scanCode == ABS_MT_SLOT) {
+>>>>>>> upstream/master
                 mCurrentSlot = rawEvent->value;
                 newSlot = true;
             }
@@ -1619,7 +1926,11 @@ void MultiTouchMotionAccumulator::process(const RawEvent* rawEvent) {
         if (mCurrentSlot < 0 || size_t(mCurrentSlot) >= mSlotCount) {
 #if DEBUG_POINTERS
             if (newSlot) {
+<<<<<<< HEAD
                 ALOGW("MultiTouch device emitted invalid slot index %d but it "
+=======
+                LOGW("MultiTouch device emitted invalid slot index %d but it "
+>>>>>>> upstream/master
                         "should be between 0 and %d; ignoring this slot.",
                         mCurrentSlot, mSlotCount - 1);
             }
@@ -1627,7 +1938,11 @@ void MultiTouchMotionAccumulator::process(const RawEvent* rawEvent) {
         } else {
             Slot* slot = &mSlots[mCurrentSlot];
 
+<<<<<<< HEAD
             switch (rawEvent->code) {
+=======
+            switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
             case ABS_MT_POSITION_X:
                 slot->mInUse = true;
                 slot->mAbsMTPositionX = rawEvent->value;
@@ -1683,7 +1998,11 @@ void MultiTouchMotionAccumulator::process(const RawEvent* rawEvent) {
                 break;
             }
         }
+<<<<<<< HEAD
     } else if (rawEvent->type == EV_SYN && rawEvent->code == SYN_MT_REPORT) {
+=======
+    } else if (rawEvent->type == EV_SYN && rawEvent->scanCode == SYN_MT_REPORT) {
+>>>>>>> upstream/master
         // MultiTouch Sync: The driver has returned all data for *one* of the pointers.
         mCurrentSlot += 1;
     }
@@ -1695,10 +2014,13 @@ void MultiTouchMotionAccumulator::finishSync() {
     }
 }
 
+<<<<<<< HEAD
 bool MultiTouchMotionAccumulator::hasStylus() const {
     return mHaveStylus;
 }
 
+=======
+>>>>>>> upstream/master
 
 // --- MultiTouchMotionAccumulator::Slot ---
 
@@ -1780,6 +2102,7 @@ bool InputMapper::markSupportedKeyCodes(uint32_t sourceMask, size_t numCodes,
     return false;
 }
 
+<<<<<<< HEAD
 void InputMapper::vibrate(const nsecs_t* pattern, size_t patternSize, ssize_t repeat,
         int32_t token) {
 }
@@ -1787,6 +2110,8 @@ void InputMapper::vibrate(const nsecs_t* pattern, size_t patternSize, ssize_t re
 void InputMapper::cancelVibrate(int32_t token) {
 }
 
+=======
+>>>>>>> upstream/master
 int32_t InputMapper::getMetaState() {
     return 0;
 }
@@ -1798,10 +2123,13 @@ status_t InputMapper::getAbsoluteAxisInfo(int32_t axis, RawAbsoluteAxisInfo* axi
     return getEventHub()->getAbsoluteAxisInfo(getDeviceId(), axis, axisInfo);
 }
 
+<<<<<<< HEAD
 void InputMapper::bumpGeneration() {
     mDevice->bumpGeneration();
 }
 
+=======
+>>>>>>> upstream/master
 void InputMapper::dumpRawAbsoluteAxisInfo(String8& dump,
         const RawAbsoluteAxisInfo& axis, const char* name) {
     if (axis.valid) {
@@ -1829,7 +2157,11 @@ uint32_t SwitchInputMapper::getSources() {
 void SwitchInputMapper::process(const RawEvent* rawEvent) {
     switch (rawEvent->type) {
     case EV_SW:
+<<<<<<< HEAD
         processSwitch(rawEvent->when, rawEvent->code, rawEvent->value);
+=======
+        processSwitch(rawEvent->when, rawEvent->scanCode, rawEvent->value);
+>>>>>>> upstream/master
         break;
     }
 }
@@ -1844,6 +2176,7 @@ int32_t SwitchInputMapper::getSwitchState(uint32_t sourceMask, int32_t switchCod
 }
 
 
+<<<<<<< HEAD
 // --- VibratorInputMapper ---
 
 VibratorInputMapper::VibratorInputMapper(InputDevice* device) :
@@ -1958,6 +2291,8 @@ void VibratorInputMapper::dump(String8& dump) {
 }
 
 
+=======
+>>>>>>> upstream/master
 // --- KeyboardInputMapper ---
 
 KeyboardInputMapper::KeyboardInputMapper(InputDevice* device,
@@ -1977,7 +2312,11 @@ void KeyboardInputMapper::populateDeviceInfo(InputDeviceInfo* info) {
     InputMapper::populateDeviceInfo(info);
 
     info->setKeyboardType(mKeyboardType);
+<<<<<<< HEAD
     info->setKeyCharacterMap(getEventHub()->getKeyCharacterMap(getDeviceId()));
+=======
+    info->setKeyCharacterMapFile(getEventHub()->getKeyCharacterMapFile(getDeviceId()));
+>>>>>>> upstream/master
 }
 
 void KeyboardInputMapper::dump(String8& dump) {
@@ -2035,7 +2374,10 @@ void KeyboardInputMapper::reset(nsecs_t when) {
     mMetaState = AMETA_NONE;
     mDownTime = 0;
     mKeyDowns.clear();
+<<<<<<< HEAD
     mCurrentHidUsage = 0;
+=======
+>>>>>>> upstream/master
 
     resetLedState();
 
@@ -2045,6 +2387,7 @@ void KeyboardInputMapper::reset(nsecs_t when) {
 void KeyboardInputMapper::process(const RawEvent* rawEvent) {
     switch (rawEvent->type) {
     case EV_KEY: {
+<<<<<<< HEAD
         int32_t scanCode = rawEvent->code;
         int32_t usageCode = mCurrentHidUsage;
         mCurrentHidUsage = 0;
@@ -2071,6 +2414,15 @@ void KeyboardInputMapper::process(const RawEvent* rawEvent) {
             mCurrentHidUsage = 0;
         }
     }
+=======
+        int32_t scanCode = rawEvent->scanCode;
+        if (isKeyboardOrGamepadKey(scanCode)) {
+            processKey(rawEvent->when, rawEvent->value != 0, rawEvent->keyCode, scanCode,
+                    rawEvent->flags);
+        }
+        break;
+    }
+>>>>>>> upstream/master
     }
 }
 
@@ -2119,7 +2471,11 @@ void KeyboardInputMapper::processKey(nsecs_t when, bool down, int32_t keyCode,
             mKeyDowns.removeAt(size_t(keyDownIndex));
         } else {
             // key was not actually down
+<<<<<<< HEAD
             ALOGI("Dropping key up from device %s because the key was not down.  "
+=======
+            LOGI("Dropping key up from device %s because the key was not down.  "
+>>>>>>> upstream/master
                     "keyCode=%d, scanCode=%d",
                     getDeviceName().string(), keyCode, scanCode);
             return;
@@ -2325,7 +2681,10 @@ void CursorInputMapper::configure(nsecs_t when,
         } else {
             mOrientation = DISPLAY_ORIENTATION_0;
         }
+<<<<<<< HEAD
         bumpGeneration();
+=======
+>>>>>>> upstream/master
     }
 }
 
@@ -2336,7 +2695,11 @@ void CursorInputMapper::configureParameters() {
         if (cursorModeString == "navigation") {
             mParameters.mode = Parameters::MODE_NAVIGATION;
         } else if (cursorModeString != "pointer" && cursorModeString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for cursor.mode: '%s'", cursorModeString.string());
+=======
+            LOGW("Invalid value for cursor.mode: '%s'", cursorModeString.string());
+>>>>>>> upstream/master
         }
     }
 
@@ -2363,7 +2726,11 @@ void CursorInputMapper::dumpParameters(String8& dump) {
         dump.append(INDENT4 "Mode: navigation\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     dump.appendFormat(INDENT4 "OrientationAware: %s\n",
@@ -2390,7 +2757,11 @@ void CursorInputMapper::process(const RawEvent* rawEvent) {
     mCursorMotionAccumulator.process(rawEvent);
     mCursorScrollAccumulator.process(rawEvent);
 
+<<<<<<< HEAD
     if (rawEvent->type == EV_SYN && rawEvent->code == SYN_REPORT) {
+=======
+    if (rawEvent->type == EV_SYN && rawEvent->scanCode == SYN_REPORT) {
+>>>>>>> upstream/master
         sync(rawEvent->when);
     }
 }
@@ -2745,7 +3116,11 @@ void TouchInputMapper::configureParameters() {
         } else if (gestureModeString == "spots") {
             mParameters.gestureMode = Parameters::GESTURE_MODE_SPOTS;
         } else if (gestureModeString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.gestureMode: '%s'", gestureModeString.string());
+=======
+            LOGW("Invalid value for touch.gestureMode: '%s'", gestureModeString.string());
+>>>>>>> upstream/master
         }
     }
 
@@ -2775,7 +3150,11 @@ void TouchInputMapper::configureParameters() {
         } else if (deviceTypeString == "pointer") {
             mParameters.deviceType = Parameters::DEVICE_TYPE_POINTER;
         } else if (deviceTypeString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.deviceType: '%s'", deviceTypeString.string());
+=======
+            LOGW("Invalid value for touch.deviceType: '%s'", deviceTypeString.string());
+>>>>>>> upstream/master
         }
     }
 
@@ -2820,7 +3199,11 @@ void TouchInputMapper::dumpParameters(String8& dump) {
         dump.append(INDENT4 "DeviceType: pointer\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     dump.appendFormat(INDENT4 "AssociatedDisplay: id=%d, isExternal=%s\n",
@@ -2858,16 +3241,22 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
             && mConfig.pointerGesturesEnabled) {
         mSource = AINPUT_SOURCE_MOUSE;
         mDeviceMode = DEVICE_MODE_POINTER;
+<<<<<<< HEAD
         if (hasStylus()) {
             mSource |= AINPUT_SOURCE_STYLUS;
         }
+=======
+>>>>>>> upstream/master
     } else if (mParameters.deviceType == Parameters::DEVICE_TYPE_TOUCH_SCREEN
             && mParameters.associatedDisplayId >= 0) {
         mSource = AINPUT_SOURCE_TOUCHSCREEN;
         mDeviceMode = DEVICE_MODE_DIRECT;
+<<<<<<< HEAD
         if (hasStylus()) {
             mSource |= AINPUT_SOURCE_STYLUS;
         }
+=======
+>>>>>>> upstream/master
     } else {
         mSource = AINPUT_SOURCE_TOUCHPAD;
         mDeviceMode = DEVICE_MODE_UNSCALED;
@@ -2875,7 +3264,11 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
 
     // Ensure we have valid X and Y axes.
     if (!mRawPointerAxes.x.valid || !mRawPointerAxes.y.valid) {
+<<<<<<< HEAD
         ALOGW(INDENT "Touch device '%s' did not report support for X or Y axis!  "
+=======
+        LOGW(INDENT "Touch device '%s' did not report support for X or Y axis!  "
+>>>>>>> upstream/master
                 "The device will be inoperable.", getDeviceName().string());
         mDeviceMode = DEVICE_MODE_DISABLED;
         return;
@@ -2887,7 +3280,11 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
                 mParameters.associatedDisplayIsExternal,
                 &mAssociatedDisplayWidth, &mAssociatedDisplayHeight,
                 &mAssociatedDisplayOrientation)) {
+<<<<<<< HEAD
             ALOGI(INDENT "Touch device '%s' could not query the properties of its associated "
+=======
+            LOGI(INDENT "Touch device '%s' could not query the properties of its associated "
+>>>>>>> upstream/master
                     "display %d.  The device will be inoperable until the display size "
                     "becomes available.",
                     getDeviceName().string(), mParameters.associatedDisplayId);
@@ -2933,7 +3330,11 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
 
     bool sizeChanged = mSurfaceWidth != width || mSurfaceHeight != height;
     if (sizeChanged || deviceModeChanged) {
+<<<<<<< HEAD
         ALOGI("Device reconfigured: id=%d, name='%s', surface size is now %dx%d, mode is %d",
+=======
+        LOGI("Device reconfigured: id=%d, name='%s', surface size is now %dx%d, mode is %d",
+>>>>>>> upstream/master
                 getDeviceId(), getDeviceName().string(), width, height, mDeviceMode);
 
         mSurfaceWidth = width;
@@ -3103,7 +3504,11 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
             mOrientedRanges.distance.min =
                     mRawPointerAxes.distance.minValue * mDistanceScale;
             mOrientedRanges.distance.max =
+<<<<<<< HEAD
                     mRawPointerAxes.distance.maxValue * mDistanceScale;
+=======
+                    mRawPointerAxes.distance.minValue * mDistanceScale;
+>>>>>>> upstream/master
             mOrientedRanges.distance.flat = 0;
             mOrientedRanges.distance.fuzz =
                     mRawPointerAxes.distance.fuzz * mDistanceScale;
@@ -3193,7 +3598,10 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
 
         // Inform the dispatcher about the changes.
         *outResetNeeded = true;
+<<<<<<< HEAD
         bumpGeneration();
+=======
+>>>>>>> upstream/master
     }
 }
 
@@ -3230,8 +3638,14 @@ void TouchInputMapper::configureVirtualKeys() {
         virtualKey.scanCode = virtualKeyDefinition.scanCode;
         int32_t keyCode;
         uint32_t flags;
+<<<<<<< HEAD
         if (getEventHub()->mapKey(getDeviceId(), virtualKey.scanCode, 0, &keyCode, &flags)) {
             ALOGW(INDENT "VirtualKey %d: could not obtain key code, ignoring",
+=======
+        if (getEventHub()->mapKey(getDeviceId(), virtualKey.scanCode,
+                & keyCode, & flags)) {
+            LOGW(INDENT "VirtualKey %d: could not obtain key code, ignoring",
+>>>>>>> upstream/master
                     virtualKey.scanCode);
             mVirtualKeys.pop(); // drop the key
             continue;
@@ -3287,7 +3701,11 @@ void TouchInputMapper::parseCalibration() {
         } else if (sizeCalibrationString == "area") {
             out.sizeCalibration = Calibration::SIZE_CALIBRATION_AREA;
         } else if (sizeCalibrationString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.size.calibration: '%s'",
+=======
+            LOGW("Invalid value for touch.size.calibration: '%s'",
+>>>>>>> upstream/master
                     sizeCalibrationString.string());
         }
     }
@@ -3310,7 +3728,11 @@ void TouchInputMapper::parseCalibration() {
         } else if (pressureCalibrationString == "amplitude") {
             out.pressureCalibration = Calibration::PRESSURE_CALIBRATION_AMPLITUDE;
         } else if (pressureCalibrationString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.pressure.calibration: '%s'",
+=======
+            LOGW("Invalid value for touch.pressure.calibration: '%s'",
+>>>>>>> upstream/master
                     pressureCalibrationString.string());
         }
     }
@@ -3329,7 +3751,11 @@ void TouchInputMapper::parseCalibration() {
         } else if (orientationCalibrationString == "vector") {
             out.orientationCalibration = Calibration::ORIENTATION_CALIBRATION_VECTOR;
         } else if (orientationCalibrationString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.orientation.calibration: '%s'",
+=======
+            LOGW("Invalid value for touch.orientation.calibration: '%s'",
+>>>>>>> upstream/master
                     orientationCalibrationString.string());
         }
     }
@@ -3343,7 +3769,11 @@ void TouchInputMapper::parseCalibration() {
         } else if (distanceCalibrationString == "scaled") {
             out.distanceCalibration = Calibration::DISTANCE_CALIBRATION_SCALED;
         } else if (distanceCalibrationString != "default") {
+<<<<<<< HEAD
             ALOGW("Invalid value for touch.distance.calibration: '%s'",
+=======
+            LOGW("Invalid value for touch.distance.calibration: '%s'",
+>>>>>>> upstream/master
                     distanceCalibrationString.string());
         }
     }
@@ -3408,7 +3838,11 @@ void TouchInputMapper::dumpCalibration(String8& dump) {
         dump.append(INDENT4 "touch.size.calibration: area\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     if (mCalibration.haveSizeScale) {
@@ -3438,7 +3872,11 @@ void TouchInputMapper::dumpCalibration(String8& dump) {
         dump.append(INDENT4 "touch.pressure.calibration: amplitude\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     if (mCalibration.havePressureScale) {
@@ -3458,7 +3896,11 @@ void TouchInputMapper::dumpCalibration(String8& dump) {
         dump.append(INDENT4 "touch.orientation.calibration: vector\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     // Distance
@@ -3470,7 +3912,11 @@ void TouchInputMapper::dumpCalibration(String8& dump) {
         dump.append(INDENT4 "touch.distance.calibration: scaled\n");
         break;
     default:
+<<<<<<< HEAD
         ALOG_ASSERT(false);
+=======
+        LOG_ASSERT(false);
+>>>>>>> upstream/master
     }
 
     if (mCalibration.haveDistanceScale) {
@@ -3524,7 +3970,11 @@ void TouchInputMapper::process(const RawEvent* rawEvent) {
     mCursorScrollAccumulator.process(rawEvent);
     mTouchButtonAccumulator.process(rawEvent);
 
+<<<<<<< HEAD
     if (rawEvent->type == EV_SYN && rawEvent->code == SYN_REPORT) {
+=======
+    if (rawEvent->type == EV_SYN && rawEvent->scanCode == SYN_REPORT) {
+>>>>>>> upstream/master
         sync(rawEvent->when);
     }
 }
@@ -3546,11 +3996,19 @@ void TouchInputMapper::sync(nsecs_t when) {
 
 #if DEBUG_RAW_EVENTS
     if (!havePointerIds) {
+<<<<<<< HEAD
         ALOGD("syncTouch: pointerCount %d -> %d, no pointer ids",
                 mLastRawPointerData.pointerCount,
                 mCurrentRawPointerData.pointerCount);
     } else {
         ALOGD("syncTouch: pointerCount %d -> %d, touching ids 0x%08x -> 0x%08x, "
+=======
+        LOGD("syncTouch: pointerCount %d -> %d, no pointer ids",
+                mLastRawPointerData.pointerCount,
+                mCurrentRawPointerData.pointerCount);
+    } else {
+        LOGD("syncTouch: pointerCount %d -> %d, touching ids 0x%08x -> 0x%08x, "
+>>>>>>> upstream/master
                 "hovering ids 0x%08x -> 0x%08x",
                 mLastRawPointerData.pointerCount,
                 mCurrentRawPointerData.pointerCount,
@@ -3701,7 +4159,11 @@ bool TouchInputMapper::consumeRawTouches(nsecs_t when, uint32_t policyFlags) {
             mCurrentVirtualKey.down = false;
             if (!mCurrentVirtualKey.ignored) {
 #if DEBUG_VIRTUAL_KEYS
+<<<<<<< HEAD
                 ALOGD("VirtualKeys: Generating key up: keyCode=%d, scanCode=%d",
+=======
+                LOGD("VirtualKeys: Generating key up: keyCode=%d, scanCode=%d",
+>>>>>>> upstream/master
                         mCurrentVirtualKey.keyCode, mCurrentVirtualKey.scanCode);
 #endif
                 dispatchVirtualKey(when, policyFlags,
@@ -3728,7 +4190,11 @@ bool TouchInputMapper::consumeRawTouches(nsecs_t when, uint32_t policyFlags) {
         mCurrentVirtualKey.down = false;
         if (!mCurrentVirtualKey.ignored) {
 #if DEBUG_VIRTUAL_KEYS
+<<<<<<< HEAD
             ALOGD("VirtualKeys: Canceling key: keyCode=%d, scanCode=%d",
+=======
+            LOGD("VirtualKeys: Canceling key: keyCode=%d, scanCode=%d",
+>>>>>>> upstream/master
                     mCurrentVirtualKey.keyCode, mCurrentVirtualKey.scanCode);
 #endif
             dispatchVirtualKey(when, policyFlags,
@@ -3758,7 +4224,11 @@ bool TouchInputMapper::consumeRawTouches(nsecs_t when, uint32_t policyFlags) {
 
                     if (!mCurrentVirtualKey.ignored) {
 #if DEBUG_VIRTUAL_KEYS
+<<<<<<< HEAD
                         ALOGD("VirtualKeys: Generating key down: keyCode=%d, scanCode=%d",
+=======
+                        LOGD("VirtualKeys: Generating key down: keyCode=%d, scanCode=%d",
+>>>>>>> upstream/master
                                 mCurrentVirtualKey.keyCode,
                                 mCurrentVirtualKey.scanCode);
 #endif
@@ -3864,7 +4334,11 @@ void TouchInputMapper::dispatchTouches(nsecs_t when, uint32_t policyFlags) {
         // Although applications receive new locations as part of individual pointer up
         // events, they do not generally handle them except when presented in a move event.
         if (moveNeeded) {
+<<<<<<< HEAD
             ALOG_ASSERT(moveIdBits.value == dispatchedIdBits.value);
+=======
+            LOG_ASSERT(moveIdBits.value == dispatchedIdBits.value);
+>>>>>>> upstream/master
             dispatchMotion(when, policyFlags, mSource,
                     AMOTION_EVENT_ACTION_MOVE, 0, metaState, buttonState, 0,
                     mCurrentCookedPointerData.pointerProperties,
@@ -3975,7 +4449,11 @@ void TouchInputMapper::cookPointerData() {
                 size = mRawPointerAxes.toolMinor.valid
                         ? avg(in.toolMajor, in.toolMinor) : in.toolMajor;
             } else {
+<<<<<<< HEAD
                 ALOG_ASSERT(false, "No touch or tool axes.  "
+=======
+                LOG_ASSERT(false, "No touch or tool axes.  "
+>>>>>>> upstream/master
                         "Size calibration should have been resolved to NONE.");
                 touchMajor = 0;
                 touchMinor = 0;
@@ -4420,7 +4898,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
     // Handle TAP timeout.
     if (isTimeout) {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
         ALOGD("Gestures: Processing timeout");
+=======
+        LOGD("Gestures: Processing timeout");
+>>>>>>> upstream/master
 #endif
 
         if (mPointerGesture.lastGestureMode == PointerGesture::TAP) {
@@ -4431,7 +4913,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
             } else {
                 // The tap is finished.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: TAP finished");
+=======
+                LOGD("Gestures: TAP finished");
+>>>>>>> upstream/master
 #endif
                 *outFinishPreviousGesture = true;
 
@@ -4523,7 +5009,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
     if (isQuietTime) {
         // Case 1: Quiet time. (QUIET)
 #if DEBUG_GESTURES
+<<<<<<< HEAD
         ALOGD("Gestures: QUIET for next %0.3fms", (mPointerGesture.quietTime
+=======
+        LOGD("Gestures: QUIET for next %0.3fms", (mPointerGesture.quietTime
+>>>>>>> upstream/master
                 + mConfig.pointerGestureQuietInterval - when) * 0.000001f);
 #endif
         if (mPointerGesture.lastGestureMode != PointerGesture::QUIET) {
@@ -4550,7 +5040,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         // finger to drag then the active pointer should switch to the finger that is
         // being dragged.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
         ALOGD("Gestures: BUTTON_CLICK_OR_DRAG activeTouchId=%d, "
+=======
+        LOGD("Gestures: BUTTON_CLICK_OR_DRAG activeTouchId=%d, "
+>>>>>>> upstream/master
                 "currentFingerCount=%d", activeTouchId, currentFingerCount);
 #endif
         // Reset state when just starting.
@@ -4579,7 +5073,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                 mPointerGesture.activeTouchId = activeTouchId = bestId;
                 activeTouchChanged = true;
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: BUTTON_CLICK_OR_DRAG switched pointers, "
+=======
+                LOGD("Gestures: BUTTON_CLICK_OR_DRAG switched pointers, "
+>>>>>>> upstream/master
                         "bestId=%d, bestSpeed=%0.3f", bestId, bestSpeed);
 #endif
             }
@@ -4636,7 +5134,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                 if (fabs(x - mPointerGesture.tapX) <= mConfig.pointerGestureTapSlop
                         && fabs(y - mPointerGesture.tapY) <= mConfig.pointerGestureTapSlop) {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: TAP");
+=======
+                    LOGD("Gestures: TAP");
+>>>>>>> upstream/master
 #endif
 
                     mPointerGesture.tapUpTime = when;
@@ -4666,14 +5168,22 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                     tapped = true;
                 } else {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: Not a TAP, deltaX=%f, deltaY=%f",
+=======
+                    LOGD("Gestures: Not a TAP, deltaX=%f, deltaY=%f",
+>>>>>>> upstream/master
                             x - mPointerGesture.tapX,
                             y - mPointerGesture.tapY);
 #endif
                 }
             } else {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: Not a TAP, %0.3fms since down",
+=======
+                LOGD("Gestures: Not a TAP, %0.3fms since down",
+>>>>>>> upstream/master
                         (when - mPointerGesture.tapDownTime) * 0.000001f);
 #endif
             }
@@ -4683,7 +5193,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
 
         if (!tapped) {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: NEUTRAL");
+=======
+            LOGD("Gestures: NEUTRAL");
+>>>>>>> upstream/master
 #endif
             mPointerGesture.activeGestureId = -1;
             mPointerGesture.currentGestureMode = PointerGesture::NEUTRAL;
@@ -4694,7 +5208,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         // The pointer follows the active touch point.
         // When in HOVER, emit HOVER_MOVE events at the pointer location.
         // When in TAP_DRAG, emit MOVE events at the pointer location.
+<<<<<<< HEAD
         ALOG_ASSERT(activeTouchId >= 0);
+=======
+        LOG_ASSERT(activeTouchId >= 0);
+>>>>>>> upstream/master
 
         mPointerGesture.currentGestureMode = PointerGesture::HOVER;
         if (mPointerGesture.lastGestureMode == PointerGesture::TAP) {
@@ -4706,14 +5224,22 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                     mPointerGesture.currentGestureMode = PointerGesture::TAP_DRAG;
                 } else {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: Not a TAP_DRAG, deltaX=%f, deltaY=%f",
+=======
+                    LOGD("Gestures: Not a TAP_DRAG, deltaX=%f, deltaY=%f",
+>>>>>>> upstream/master
                             x - mPointerGesture.tapX,
                             y - mPointerGesture.tapY);
 #endif
                 }
             } else {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: Not a TAP_DRAG, %0.3fms time since up",
+=======
+                LOGD("Gestures: Not a TAP_DRAG, %0.3fms time since up",
+>>>>>>> upstream/master
                         (when - mPointerGesture.tapUpTime) * 0.000001f);
 #endif
             }
@@ -4744,12 +5270,20 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         bool down;
         if (mPointerGesture.currentGestureMode == PointerGesture::TAP_DRAG) {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: TAP_DRAG");
+=======
+            LOGD("Gestures: TAP_DRAG");
+>>>>>>> upstream/master
 #endif
             down = true;
         } else {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: HOVER");
+=======
+            LOGD("Gestures: HOVER");
+>>>>>>> upstream/master
 #endif
             if (mPointerGesture.lastGestureMode != PointerGesture::HOVER) {
                 *outFinishPreviousGesture = true;
@@ -4794,7 +5328,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         //
         // When the two fingers move enough or when additional fingers are added, we make
         // a decision to transition into SWIPE or FREEFORM mode accordingly.
+<<<<<<< HEAD
         ALOG_ASSERT(activeTouchId >= 0);
+=======
+        LOG_ASSERT(activeTouchId >= 0);
+>>>>>>> upstream/master
 
         bool settled = when >= mPointerGesture.firstTouchTime
                 + mConfig.pointerGestureMultitouchSettleInterval;
@@ -4806,7 +5344,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
             // Additional pointers have gone down but not yet settled.
             // Reset the gesture.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: Resetting gesture since additional pointers went down for MULTITOUCH, "
+=======
+            LOGD("Gestures: Resetting gesture since additional pointers went down for MULTITOUCH, "
+>>>>>>> upstream/master
                     "settle time remaining %0.3fms", (mPointerGesture.firstTouchTime
                             + mConfig.pointerGestureMultitouchSettleInterval - when)
                             * 0.000001f);
@@ -4825,7 +5367,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
 
             // Use the centroid and pointer location as the reference points for the gesture.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: Using centroid as reference for MULTITOUCH, "
+=======
+            LOGD("Gestures: Using centroid as reference for MULTITOUCH, "
+>>>>>>> upstream/master
                     "settle time remaining %0.3fms", (mPointerGesture.firstTouchTime
                             + mConfig.pointerGestureMultitouchSettleInterval - when)
                             * 0.000001f);
@@ -4888,7 +5434,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                 if (currentFingerCount > 2) {
                     // There are more than two pointers, switch to FREEFORM.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: PRESS transitioned to FREEFORM, number of pointers %d > 2",
+=======
+                    LOGD("Gestures: PRESS transitioned to FREEFORM, number of pointers %d > 2",
+>>>>>>> upstream/master
                             currentFingerCount);
 #endif
                     *outCancelPreviousGesture = true;
@@ -4905,7 +5455,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                         // There are two pointers but they are too far apart for a SWIPE,
                         // switch to FREEFORM.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                         ALOGD("Gestures: PRESS transitioned to FREEFORM, distance %0.3f > %0.3f",
+=======
+                        LOGD("Gestures: PRESS transitioned to FREEFORM, distance %0.3f > %0.3f",
+>>>>>>> upstream/master
                                 mutualDistance, mPointerGestureMaxSwipeWidth);
 #endif
                         *outCancelPreviousGesture = true;
@@ -4932,7 +5486,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                             if (cosine >= mConfig.pointerGestureSwipeTransitionAngleCosine) {
                                 // Pointers are moving in the same direction.  Switch to SWIPE.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                                 ALOGD("Gestures: PRESS transitioned to SWIPE, "
+=======
+                                LOGD("Gestures: PRESS transitioned to SWIPE, "
+>>>>>>> upstream/master
                                         "dist1 %0.3f >= %0.3f, dist2 %0.3f >= %0.3f, "
                                         "cosine %0.3f >= %0.3f",
                                         dist1, mConfig.pointerGestureMultitouchMinDistance,
@@ -4943,7 +5501,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                             } else {
                                 // Pointers are moving in different directions.  Switch to FREEFORM.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                                 ALOGD("Gestures: PRESS transitioned to FREEFORM, "
+=======
+                                LOGD("Gestures: PRESS transitioned to FREEFORM, "
+>>>>>>> upstream/master
                                         "dist1 %0.3f >= %0.3f, dist2 %0.3f >= %0.3f, "
                                         "cosine %0.3f < %0.3f",
                                         dist1, mConfig.pointerGestureMultitouchMinDistance,
@@ -4962,7 +5524,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
             // Cancel previous gesture.
             if (currentFingerCount > 2) {
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: SWIPE transitioned to FREEFORM, number of pointers %d > 2",
+=======
+                LOGD("Gestures: SWIPE transitioned to FREEFORM, number of pointers %d > 2",
+>>>>>>> upstream/master
                         currentFingerCount);
 #endif
                 *outCancelPreviousGesture = true;
@@ -4999,11 +5565,19 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                 || mPointerGesture.currentGestureMode == PointerGesture::SWIPE) {
             // PRESS or SWIPE mode.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: PRESS or SWIPE activeTouchId=%d,"
                     "activeGestureId=%d, currentTouchPointerCount=%d",
                     activeTouchId, mPointerGesture.activeGestureId, currentFingerCount);
 #endif
             ALOG_ASSERT(mPointerGesture.activeGestureId >= 0);
+=======
+            LOGD("Gestures: PRESS or SWIPE activeTouchId=%d,"
+                    "activeGestureId=%d, currentTouchPointerCount=%d",
+                    activeTouchId, mPointerGesture.activeGestureId, currentFingerCount);
+#endif
+            LOG_ASSERT(mPointerGesture.activeGestureId >= 0);
+>>>>>>> upstream/master
 
             mPointerGesture.currentGestureIdBits.clear();
             mPointerGesture.currentGestureIdBits.markBit(mPointerGesture.activeGestureId);
@@ -5021,11 +5595,19 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         } else if (mPointerGesture.currentGestureMode == PointerGesture::FREEFORM) {
             // FREEFORM mode.
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: FREEFORM activeTouchId=%d,"
                     "activeGestureId=%d, currentTouchPointerCount=%d",
                     activeTouchId, mPointerGesture.activeGestureId, currentFingerCount);
 #endif
             ALOG_ASSERT(mPointerGesture.activeGestureId >= 0);
+=======
+            LOGD("Gestures: FREEFORM activeTouchId=%d,"
+                    "activeGestureId=%d, currentTouchPointerCount=%d",
+                    activeTouchId, mPointerGesture.activeGestureId, currentFingerCount);
+#endif
+            LOG_ASSERT(mPointerGesture.activeGestureId >= 0);
+>>>>>>> upstream/master
 
             mPointerGesture.currentGestureIdBits.clear();
 
@@ -5064,7 +5646,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
             }
 
 #if DEBUG_GESTURES
+<<<<<<< HEAD
             ALOGD("Gestures: FREEFORM follow up "
+=======
+            LOGD("Gestures: FREEFORM follow up "
+>>>>>>> upstream/master
                     "mappedTouchIdBits=0x%08x, usedGestureIdBits=0x%08x, "
                     "activeGestureId=%d",
                     mappedTouchIdBits.value, usedGestureIdBits.value,
@@ -5079,14 +5665,22 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                     gestureId = usedGestureIdBits.markFirstUnmarkedBit();
                     mPointerGesture.freeformTouchToGestureIdMap[touchId] = gestureId;
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: FREEFORM "
+=======
+                    LOGD("Gestures: FREEFORM "
+>>>>>>> upstream/master
                             "new mapping for touch id %d -> gesture id %d",
                             touchId, gestureId);
 #endif
                 } else {
                     gestureId = mPointerGesture.freeformTouchToGestureIdMap[touchId];
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                     ALOGD("Gestures: FREEFORM "
+=======
+                    LOGD("Gestures: FREEFORM "
+>>>>>>> upstream/master
                             "existing mapping for touch id %d -> gesture id %d",
                             touchId, gestureId);
 #endif
@@ -5119,7 +5713,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
                 mPointerGesture.activeGestureId =
                         mPointerGesture.currentGestureIdBits.firstMarkedBit();
 #if DEBUG_GESTURES
+<<<<<<< HEAD
                 ALOGD("Gestures: FREEFORM new "
+=======
+                LOGD("Gestures: FREEFORM new "
+>>>>>>> upstream/master
                         "activeGestureId=%d", mPointerGesture.activeGestureId);
 #endif
             }
@@ -5129,7 +5727,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
     mPointerController->setButtonState(mCurrentButtonState);
 
 #if DEBUG_GESTURES
+<<<<<<< HEAD
     ALOGD("Gestures: finishPreviousGesture=%s, cancelPreviousGesture=%s, "
+=======
+    LOGD("Gestures: finishPreviousGesture=%s, cancelPreviousGesture=%s, "
+>>>>>>> upstream/master
             "currentGestureMode=%d, currentGestureIdBits=0x%08x, "
             "lastGestureMode=%d, lastGestureIdBits=0x%08x",
             toString(*outFinishPreviousGesture), toString(*outCancelPreviousGesture),
@@ -5140,7 +5742,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         uint32_t index = mPointerGesture.currentGestureIdToIndex[id];
         const PointerProperties& properties = mPointerGesture.currentGestureProperties[index];
         const PointerCoords& coords = mPointerGesture.currentGestureCoords[index];
+<<<<<<< HEAD
         ALOGD("  currentGesture[%d]: index=%d, toolType=%d, "
+=======
+        LOGD("  currentGesture[%d]: index=%d, toolType=%d, "
+>>>>>>> upstream/master
                 "x=%0.3f, y=%0.3f, pressure=%0.3f",
                 id, index, properties.toolType,
                 coords.getAxisValue(AMOTION_EVENT_AXIS_X),
@@ -5152,7 +5758,11 @@ bool TouchInputMapper::preparePointerGestures(nsecs_t when,
         uint32_t index = mPointerGesture.lastGestureIdToIndex[id];
         const PointerProperties& properties = mPointerGesture.lastGestureProperties[index];
         const PointerCoords& coords = mPointerGesture.lastGestureCoords[index];
+<<<<<<< HEAD
         ALOGD("  lastGesture[%d]: index=%d, toolType=%d, "
+=======
+        LOGD("  lastGesture[%d]: index=%d, toolType=%d, "
+>>>>>>> upstream/master
                 "x=%0.3f, y=%0.3f, pressure=%0.3f",
                 id, index, properties.toolType,
                 coords.getAxisValue(AMOTION_EVENT_AXIS_X),
@@ -5393,7 +6003,11 @@ void TouchInputMapper::dispatchMotion(nsecs_t when, uint32_t policyFlags, uint32
         pointerCount += 1;
     }
 
+<<<<<<< HEAD
     ALOG_ASSERT(pointerCount != 0);
+=======
+    LOG_ASSERT(pointerCount != 0);
+>>>>>>> upstream/master
 
     if (changedId >= 0 && pointerCount == 1) {
         // Replace initial down and final up action.
@@ -5405,7 +6019,11 @@ void TouchInputMapper::dispatchMotion(nsecs_t when, uint32_t policyFlags, uint32
             action = AMOTION_EVENT_ACTION_UP;
         } else {
             // Can't happen.
+<<<<<<< HEAD
             ALOG_ASSERT(false);
+=======
+            LOG_ASSERT(false);
+>>>>>>> upstream/master
         }
     }
 
@@ -5461,7 +6079,11 @@ const TouchInputMapper::VirtualKey* TouchInputMapper::findVirtualKeyHit(
         const VirtualKey& virtualKey = mVirtualKeys[i];
 
 #if DEBUG_VIRTUAL_KEYS
+<<<<<<< HEAD
         ALOGD("VirtualKeys: Hit test (%d, %d): keyCode=%d, scanCode=%d, "
+=======
+        LOGD("VirtualKeys: Hit test (%d, %d): keyCode=%d, scanCode=%d, "
+>>>>>>> upstream/master
                 "left=%d, top=%d, right=%d, bottom=%d",
                 x, y,
                 virtualKey.keyCode, virtualKey.scanCode,
@@ -5566,9 +6188,15 @@ void TouchInputMapper::assignPointerIds() {
     }
 
 #if DEBUG_POINTER_ASSIGNMENT
+<<<<<<< HEAD
     ALOGD("assignPointerIds - initial distance min-heap: size=%d", heapSize);
     for (size_t i = 0; i < heapSize; i++) {
         ALOGD("  heap[%d]: cur=%d, last=%d, distance=%lld",
+=======
+    LOGD("assignPointerIds - initial distance min-heap: size=%d", heapSize);
+    for (size_t i = 0; i < heapSize; i++) {
+        LOGD("  heap[%d]: cur=%d, last=%d, distance=%lld",
+>>>>>>> upstream/master
                 i, heap[i].currentPointerIndex, heap[i].lastPointerIndex,
                 heap[i].distance);
     }
@@ -5612,9 +6240,15 @@ void TouchInputMapper::assignPointerIds() {
                 }
 
 #if DEBUG_POINTER_ASSIGNMENT
+<<<<<<< HEAD
                 ALOGD("assignPointerIds - reduced distance min-heap: size=%d", heapSize);
                 for (size_t i = 0; i < heapSize; i++) {
                     ALOGD("  heap[%d]: cur=%d, last=%d, distance=%lld",
+=======
+                LOGD("assignPointerIds - reduced distance min-heap: size=%d", heapSize);
+                for (size_t i = 0; i < heapSize; i++) {
+                    LOGD("  heap[%d]: cur=%d, last=%d, distance=%lld",
+>>>>>>> upstream/master
                             i, heap[i].currentPointerIndex, heap[i].lastPointerIndex,
                             heap[i].distance);
                 }
@@ -5640,7 +6274,11 @@ void TouchInputMapper::assignPointerIds() {
             usedIdBits.markBit(id);
 
 #if DEBUG_POINTER_ASSIGNMENT
+<<<<<<< HEAD
             ALOGD("assignPointerIds - matched: cur=%d, last=%d, id=%d, distance=%lld",
+=======
+            LOGD("assignPointerIds - matched: cur=%d, last=%d, id=%d, distance=%lld",
+>>>>>>> upstream/master
                     lastPointerIndex, currentPointerIndex, id, heap[0].distance);
 #endif
             break;
@@ -5658,7 +6296,11 @@ void TouchInputMapper::assignPointerIds() {
                 mCurrentRawPointerData.isHovering(currentPointerIndex));
 
 #if DEBUG_POINTER_ASSIGNMENT
+<<<<<<< HEAD
         ALOGD("assignPointerIds - assigned: cur=%d, id=%d",
+=======
+        LOGD("assignPointerIds - assigned: cur=%d, id=%d",
+>>>>>>> upstream/master
                 currentPointerIndex, id);
 #endif
     }
@@ -5778,10 +6420,13 @@ void SingleTouchInputMapper::configureRawPointerAxes() {
     getAbsoluteAxisInfo(ABS_TILT_Y, &mRawPointerAxes.tiltY);
 }
 
+<<<<<<< HEAD
 bool SingleTouchInputMapper::hasStylus() const {
     return mTouchButtonAccumulator.hasStylus();
 }
 
+=======
+>>>>>>> upstream/master
 
 // --- MultiTouchInputMapper ---
 
@@ -5820,7 +6465,11 @@ void MultiTouchInputMapper::syncTouch(nsecs_t when, bool* outHavePointerIds) {
 
         if (outCount >= MAX_POINTERS) {
 #if DEBUG_POINTERS
+<<<<<<< HEAD
             ALOGD("MultiTouch device %s emitted more than maximum of %d pointers; "
+=======
+            LOGD("MultiTouch device %s emitted more than maximum of %d pointers; "
+>>>>>>> upstream/master
                     "ignoring the rest.",
                     getDeviceName().string(), MAX_POINTERS);
 #endif
@@ -5911,11 +6560,16 @@ void MultiTouchInputMapper::configureRawPointerAxes() {
             && mRawPointerAxes.slot.minValue == 0 && mRawPointerAxes.slot.maxValue > 0) {
         size_t slotCount = mRawPointerAxes.slot.maxValue + 1;
         if (slotCount > MAX_SLOTS) {
+<<<<<<< HEAD
             ALOGW("MultiTouch Device %s reported %d slots but the framework "
+=======
+            LOGW("MultiTouch Device %s reported %d slots but the framework "
+>>>>>>> upstream/master
                     "only supports a maximum of %d slots at this time.",
                     getDeviceName().string(), slotCount, MAX_SLOTS);
             slotCount = MAX_SLOTS;
         }
+<<<<<<< HEAD
         mMultiTouchMotionAccumulator.configure(getDevice(),
                 slotCount, true /*usingSlotsProtocol*/);
     } else {
@@ -5929,6 +6583,14 @@ bool MultiTouchInputMapper::hasStylus() const {
             || mTouchButtonAccumulator.hasStylus();
 }
 
+=======
+        mMultiTouchMotionAccumulator.configure(slotCount, true /*usingSlotsProtocol*/);
+    } else {
+        mMultiTouchMotionAccumulator.configure(MAX_POINTERS, false /*usingSlotsProtocol*/);
+    }
+}
+
+>>>>>>> upstream/master
 
 // --- JoystickInputMapper ---
 
@@ -6054,7 +6716,11 @@ void JoystickInputMapper::configure(nsecs_t when,
         // If there are too many axes, start dropping them.
         // Prefer to keep explicitly mapped axes.
         if (mAxes.size() > PointerCoords::MAX_AXES) {
+<<<<<<< HEAD
             ALOGI("Joystick '%s' has %d axes but the framework only supports a maximum of %d.",
+=======
+            LOGI("Joystick '%s' has %d axes but the framework only supports a maximum of %d.",
+>>>>>>> upstream/master
                     getDeviceName().string(), mAxes.size(), PointerCoords::MAX_AXES);
             pruneAxes(true);
             pruneAxes(false);
@@ -6075,7 +6741,11 @@ void JoystickInputMapper::configure(nsecs_t when,
                     axis.axisInfo.axis = nextGenericAxisId;
                     nextGenericAxisId += 1;
                 } else {
+<<<<<<< HEAD
                     ALOGI("Ignoring joystick '%s' axis %d because all of the generic axis ids "
+=======
+                    LOGI("Ignoring joystick '%s' axis %d because all of the generic axis ids "
+>>>>>>> upstream/master
                             "have already been assigned to other axes.",
                             getDeviceName().string(), mAxes.keyAt(i));
                     mAxes.removeItemsAt(i--);
@@ -6105,7 +6775,11 @@ void JoystickInputMapper::pruneAxes(bool ignoreExplicitlyMappedAxes) {
         if (ignoreExplicitlyMappedAxes && mAxes.valueAt(i).explicitlyMapped) {
             continue;
         }
+<<<<<<< HEAD
         ALOGI("Discarding joystick '%s' axis %d because there are too many axes.",
+=======
+        LOGI("Discarding joystick '%s' axis %d because there are too many axes.",
+>>>>>>> upstream/master
                 getDeviceName().string(), mAxes.keyAt(i));
         mAxes.removeItemsAt(i);
     }
@@ -6144,7 +6818,11 @@ void JoystickInputMapper::reset(nsecs_t when) {
 void JoystickInputMapper::process(const RawEvent* rawEvent) {
     switch (rawEvent->type) {
     case EV_ABS: {
+<<<<<<< HEAD
         ssize_t index = mAxes.indexOfKey(rawEvent->code);
+=======
+        ssize_t index = mAxes.indexOfKey(rawEvent->scanCode);
+>>>>>>> upstream/master
         if (index >= 0) {
             Axis& axis = mAxes.editValueAt(index);
             float newValue, highNewValue;
@@ -6180,7 +6858,11 @@ void JoystickInputMapper::process(const RawEvent* rawEvent) {
     }
 
     case EV_SYN:
+<<<<<<< HEAD
         switch (rawEvent->code) {
+=======
+        switch (rawEvent->scanCode) {
+>>>>>>> upstream/master
         case SYN_REPORT:
             sync(rawEvent->when, false /*force*/);
             break;

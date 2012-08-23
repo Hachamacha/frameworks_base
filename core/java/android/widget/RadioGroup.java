@@ -23,8 +23,11 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 
 /**
@@ -190,8 +193,11 @@ public class RadioGroup extends LinearLayout {
      *
      * @see #check(int)
      * @see #clearCheck()
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#RadioGroup_checkedButton
+=======
+>>>>>>> upstream/master
      */
     public int getCheckedRadioButtonId() {
         return mCheckedId;
@@ -240,6 +246,7 @@ public class RadioGroup extends LinearLayout {
         return new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -252,6 +259,8 @@ public class RadioGroup extends LinearLayout {
         info.setClassName(RadioGroup.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * <p>This set of layout parameters defaults the width and the height of
      * the children to {@link #WRAP_CONTENT} when they are not specified in the

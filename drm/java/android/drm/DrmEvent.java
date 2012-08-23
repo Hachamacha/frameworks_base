@@ -23,10 +23,13 @@ import java.util.HashMap;
  *
  */
 public class DrmEvent {
+<<<<<<< HEAD
 
     // Please do not add type constants in this class. More event type constants
     // should go to DrmInfoEvent or DrmErrorEvent classes.
 
+=======
+>>>>>>> upstream/master
     /**
      * All of the rights information associated with all DRM schemes have been successfully removed.
      */

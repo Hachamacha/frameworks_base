@@ -16,6 +16,7 @@
 
 package android.net;
 
+<<<<<<< HEAD
 import android.test.suitebuilder.annotation.Suppress;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,6 +27,19 @@ import junit.framework.TestCase;
 public class SSLTest extends TestCase {
     //This test relies on network resources.
     @Suppress
+=======
+import android.net.SSLCertificateSocketFactory;
+import android.test.suitebuilder.annotation.Suppress;
+import junit.framework.TestCase;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
+//This test relies on network resources.
+@Suppress
+public class SSLTest extends TestCase {
+>>>>>>> upstream/master
     public void testCertificate() throws Exception {
         // test www.fortify.net/sslcheck.html
         Socket ssl = SSLCertificateSocketFactory.getDefault().createSocket("www.fortify.net",443);
@@ -48,6 +62,7 @@ public class SSLTest extends TestCase {
 
         // System.out.println(new String(b));
     }
+<<<<<<< HEAD
 
     public void testStringsToNpnBytes() {
         byte[] expected = {
@@ -82,4 +97,6 @@ public class SSLTest extends TestCase {
         } catch (IllegalArgumentException expected) {
         }
     }
+=======
+>>>>>>> upstream/master
 }

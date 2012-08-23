@@ -30,7 +30,10 @@ package android.view;
  */
 public abstract class ActionMode {
     private Object mTag;
+<<<<<<< HEAD
     private boolean mTitleOptionalHint;
+=======
+>>>>>>> upstream/master
 
     /**
      * Set a tag object associated with this ActionMode.
@@ -105,6 +108,7 @@ public abstract class ActionMode {
     public abstract void setSubtitle(int resId);
 
     /**
+<<<<<<< HEAD
      * Set whether or not the title/subtitle display for this action mode
      * is optional.
      *
@@ -143,6 +147,8 @@ public abstract class ActionMode {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set a custom view for this action mode. The custom view will take the place of
      * the title and subtitle. Useful for things like search boxes.
      *

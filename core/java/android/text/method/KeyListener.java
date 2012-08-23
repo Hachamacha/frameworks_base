@@ -22,17 +22,24 @@ import android.view.View;
 
 /**
  * Interface for converting text key events into edit operations on an
+<<<<<<< HEAD
  * Editable class.  Note that for most cases this interface has been
+=======
+ * Editable class.  Note that for must cases this interface has been
+>>>>>>> upstream/master
  * superceded by general soft input methods as defined by
  * {@link android.view.inputmethod.InputMethod}; it should only be used
  * for cases where an application has its own on-screen keypad and also wants
  * to process hard keyboard events to match it.
+<<<<<<< HEAD
  * <p></p>
  * Key presses on soft input methods are not required to trigger the methods
  * in this listener, and are in fact discouraged to do so.  The default
  * android keyboard will not trigger these for any key to any application
  * targetting Jelly Bean or later, and will only deliver it for some
  * key presses to applications targetting Ice Cream Sandwich or earlier.
+=======
+>>>>>>> upstream/master
  */
 public interface KeyListener {
     /**

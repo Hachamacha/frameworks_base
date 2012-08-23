@@ -82,10 +82,13 @@ class MeasuredText {
         return null;
     }
 
+<<<<<<< HEAD
     void setPos(int pos) {
         mPos = pos;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Analyzes text for bidirectional runs.  Allocates working buffers.
      */
@@ -113,11 +116,16 @@ class MeasuredText {
             for (int i = 0; i < spans.length; i++) {
                 int startInPara = spanned.getSpanStart(spans[i]) - start;
                 int endInPara = spanned.getSpanEnd(spans[i]) - start;
+<<<<<<< HEAD
                 // The span interval may be larger and must be restricted to [start, end[
                 if (startInPara < 0) startInPara = 0;
                 if (endInPara > len) endInPara = len;
                 for (int j = startInPara; j < endInPara; j++) {
                     mChars[j] = '\uFFFC'; // object replacement character
+=======
+                for (int j = startInPara; j < endInPara; j++) {
+                    mChars[j] = '\uFFFC';
+>>>>>>> upstream/master
                 }
             }
         }
@@ -226,6 +234,7 @@ class MeasuredText {
         return wid;
     }
 
+<<<<<<< HEAD
     int breakText(int limit, boolean forwards, float width) {
         float[] w = mWidths;
         if (forwards) {
@@ -247,6 +256,25 @@ class MeasuredText {
             while (i < limit - 1 && mChars[i + 1] == ' ') i++;
             return limit - i - 1;
         }
+=======
+    int breakText(int start, int limit, boolean forwards, float width) {
+        float[] w = mWidths;
+        if (forwards) {
+            for (int i = start; i < limit; ++i) {
+                if ((width -= w[i]) < 0) {
+                    return i - start;
+                }
+            }
+        } else {
+            for (int i = limit; --i >= start;) {
+                if ((width -= w[i]) < 0) {
+                    return limit - i -1;
+                }
+            }
+        }
+
+        return limit - start;
+>>>>>>> upstream/master
     }
 
     float measure(int start, int limit) {

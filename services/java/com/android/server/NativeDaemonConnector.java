@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.os.SystemClock;
+<<<<<<< HEAD
 import android.util.LocalLog;
 import android.util.Slog;
 
@@ -73,6 +74,61 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
         mSequenceNumber = new AtomicInteger(0);
         TAG = logTag != null ? logTag : "NativeDaemonConnector";
         mLocalLog = new LocalLog(maxLogSize);
+=======
+import android.util.Slog;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+/**
+ * Generic connector class for interfacing with a native
+ * daemon which uses the libsysutils FrameworkListener
+ * protocol.
+ */
+final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdog.Monitor {
+    private static final boolean LOCAL_LOGD = false;
+
+    private BlockingQueue<String> mResponseQueue;
+    private OutputStream          mOutputStream;
+    private String                TAG = "NativeDaemonConnector";
+    private String                mSocket;
+    private INativeDaemonConnectorCallbacks mCallbacks;
+    private Handler               mCallbackHandler;
+
+    /** Lock held whenever communicating with native daemon. */
+    private Object mDaemonLock = new Object();
+
+    private final int BUFFER_SIZE = 4096;
+
+    class ResponseCode {
+        public static final int ActionInitiated                = 100;
+
+        public static final int CommandOkay                    = 200;
+
+        // The range of 400 -> 599 is reserved for cmd failures
+        public static final int OperationFailed                = 400;
+        public static final int CommandSyntaxError             = 500;
+        public static final int CommandParameterError          = 501;
+
+        public static final int UnsolicitedInformational       = 600;
+
+        //
+        public static final int FailedRangeStart               = 400;
+        public static final int FailedRangeEnd                 = 599;
+    }
+
+    NativeDaemonConnector(INativeDaemonConnectorCallbacks callbacks,
+                          String socket, int responseQueueSize, String logTag) {
+        mCallbacks = callbacks;
+        if (logTag != null)
+            TAG = logTag;
+        mSocket = socket;
+        mResponseQueue = new LinkedBlockingQueue<String>(responseQueueSize);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -85,7 +141,11 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
             try {
                 listenToSocket();
             } catch (Exception e) {
+<<<<<<< HEAD
                 loge("Error in NativeDaemonConnector: " + e);
+=======
+                Slog.e(TAG, "Error in NativeDaemonConnector", e);
+>>>>>>> upstream/master
                 SystemClock.sleep(5000);
             }
         }
@@ -95,11 +155,21 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
     public boolean handleMessage(Message msg) {
         String event = (String) msg.obj;
         try {
+<<<<<<< HEAD
             if (!mCallbacks.onEvent(msg.what, event, NativeDaemonEvent.unescapeArgs(event))) {
                 log(String.format("Unhandled event '%s'", event));
             }
         } catch (Exception e) {
             loge("Error handling '" + event + "': " + e);
+=======
+            if (!mCallbacks.onEvent(msg.what, event, event.split(" "))) {
+                Slog.w(TAG, String.format(
+                        "Unhandled event '%s'", event));
+            }
+        } catch (Exception e) {
+            Slog.e(TAG, String.format(
+                    "Error handling '%s'", event), e);
+>>>>>>> upstream/master
         }
         return true;
     }
@@ -115,9 +185,13 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
             socket.connect(address);
 
             InputStream inputStream = socket.getInputStream();
+<<<<<<< HEAD
             synchronized (mDaemonLock) {
                 mOutputStream = socket.getOutputStream();
             }
+=======
+            mOutputStream = socket.getOutputStream();
+>>>>>>> upstream/master
 
             mCallbacks.onDaemonConnected();
 
@@ -126,10 +200,14 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
 
             while (true) {
                 int count = inputStream.read(buffer, start, BUFFER_SIZE - start);
+<<<<<<< HEAD
                 if (count < 0) {
                     loge("got " + count + " reading with start = " + start);
                     break;
                 }
+=======
+                if (count < 0) break;
+>>>>>>> upstream/master
 
                 // Add our starting point to the count and reset the start.
                 count += start;
@@ -137,6 +215,7 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
 
                 for (int i = 0; i < count; i++) {
                     if (buffer[i] == 0) {
+<<<<<<< HEAD
                         final String rawEvent = new String(
                                 buffer, start, i - start, Charsets.UTF_8);
                         log("RCV <- {" + rawEvent + "}");
@@ -162,6 +241,31 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
                     final String rawEvent = new String(buffer, start, count, Charsets.UTF_8);
                     log("RCV incomplete <- {" + rawEvent + "}");
                 }
+=======
+                        String event = new String(buffer, start, i - start);
+                        if (LOCAL_LOGD) Slog.d(TAG, String.format("RCV <- {%s}", event));
+
+                        String[] tokens = event.split(" ", 2);
+                        try {
+                            int code = Integer.parseInt(tokens[0]);
+
+                            if (code >= ResponseCode.UnsolicitedInformational) {
+                                mCallbackHandler.sendMessage(
+                                        mCallbackHandler.obtainMessage(code, event));
+                            } else {
+                                try {
+                                    mResponseQueue.put(event);
+                                } catch (InterruptedException ex) {
+                                    Slog.e(TAG, "Failed to put response onto queue", ex);
+                                }
+                            }
+                        } catch (NumberFormatException nfe) {
+                            Slog.w(TAG, String.format("Bad msg (%s)", event));
+                        }
+                        start = i + 1;
+                    }
+                }
+>>>>>>> upstream/master
 
                 // We should end at the amount we read. If not, compact then
                 // buffer and read again.
@@ -174,16 +278,26 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
                 }
             }
         } catch (IOException ex) {
+<<<<<<< HEAD
             loge("Communications error: " + ex);
+=======
+            Slog.e(TAG, "Communications error", ex);
+>>>>>>> upstream/master
             throw ex;
         } finally {
             synchronized (mDaemonLock) {
                 if (mOutputStream != null) {
                     try {
+<<<<<<< HEAD
                         loge("closing stream for " + mSocket);
                         mOutputStream.close();
                     } catch (IOException e) {
                         loge("Failed closing output stream: " + e);
+=======
+                        mOutputStream.close();
+                    } catch (IOException e) {
+                        Slog.w(TAG, "Failed closing output stream", e);
+>>>>>>> upstream/master
                     }
                     mOutputStream = null;
                 }
@@ -194,6 +308,7 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
                     socket.close();
                 }
             } catch (IOException ex) {
+<<<<<<< HEAD
                 loge("Failed closing socket: " + ex);
             }
         }
@@ -581,5 +696,144 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
                 }
             }
         }
+=======
+                Slog.w(TAG, "Failed closing socket", ex);
+            }
+        }
+    }
+
+    private void sendCommandLocked(String command) throws NativeDaemonConnectorException {
+        sendCommandLocked(command, null);
+    }
+
+    /**
+     * Sends a command to the daemon with a single argument
+     *
+     * @param command  The command to send to the daemon
+     * @param argument The argument to send with the command (or null)
+     */
+    private void sendCommandLocked(String command, String argument)
+            throws NativeDaemonConnectorException {
+        if (command != null && command.indexOf('\0') >= 0) {
+            throw new IllegalArgumentException("unexpected command: " + command);
+        }
+        if (argument != null && argument.indexOf('\0') >= 0) {
+            throw new IllegalArgumentException("unexpected argument: " + argument);
+        }
+
+        if (LOCAL_LOGD) Slog.d(TAG, String.format("SND -> {%s} {%s}", command, argument));
+        if (mOutputStream == null) {
+            Slog.e(TAG, "No connection to daemon", new IllegalStateException());
+            throw new NativeDaemonConnectorException("No output stream!");
+        } else {
+            StringBuilder builder = new StringBuilder(command);
+            if (argument != null) {
+                builder.append(argument);
+            }
+            builder.append('\0');
+
+            try {
+                mOutputStream.write(builder.toString().getBytes());
+            } catch (IOException ex) {
+                Slog.e(TAG, "IOException in sendCommand", ex);
+            }
+        }
+    }
+
+    /**
+     * Issue a command to the native daemon and return the responses
+     */
+    public ArrayList<String> doCommand(String cmd) throws NativeDaemonConnectorException {
+        synchronized (mDaemonLock) {
+            return doCommandLocked(cmd);
+        }
+    }
+
+    private ArrayList<String> doCommandLocked(String cmd) throws NativeDaemonConnectorException {
+        mResponseQueue.clear();
+        sendCommandLocked(cmd);
+
+        ArrayList<String> response = new ArrayList<String>();
+        boolean complete = false;
+        int code = -1;
+
+        while (!complete) {
+            try {
+                // TODO - this should not block forever
+                String line = mResponseQueue.take();
+                if (LOCAL_LOGD) Slog.d(TAG, String.format("RSP <- {%s}", line));
+                String[] tokens = line.split(" ");
+                try {
+                    code = Integer.parseInt(tokens[0]);
+                } catch (NumberFormatException nfe) {
+                    throw new NativeDaemonConnectorException(
+                            String.format("Invalid response from daemon (%s)", line));
+                }
+
+                if ((code >= 200) && (code < 600)) {
+                    complete = true;
+                }
+                response.add(line);
+            } catch (InterruptedException ex) {
+                Slog.e(TAG, "Failed to process response", ex);
+            }
+        }
+
+        if (code >= ResponseCode.FailedRangeStart &&
+                code <= ResponseCode.FailedRangeEnd) {
+            /*
+             * Note: The format of the last response in this case is
+             *        "NNN <errmsg>"
+             */
+            throw new NativeDaemonConnectorException(
+                    code, cmd, response.get(response.size()-1).substring(4));
+        }
+        return response;
+    }
+
+    /**
+     * Issues a list command and returns the cooked list
+     */
+    public String[] doListCommand(String cmd, int expectedResponseCode)
+            throws NativeDaemonConnectorException {
+
+        ArrayList<String> rsp = doCommand(cmd);
+        String[] rdata = new String[rsp.size()-1];
+        int idx = 0;
+
+        for (int i = 0; i < rsp.size(); i++) {
+            String line = rsp.get(i);
+            try {
+                String[] tok = line.split(" ");
+                int code = Integer.parseInt(tok[0]);
+                if (code == expectedResponseCode) {
+                    rdata[idx++] = line.substring(tok[0].length() + 1);
+                } else if (code == NativeDaemonConnector.ResponseCode.CommandOkay) {
+                    if (LOCAL_LOGD) Slog.d(TAG, String.format("List terminated with {%s}", line));
+                    int last = rsp.size() -1;
+                    if (i != last) {
+                        Slog.w(TAG, String.format("Recv'd %d lines after end of list {%s}", (last-i), cmd));
+                        for (int j = i; j <= last ; j++) {
+                            Slog.w(TAG, String.format("ExtraData <%s>", rsp.get(i)));
+                        }
+                    }
+                    return rdata;
+                } else {
+                    throw new NativeDaemonConnectorException(
+                            String.format("Expected list response %d, but got %d",
+                                    expectedResponseCode, code));
+                }
+            } catch (NumberFormatException nfe) {
+                throw new NativeDaemonConnectorException(
+                        String.format("Error reading code '%s'", line));
+            }
+        }
+        throw new NativeDaemonConnectorException("Got an empty response");
+    }
+
+    /** {@inheritDoc} */
+    public void monitor() {
+        synchronized (mDaemonLock) { }
+>>>>>>> upstream/master
     }
 }

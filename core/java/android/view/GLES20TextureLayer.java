@@ -18,7 +18,10 @@ package android.view;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+<<<<<<< HEAD
 import android.graphics.Rect;
+=======
+>>>>>>> upstream/master
 import android.graphics.SurfaceTexture;
 
 /**
@@ -42,12 +45,15 @@ class GLES20TextureLayer extends GLES20Layer {
         }        
     }
 
+<<<<<<< HEAD
     GLES20TextureLayer(SurfaceTexture surface, boolean isOpaque) {
         this(isOpaque);
         mSurface = surface;
         mSurface.attachToGLContext(mTexture);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     boolean isValid() {
         return mLayer != 0 && mTexture != 0;
@@ -78,6 +84,7 @@ class GLES20TextureLayer extends GLES20Layer {
         return mSurface;
     }
 
+<<<<<<< HEAD
     void setSurfaceTexture(SurfaceTexture surfaceTexture) {
         if (mSurface != null) {
             mSurface.release();
@@ -86,6 +93,8 @@ class GLES20TextureLayer extends GLES20Layer {
         mSurface.attachToGLContext(mTexture);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     void update(int width, int height, boolean isOpaque) {
         super.update(width, height, isOpaque);
@@ -96,8 +105,11 @@ class GLES20TextureLayer extends GLES20Layer {
     void setTransform(Matrix matrix) {
         GLES20Canvas.nSetTextureLayerTransform(mLayer, matrix.native_instance);
     }
+<<<<<<< HEAD
 
     @Override
     void redraw(DisplayList displayList, Rect dirtyRect) {
     }
+=======
+>>>>>>> upstream/master
 }

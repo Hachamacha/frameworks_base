@@ -21,7 +21,11 @@ import android.renderscript.RenderScript.RSMessageHandler;
 
 public class UnitTest extends Thread {
     public String name;
+<<<<<<< HEAD
     private int result;
+=======
+    public int result;
+>>>>>>> upstream/master
     private ScriptField_ListAllocs_s.Item mItem;
     private RSTestCore mRSTC;
     private boolean msgHandled;
@@ -58,12 +62,21 @@ public class UnitTest extends Thread {
 
     protected void _RS_ASSERT(String message, boolean b) {
         if(b == false) {
+<<<<<<< HEAD
             Log.e(name, message + " FAILED");
             failTest();
         }
     }
 
     private void updateUI() {
+=======
+            result = -1;
+            Log.e(name, message + " FAILED");
+        }
+    }
+
+    protected void updateUI() {
+>>>>>>> upstream/master
         if (mItem != null) {
             mItem.result = result;
             msgHandled = true;
@@ -104,6 +117,7 @@ public class UnitTest extends Thread {
         }
     }
 
+<<<<<<< HEAD
     public int getResult() {
         return result;
     }
@@ -120,6 +134,8 @@ public class UnitTest extends Thread {
         updateUI();
     }
 
+=======
+>>>>>>> upstream/master
     public void setItem(ScriptField_ListAllocs_s.Item item) {
         mItem = item;
     }

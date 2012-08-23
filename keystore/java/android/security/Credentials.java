@@ -26,13 +26,19 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+<<<<<<< HEAD
 import java.io.ObjectOutputStream;
+=======
+>>>>>>> upstream/master
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charsets;
 import java.security.KeyPair;
+<<<<<<< HEAD
 import java.security.cert.X509Certificate;
+=======
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +81,7 @@ public class Credentials {
     public static final String EXTENSION_PFX = ".pfx";
 
     /**
+<<<<<<< HEAD
      * Intent extra: name for the user's private key.
      */
     public static final String EXTRA_USER_PRIVATE_KEY_NAME = "user_private_key_name";
@@ -105,6 +112,8 @@ public class Credentials {
     public static final String EXTRA_CA_CERTIFICATES_DATA = "ca_certificates_data";
 
     /**
+=======
+>>>>>>> upstream/master
      * Convert objects to a PEM format, which is used for
      * CA_CERTIFICATE, USER_CERTIFICATE, and USER_PRIVATE_KEY
      * entries.

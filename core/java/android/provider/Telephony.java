@@ -596,8 +596,13 @@ public final class Telephony {
              * values:</p>
              *
              * <ul>
+<<<<<<< HEAD
              *   <li><em>message</em> - An SmsCbMessage object containing the broadcast message
              *   data. This is not an emergency alert, so ETWS and CMAS data will be null.</li>
+=======
+             *   <li><em>pdus</em> - An Object[] of byte[]s containing the PDUs
+             *   that make up the message.</li>
+>>>>>>> upstream/master
              * </ul>
              *
              * <p>The extra values can be extracted using
@@ -616,8 +621,13 @@ public final class Telephony {
              * values:</p>
              *
              * <ul>
+<<<<<<< HEAD
              *   <li><em>message</em> - An SmsCbMessage object containing the broadcast message
              *   data, including ETWS or CMAS warning notification info if present.</li>
+=======
+             *   <li><em>pdus</em> - An Object[] of byte[]s containing the PDUs
+             *   that make up the message.</li>
+>>>>>>> upstream/master
              * </ul>
              *
              * <p>The extra values can be extracted using
@@ -631,6 +641,7 @@ public final class Telephony {
                     "android.provider.Telephony.SMS_EMERGENCY_CB_RECEIVED";
 
             /**
+<<<<<<< HEAD
              * Broadcast Action: A new CDMA SMS has been received containing Service Category
              * Program Data (updates the list of enabled broadcast channels). The intent will
              * have the following extra values:</p>
@@ -651,6 +662,8 @@ public final class Telephony {
                     "android.provider.Telephony.SMS_SERVICE_CATEGORY_PROGRAM_DATA_RECEIVED";
 
             /**
+=======
+>>>>>>> upstream/master
              * Broadcast Action: The SIM storage for SMS messages is full.  If
              * space is not freed, messages targeted for the SIM (class 2) may
              * not be saved.
@@ -1816,6 +1829,7 @@ public final class Telephony {
         public static final String BEARER = "bearer";
     }
 
+<<<<<<< HEAD
     /**
      * Contains received SMS cell broadcast messages.
      */
@@ -1991,6 +2005,8 @@ public final class Telephony {
         };
     }
 
+=======
+>>>>>>> upstream/master
     public static final class Intents {
         private Intents() {
             // Not instantiable

@@ -888,6 +888,7 @@ public class XmlUtils
             ;
         }
     }
+<<<<<<< HEAD
 
     public static boolean nextElementWithin(XmlPullParser parser, int outerDepth)
             throws IOException, XmlPullParserException {
@@ -903,4 +904,6 @@ public class XmlUtils
             }
         }
     }
+=======
+>>>>>>> upstream/master
 }

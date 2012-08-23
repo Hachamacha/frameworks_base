@@ -32,7 +32,10 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 /**
  * SlidingDrawer hides content out of the screen and allows the user to drag a handle
@@ -811,6 +814,7 @@ public class SlidingDrawer extends ViewGroup {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -823,6 +827,8 @@ public class SlidingDrawer extends ViewGroup {
         info.setClassName(SlidingDrawer.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     private void closeDrawer() {
         moveHandle(COLLAPSED_FULL_CLOSED);
         mContent.setVisibility(View.GONE);

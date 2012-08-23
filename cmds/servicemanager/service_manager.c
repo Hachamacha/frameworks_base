@@ -11,8 +11,13 @@
 #include "binder.h"
 
 #if 0
+<<<<<<< HEAD
 #define ALOGI(x...) fprintf(stderr, "svcmgr: " x)
 #define ALOGE(x...) fprintf(stderr, "svcmgr: " x)
+=======
+#define LOGI(x...) fprintf(stderr, "svcmgr: " x)
+#define LOGE(x...) fprintf(stderr, "svcmgr: " x)
+>>>>>>> upstream/master
 #else
 #define LOG_TAG "ServiceManager"
 #include <cutils/log.h>
@@ -27,6 +32,12 @@ static struct {
     unsigned uid;
     const char *name;
 } allowed[] = {
+<<<<<<< HEAD
+=======
+#ifdef LVMX
+    { AID_MEDIA, "com.lifevibes.mx.ipc" },
+#endif
+>>>>>>> upstream/master
     { AID_MEDIA, "media.audio_flinger" },
     { AID_MEDIA, "media.player" },
     { AID_MEDIA, "media.camera" },
@@ -43,8 +54,11 @@ static struct {
     { AID_RADIO, "isms" },
     { AID_RADIO, "iphonesubinfo" },
     { AID_RADIO, "simphonebook" },
+<<<<<<< HEAD
     { AID_MEDIA, "common_time.clock" },
     { AID_MEDIA, "common_time.config" },
+=======
+>>>>>>> upstream/master
 };
 
 void *svcmgr_handle;
@@ -92,7 +106,10 @@ struct svcinfo
     struct svcinfo *next;
     void *ptr;
     struct binder_death death;
+<<<<<<< HEAD
     int allow_isolated;
+=======
+>>>>>>> upstream/master
     unsigned len;
     uint16_t name[0];
 };
@@ -115,7 +132,11 @@ struct svcinfo *find_svc(uint16_t *s16, unsigned len)
 void svcinfo_death(struct binder_state *bs, void *ptr)
 {
     struct svcinfo *si = ptr;
+<<<<<<< HEAD
     ALOGI("service '%s' died\n", str8(si->name));
+=======
+    LOGI("service '%s' died\n", str8(si->name));
+>>>>>>> upstream/master
     if (si->ptr) {
         binder_release(bs, si->ptr);
         si->ptr = 0;
@@ -128,11 +149,16 @@ uint16_t svcmgr_id[] = {
 };
   
 
+<<<<<<< HEAD
 void *do_find_service(struct binder_state *bs, uint16_t *s, unsigned len, unsigned uid)
+=======
+void *do_find_service(struct binder_state *bs, uint16_t *s, unsigned len)
+>>>>>>> upstream/master
 {
     struct svcinfo *si;
     si = find_svc(s, len);
 
+<<<<<<< HEAD
 //    ALOGI("check_service('%s') ptr = %p\n", str8(s), si ? si->ptr : 0);
     if (si && si->ptr) {
         if (!si->allow_isolated) {
@@ -143,6 +169,10 @@ void *do_find_service(struct binder_state *bs, uint16_t *s, unsigned len, unsign
                 return 0;
             }
         }
+=======
+//    LOGI("check_service('%s') ptr = %p\n", str8(s), si ? si->ptr : 0);
+    if (si && si->ptr) {
+>>>>>>> upstream/master
         return si->ptr;
     } else {
         return 0;
@@ -151,17 +181,28 @@ void *do_find_service(struct binder_state *bs, uint16_t *s, unsigned len, unsign
 
 int do_add_service(struct binder_state *bs,
                    uint16_t *s, unsigned len,
+<<<<<<< HEAD
                    void *ptr, unsigned uid, int allow_isolated)
 {
     struct svcinfo *si;
     //ALOGI("add_service('%s',%p,%s) uid=%d\n", str8(s), ptr,
     //        allow_isolated ? "allow_isolated" : "!allow_isolated", uid);
+=======
+                   void *ptr, unsigned uid)
+{
+    struct svcinfo *si;
+//    LOGI("add_service('%s',%p) uid=%d\n", str8(s), ptr, uid);
+>>>>>>> upstream/master
 
     if (!ptr || (len == 0) || (len > 127))
         return -1;
 
     if (!svc_can_register(uid, s)) {
+<<<<<<< HEAD
         ALOGE("add_service('%s',%p) uid=%d - PERMISSION DENIED\n",
+=======
+        LOGE("add_service('%s',%p) uid=%d - PERMISSION DENIED\n",
+>>>>>>> upstream/master
              str8(s), ptr, uid);
         return -1;
     }
@@ -169,7 +210,11 @@ int do_add_service(struct binder_state *bs,
     si = find_svc(s, len);
     if (si) {
         if (si->ptr) {
+<<<<<<< HEAD
             ALOGE("add_service('%s',%p) uid=%d - ALREADY REGISTERED, OVERRIDE\n",
+=======
+            LOGE("add_service('%s',%p) uid=%d - ALREADY REGISTERED, OVERRIDE\n",
+>>>>>>> upstream/master
                  str8(s), ptr, uid);
             svcinfo_death(bs, si);
         }
@@ -177,7 +222,11 @@ int do_add_service(struct binder_state *bs,
     } else {
         si = malloc(sizeof(*si) + (len + 1) * sizeof(uint16_t));
         if (!si) {
+<<<<<<< HEAD
             ALOGE("add_service('%s',%p) uid=%d - OUT OF MEMORY\n",
+=======
+            LOGE("add_service('%s',%p) uid=%d - OUT OF MEMORY\n",
+>>>>>>> upstream/master
                  str8(s), ptr, uid);
             return -1;
         }
@@ -187,7 +236,10 @@ int do_add_service(struct binder_state *bs,
         si->name[len] = '\0';
         si->death.func = svcinfo_death;
         si->death.ptr = si;
+<<<<<<< HEAD
         si->allow_isolated = allow_isolated;
+=======
+>>>>>>> upstream/master
         si->next = svclist;
         svclist = si;
     }
@@ -207,9 +259,14 @@ int svcmgr_handler(struct binder_state *bs,
     unsigned len;
     void *ptr;
     uint32_t strict_policy;
+<<<<<<< HEAD
     int allow_isolated;
 
 //    ALOGI("target=%p code=%d pid=%d uid=%d\n",
+=======
+
+//    LOGI("target=%p code=%d pid=%d uid=%d\n",
+>>>>>>> upstream/master
 //         txn->target, txn->code, txn->sender_pid, txn->sender_euid);
 
     if (txn->target != svcmgr_handle)
@@ -231,7 +288,11 @@ int svcmgr_handler(struct binder_state *bs,
     case SVC_MGR_GET_SERVICE:
     case SVC_MGR_CHECK_SERVICE:
         s = bio_get_string16(msg, &len);
+<<<<<<< HEAD
         ptr = do_find_service(bs, s, len, txn->sender_euid);
+=======
+        ptr = do_find_service(bs, s, len);
+>>>>>>> upstream/master
         if (!ptr)
             break;
         bio_put_ref(reply, ptr);
@@ -240,8 +301,12 @@ int svcmgr_handler(struct binder_state *bs,
     case SVC_MGR_ADD_SERVICE:
         s = bio_get_string16(msg, &len);
         ptr = bio_get_ref(msg);
+<<<<<<< HEAD
         allow_isolated = bio_get_uint32(msg) ? 1 : 0;
         if (do_add_service(bs, s, len, ptr, txn->sender_euid, allow_isolated))
+=======
+        if (do_add_service(bs, s, len, ptr, txn->sender_euid))
+>>>>>>> upstream/master
             return -1;
         break;
 
@@ -258,7 +323,11 @@ int svcmgr_handler(struct binder_state *bs,
         return -1;
     }
     default:
+<<<<<<< HEAD
         ALOGE("unknown code %d\n", txn->code);
+=======
+        LOGE("unknown code %d\n", txn->code);
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -274,7 +343,11 @@ int main(int argc, char **argv)
     bs = binder_open(128*1024);
 
     if (binder_become_context_manager(bs)) {
+<<<<<<< HEAD
         ALOGE("cannot become context manager (%s)\n", strerror(errno));
+=======
+        LOGE("cannot become context manager (%s)\n", strerror(errno));
+>>>>>>> upstream/master
         return -1;
     }
 

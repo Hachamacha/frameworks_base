@@ -19,15 +19,21 @@ package com.android.internal.telephony.cdma;
 import android.os.*;
 import android.util.Log;
 
+<<<<<<< HEAD
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccCard;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccConstants;
 import com.android.internal.telephony.IccException;
 import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccFileTypeMismatch;
 import com.android.internal.telephony.IccIoResult;
 import com.android.internal.telephony.IccUtils;
+<<<<<<< HEAD
 import com.android.internal.telephony.PhoneBase;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.PhoneProxy;
 
 import java.util.ArrayList;
@@ -41,8 +47,16 @@ public final class RuimFileHandler extends IccFileHandler {
     //***** Instance Variables
 
     //***** Constructor
+<<<<<<< HEAD
     public RuimFileHandler(IccCard card, String aid, CommandsInterface ci) {
         super(card, aid, ci);
+=======
+    RuimFileHandler(CDMAPhone phone) {
+        super(phone);
+    }
+
+    public void dispose() {
+>>>>>>> upstream/master
     }
 
     protected void finalize() {
@@ -57,9 +71,14 @@ public final class RuimFileHandler extends IccFileHandler {
         Message response = obtainMessage(EVENT_READ_ICON_DONE, fileid, 0,
                 onLoaded);
 
+<<<<<<< HEAD
         mCi.iccIOForApp(COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
                 GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null,
                 mAid, response);
+=======
+        phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
+                GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null, response);
+>>>>>>> upstream/master
     }
 
     @Override

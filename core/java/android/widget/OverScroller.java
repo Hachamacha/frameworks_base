@@ -35,7 +35,11 @@ public class OverScroller {
     private final SplineOverScroller mScrollerX;
     private final SplineOverScroller mScrollerY;
 
+<<<<<<< HEAD
     private Interpolator mInterpolator;
+=======
+    private final Interpolator mInterpolator;
+>>>>>>> upstream/master
 
     private final boolean mFlywheel;
 
@@ -113,10 +117,13 @@ public class OverScroller {
         this(context, interpolator, flywheel);
     }
 
+<<<<<<< HEAD
     void setInterpolator(Interpolator interpolator) {
         mInterpolator = interpolator;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * The amount of friction applied to flings. The default value
      * is {@link ViewConfiguration#getScrollFriction}.

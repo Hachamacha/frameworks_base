@@ -30,8 +30,12 @@ import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStatsHistory.FIELD_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileAll;
+<<<<<<< HEAD
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.MB_IN_BYTES;
+=======
+import static android.net.NetworkTemplate.buildTemplateWifi;
+>>>>>>> upstream/master
 import static android.net.TrafficStats.UID_REMOVED;
 import static android.net.TrafficStats.UID_TETHERING;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
@@ -40,7 +44,10 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_POLL;
 import static org.easymock.EasyMock.anyLong;
+<<<<<<< HEAD
 import static org.easymock.EasyMock.aryEq;
+=======
+>>>>>>> upstream/master
 import static org.easymock.EasyMock.capture;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.eq;
@@ -54,7 +61,10 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
+<<<<<<< HEAD
 import android.net.INetworkStatsSession;
+=======
+>>>>>>> upstream/master
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
@@ -66,12 +76,18 @@ import android.os.INetworkManagementService;
 import android.telephony.TelephonyManager;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
+<<<<<<< HEAD
 import android.test.suitebuilder.annotation.Suppress;
+=======
+>>>>>>> upstream/master
 import android.util.TrustedTime;
 
 import com.android.server.net.NetworkStatsService;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings;
+<<<<<<< HEAD
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings.Config;
+=======
+>>>>>>> upstream/master
 
 import org.easymock.Capture;
 import org.easymock.EasyMock;
@@ -93,9 +109,14 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
     private static final String IMSI_1 = "310004";
     private static final String IMSI_2 = "310260";
+<<<<<<< HEAD
     private static final String TEST_SSID = "AndroidAP";
 
     private static NetworkTemplate sTemplateWifi = buildTemplateWifiWildcard();
+=======
+
+    private static NetworkTemplate sTemplateWifi = buildTemplateWifi();
+>>>>>>> upstream/master
     private static NetworkTemplate sTemplateImsi1 = buildTemplateMobileAll(IMSI_1);
     private static NetworkTemplate sTemplateImsi2 = buildTemplateMobileAll(IMSI_2);
 
@@ -115,7 +136,10 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
     private IConnectivityManager mConnManager;
 
     private NetworkStatsService mService;
+<<<<<<< HEAD
     private INetworkStatsSession mSession;
+=======
+>>>>>>> upstream/master
     private INetworkManagementEventObserver mNetworkObserver;
 
     @Override
@@ -154,7 +178,10 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
         replay();
         mService.systemReady();
+<<<<<<< HEAD
         mSession = mService.openSession();
+=======
+>>>>>>> upstream/master
         verifyAndReset();
 
         mNetworkObserver = networkObserver.getValue();
@@ -163,7 +190,13 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
     @Override
     public void tearDown() throws Exception {
+<<<<<<< HEAD
         IoUtils.deleteContents(mStatsDir);
+=======
+        for (File file : mStatsDir.listFiles()) {
+            file.delete();
+        }
+>>>>>>> upstream/master
 
         mServiceContext = null;
         mStatsDir = null;
@@ -174,7 +207,10 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         mSettings = null;
         mConnManager = null;
 
+<<<<<<< HEAD
         mSession.close();
+=======
+>>>>>>> upstream/master
         mService = null;
 
         super.tearDown();
@@ -289,6 +325,16 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         mServiceContext.sendBroadcast(new Intent(Intent.ACTION_SHUTDOWN));
         verifyAndReset();
 
+<<<<<<< HEAD
+=======
+        // talk with zombie service to assert stats have gone; and assert that
+        // we persisted them to file.
+        expectDefaultSettings();
+        replay();
+        assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
+        verifyAndReset();
+
+>>>>>>> upstream/master
         assertStatsFilesExist(true);
 
         // boot through serviceReady() again
@@ -319,8 +365,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
     }
 
+<<<<<<< HEAD
     // TODO: simulate reboot to test bucket resize
     @Suppress
+=======
+>>>>>>> upstream/master
     public void testStatsBucketResize() throws Exception {
         NetworkStatsHistory history = null;
 
@@ -352,7 +401,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
 
         // verify service recorded history
+<<<<<<< HEAD
         history = mSession.getHistoryForNetwork(sTemplateWifi, FIELD_ALL);
+=======
+        history = mService.getHistoryForNetwork(sTemplateWifi, FIELD_ALL);
+>>>>>>> upstream/master
         assertValues(history, Long.MIN_VALUE, Long.MAX_VALUE, 512L, 4L, 512L, 4L, 0);
         assertEquals(HOUR_IN_MILLIS, history.getBucketDuration());
         assertEquals(2, history.size());
@@ -370,7 +423,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
 
         // verify identical stats, but spread across 4 buckets now
+<<<<<<< HEAD
         history = mSession.getHistoryForNetwork(sTemplateWifi, FIELD_ALL);
+=======
+        history = mService.getHistoryForNetwork(sTemplateWifi, FIELD_ALL);
+>>>>>>> upstream/master
         assertValues(history, Long.MIN_VALUE, Long.MAX_VALUE, 512L, 4L, 512L, 4L, 0);
         assertEquals(30 * MINUTE_IN_MILLIS, history.getBucketDuration());
         assertEquals(4, history.size());
@@ -604,6 +661,10 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         assertUidTotal(sTemplateImsi1, UID_RED, 1536L, 12L, 1280L, 10L, 10);
 
         verifyAndReset();
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     }
 
     public void testSummaryForAllUid() throws Exception {
@@ -655,7 +716,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
 
         // first verify entire history present
+<<<<<<< HEAD
         NetworkStats stats = mSession.getSummaryForAllUid(
+=======
+        NetworkStats stats = mService.getSummaryForAllUid(
+>>>>>>> upstream/master
                 sTemplateWifi, Long.MIN_VALUE, Long.MAX_VALUE, true);
         assertEquals(3, stats.size());
         assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 1);
@@ -664,7 +729,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
         // now verify that recent history only contains one uid
         final long currentTime = currentTimeMillis();
+<<<<<<< HEAD
         stats = mSession.getSummaryForAllUid(
+=======
+        stats = mService.getSummaryForAllUid(
+>>>>>>> upstream/master
                 sTemplateWifi, currentTime - HOUR_IN_MILLIS, currentTime, true);
         assertEquals(1, stats.size());
         assertValues(stats, IFACE_ALL, UID_BLUE, SET_DEFAULT, TAG_NONE, 1024L, 8L, 512L, 4L, 0);
@@ -726,7 +795,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         assertUidTotal(sTemplateWifi, UID_RED, 160L, 4L, 160L, 4L, 2);
 
         // verify entire history present
+<<<<<<< HEAD
         final NetworkStats stats = mSession.getSummaryForAllUid(
+=======
+        final NetworkStats stats = mService.getSummaryForAllUid(
+>>>>>>> upstream/master
                 sTemplateWifi, Long.MIN_VALUE, Long.MAX_VALUE, true);
         assertEquals(4, stats.size());
         assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, TAG_NONE, 128L, 2L, 128L, 2L, 1);
@@ -756,6 +829,7 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         expectDefaultSettings();
         expectNetworkStatsSummary(new NetworkStats(getElapsedRealtime(), 1)
                 .addIfaceValues(TEST_IFACE, 2048L, 16L, 512L, 4L));
+<<<<<<< HEAD
 
         final NetworkStats uidStats = new NetworkStats(getElapsedRealtime(), 1)
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 128L, 2L, 128L, 2L, 0L);
@@ -765,6 +839,13 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
         expectNetworkStatsUidDetail(uidStats, tetherIfacePairs, tetherStats);
         expectNetworkStatsPoll();
+=======
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 128L, 2L, 128L, 2L, 0L));
+        final String[] tetherIfacePairs = new String[] { TEST_IFACE, "wlan0" };
+        expectNetworkStatsPoll(tetherIfacePairs, new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_TETHERING, SET_DEFAULT, TAG_NONE, 1920L, 14L, 384L, 2L, 0L));
+>>>>>>> upstream/master
 
         replay();
         mServiceContext.sendBroadcast(new Intent(ACTION_NETWORK_STATS_POLL));
@@ -777,6 +858,7 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
     }
 
+<<<<<<< HEAD
     public void testReportXtOverDev() throws Exception {
         // bring mobile network online
         expectCurrentTime();
@@ -851,15 +933,26 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         // verify summary API
         final NetworkStats stats = mSession.getSummaryForNetwork(template, start, end);
         assertValues(stats, IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, rxBytes, rxPackets, txBytes,
+=======
+    private void assertNetworkTotal(NetworkTemplate template, long rxBytes, long rxPackets,
+            long txBytes, long txPackets, int operations) {
+        final NetworkStatsHistory history = mService.getHistoryForNetwork(template, FIELD_ALL);
+        assertValues(history, Long.MIN_VALUE, Long.MAX_VALUE, rxBytes, rxPackets, txBytes,
+>>>>>>> upstream/master
                 txPackets, operations);
     }
 
     private void assertUidTotal(NetworkTemplate template, int uid, long rxBytes, long rxPackets,
+<<<<<<< HEAD
             long txBytes, long txPackets, int operations) throws Exception {
+=======
+            long txBytes, long txPackets, int operations) {
+>>>>>>> upstream/master
         assertUidTotal(template, uid, SET_ALL, rxBytes, rxPackets, txBytes, txPackets, operations);
     }
 
     private void assertUidTotal(NetworkTemplate template, int uid, int set, long rxBytes,
+<<<<<<< HEAD
             long rxPackets, long txBytes, long txPackets, int operations) throws Exception {
         // verify history API
         final NetworkStatsHistory history = mSession.getHistoryForUid(
@@ -872,6 +965,13 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
                 template, Long.MIN_VALUE, Long.MAX_VALUE, false);
         assertValues(stats, IFACE_ALL, uid, set, TAG_NONE, rxBytes, rxPackets, txBytes, txPackets,
                 operations);
+=======
+            long rxPackets, long txBytes, long txPackets, int operations) {
+        final NetworkStatsHistory history = mService.getHistoryForUid(
+                template, uid, set, TAG_NONE, FIELD_ALL);
+        assertValues(history, Long.MIN_VALUE, Long.MAX_VALUE, rxBytes, rxPackets, txBytes,
+                txPackets, operations);
+>>>>>>> upstream/master
     }
 
     private void expectSystemReady() throws Exception {
@@ -884,12 +984,16 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
 
         mNetManager.setGlobalAlert(anyLong());
         expectLastCall().atLeastOnce();
+<<<<<<< HEAD
 
         expect(mNetManager.isBandwidthControlEnabled()).andReturn(true).atLeastOnce();
+=======
+>>>>>>> upstream/master
     }
 
     private void expectNetworkState(NetworkState... state) throws Exception {
         expect(mConnManager.getAllNetworkState()).andReturn(state).atLeastOnce();
+<<<<<<< HEAD
 
         final LinkProperties linkProp = state.length > 0 ? state[0].linkProperties : null;
         expect(mConnManager.getActiveLinkProperties()).andReturn(linkProp).atLeastOnce();
@@ -921,12 +1025,23 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         expect(mConnManager.getTetheredIfacePairs()).andReturn(tetherIfacePairs).atLeastOnce();
         expect(mNetManager.getNetworkStatsTethering(aryEq(tetherIfacePairs)))
                 .andReturn(tetherStats).atLeastOnce();
+=======
+    }
+
+    private void expectNetworkStatsSummary(NetworkStats summary) throws Exception {
+        expect(mNetManager.getNetworkStatsSummary()).andReturn(summary).atLeastOnce();
+    }
+
+    private void expectNetworkStatsUidDetail(NetworkStats detail) throws Exception {
+        expect(mNetManager.getNetworkStatsUidDetail(eq(UID_ALL))).andReturn(detail).atLeastOnce();
+>>>>>>> upstream/master
     }
 
     private void expectDefaultSettings() throws Exception {
         expectSettings(0L, HOUR_IN_MILLIS, WEEK_IN_MILLIS);
     }
 
+<<<<<<< HEAD
     private void expectSettings(long persistBytes, long bucketDuration, long deleteAge)
             throws Exception {
         expect(mSettings.getPollInterval()).andReturn(HOUR_IN_MILLIS).anyTimes();
@@ -945,6 +1060,18 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         expect(mSettings.getXtPersistBytes(anyLong())).andReturn(MB_IN_BYTES).anyTimes();
         expect(mSettings.getUidPersistBytes(anyLong())).andReturn(MB_IN_BYTES).anyTimes();
         expect(mSettings.getUidTagPersistBytes(anyLong())).andReturn(MB_IN_BYTES).anyTimes();
+=======
+    private void expectSettings(long persistThreshold, long bucketDuration, long maxHistory)
+            throws Exception {
+        expect(mSettings.getPollInterval()).andReturn(HOUR_IN_MILLIS).anyTimes();
+        expect(mSettings.getPersistThreshold()).andReturn(persistThreshold).anyTimes();
+        expect(mSettings.getNetworkBucketDuration()).andReturn(bucketDuration).anyTimes();
+        expect(mSettings.getNetworkMaxHistory()).andReturn(maxHistory).anyTimes();
+        expect(mSettings.getUidBucketDuration()).andReturn(bucketDuration).anyTimes();
+        expect(mSettings.getUidMaxHistory()).andReturn(maxHistory).anyTimes();
+        expect(mSettings.getTagMaxHistory()).andReturn(maxHistory).anyTimes();
+        expect(mSettings.getTimeCacheMaxAge()).andReturn(DAY_IN_MILLIS).anyTimes();
+>>>>>>> upstream/master
     }
 
     private void expectCurrentTime() throws Exception {
@@ -956,6 +1083,7 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
     }
 
     private void expectNetworkStatsPoll() throws Exception {
+<<<<<<< HEAD
         mNetManager.setGlobalAlert(anyLong());
         expectLastCall().anyTimes();
     }
@@ -966,11 +1094,35 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
             assertTrue(basePath.list().length > 0);
         } else {
             assertTrue(basePath.list().length == 0);
+=======
+        expectNetworkStatsPoll(new String[0], new NetworkStats(getElapsedRealtime(), 0));
+    }
+
+    private void expectNetworkStatsPoll(String[] tetherIfacePairs, NetworkStats tetherStats)
+            throws Exception {
+        mNetManager.setGlobalAlert(anyLong());
+        expectLastCall().anyTimes();
+        expect(mConnManager.getTetheredIfacePairs()).andReturn(tetherIfacePairs).anyTimes();
+        expect(mNetManager.getNetworkStatsTethering(eq(tetherIfacePairs)))
+                .andReturn(tetherStats).anyTimes();
+    }
+
+    private void assertStatsFilesExist(boolean exist) {
+        final File networkFile = new File(mStatsDir, "netstats.bin");
+        final File uidFile = new File(mStatsDir, "netstats_uid.bin");
+        if (exist) {
+            assertTrue(networkFile.exists());
+            assertTrue(uidFile.exists());
+        } else {
+            assertFalse(networkFile.exists());
+            assertFalse(uidFile.exists());
+>>>>>>> upstream/master
         }
     }
 
     private static void assertValues(NetworkStats stats, String iface, int uid, int set,
             int tag, long rxBytes, long rxPackets, long txBytes, long txPackets, int operations) {
+<<<<<<< HEAD
         final NetworkStats.Entry entry = new NetworkStats.Entry();
         if (set == SET_DEFAULT || set == SET_ALL) {
             final int i = stats.findIndex(iface, uid, SET_DEFAULT, tag);
@@ -985,6 +1137,10 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
             }
         }
 
+=======
+        final int i = stats.findIndex(iface, uid, set, tag);
+        final NetworkStats.Entry entry = stats.getValues(i, null);
+>>>>>>> upstream/master
         assertEquals("unexpected rxBytes", rxBytes, entry.rxBytes);
         assertEquals("unexpected rxPackets", rxPackets, entry.rxPackets);
         assertEquals("unexpected txBytes", txBytes, entry.txBytes);
@@ -1007,7 +1163,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         info.setDetailedState(DetailedState.CONNECTED, null, null);
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
+<<<<<<< HEAD
         return new NetworkState(info, prop, null, null, TEST_SSID);
+=======
+        return new NetworkState(info, prop, null);
+>>>>>>> upstream/master
     }
 
     private static NetworkState buildMobile3gState(String subscriberId) {
@@ -1016,7 +1176,11 @@ public class NetworkStatsServiceTest extends AndroidTestCase {
         info.setDetailedState(DetailedState.CONNECTED, null, null);
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
+<<<<<<< HEAD
         return new NetworkState(info, prop, null, subscriberId, null);
+=======
+        return new NetworkState(info, prop, null, subscriberId);
+>>>>>>> upstream/master
     }
 
     private static NetworkState buildMobile4gState(String iface) {

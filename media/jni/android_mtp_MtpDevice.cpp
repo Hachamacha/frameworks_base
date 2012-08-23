@@ -92,7 +92,11 @@ MtpDevice* get_device_from_object(JNIEnv* env, jobject javaDevice)
 
 static void checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
     if (env->ExceptionCheck()) {
+<<<<<<< HEAD
         ALOGE("An exception was thrown by callback '%s'.", methodName);
+=======
+        LOGE("An exception was thrown by callback '%s'.", methodName);
+>>>>>>> upstream/master
         LOGE_EX(env);
         env->ExceptionClear();
     }
@@ -132,17 +136,29 @@ android_mtp_MtpDevice_get_device_info(JNIEnv *env, jobject thiz)
 {
     MtpDevice* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGD("android_mtp_MtpDevice_get_device_info device is null");
+=======
+        LOGD("android_mtp_MtpDevice_get_device_info device is null");
+>>>>>>> upstream/master
         return NULL;
     }
     MtpDeviceInfo* deviceInfo = device->getDeviceInfo();
     if (!deviceInfo) {
+<<<<<<< HEAD
         ALOGD("android_mtp_MtpDevice_get_device_info deviceInfo is null");
+=======
+        LOGD("android_mtp_MtpDevice_get_device_info deviceInfo is null");
+>>>>>>> upstream/master
         return NULL;
     }
     jobject info = env->NewObject(clazz_deviceInfo, constructor_deviceInfo);
     if (info == NULL) {
+<<<<<<< HEAD
         ALOGE("Could not create a MtpDeviceInfo object");
+=======
+        LOGE("Could not create a MtpDeviceInfo object");
+>>>>>>> upstream/master
         delete deviceInfo;
         return NULL;
     }
@@ -195,7 +211,11 @@ android_mtp_MtpDevice_get_storage_info(JNIEnv *env, jobject thiz, jint storageID
 
     jobject info = env->NewObject(clazz_storageInfo, constructor_storageInfo);
     if (info == NULL) {
+<<<<<<< HEAD
         ALOGE("Could not create a MtpStorageInfo object");
+=======
+        LOGE("Could not create a MtpStorageInfo object");
+>>>>>>> upstream/master
         delete storageInfo;
         return NULL;
     }
@@ -248,7 +268,11 @@ android_mtp_MtpDevice_get_object_info(JNIEnv *env, jobject thiz, jint objectID)
         return NULL;
     jobject info = env->NewObject(clazz_objectInfo, constructor_objectInfo);
     if (info == NULL) {
+<<<<<<< HEAD
         ALOGE("Could not create a MtpObjectInfo object");
+=======
+        LOGE("Could not create a MtpObjectInfo object");
+>>>>>>> upstream/master
         delete objectInfo;
         return NULL;
     }
@@ -429,197 +453,349 @@ int register_android_mtp_MtpDevice(JNIEnv *env)
 {
     jclass clazz;
 
+<<<<<<< HEAD
     ALOGD("register_android_mtp_MtpDevice\n");
 
     clazz = env->FindClass("android/mtp/MtpDeviceInfo");
     if (clazz == NULL) {
         ALOGE("Can't find android/mtp/MtpDeviceInfo");
+=======
+    LOGD("register_android_mtp_MtpDevice\n");
+
+    clazz = env->FindClass("android/mtp/MtpDeviceInfo");
+    if (clazz == NULL) {
+        LOGE("Can't find android/mtp/MtpDeviceInfo");
+>>>>>>> upstream/master
         return -1;
     }
     constructor_deviceInfo = env->GetMethodID(clazz, "<init>", "()V");
     if (constructor_deviceInfo == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpDeviceInfo constructor");
+=======
+        LOGE("Can't find android/mtp/MtpDeviceInfo constructor");
+>>>>>>> upstream/master
         return -1;
     }
     field_deviceInfo_manufacturer = env->GetFieldID(clazz, "mManufacturer", "Ljava/lang/String;");
     if (field_deviceInfo_manufacturer == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpDeviceInfo.mManufacturer");
+=======
+        LOGE("Can't find MtpDeviceInfo.mManufacturer");
+>>>>>>> upstream/master
         return -1;
     }
     field_deviceInfo_model = env->GetFieldID(clazz, "mModel", "Ljava/lang/String;");
     if (field_deviceInfo_model == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpDeviceInfo.mModel");
+=======
+        LOGE("Can't find MtpDeviceInfo.mModel");
+>>>>>>> upstream/master
         return -1;
     }
     field_deviceInfo_version = env->GetFieldID(clazz, "mVersion", "Ljava/lang/String;");
     if (field_deviceInfo_version == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpDeviceInfo.mVersion");
+=======
+        LOGE("Can't find MtpDeviceInfo.mVersion");
+>>>>>>> upstream/master
         return -1;
     }
     field_deviceInfo_serialNumber = env->GetFieldID(clazz, "mSerialNumber", "Ljava/lang/String;");
     if (field_deviceInfo_serialNumber == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpDeviceInfo.mSerialNumber");
+=======
+        LOGE("Can't find MtpDeviceInfo.mSerialNumber");
+>>>>>>> upstream/master
         return -1;
     }
     clazz_deviceInfo = (jclass)env->NewGlobalRef(clazz);
 
     clazz = env->FindClass("android/mtp/MtpStorageInfo");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpStorageInfo");
+=======
+        LOGE("Can't find android/mtp/MtpStorageInfo");
+>>>>>>> upstream/master
         return -1;
     }
     constructor_storageInfo = env->GetMethodID(clazz, "<init>", "()V");
     if (constructor_storageInfo == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpStorageInfo constructor");
+=======
+        LOGE("Can't find android/mtp/MtpStorageInfo constructor");
+>>>>>>> upstream/master
         return -1;
     }
     field_storageInfo_storageId = env->GetFieldID(clazz, "mStorageId", "I");
     if (field_storageInfo_storageId == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorageInfo.mStorageId");
+=======
+        LOGE("Can't find MtpStorageInfo.mStorageId");
+>>>>>>> upstream/master
         return -1;
     }
     field_storageInfo_maxCapacity = env->GetFieldID(clazz, "mMaxCapacity", "J");
     if (field_storageInfo_maxCapacity == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorageInfo.mMaxCapacity");
+=======
+        LOGE("Can't find MtpStorageInfo.mMaxCapacity");
+>>>>>>> upstream/master
         return -1;
     }
     field_storageInfo_freeSpace = env->GetFieldID(clazz, "mFreeSpace", "J");
     if (field_storageInfo_freeSpace == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorageInfo.mFreeSpace");
+=======
+        LOGE("Can't find MtpStorageInfo.mFreeSpace");
+>>>>>>> upstream/master
         return -1;
     }
     field_storageInfo_description = env->GetFieldID(clazz, "mDescription", "Ljava/lang/String;");
     if (field_storageInfo_description == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorageInfo.mDescription");
+=======
+        LOGE("Can't find MtpStorageInfo.mDescription");
+>>>>>>> upstream/master
         return -1;
     }
     field_storageInfo_volumeIdentifier = env->GetFieldID(clazz, "mVolumeIdentifier", "Ljava/lang/String;");
     if (field_storageInfo_volumeIdentifier == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorageInfo.mVolumeIdentifier");
+=======
+        LOGE("Can't find MtpStorageInfo.mVolumeIdentifier");
+>>>>>>> upstream/master
         return -1;
     }
     clazz_storageInfo = (jclass)env->NewGlobalRef(clazz);
 
     clazz = env->FindClass("android/mtp/MtpObjectInfo");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpObjectInfo");
+=======
+        LOGE("Can't find android/mtp/MtpObjectInfo");
+>>>>>>> upstream/master
         return -1;
     }
     constructor_objectInfo = env->GetMethodID(clazz, "<init>", "()V");
     if (constructor_objectInfo == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpObjectInfo constructor");
+=======
+        LOGE("Can't find android/mtp/MtpObjectInfo constructor");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_handle = env->GetFieldID(clazz, "mHandle", "I");
     if (field_objectInfo_handle == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mHandle");
+=======
+        LOGE("Can't find MtpObjectInfo.mHandle");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_storageId = env->GetFieldID(clazz, "mStorageId", "I");
     if (field_objectInfo_storageId == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mStorageId");
+=======
+        LOGE("Can't find MtpObjectInfo.mStorageId");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_format = env->GetFieldID(clazz, "mFormat", "I");
     if (field_objectInfo_format == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mFormat");
+=======
+        LOGE("Can't find MtpObjectInfo.mFormat");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_protectionStatus = env->GetFieldID(clazz, "mProtectionStatus", "I");
     if (field_objectInfo_protectionStatus == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mProtectionStatus");
+=======
+        LOGE("Can't find MtpObjectInfo.mProtectionStatus");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_compressedSize = env->GetFieldID(clazz, "mCompressedSize", "I");
     if (field_objectInfo_compressedSize == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mCompressedSize");
+=======
+        LOGE("Can't find MtpObjectInfo.mCompressedSize");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_thumbFormat = env->GetFieldID(clazz, "mThumbFormat", "I");
     if (field_objectInfo_thumbFormat == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mThumbFormat");
+=======
+        LOGE("Can't find MtpObjectInfo.mThumbFormat");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_thumbCompressedSize = env->GetFieldID(clazz, "mThumbCompressedSize", "I");
     if (field_objectInfo_thumbCompressedSize == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mThumbCompressedSize");
+=======
+        LOGE("Can't find MtpObjectInfo.mThumbCompressedSize");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_thumbPixWidth = env->GetFieldID(clazz, "mThumbPixWidth", "I");
     if (field_objectInfo_thumbPixWidth == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mThumbPixWidth");
+=======
+        LOGE("Can't find MtpObjectInfo.mThumbPixWidth");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_thumbPixHeight = env->GetFieldID(clazz, "mThumbPixHeight", "I");
     if (field_objectInfo_thumbPixHeight == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mThumbPixHeight");
+=======
+        LOGE("Can't find MtpObjectInfo.mThumbPixHeight");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_imagePixWidth = env->GetFieldID(clazz, "mImagePixWidth", "I");
     if (field_objectInfo_imagePixWidth == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mImagePixWidth");
+=======
+        LOGE("Can't find MtpObjectInfo.mImagePixWidth");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_imagePixHeight = env->GetFieldID(clazz, "mImagePixHeight", "I");
     if (field_objectInfo_imagePixHeight == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mImagePixHeight");
+=======
+        LOGE("Can't find MtpObjectInfo.mImagePixHeight");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_imagePixDepth = env->GetFieldID(clazz, "mImagePixDepth", "I");
     if (field_objectInfo_imagePixDepth == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mImagePixDepth");
+=======
+        LOGE("Can't find MtpObjectInfo.mImagePixDepth");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_parent = env->GetFieldID(clazz, "mParent", "I");
     if (field_objectInfo_parent == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mParent");
+=======
+        LOGE("Can't find MtpObjectInfo.mParent");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_associationType = env->GetFieldID(clazz, "mAssociationType", "I");
     if (field_objectInfo_associationType == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mAssociationType");
+=======
+        LOGE("Can't find MtpObjectInfo.mAssociationType");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_associationDesc = env->GetFieldID(clazz, "mAssociationDesc", "I");
     if (field_objectInfo_associationDesc == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mAssociationDesc");
+=======
+        LOGE("Can't find MtpObjectInfo.mAssociationDesc");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_sequenceNumber = env->GetFieldID(clazz, "mSequenceNumber", "I");
     if (field_objectInfo_sequenceNumber == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mSequenceNumber");
+=======
+        LOGE("Can't find MtpObjectInfo.mSequenceNumber");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_name = env->GetFieldID(clazz, "mName", "Ljava/lang/String;");
     if (field_objectInfo_name == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mName");
+=======
+        LOGE("Can't find MtpObjectInfo.mName");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_dateCreated = env->GetFieldID(clazz, "mDateCreated", "J");
     if (field_objectInfo_dateCreated == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mDateCreated");
+=======
+        LOGE("Can't find MtpObjectInfo.mDateCreated");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_dateModified = env->GetFieldID(clazz, "mDateModified", "J");
     if (field_objectInfo_dateModified == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mDateModified");
+=======
+        LOGE("Can't find MtpObjectInfo.mDateModified");
+>>>>>>> upstream/master
         return -1;
     }
     field_objectInfo_keywords = env->GetFieldID(clazz, "mKeywords", "Ljava/lang/String;");
     if (field_objectInfo_keywords == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpObjectInfo.mKeywords");
+=======
+        LOGE("Can't find MtpObjectInfo.mKeywords");
+>>>>>>> upstream/master
         return -1;
     }
     clazz_objectInfo = (jclass)env->NewGlobalRef(clazz);
 
     clazz = env->FindClass("android/mtp/MtpDevice");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpDevice");
+=======
+        LOGE("Can't find android/mtp/MtpDevice");
+>>>>>>> upstream/master
         return -1;
     }
     field_context = env->GetFieldID(clazz, "mNativeContext", "I");
     if (field_context == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpDevice.mNativeContext");
+=======
+        LOGE("Can't find MtpDevice.mNativeContext");
+>>>>>>> upstream/master
         return -1;
     }
 

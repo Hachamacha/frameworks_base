@@ -24,17 +24,23 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+<<<<<<< HEAD
 import android.media.IAudioService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+=======
+>>>>>>> upstream/master
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.util.Log;
 import android.util.Slog;
+=======
+>>>>>>> upstream/master
 
 /**
  * Base class for keyguard views.  {@link #reset} is where you should
@@ -77,9 +83,14 @@ public abstract class KeyguardViewBase extends FrameLayout {
         }
     };
 
+<<<<<<< HEAD
     public KeyguardViewBase(Context context, KeyguardViewCallback callback) {
         super(context);
         mCallback = callback;
+=======
+    public KeyguardViewBase(Context context) {
+        super(context);
+>>>>>>> upstream/master
         resetBackground();
     }
 
@@ -87,6 +98,14 @@ public abstract class KeyguardViewBase extends FrameLayout {
         setBackgroundDrawable(mBackgroundDrawable);
     }
 
+<<<<<<< HEAD
+=======
+    // used to inject callback
+    void setCallback(KeyguardViewCallback callback) {
+        mCallback = callback;
+    }
+
+>>>>>>> upstream/master
     public KeyguardViewCallback getCallback() {
         return mCallback;
     }
@@ -199,7 +218,13 @@ public abstract class KeyguardViewBase extends FrameLayout {
                 case KeyEvent.KEYCODE_MEDIA_REWIND:
                 case KeyEvent.KEYCODE_MEDIA_RECORD:
                 case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD: {
+<<<<<<< HEAD
                     handleMediaKeyEvent(event);
+=======
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
+                    intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+                    getContext().sendOrderedBroadcast(intent, null);
+>>>>>>> upstream/master
                     return true;
                 }
 
@@ -213,6 +238,7 @@ public abstract class KeyguardViewBase extends FrameLayout {
                                         Context.AUDIO_SERVICE);
                             }
                         }
+<<<<<<< HEAD
                         // Volume buttons should only function for music (local or remote).
                         // TODO: Actually handle MUTE.
                         mAudioManager.adjustLocalOrRemoteStreamVolume(
@@ -220,6 +246,18 @@ public abstract class KeyguardViewBase extends FrameLayout {
                                 keyCode == KeyEvent.KEYCODE_VOLUME_UP
                                         ? AudioManager.ADJUST_RAISE
                                         : AudioManager.ADJUST_LOWER);
+=======
+                        // Volume buttons should only function for music.
+                        if (mAudioManager.isMusicActive()) {
+                            // TODO: Actually handle MUTE.
+                            mAudioManager.adjustStreamVolume(
+                                        AudioManager.STREAM_MUSIC,
+                                        keyCode == KeyEvent.KEYCODE_VOLUME_UP
+                                                ? AudioManager.ADJUST_RAISE
+                                                : AudioManager.ADJUST_LOWER,
+                                        0);
+                        }
+>>>>>>> upstream/master
                         // Don't execute default volume behavior
                         return true;
                     } else {
@@ -240,7 +278,13 @@ public abstract class KeyguardViewBase extends FrameLayout {
                 case KeyEvent.KEYCODE_MEDIA_REWIND:
                 case KeyEvent.KEYCODE_MEDIA_RECORD:
                 case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD: {
+<<<<<<< HEAD
                     handleMediaKeyEvent(event);
+=======
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
+                    intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+                    getContext().sendOrderedBroadcast(intent, null);
+>>>>>>> upstream/master
                     return true;
                 }
             }
@@ -248,6 +292,7 @@ public abstract class KeyguardViewBase extends FrameLayout {
         return false;
     }
 
+<<<<<<< HEAD
     void handleMediaKeyEvent(KeyEvent keyEvent) {
         IAudioService audioService = IAudioService.Stub.asInterface(
                 ServiceManager.checkService(Context.AUDIO_SERVICE));
@@ -262,6 +307,8 @@ public abstract class KeyguardViewBase extends FrameLayout {
         }
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void dispatchSystemUiVisibilityChanged(int visibility) {
         super.dispatchSystemUiVisibilityChanged(visibility);

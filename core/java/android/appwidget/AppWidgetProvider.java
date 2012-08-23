@@ -74,6 +74,7 @@ public class AppWidgetProvider extends BroadcastReceiver {
                 this.onDeleted(context, new int[] { appWidgetId });
             }
         }
+<<<<<<< HEAD
         else if (AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED.equals(action)) {
             Bundle extras = intent.getExtras();
             if (extras != null && extras.containsKey(AppWidgetManager.EXTRA_APPWIDGET_ID)
@@ -84,6 +85,8 @@ public class AppWidgetProvider extends BroadcastReceiver {
                         appWidgetId, widgetExtras);
             }
         }
+=======
+>>>>>>> upstream/master
         else if (AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action)) {
             this.onEnabled(context);
         }
@@ -92,7 +95,11 @@ public class AppWidgetProvider extends BroadcastReceiver {
         }
     }
     // END_INCLUDE(onReceive)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Called in response to the {@link AppWidgetManager#ACTION_APPWIDGET_UPDATE} broadcast when
      * this AppWidget provider is being asked to provide {@link android.widget.RemoteViews RemoteViews}
@@ -112,6 +119,7 @@ public class AppWidgetProvider extends BroadcastReceiver {
      */
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
     }
+<<<<<<< HEAD
 
     /**
      * Called in response to the {@link AppWidgetManager#ACTION_APPWIDGET_OPTIONS_CHANGED}
@@ -132,6 +140,9 @@ public class AppWidgetProvider extends BroadcastReceiver {
             int appWidgetId, Bundle newOptions) {
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Called in response to the {@link AppWidgetManager#ACTION_APPWIDGET_DELETED} broadcast when
      * one or more AppWidget instances have been deleted.  Override this method to implement

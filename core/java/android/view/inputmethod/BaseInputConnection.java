@@ -19,6 +19,10 @@ package android.view.inputmethod;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
+import android.os.Handler;
+>>>>>>> upstream/master
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.NoCopySpan;
@@ -152,6 +156,7 @@ public class BaseInputConnection implements InputConnection {
     }
 
     /**
+<<<<<<< HEAD
      * Called when this InputConnection is no longer used by the InputMethodManager.
      *
      * @hide
@@ -161,6 +166,8 @@ public class BaseInputConnection implements InputConnection {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Default implementation uses
      * {@link MetaKeyKeyListener#clearMetaKeyState(long, int)
      * MetaKeyKeyListener.clearMetaKeyState(long, int)} to clear the state.
@@ -201,12 +208,19 @@ public class BaseInputConnection implements InputConnection {
     /**
      * The default implementation performs the deletion around the current
      * selection position of the editable text.
+<<<<<<< HEAD
      * @param beforeLength
      * @param afterLength
      */
     public boolean deleteSurroundingText(int beforeLength, int afterLength) {
         if (DEBUG) Log.v(TAG, "deleteSurroundingText " + beforeLength
                 + " / " + afterLength);
+=======
+     */
+    public boolean deleteSurroundingText(int leftLength, int rightLength) {
+        if (DEBUG) Log.v(TAG, "deleteSurroundingText " + leftLength
+                + " / " + rightLength);
+>>>>>>> upstream/master
         final Editable content = getEditable();
         if (content == null) return false;
 
@@ -236,17 +250,29 @@ public class BaseInputConnection implements InputConnection {
 
         int deleted = 0;
 
+<<<<<<< HEAD
         if (beforeLength > 0) {
             int start = a - beforeLength;
+=======
+        if (leftLength > 0) {
+            int start = a - leftLength;
+>>>>>>> upstream/master
             if (start < 0) start = 0;
             content.delete(start, a);
             deleted = a - start;
         }
 
+<<<<<<< HEAD
         if (afterLength > 0) {
             b = b - deleted;
 
             int end = b + afterLength;
+=======
+        if (rightLength > 0) {
+            b = b - deleted;
+
+            int end = b + rightLength;
+>>>>>>> upstream/master
             if (end > content.length()) end = content.length();
 
             content.delete(b, end);
@@ -505,6 +531,7 @@ public class BaseInputConnection implements InputConnection {
      */
     public boolean sendKeyEvent(KeyEvent event) {
         synchronized (mIMM.mH) {
+<<<<<<< HEAD
             ViewRootImpl viewRootImpl = mTargetView != null ? mTargetView.getViewRootImpl() : null;
             if (viewRootImpl == null) {
                 if (mIMM.mServedView != null) {
@@ -513,6 +540,17 @@ public class BaseInputConnection implements InputConnection {
             }
             if (viewRootImpl != null) {
                 viewRootImpl.dispatchKeyFromIme(event);
+=======
+            Handler h = mTargetView != null ? mTargetView.getHandler() : null;
+            if (h == null) {
+                if (mIMM.mServedView != null) {
+                    h = mIMM.mServedView.getHandler();
+                }
+            }
+            if (h != null) {
+                h.sendMessage(h.obtainMessage(ViewRootImpl.DISPATCH_KEY_FROM_IME,
+                        event));
+>>>>>>> upstream/master
             }
         }
         return false;

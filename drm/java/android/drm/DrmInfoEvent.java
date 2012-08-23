@@ -24,10 +24,13 @@ import java.util.HashMap;
  *
  */
 public class DrmInfoEvent extends DrmEvent {
+<<<<<<< HEAD
 
     // Please add newly defined type constants to the end of the list,
     // and modify checkTypeValidity() accordingly.
 
+=======
+>>>>>>> upstream/master
     /**
      * The registration has already been done by another account ID.
      */
@@ -54,6 +57,7 @@ public class DrmInfoEvent extends DrmEvent {
      */
     public static final int TYPE_RIGHTS_REMOVED = 6;
 
+<<<<<<< HEAD
     // Add more type constants here...
 
     // FIXME:
@@ -61,10 +65,13 @@ public class DrmInfoEvent extends DrmEvent {
     // TYPE_VENDOR_SPECIFIC, to take care vendor specific use
     // cases.
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a <code>DrmInfoEvent</code> object with the specified parameters.
      *
      * @param uniqueId Unique session identifier.
+<<<<<<< HEAD
      * @param type Type of the event. Must be any of the event types defined above,
      * or the constants defined in {@link DrmEvent}.
      * @param message Message description. It can be null.
@@ -72,21 +79,34 @@ public class DrmInfoEvent extends DrmEvent {
     public DrmInfoEvent(int uniqueId, int type, String message) {
         super(uniqueId, type, message);
         checkTypeValidity(type);
+=======
+     * @param type Type of the event. Could be any of the event types defined above.
+     * @param message Message description.
+     */
+    public DrmInfoEvent(int uniqueId, int type, String message) {
+        super(uniqueId, type, message);
+>>>>>>> upstream/master
     }
 
     /**
      * Creates a <code>DrmInfoEvent</code> object with the specified parameters.
      *
      * @param uniqueId Unique session identifier.
+<<<<<<< HEAD
      * @param type Type of the event. Must be any of the event types defined above,
      * or the constants defined in {@link DrmEvent}
      * @param message Message description. It can be null.
+=======
+     * @param type Type of the event. Could be any of the event types defined above.
+     * @param message Message description.
+>>>>>>> upstream/master
      * @param attributes Attributes for extensible information. Could be any
      * information provided by the plug-in.
      */
     public DrmInfoEvent(int uniqueId, int type, String message,
                             HashMap<String, Object> attributes) {
         super(uniqueId, type, message, attributes);
+<<<<<<< HEAD
         checkTypeValidity(type);
     }
 
@@ -105,6 +125,8 @@ public class DrmInfoEvent extends DrmEvent {
                 throw new IllegalArgumentException(msg);
             }
         }
+=======
+>>>>>>> upstream/master
     }
 }
 

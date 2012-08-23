@@ -17,7 +17,11 @@
 #ifndef _UI_INPUT_LISTENER_H
 #define _UI_INPUT_LISTENER_H
 
+<<<<<<< HEAD
 #include <androidfw/Input.h>
+=======
+#include <ui/Input.h>
+>>>>>>> upstream/master
 #include <utils/RefBase.h>
 #include <utils/Vector.h>
 

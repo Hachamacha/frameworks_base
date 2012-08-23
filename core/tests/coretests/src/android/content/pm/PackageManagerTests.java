@@ -170,10 +170,18 @@ public class PackageManagerTests extends AndroidTestCase {
         return ipm;
     }
 
+<<<<<<< HEAD
     public void invokeInstallPackage(Uri packageURI, int flags, GenericReceiver receiver,
             boolean shouldSucceed) {
         PackageInstallObserver observer = new PackageInstallObserver();
         mContext.registerReceiver(receiver, receiver.filter);
+=======
+    public boolean invokeInstallPackage(Uri packageURI, int flags, GenericReceiver receiver) {
+        PackageInstallObserver observer = new PackageInstallObserver();
+        final boolean received = false;
+        mContext.registerReceiver(receiver, receiver.filter);
+        final boolean DEBUG = true;
+>>>>>>> upstream/master
         try {
             // Wait on observer
             synchronized(observer) {
@@ -191,6 +199,7 @@ public class PackageManagerTests extends AndroidTestCase {
                     if(!observer.isDone()) {
                         fail("Timed out waiting for packageInstalled callback");
                     }
+<<<<<<< HEAD
 
                     if (shouldSucceed) {
                         if (observer.returnCode != PackageManager.INSTALL_SUCCEEDED) {
@@ -209,6 +218,12 @@ public class PackageManagerTests extends AndroidTestCase {
                         return;
                     }
 
+=======
+                    if (observer.returnCode != PackageManager.INSTALL_SUCCEEDED) {
+                        Log.i(TAG, "Failed to install with error code = " + observer.returnCode);
+                        return false;
+                    }
+>>>>>>> upstream/master
                     // Verify we received the broadcast
                     waitTime = 0;
                     while((!receiver.isDone()) && (waitTime < MAX_WAIT_TIME) ) {
@@ -222,6 +237,10 @@ public class PackageManagerTests extends AndroidTestCase {
                     if(!receiver.isDone()) {
                         fail("Timed out waiting for PACKAGE_ADDED notification");
                     }
+<<<<<<< HEAD
+=======
+                    return receiver.received;
+>>>>>>> upstream/master
                 }
             }
         } finally {
@@ -309,7 +328,13 @@ public class PackageManagerTests extends AndroidTestCase {
     private static final int INSTALL_LOC_ERR = -1;
     private int getInstallLoc(int flags, int expInstallLocation, long pkgLen) {
         // Flags explicitly over ride everything else.
+<<<<<<< HEAD
         if ((flags & PackageManager.INSTALL_EXTERNAL) != 0 ) {
+=======
+        if ((flags & PackageManager.INSTALL_FORWARD_LOCK) != 0 ) {
+            return INSTALL_LOC_INT;
+        } else if ((flags & PackageManager.INSTALL_EXTERNAL) != 0 ) {
+>>>>>>> upstream/master
             return INSTALL_LOC_SD;
         } else if ((flags & PackageManager.INSTALL_INTERNAL) != 0) {
             return INSTALL_LOC_INT;
@@ -378,6 +403,7 @@ public class PackageManagerTests extends AndroidTestCase {
             String publicSrcPath = publicSrcDir.getParent();
             long pkgLen = new File(info.sourceDir).length();
 
+<<<<<<< HEAD
             int rLoc = getInstallLoc(flags, expInstallLocation, pkgLen);
             if (rLoc == INSTALL_LOC_INT) {
                 if ((flags & PackageManager.INSTALL_FORWARD_LOCK) != 0) {
@@ -448,6 +474,63 @@ public class PackageManagerTests extends AndroidTestCase {
             } else {
                 // TODO handle error. Install should have failed.
                 fail("Install should have failed");
+=======
+            if ((flags & PackageManager.INSTALL_FORWARD_LOCK) != 0) {
+                assertTrue((info.flags & ApplicationInfo.FLAG_FORWARD_LOCK) != 0);
+                assertEquals(srcPath, drmInstallPath);
+                assertEquals(publicSrcPath, appInstallPath);
+                assertTrue(info.nativeLibraryDir.startsWith(dataDir.getPath()));
+            } else {
+                assertFalse((info.flags & ApplicationInfo.FLAG_FORWARD_LOCK) != 0);
+                int rLoc = getInstallLoc(flags, expInstallLocation, pkgLen);
+                if (rLoc == INSTALL_LOC_INT) {
+                    assertEquals(srcPath, appInstallPath);
+                    assertEquals(publicSrcPath, appInstallPath);
+                    assertFalse((info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0);
+                    assertTrue(info.nativeLibraryDir.startsWith(dataDir.getPath()));
+
+                    // Make sure the native library dir is not a symlink
+                    final File nativeLibDir = new File(info.nativeLibraryDir);
+                    assertTrue("Native library dir should exist at " + info.nativeLibraryDir,
+                            nativeLibDir.exists());
+                    try {
+                        assertEquals("Native library dir should not be a symlink",
+                                info.nativeLibraryDir,
+                                nativeLibDir.getCanonicalPath());
+                    } catch (IOException e) {
+                        fail("Can't read " + nativeLibDir.getPath());
+                    }
+                } else if (rLoc == INSTALL_LOC_SD){
+                    assertTrue("Application flags (" + info.flags
+                            + ") should contain FLAG_EXTERNAL_STORAGE",
+                            (info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0);
+                    assertTrue("The APK path (" + srcPath + ") should start with "
+                            + SECURE_CONTAINERS_PREFIX, srcPath
+                            .startsWith(SECURE_CONTAINERS_PREFIX));
+                    assertTrue("The public APK path (" + publicSrcPath + ") should start with "
+                            + SECURE_CONTAINERS_PREFIX, publicSrcPath
+                            .startsWith(SECURE_CONTAINERS_PREFIX));
+                    assertTrue("The native library path (" + info.nativeLibraryDir
+                            + ") should start with " + SECURE_CONTAINERS_PREFIX,
+                            info.nativeLibraryDir.startsWith(SECURE_CONTAINERS_PREFIX));
+
+                    // Make sure the native library in /data/data/<app>/lib is a
+                    // symlink to the ASEC
+                    final File nativeLibSymLink = new File(info.dataDir, "lib");
+                    assertTrue("Native library symlink should exist at " + nativeLibSymLink.getPath(),
+                            nativeLibSymLink.exists());
+                    try {
+                        assertEquals(nativeLibSymLink.getPath() + " should be a symlink to "
+                                + info.nativeLibraryDir, info.nativeLibraryDir, nativeLibSymLink
+                                .getCanonicalPath());
+                    } catch (IOException e) {
+                        fail("Can't read " + nativeLibSymLink.getPath());
+                    }
+                } else {
+                    // TODO handle error. Install should have failed.
+                    fail("Install should have failed");
+                }
+>>>>>>> upstream/master
             }
         } catch (NameNotFoundException e) {
             failStr("failed with exception : " + e);
@@ -613,7 +696,11 @@ public class PackageManagerTests extends AndroidTestCase {
                 }
             } else {
                 InstallReceiver receiver = new InstallReceiver(pkg.packageName);
+<<<<<<< HEAD
                 invokeInstallPackage(packageURI, flags, receiver, true);
+=======
+                assertTrue(invokeInstallPackage(packageURI, flags, receiver));
+>>>>>>> upstream/master
                 // Verify installed information
                 assertInstall(pkg, flags, expInstallLocation);
             }
@@ -730,9 +817,19 @@ public class PackageManagerTests extends AndroidTestCase {
             receiver = new InstallReceiver(ip.pkg.packageName);
         }
         try {
+<<<<<<< HEAD
             invokeInstallPackage(ip.packageURI, flags, receiver, replace);
             if (replace) {
                 assertInstall(ip.pkg, flags, ip.pkg.installLocation);
+=======
+            try {
+                assertEquals(invokeInstallPackage(ip.packageURI, flags, receiver), replace);
+                if (replace) {
+                    assertInstall(ip.pkg, flags, ip.pkg.installLocation);
+                }
+            } catch (Exception e) {
+                failStr("Failed with exception : " + e);
+>>>>>>> upstream/master
             }
         } finally {
             cleanUpInstall(ip);
@@ -1229,8 +1326,14 @@ public class PackageManagerTests extends AndroidTestCase {
 
         installFromRawResource("install.apk", R.raw.install_loc_unspecified,
                 PackageManager.INSTALL_FORWARD_LOCK |
+<<<<<<< HEAD
                 PackageManager.INSTALL_EXTERNAL, true, false, -1,
                 PackageInfo.INSTALL_LOCATION_PREFER_EXTERNAL);
+=======
+                PackageManager.INSTALL_EXTERNAL, true, true,
+                PackageManager.INSTALL_FAILED_INVALID_INSTALL_LOCATION,
+                PackageInfo.INSTALL_LOCATION_UNSPECIFIED);
+>>>>>>> upstream/master
     }
 
     @LargeTest
@@ -1264,7 +1367,11 @@ public class PackageManagerTests extends AndroidTestCase {
         GenericReceiver receiver = new ReplaceReceiver(ip.pkg.packageName);
         int replaceFlags = rFlags | PackageManager.INSTALL_REPLACE_EXISTING;
         try {
+<<<<<<< HEAD
             invokeInstallPackage(ip.packageURI, replaceFlags, receiver, true);
+=======
+            assertEquals(invokeInstallPackage(ip.packageURI, replaceFlags, receiver), true);
+>>>>>>> upstream/master
             assertInstall(ip.pkg, rFlags, ip.pkg.installLocation);
         } catch (Exception e) {
             failStr("Failed with exception : " + e);
@@ -1291,7 +1398,11 @@ public class PackageManagerTests extends AndroidTestCase {
         GenericReceiver receiver = new ReplaceReceiver(ip.pkg.packageName);
         int replaceFlags = rFlags | PackageManager.INSTALL_REPLACE_EXISTING;
         try {
+<<<<<<< HEAD
             invokeInstallPackage(ip.packageURI, replaceFlags, receiver, true);
+=======
+            assertEquals(invokeInstallPackage(ip.packageURI, replaceFlags, receiver), true);
+>>>>>>> upstream/master
             assertInstall(ip.pkg, iFlags, ip.pkg.installLocation);
         } catch (Exception e) {
             failStr("Failed with exception : " + e);
@@ -1625,8 +1736,13 @@ public class PackageManagerTests extends AndroidTestCase {
 
         int installFlags = PackageManager.INSTALL_FORWARD_LOCK;
         int moveFlags = PackageManager.MOVE_EXTERNAL_MEDIA;
+<<<<<<< HEAD
         boolean fail = false;
         int result = PackageManager.MOVE_SUCCEEDED;
+=======
+        boolean fail = true;
+        int result = PackageManager.MOVE_FAILED_FORWARD_LOCKED;
+>>>>>>> upstream/master
         sampleMoveFromRawResource(installFlags, moveFlags, fail, result);
     }
 
@@ -1786,6 +1902,7 @@ public class PackageManagerTests extends AndroidTestCase {
     }
 
     /*
+<<<<<<< HEAD
      * Install an app with both external and forward-lock flags set.
      */
     @LargeTest
@@ -1797,6 +1914,17 @@ public class PackageManagerTests extends AndroidTestCase {
 
         sampleInstallFromRawResource(PackageManager.INSTALL_FORWARD_LOCK
                 | PackageManager.INSTALL_EXTERNAL, true);
+=======
+     * Install an app with both external and forward-lock flags set. should fail
+     */
+    @LargeTest
+    public void testFlagEF() {
+        installFromRawResource("install.apk", R.raw.install,
+                PackageManager.INSTALL_FORWARD_LOCK | PackageManager.INSTALL_EXTERNAL,
+                false,
+                true, PackageManager.INSTALL_FAILED_INVALID_INSTALL_LOCATION,
+                PackageInfo.INSTALL_LOCATION_AUTO);
+>>>>>>> upstream/master
     }
 
     /*
@@ -1913,11 +2041,16 @@ public class PackageManagerTests extends AndroidTestCase {
                 PackageManager.INSTALL_FORWARD_LOCK,
                 true,
                 false, -1,
+<<<<<<< HEAD
                 PackageInfo.INSTALL_LOCATION_INTERNAL_ONLY);
+=======
+                PackageInfo.INSTALL_LOCATION_PREFER_EXTERNAL);
+>>>>>>> upstream/master
     }
 
     /*
      * Install an app with fwd locked flag set and install location set to
+<<<<<<< HEAD
      * preferExternal. Should install externally.
      */
     @LargeTest
@@ -1927,6 +2060,12 @@ public class PackageManagerTests extends AndroidTestCase {
             return;
         }
 
+=======
+     * preferExternal. should install internally.
+     */
+    @LargeTest
+    public void testFlagFManifestE() {
+>>>>>>> upstream/master
         installFromRawResource("install.apk", R.raw.install_loc_sdcard,
                 PackageManager.INSTALL_FORWARD_LOCK,
                 true,
@@ -1935,6 +2074,7 @@ public class PackageManagerTests extends AndroidTestCase {
     }
 
     /*
+<<<<<<< HEAD
      * Install an app with fwd locked flag set and install location set to auto.
      * should install externally.
      */
@@ -1945,11 +2085,22 @@ public class PackageManagerTests extends AndroidTestCase {
             return;
         }
 
+=======
+     * Install an app with fwd locked flag set and install location set to
+     * auto. should install internally.
+     */
+    @LargeTest
+    public void testFlagFManifestA() {
+>>>>>>> upstream/master
         installFromRawResource("install.apk", R.raw.install_loc_auto,
                 PackageManager.INSTALL_FORWARD_LOCK,
                 true,
                 false, -1,
+<<<<<<< HEAD
                 PackageInfo.INSTALL_LOCATION_AUTO);
+=======
+                PackageInfo.INSTALL_LOCATION_PREFER_EXTERNAL);
+>>>>>>> upstream/master
     }
 
     /* The following test functions verify install location for existing apps.

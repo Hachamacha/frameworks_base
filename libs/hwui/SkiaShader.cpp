@@ -20,7 +20,10 @@
 
 #include <SkMatrix.h>
 
+<<<<<<< HEAD
 #include "Caches.h"
+=======
+>>>>>>> upstream/master
 #include "SkiaShader.h"
 #include "Texture.h"
 #include "Matrix.h"
@@ -32,6 +35,15 @@ namespace uirenderer {
 // Support
 ///////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
+=======
+static const GLenum gTextureUnitsMap[] = {
+        GL_TEXTURE0,
+        GL_TEXTURE1,
+        GL_TEXTURE2
+};
+
+>>>>>>> upstream/master
 static const GLint gTileModes[] = {
         GL_CLAMP_TO_EDGE,   // == SkShader::kClamp_TileMode
         GL_REPEAT,          // == SkShader::kRepeat_Mode
@@ -72,7 +84,11 @@ void SkiaShader::setupProgram(Program* program, const mat4& modelView, const Sna
 
 void SkiaShader::bindTexture(Texture* texture, GLenum wrapS, GLenum wrapT) {
     glBindTexture(GL_TEXTURE_2D, texture->id);
+<<<<<<< HEAD
     texture->setWrapST(wrapS, wrapT);
+=======
+    texture->setWrap(wrapS, wrapT);
+>>>>>>> upstream/master
 }
 
 void SkiaShader::computeScreenSpaceMatrix(mat4& screenSpace, const mat4& modelView) {
@@ -124,7 +140,11 @@ void SkiaBitmapShader::describe(ProgramDescription& description, const Extension
 void SkiaBitmapShader::setupProgram(Program* program, const mat4& modelView,
         const Snapshot& snapshot, GLuint* textureUnit) {
     GLuint textureSlot = (*textureUnit)++;
+<<<<<<< HEAD
     Caches::getInstance().activeTexture(textureSlot);
+=======
+    glActiveTexture(gTextureUnitsMap[textureSlot]);
+>>>>>>> upstream/master
 
     Texture* texture = mTexture;
     mTexture = NULL;
@@ -143,7 +163,11 @@ void SkiaBitmapShader::setupProgram(Program* program, const mat4& modelView,
     // ::updateTransforms() but we don't have the texture object
     // available at that point. The optimization is not worth the
     // effort for now.
+<<<<<<< HEAD
     texture->setFilter(GL_LINEAR);
+=======
+    texture->setFilter(GL_LINEAR, GL_LINEAR);
+>>>>>>> upstream/master
 
     glUniform1i(program->getUniform("bitmapSampler"), textureSlot);
     glUniformMatrix4fv(program->getUniform("textureTransform"), 1,
@@ -218,7 +242,11 @@ void SkiaLinearGradientShader::describe(ProgramDescription& description,
 void SkiaLinearGradientShader::setupProgram(Program* program, const mat4& modelView,
         const Snapshot& snapshot, GLuint* textureUnit) {
     GLuint textureSlot = (*textureUnit)++;
+<<<<<<< HEAD
     Caches::getInstance().activeTexture(textureSlot);
+=======
+    glActiveTexture(gTextureUnitsMap[textureSlot]);
+>>>>>>> upstream/master
 
     Texture* texture = mGradientCache->get(mColors, mPositions, mCount, mTileX);
 
@@ -330,7 +358,11 @@ void SkiaSweepGradientShader::describe(ProgramDescription& description,
 void SkiaSweepGradientShader::setupProgram(Program* program, const mat4& modelView,
         const Snapshot& snapshot, GLuint* textureUnit) {
     GLuint textureSlot = (*textureUnit)++;
+<<<<<<< HEAD
     Caches::getInstance().activeTexture(textureSlot);
+=======
+    glActiveTexture(gTextureUnitsMap[textureSlot]);
+>>>>>>> upstream/master
 
     Texture* texture = mGradientCache->get(mColors, mPositions, mCount);
 

@@ -16,7 +16,10 @@
 
 package android.graphics.drawable;
 
+<<<<<<< HEAD
 import android.graphics.Insets;
+=======
+>>>>>>> upstream/master
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -297,6 +300,10 @@ public abstract class Drawable {
 
     /**
      * Implement this interface if you want to create an drawable that is RTL aware
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> upstream/master
      * @hide
      */
     public static interface Callback2 extends Callback {
@@ -385,7 +392,13 @@ public abstract class Drawable {
     }
 
     /**
+<<<<<<< HEAD
      * Get the resolved layout direction of this Drawable.
+=======
+     * Use the current {@link android.graphics.drawable.Drawable.Callback2} implementation to get
+     * the resolved layout direction of this Drawable.
+     *
+>>>>>>> upstream/master
      * @hide
      */
     public int getResolvedLayoutDirectionSelf() {
@@ -707,6 +720,7 @@ public abstract class Drawable {
     }
 
     /**
+<<<<<<< HEAD
      * Return in insets the layout insets suggested by this Drawable for use with alignment
      * operations during layout.
      *
@@ -717,6 +731,8 @@ public abstract class Drawable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Make this drawable mutable. This operation cannot be reversed. A mutable
      * drawable is guaranteed to not share its state with any other drawable.
      * This is especially useful when you need to modify properties of drawables
@@ -785,6 +801,7 @@ public abstract class Drawable {
                 np = null;
                 pad = null;
             }
+<<<<<<< HEAD
             int[] layoutBounds = bm.getLayoutBounds();
             Rect layoutBoundsRect = null;
             if (layoutBounds != null) {
@@ -792,6 +809,9 @@ public abstract class Drawable {
                                              layoutBounds[2], layoutBounds[3]);
             }
             return drawableFromBitmap(res, bm, np, pad, layoutBoundsRect, srcName);
+=======
+            return drawableFromBitmap(res, bm, np, pad, srcName);
+>>>>>>> upstream/master
         }
         return null;
     }
@@ -893,7 +913,11 @@ public abstract class Drawable {
 
         Bitmap bm = BitmapFactory.decodeFile(pathName);
         if (bm != null) {
+<<<<<<< HEAD
             return drawableFromBitmap(null, bm, null, null, null, pathName);
+=======
+            return drawableFromBitmap(null, bm, null, null, pathName);
+>>>>>>> upstream/master
         }
 
         return null;
@@ -974,10 +998,17 @@ public abstract class Drawable {
     }
 
     private static Drawable drawableFromBitmap(Resources res, Bitmap bm, byte[] np,
+<<<<<<< HEAD
             Rect pad, Rect layoutBounds, String srcName) {
 
         if (np != null) {
             return new NinePatchDrawable(res, bm, np, pad, layoutBounds, srcName);
+=======
+            Rect pad, String srcName) {
+
+        if (np != null) {
+            return new NinePatchDrawable(res, bm, np, pad, srcName);
+>>>>>>> upstream/master
         }
 
         return new BitmapDrawable(res, bm);

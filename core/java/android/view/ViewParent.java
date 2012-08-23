@@ -261,6 +261,7 @@ public interface ViewParent {
      * @return True if the event was sent.
      */
     public boolean requestSendAccessibilityEvent(View child, AccessibilityEvent event);
+<<<<<<< HEAD
 
     /**
      * Called when a child view now has or no longer is tracking transient state.
@@ -307,4 +308,6 @@ public interface ViewParent {
      * @hide
      */
     public View findViewToTakeAccessibilityFocusFromHover(View child, View descendant);
+=======
+>>>>>>> upstream/master
 }

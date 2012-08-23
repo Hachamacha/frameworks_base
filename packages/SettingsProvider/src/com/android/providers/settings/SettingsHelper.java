@@ -43,6 +43,12 @@ public class SettingsHelper {
     private IContentService mContentService;
     private IPowerManager mPowerManager;
 
+<<<<<<< HEAD
+=======
+    private boolean mSilent;
+    private boolean mVibrate;
+
+>>>>>>> upstream/master
     public SettingsHelper(Context context) {
         mContext = context;
         mAudioManager = (AudioManager) context
@@ -116,6 +122,21 @@ public class SettingsHelper {
         }
     }
 
+<<<<<<< HEAD
+=======
+    private void setRingerMode() {
+        if (mSilent) {
+            mAudioManager.setRingerMode(mVibrate ? AudioManager.RINGER_MODE_VIBRATE :
+                AudioManager.RINGER_MODE_SILENT);
+        } else {
+            mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER,
+                    mVibrate ? AudioManager.VIBRATE_SETTING_ON
+                            : AudioManager.VIBRATE_SETTING_OFF);
+        }
+    }
+
+>>>>>>> upstream/master
     byte[] getLocaleData() {
         Configuration conf = mContext.getResources().getConfiguration();
         final Locale loc = conf.locale;

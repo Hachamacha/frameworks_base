@@ -3,12 +3,16 @@
     Vendor-provided fallback fonts
 
     This file can be edited to add references to fonts that are not installed or referenced in the
+<<<<<<< HEAD
     default system. The file should then be placed in /vendor/etc/fallback_fonts.xml. Note
     that in your makefile, this directory should be referenced as $(TARGET_COPY_OUT_VENDOR)/etc/:
 
         PRODUCT_COPY_FILES += \
             frameworks/base/data/fonts/vendor_fonts.xml:$(TARGET_COPY_OUT_VENDOR)/etc/fallback_fonts.xml \
             frameworks/base/data/fonts/vendor_fonts-ja.xml:$(TARGET_COPY_OUT_VENDOR)/etc/fallback_fonts-ja.xml
+=======
+    default system. The file should then be placed in /vendor/etc/fallback_fonts.xml.
+>>>>>>> upstream/master
 
     For example, vendors might want to build configurations for locales that are
     better served by fonts which either handle glyphs not supported in the default fonts or which
@@ -30,6 +34,7 @@
     place in the overall fallback fonts. The order of this list determines which fallback font
     will be used to support any glyphs that are not handled by the default system fonts.
 
+<<<<<<< HEAD
     Han languages (Chinese, Japanese, and Korean) share a common range of unicode characters;
     their ordering in the fallback or vendor files gives priority to the first in the list.
     Locale-specific ordering can be configured by adding language and region codes to the end
@@ -59,6 +64,8 @@
             </family>
         </familyset>
 
+=======
+>>>>>>> upstream/master
     The sample configuration below is an example of how one might provide two families of fonts
     that get inserted at the first and second (0  and 1) position in the overall fallback fonts.
 

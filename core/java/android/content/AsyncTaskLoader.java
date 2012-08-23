@@ -18,7 +18,10 @@ package android.content;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.os.OperationCanceledException;
+=======
+>>>>>>> upstream/master
 import android.os.SystemClock;
 import android.util.Slog;
 import android.util.TimeUtils;
@@ -54,16 +57,26 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
     static final boolean DEBUG = false;
 
     final class LoadTask extends AsyncTask<Void, Void, D> implements Runnable {
+<<<<<<< HEAD
         private final CountDownLatch mDone = new CountDownLatch(1);
 
         // Set to true to indicate that the task has been posted to a handler for
         // execution at a later time.  Used to throttle updates.
         boolean waiting;
 
+=======
+
+        D result;
+        boolean waiting;
+
+        private CountDownLatch done = new CountDownLatch(1);
+
+>>>>>>> upstream/master
         /* Runs on a worker thread */
         @Override
         protected D doInBackground(Void... params) {
             if (DEBUG) Slog.v(TAG, this + " >>> doInBackground");
+<<<<<<< HEAD
             try {
                 D data = AsyncTaskLoader.this.onLoadInBackground();
                 if (DEBUG) Slog.v(TAG, this + "  <<< doInBackground");
@@ -81,6 +94,11 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
                 if (DEBUG) Slog.v(TAG, this + "  <<< doInBackground (was canceled)");
                 return null;
             }
+=======
+            result = AsyncTaskLoader.this.onLoadInBackground();
+            if (DEBUG) Slog.v(TAG, this + "  <<< doInBackground");
+            return result;
+>>>>>>> upstream/master
         }
 
         /* Runs on the UI thread */
@@ -90,6 +108,7 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
             try {
                 AsyncTaskLoader.this.dispatchOnLoadComplete(this, data);
             } finally {
+<<<<<<< HEAD
                 mDone.countDown();
             }
         }
@@ -107,11 +126,28 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
 
         /* Runs on the UI thread, when the waiting task is posted to a handler.
          * This method is only executed when task execution was deferred (waiting was true). */
+=======
+                done.countDown();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            if (DEBUG) Slog.v(TAG, this + " onCancelled");
+            try {
+                AsyncTaskLoader.this.dispatchOnCancelled(this, result);
+            } finally {
+                done.countDown();
+            }
+        }
+
+>>>>>>> upstream/master
         @Override
         public void run() {
             waiting = false;
             AsyncTaskLoader.this.executePendingTask();
         }
+<<<<<<< HEAD
 
         /* Used for testing purposes to wait for the task to complete. */
         public void waitForLoader() {
@@ -121,6 +157,8 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
                 // Ignore
             }
         }
+=======
+>>>>>>> upstream/master
     }
 
     volatile LoadTask mTask;
@@ -136,7 +174,11 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
 
     /**
      * Set amount to throttle updates by.  This is the minimum time from
+<<<<<<< HEAD
      * when the last {@link #loadInBackground()} call has completed until
+=======
+     * when the last {@link #onLoadInBackground()} call has completed until
+>>>>>>> upstream/master
      * a new load is scheduled.
      *
      * @param delayMS Amount of delay, in milliseconds.
@@ -157,9 +199,30 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
         executePendingTask();
     }
 
+<<<<<<< HEAD
     @Override
     protected boolean onCancelLoad() {
         if (DEBUG) Slog.v(TAG, "onCancelLoad: mTask=" + mTask);
+=======
+    /**
+     * Attempt to cancel the current load task. See {@link AsyncTask#cancel(boolean)}
+     * for more info.  Must be called on the main thread of the process.
+     *
+     * <p>Cancelling is not an immediate operation, since the load is performed
+     * in a background thread.  If there is currently a load in progress, this
+     * method requests that the load be cancelled, and notes this is the case;
+     * once the background thread has completed its work its remaining state
+     * will be cleared.  If another load request comes in during this time,
+     * it will be held until the cancelled load is complete.
+     *
+     * @return Returns <tt>false</tt> if the task could not be cancelled,
+     *         typically because it has already completed normally, or
+     *         because {@link #startLoading()} hasn't been called; returns
+     *         <tt>true</tt> otherwise.
+     */
+    public boolean cancelLoad() {
+        if (DEBUG) Slog.v(TAG, "cancelLoad: mTask=" + mTask);
+>>>>>>> upstream/master
         if (mTask != null) {
             if (mCancellingTask != null) {
                 // There was a pending task already waiting for a previous
@@ -185,7 +248,10 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
                 if (DEBUG) Slog.v(TAG, "cancelLoad: cancelled=" + cancelled);
                 if (cancelled) {
                     mCancellingTask = mTask;
+<<<<<<< HEAD
                     cancelLoadInBackground();
+=======
+>>>>>>> upstream/master
                 }
                 mTask = null;
                 return cancelled;
@@ -196,10 +262,14 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
 
     /**
      * Called if the task was canceled before it was completed.  Gives the class a chance
+<<<<<<< HEAD
      * to clean up post-cancellation and to properly dispose of the result.
      *
      * @param data The value that was returned by {@link #loadInBackground}, or null
      * if the task threw {@link OperationCanceledException}.
+=======
+     * to properly dispose of the result.
+>>>>>>> upstream/master
      */
     public void onCanceled(D data) {
     }
@@ -233,8 +303,11 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
             if (DEBUG) Slog.v(TAG, "Cancelled task is now canceled!");
             mLastLoadCompleteTime = SystemClock.uptimeMillis();
             mCancellingTask = null;
+<<<<<<< HEAD
             if (DEBUG) Slog.v(TAG, "Delivering cancellation");
             deliverCancellation();
+=======
+>>>>>>> upstream/master
             executePendingTask();
         }
     }
@@ -257,6 +330,7 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
     }
 
     /**
+<<<<<<< HEAD
      * Called on a worker thread to perform the actual load and to return
      * the result of the load operation.
      *
@@ -282,10 +356,13 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
      * @see #isLoadInBackgroundCanceled
      * @see #cancelLoadInBackground
      * @see #onCanceled
+=======
+>>>>>>> upstream/master
      */
     public abstract D loadInBackground();
 
     /**
+<<<<<<< HEAD
      * Calls {@link #loadInBackground()}.
      *
      * This method is reserved for use by the loader framework.
@@ -296,12 +373,22 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
      * @throws OperationCanceledException if the load is canceled during execution.
      *
      * @see #loadInBackground
+=======
+     * Called on a worker thread to perform the actual load. Implementations should not deliver the
+     * result directly, but should return them from this method, which will eventually end up
+     * calling {@link #deliverResult} on the UI thread. If implementations need to process
+     * the results on the UI thread they may override {@link #deliverResult} and do so
+     * there.
+     *
+     * @return Implementations must return the result of their load operation.
+>>>>>>> upstream/master
      */
     protected D onLoadInBackground() {
         return loadInBackground();
     }
 
     /**
+<<<<<<< HEAD
      * Called on the main thread to abort a load in progress.
      *
      * Override this method to abort the current invocation of {@link #loadInBackground}
@@ -327,6 +414,8 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Locks the current thread until the loader completes the current load
      * operation. Returns immediately if there is no load operation running.
      * Should not be called from the UI thread: calling it from the UI
@@ -339,7 +428,15 @@ public abstract class AsyncTaskLoader<D> extends Loader<D> {
     public void waitForLoader() {
         LoadTask task = mTask;
         if (task != null) {
+<<<<<<< HEAD
             task.waitForLoader();
+=======
+            try {
+                task.done.await();
+            } catch (InterruptedException e) {
+                // Ignore
+            }
+>>>>>>> upstream/master
         }
     }
 

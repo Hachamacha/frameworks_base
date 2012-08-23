@@ -99,6 +99,7 @@ public abstract class Context {
     public static final int MODE_MULTI_PROCESS = 0x0004;
 
     /**
+<<<<<<< HEAD
      * Database open flag: when set, the database is opened with write-ahead
      * logging enabled by default.
      *
@@ -109,6 +110,8 @@ public abstract class Context {
     public static final int MODE_ENABLE_WRITE_AHEAD_LOGGING = 0x0008;
 
     /**
+=======
+>>>>>>> upstream/master
      * Flag for {@link #bindService}: automatically create the service as long
      * as the binding exists.  Note that while this will create the service,
      * its {@link android.app.Service#onStartCommand}
@@ -701,7 +704,10 @@ public abstract class Context {
      * @param mode Operating mode.  Use 0 or {@link #MODE_PRIVATE} for the
      *     default operation, {@link #MODE_WORLD_READABLE}
      *     and {@link #MODE_WORLD_WRITEABLE} to control permissions.
+<<<<<<< HEAD
      *     Use {@link #MODE_ENABLE_WRITE_AHEAD_LOGGING} to enable write-ahead logging by default.
+=======
+>>>>>>> upstream/master
      * @param factory An optional factory class that is called to instantiate a
      *     cursor when query is called.
      *
@@ -711,7 +717,10 @@ public abstract class Context {
      * @see #MODE_PRIVATE
      * @see #MODE_WORLD_READABLE
      * @see #MODE_WORLD_WRITEABLE
+<<<<<<< HEAD
      * @see #MODE_ENABLE_WRITE_AHEAD_LOGGING
+=======
+>>>>>>> upstream/master
      * @see #deleteDatabase
      */
     public abstract SQLiteDatabase openOrCreateDatabase(String name,
@@ -728,7 +737,10 @@ public abstract class Context {
      * @param mode Operating mode.  Use 0 or {@link #MODE_PRIVATE} for the
      *     default operation, {@link #MODE_WORLD_READABLE}
      *     and {@link #MODE_WORLD_WRITEABLE} to control permissions.
+<<<<<<< HEAD
      *     Use {@link #MODE_ENABLE_WRITE_AHEAD_LOGGING} to enable write-ahead logging by default.
+=======
+>>>>>>> upstream/master
      * @param factory An optional factory class that is called to instantiate a
      *     cursor when query is called.
      * @param errorHandler the {@link DatabaseErrorHandler} to be used when sqlite reports database
@@ -739,7 +751,10 @@ public abstract class Context {
      * @see #MODE_PRIVATE
      * @see #MODE_WORLD_READABLE
      * @see #MODE_WORLD_WRITEABLE
+<<<<<<< HEAD
      * @see #MODE_ENABLE_WRITE_AHEAD_LOGGING
+=======
+>>>>>>> upstream/master
      * @see #deleteDatabase
      */
     public abstract SQLiteDatabase openOrCreateDatabase(String name,
@@ -813,8 +828,11 @@ public abstract class Context {
     /**
      * @deprecated Use {@link android.app.WallpaperManager#setBitmap(Bitmap)
      * WallpaperManager.set()} instead.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
+=======
+>>>>>>> upstream/master
      */
     @Deprecated
     public abstract void setWallpaper(Bitmap bitmap) throws IOException;
@@ -822,8 +840,11 @@ public abstract class Context {
     /**
      * @deprecated Use {@link android.app.WallpaperManager#setStream(InputStream)
      * WallpaperManager.set()} instead.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
+=======
+>>>>>>> upstream/master
      */
     @Deprecated
     public abstract void setWallpaper(InputStream data) throws IOException;
@@ -831,13 +852,17 @@ public abstract class Context {
     /**
      * @deprecated Use {@link android.app.WallpaperManager#clear
      * WallpaperManager.clear()} instead.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
+=======
+>>>>>>> upstream/master
      */
     @Deprecated
     public abstract void clearWallpaper() throws IOException;
 
     /**
+<<<<<<< HEAD
      * Same as {@link #startActivity(Intent, Bundle)} with no options
      * specified.
      *
@@ -851,6 +876,8 @@ public abstract class Context {
     public abstract void startActivity(Intent intent);
 
     /**
+=======
+>>>>>>> upstream/master
      * Launch a new activity.  You will not receive any information about when
      * the activity exits.
      *
@@ -865,6 +892,7 @@ public abstract class Context {
      * if there was no Activity found to run the given Intent.
      *
      * @param intent The description of the activity to start.
+<<<<<<< HEAD
      * @param options Additional options for how the Activity should be started.
      * May be null if there are no options.  See {@link android.app.ActivityOptions}
      * for how to build the Bundle supplied here; there are no supported definitions
@@ -889,6 +917,14 @@ public abstract class Context {
      * @see PackageManager#resolveActivity
      */
     public abstract void startActivities(Intent[] intents);
+=======
+     *
+     * @throws ActivityNotFoundException
+     *
+     * @see PackageManager#resolveActivity
+     */
+    public abstract void startActivity(Intent intent);
+>>>>>>> upstream/master
 
     /**
      * Launch multiple new activities.  This is generally the same as calling
@@ -905,6 +941,7 @@ public abstract class Context {
      * list may be on it, some not), so you probably want to avoid such situations.
      *
      * @param intents An array of Intents to be started.
+<<<<<<< HEAD
      * @param options Additional options for how the Activity should be started.
      * See {@link android.content.Context#startActivity(Intent, Bundle)
      * Context.startActivity(Intent, Bundle)} for more details.
@@ -938,6 +975,17 @@ public abstract class Context {
 
     /**
      * Like {@link #startActivity(Intent, Bundle)}, but taking a IntentSender
+=======
+     *
+     * @throws ActivityNotFoundException
+     *
+     * @see PackageManager#resolveActivity
+     */
+    public abstract void startActivities(Intent[] intents);
+
+    /**
+     * Like {@link #startActivity(Intent)}, but taking a IntentSender
+>>>>>>> upstream/master
      * to start.  If the IntentSender is for an activity, that activity will be started
      * as if you had called the regular {@link #startActivity(Intent)}
      * here; otherwise, its associated action will be executed (such as
@@ -952,6 +1000,7 @@ public abstract class Context {
      * @param flagsValues Desired values for any bits set in
      * <var>flagsMask</var>
      * @param extraFlags Always set to 0.
+<<<<<<< HEAD
      * @param options Additional options for how the Activity should be started.
      * See {@link android.content.Context#startActivity(Intent, Bundle)
      * Context.startActivity(Intent, Bundle)} for more details.  If options
@@ -964,6 +1013,12 @@ public abstract class Context {
     public abstract void startIntentSender(IntentSender intent,
             Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags,
             Bundle options) throws IntentSender.SendIntentException;
+=======
+     */
+    public abstract void startIntentSender(IntentSender intent,
+            Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)
+            throws IntentSender.SendIntentException;
+>>>>>>> upstream/master
 
     /**
      * Broadcast the given intent to all interested BroadcastReceivers.  This
@@ -988,6 +1043,7 @@ public abstract class Context {
     public abstract void sendBroadcast(Intent intent);
 
     /**
+<<<<<<< HEAD
      * Same as #sendBroadcast(Intent intent), but for a specific user. Used by the system only.
      * @param intent the intent to broadcast
      * @param userId user to send the intent to
@@ -998,6 +1054,8 @@ public abstract class Context {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Broadcast the given intent to all interested BroadcastReceivers, allowing
      * an optional required permission to be enforced.  This
      * call is asynchronous; it returns immediately, and you will continue
@@ -1353,7 +1411,11 @@ public abstract class Context {
     /**
      * Connect to an application service, creating it if needed.  This defines
      * a dependency between your application and the service.  The given
+<<<<<<< HEAD
      * <var>conn</var> will receive the service object when it is created and be
+=======
+     * <var>conn</var> will receive the service object when its created and be
+>>>>>>> upstream/master
      * told if it dies and restarts.  The service will be considered required
      * by the system only for as long as the calling context exists.  For
      * example, if this Context is an Activity that is stopped, the service will
@@ -1362,15 +1424,25 @@ public abstract class Context {
      * <p>This function will throw {@link SecurityException} if you do not
      * have permission to bind to the given service.
      *
+<<<<<<< HEAD
      * <p class="note">Note: this method <em>can not be called from a
      * {@link BroadcastReceiver} component</em>.  A pattern you can use to
      * communicate from a BroadcastReceiver to a Service is to call
+=======
+     * <p class="note">Note: this method <em>can not be called from an
+     * {@link BroadcastReceiver} component</em>.  A pattern you can use to
+     * communicate from an BroadcastReceiver to a Service is to call
+>>>>>>> upstream/master
      * {@link #startService} with the arguments containing the command to be
      * sent, with the service calling its
      * {@link android.app.Service#stopSelf(int)} method when done executing
      * that command.  See the API demo App/Service/Service Start Arguments
      * Controller for an illustration of this.  It is okay, however, to use
+<<<<<<< HEAD
      * this method from a BroadcastReceiver that has been registered with
+=======
+     * this method from an BroadcastReceiver that has been registered with
+>>>>>>> upstream/master
      * {@link #registerReceiver}, since the lifetime of this BroadcastReceiver
      * is tied to another object (the one that registered it).</p>
      *
@@ -1400,6 +1472,7 @@ public abstract class Context {
             int flags);
 
     /**
+<<<<<<< HEAD
      * Same as {@link #bindService(Intent, ServiceConnection, int)}, but with an explicit userId
      * argument for use by system server and other multi-user aware code.
      * @hide
@@ -1409,6 +1482,8 @@ public abstract class Context {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Disconnect from an application service.  You will no longer receive
      * calls as the service is restarted, and the service is now allowed to
      * stop at any time.
@@ -1534,8 +1609,11 @@ public abstract class Context {
      * @see android.net.wifi.WifiManager
      * @see #AUDIO_SERVICE
      * @see android.media.AudioManager
+<<<<<<< HEAD
      * @see #MEDIA_ROUTER_SERVICE
      * @see android.media.MediaRouter
+=======
+>>>>>>> upstream/master
      * @see #TELEPHONY_SERVICE
      * @see android.telephony.TelephonyManager
      * @see #INPUT_METHOD_SERVICE
@@ -1731,6 +1809,7 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link
+<<<<<<< HEAD
      * android.os.IUpdateLock} for managing runtime sequences that
      * must not be interrupted by headless OTA application or similar.
      *
@@ -1742,6 +1821,8 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link
+=======
+>>>>>>> upstream/master
      * android.net.NetworkManagementService} for handling management of
      * system network services
      *
@@ -1777,6 +1858,7 @@ public abstract class Context {
     public static final String WIFI_P2P_SERVICE = "wifip2p";
 
     /**
+<<<<<<< HEAD
      * Use with {@link #getSystemService} to retrieve a {@link
      * android.net.nsd.NsdManager} for handling management of network service
      * discovery
@@ -1787,6 +1869,8 @@ public abstract class Context {
     public static final String NSD_SERVICE = "servicediscovery";
 
     /**
+=======
+>>>>>>> upstream/master
      * Use with {@link #getSystemService} to retrieve a
      * {@link android.media.AudioManager} for handling management of volume,
      * ringer modes and audio routing.
@@ -1798,6 +1882,7 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a
+<<<<<<< HEAD
      * {@link android.media.MediaRouter} for controlling and managing
      * routing of media.
      *
@@ -1808,6 +1893,8 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a
+=======
+>>>>>>> upstream/master
      * {@link android.telephony.TelephonyManager} for handling management the
      * telephony features of the device.
      *
@@ -1924,6 +2011,7 @@ public abstract class Context {
     public static final String USB_SERVICE = "usb";
 
     /**
+<<<<<<< HEAD
      * Use with {@link #getSystemService} to retrieve a {@link
      * android.hardware.SerialManager} for access to serial ports.
      *
@@ -1955,6 +2043,8 @@ public abstract class Context {
     public static final String SCHEDULING_POLICY_SERVICE = "scheduling_policy";
 
     /**
+=======
+>>>>>>> upstream/master
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
      *

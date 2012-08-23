@@ -6,6 +6,16 @@ parent.link=index.html
 <div id="qv-wrapper">
 <div id="qv">
 
+<<<<<<< HEAD
+=======
+  <h2>Quickview</h2>
+  <ul>
+    <li>A title bar that includes the application icon and activity title</li>
+    <li>Provides access to menu items and navigation modes such as tabs</li>
+    <li>Requires API level 11 or greater</li>
+  </ul>
+
+>>>>>>> upstream/master
   <h2>In this document</h2>
 <ol>
   <li><a href="#Adding">Adding the Action Bar</a>
@@ -95,7 +105,11 @@ navigation label, such as the currently selected tab.</p></li>
 
   <li>Provide consistent navigation and view refinement across different applications.
     <p>The action bar provides built-in tab navigation for switching between <a
+<<<<<<< HEAD
 href="{@docRoot}guide/components/fragments.html">fragments</a>. It also offers a drop-down
+=======
+href="{@docRoot}guide/topics/fundamentals/fragments.html">fragments</a>. It also offers a drop-down
+>>>>>>> upstream/master
 list you can use as an alternative navigation mode or to refine the current view (such as to sort
 a list by different criteria).</p>
   </li>
@@ -113,7 +127,11 @@ include a <em>Menu</em> button).</p>
 </li>
 </ul>
 
+<<<<<<< HEAD
 <img src="{@docRoot}images/ui/actionbar.png" alt="" width="440" />
+=======
+<img src="{@docRoot}images/ui/actionbar.png" alt="" />
+>>>>>>> upstream/master
 <p class="img-caption"><strong>Figure 1.</strong> Action bar from the <a
 href="{@docRoot}resources/samples/HoneycombGallery/index.html">Honeycomb Gallery</a> app (on a
 landscape handset), showing the logo on the left, navigation tabs, and an action item on the
@@ -124,7 +142,11 @@ action bar for displaying contextual action items, see the <a
 href="{@docRoot}guide/topics/ui/menus.html#context-menu">Menu</a> guide.</p>
 
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Action Bar Design</strong></p>
   <p>For design guidelines, read Android Design's <a
 href="{@docRoot}design/patterns/actionbar.html">Action Bar</a> guide.</p>
@@ -503,7 +525,11 @@ intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 </pre>
 
 <p>For more information about these flags and other back stack behaviors, read the <a
+<<<<<<< HEAD
 href="{@docRoot}guide/components/tasks-and-back-stack.html">Tasks and Back Stack</a>
+=======
+href="{@docRoot}guide/topics/fundamentals/tasks-and-back-stack.html">Tasks and Back Stack</a>
+>>>>>>> upstream/master
 developer guide.</p>
 
 <p class="note"><strong>Note:</strong> If you're using the icon to navigate to the home
@@ -545,7 +571,11 @@ the email application, but presses the action bar icon to navigate up, rather th
 <p class="img-caption"><strong>Figure 6.</strong> Example behavior for UP navigation after
 entering the Email app from the People app.</p>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Navigation Design</strong></p>
   <p>For more about how <em>Up</em> and <em>Back</em> navigation differ, read Android Design's <a
 href="{@docRoot}design/patterns/navigation.html">Navigation</a> guide.</p>
@@ -948,7 +978,11 @@ when the screen is too narrow, as shown in figures 9 and 10.</p>
 <p>To switch between fragments using the tabs, you must perform a fragment
 transaction each time a tab is selected. If you're not familiar with how to change fragments
 using {@link android.app.FragmentTransaction}, first read the <a
+<<<<<<< HEAD
 href="{@docRoot}guide/components/fragments.html">Fragments</a> developer guide.</p>
+=======
+href="{@docRoot}guide/topics/fundamentals/fragments.html">Fragments</a> developer guide.</p>
+>>>>>>> upstream/master
 
 <p>To get started, your layout must include a {@link android.view.ViewGroup} in which you place each
 {@link android.app.Fragment} associated with a tab. Be sure the {@link android.view.ViewGroup} has a
@@ -1085,7 +1119,11 @@ href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/app/Frag
 
 
 <p>If your activity stops, you should retain the currently selected tab with the <a
+<<<<<<< HEAD
 href="{@docRoot}guide/components/activities.html#SavingActivityState">saved instance
+=======
+href="{@docRoot}guide/topics/fundamentals/activities.html#SavingActivityState">saved instance
+>>>>>>> upstream/master
 state</a> so you can open the appropriate tab when the user returns. When it's time to save the
 state, you can query the currently selected tab with {@link
 android.app.ActionBar#getSelectedNavigationIndex()}. This returns the index position of the selected
@@ -1094,7 +1132,11 @@ tab.</p>
 <p class="caution"><strong>Caution:</strong> It's important that you save the state of each fragment
 as necessary, so that when users switch fragments with the tabs and then return to a previous
 fragment, it looks the way it did when they left. For information about saving the state of your
+<<<<<<< HEAD
 fragment, see the <a href="{@docRoot}guide/components/fragments.html">Fragments</a>
+=======
+fragment, see the <a href="{@docRoot}guide/topics/fundamentals/fragments.html">Fragments</a>
+>>>>>>> upstream/master
 developer guide.</p>
 
 

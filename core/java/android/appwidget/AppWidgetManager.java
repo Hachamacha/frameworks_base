@@ -19,7 +19,10 @@ package android.appwidget;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -80,6 +83,7 @@ public class AppWidgetManager {
     public static final String ACTION_APPWIDGET_PICK = "android.appwidget.action.APPWIDGET_PICK";
 
     /**
+<<<<<<< HEAD
      * Send this from your {@link AppWidgetHost} activity when you want to bind an AppWidget to
      * display and bindAppWidgetIdIfAllowed returns false.
      * <p>
@@ -120,6 +124,8 @@ public class AppWidgetManager {
     public static final String ACTION_APPWIDGET_BIND = "android.appwidget.action.APPWIDGET_BIND";
 
     /**
+=======
+>>>>>>> upstream/master
      * Sent when it is time to configure your AppWidget while it is being added to a host.
      * This action is not sent as a broadcast to the AppWidget provider, but as a startActivity
      * to the activity specified in the {@link AppWidgetProviderInfo AppWidgetProviderInfo meta-data}.
@@ -150,6 +156,7 @@ public class AppWidgetManager {
     public static final String EXTRA_APPWIDGET_ID = "appWidgetId";
 
     /**
+<<<<<<< HEAD
      * An bundle extra that contains the lower bound on the current width, in dips, of a widget instance.
      */
     public static final String OPTION_APPWIDGET_MIN_WIDTH = "appWidgetMinWidth";
@@ -176,6 +183,8 @@ public class AppWidgetManager {
     public static final String EXTRA_APPWIDGET_OPTIONS = "appWidgetOptions";
 
     /**
+=======
+>>>>>>> upstream/master
      * An intent extra that contains multiple appWidgetIds.
      * <p>
      * The value will be an int array that can be retrieved like this:
@@ -184,6 +193,7 @@ public class AppWidgetManager {
     public static final String EXTRA_APPWIDGET_IDS = "appWidgetIds";
 
     /**
+<<<<<<< HEAD
      * An intent extra that contains the component name of a AppWidget provider.
      * <p>
      * The value will be an ComponentName.
@@ -191,6 +201,8 @@ public class AppWidgetManager {
     public static final String EXTRA_APPWIDGET_PROVIDER = "appWidgetProvider";
 
     /**
+=======
+>>>>>>> upstream/master
      * An intent extra to pass to the AppWidget picker containing a {@link java.util.List} of
      * {@link AppWidgetProviderInfo} objects to mix in to the list of AppWidgets that are
      * installed.  (This is how the launcher shows the search widget).
@@ -235,6 +247,7 @@ public class AppWidgetManager {
     public static final String ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE";
 
     /**
+<<<<<<< HEAD
      * Sent when the custom extras for an AppWidget change.
      *
      * @see AppWidgetProvider#onAppWidgetExtrasChanged AppWidgetProvider#onAppWidgetExtrasChanged(
@@ -243,6 +256,8 @@ public class AppWidgetManager {
     public static final String ACTION_APPWIDGET_OPTIONS_CHANGED = "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS";
 
     /**
+=======
+>>>>>>> upstream/master
      * Sent when an instance of an AppWidget is deleted from its host.
      *
      * @see AppWidgetProvider#onDeleted AppWidgetProvider.onDeleted(Context context, int[] appWidgetIds)
@@ -320,10 +335,13 @@ public class AppWidgetManager {
      * It is okay to call this method both inside an {@link #ACTION_APPWIDGET_UPDATE} broadcast,
      * and outside of the handler.
      * This method will only work when called from the uid that owns the AppWidget provider.
+<<<<<<< HEAD
      * 
      * <p>
      * The total Bitmap memory used by the RemoteViews object cannot exceed that required to
      * fill the screen 1.5 times, ie. (screen width x screen height x 4 x 1.5) bytes.
+=======
+>>>>>>> upstream/master
      *
      * @param appWidgetIds     The AppWidget instances for which to set the RemoteViews.
      * @param views         The RemoteViews object to show.
@@ -338,6 +356,7 @@ public class AppWidgetManager {
     }
 
     /**
+<<<<<<< HEAD
      * Update the extras for a given widget instance.
      *
      * The extras can be used to embed additional information about this widget to be accessed
@@ -378,6 +397,8 @@ public class AppWidgetManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set the RemoteViews to use for the specified appWidgetId.
      *
      * Note that the RemoteViews parameter will be cached by the AppWidgetService, and hence should
@@ -389,10 +410,13 @@ public class AppWidgetManager {
      * and outside of the handler.
      * This method will only work when called from the uid that owns the AppWidget provider.
      *
+<<<<<<< HEAD
      * <p>
      * The total Bitmap memory used by the RemoteViews object cannot exceed that required to
      * fill the screen 1.5 times, ie. (screen width x screen height x 4 x 1.5) bytes.
      *
+=======
+>>>>>>> upstream/master
      * @param appWidgetId      The AppWidget instance for which to set the RemoteViews.
      * @param views         The RemoteViews object to show.
      */
@@ -556,14 +580,22 @@ public class AppWidgetManager {
     /**
      * Set the component for a given appWidgetId.
      *
+<<<<<<< HEAD
      * <p class="note">You need the BIND_APPWIDGET permission or the user must have enabled binding
      *         widgets always for your component. This method is used by the AppWidget picker and
      *         should not be used by other apps.
+=======
+     * <p class="note">You need the APPWIDGET_LIST permission.  This method is to be used by the
+     * AppWidget picker.
+>>>>>>> upstream/master
      *
      * @param appWidgetId     The AppWidget instance for which to set the RemoteViews.
      * @param provider      The {@link android.content.BroadcastReceiver} that will be the AppWidget
      *                      provider for this AppWidget.
+<<<<<<< HEAD
      * @hide
+=======
+>>>>>>> upstream/master
      */
     public void bindAppWidgetId(int appWidgetId, ComponentName provider) {
         try {
@@ -575,6 +607,7 @@ public class AppWidgetManager {
     }
 
     /**
+<<<<<<< HEAD
      * Set the component for a given appWidgetId.
      *
      * <p class="note">You need the BIND_APPWIDGET permission or the user must have enabled binding
@@ -637,6 +670,8 @@ public class AppWidgetManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Binds the RemoteViewsService for a given appWidgetId and intent.
      *
      * The appWidgetId specified must already be bound to the calling AppWidgetHost via

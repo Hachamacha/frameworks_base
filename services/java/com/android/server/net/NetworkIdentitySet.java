@@ -21,6 +21,10 @@ import android.net.NetworkIdentity;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.net.ProtocolException;
+>>>>>>> upstream/master
 import java.util.HashSet;
 
 /**
@@ -32,13 +36,17 @@ import java.util.HashSet;
 public class NetworkIdentitySet extends HashSet<NetworkIdentity> {
     private static final int VERSION_INIT = 1;
     private static final int VERSION_ADD_ROAMING = 2;
+<<<<<<< HEAD
     private static final int VERSION_ADD_NETWORK_ID = 3;
+=======
+>>>>>>> upstream/master
 
     public NetworkIdentitySet() {
     }
 
     public NetworkIdentitySet(DataInputStream in) throws IOException {
         final int version = in.readInt();
+<<<<<<< HEAD
         final int size = in.readInt();
         for (int i = 0; i < size; i++) {
             if (version <= VERSION_INIT) {
@@ -61,17 +69,52 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> {
             }
 
             add(new NetworkIdentity(type, subType, subscriberId, networkId, false));
+=======
+        switch (version) {
+            case VERSION_INIT: {
+                final int size = in.readInt();
+                for (int i = 0; i < size; i++) {
+                    final int ignoredVersion = in.readInt();
+                    final int type = in.readInt();
+                    final int subType = in.readInt();
+                    final String subscriberId = readOptionalString(in);
+                    add(new NetworkIdentity(type, subType, subscriberId, false));
+                }
+                break;
+            }
+            case VERSION_ADD_ROAMING: {
+                final int size = in.readInt();
+                for (int i = 0; i < size; i++) {
+                    final int type = in.readInt();
+                    final int subType = in.readInt();
+                    final String subscriberId = readOptionalString(in);
+                    final boolean roaming = in.readBoolean();
+                    add(new NetworkIdentity(type, subType, subscriberId, roaming));
+                }
+                break;
+            }
+            default: {
+                throw new ProtocolException("unexpected version: " + version);
+            }
+>>>>>>> upstream/master
         }
     }
 
     public void writeToStream(DataOutputStream out) throws IOException {
+<<<<<<< HEAD
         out.writeInt(VERSION_ADD_NETWORK_ID);
+=======
+        out.writeInt(VERSION_ADD_ROAMING);
+>>>>>>> upstream/master
         out.writeInt(size());
         for (NetworkIdentity ident : this) {
             out.writeInt(ident.getType());
             out.writeInt(ident.getSubType());
             writeOptionalString(out, ident.getSubscriberId());
+<<<<<<< HEAD
             writeOptionalString(out, ident.getNetworkId());
+=======
+>>>>>>> upstream/master
             out.writeBoolean(ident.getRoaming());
         }
     }

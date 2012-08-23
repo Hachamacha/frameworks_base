@@ -19,7 +19,10 @@ package android.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import com.android.internal.R;
 
@@ -78,6 +81,7 @@ public class RadioButton extends CompoundButton {
     }
 
     @Override
+<<<<<<< HEAD
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(RadioButton.class.getName());
@@ -87,5 +91,14 @@ public class RadioButton extends CompoundButton {
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(RadioButton.class.getName());
+=======
+    public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
+        super.onPopulateAccessibilityEvent(event);
+        if (isChecked()) {
+            event.getText().add(mContext.getString(R.string.radiobutton_selected));
+        } else {
+            event.getText().add(mContext.getString(R.string.radiobutton_not_selected));
+        }
+>>>>>>> upstream/master
     }
 }

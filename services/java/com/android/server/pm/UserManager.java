@@ -16,7 +16,10 @@
 
 package com.android.server.pm;
 
+<<<<<<< HEAD
 import com.android.internal.util.ArrayUtils;
+=======
+>>>>>>> upstream/master
 import com.android.internal.util.FastXmlSerializer;
 
 import android.content.pm.ApplicationInfo;
@@ -25,7 +28,10 @@ import android.content.pm.UserInfo;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.SystemClock;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -59,7 +65,11 @@ public class UserManager {
     private static final String USER_INFO_DIR = "system" + File.separator + "users";
     private static final String USER_LIST_FILENAME = "userlist.xml";
 
+<<<<<<< HEAD
     private SparseArray<UserInfo> mUsers = new SparseArray<UserInfo>();
+=======
+    private SparseArray<UserInfo> mUsers;
+>>>>>>> upstream/master
 
     private final File mUsersDir;
     private final File mUserListFile;
@@ -74,9 +84,12 @@ public class UserManager {
     UserManager(File dataDir, File baseUserPath) {
         mUsersDir = new File(dataDir, USER_INFO_DIR);
         mUsersDir.mkdirs();
+<<<<<<< HEAD
         // Make zeroth user directory, for services to migrate their files to that location
         File userZeroDir = new File(mUsersDir, "0");
         userZeroDir.mkdirs();
+=======
+>>>>>>> upstream/master
         mBaseUserPath = baseUserPath;
         FileUtils.setPermissions(mUsersDir.toString(),
                 FileUtils.S_IRWXU|FileUtils.S_IRWXG
@@ -92,6 +105,7 @@ public class UserManager {
     }
 
     public List<UserInfo> getUsers() {
+<<<<<<< HEAD
         synchronized (mUsers) {
             ArrayList<UserInfo> users = new ArrayList<UserInfo>(mUsers.size());
             for (int i = 0; i < mUsers.size(); i++) {
@@ -122,6 +136,13 @@ public class UserManager {
                 writeUserLocked(info);
             }
         }
+=======
+        ArrayList<UserInfo> users = new ArrayList<UserInfo>(mUsers.size());
+        for (int i = 0; i < mUsers.size(); i++) {
+            users.add(mUsers.valueAt(i));
+        }
+        return users;
+>>>>>>> upstream/master
     }
 
     /**
@@ -134,6 +155,7 @@ public class UserManager {
     }
 
     private void readUserList() {
+<<<<<<< HEAD
         synchronized (mUsers) {
             readUserListLocked();
         }
@@ -142,6 +164,11 @@ public class UserManager {
     private void readUserListLocked() {
         if (!mUserListFile.exists()) {
             fallbackToSingleUserLocked();
+=======
+        mUsers = new SparseArray<UserInfo>();
+        if (!mUserListFile.exists()) {
+            fallbackToSingleUser();
+>>>>>>> upstream/master
             return;
         }
         FileInputStream fis = null;
@@ -157,7 +184,11 @@ public class UserManager {
 
             if (type != XmlPullParser.START_TAG) {
                 Slog.e(LOG_TAG, "Unable to read user list");
+<<<<<<< HEAD
                 fallbackToSingleUserLocked();
+=======
+                fallbackToSingleUser();
+>>>>>>> upstream/master
                 return;
             }
 
@@ -170,6 +201,7 @@ public class UserManager {
                     }
                 }
             }
+<<<<<<< HEAD
             updateUserIdsLocked();
         } catch (IOException ioe) {
             fallbackToSingleUserLocked();
@@ -186,14 +218,32 @@ public class UserManager {
     }
 
     private void fallbackToSingleUserLocked() {
+=======
+            updateUserIds();
+        } catch (IOException ioe) {
+            fallbackToSingleUser();
+        } catch (XmlPullParserException pe) {
+            fallbackToSingleUser();
+        }
+    }
+
+    private void fallbackToSingleUser() {
+>>>>>>> upstream/master
         // Create the primary user
         UserInfo primary = new UserInfo(0, "Primary",
                 UserInfo.FLAG_ADMIN | UserInfo.FLAG_PRIMARY);
         mUsers.put(0, primary);
+<<<<<<< HEAD
         updateUserIdsLocked();
 
         writeUserListLocked();
         writeUserLocked(primary);
+=======
+        updateUserIds();
+
+        writeUserList();
+        writeUser(primary);
+>>>>>>> upstream/master
     }
 
     /*
@@ -203,11 +253,18 @@ public class UserManager {
      *   <name>Primary</name>
      * </user>
      */
+<<<<<<< HEAD
     private void writeUserLocked(UserInfo userInfo) {
         FileOutputStream fos = null;
         try {
             final File mUserFile = new File(mUsersDir, userInfo.id + ".xml");
             fos = new FileOutputStream(mUserFile);
+=======
+    private void writeUser(UserInfo userInfo) {
+        try {
+            final File mUserFile = new File(mUsersDir, userInfo.id + ".xml");
+            final FileOutputStream fos = new FileOutputStream(mUserFile);
+>>>>>>> upstream/master
             final BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             // XmlSerializer serializer = XmlUtils.serializerInstance();
@@ -229,6 +286,7 @@ public class UserManager {
             serializer.endDocument();
         } catch (IOException ioe) {
             Slog.e(LOG_TAG, "Error writing user info " + userInfo.id + "\n" + ioe);
+<<<<<<< HEAD
         } finally {
             if (fos != null) {
                 try {
@@ -236,6 +294,8 @@ public class UserManager {
                 } catch (IOException ioe) {
                 }
             }
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -247,10 +307,16 @@ public class UserManager {
      *   <user id="2"></user>
      * </users>
      */
+<<<<<<< HEAD
     private void writeUserListLocked() {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(mUserListFile);
+=======
+    private void writeUserList() {
+        try {
+            final FileOutputStream fos = new FileOutputStream(mUserListFile);
+>>>>>>> upstream/master
             final BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             // XmlSerializer serializer = XmlUtils.serializerInstance();
@@ -273,6 +339,7 @@ public class UserManager {
             serializer.endDocument();
         } catch (IOException ioe) {
             Slog.e(LOG_TAG, "Error writing user list");
+<<<<<<< HEAD
         } finally {
             if (fos != null) {
                 try {
@@ -280,6 +347,8 @@ public class UserManager {
                 } catch (IOException ioe) {
                 }
             }
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -323,12 +392,17 @@ public class UserManager {
                     }
                 }
             }
+<<<<<<< HEAD
+=======
+            fis.close();
+>>>>>>> upstream/master
 
             UserInfo userInfo = new UserInfo(id, name, flags);
             return userInfo;
 
         } catch (IOException ioe) {
         } catch (XmlPullParserException pe) {
+<<<<<<< HEAD
         } finally {
             if (fis != null) {
                 try {
@@ -336,10 +410,13 @@ public class UserManager {
                 } catch (IOException e) {
                 }
             }
+=======
+>>>>>>> upstream/master
         }
         return null;
     }
 
+<<<<<<< HEAD
     public UserInfo createUser(String name, int flags) {
         int userId = getNextAvailableId();
         UserInfo userInfo = new UserInfo(userId, name, flags);
@@ -353,6 +430,19 @@ public class UserManager {
             writeUserLocked(userInfo);
             updateUserIdsLocked();
         }
+=======
+    public UserInfo createUser(String name, int flags, List<ApplicationInfo> apps) {
+        int userId = getNextAvailableId();
+        UserInfo userInfo = new UserInfo(userId, name, flags);
+        File userPath = new File(mBaseUserPath, Integer.toString(userId));
+        if (!createPackageFolders(userId, userPath, apps)) {
+            return null;
+        }
+        mUsers.put(userId, userInfo);
+        writeUserList();
+        writeUser(userInfo);
+        updateUserIds();
+>>>>>>> upstream/master
         return userInfo;
     }
 
@@ -361,6 +451,7 @@ public class UserManager {
      * after the user's processes have been terminated.
      * @param id the user's id
      */
+<<<<<<< HEAD
     public boolean removeUser(int id) {
         synchronized (mUsers) {
             return removeUserLocked(id);
@@ -368,6 +459,9 @@ public class UserManager {
     }
 
     private boolean removeUserLocked(int id) {
+=======
+    public void removeUser(int id) {
+>>>>>>> upstream/master
         // Remove from the list
         UserInfo userInfo = mUsers.get(id);
         if (userInfo != null) {
@@ -377,11 +471,19 @@ public class UserManager {
             File userFile = new File(mUsersDir, id + ".xml");
             userFile.delete();
             // Update the user list
+<<<<<<< HEAD
             writeUserListLocked();
             updateUserIdsLocked();
             return true;
         }
         return false;
+=======
+            writeUserList();
+            // Remove the data directories for all packages for this user
+            removePackageFolders(id);
+            updateUserIds();
+        }
+>>>>>>> upstream/master
     }
 
     public void installPackageForAllUsers(String packageName, int uid) {
@@ -389,7 +491,11 @@ public class UserManager {
             // Don't do it for the primary user, it will become recursive.
             if (userId == 0)
                 continue;
+<<<<<<< HEAD
             mInstaller.createUserData(packageName, UserId.getUid(userId, uid),
+=======
+            mInstaller.createUserData(packageName, PackageManager.getUid(userId, uid),
+>>>>>>> upstream/master
                     userId);
         }
     }
@@ -415,7 +521,11 @@ public class UserManager {
     /**
      * Caches the list of user ids in an array, adjusting the array size when necessary.
      */
+<<<<<<< HEAD
     private void updateUserIdsLocked() {
+=======
+    private void updateUserIds() {
+>>>>>>> upstream/master
         if (mUserIds == null || mUserIds.length != mUsers.size()) {
             mUserIds = new int[mUsers.size()];
         }
@@ -426,8 +536,11 @@ public class UserManager {
 
     /**
      * Returns the next available user id, filling in any holes in the ids.
+<<<<<<< HEAD
      * TODO: May not be a good idea to recycle ids, in case it results in confusion
      * for data and battery stats collection, or unexpected cross-talk.
+=======
+>>>>>>> upstream/master
      * @return
      */
     private int getNextAvailableId() {
@@ -441,21 +554,47 @@ public class UserManager {
         return i;
     }
 
+<<<<<<< HEAD
     private boolean createPackageFolders(int id, File userPath) {
         // mInstaller may not be available for unit-tests.
         if (mInstaller == null) return true;
 
+=======
+    private boolean createPackageFolders(int id, File userPath, final List<ApplicationInfo> apps) {
+        // mInstaller may not be available for unit-tests.
+        if (mInstaller == null || apps == null) return true;
+
+        final long startTime = SystemClock.elapsedRealtime();
+>>>>>>> upstream/master
         // Create the user path
         userPath.mkdir();
         FileUtils.setPermissions(userPath.toString(), FileUtils.S_IRWXU | FileUtils.S_IRWXG
                 | FileUtils.S_IXOTH, -1, -1);
 
+<<<<<<< HEAD
         mInstaller.cloneUserData(0, id, false);
 
         return true;
     }
 
     boolean removePackageFolders(int id) {
+=======
+        // Create the individual data directories
+        for (ApplicationInfo app : apps) {
+            if (app.uid > android.os.Process.FIRST_APPLICATION_UID
+                    && app.uid < PackageManager.PER_USER_RANGE) {
+                mInstaller.createUserData(app.packageName,
+                        PackageManager.getUid(id, app.uid), id);
+            }
+        }
+        final long stopTime = SystemClock.elapsedRealtime();
+        Log.i(LOG_TAG,
+                "Time to create " + apps.size() + " packages = " + (stopTime - startTime) + "ms");
+        return true;
+    }
+
+    private boolean removePackageFolders(int id) {
+>>>>>>> upstream/master
         // mInstaller may not be available for unit-tests.
         if (mInstaller == null) return true;
 

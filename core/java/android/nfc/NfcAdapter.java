@@ -28,7 +28,10 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
+<<<<<<< HEAD
 import android.net.Uri;
+=======
+>>>>>>> upstream/master
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
@@ -67,9 +70,12 @@ public final class NfcAdapter {
      * <p>If the tag has an NDEF payload this intent is started before
      * {@link #ACTION_TECH_DISCOVERED}. If any activities respond to this intent neither
      * {@link #ACTION_TECH_DISCOVERED} or {@link #ACTION_TAG_DISCOVERED} will be started.
+<<<<<<< HEAD
      *
      * <p>The MIME type or data URI of this intent are normalized before dispatch -
      * so that MIME, URI scheme and URI host are always lower-case.
+=======
+>>>>>>> upstream/master
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_NDEF_DISCOVERED = "android.nfc.action.NDEF_DISCOVERED";
@@ -82,6 +88,7 @@ public final class NfcAdapter {
      * for this action and specify the desired tech types in a
      * manifest <code>meta-data</code> entry. Here is an example manfiest entry:
      * <pre>
+<<<<<<< HEAD
      * &lt;activity android:name=".nfc.TechFilter" android:label="NFC/TechFilter"&gt;
      *     &lt;!-- Add a technology filter --&gt;
      *     &lt;intent-filter&gt;
@@ -92,6 +99,19 @@ public final class NfcAdapter {
      *         android:resource="@xml/filter_nfc"
      *     /&gt;
      * &lt;/activity&gt;</pre>
+=======
+     *   &lt;activity android:name=".nfc.TechFilter" android:label="NFC/TechFilter"&gt;
+     *       &lt;!-- Add a technology filter --&gt;
+     *       &lt;intent-filter&gt;
+     *           &lt;action android:name="android.nfc.action.TECH_DISCOVERED" /&gt;
+     *       &lt;/intent-filter&gt;
+     *
+     *       &lt;meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+     *           android:resource="@xml/filter_nfc"
+     *       /&gt;
+     *   &lt;/activity&gt;
+     * </pre>
+>>>>>>> upstream/master
      *
      * <p>The meta-data XML file should contain one or more <code>tech-list</code> entries
      * each consisting or one or more <code>tech</code> entries. The <code>tech</code> entries refer
@@ -120,7 +140,12 @@ public final class NfcAdapter {
      *         &lt;tech&gt;android.nfc.tech.MifareClassic&lt;/tech&gt;
      *         &lt;tech&gt;android.nfc.tech.Ndef&lt;/tech&gt;
      *     &lt;/tech-list&gt;
+<<<<<<< HEAD
      * &lt;/resources&gt;</pre>
+=======
+     * &lt;/resources&gt;
+     * </pre>
+>>>>>>> upstream/master
      *
      * <p>This intent is started after {@link #ACTION_NDEF_DISCOVERED} and before
      * {@link #ACTION_TAG_DISCOVERED}. If any activities respond to {@link #ACTION_NDEF_DISCOVERED}
@@ -153,6 +178,7 @@ public final class NfcAdapter {
     public static final String EXTRA_TAG = "android.nfc.extra.TAG";
 
     /**
+<<<<<<< HEAD
      * Extra containing an array of {@link NdefMessage} present on the discovered tag.<p>
      * This extra is mandatory for {@link #ACTION_NDEF_DISCOVERED} intents,
      * and optional for {@link #ACTION_TECH_DISCOVERED}, and
@@ -160,6 +186,11 @@ public final class NfcAdapter {
      * When this extra is present there will always be at least one
      * {@link NdefMessage} element. Most NDEF tags have only one NDEF message,
      * but we use an array for future compatibility.
+=======
+     * Optional extra containing an array of {@link NdefMessage} present on the discovered tag for
+     * the {@link #ACTION_NDEF_DISCOVERED}, {@link #ACTION_TECH_DISCOVERED}, and
+     * {@link #ACTION_TAG_DISCOVERED} intents.
+>>>>>>> upstream/master
      */
     public static final String EXTRA_NDEF_MESSAGES = "android.nfc.extra.NDEF_MESSAGES";
 
@@ -201,6 +232,7 @@ public final class NfcAdapter {
     /** @hide */
     public static final int STATE_TURNING_OFF = 4;
 
+<<<<<<< HEAD
     /** @hide */
     public static final String ACTION_HANDOVER_TRANSFER_STARTED =
             "android.nfc.action.HANDOVER_TRANSFER_STARTED";
@@ -222,6 +254,8 @@ public final class NfcAdapter {
     public static final String EXTRA_HANDOVER_TRANSFER_URI =
             "android.nfc.extra.HANDOVER_TRANSFER_URI";
 
+=======
+>>>>>>> upstream/master
     // Guarded by NfcAdapter.class
     static boolean sIsInitialized = false;
 
@@ -300,12 +334,15 @@ public final class NfcAdapter {
         public NdefMessage createNdefMessage(NfcEvent event);
     }
 
+<<<<<<< HEAD
 
     // TODO javadoc
     public interface CreateBeamUrisCallback {
         public Uri[] createBeamUris(NfcEvent event);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Helper to check if this device has FEATURE_NFC, but without using
      * a context.
@@ -383,9 +420,16 @@ public final class NfcAdapter {
      * Most Android devices will only have one NFC Adapter (NFC Controller).
      * <p>
      * This helper is the equivalent of:
+<<<<<<< HEAD
      * <pre>
      * NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
      * NfcAdapter adapter = manager.getDefaultAdapter();</pre>
+=======
+     * <pre>{@code
+     * NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
+     * NfcAdapter adapter = manager.getDefaultAdapter();
+     * }</pre>
+>>>>>>> upstream/master
      * @param context the calling application's context
      *
      * @return the default NFC adapter, or null if no NFC adapter exists
@@ -395,11 +439,16 @@ public final class NfcAdapter {
             throw new IllegalArgumentException("context cannot be null");
         }
         context = context.getApplicationContext();
+<<<<<<< HEAD
         if (context == null) {
             throw new IllegalArgumentException(
                     "context not associated with any application (using a mock context?)");
         }
         /* use getSystemService() for consistency */
+=======
+        /* use getSystemService() instead of just instantiating to take
+         * advantage of the context's cached NfcManager & NfcAdapter */
+>>>>>>> upstream/master
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
         if (manager == null) {
             // NFC not available
@@ -414,6 +463,7 @@ public final class NfcAdapter {
      * for many NFC API methods. Those methods will fail when called on an NfcAdapter
      * object created from this method.<p>
      * @deprecated use {@link #getDefaultAdapter(Context)}
+<<<<<<< HEAD
      * @hide
      */
     @Deprecated
@@ -422,6 +472,11 @@ public final class NfcAdapter {
         // deprecated in API version 10 (GB 2.3.3)
         // removed from public API in version 16 (ICS MR2)
         // should maintain as a hidden API for binary compatibility for a little longer
+=======
+     */
+    @Deprecated
+    public static NfcAdapter getDefaultAdapter() {
+>>>>>>> upstream/master
         Log.w(TAG, "WARNING: NfcAdapter.getDefaultAdapter() is deprecated, use " +
                 "NfcAdapter.getDefaultAdapter(Context) instead", new Exception());
 
@@ -488,6 +543,7 @@ public final class NfcAdapter {
     /**
      * Return true if this NFC Adapter has any features enabled.
      *
+<<<<<<< HEAD
      * <p>If this method returns false, the NFC hardware is guaranteed not to
      * generate or respond to any NFC communication over its NFC radio.
      * <p>Applications can use this to check if NFC is enabled. Applications
@@ -495,6 +551,13 @@ public final class NfcAdapter {
      * <p><pre>startActivity(new Intent(Settings.ACTION_NFC_SETTINGS))</pre>
      *
      * @see android.provider.Settings#ACTION_NFC_SETTINGS
+=======
+     * <p>Application may use this as a helper to suggest that the user
+     * should turn on NFC in Settings.
+     * <p>If this method returns false, the NFC hardware is guaranteed not to
+     * generate or respond to any NFC transactions.
+     *
+>>>>>>> upstream/master
      * @return true if this NFC Adapter has any features enabled
      */
     public boolean isEnabled() {
@@ -571,10 +634,16 @@ public final class NfcAdapter {
      *
      * @hide
      */
+<<<<<<< HEAD
 
     public boolean disable() {
         try {
             return sService.disable(true);
+=======
+    public boolean disable() {
+        try {
+            return sService.disable();
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             attemptDeadServiceRecovery(e);
             return false;
@@ -582,6 +651,7 @@ public final class NfcAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Set one or more {@link Uri}s to send using Android Beam (TM). Every
      * Uri you provide must have either scheme 'file' or scheme 'content'.
      *
@@ -786,10 +856,28 @@ public final class NfcAdapter {
      * <p class="note">For sending large content such as pictures and songs,
      * consider using {@link #setBeamPushUris}, which switches to alternate transports
      * such as Bluetooth to achieve a fast transfer rate.
+=======
+     * Set the {@link NdefMessage} to push over NFC during the specified activities.
+     *
+     * <p>This method may be called at any time, but the NDEF message is
+     * only made available for NDEF push when one of the specified activities
+     * is in resumed (foreground) state.
+     *
+     * <p>Only one NDEF message can be pushed by the currently resumed activity.
+     * If both {@link #setNdefPushMessage} and
+     * {@link #setNdefPushMessageCallback} are set then
+     * the callback will take priority.
+     *
+     * <p>Pass a null NDEF message to disable foreground NDEF push in the
+     * specified activities.
+     *
+     * <p>At least one activity must be specified, and usually only one is necessary.
+>>>>>>> upstream/master
      *
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      *
      * @param message NDEF message to push over NFC, or null to disable
+<<<<<<< HEAD
      * @param activity activity for which the NDEF message will be pushed
      * @param activities optional additional activities, however we strongly recommend
      *        to only register one at a time, and to do so in that activity's
@@ -818,10 +906,29 @@ public final class NfcAdapter {
                 // Prevent new applications from making this mistake, re-throw
                 throw(e);
             }
+=======
+     * @param activity an activity in which NDEF push should be enabled to share the provided
+     *                 NDEF message
+     * @param activities optional additional activities that should also enable NDEF push with
+     *                   the provided NDEF message
+     */
+    public void setNdefPushMessage(NdefMessage message, Activity activity,
+            Activity ... activities) {
+        if (activity == null) {
+            throw new NullPointerException("activity cannot be null");
+        }
+        mNfcActivityManager.setNdefPushMessage(activity, message);
+        for (Activity a : activities) {
+            if (a == null) {
+                throw new NullPointerException("activities cannot contain null");
+            }
+            mNfcActivityManager.setNdefPushMessage(a, message);
+>>>>>>> upstream/master
         }
     }
 
     /**
+<<<<<<< HEAD
      * Set a callback that dynamically generates NDEF messages to send using Android Beam (TM).
      *
      * <p>This method may be called at any time before {@link Activity#onDestroy},
@@ -909,10 +1016,48 @@ public final class NfcAdapter {
                 // Prevent new applications from making this mistake, re-throw
                 throw(e);
             }
+=======
+     * Set the callback to create a {@link NdefMessage} to push over NFC.
+     *
+     * <p>This method may be called at any time, but this callback is
+     * only made if one of the specified activities
+     * is in resumed (foreground) state.
+     *
+     * <p>Only one NDEF message can be pushed by the currently resumed activity.
+     * If both {@link #setNdefPushMessage} and
+     * {@link #setNdefPushMessageCallback} are set then
+     * the callback will take priority.
+     *
+     * <p>Pass a null callback to disable the callback in the
+     * specified activities.
+     *
+     * <p>At least one activity must be specified, and usually only one is necessary.
+     *
+     * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
+     *
+     * @param callback callback, or null to disable
+     * @param activity an activity in which NDEF push should be enabled to share an NDEF message
+     *                 that's retrieved from the provided callback
+     * @param activities optional additional activities that should also enable NDEF push using
+     *                   the provided callback
+     */
+    public void setNdefPushMessageCallback(CreateNdefMessageCallback callback, Activity activity,
+            Activity ... activities) {
+        if (activity == null) {
+            throw new NullPointerException("activity cannot be null");
+        }
+        mNfcActivityManager.setNdefPushMessageCallback(activity, callback);
+        for (Activity a : activities) {
+            if (a == null) {
+                throw new NullPointerException("activities cannot contain null");
+            }
+            mNfcActivityManager.setNdefPushMessageCallback(a, callback);
+>>>>>>> upstream/master
         }
     }
 
     /**
+<<<<<<< HEAD
      * Set a callback on successful Android Beam (TM).
      *
      * <p>This method may be called at any time before {@link Activity#onDestroy},
@@ -940,10 +1085,20 @@ public final class NfcAdapter {
      * <p class="note">Do not pass in an Activity that has already been through
      * {@link Activity#onDestroy}. This is guaranteed if you call this API
      * during {@link Activity#onCreate}.
+=======
+     * Set the callback on a successful NDEF push over NFC.
+     *
+     * <p>This method may be called at any time, but NDEF push and this callback
+     * can only occur when one of the specified activities is in resumed
+     * (foreground) state.
+     *
+     * <p>One or more activities must be specified.
+>>>>>>> upstream/master
      *
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      *
      * @param callback callback, or null to disable
+<<<<<<< HEAD
      * @param activity activity for which the NDEF message will be pushed
      * @param activities optional additional activities, however we strongly recommend
      *        to only register one at a time, and to do so in that activity's
@@ -972,6 +1127,22 @@ public final class NfcAdapter {
                 // Prevent new applications from making this mistake, re-throw
                 throw(e);
             }
+=======
+     * @param activity an activity to enable the callback (at least one is required)
+     * @param activities zero or more additional activities to enable to callback
+     */
+    public void setOnNdefPushCompleteCallback(OnNdefPushCompleteCallback callback,
+            Activity activity, Activity ... activities) {
+        if (activity == null) {
+            throw new NullPointerException("activity cannot be null");
+        }
+        mNfcActivityManager.setOnNdefPushCompleteCallback(activity, callback);
+        for (Activity a : activities) {
+            if (a == null) {
+                throw new NullPointerException("activities cannot contain null");
+            }
+            mNfcActivityManager.setOnNdefPushCompleteCallback(a, callback);
+>>>>>>> upstream/master
         }
     }
 
@@ -1123,7 +1294,10 @@ public final class NfcAdapter {
      * @throws IllegalStateException if the Activity has already been paused
      * @deprecated use {@link #setNdefPushMessage} instead
      */
+<<<<<<< HEAD
     @Deprecated
+=======
+>>>>>>> upstream/master
     public void disableForegroundNdefPush(Activity activity) {
         if (activity == null) {
             throw new NullPointerException();
@@ -1135,6 +1309,64 @@ public final class NfcAdapter {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * TODO: Remove this once pre-built apk's (Maps, Youtube etc) are updated
+     * @deprecated use {@link CreateNdefMessageCallback} or {@link OnNdefPushCompleteCallback}
+     * @hide
+     */
+    @Deprecated
+    public interface NdefPushCallback {
+        /**
+         * @deprecated use {@link CreateNdefMessageCallback} instead
+         */
+        @Deprecated
+        NdefMessage createMessage();
+        /**
+         * @deprecated use{@link OnNdefPushCompleteCallback} instead
+         */
+        @Deprecated
+        void onMessagePushed();
+    }
+
+    /**
+     * TODO: Remove this
+     * Converts new callbacks to old callbacks.
+     */
+    static final class LegacyCallbackWrapper implements CreateNdefMessageCallback,
+            OnNdefPushCompleteCallback {
+        final NdefPushCallback mLegacyCallback;
+        LegacyCallbackWrapper(NdefPushCallback legacyCallback) {
+            mLegacyCallback = legacyCallback;
+        }
+        @Override
+        public void onNdefPushComplete(NfcEvent event) {
+            mLegacyCallback.onMessagePushed();
+        }
+        @Override
+        public NdefMessage createNdefMessage(NfcEvent event) {
+            return mLegacyCallback.createMessage();
+        }
+    }
+
+    /**
+     * TODO: Remove this once pre-built apk's (Maps, Youtube etc) are updated
+     * @deprecated use {@link #setNdefPushMessageCallback} instead
+     * @hide
+     */
+    @Deprecated
+    public void enableForegroundNdefPush(Activity activity, final NdefPushCallback callback) {
+        if (activity == null || callback == null) {
+            throw new NullPointerException();
+        }
+        enforceResumed(activity);
+        LegacyCallbackWrapper callbackWrapper = new LegacyCallbackWrapper(callback);
+        mNfcActivityManager.setNdefPushMessageCallback(activity, callbackWrapper);
+        mNfcActivityManager.setOnNdefPushCompleteCallback(activity, callbackWrapper);
+    }
+
+    /**
+>>>>>>> upstream/master
      * Enable NDEF Push feature.
      * <p>This API is for the Settings application.
      * @hide
@@ -1163,6 +1395,7 @@ public final class NfcAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Return true if the NDEF Push (Android Beam) feature is enabled.
      * <p>This function will return true only if both NFC is enabled, and the
      * NDEF Push feature is enabled.
@@ -1184,6 +1417,18 @@ public final class NfcAdapter {
      *
      * @see android.provider.Settings#ACTION_NFCSHARING_SETTINGS
      * @return true if NDEF Push feature is enabled
+=======
+     * Return true if NDEF Push feature is enabled.
+     * <p>This function can return true even if NFC is currently turned-off.
+     * This indicates that NDEF Push is not currently active, but it has
+     * been requested by the user and will be active as soon as NFC is turned
+     * on.
+     * <p>If you want to check if NDEF PUsh sharing is currently active, use
+     * <code>{@link #isEnabled()} && {@link #isNdefPushEnabled()}</code>
+     *
+     * @return true if NDEF Push feature is enabled
+     * @hide
+>>>>>>> upstream/master
      */
     public boolean isNdefPushEnabled() {
         try {
@@ -1195,6 +1440,7 @@ public final class NfcAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * Inject a mock NFC tag.<p>
      * Used for testing purposes.
      * <p class="note">Requires the
@@ -1224,6 +1470,8 @@ public final class NfcAdapter {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @hide
      */
     public INfcAdapterExtras getNfcAdapterExtrasInterface() {
@@ -1244,6 +1492,7 @@ public final class NfcAdapter {
             throw new IllegalStateException("API cannot be called while activity is paused");
         }
     }
+<<<<<<< HEAD
 
     int getSdkVersion() {
         if (mContext == null) {
@@ -1252,4 +1501,6 @@ public final class NfcAdapter {
             return mContext.getApplicationInfo().targetSdkVersion;
         }
     }
+=======
+>>>>>>> upstream/master
 }

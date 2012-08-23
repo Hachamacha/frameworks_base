@@ -42,15 +42,22 @@ public class LocationProviderProxy implements LocationProviderInterface {
 
     private static final String TAG = "LocationProviderProxy";
 
+<<<<<<< HEAD
     public static final String SERVICE_ACTION =
         "com.android.location.service.NetworkLocationProvider";
 
+=======
+>>>>>>> upstream/master
     private final Context mContext;
     private final String mName;
     private final Intent mIntent;
     private final Handler mHandler;
     private final Object mMutex = new Object();  // synchronizes access to non-final members
+<<<<<<< HEAD
     private Connection mServiceConnection;  // never null after ctor
+=======
+    private Connection mServiceConnection = new Connection();  // never null
+>>>>>>> upstream/master
 
     // cached values set by the location manager
     private boolean mLocationTracking = false;
@@ -61,6 +68,7 @@ public class LocationProviderProxy implements LocationProviderInterface {
     private NetworkInfo mNetworkInfo;
 
     // constructor for proxying location providers implemented in a separate service
+<<<<<<< HEAD
     public LocationProviderProxy(Context context, String name, String packageName,
             Handler handler) {
         mContext = context;
@@ -81,6 +89,30 @@ public class LocationProviderProxy implements LocationProviderInterface {
             mContext.bindService(mIntent, mServiceConnection,
                     Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND |
                     Context.BIND_ALLOW_OOM_MANAGEMENT);
+=======
+    public LocationProviderProxy(Context context, String name, String serviceName,
+            Handler handler) {
+        mContext = context;
+        mName = name;
+        mIntent = new Intent(serviceName);
+        mHandler = handler;
+        mContext.bindService(mIntent, mServiceConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND
+                | Context.BIND_ALLOW_OOM_MANAGEMENT);
+    }
+
+    /**
+     * When unbundled NetworkLocationService package is updated, we
+     * need to unbind from the old version and re-bind to the new one.
+     */
+    public void reconnect() {
+        synchronized (mMutex) {
+            mContext.unbindService(mServiceConnection);
+            mServiceConnection = new Connection();
+            mContext.bindService(mIntent, mServiceConnection,
+                    Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND
+                    | Context.BIND_ALLOW_OOM_MANAGEMENT);
+>>>>>>> upstream/master
         }
     }
 

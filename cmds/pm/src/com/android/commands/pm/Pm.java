@@ -21,7 +21,10 @@ import com.android.internal.content.PackageHelper;
 import android.app.ActivityManagerNative;
 import android.content.ComponentName;
 import android.content.pm.ApplicationInfo;
+<<<<<<< HEAD
 import android.content.pm.ContainerEncryptionParams;
+=======
+>>>>>>> upstream/master
 import android.content.pm.FeatureInfo;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageDeleteObserver;
@@ -34,11 +37,18 @@ import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
+<<<<<<< HEAD
 import android.content.pm.UserInfo;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Binder;
+=======
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Parcel;
+>>>>>>> upstream/master
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -46,17 +56,23 @@ import android.os.ServiceManager;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+<<<<<<< HEAD
 import java.security.InvalidAlgorithmParameterException;
+=======
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.WeakHashMap;
 
+<<<<<<< HEAD
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+=======
+>>>>>>> upstream/master
 public final class Pm {
     IPackageManager mPm;
 
@@ -132,6 +148,7 @@ public final class Pm {
             return;
         }
 
+<<<<<<< HEAD
         if ("grant".equals(op)) {
             runGrantRevokePermission(true);
             return;
@@ -147,6 +164,8 @@ public final class Pm {
             return;
         }
 
+=======
+>>>>>>> upstream/master
         if ("set-install-location".equals(op)) {
             runSetInstallLocation();
             return;
@@ -157,21 +176,32 @@ public final class Pm {
             return;
         }
 
+<<<<<<< HEAD
         if ("create-user".equals(op)) {
+=======
+        if ("createUser".equals(op)) {
+>>>>>>> upstream/master
             runCreateUser();
             return;
         }
 
+<<<<<<< HEAD
         if ("remove-user".equals(op)) {
+=======
+        if ("removeUser".equals(op)) {
+>>>>>>> upstream/master
             runRemoveUser();
             return;
         }
 
+<<<<<<< HEAD
         if ("list-users".equals(op)) {
             runListUsers();
             return;
         }
 
+=======
+>>>>>>> upstream/master
         try {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("-l")) {
@@ -226,8 +256,11 @@ public final class Pm {
             runListLibraries();
         } else if ("instrumentation".equals(type)) {
             runListInstrumentation();
+<<<<<<< HEAD
         } else if ("users".equals(type)) {
             runListUsers();
+=======
+>>>>>>> upstream/master
         } else {
             System.err.println("Error: unknown list type '" + type + "'");
             showUsage();
@@ -241,7 +274,10 @@ public final class Pm {
         int getFlags = 0;
         boolean listDisabled = false, listEnabled = false;
         boolean listSystem = false, listThirdParty = false;
+<<<<<<< HEAD
         boolean listInstaller = false;
+=======
+>>>>>>> upstream/master
         try {
             String opt;
             while ((opt=nextOption()) != null) {
@@ -259,8 +295,11 @@ public final class Pm {
                     listSystem = true;
                 } else if (opt.equals("-3")) {
                     listThirdParty = true;
+<<<<<<< HEAD
                 } else if (opt.equals("-i")) {
                     listInstaller = true;
+=======
+>>>>>>> upstream/master
                 } else if (opt.equals("-u")) {
                     getFlags |= PackageManager.GET_UNINSTALLED_PACKAGES;
                 } else {
@@ -297,12 +336,16 @@ public final class Pm {
                         System.out.print(info.applicationInfo.sourceDir);
                         System.out.print("=");
                     }
+<<<<<<< HEAD
                     System.out.print(info.packageName);
                     if (listInstaller) {
                         System.out.print("  installer=");
                         System.out.print(mPm.getInstallerPackageName(info.packageName));
                     }
                     System.out.println();
+=======
+                    System.out.println(info.packageName);
+>>>>>>> upstream/master
                 }
             }
         } catch (RemoteException e) {
@@ -619,9 +662,14 @@ public final class Pm {
                 if (groups && groupName == null && pi.group != null) {
                     continue;
                 }
+<<<<<<< HEAD
                 final int base = pi.protectionLevel & PermissionInfo.PROTECTION_MASK_BASE;
                 if (base < startProtectionLevel
                         || base > endProtectionLevel) {
+=======
+                if (pi.protectionLevel < startProtectionLevel
+                        || pi.protectionLevel > endProtectionLevel) {
+>>>>>>> upstream/master
                     continue;
                 }
                 if (summary) {
@@ -651,8 +699,27 @@ public final class Pm {
                                     + loadText(pi, pi.descriptionRes,
                                             pi.nonLocalizedDescription));
                         }
+<<<<<<< HEAD
                         System.out.println(prefix + "  protectionLevel:"
                                 + PermissionInfo.protectionToString(pi.protectionLevel));
+=======
+                        String protLevel = "unknown";
+                        switch(pi.protectionLevel) {
+                            case PermissionInfo.PROTECTION_DANGEROUS:
+                                protLevel = "dangerous";
+                                break;
+                            case PermissionInfo.PROTECTION_NORMAL:
+                                protLevel = "normal";
+                                break;
+                            case PermissionInfo.PROTECTION_SIGNATURE:
+                                protLevel = "signature";
+                                break;
+                            case PermissionInfo.PROTECTION_SIGNATURE_OR_SYSTEM:
+                                protLevel = "signatureOrSystem";
+                                break;
+                        }
+                        System.out.println(prefix + "  protectionLevel:" + protLevel);
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -769,6 +836,7 @@ public final class Pm {
         String installerPackageName = null;
 
         String opt;
+<<<<<<< HEAD
 
         String algo = null;
         byte[] iv = null;
@@ -778,6 +846,8 @@ public final class Pm {
         byte[] macKey = null;
         byte[] tag = null;
 
+=======
+>>>>>>> upstream/master
         while ((opt=nextOption()) != null) {
             if (opt.equals("-l")) {
                 installFlags |= PackageManager.INSTALL_FORWARD_LOCK;
@@ -798,6 +868,7 @@ public final class Pm {
             } else if (opt.equals("-f")) {
                 // Override if -s option is specified.
                 installFlags |= PackageManager.INSTALL_INTERNAL;
+<<<<<<< HEAD
             } else if (opt.equals("--algo")) {
                 algo = nextOptionData();
                 if (algo == null) {
@@ -840,6 +911,8 @@ public final class Pm {
                     showUsage();
                     return;
                 }
+=======
+>>>>>>> upstream/master
             } else {
                 System.err.println("Error: Unknown option: " + opt);
                 showUsage();
@@ -847,6 +920,7 @@ public final class Pm {
             }
         }
 
+<<<<<<< HEAD
         final ContainerEncryptionParams encryptionParams;
         if (algo != null || iv != null || key != null || macAlgo != null || macKey != null
                 || tag != null) {
@@ -885,6 +959,8 @@ public final class Pm {
             encryptionParams = null;
         }
 
+=======
+>>>>>>> upstream/master
         final Uri apkURI;
         final Uri verificationURI;
 
@@ -911,7 +987,11 @@ public final class Pm {
         PackageInstallObserver obs = new PackageInstallObserver();
         try {
             mPm.installPackageWithVerification(apkURI, obs, installFlags, installerPackageName,
+<<<<<<< HEAD
                     verificationURI, null, encryptionParams);
+=======
+                    verificationURI, null);
+>>>>>>> upstream/master
 
             synchronized (obs) {
                 while (!obs.finished) {
@@ -934,6 +1014,7 @@ public final class Pm {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Convert a string containing hex-encoded bytes to a byte array.
      *
@@ -969,6 +1050,12 @@ public final class Pm {
         // Need to be run as root
         if (Process.myUid() != ROOT_UID) {
             System.err.println("Error: create-user must be run as root");
+=======
+    public void runCreateUser() {
+        // Need to be run as root
+        if (Process.myUid() != ROOT_UID) {
+            System.err.println("Error: createUser must be run as root");
+>>>>>>> upstream/master
             return;
         }
         String name;
@@ -981,7 +1068,11 @@ public final class Pm {
         name = arg;
         try {
             if (mPm.createUser(name, 0) == null) {
+<<<<<<< HEAD
                 System.err.println("Error: couldn't create User.");
+=======
+                System.err.println("Error: couldn't create user.");
+>>>>>>> upstream/master
                 showUsage();
             }
         } catch (RemoteException e) {
@@ -994,7 +1085,11 @@ public final class Pm {
     public void runRemoveUser() {
         // Need to be run as root
         if (Process.myUid() != ROOT_UID) {
+<<<<<<< HEAD
             System.err.println("Error: remove-user must be run as root");
+=======
+            System.err.println("Error: removeUser must be run as root");
+>>>>>>> upstream/master
             return;
         }
         int userId;
@@ -1022,6 +1117,7 @@ public final class Pm {
         }
     }
 
+<<<<<<< HEAD
     public void runListUsers() {
         // Need to be run as root
         if (Process.myUid() != ROOT_UID) {
@@ -1043,6 +1139,8 @@ public final class Pm {
             System.err.println(PM_NOT_RUNNING_ERR);
         }
     }
+=======
+>>>>>>> upstream/master
     class PackageDeleteObserver extends IPackageDeleteObserver.Stub {
         boolean finished;
         boolean result;
@@ -1123,8 +1221,12 @@ public final class Pm {
 
         ClearDataObserver obs = new ClearDataObserver();
         try {
+<<<<<<< HEAD
             if (!ActivityManagerNative.getDefault().clearApplicationUserData(pkg, obs,
                     Binder.getOrigCallingUser())) {
+=======
+            if (!ActivityManagerNative.getDefault().clearApplicationUserData(pkg, obs)) {
+>>>>>>> upstream/master
                 System.err.println("Failed");
             }
 
@@ -1162,6 +1264,7 @@ public final class Pm {
         return "unknown";
     }
 
+<<<<<<< HEAD
     private boolean isNumber(String s) {
         try {
             Integer.parseInt(s);
@@ -1185,6 +1288,9 @@ public final class Pm {
             }
         }
 
+=======
+    private void runSetEnabledSetting(int state) {
+>>>>>>> upstream/master
         String pkg = nextArg();
         if (pkg == null) {
             System.err.println("Error: no package or component specified");
@@ -1194,20 +1300,34 @@ public final class Pm {
         ComponentName cn = ComponentName.unflattenFromString(pkg);
         if (cn == null) {
             try {
+<<<<<<< HEAD
                 mPm.setApplicationEnabledSetting(pkg, state, 0, userId);
                 System.err.println("Package " + pkg + " new state: "
                         + enabledSettingToString(
                         mPm.getApplicationEnabledSetting(pkg, userId)));
+=======
+                mPm.setApplicationEnabledSetting(pkg, state, 0);
+                System.err.println("Package " + pkg + " new state: "
+                        + enabledSettingToString(
+                                mPm.getApplicationEnabledSetting(pkg)));
+>>>>>>> upstream/master
             } catch (RemoteException e) {
                 System.err.println(e.toString());
                 System.err.println(PM_NOT_RUNNING_ERR);
             }
         } else {
             try {
+<<<<<<< HEAD
                 mPm.setComponentEnabledSetting(cn, state, 0, userId);
                 System.err.println("Component " + cn.toShortString() + " new state: "
                         + enabledSettingToString(
                         mPm.getComponentEnabledSetting(cn, userId)));
+=======
+                mPm.setComponentEnabledSetting(cn, state, 0);
+                System.err.println("Component " + cn.toShortString() + " new state: "
+                        + enabledSettingToString(
+                                mPm.getComponentEnabledSetting(cn)));
+>>>>>>> upstream/master
             } catch (RemoteException e) {
                 System.err.println(e.toString());
                 System.err.println(PM_NOT_RUNNING_ERR);
@@ -1215,6 +1335,7 @@ public final class Pm {
         }
     }
 
+<<<<<<< HEAD
     private void runGrantRevokePermission(boolean grant) {
         String pkg = nextArg();
         if (pkg == null) {
@@ -1272,13 +1393,19 @@ public final class Pm {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Displays the package file for a package.
      * @param pckg
      */
     private void displayPackageFilePath(String pckg) {
         try {
+<<<<<<< HEAD
             PackageInfo info = mPm.getPackageInfo(pckg, 0, 0);
+=======
+            PackageInfo info = mPm.getPackageInfo(pckg, 0);
+>>>>>>> upstream/master
             if (info != null && info.applicationInfo != null) {
                 System.out.print("package:");
                 System.out.println(info.applicationInfo.sourceDir);
@@ -1294,7 +1421,11 @@ public final class Pm {
         if (res != null) return res;
 
         try {
+<<<<<<< HEAD
             ApplicationInfo ai = mPm.getApplicationInfo(pii.packageName, 0, 0);
+=======
+            ApplicationInfo ai = mPm.getApplicationInfo(pii.packageName, 0);
+>>>>>>> upstream/master
             AssetManager am = new AssetManager();
             am.addAssetPath(ai.publicSourceDir);
             res = new Resources(am, null, null);
@@ -1354,25 +1485,40 @@ public final class Pm {
     }
 
     private static void showUsage() {
+<<<<<<< HEAD
         System.err.println("usage: pm list packages [-f] [-d] [-e] [-s] [-3] [-i] [-u] [FILTER]");
+=======
+        System.err.println("usage: pm list packages [-f] [-d] [-e] [-s] [-e] [-u] [FILTER]");
+>>>>>>> upstream/master
         System.err.println("       pm list permission-groups");
         System.err.println("       pm list permissions [-g] [-f] [-d] [-u] [GROUP]");
         System.err.println("       pm list instrumentation [-f] [TARGET-PACKAGE]");
         System.err.println("       pm list features");
         System.err.println("       pm list libraries");
         System.err.println("       pm path PACKAGE");
+<<<<<<< HEAD
         System.err.println("       pm install [-l] [-r] [-t] [-i INSTALLER_PACKAGE_NAME] [-s] [-f]");
         System.err.println("                  [--algo <algorithm name> --key <key-in-hex> --iv <IV-in-hex>] PATH");
+=======
+        System.err.println("       pm install [-l] [-r] [-t] [-i INSTALLER_PACKAGE_NAME] [-s] [-f] PATH");
+>>>>>>> upstream/master
         System.err.println("       pm uninstall [-k] PACKAGE");
         System.err.println("       pm clear PACKAGE");
         System.err.println("       pm enable PACKAGE_OR_COMPONENT");
         System.err.println("       pm disable PACKAGE_OR_COMPONENT");
         System.err.println("       pm disable-user PACKAGE_OR_COMPONENT");
+<<<<<<< HEAD
         System.err.println("       pm grant PACKAGE PERMISSION");
         System.err.println("       pm revoke PACKAGE PERMISSION");
         System.err.println("       pm set-install-location [0/auto] [1/internal] [2/external]");
         System.err.println("       pm get-install-location");
         System.err.println("       pm set-permission-enforced PERMISSION [true|false]");
+=======
+        System.err.println("       pm set-install-location [0/auto] [1/internal] [2/external]");
+        System.err.println("       pm get-install-location");
+        System.err.println("       pm createUser USER_NAME");
+        System.err.println("       pm removeUser USER_ID");
+>>>>>>> upstream/master
         System.err.println("");
         System.err.println("pm list packages: prints all packages, optionally only");
         System.err.println("  those whose package name contains the text in FILTER.  Options:");
@@ -1381,7 +1527,10 @@ public final class Pm {
         System.err.println("    -e: filter to only show enabled packages.");
         System.err.println("    -s: filter to only show system packages.");
         System.err.println("    -3: filter to only show third party packages.");
+<<<<<<< HEAD
         System.err.println("    -i: see the installer for the packages.");
+=======
+>>>>>>> upstream/master
         System.err.println("    -u: also include uninstalled packages.");
         System.err.println("");
         System.err.println("pm list permission-groups: prints all known permission groups.");
@@ -1419,10 +1568,13 @@ public final class Pm {
         System.err.println("pm enable, disable, disable-user: these commands change the enabled state");
         System.err.println("  of a given package or component (written as \"package/class\").");
         System.err.println("");
+<<<<<<< HEAD
         System.err.println("pm grant, revoke: these commands either grant or revoke permissions");
         System.err.println("  to applications.  Only optional permissions the application has");
         System.err.println("  declared can be granted or revoked.");
         System.err.println("");
+=======
+>>>>>>> upstream/master
         System.err.println("pm get-install-location: returns the current install location.");
         System.err.println("    0 [auto]: Let system decide the best location");
         System.err.println("    1 [internal]: Install on internal device storage");

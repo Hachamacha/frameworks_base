@@ -95,7 +95,10 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
 
     // ------- XmlResourceParser implementation
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setFeature(String name, boolean state)
             throws XmlPullParserException {
         if (FEATURE_PROCESS_NAMESPACES.equals(name) && state) {
@@ -107,7 +110,10 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
         throw new XmlPullParserException("Unsupported feature: " + name);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean getFeature(String name) {
         if (FEATURE_PROCESS_NAMESPACES.equals(name)) {
             return true;
@@ -118,101 +124,158 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
         return false;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setProperty(String name, Object value) throws XmlPullParserException {
         throw new XmlPullParserException("setProperty() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public Object getProperty(String name) {
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setInput(Reader in) throws XmlPullParserException {
         mParser.setInput(in);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setInput(InputStream inputStream, String inputEncoding)
             throws XmlPullParserException {
         mParser.setInput(inputStream, inputEncoding);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void defineEntityReplacementText(String entityName,
             String replacementText) throws XmlPullParserException {
         throw new XmlPullParserException(
                 "defineEntityReplacementText() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getNamespacePrefix(int pos) throws XmlPullParserException {
         throw new XmlPullParserException("getNamespacePrefix() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getInputEncoding() {
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getNamespace(String prefix) {
         throw new RuntimeException("getNamespace() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getNamespaceCount(int depth) throws XmlPullParserException {
         throw new XmlPullParserException("getNamespaceCount() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getPositionDescription() {
         return "Binary XML file line #" + getLineNumber();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getNamespaceUri(int pos) throws XmlPullParserException {
         throw new XmlPullParserException("getNamespaceUri() not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getColumnNumber() {
         return -1;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getDepth() {
         return mParser.getDepth();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getText() {
         return mParser.getText();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getLineNumber() {
         return mParser.getLineNumber();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getEventType() {
         return mEventType;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean isWhitespace() throws XmlPullParserException {
         // Original comment: whitespace was stripped by aapt.
         return mParser.isWhitespace();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getPrefix() {
         throw new RuntimeException("getPrefix not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public char[] getTextCharacters(int[] holderForStartAndLength) {
         String txt = getText();
         char[] chars = null;
@@ -225,68 +288,107 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
         return chars;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getNamespace() {
         return mParser.getNamespace();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getName() {
         return mParser.getName();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeNamespace(int index) {
         return mParser.getAttributeNamespace(index);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeName(int index) {
         return mParser.getAttributeName(index);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributePrefix(int index) {
         throw new RuntimeException("getAttributePrefix not supported");
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean isEmptyElementTag() {
         // XXX Need to detect this.
         return false;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeCount() {
         return mParser.getAttributeCount();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeValue(int index) {
         return mParser.getAttributeValue(index);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeType(int index) {
         return "CDATA";
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean isAttributeDefault(int index) {
         return false;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int nextToken() throws XmlPullParserException, IOException {
         return next();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeValue(String namespace, String name) {
         return mParser.getAttributeValue(namespace, name);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int next() throws XmlPullParserException, IOException {
         if (!mStarted) {
             mStarted = true;
@@ -347,7 +449,10 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
         return "????";
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void require(int type, String namespace, String name)
             throws XmlPullParserException {
         if (type != getEventType()
@@ -357,7 +462,10 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
                     + getPositionDescription());
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String nextText() throws XmlPullParserException, IOException {
         if (getEventType() != START_TAG) {
             throw new XmlPullParserException(getPositionDescription()
@@ -384,7 +492,10 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int nextTag() throws XmlPullParserException, IOException {
         int eventType = next();
         if (eventType == TEXT && isWhitespace()) { // skip whitespace
@@ -400,94 +511,148 @@ public class BridgeXmlBlockParser implements XmlResourceParser {
     // AttributeSet implementation
 
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void close() {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean getAttributeBooleanValue(int index, boolean defaultValue) {
         return mAttrib.getAttributeBooleanValue(index, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean getAttributeBooleanValue(String namespace, String attribute,
             boolean defaultValue) {
         return mAttrib.getAttributeBooleanValue(namespace, attribute, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public float getAttributeFloatValue(int index, float defaultValue) {
         return mAttrib.getAttributeFloatValue(index, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public float getAttributeFloatValue(String namespace, String attribute, float defaultValue) {
         return mAttrib.getAttributeFloatValue(namespace, attribute, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeIntValue(int index, int defaultValue) {
         return mAttrib.getAttributeIntValue(index, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeIntValue(String namespace, String attribute, int defaultValue) {
         return mAttrib.getAttributeIntValue(namespace, attribute, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeListValue(int index, String[] options, int defaultValue) {
         return mAttrib.getAttributeListValue(index, options, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeListValue(String namespace, String attribute,
             String[] options, int defaultValue) {
         return mAttrib.getAttributeListValue(namespace, attribute, options, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeNameResource(int index) {
         return mAttrib.getAttributeNameResource(index);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeResourceValue(int index, int defaultValue) {
         return mAttrib.getAttributeResourceValue(index, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeResourceValue(String namespace, String attribute, int defaultValue) {
         return mAttrib.getAttributeResourceValue(namespace, attribute, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeUnsignedIntValue(int index, int defaultValue) {
         return mAttrib.getAttributeUnsignedIntValue(index, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeUnsignedIntValue(String namespace, String attribute, int defaultValue) {
         return mAttrib.getAttributeUnsignedIntValue(namespace, attribute, defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getClassAttribute() {
         return mAttrib.getClassAttribute();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getIdAttribute() {
         return mAttrib.getIdAttribute();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getIdAttributeResourceValue(int defaultValue) {
         return mAttrib.getIdAttributeResourceValue(defaultValue);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getStyleAttribute() {
         return mAttrib.getStyleAttribute();
     }

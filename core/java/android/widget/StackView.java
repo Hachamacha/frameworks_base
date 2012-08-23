@@ -32,7 +32,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.TableMaskFilter;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.InputDevice;
@@ -41,8 +44,11 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.animation.LinearInterpolator;
 import android.widget.RemoteViews.RemoteView;
 
@@ -1219,6 +1225,7 @@ public class StackView extends AdapterViewAnimator {
         measureChildren();
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -1265,6 +1272,8 @@ public class StackView extends AdapterViewAnimator {
         return false;
     }
 
+=======
+>>>>>>> upstream/master
     class LayoutParams extends ViewGroup.LayoutParams {
         int horizontalOffset;
         int verticalOffset;

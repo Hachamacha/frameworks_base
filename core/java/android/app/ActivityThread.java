@@ -60,7 +60,10 @@ import android.net.ProxyProperties;
 import android.opengl.GLUtils;
 import android.os.AsyncTask;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.os.Binder;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -75,14 +78,20 @@ import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.text.TextUtils;
+<<<<<<< HEAD
 import android.os.Trace;
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.AndroidRuntimeException;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.LogPrinter;
+<<<<<<< HEAD
 import android.util.PrintWriterPrinter;
+=======
+>>>>>>> upstream/master
 import android.util.Slog;
 import android.view.Display;
 import android.view.HardwareRenderer;
@@ -94,7 +103,10 @@ import android.view.ViewRootImpl;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManagerImpl;
+<<<<<<< HEAD
 import android.renderscript.RenderScript;
+=======
+>>>>>>> upstream/master
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -112,8 +124,11 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
+<<<<<<< HEAD
 import libcore.io.IoUtils;
 
+=======
+>>>>>>> upstream/master
 import dalvik.system.CloseGuard;
 
 final class SuperNotCalledException extends AndroidRuntimeException {
@@ -145,11 +160,16 @@ public final class ActivityThread {
     /** @hide */
     public static final boolean DEBUG_BROADCAST = false;
     private static final boolean DEBUG_RESULTS = false;
+<<<<<<< HEAD
     private static final boolean DEBUG_BACKUP = false;
     private static final boolean DEBUG_CONFIGURATION = false;
     private static final boolean DEBUG_SERVICE = false;
     private static final boolean DEBUG_MEMORY_TRIM = false;
     private static final boolean DEBUG_PROVIDER = false;
+=======
+    private static final boolean DEBUG_BACKUP = true;
+    private static final boolean DEBUG_CONFIGURATION = false;
+>>>>>>> upstream/master
     private static final long MIN_TIME_BETWEEN_GCS = 5*1000;
     private static final Pattern PATTERN_SEMICOLON = Pattern.compile(";");
     private static final int SQLITE_MEM_RELEASED_EVENT_LOG_TAG = 75003;
@@ -187,10 +207,15 @@ public final class ActivityThread {
     static final ThreadLocal<ActivityThread> sThreadLocal = new ThreadLocal<ActivityThread>();
     Instrumentation mInstrumentation;
     String mInstrumentationAppDir = null;
+<<<<<<< HEAD
     String mInstrumentationAppLibraryDir = null;
     String mInstrumentationAppPackage = null;
     String mInstrumentedAppDir = null;
     String mInstrumentedAppLibraryDir = null;
+=======
+    String mInstrumentationAppPackage = null;
+    String mInstrumentedAppDir = null;
+>>>>>>> upstream/master
     boolean mSystemThread = false;
     boolean mJitEnabled = false;
 
@@ -221,8 +246,11 @@ public final class ActivityThread {
         = new HashMap<IBinder, ProviderRefCount>();
     final HashMap<IBinder, ProviderClientRecord> mLocalProviders
         = new HashMap<IBinder, ProviderClientRecord>();
+<<<<<<< HEAD
     final HashMap<ComponentName, ProviderClientRecord> mLocalProvidersByName
             = new HashMap<ComponentName, ProviderClientRecord>();
+=======
+>>>>>>> upstream/master
 
     final HashMap<Activity, ArrayList<OnActivityPausedListener>> mOnPauseListeners
         = new HashMap<Activity, ArrayList<OnActivityPausedListener>>();
@@ -288,7 +316,11 @@ public final class ActivityThread {
         }
 
         public String toString() {
+<<<<<<< HEAD
             ComponentName componentName = intent != null ? intent.getComponent() : null;
+=======
+            ComponentName componentName = intent.getComponent();
+>>>>>>> upstream/master
             return "ActivityRecord{"
                 + Integer.toHexString(System.identityHashCode(this))
                 + " token=" + token + " " + (componentName == null
@@ -297,6 +329,7 @@ public final class ActivityThread {
         }
     }
 
+<<<<<<< HEAD
     final class ProviderClientRecord {
         final String[] mNames;
         final IContentProvider mProvider;
@@ -310,6 +343,22 @@ public final class ActivityThread {
             mProvider = provider;
             mLocalProvider = localProvider;
             mHolder = holder;
+=======
+    final class ProviderClientRecord implements IBinder.DeathRecipient {
+        final String mName;
+        final IContentProvider mProvider;
+        final ContentProvider mLocalProvider;
+
+        ProviderClientRecord(String name, IContentProvider provider,
+                ContentProvider localProvider) {
+            mName = name;
+            mProvider = provider;
+            mLocalProvider = localProvider;
+        }
+
+        public void binderDied() {
+            removeDeadProvider(mName, mProvider);
+>>>>>>> upstream/master
         }
     }
 
@@ -392,7 +441,10 @@ public final class ActivityThread {
         Bundle instrumentationArgs;
         IInstrumentationWatcher instrumentationWatcher;
         int debugMode;
+<<<<<<< HEAD
         boolean enableOpenGlTrace;
+=======
+>>>>>>> upstream/master
         boolean restrictedBackupMode;
         boolean persistent;
         Configuration config;
@@ -420,7 +472,10 @@ public final class ActivityThread {
                     try {
                         fd.close();
                     } catch (IOException e) {
+<<<<<<< HEAD
                         // Ignore
+=======
+>>>>>>> upstream/master
                     }
                 }
                 return;
@@ -429,7 +484,10 @@ public final class ActivityThread {
                 try {
                     profileFd.close();
                 } catch (IOException e) {
+<<<<<<< HEAD
                     // Ignore
+=======
+>>>>>>> upstream/master
                 }
             }
             profileFile = file;
@@ -511,6 +569,10 @@ public final class ActivityThread {
         private static final String HEAP_COLUMN = "%13s %8s %8s %8s %8s %8s %8s";
         private static final String ONE_COUNT_COLUMN = "%21s %8d";
         private static final String TWO_COUNT_COLUMNS = "%21s %8d %21s %8d";
+<<<<<<< HEAD
+=======
+        private static final String TWO_COUNT_COLUMNS_DB = "%21s %8d %21s %8d";
+>>>>>>> upstream/master
         private static final String DB_INFO_FORMAT = "  %8s %8s %14s %14s  %s";
 
         // Formatting for checkin service - update version if row format changes
@@ -660,9 +722,12 @@ public final class ActivityThread {
             s.intent = intent;
             s.rebind = rebind;
 
+<<<<<<< HEAD
             if (DEBUG_SERVICE)
                 Slog.v(TAG, "scheduleBindService token=" + token + " intent=" + intent + " uid="
                         + Binder.getCallingUid() + " pid=" + Binder.getCallingPid());
+=======
+>>>>>>> upstream/master
             queueOrSendMessage(H.BIND_SERVICE, s);
         }
 
@@ -695,8 +760,13 @@ public final class ActivityThread {
                 ComponentName instrumentationName, String profileFile,
                 ParcelFileDescriptor profileFd, boolean autoStopProfiler,
                 Bundle instrumentationArgs, IInstrumentationWatcher instrumentationWatcher,
+<<<<<<< HEAD
                 int debugMode, boolean enableOpenGlTrace, boolean isRestrictedBackupMode,
                 boolean persistent, Configuration config, CompatibilityInfo compatInfo,
+=======
+                int debugMode, boolean isRestrictedBackupMode, boolean persistent,
+                Configuration config, CompatibilityInfo compatInfo,
+>>>>>>> upstream/master
                 Map<String, IBinder> services, Bundle coreSettings) {
 
             if (services != null) {
@@ -714,7 +784,10 @@ public final class ActivityThread {
             data.instrumentationArgs = instrumentationArgs;
             data.instrumentationWatcher = instrumentationWatcher;
             data.debugMode = debugMode;
+<<<<<<< HEAD
             data.enableOpenGlTrace = enableOpenGlTrace;
+=======
+>>>>>>> upstream/master
             data.restrictedBackupMode = isRestrictedBackupMode;
             data.persistent = persistent;
             data.config = config;
@@ -842,6 +915,7 @@ public final class ActivityThread {
             }
         }
 
+<<<<<<< HEAD
         public void dumpProvider(FileDescriptor fd, IBinder providertoken,
                 String[] args) {
             DumpComponentInfo data = new DumpComponentInfo();
@@ -855,19 +929,30 @@ public final class ActivityThread {
             }
         }
 
+=======
+>>>>>>> upstream/master
         @Override
         public Debug.MemoryInfo dumpMemInfo(FileDescriptor fd, boolean checkin,
                 boolean all, String[] args) {
             FileOutputStream fout = new FileOutputStream(fd);
             PrintWriter pw = new PrintWriter(fout);
             try {
+<<<<<<< HEAD
                 return dumpMemInfo(pw, checkin, all);
+=======
+                return dumpMemInfo(pw, checkin, all, args);
+>>>>>>> upstream/master
             } finally {
                 pw.flush();
             }
         }
 
+<<<<<<< HEAD
         private Debug.MemoryInfo dumpMemInfo(PrintWriter pw, boolean checkin, boolean all) {
+=======
+        private Debug.MemoryInfo dumpMemInfo(PrintWriter pw, boolean checkin, boolean all,
+                String[] args) {
+>>>>>>> upstream/master
             long nativeMax = Debug.getNativeHeapSize() / 1024;
             long nativeAllocated = Debug.getNativeHeapAllocatedSize() / 1024;
             long nativeFree = Debug.getNativeHeapFreeSize() / 1024;
@@ -894,6 +979,10 @@ public final class ActivityThread {
             int binderProxyObjectCount = Debug.getBinderProxyObjectCount();
             int binderDeathObjectCount = Debug.getBinderDeathObjectCount();
             long openSslSocketCount = Debug.countInstancesOfClass(OpenSSLSocketImpl.class);
+<<<<<<< HEAD
+=======
+            long sqliteAllocated = SQLiteDebug.getHeapAllocatedSize() / 1024;
+>>>>>>> upstream/master
             SQLiteDebug.PagerStats stats = SQLiteDebug.getDatabaseInfo();
 
             // For checkin, we print one long comma-separated list of values
@@ -961,9 +1050,15 @@ public final class ActivityThread {
                 pw.print(openSslSocketCount); pw.print(',');
 
                 // SQL
+<<<<<<< HEAD
                 pw.print(stats.memoryUsed / 1024); pw.print(',');
                 pw.print(stats.memoryUsed / 1024); pw.print(',');
                 pw.print(stats.pageCacheOverflow / 1024); pw.print(',');
+=======
+                pw.print(sqliteAllocated); pw.print(',');
+                pw.print(stats.memoryUsed / 1024); pw.print(',');
+                pw.print(stats.pageCacheOverflo / 1024); pw.print(',');
+>>>>>>> upstream/master
                 pw.print(stats.largestMemAlloc / 1024);
                 for (int i = 0; i < stats.dbStats.size(); i++) {
                     DbStats dbStats = stats.dbStats.get(i);
@@ -1029,9 +1124,16 @@ public final class ActivityThread {
             // SQLite mem info
             pw.println(" ");
             pw.println(" SQL");
+<<<<<<< HEAD
             printRow(pw, ONE_COUNT_COLUMN, "MEMORY_USED:", stats.memoryUsed / 1024);
             printRow(pw, TWO_COUNT_COLUMNS, "PAGECACHE_OVERFLOW:",
                     stats.pageCacheOverflow / 1024, "MALLOC_SIZE:", stats.largestMemAlloc / 1024);
+=======
+            printRow(pw, TWO_COUNT_COLUMNS_DB, "heap:", sqliteAllocated, "MEMORY_USED:",
+                    stats.memoryUsed / 1024);
+            printRow(pw, TWO_COUNT_COLUMNS_DB, "PAGECACHE_OVERFLOW:",
+                    stats.pageCacheOverflo / 1024, "MALLOC_SIZE:", stats.largestMemAlloc / 1024);
+>>>>>>> upstream/master
             pw.println(" ");
             int N = stats.dbStats.size();
             if (N > 0) {
@@ -1065,6 +1167,7 @@ public final class ActivityThread {
             WindowManagerImpl.getDefault().dumpGfxInfo(fd);
         }
 
+<<<<<<< HEAD
         @Override
         public void dumpDbInfo(FileDescriptor fd, String[] args) {
             PrintWriter pw = new PrintWriter(new FileOutputStream(fd));
@@ -1078,6 +1181,8 @@ public final class ActivityThread {
             queueOrSendMessage(H.UNSTABLE_PROVIDER_DIED, provider);
         }
 
+=======
+>>>>>>> upstream/master
         private void printRow(PrintWriter pw, String format, Object...objs) {
             pw.println(String.format(format, objs));
         }
@@ -1096,7 +1201,10 @@ public final class ActivityThread {
         public void scheduleTrimMemory(int level) {
             queueOrSendMessage(H.TRIM_MEMORY, null, level);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     }
 
     private class H extends Handler {
@@ -1141,8 +1249,11 @@ public final class ActivityThread {
         public static final int SET_CORE_SETTINGS       = 138;
         public static final int UPDATE_PACKAGE_COMPATIBILITY_INFO = 139;
         public static final int TRIM_MEMORY             = 140;
+<<<<<<< HEAD
         public static final int DUMP_PROVIDER           = 141;
         public static final int UNSTABLE_PROVIDER_DIED  = 142;
+=======
+>>>>>>> upstream/master
         String codeToString(int code) {
             if (DEBUG_MESSAGES) {
                 switch (code) {
@@ -1187,6 +1298,7 @@ public final class ActivityThread {
                     case SET_CORE_SETTINGS: return "SET_CORE_SETTINGS";
                     case UPDATE_PACKAGE_COMPATIBILITY_INFO: return "UPDATE_PACKAGE_COMPATIBILITY_INFO";
                     case TRIM_MEMORY: return "TRIM_MEMORY";
+<<<<<<< HEAD
                     case DUMP_PROVIDER: return "DUMP_PROVIDER";
                     case UNSTABLE_PROVIDER_DIED: return "UNSTABLE_PROVIDER_DIED";
                 }
@@ -1198,11 +1310,22 @@ public final class ActivityThread {
             switch (msg.what) {
                 case LAUNCH_ACTIVITY: {
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityStart");
+=======
+                }
+            }
+            return "(unknown)";
+        }
+        public void handleMessage(Message msg) {
+            if (DEBUG_MESSAGES) Slog.v(TAG, ">>> handling: " + msg.what);
+            switch (msg.what) {
+                case LAUNCH_ACTIVITY: {
+>>>>>>> upstream/master
                     ActivityClientRecord r = (ActivityClientRecord)msg.obj;
 
                     r.packageInfo = getPackageInfoNoCheck(
                             r.activityInfo.applicationInfo, r.compatInfo);
                     handleLaunchActivity(r, null);
+<<<<<<< HEAD
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                 } break;
                 case RELAUNCH_ACTIVITY: {
@@ -1264,6 +1387,46 @@ public final class ActivityThread {
                     AppBindData data = (AppBindData)msg.obj;
                     handleBindApplication(data);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                } break;
+                case RELAUNCH_ACTIVITY: {
+                    ActivityClientRecord r = (ActivityClientRecord)msg.obj;
+                    handleRelaunchActivity(r);
+                } break;
+                case PAUSE_ACTIVITY:
+                    handlePauseActivity((IBinder)msg.obj, false, msg.arg1 != 0, msg.arg2);
+                    maybeSnapshot();
+                    break;
+                case PAUSE_ACTIVITY_FINISHING:
+                    handlePauseActivity((IBinder)msg.obj, true, msg.arg1 != 0, msg.arg2);
+                    break;
+                case STOP_ACTIVITY_SHOW:
+                    handleStopActivity((IBinder)msg.obj, true, msg.arg2);
+                    break;
+                case STOP_ACTIVITY_HIDE:
+                    handleStopActivity((IBinder)msg.obj, false, msg.arg2);
+                    break;
+                case SHOW_WINDOW:
+                    handleWindowVisibility((IBinder)msg.obj, true);
+                    break;
+                case HIDE_WINDOW:
+                    handleWindowVisibility((IBinder)msg.obj, false);
+                    break;
+                case RESUME_ACTIVITY:
+                    handleResumeActivity((IBinder)msg.obj, true,
+                            msg.arg1 != 0);
+                    break;
+                case SEND_RESULT:
+                    handleSendResult((ResultData)msg.obj);
+                    break;
+                case DESTROY_ACTIVITY:
+                    handleDestroyActivity((IBinder)msg.obj, msg.arg1 != 0,
+                            msg.arg2, false);
+                    break;
+                case BIND_APPLICATION:
+                    AppBindData data = (AppBindData)msg.obj;
+                    handleBindApplication(data);
+>>>>>>> upstream/master
                     break;
                 case EXIT_APPLICATION:
                     if (mInitialApplication != null) {
@@ -1272,6 +1435,7 @@ public final class ActivityThread {
                     Looper.myLooper().quit();
                     break;
                 case NEW_INTENT:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityNewIntent");
                     handleNewIntent((NewIntentData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
@@ -1317,6 +1481,35 @@ public final class ActivityThread {
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "configChanged");
                     handleConfigurationChanged((Configuration)msg.obj, null);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                    handleNewIntent((NewIntentData)msg.obj);
+                    break;
+                case RECEIVER:
+                    handleReceiver((ReceiverData)msg.obj);
+                    maybeSnapshot();
+                    break;
+                case CREATE_SERVICE:
+                    handleCreateService((CreateServiceData)msg.obj);
+                    break;
+                case BIND_SERVICE:
+                    handleBindService((BindServiceData)msg.obj);
+                    break;
+                case UNBIND_SERVICE:
+                    handleUnbindService((BindServiceData)msg.obj);
+                    break;
+                case SERVICE_ARGS:
+                    handleServiceArgs((ServiceArgsData)msg.obj);
+                    break;
+                case STOP_SERVICE:
+                    handleStopService((IBinder)msg.obj);
+                    maybeSnapshot();
+                    break;
+                case REQUEST_THUMBNAIL:
+                    handleRequestThumbnail((IBinder)msg.obj);
+                    break;
+                case CONFIGURATION_CHANGED:
+                    handleConfigurationChanged((Configuration)msg.obj, null);
+>>>>>>> upstream/master
                     break;
                 case CLEAN_UP_CONTEXT:
                     ContextCleanupInfo cci = (ContextCleanupInfo)msg.obj;
@@ -1329,6 +1522,7 @@ public final class ActivityThread {
                     handleDumpService((DumpComponentInfo)msg.obj);
                     break;
                 case LOW_MEMORY:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "lowMemory");
                     handleLowMemory();
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
@@ -1337,11 +1531,18 @@ public final class ActivityThread {
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityConfigChanged");
                     handleActivityConfigurationChanged((IBinder)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                    handleLowMemory();
+                    break;
+                case ACTIVITY_CONFIGURATION_CHANGED:
+                    handleActivityConfigurationChanged((IBinder)msg.obj);
+>>>>>>> upstream/master
                     break;
                 case PROFILER_CONTROL:
                     handleProfilerControl(msg.arg1 != 0, (ProfilerControlData)msg.obj, msg.arg2);
                     break;
                 case CREATE_BACKUP_AGENT:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "backupCreateAgent");
                     handleCreateBackupAgent((CreateBackupAgentData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
@@ -1350,22 +1551,36 @@ public final class ActivityThread {
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "backupDestroyAgent");
                     handleDestroyBackupAgent((CreateBackupAgentData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                    handleCreateBackupAgent((CreateBackupAgentData)msg.obj);
+                    break;
+                case DESTROY_BACKUP_AGENT:
+                    handleDestroyBackupAgent((CreateBackupAgentData)msg.obj);
+>>>>>>> upstream/master
                     break;
                 case SUICIDE:
                     Process.killProcess(Process.myPid());
                     break;
                 case REMOVE_PROVIDER:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "providerRemove");
                     completeRemoveProvider((ProviderRefCount)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                    completeRemoveProvider((IContentProvider)msg.obj);
+>>>>>>> upstream/master
                     break;
                 case ENABLE_JIT:
                     ensureJitEnabled();
                     break;
                 case DISPATCH_PACKAGE_BROADCAST:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "broadcastPackage");
                     handleDispatchPackageBroadcast(msg.arg1, (String[])msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                    handleDispatchPackageBroadcast(msg.arg1, (String[])msg.obj);
+>>>>>>> upstream/master
                     break;
                 case SCHEDULE_CRASH:
                     throw new RemoteServiceException((String)msg.obj);
@@ -1375,6 +1590,7 @@ public final class ActivityThread {
                 case DUMP_ACTIVITY:
                     handleDumpActivity((DumpComponentInfo)msg.obj);
                     break;
+<<<<<<< HEAD
                 case DUMP_PROVIDER:
                     handleDumpProvider((DumpComponentInfo)msg.obj);
                     break;
@@ -1387,11 +1603,19 @@ public final class ActivityThread {
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "setCoreSettings");
                     handleSetCoreSettings((Bundle) msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+                case SLEEPING:
+                    handleSleeping((IBinder)msg.obj, msg.arg1 != 0);
+                    break;
+                case SET_CORE_SETTINGS:
+                    handleSetCoreSettings((Bundle) msg.obj);
+>>>>>>> upstream/master
                     break;
                 case UPDATE_PACKAGE_COMPATIBILITY_INFO:
                     handleUpdatePackageCompatibilityInfo((UpdateCompatibilityData)msg.obj);
                     break;
                 case TRIM_MEMORY:
+<<<<<<< HEAD
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "trimMemory");
                     handleTrimMemory(msg.arg1);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
@@ -1401,6 +1625,12 @@ public final class ActivityThread {
                     break;
             }
             if (DEBUG_MESSAGES) Slog.v(TAG, "<<< done: " + codeToString(msg.what));
+=======
+                    handleTrimMemory(msg.arg1);
+                    break;
+            }
+            if (DEBUG_MESSAGES) Slog.v(TAG, "<<< done: " + msg.what);
+>>>>>>> upstream/master
         }
 
         private void maybeSnapshot() {
@@ -1560,6 +1790,20 @@ public final class ActivityThread {
         return dm;
     }
 
+<<<<<<< HEAD
+=======
+    static Configuration applyConfigCompat(Configuration config, CompatibilityInfo compat) {
+        if (config == null) {
+            return null;
+        }
+        if (compat != null && !compat.supportsScreen()) {
+            config = new Configuration(config);
+            compat.applyToConfiguration(config);
+        }
+        return config;
+    }
+
+>>>>>>> upstream/master
     private Configuration mMainThreadConfig = new Configuration();
     Configuration applyConfigCompatMainThread(Configuration config, CompatibilityInfo compat) {
         if (config == null) {
@@ -1678,7 +1922,11 @@ public final class ActivityThread {
         }
         PackageInfo pi = null;
         try {
+<<<<<<< HEAD
             pi = getPackageManager().getPackageInfo(theme.getThemePackageName(), 0, 0);
+=======
+            pi = getPackageManager().getPackageInfo(theme.getThemePackageName(), 0);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
         }
         if (pi != null && pi.applicationInfo != null && pi.themeInfos != null) {
@@ -1765,7 +2013,11 @@ public final class ActivityThread {
         ApplicationInfo ai = null;
         try {
             ai = getPackageManager().getApplicationInfo(packageName,
+<<<<<<< HEAD
                     PackageManager.GET_SHARED_LIBRARY_FILES, UserId.myUserId());
+=======
+                    PackageManager.GET_SHARED_LIBRARY_FILES);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             // Ignore
         }
@@ -1782,8 +2034,12 @@ public final class ActivityThread {
         boolean includeCode = (flags&Context.CONTEXT_INCLUDE_CODE) != 0;
         boolean securityViolation = includeCode && ai.uid != 0
                 && ai.uid != Process.SYSTEM_UID && (mBoundApplication != null
+<<<<<<< HEAD
                         ? !UserId.isSameApp(ai.uid, mBoundApplication.appInfo.uid)
                         : true);
+=======
+                        ? ai.uid != mBoundApplication.appInfo.uid : true);
+>>>>>>> upstream/master
         if ((flags&(Context.CONTEXT_INCLUDE_CODE
                 |Context.CONTEXT_IGNORE_SECURITY))
                 == Context.CONTEXT_INCLUDE_CODE) {
@@ -1981,7 +2237,11 @@ public final class ActivityThread {
         if (aInfo == null) {
             // Throw an exception.
             Instrumentation.checkStartActivityResult(
+<<<<<<< HEAD
                     ActivityManager.START_CLASS_NOT_FOUND, intent);
+=======
+                    IActivityManager.START_CLASS_NOT_FOUND, intent);
+>>>>>>> upstream/master
         }
         return aInfo;
     }
@@ -2225,6 +2485,7 @@ public final class ActivityThread {
                     r.activity.mCalled = false;
                     mInstrumentation.callActivityOnPause(r.activity);
                     // We need to keep around the original state, in case
+<<<<<<< HEAD
                     // we need to be created again.  But we only do this
                     // for pre-Honeycomb apps, which always save their state
                     // when pausing, so we can not have them save their state
@@ -2234,6 +2495,10 @@ public final class ActivityThread {
                     if (r.isPreHoneycomb()) {
                         r.state = oldState;
                     }
+=======
+                    // we need to be created again.
+                    r.state = oldState;
+>>>>>>> upstream/master
                     if (!r.activity.mCalled) {
                         throw new SuperNotCalledException(
                             "Activity " + r.intent.getComponent().toShortString() +
@@ -2502,8 +2767,11 @@ public final class ActivityThread {
 
     private void handleBindService(BindServiceData data) {
         Service s = mServices.get(data.token);
+<<<<<<< HEAD
         if (DEBUG_SERVICE)
             Slog.v(TAG, "handleBindService s=" + s + " rebind=" + data.rebind);
+=======
+>>>>>>> upstream/master
         if (s != null) {
             try {
                 data.intent.setExtrasClassLoader(s.getClassLoader());
@@ -2557,6 +2825,7 @@ public final class ActivityThread {
     }
 
     private void handleDumpService(DumpComponentInfo info) {
+<<<<<<< HEAD
         final StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
             Service s = mServices.get(info.token);
@@ -2568,10 +2837,22 @@ public final class ActivityThread {
         } finally {
             IoUtils.closeQuietly(info.fd);
             StrictMode.setThreadPolicy(oldPolicy);
+=======
+        Service s = mServices.get(info.token);
+        if (s != null) {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(info.fd.getFileDescriptor()));
+            s.dump(info.fd.getFileDescriptor(), pw, info.args);
+            pw.flush();
+            try {
+                info.fd.close();
+            } catch (IOException e) {
+            }
+>>>>>>> upstream/master
         }
     }
 
     private void handleDumpActivity(DumpComponentInfo info) {
+<<<<<<< HEAD
         final StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
             ActivityClientRecord r = mActivities.get(info.token);
@@ -2598,6 +2879,17 @@ public final class ActivityThread {
         } finally {
             IoUtils.closeQuietly(info.fd);
             StrictMode.setThreadPolicy(oldPolicy);
+=======
+        ActivityClientRecord r = mActivities.get(info.token);
+        if (r != null && r.activity != null) {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(info.fd.getFileDescriptor()));
+            r.activity.dump(info.prefix, info.fd.getFileDescriptor(), pw, info.args);
+            pw.flush();
+            try {
+                info.fd.close();
+            } catch (IOException e) {
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -2705,7 +2997,11 @@ public final class ActivityThread {
         return r;
     }
 
+<<<<<<< HEAD
     static final void cleanUpPendingRemoveWindows(ActivityClientRecord r) {
+=======
+    final void cleanUpPendingRemoveWindows(ActivityClientRecord r) {
+>>>>>>> upstream/master
         if (r.mPendingRemoveWindow != null) {
             r.mPendingRemoveWindowManager.removeViewImmediate(r.mPendingRemoveWindow);
             IBinder wtoken = r.mPendingRemoveWindow.getWindowToken();
@@ -2781,7 +3077,10 @@ public final class ActivityThread {
                     if (DEBUG_CONFIGURATION) Slog.v(TAG, "Resuming activity "
                             + r.activityInfo.name + " with newConfig " + r.newConfig);
                     performConfigurationChanged(r.activity, r.newConfig);
+<<<<<<< HEAD
                     freeTextLayoutCachesIfNeeded(r.activity.mCurrentConfig.diff(r.newConfig));
+=======
+>>>>>>> upstream/master
                     r.newConfig = null;
                 }
                 if (localLOGV) Slog.v(TAG, "Resuming " + r + " with isForward="
@@ -2984,6 +3283,7 @@ public final class ActivityThread {
         performStopActivityInner(r, null, false, saveState);
     }
 
+<<<<<<< HEAD
     private static class StopInfo implements Runnable {
         ActivityClientRecord activity;
         Bundle state;
@@ -3020,6 +3320,18 @@ public final class ActivityThread {
             client = inClient;
             stableCount = sCount;
             unstableCount = uCount;
+=======
+    private static class StopInfo {
+        Bitmap thumbnail;
+        CharSequence description;
+    }
+
+    private static final class ProviderRefCount {
+        public int count;
+
+        ProviderRefCount(int pCount) {
+            count = pCount;
+>>>>>>> upstream/master
         }
     }
 
@@ -3112,7 +3424,10 @@ public final class ActivityThread {
                     if (DEBUG_CONFIGURATION) Slog.v(TAG, "Updating activity vis "
                             + r.activityInfo.name + " with new config " + r.newConfig);
                     performConfigurationChanged(r.activity, r.newConfig);
+<<<<<<< HEAD
                     freeTextLayoutCachesIfNeeded(r.activity.mCurrentConfig.diff(r.newConfig));
+=======
+>>>>>>> upstream/master
                     r.newConfig = null;
                 }
             } else {
@@ -3143,6 +3458,7 @@ public final class ActivityThread {
             QueuedWork.waitToFinish();
         }
 
+<<<<<<< HEAD
         // Schedule the call to tell the activity manager we have
         // stopped.  We don't do this immediately, because we want to
         // have a chance for any other pending work (in particular memory
@@ -3151,6 +3467,14 @@ public final class ActivityThread {
         info.activity = r;
         info.state = r.state;
         mH.post(info);
+=======
+        // Tell activity manager we have been stopped.
+        try {
+            ActivityManagerNative.getDefault().activityStopped(
+                r.token, r.state, info.thumbnail, info.description);
+        } catch (RemoteException ex) {
+        }
+>>>>>>> upstream/master
     }
 
     final void performRestartActivity(IBinder token) {
@@ -3663,12 +3987,23 @@ public final class ActivityThread {
                 = new ArrayList<ComponentCallbacks2>();
 
         if (mActivities.size() > 0) {
+<<<<<<< HEAD
             for (ActivityClientRecord ar : mActivities.values()) {
+=======
+            Iterator<ActivityClientRecord> it = mActivities.values().iterator();
+            while (it.hasNext()) {
+                ActivityClientRecord ar = it.next();
+>>>>>>> upstream/master
                 Activity a = ar.activity;
                 if (a != null) {
                     Configuration thisConfig = applyConfigCompatMainThread(newConfig,
                             ar.packageInfo.mCompatibilityInfo.getIfNeeded());
+<<<<<<< HEAD
                     if (!ar.activity.mFinished && (allActivities || !ar.paused)) {
+=======
+                    if (!ar.activity.mFinished && (allActivities ||
+                            (a != null && !ar.paused))) {
+>>>>>>> upstream/master
                         // If the activity is currently resumed, its configuration
                         // needs to change right now.
                         callbacks.add(a);
@@ -3678,24 +4013,41 @@ public final class ActivityThread {
                         // the activity manager may, before then, decide the
                         // activity needs to be destroyed to handle its new
                         // configuration.
+<<<<<<< HEAD
                         if (DEBUG_CONFIGURATION) {
                             Slog.v(TAG, "Setting activity "
                                     + ar.activityInfo.name + " newConfig=" + thisConfig);
                         }
+=======
+                        if (DEBUG_CONFIGURATION) Slog.v(TAG, "Setting activity "
+                                + ar.activityInfo.name + " newConfig=" + thisConfig);
+>>>>>>> upstream/master
                         ar.newConfig = thisConfig;
                     }
                 }
             }
         }
         if (mServices.size() > 0) {
+<<<<<<< HEAD
             for (Service service : mServices.values()) {
                 callbacks.add(service);
+=======
+            Iterator<Service> it = mServices.values().iterator();
+            while (it.hasNext()) {
+                callbacks.add(it.next());
+>>>>>>> upstream/master
             }
         }
         synchronized (mProviderMap) {
             if (mLocalProviders.size() > 0) {
+<<<<<<< HEAD
                 for (ProviderClientRecord providerClientRecord : mLocalProviders.values()) {
                     callbacks.add(providerClientRecord.mLocalProvider);
+=======
+                Iterator<ProviderClientRecord> it = mLocalProviders.values().iterator();
+                while (it.hasNext()) {
+                    callbacks.add(it.next().mLocalProvider);
+>>>>>>> upstream/master
                 }
             }
         }
@@ -3707,7 +4059,12 @@ public final class ActivityThread {
         return callbacks;
     }
 
+<<<<<<< HEAD
     private static void performConfigurationChanged(ComponentCallbacks2 cb, Configuration config) {
+=======
+    private final void performConfigurationChanged(
+            ComponentCallbacks2 cb, Configuration config) {
+>>>>>>> upstream/master
         // Only for Activity objects, check that they actually call up to their
         // superclass implementation.  ComponentCallbacks2 is an interface, so
         // we check the runtime type and act accordingly.
@@ -3840,7 +4197,10 @@ public final class ActivityThread {
     final void handleConfigurationChanged(Configuration config, CompatibilityInfo compat) {
 
         ArrayList<ComponentCallbacks2> callbacks = null;
+<<<<<<< HEAD
         int configDiff = 0;
+=======
+>>>>>>> upstream/master
 
         int diff = 0;
 
@@ -3867,7 +4227,10 @@ public final class ActivityThread {
             if (!mConfiguration.isOtherSeqNewer(config) && compat == null) {
                 return;
             }
+<<<<<<< HEAD
             configDiff = mConfiguration.diff(config);
+=======
+>>>>>>> upstream/master
             mConfiguration.updateFrom(config);
             config = applyCompatConfiguration();
             callbacks = collectComponentCallbacksLocked(false, config);
@@ -3876,8 +4239,11 @@ public final class ActivityThread {
         // Cleanup hardware accelerated stuff
         WindowManagerImpl.getDefault().trimLocalMemory();
 
+<<<<<<< HEAD
         freeTextLayoutCachesIfNeeded(configDiff);
 
+=======
+>>>>>>> upstream/master
         if (callbacks != null) {
             final int N = callbacks.size();
             for (int i=0; i<N; i++) {
@@ -3899,6 +4265,7 @@ public final class ActivityThread {
         }
     }
 
+<<<<<<< HEAD
     final void freeTextLayoutCachesIfNeeded(int configDiff) {
         if (configDiff != 0) {
             // Ask text layout engine to free its caches if there is a locale change
@@ -3910,6 +4277,8 @@ public final class ActivityThread {
         }
     }
 
+=======
+>>>>>>> upstream/master
     final void handleActivityConfigurationChanged(IBinder token) {
         ActivityClientRecord r = mActivities.get(token);
         if (r == null || r.activity == null) {
@@ -3920,14 +4289,23 @@ public final class ActivityThread {
                 + r.activityInfo.name);
         
         performConfigurationChanged(r.activity, mCompatConfiguration);
+<<<<<<< HEAD
 
         freeTextLayoutCachesIfNeeded(r.activity.mCurrentConfig.diff(mCompatConfiguration));
+=======
+>>>>>>> upstream/master
     }
 
     final void handleProfilerControl(boolean start, ProfilerControlData pcd, int profileType) {
         if (start) {
             try {
                 switch (profileType) {
+<<<<<<< HEAD
+=======
+                    case 1:
+                        ViewDebug.startLooperProfiling(pcd.path, pcd.fd.getFileDescriptor());
+                        break;
+>>>>>>> upstream/master
                     default:                        
                         mProfiler.setProfiler(pcd.path, pcd.fd);
                         mProfiler.autoStopProfiler = false;
@@ -3946,6 +4324,12 @@ public final class ActivityThread {
             }
         } else {
             switch (profileType) {
+<<<<<<< HEAD
+=======
+                case 1:
+                    ViewDebug.stopLooperProfiling();
+                    break;
+>>>>>>> upstream/master
                 default:
                     mProfiler.stopProfiling();
                     break;
@@ -3953,7 +4337,11 @@ public final class ActivityThread {
         }
     }
 
+<<<<<<< HEAD
     static final void handleDumpHeap(boolean managed, DumpHeapData dhd) {
+=======
+    final void handleDumpHeap(boolean managed, DumpHeapData dhd) {
+>>>>>>> upstream/master
         if (managed) {
             try {
                 Debug.dumpHprofData(dhd.path, dhd.fd.getFileDescriptor());
@@ -4018,24 +4406,34 @@ public final class ActivityThread {
         // Ask graphics to free up as much as possible (font/image caches)
         Canvas.freeCaches();
 
+<<<<<<< HEAD
         // Ask text layout engine to free also as much as possible
         Canvas.freeTextLayoutCaches();
 
+=======
+>>>>>>> upstream/master
         BinderInternal.forceGc("mem");
     }
 
     final void handleTrimMemory(int level) {
+<<<<<<< HEAD
         if (DEBUG_MEMORY_TRIM) Slog.v(TAG, "Trimming memory to level: " + level);
 
         final WindowManagerImpl windowManager = WindowManagerImpl.getDefault();
         windowManager.startTrimMemory(level);
 
         ArrayList<ComponentCallbacks2> callbacks;
+=======
+        WindowManagerImpl.getDefault().trimMemory(level);
+        ArrayList<ComponentCallbacks2> callbacks;
+
+>>>>>>> upstream/master
         synchronized (mPackages) {
             callbacks = collectComponentCallbacksLocked(true, null);
         }
 
         final int N = callbacks.size();
+<<<<<<< HEAD
         for (int i = 0; i < N; i++) {
             callbacks.get(i).onTrimMemory(level);
         }
@@ -4048,15 +4446,31 @@ public final class ActivityThread {
             // Isolated processes aren't going to do UI.
             return;
         }
+=======
+        for (int i=0; i<N; i++) {
+            callbacks.get(i).onTrimMemory(level);
+        }
+    }
+
+    private void setupGraphicsSupport(LoadedApk info) {
+>>>>>>> upstream/master
         try {
             int uid = Process.myUid();
             String[] packages = getPackageManager().getPackagesForUid(uid);
 
             // If there are several packages in this application we won't
             // initialize the graphics disk caches 
+<<<<<<< HEAD
             if (packages != null && packages.length == 1) {
                 HardwareRenderer.setupDiskCache(cacheDir);
                 RenderScript.setupDiskCache(cacheDir);
+=======
+            if (packages.length == 1) {
+                ContextImpl appContext = new ContextImpl();
+                appContext.init(info, null, this);
+
+                HardwareRenderer.setupDiskCache(appContext.getCacheDir());
+>>>>>>> upstream/master
             }
         } catch (RemoteException e) {
             // Ignore
@@ -4095,7 +4509,11 @@ public final class ActivityThread {
         // implementation to use the pool executor.  Normally, we use the
         // serialized executor as the default. This has to happen in the
         // main thread so the main looper is set right.
+<<<<<<< HEAD
         if (data.appInfo.targetSdkVersion <= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+=======
+        if (data.appInfo.targetSdkVersion <= 12) {
+>>>>>>> upstream/master
             AsyncTask.setDefaultExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
@@ -4122,6 +4540,7 @@ public final class ActivityThread {
 
         data.info = getPackageInfoNoCheck(data.appInfo, data.compatInfo);
 
+<<<<<<< HEAD
         final ContextImpl appContext = new ContextImpl();
         appContext.init(data.info, null, this);
         final File cacheDir = appContext.getCacheDir();
@@ -4131,6 +4550,10 @@ public final class ActivityThread {
 
         setupGraphicsSupport(data.info, cacheDir);
 
+=======
+        setupGraphicsSupport(data.info);        
+        
+>>>>>>> upstream/master
         /**
          * For system applications on userdebug/eng builds, log stack
          * traces of disk and network access to dropbox for analysis.
@@ -4186,11 +4609,14 @@ public final class ActivityThread {
             }
         }
 
+<<<<<<< HEAD
         // Enable OpenGL tracing if required
         if (data.enableOpenGlTrace) {
             GLUtils.enableTracing();
         }
 
+=======
+>>>>>>> upstream/master
         /**
          * Initialize the default http proxy in this process for the reasons we set the time zone.
          */
@@ -4207,6 +4633,11 @@ public final class ActivityThread {
         }
 
         if (data.instrumentationName != null) {
+<<<<<<< HEAD
+=======
+            ContextImpl appContext = new ContextImpl();
+            appContext.init(data.info, null, this);
+>>>>>>> upstream/master
             InstrumentationInfo ii = null;
             try {
                 ii = appContext.getPackageManager().
@@ -4220,10 +4651,15 @@ public final class ActivityThread {
             }
 
             mInstrumentationAppDir = ii.sourceDir;
+<<<<<<< HEAD
             mInstrumentationAppLibraryDir = ii.nativeLibraryDir;
             mInstrumentationAppPackage = ii.packageName;
             mInstrumentedAppDir = data.info.getAppDir();
             mInstrumentedAppLibraryDir = data.info.getLibDir();
+=======
+            mInstrumentationAppPackage = ii.packageName;
+            mInstrumentedAppDir = data.info.getAppDir();
+>>>>>>> upstream/master
 
             ApplicationInfo instrApp = new ApplicationInfo();
             instrApp.packageName = ii.packageName;
@@ -4257,6 +4693,18 @@ public final class ActivityThread {
                 Debug.startMethodTracing(file.toString(), 8 * 1024 * 1024);
             }
 
+<<<<<<< HEAD
+=======
+            try {
+                mInstrumentation.onCreate(data.instrumentationArgs);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(
+                    "Exception thrown in onCreate() of "
+                    + data.instrumentationName + ": " + e.toString(), e);
+            }
+
+>>>>>>> upstream/master
         } else {
             mInstrumentation = new Instrumentation();
         }
@@ -4265,6 +4713,7 @@ public final class ActivityThread {
             dalvik.system.VMRuntime.getRuntime().clearGrowthLimit();
         }
 
+<<<<<<< HEAD
         // Allow disk access during application and provider setup. This could
         // block processing ordered broadcasts, but later processing would
         // probably end up doing the same disk access.
@@ -4309,6 +4758,33 @@ public final class ActivityThread {
             }
         } finally {
             StrictMode.setThreadPolicy(savedPolicy);
+=======
+        // If the app is being launched for full backup or restore, bring it up in
+        // a restricted environment with the base application class.
+        Application app = data.info.makeApplication(data.restrictedBackupMode, null);
+        mInitialApplication = app;
+
+        // don't bring up providers in restricted mode; they may depend on the
+        // app's custom Application class
+        if (!data.restrictedBackupMode){ 
+            List<ProviderInfo> providers = data.providers;
+            if (providers != null) {
+                installContentProviders(app, providers);
+                // For process that contains content providers, we want to
+                // ensure that the JIT is enabled "at some point".
+                mH.sendEmptyMessageDelayed(H.ENABLE_JIT, 10*1000);
+            }
+        }
+
+        try {
+            mInstrumentation.callApplicationOnCreate(app);
+        } catch (Exception e) {
+            if (!mInstrumentation.onException(app, e)) {
+                throw new RuntimeException(
+                    "Unable to create application " + app.getClass().getName()
+                    + ": " + e.toString(), e);
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -4331,16 +4807,31 @@ public final class ActivityThread {
         final ArrayList<IActivityManager.ContentProviderHolder> results =
             new ArrayList<IActivityManager.ContentProviderHolder>();
 
+<<<<<<< HEAD
         for (ProviderInfo cpi : providers) {
+=======
+        Iterator<ProviderInfo> i = providers.iterator();
+        while (i.hasNext()) {
+            ProviderInfo cpi = i.next();
+>>>>>>> upstream/master
             StringBuilder buf = new StringBuilder(128);
             buf.append("Pub ");
             buf.append(cpi.authority);
             buf.append(": ");
             buf.append(cpi.name);
             Log.i(TAG, buf.toString());
+<<<<<<< HEAD
             IActivityManager.ContentProviderHolder cph = installProvider(context, null, cpi,
                     false /*noisy*/, true /*noReleaseNeeded*/, true /*stable*/);
             if (cph != null) {
+=======
+            IContentProvider cp = installProvider(context, null, cpi,
+                    false /*noisy*/, true /*noReleaseNeeded*/);
+            if (cp != null) {
+                IActivityManager.ContentProviderHolder cph =
+                        new IActivityManager.ContentProviderHolder(cpi);
+                cph.provider = cp;
+>>>>>>> upstream/master
                 cph.noReleaseNeeded = true;
                 results.add(cph);
             }
@@ -4353,8 +4844,13 @@ public final class ActivityThread {
         }
     }
 
+<<<<<<< HEAD
     public final IContentProvider acquireProvider(Context c, String name, boolean stable) {
         IContentProvider provider = acquireExistingProvider(c, name, stable);
+=======
+    public final IContentProvider acquireProvider(Context c, String name) {
+        IContentProvider provider = acquireExistingProvider(c, name);
+>>>>>>> upstream/master
         if (provider != null) {
             return provider;
         }
@@ -4368,7 +4864,11 @@ public final class ActivityThread {
         IActivityManager.ContentProviderHolder holder = null;
         try {
             holder = ActivityManagerNative.getDefault().getContentProvider(
+<<<<<<< HEAD
                     getApplicationThread(), name, stable);
+=======
+                    getApplicationThread(), name);
+>>>>>>> upstream/master
         } catch (RemoteException ex) {
         }
         if (holder == null) {
@@ -4378,6 +4878,7 @@ public final class ActivityThread {
 
         // Install provider will increment the reference count for us, and break
         // any ties in the race.
+<<<<<<< HEAD
         holder = installProvider(c, holder, holder.info,
                 true /*noisy*/, holder.noReleaseNeeded, stable);
         return holder.provider;
@@ -4451,6 +4952,25 @@ public final class ActivityThread {
 
     public final IContentProvider acquireExistingProvider(Context c, String name,
             boolean stable) {
+=======
+        provider = installProvider(c, holder.provider, holder.info,
+                true /*noisy*/, holder.noReleaseNeeded);
+        if (holder.provider != null && provider != holder.provider) {
+            if (localLOGV) {
+                Slog.v(TAG, "acquireProvider: lost the race, releasing extraneous "
+                        + "reference to the content provider");
+            }
+            try {
+                ActivityManagerNative.getDefault().removeContentProvider(
+                        getApplicationThread(), name);
+            } catch (RemoteException ex) {
+            }
+        }
+        return provider;
+    }
+
+    public final IContentProvider acquireExistingProvider(Context c, String name) {
+>>>>>>> upstream/master
         synchronized (mProviderMap) {
             ProviderClientRecord pr = mProviderMap.get(name);
             if (pr == null) {
@@ -4464,14 +4984,32 @@ public final class ActivityThread {
             // provider is not reference counted and never needs to be released.
             ProviderRefCount prc = mProviderRefCountMap.get(jBinder);
             if (prc != null) {
+<<<<<<< HEAD
                 incProviderRefLocked(prc, stable);
+=======
+                prc.count += 1;
+                if (prc.count == 1) {
+                    if (localLOGV) {
+                        Slog.v(TAG, "acquireExistingProvider: "
+                                + "snatched provider from the jaws of death");
+                    }
+                    // Because the provider previously had a reference count of zero,
+                    // it was scheduled to be removed.  Cancel that.
+                    mH.removeMessages(H.REMOVE_PROVIDER, provider);
+                }
+>>>>>>> upstream/master
             }
             return provider;
         }
     }
 
+<<<<<<< HEAD
     public final boolean releaseProvider(IContentProvider provider, boolean stable) {
         if (provider == null) {
+=======
+    public final boolean releaseProvider(IContentProvider provider) {
+        if(provider == null) {
+>>>>>>> upstream/master
             return false;
         }
 
@@ -4483,6 +5021,7 @@ public final class ActivityThread {
                 return false;
             }
 
+<<<<<<< HEAD
             boolean lastRef = false;
             if (stable) {
                 if (prc.stableCount == 0) {
@@ -4554,11 +5093,28 @@ public final class ActivityThread {
                 } else {
                     Slog.w(TAG, "Duplicate remove pending of provider " + prc.holder.info.name);
                 }
+=======
+            if (prc.count == 0) {
+                if (localLOGV) Slog.v(TAG, "releaseProvider: ref count already 0, how?");
+                return false;
+            }
+
+            prc.count -= 1;
+            if (prc.count == 0) {
+                // Schedule the actual remove asynchronously, since we don't know the context
+                // this will be called in.
+                // TODO: it would be nice to post a delayed message, so
+                // if we come back and need the same provider quickly
+                // we will still have it available.
+                Message msg = mH.obtainMessage(H.REMOVE_PROVIDER, provider);
+                mH.sendMessage(msg);
+>>>>>>> upstream/master
             }
             return true;
         }
     }
 
+<<<<<<< HEAD
     final void completeRemoveProvider(ProviderRefCount prc) {
         synchronized (mProviderMap) {
             if (!prc.removePending) {
@@ -4566,15 +5122,38 @@ public final class ActivityThread {
                 // the provider before the removal was completed.
                 // Abort the removal.  We will do it later.
                 if (DEBUG_PROVIDER) Slog.v(TAG, "completeRemoveProvider: lost the race, "
+=======
+    final void completeRemoveProvider(IContentProvider provider) {
+        IBinder jBinder = provider.asBinder();
+        String remoteProviderName = null;
+        synchronized(mProviderMap) {
+            ProviderRefCount prc = mProviderRefCountMap.get(jBinder);
+            if (prc == null) {
+                // Either no release is needed (so we shouldn't be here) or the
+                // provider was already released.
+                if (localLOGV) Slog.v(TAG, "completeRemoveProvider: release not needed");
+                return;
+            }
+
+            if (prc.count != 0) {
+                // There was a race!  Some other client managed to acquire
+                // the provider before the removal was completed.
+                // Abort the removal.  We will do it later.
+                if (localLOGV) Slog.v(TAG, "completeRemoveProvider: lost the race, "
+>>>>>>> upstream/master
                         + "provider still in use");
                 return;
             }
 
+<<<<<<< HEAD
             final IBinder jBinder = prc.holder.provider.asBinder();
             ProviderRefCount existingPrc = mProviderRefCountMap.get(jBinder);
             if (existingPrc == prc) {
                 mProviderRefCountMap.remove(jBinder);
             }
+=======
+            mProviderRefCountMap.remove(jBinder);
+>>>>>>> upstream/master
 
             Iterator<ProviderClientRecord> iter = mProviderMap.values().iterator();
             while (iter.hasNext()) {
@@ -4582,10 +5161,20 @@ public final class ActivityThread {
                 IBinder myBinder = pr.mProvider.asBinder();
                 if (myBinder == jBinder) {
                     iter.remove();
+<<<<<<< HEAD
+=======
+                    if (pr.mLocalProvider == null) {
+                        myBinder.unlinkToDeath(pr, 0);
+                        if (remoteProviderName == null) {
+                            remoteProviderName = pr.mName;
+                        }
+                    }
+>>>>>>> upstream/master
                 }
             }
         }
 
+<<<<<<< HEAD
         try {
             if (DEBUG_PROVIDER) {
                 Slog.v(TAG, "removeProvider: Invoking ActivityManagerNative."
@@ -4626,11 +5215,36 @@ public final class ActivityThread {
                     } catch (RemoteException e) {
                         //do nothing content provider object is dead any way
                     }
+=======
+        if (remoteProviderName != null) {
+            try {
+                if (localLOGV) {
+                    Slog.v(TAG, "removeProvider: Invoking ActivityManagerNative."
+                            + "removeContentProvider(" + remoteProviderName + ")");
+                }
+                ActivityManagerNative.getDefault().removeContentProvider(
+                        getApplicationThread(), remoteProviderName);
+            } catch (RemoteException e) {
+                //do nothing content provider object is dead any way
+            }
+        }
+    }
+
+    final void removeDeadProvider(String name, IContentProvider provider) {
+        synchronized(mProviderMap) {
+            ProviderClientRecord pr = mProviderMap.get(name);
+            if (pr != null && pr.mProvider.asBinder() == provider.asBinder()) {
+                Slog.i(TAG, "Removing dead content provider: " + name);
+                ProviderClientRecord removed = mProviderMap.remove(name);
+                if (removed != null) {
+                    removed.mProvider.asBinder().unlinkToDeath(removed, 0);
+>>>>>>> upstream/master
                 }
             }
         }
     }
 
+<<<<<<< HEAD
     private ProviderClientRecord installProviderAuthoritiesLocked(IContentProvider provider,
             ContentProvider localProvider,IActivityManager.ContentProviderHolder holder) {
         String names[] = PATTERN_SEMICOLON.split(holder.info.authority);
@@ -4648,6 +5262,8 @@ public final class ActivityThread {
         return pcr;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Installs the provider.
      *
@@ -4662,6 +5278,7 @@ public final class ActivityThread {
      * and returns the existing provider.  This can happen due to concurrent
      * attempts to acquire the same provider.
      */
+<<<<<<< HEAD
     private IActivityManager.ContentProviderHolder installProvider(Context context,
             IActivityManager.ContentProviderHolder holder, ProviderInfo info,
             boolean noisy, boolean noReleaseNeeded, boolean stable) {
@@ -4669,6 +5286,14 @@ public final class ActivityThread {
         IContentProvider provider;
         if (holder == null || holder.provider == null) {
             if (DEBUG_PROVIDER || noisy) {
+=======
+    private IContentProvider installProvider(Context context,
+            IContentProvider provider, ProviderInfo info,
+            boolean noisy, boolean noReleaseNeeded) {
+        ContentProvider localProvider = null;
+        if (provider == null) {
+            if (noisy) {
+>>>>>>> upstream/master
                 Slog.d(TAG, "Loading provider " + info.authority + ": "
                         + info.name);
             }
@@ -4705,7 +5330,11 @@ public final class ActivityThread {
                           info.applicationInfo.sourceDir);
                     return null;
                 }
+<<<<<<< HEAD
                 if (DEBUG_PROVIDER) Slog.v(
+=======
+                if (false) Slog.v(
+>>>>>>> upstream/master
                     TAG, "Instantiating local provider " + info.name);
                 // XXX Need to create the correct context for this provider.
                 localProvider.attachInfo(c, info);
@@ -4717,6 +5346,7 @@ public final class ActivityThread {
                 }
                 return null;
             }
+<<<<<<< HEAD
         } else {
             provider = holder.provider;
             if (DEBUG_PROVIDER) Slog.v(TAG, "Installing external provider " + info.authority + ": "
@@ -4734,11 +5364,52 @@ public final class ActivityThread {
                 ProviderClientRecord pr = mLocalProvidersByName.get(cname);
                 if (pr != null) {
                     if (DEBUG_PROVIDER) {
+=======
+        } else if (localLOGV) {
+            Slog.v(TAG, "Installing external provider " + info.authority + ": "
+                    + info.name);
+        }
+
+        synchronized (mProviderMap) {
+            // There is a possibility that this thread raced with another thread to
+            // add the provider.  If we find another thread got there first then we
+            // just get out of the way and return the original provider.
+            IBinder jBinder = provider.asBinder();
+            String names[] = PATTERN_SEMICOLON.split(info.authority);
+            for (int i = 0; i < names.length; i++) {
+                ProviderClientRecord pr = mProviderMap.get(names[i]);
+                if (pr != null) {
+                    if (localLOGV) {
+                        Slog.v(TAG, "installProvider: lost the race, "
+                                + "using existing named provider");
+                    }
+                    provider = pr.mProvider;
+                } else {
+                    pr = new ProviderClientRecord(names[i], provider, localProvider);
+                    if (localProvider == null) {
+                        try {
+                            jBinder.linkToDeath(pr, 0);
+                        } catch (RemoteException e) {
+                            // Provider already dead.  Bail out of here without making
+                            // any changes to the provider map or other data structures.
+                            return null;
+                        }
+                    }
+                    mProviderMap.put(names[i], pr);
+                }
+            }
+
+            if (localProvider != null) {
+                ProviderClientRecord pr = mLocalProviders.get(jBinder);
+                if (pr != null) {
+                    if (localLOGV) {
+>>>>>>> upstream/master
                         Slog.v(TAG, "installProvider: lost the race, "
                                 + "using existing local provider");
                     }
                     provider = pr.mProvider;
                 } else {
+<<<<<<< HEAD
                     holder = new IActivityManager.ContentProviderHolder(info);
                     holder.provider = provider;
                     holder.noReleaseNeeded = true;
@@ -4783,6 +5454,35 @@ public final class ActivityThread {
         }
 
         return retHolder;
+=======
+                    pr = new ProviderClientRecord(null, provider, localProvider);
+                    mLocalProviders.put(jBinder, pr);
+                }
+            }
+
+            if (!noReleaseNeeded) {
+                ProviderRefCount prc = mProviderRefCountMap.get(jBinder);
+                if (prc != null) {
+                    if (localLOGV) {
+                        Slog.v(TAG, "installProvider: lost the race, incrementing ref count");
+                    }
+                    prc.count += 1;
+                    if (prc.count == 1) {
+                        if (localLOGV) {
+                            Slog.v(TAG, "installProvider: "
+                                    + "snatched provider from the jaws of death");
+                        }
+                        // Because the provider previously had a reference count of zero,
+                        // it was scheduled to be removed.  Cancel that.
+                        mH.removeMessages(H.REMOVE_PROVIDER, provider);
+                    }
+                } else {
+                    mProviderRefCountMap.put(jBinder, new ProviderRefCount(1));
+                }
+            }
+        }
+        return provider;
+>>>>>>> upstream/master
     }
 
     private void attach(boolean system) {
@@ -4845,7 +5545,11 @@ public final class ActivityThread {
         });
     }
 
+<<<<<<< HEAD
     public static ActivityThread systemMain() {
+=======
+    public static final ActivityThread systemMain() {
+>>>>>>> upstream/master
         HardwareRenderer.disable(true);
         ActivityThread thread = new ActivityThread();
         thread.attach(true);
@@ -4886,8 +5590,11 @@ public final class ActivityThread {
         ActivityThread thread = new ActivityThread();
         thread.attach(false);
 
+<<<<<<< HEAD
         AsyncTask.init();
 
+=======
+>>>>>>> upstream/master
         if (false) {
             Looper.myLooper().setMessageLogging(new
                     LogPrinter(Log.DEBUG, "ActivityThread"));

@@ -30,6 +30,7 @@ public class TargetDrawable {
     public static final int[] STATE_ACTIVE =
             { android.R.attr.state_enabled, android.R.attr.state_active, -android.R.attr.state_focused };
     public static final int[] STATE_INACTIVE =
+<<<<<<< HEAD
             { android.R.attr.state_enabled, -android.R.attr.state_active , -android.R.attr.state_focused };
     public static final int[] STATE_FOCUSED =
             { android.R.attr.state_enabled, -android.R.attr.state_active,
@@ -39,12 +40,23 @@ public class TargetDrawable {
     private float mTranslationY = 0.0f;
     private float mPositionX = 0.0f;
     private float mPositionY = 0.0f;
+=======
+            { android.R.attr.state_enabled, -android.R.attr.state_active, -android.R.attr.state_focused };
+    public static final int[] STATE_FOCUSED =
+            { android.R.attr.state_enabled, android.R.attr.state_focused };
+
+    private float mTranslationX = 0.0f;
+    private float mTranslationY = 0.0f;
+>>>>>>> upstream/master
     private float mScaleX = 1.0f;
     private float mScaleY = 1.0f;
     private float mAlpha = 1.0f;
     private Drawable mDrawable;
+<<<<<<< HEAD
     private boolean mEnabled = true;
     private final int mResourceId;
+=======
+>>>>>>> upstream/master
 
     /* package */ static class DrawableWithAlpha extends Drawable {
         private float mAlpha = 1.0f;
@@ -77,6 +89,7 @@ public class TargetDrawable {
     }
 
     public TargetDrawable(Resources res, int resId) {
+<<<<<<< HEAD
         mResourceId = resId;
         setDrawable(res, resId);
     }
@@ -93,12 +106,19 @@ public class TargetDrawable {
 
     public TargetDrawable(Resources res, Drawable drawable) {
         mResourceId = 0;
+=======
+        this(res, resId == 0 ? null : res.getDrawable(resId));
+    }
+
+    public TargetDrawable(Resources res, Drawable drawable) {
+>>>>>>> upstream/master
         // Mutate the drawable so we can animate shared drawable properties.
         mDrawable = drawable != null ? drawable.mutate() : null;
         resizeDrawables();
         setState(STATE_INACTIVE);
     }
 
+<<<<<<< HEAD
     public TargetDrawable(TargetDrawable other) {
         mResourceId = other.mResourceId;
         // Mutate the drawable so we can animate shared drawable properties.
@@ -107,6 +127,8 @@ public class TargetDrawable {
         setState(STATE_INACTIVE);
     }
 
+=======
+>>>>>>> upstream/master
     public void setState(int [] state) {
         if (mDrawable instanceof StateListDrawable) {
             StateListDrawable d = (StateListDrawable) mDrawable;
@@ -147,8 +169,13 @@ public class TargetDrawable {
      *
      * @return
      */
+<<<<<<< HEAD
     public boolean isEnabled() {
         return mDrawable != null && mEnabled;
+=======
+    public boolean isValid() {
+        return mDrawable != null;
+>>>>>>> upstream/master
     }
 
     /**
@@ -221,6 +248,7 @@ public class TargetDrawable {
         return mAlpha;
     }
 
+<<<<<<< HEAD
     public void setPositionX(float x) {
         mPositionX = x;
     }
@@ -237,6 +265,8 @@ public class TargetDrawable {
         return mPositionY;
     }
 
+=======
+>>>>>>> upstream/master
     public int getWidth() {
         return mDrawable != null ? mDrawable.getIntrinsicWidth() : 0;
     }
@@ -246,17 +276,27 @@ public class TargetDrawable {
     }
 
     public void draw(Canvas canvas) {
+<<<<<<< HEAD
         if (mDrawable == null || !mEnabled) {
             return;
         }
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.scale(mScaleX, mScaleY, mPositionX, mPositionY);
         canvas.translate(mTranslationX + mPositionX, mTranslationY + mPositionY);
+=======
+        if (mDrawable == null) {
+            return;
+        }
+        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.translate(mTranslationX, mTranslationY);
+        canvas.scale(mScaleX, mScaleY);
+>>>>>>> upstream/master
         canvas.translate(-0.5f * getWidth(), -0.5f * getHeight());
         mDrawable.setAlpha((int) Math.round(mAlpha * 255f));
         mDrawable.draw(canvas);
         canvas.restore();
     }
+<<<<<<< HEAD
 
     public void setEnabled(boolean enabled) {
         mEnabled  = enabled;
@@ -265,4 +305,6 @@ public class TargetDrawable {
     public int getResourceId() {
         return mResourceId;
     }
+=======
+>>>>>>> upstream/master
 }

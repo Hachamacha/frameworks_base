@@ -513,16 +513,28 @@ public class Handler {
      * message queue.
      */
     public final void removeMessages(int what) {
+<<<<<<< HEAD
         mQueue.removeMessages(this, what, null);
+=======
+        mQueue.removeMessages(this, what, null, true);
+>>>>>>> upstream/master
     }
 
     /**
      * Remove any pending posts of messages with code 'what' and whose obj is
+<<<<<<< HEAD
      * 'object' that are in the message queue.  If <var>object</var> is null,
      * all messages will be removed.
      */
     public final void removeMessages(int what, Object object) {
         mQueue.removeMessages(this, what, object);
+=======
+     * 'object' that are in the message queue.  If <var>token</var> is null,
+     * all messages will be removed.
+     */
+    public final void removeMessages(int what, Object object) {
+        mQueue.removeMessages(this, what, object, true);
+>>>>>>> upstream/master
     }
 
     /**
@@ -539,7 +551,11 @@ public class Handler {
      * the message queue.
      */
     public final boolean hasMessages(int what) {
+<<<<<<< HEAD
         return mQueue.hasMessages(this, what, null);
+=======
+        return mQueue.removeMessages(this, what, null, false);
+>>>>>>> upstream/master
     }
 
     /**
@@ -547,6 +563,7 @@ public class Handler {
      * whose obj is 'object' in the message queue.
      */
     public final boolean hasMessages(int what, Object object) {
+<<<<<<< HEAD
         return mQueue.hasMessages(this, what, object);
     }
 
@@ -558,6 +575,9 @@ public class Handler {
      */
     public final boolean hasCallbacks(Runnable r) {
         return mQueue.hasMessages(this, r, null);
+=======
+        return mQueue.removeMessages(this, what, object, false);
+>>>>>>> upstream/master
     }
 
     // if we can get rid of this method, the handler need not remember its loop
@@ -598,20 +618,32 @@ public class Handler {
         }
     }
 
+<<<<<<< HEAD
     private static Message getPostMessage(Runnable r) {
+=======
+    private final Message getPostMessage(Runnable r) {
+>>>>>>> upstream/master
         Message m = Message.obtain();
         m.callback = r;
         return m;
     }
 
+<<<<<<< HEAD
     private static Message getPostMessage(Runnable r, Object token) {
+=======
+    private final Message getPostMessage(Runnable r, Object token) {
+>>>>>>> upstream/master
         Message m = Message.obtain();
         m.obj = token;
         m.callback = r;
         return m;
     }
 
+<<<<<<< HEAD
     private static void handleCallback(Message message) {
+=======
+    private final void handleCallback(Message message) {
+>>>>>>> upstream/master
         message.callback.run();
     }
 

@@ -112,6 +112,7 @@ public class Transformation {
     }
     
     /**
+<<<<<<< HEAD
      * Like {@link #compose(Transformation)} but does this.postConcat(t) of
      * the transformation matrix.
      * @hide
@@ -122,6 +123,8 @@ public class Transformation {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @return The 3x3 Matrix representing the trnasformation to apply to the
      * coordinates of the object being animated
      */

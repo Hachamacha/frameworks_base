@@ -62,7 +62,11 @@ and each View is responsible for drawing itself.
 
    <p>
    The measure pass uses two classes to communicate dimensions. The
+<<<<<<< HEAD
    {@link android.view.ViewGroup.LayoutParams} class is used by Views to tell their parents how they
+=======
+   {@link android.view.View.MeasureSpec} class is used by Views to tell their parents how they
+>>>>>>> upstream/master
    want to be measured and positioned. The base LayoutParams class just
    describes how big the View wants to be for both width and height. For each
    dimension, it can specify one of:</p>

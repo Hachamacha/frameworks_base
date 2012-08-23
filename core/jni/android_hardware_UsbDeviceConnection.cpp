@@ -53,7 +53,11 @@ android_hardware_UsbDeviceConnection_open(JNIEnv *env, jobject thiz, jstring dev
     if (device) {
         env->SetIntField(thiz, field_context, (int)device);
     } else {
+<<<<<<< HEAD
         ALOGE("usb_device_open failed for %s", deviceNameStr);
+=======
+        LOGE("usb_device_open failed for %s", deviceNameStr);
+>>>>>>> upstream/master
         close(fd);
     }
 
@@ -64,7 +68,11 @@ android_hardware_UsbDeviceConnection_open(JNIEnv *env, jobject thiz, jstring dev
 static void
 android_hardware_UsbDeviceConnection_close(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGD("close\n");
+=======
+    LOGD("close\n");
+>>>>>>> upstream/master
     struct usb_device* device = get_device_from_object(env, thiz);
     if (device) {
         usb_device_close(device);
@@ -77,7 +85,11 @@ android_hardware_UsbDeviceConnection_get_fd(JNIEnv *env, jobject thiz)
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_get_fd");
+=======
+        LOGE("device is closed in native_get_fd");
+>>>>>>> upstream/master
         return -1;
     }
     return usb_device_get_fd(device);
@@ -110,7 +122,11 @@ android_hardware_UsbDeviceConnection_claim_interface(JNIEnv *env, jobject thiz,
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_claim_interface");
+=======
+        LOGE("device is closed in native_claim_interface");
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -128,7 +144,11 @@ android_hardware_UsbDeviceConnection_release_interface(JNIEnv *env, jobject thiz
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_release_interface");
+=======
+        LOGE("device is closed in native_release_interface");
+>>>>>>> upstream/master
         return -1;
     }
     int ret = usb_device_release_interface(device, interfaceID);
@@ -146,7 +166,11 @@ android_hardware_UsbDeviceConnection_control_request(JNIEnv *env, jobject thiz,
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_control_request");
+=======
+        LOGE("device is closed in native_control_request");
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -174,7 +198,11 @@ android_hardware_UsbDeviceConnection_bulk_request(JNIEnv *env, jobject thiz,
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_control_request");
+=======
+        LOGE("device is closed in native_control_request");
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -200,7 +228,11 @@ android_hardware_UsbDeviceConnection_request_wait(JNIEnv *env, jobject thiz)
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_request_wait");
+=======
+        LOGE("device is closed in native_request_wait");
+>>>>>>> upstream/master
         return NULL;
     }
 
@@ -216,7 +248,11 @@ android_hardware_UsbDeviceConnection_get_serial(JNIEnv *env, jobject thiz)
 {
     struct usb_device* device = get_device_from_object(env, thiz);
     if (!device) {
+<<<<<<< HEAD
         ALOGE("device is closed in native_request_wait");
+=======
+        LOGE("device is closed in native_request_wait");
+>>>>>>> upstream/master
         return NULL;
     }
     char* serial = usb_device_get_serial(device);
@@ -249,12 +285,20 @@ int register_android_hardware_UsbDeviceConnection(JNIEnv *env)
 {
     jclass clazz = env->FindClass("android/hardware/usb/UsbDeviceConnection");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/hardware/usb/UsbDeviceConnection");
+=======
+        LOGE("Can't find android/hardware/usb/UsbDeviceConnection");
+>>>>>>> upstream/master
         return -1;
     }
     field_context = env->GetFieldID(clazz, "mNativeContext", "I");
     if (field_context == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find UsbDeviceConnection.mNativeContext");
+=======
+        LOGE("Can't find UsbDeviceConnection.mNativeContext");
+>>>>>>> upstream/master
         return -1;
     }
 

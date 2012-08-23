@@ -21,6 +21,7 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.IConnectivityManager;
+<<<<<<< HEAD
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceResponse;
 import android.net.wifi.p2p.nsd.WifiP2pServiceInfo;
@@ -30,6 +31,9 @@ import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceResponse;
 import android.os.Binder;
 import android.os.Bundle;
+=======
+import android.os.Binder;
+>>>>>>> upstream/master
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,8 +48,11 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
+=======
+>>>>>>> upstream/master
 
 /**
  * This class provides the API for managing Wi-Fi peer-to-peer connectivity. This lets an
@@ -57,20 +64,36 @@ import java.util.Map;
  * callbacks provided by the application. The application needs to do an initialization with
  * {@link #initialize} before doing any p2p operation.
  *
+<<<<<<< HEAD
  * <p> Most application calls need a {@link ActionListener} instance for receiving callbacks
  * {@link ActionListener#onSuccess} or {@link ActionListener#onFailure}. Action callbacks
  * indicate whether the initiation of the action was a success or a failure.
+=======
+ * <p> Application actions {@link #discoverPeers}, {@link #connect}, {@link #cancelConnect},
+ * {@link #createGroup} and {@link #removeGroup} need a {@link ActionListener} instance for
+ * receiving callbacks {@link ActionListener#onSuccess} or {@link ActionListener#onFailure}.
+ * Action callbacks indicate whether the initiation of the action was a success or a failure.
+>>>>>>> upstream/master
  * Upon failure, the reason of failure can be one of {@link #ERROR}, {@link #P2P_UNSUPPORTED}
  * or {@link #BUSY}.
  *
  * <p> An application can initiate discovery of peers with {@link #discoverPeers}. An initiated
  * discovery request from an application stays active until the device starts connecting to a peer
+<<<<<<< HEAD
  * ,forms a p2p group or there is an explicit {@link #stopPeerDiscovery}.
  * Applications can listen to {@link #WIFI_P2P_DISCOVERY_CHANGED_ACTION} to know if a peer-to-peer
  * discovery is running or stopped. Additionally, {@link #WIFI_P2P_PEERS_CHANGED_ACTION} indicates
  * if the peer list has changed.
  *
  * <p> When an application needs to fetch the current list of peers, it can request the list
+=======
+ * or forms a p2p group. The {@link ActionListener} callbacks provide feedback on whether the
+ * discovery initiation was successful or failure. Additionally, applications can listen
+ * to {@link #WIFI_P2P_PEERS_CHANGED_ACTION} intent action to know when the peer list changes.
+ *
+ * <p> When the peer list change intent {@link #WIFI_P2P_PEERS_CHANGED_ACTION} is received
+ * or when an application needs to fetch the current list of peers, it can request the list
+>>>>>>> upstream/master
  * of peers with {@link #requestPeers}. When the peer list is available
  * {@link PeerListListener#onPeersAvailable} is called with the device list.
  *
@@ -78,7 +101,11 @@ import java.util.Map;
  * {@link WifiP2pConfig} for details on setting up the configuration. For communication with legacy
  * Wi-Fi devices that do not support p2p, an app can create a group using {@link #createGroup}
  * which creates an access point whose details can be fetched with {@link #requestGroupInfo}.
+<<<<<<< HEAD
  *
+=======
+*
+>>>>>>> upstream/master
  * <p> After a successful group formation through {@link #createGroup} or through {@link #connect},
  * use {@link #requestConnectionInfo} to fetch the connection details. The connection info
  * {@link WifiP2pInfo} contains the address of the group owner
@@ -86,6 +113,7 @@ import java.util.Map;
  * if the current device is a p2p group owner. A p2p client can thus communicate with
  * the p2p group owner through a socket connection.
  *
+<<<<<<< HEAD
  * <p> With peer discovery using {@link  #discoverPeers}, an application discovers the neighboring
  * peers, but has no good way to figure out which peer to establish a connection with. For example,
  * if a game application is interested in finding all the neighboring peers that are also running
@@ -116,6 +144,10 @@ import java.util.Map;
  * The application is notified of a result of service discovery request through listener callbacks
  * set through {@link #setDnsSdResponseListeners} for Bonjour or
  * {@link #setUpnpServiceResponseListener} for Upnp.
+=======
+ * <p> Android has no platform support for service discovery yet, so applications could
+ * run a service discovery protocol to discover services on the peer-to-peer netework.
+>>>>>>> upstream/master
  *
  * <p class="note"><strong>Note:</strong>
  * Registering an application handler with {@link #initialize} requires the permissions
@@ -219,6 +251,7 @@ public class WifiP2pManager {
         "android.net.wifi.p2p.PEERS_CHANGED";
 
     /**
+<<<<<<< HEAD
      * Broadcast intent action indicating that peer discovery has either started or stopped.
      * One extra {@link #EXTRA_DISCOVERY_STATE} indicates whether discovery has started
      * or stopped.
@@ -254,6 +287,8 @@ public class WifiP2pManager {
     public static final int WIFI_P2P_DISCOVERY_STARTED = 2;
 
     /**
+=======
+>>>>>>> upstream/master
      * Broadcast intent action indicating that this device details have changed.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
@@ -266,6 +301,7 @@ public class WifiP2pManager {
      */
     public static final String EXTRA_WIFI_P2P_DEVICE = "wifiP2pDevice";
 
+<<<<<<< HEAD
     /**
      * The lookup key for a {@link #String} object.
      * Retrieve with {@link android.os.Bundle#getString(String)}.
@@ -301,11 +337,14 @@ public class WifiP2pManager {
      */
     public static final String P2P_CONFIG_BUNDLE_KEY = "wifiP2pConfig";
 
+=======
+>>>>>>> upstream/master
     IWifiP2pManager mService;
 
     private static final int BASE = Protocol.BASE_WIFI_P2P_MANAGER;
 
     /** @hide */
+<<<<<<< HEAD
     public static final int DISCOVER_PEERS                          = BASE + 1;
     /** @hide */
     public static final int DISCOVER_PEERS_FAILED                   = BASE + 2;
@@ -435,6 +474,70 @@ public class WifiP2pManager {
     public static final int CONNECTION_REQUESTED                    = BASE + 57;
     /** @hide */
     public static final int SHOW_PIN_REQUESTED                      = BASE + 58;
+=======
+    public static final int ENABLE_P2P                              = BASE + 1;
+    /** @hide */
+    public static final int ENABLE_P2P_FAILED                       = BASE + 2;
+    /** @hide */
+    public static final int ENABLE_P2P_SUCCEEDED                    = BASE + 3;
+
+    /** @hide */
+    public static final int DISABLE_P2P                             = BASE + 4;
+    /** @hide */
+    public static final int DISABLE_P2P_FAILED                      = BASE + 5;
+    /** @hide */
+    public static final int DISABLE_P2P_SUCCEEDED                   = BASE + 6;
+
+    /** @hide */
+    public static final int DISCOVER_PEERS                          = BASE + 7;
+    /** @hide */
+    public static final int DISCOVER_PEERS_FAILED                   = BASE + 8;
+    /** @hide */
+    public static final int DISCOVER_PEERS_SUCCEEDED                = BASE + 9;
+
+    /** @hide */
+    public static final int CONNECT                                 = BASE + 10;
+    /** @hide */
+    public static final int CONNECT_FAILED                          = BASE + 11;
+    /** @hide */
+    public static final int CONNECT_SUCCEEDED                       = BASE + 12;
+
+    /** @hide */
+    public static final int CANCEL_CONNECT                          = BASE + 13;
+    /** @hide */
+    public static final int CANCEL_CONNECT_FAILED                   = BASE + 14;
+    /** @hide */
+    public static final int CANCEL_CONNECT_SUCCEEDED                = BASE + 15;
+
+    /** @hide */
+    public static final int CREATE_GROUP                            = BASE + 16;
+    /** @hide */
+    public static final int CREATE_GROUP_FAILED                     = BASE + 17;
+    /** @hide */
+    public static final int CREATE_GROUP_SUCCEEDED                  = BASE + 18;
+
+    /** @hide */
+    public static final int REMOVE_GROUP                            = BASE + 19;
+    /** @hide */
+    public static final int REMOVE_GROUP_FAILED                     = BASE + 20;
+    /** @hide */
+    public static final int REMOVE_GROUP_SUCCEEDED                  = BASE + 21;
+
+    /** @hide */
+    public static final int REQUEST_PEERS                           = BASE + 22;
+    /** @hide */
+    public static final int RESPONSE_PEERS                          = BASE + 23;
+
+    /** @hide */
+    public static final int REQUEST_CONNECTION_INFO                 = BASE + 24;
+    /** @hide */
+    public static final int RESPONSE_CONNECTION_INFO                = BASE + 25;
+
+    /** @hide */
+    public static final int REQUEST_GROUP_INFO                      = BASE + 26;
+    /** @hide */
+    public static final int RESPONSE_GROUP_INFO                     = BASE + 27;
+>>>>>>> upstream/master
 
     /**
      * Create a new WifiP2pManager instance. Applications use
@@ -467,6 +570,7 @@ public class WifiP2pManager {
      */
     public static final int BUSY                = 2;
 
+<<<<<<< HEAD
     /**
      * Passed with {@link ActionListener#onFailure}.
      * Indicates that the {@link #discoverServices} failed because no service
@@ -483,6 +587,8 @@ public class WifiP2pManager {
      */
     public static final int NOT_IN_FOREGROUND   = 4;
 
+=======
+>>>>>>> upstream/master
     /** Interface for callback invocation when framework channel is lost */
     public interface ChannelListener {
         /**
@@ -531,6 +637,7 @@ public class WifiP2pManager {
         public void onGroupInfoAvailable(WifiP2pGroup group);
     }
 
+<<<<<<< HEAD
    /**
     * Interface for callback invocation when service discovery response other than
     * Upnp or Bonjour is received
@@ -657,12 +764,15 @@ public class WifiP2pManager {
         public void onDetached(int reason);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * A channel that connects the application to the Wifi p2p framework.
      * Most p2p operations require a Channel as an argument. An instance of Channel is obtained
      * by doing a call on {@link #initialize}
      */
     public static class Channel {
+<<<<<<< HEAD
         Channel(Context context, Looper looper, ChannelListener l) {
             mAsyncChannel = new AsyncChannel();
             mHandler = new P2pHandler(looper);
@@ -683,6 +793,20 @@ public class WifiP2pManager {
         private AsyncChannel mAsyncChannel;
         private P2pHandler mHandler;
         Context mContext;
+=======
+        Channel(Looper looper, ChannelListener l) {
+            mAsyncChannel = new AsyncChannel();
+            mHandler = new P2pHandler(looper);
+            mChannelListener = l;
+        }
+        private ChannelListener mChannelListener;
+        private HashMap<Integer, Object> mListenerMap = new HashMap<Integer, Object>();
+        private Object mListenerMapLock = new Object();
+        private int mListenerKey = 0;
+
+        AsyncChannel mAsyncChannel;
+        P2pHandler mHandler;
+>>>>>>> upstream/master
         class P2pHandler extends Handler {
             P2pHandler(Looper looper) {
                 super(looper);
@@ -700,12 +824,16 @@ public class WifiP2pManager {
                         break;
                     /* ActionListeners grouped together */
                     case WifiP2pManager.DISCOVER_PEERS_FAILED:
+<<<<<<< HEAD
                     case WifiP2pManager.STOP_DISCOVERY_FAILED:
                     case WifiP2pManager.DISCOVER_SERVICES_FAILED:
+=======
+>>>>>>> upstream/master
                     case WifiP2pManager.CONNECT_FAILED:
                     case WifiP2pManager.CANCEL_CONNECT_FAILED:
                     case WifiP2pManager.CREATE_GROUP_FAILED:
                     case WifiP2pManager.REMOVE_GROUP_FAILED:
+<<<<<<< HEAD
                     case WifiP2pManager.ADD_LOCAL_SERVICE_FAILED:
                     case WifiP2pManager.REMOVE_LOCAL_SERVICE_FAILED:
                     case WifiP2pManager.CLEAR_LOCAL_SERVICES_FAILED:
@@ -713,18 +841,24 @@ public class WifiP2pManager {
                     case WifiP2pManager.REMOVE_SERVICE_REQUEST_FAILED:
                     case WifiP2pManager.CLEAR_SERVICE_REQUESTS_FAILED:
                     case WifiP2pManager.SET_DEVICE_NAME_FAILED:
+=======
+>>>>>>> upstream/master
                         if (listener != null) {
                             ((ActionListener) listener).onFailure(message.arg1);
                         }
                         break;
                     /* ActionListeners grouped together */
                     case WifiP2pManager.DISCOVER_PEERS_SUCCEEDED:
+<<<<<<< HEAD
                     case WifiP2pManager.STOP_DISCOVERY_SUCCEEDED:
                     case WifiP2pManager.DISCOVER_SERVICES_SUCCEEDED:
+=======
+>>>>>>> upstream/master
                     case WifiP2pManager.CONNECT_SUCCEEDED:
                     case WifiP2pManager.CANCEL_CONNECT_SUCCEEDED:
                     case WifiP2pManager.CREATE_GROUP_SUCCEEDED:
                     case WifiP2pManager.REMOVE_GROUP_SUCCEEDED:
+<<<<<<< HEAD
                     case WifiP2pManager.ADD_LOCAL_SERVICE_SUCCEEDED:
                     case WifiP2pManager.REMOVE_LOCAL_SERVICE_SUCCEEDED:
                     case WifiP2pManager.CLEAR_LOCAL_SERVICES_SUCCEEDED:
@@ -732,6 +866,8 @@ public class WifiP2pManager {
                     case WifiP2pManager.REMOVE_SERVICE_REQUEST_SUCCEEDED:
                     case WifiP2pManager.CLEAR_SERVICE_REQUESTS_SUCCEEDED:
                     case WifiP2pManager.SET_DEVICE_NAME_SUCCEEDED:
+=======
+>>>>>>> upstream/master
                         if (listener != null) {
                             ((ActionListener) listener).onSuccess();
                         }
@@ -754,6 +890,7 @@ public class WifiP2pManager {
                             ((GroupInfoListener) listener).onGroupInfoAvailable(group);
                         }
                         break;
+<<<<<<< HEAD
                     case WifiP2pManager.RESPONSE_SERVICE:
                         WifiP2pServiceResponse resp = (WifiP2pServiceResponse) message.obj;
                         handleServiceResponse(resp);
@@ -786,6 +923,8 @@ public class WifiP2pManager {
                             mDialogListener = null;
                         }
                         break;
+=======
+>>>>>>> upstream/master
                    default:
                         Log.d(TAG, "Ignored " + message);
                         break;
@@ -793,6 +932,7 @@ public class WifiP2pManager {
             }
         }
 
+<<<<<<< HEAD
         private void handleServiceResponse(WifiP2pServiceResponse resp) {
             if (resp instanceof WifiP2pDnsSdServiceResponse) {
                 handleDnsSdServiceResponse((WifiP2pDnsSdServiceResponse)resp);
@@ -840,17 +980,29 @@ public class WifiP2pManager {
                 do {
                     key = mListenerKey++;
                 } while (key == INVALID_LISTENER_KEY);
+=======
+        int putListener(Object listener) {
+            if (listener == null) return 0;
+            int key;
+            synchronized (mListenerMapLock) {
+                key = mListenerKey++;
+>>>>>>> upstream/master
                 mListenerMap.put(key, listener);
             }
             return key;
         }
 
+<<<<<<< HEAD
         private Object getListener(int key) {
             if (key == INVALID_LISTENER_KEY) return null;
+=======
+        Object getListener(int key) {
+>>>>>>> upstream/master
             synchronized (mListenerMapLock) {
                 return mListenerMap.remove(key);
             }
         }
+<<<<<<< HEAD
 
         private void setDialogListener(DialogListener listener) {
             mDialogListener = listener;
@@ -867,6 +1019,8 @@ public class WifiP2pManager {
 
     private static void checkServiceRequest(WifiP2pServiceRequest req) {
         if (req == null) throw new IllegalArgumentException("service request is null");
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -882,7 +1036,11 @@ public class WifiP2pManager {
         Messenger messenger = getMessenger();
         if (messenger == null) return null;
 
+<<<<<<< HEAD
         Channel c = new Channel(srcContext, srcLooper, listener);
+=======
+        Channel c = new Channel(srcLooper, listener);
+>>>>>>> upstream/master
         if (c.mAsyncChannel.connectSync(srcContext, c.mHandler, messenger)
                 == AsyncChannel.STATUS_SUCCESSFUL) {
             return c;
@@ -892,6 +1050,29 @@ public class WifiP2pManager {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Sends in a request to the system to enable p2p. This will pop up a dialog
+     * to the user and upon authorization will enable p2p.
+     * @hide
+     */
+    public void enableP2p(Channel c) {
+        if (c == null) return;
+        c.mAsyncChannel.sendMessage(ENABLE_P2P);
+    }
+
+    /**
+     * Sends in a request to the system to disable p2p. This will pop up a dialog
+     * to the user and upon authorization will enable p2p.
+     * @hide
+     */
+    public void disableP2p(Channel c) {
+        if (c == null) return;
+        c.mAsyncChannel.sendMessage(DISABLE_P2P);
+    }
+
+    /**
+>>>>>>> upstream/master
      * Initiate peer discovery. A discovery process involves scanning for available Wi-Fi peers
      * for the purpose of establishing a connection.
      *
@@ -911,6 +1092,7 @@ public class WifiP2pManager {
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void discoverPeers(Channel c, ActionListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
         c.mAsyncChannel.sendMessage(DISCOVER_PEERS, 0, c.putListener(listener));
     }
@@ -931,6 +1113,12 @@ public class WifiP2pManager {
         c.mAsyncChannel.sendMessage(STOP_DISCOVERY, 0, c.putListener(listener));
     }
 
+=======
+        if (c == null) return;
+        c.mAsyncChannel.sendMessage(DISCOVER_PEERS, 0, c.putListener(listener));
+    }
+
+>>>>>>> upstream/master
     /**
      * Start a p2p connection to a device with the specified configuration.
      *
@@ -954,7 +1142,11 @@ public class WifiP2pManager {
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void connect(Channel c, WifiP2pConfig config, ActionListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(CONNECT, 0, c.putListener(listener), config);
     }
 
@@ -970,7 +1162,11 @@ public class WifiP2pManager {
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void cancelConnect(Channel c, ActionListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(CANCEL_CONNECT, 0, c.putListener(listener));
     }
 
@@ -994,7 +1190,11 @@ public class WifiP2pManager {
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void createGroup(Channel c, ActionListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(CREATE_GROUP, 0, c.putListener(listener));
     }
 
@@ -1010,11 +1210,16 @@ public class WifiP2pManager {
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void removeGroup(Channel c, ActionListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(REMOVE_GROUP, 0, c.putListener(listener));
     }
 
     /**
+<<<<<<< HEAD
      * Register a local service for service discovery. If a local service is registered,
      * the framework automatically responds to a service discovery request from a peer.
      *
@@ -1214,13 +1419,19 @@ public class WifiP2pManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Request the current list of peers.
      *
      * @param c is the channel created at {@link #initialize}
      * @param listener for callback when peer list is available. Can be null.
      */
     public void requestPeers(Channel c, PeerListListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(REQUEST_PEERS, 0, c.putListener(listener));
     }
 
@@ -1231,7 +1442,11 @@ public class WifiP2pManager {
      * @param listener for callback when connection info is available. Can be null.
      */
     public void requestConnectionInfo(Channel c, ConnectionInfoListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(REQUEST_CONNECTION_INFO, 0, c.putListener(listener));
     }
 
@@ -1242,11 +1457,16 @@ public class WifiP2pManager {
      * @param listener for callback when group info is available. Can be null.
      */
     public void requestGroupInfo(Channel c, GroupInfoListener listener) {
+<<<<<<< HEAD
         checkChannel(c);
+=======
+        if (c == null) return;
+>>>>>>> upstream/master
         c.mAsyncChannel.sendMessage(REQUEST_GROUP_INFO, 0, c.putListener(listener));
     }
 
     /**
+<<<<<<< HEAD
      * Set p2p device name.
      * @hide
      * @param c is the channel created at {@link #initialize}
@@ -1297,6 +1517,8 @@ public class WifiP2pManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Get a reference to WifiP2pService handler. This is used to establish
      * an AsyncChannel communication with WifiService
      *

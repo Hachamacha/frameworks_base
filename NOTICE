@@ -56,6 +56,7 @@ the Apache2 License.
    =========================================================================
    ==  NOTICE file corresponding to the section 4 d of                    ==
    ==  the Apache License, Version 2.0,                                   ==
+<<<<<<< HEAD
    ==  in this case for the mDnsResponder code.                           ==
    =========================================================================
 
@@ -67,6 +68,8 @@ the Apache2 License.
    =========================================================================
    ==  NOTICE file corresponding to the section 4 d of                    ==
    ==  the Apache License, Version 2.0,                                   ==
+=======
+>>>>>>> upstream/master
    ==  in this case for the TagSoup code.                                 ==
    =========================================================================
 

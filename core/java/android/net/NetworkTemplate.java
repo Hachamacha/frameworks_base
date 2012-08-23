@@ -18,9 +18,13 @@ package android.net;
 
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_WIFI;
+<<<<<<< HEAD
 import static android.net.ConnectivityManager.TYPE_WIFI_P2P;
 import static android.net.ConnectivityManager.TYPE_WIMAX;
 import static android.net.NetworkIdentity.COMBINE_SUBTYPE_ENABLED;
+=======
+import static android.net.ConnectivityManager.TYPE_WIMAX;
+>>>>>>> upstream/master
 import static android.net.NetworkIdentity.scrubSubscriberId;
 import static android.telephony.TelephonyManager.NETWORK_CLASS_2_G;
 import static android.telephony.TelephonyManager.NETWORK_CLASS_3_G;
@@ -43,6 +47,7 @@ import com.android.internal.util.Objects;
  */
 public class NetworkTemplate implements Parcelable {
 
+<<<<<<< HEAD
     public static final int MATCH_MOBILE_ALL = 1;
     public static final int MATCH_MOBILE_3G_LOWER = 2;
     public static final int MATCH_MOBILE_4G = 3;
@@ -50,6 +55,18 @@ public class NetworkTemplate implements Parcelable {
     public static final int MATCH_ETHERNET = 5;
     public static final int MATCH_MOBILE_WILDCARD = 6;
     public static final int MATCH_WIFI_WILDCARD = 7;
+=======
+    /** {@hide} */
+    public static final int MATCH_MOBILE_ALL = 1;
+    /** {@hide} */
+    public static final int MATCH_MOBILE_3G_LOWER = 2;
+    /** {@hide} */
+    public static final int MATCH_MOBILE_4G = 3;
+    /** {@hide} */
+    public static final int MATCH_WIFI = 4;
+    /** {@hide} */
+    public static final int MATCH_ETHERNET = 5;
+>>>>>>> upstream/master
 
     /**
      * Set of {@link NetworkInfo#getType()} that reflect data usage.
@@ -61,6 +78,7 @@ public class NetworkTemplate implements Parcelable {
                 com.android.internal.R.array.config_data_usage_network_types);
     }
 
+<<<<<<< HEAD
     private static boolean sForceAllNetworkTypes = false;
 
     // @VisibleForTesting
@@ -121,6 +139,40 @@ public class NetworkTemplate implements Parcelable {
      */
     public static NetworkTemplate buildTemplateWifi(String networkId) {
         return new NetworkTemplate(MATCH_WIFI, null, networkId);
+=======
+    /**
+     * Template to combine all {@link ConnectivityManager#TYPE_MOBILE} style
+     * networks together. Only uses statistics for requested IMSI.
+     */
+    public static NetworkTemplate buildTemplateMobileAll(String subscriberId) {
+        return new NetworkTemplate(MATCH_MOBILE_ALL, subscriberId);
+    }
+
+    /**
+     * Template to combine all {@link ConnectivityManager#TYPE_MOBILE} style
+     * networks together that roughly meet a "3G" definition, or lower. Only
+     * uses statistics for requested IMSI.
+     */
+    public static NetworkTemplate buildTemplateMobile3gLower(String subscriberId) {
+        return new NetworkTemplate(MATCH_MOBILE_3G_LOWER, subscriberId);
+    }
+
+    /**
+     * Template to combine all {@link ConnectivityManager#TYPE_MOBILE} style
+     * networks together that meet a "4G" definition. Only uses statistics for
+     * requested IMSI.
+     */
+    public static NetworkTemplate buildTemplateMobile4g(String subscriberId) {
+        return new NetworkTemplate(MATCH_MOBILE_4G, subscriberId);
+    }
+
+    /**
+     * Template to combine all {@link ConnectivityManager#TYPE_WIFI} style
+     * networks together.
+     */
+    public static NetworkTemplate buildTemplateWifi() {
+        return new NetworkTemplate(MATCH_WIFI, null);
+>>>>>>> upstream/master
     }
 
     /**
@@ -128,22 +180,35 @@ public class NetworkTemplate implements Parcelable {
      * networks together.
      */
     public static NetworkTemplate buildTemplateEthernet() {
+<<<<<<< HEAD
         return new NetworkTemplate(MATCH_ETHERNET, null, null);
+=======
+        return new NetworkTemplate(MATCH_ETHERNET, null);
+>>>>>>> upstream/master
     }
 
     private final int mMatchRule;
     private final String mSubscriberId;
+<<<<<<< HEAD
     private final String mNetworkId;
 
     public NetworkTemplate(int matchRule, String subscriberId, String networkId) {
         mMatchRule = matchRule;
         mSubscriberId = subscriberId;
         mNetworkId = networkId;
+=======
+
+    /** {@hide} */
+    public NetworkTemplate(int matchRule, String subscriberId) {
+        this.mMatchRule = matchRule;
+        this.mSubscriberId = subscriberId;
+>>>>>>> upstream/master
     }
 
     private NetworkTemplate(Parcel in) {
         mMatchRule = in.readInt();
         mSubscriberId = in.readString();
+<<<<<<< HEAD
         mNetworkId = in.readString();
     }
 
@@ -155,12 +220,24 @@ public class NetworkTemplate implements Parcelable {
     }
 
     @Override
+=======
+    }
+
+    /** {@inheritDoc} */
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mMatchRule);
+        dest.writeString(mSubscriberId);
+    }
+
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         final StringBuilder builder = new StringBuilder("NetworkTemplate: ");
         builder.append("matchRule=").append(getMatchRuleName(mMatchRule));
         if (mSubscriberId != null) {
@@ -170,11 +247,20 @@ public class NetworkTemplate implements Parcelable {
             builder.append(", networkId=").append(mNetworkId);
         }
         return builder.toString();
+=======
+        final String scrubSubscriberId = scrubSubscriberId(mSubscriberId);
+        return "NetworkTemplate: matchRule=" + getMatchRuleName(mMatchRule) + ", subscriberId="
+                + scrubSubscriberId;
+>>>>>>> upstream/master
     }
 
     @Override
     public int hashCode() {
+<<<<<<< HEAD
         return Objects.hashCode(mMatchRule, mSubscriberId, mNetworkId);
+=======
+        return Objects.hashCode(mMatchRule, mSubscriberId);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -182,24 +268,39 @@ public class NetworkTemplate implements Parcelable {
         if (obj instanceof NetworkTemplate) {
             final NetworkTemplate other = (NetworkTemplate) obj;
             return mMatchRule == other.mMatchRule
+<<<<<<< HEAD
                     && Objects.equal(mSubscriberId, other.mSubscriberId)
                     && Objects.equal(mNetworkId, other.mNetworkId);
+=======
+                    && Objects.equal(mSubscriberId, other.mSubscriberId);
+>>>>>>> upstream/master
         }
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    /** {@hide} */
+>>>>>>> upstream/master
     public int getMatchRule() {
         return mMatchRule;
     }
 
+<<<<<<< HEAD
+=======
+    /** {@hide} */
+>>>>>>> upstream/master
     public String getSubscriberId() {
         return mSubscriberId;
     }
 
+<<<<<<< HEAD
     public String getNetworkId() {
         return mNetworkId;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Test if given {@link NetworkIdentity} matches this template.
      */
@@ -215,10 +316,13 @@ public class NetworkTemplate implements Parcelable {
                 return matchesWifi(ident);
             case MATCH_ETHERNET:
                 return matchesEthernet(ident);
+<<<<<<< HEAD
             case MATCH_MOBILE_WILDCARD:
                 return matchesMobileWildcard(ident);
             case MATCH_WIFI_WILDCARD:
                 return matchesWifiWildcard(ident);
+=======
+>>>>>>> upstream/master
             default:
                 throw new IllegalArgumentException("unknown network template");
         }
@@ -232,7 +336,11 @@ public class NetworkTemplate implements Parcelable {
             // TODO: consider matching against WiMAX subscriber identity
             return true;
         } else {
+<<<<<<< HEAD
             return ((sForceAllNetworkTypes || contains(DATA_USAGE_NETWORK_TYPES, ident.mType))
+=======
+            return (contains(DATA_USAGE_NETWORK_TYPES, ident.mType)
+>>>>>>> upstream/master
                     && Objects.equal(mSubscriberId, ident.mSubscriberId));
         }
     }
@@ -241,7 +349,10 @@ public class NetworkTemplate implements Parcelable {
      * Check if mobile network classified 3G or lower with matching IMSI.
      */
     private boolean matchesMobile3gLower(NetworkIdentity ident) {
+<<<<<<< HEAD
         ensureSubtypeAvailable();
+=======
+>>>>>>> upstream/master
         if (ident.mType == TYPE_WIMAX) {
             return false;
         } else if (matchesMobile(ident)) {
@@ -259,7 +370,10 @@ public class NetworkTemplate implements Parcelable {
      * Check if mobile network classified 4G with matching IMSI.
      */
     private boolean matchesMobile4g(NetworkIdentity ident) {
+<<<<<<< HEAD
         ensureSubtypeAvailable();
+=======
+>>>>>>> upstream/master
         if (ident.mType == TYPE_WIMAX) {
             // TODO: consider matching against WiMAX subscriber identity
             return true;
@@ -276,12 +390,19 @@ public class NetworkTemplate implements Parcelable {
      * Check if matches Wi-Fi network template.
      */
     private boolean matchesWifi(NetworkIdentity ident) {
+<<<<<<< HEAD
         switch (ident.mType) {
             case TYPE_WIFI:
                 return Objects.equal(mNetworkId, ident.mNetworkId);
             default:
                 return false;
         }
+=======
+        if (ident.mType == TYPE_WIFI) {
+            return true;
+        }
+        return false;
+>>>>>>> upstream/master
     }
 
     /**
@@ -294,6 +415,7 @@ public class NetworkTemplate implements Parcelable {
         return false;
     }
 
+<<<<<<< HEAD
     private boolean matchesMobileWildcard(NetworkIdentity ident) {
         if (ident.mType == TYPE_WIMAX) {
             return true;
@@ -312,6 +434,8 @@ public class NetworkTemplate implements Parcelable {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private static String getMatchRuleName(int matchRule) {
         switch (matchRule) {
             case MATCH_MOBILE_3G_LOWER:
@@ -324,15 +448,19 @@ public class NetworkTemplate implements Parcelable {
                 return "WIFI";
             case MATCH_ETHERNET:
                 return "ETHERNET";
+<<<<<<< HEAD
             case MATCH_MOBILE_WILDCARD:
                 return "MOBILE_WILDCARD";
             case MATCH_WIFI_WILDCARD:
                 return "WIFI_WILDCARD";
+=======
+>>>>>>> upstream/master
             default:
                 return "UNKNOWN";
         }
     }
 
+<<<<<<< HEAD
     private static void ensureSubtypeAvailable() {
         if (COMBINE_SUBTYPE_ENABLED) {
             throw new IllegalArgumentException(
@@ -342,11 +470,17 @@ public class NetworkTemplate implements Parcelable {
 
     public static final Creator<NetworkTemplate> CREATOR = new Creator<NetworkTemplate>() {
         @Override
+=======
+    public static final Creator<NetworkTemplate> CREATOR = new Creator<NetworkTemplate>() {
+>>>>>>> upstream/master
         public NetworkTemplate createFromParcel(Parcel in) {
             return new NetworkTemplate(in);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkTemplate[] newArray(int size) {
             return new NetworkTemplate[size];
         }

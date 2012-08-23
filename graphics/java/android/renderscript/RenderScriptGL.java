@@ -29,7 +29,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
+<<<<<<< HEAD
  * @deprecated in API 16
+=======
+>>>>>>> upstream/master
  * The Graphics derivitive of Renderscript.  Extends the basic context to add a
  * root script which is the display window for graphical output.  When the
  * system needs to update the display the currently bound root script will be
@@ -47,7 +50,10 @@ public class RenderScriptGL extends RenderScript {
     int mHeight;
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Class which is used to describe a pixel format for a graphical buffer.
      * This is used to describe the intended format of the display surface.
      *
@@ -68,6 +74,7 @@ public class RenderScriptGL extends RenderScript {
         int mSamplesPref    = 1;
         float mSamplesQ     = 1.f;
 
+<<<<<<< HEAD
         /**
          * @deprecated in API 16
          */
@@ -77,6 +84,11 @@ public class RenderScriptGL extends RenderScript {
         /**
          * @deprecated in API 16
          */
+=======
+        public SurfaceConfig() {
+        }
+
+>>>>>>> upstream/master
         public SurfaceConfig(SurfaceConfig sc) {
             mDepthMin = sc.mDepthMin;
             mDepthPref = sc.mDepthPref;
@@ -101,7 +113,10 @@ public class RenderScriptGL extends RenderScript {
         }
 
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Set the per-component bit depth for color (red, green, blue).  This
          * configures the surface for an unsigned integer buffer type.
          *
@@ -115,7 +130,10 @@ public class RenderScriptGL extends RenderScript {
         }
 
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Set the bit depth for alpha. This configures the surface for
          * an unsigned integer buffer type.
          *
@@ -129,7 +147,10 @@ public class RenderScriptGL extends RenderScript {
         }
 
          /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Set the bit depth for the depth buffer. This configures the
          * surface for an unsigned integer buffer type.  If a minimum of 0
          * is specified then its possible no depth buffer will be
@@ -145,7 +166,10 @@ public class RenderScriptGL extends RenderScript {
         }
 
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Configure the multisample rendering.
          *
          * @param minimum The required number of samples, must be at least 1.
@@ -169,7 +193,10 @@ public class RenderScriptGL extends RenderScript {
     SurfaceConfig mSurfaceConfig;
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Construct a new RenderScriptGL context.
      *
      * @param ctx The context.
@@ -179,7 +206,11 @@ public class RenderScriptGL extends RenderScript {
         super(ctx);
         mSurfaceConfig = new SurfaceConfig(sc);
 
+<<<<<<< HEAD
         int sdkVersion = ctx.getApplicationInfo().targetSdkVersion;
+=======
+        int sdkVersion = getTargetSdkVersion(ctx);
+>>>>>>> upstream/master
 
         mWidth = 0;
         mHeight = 0;
@@ -200,7 +231,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Bind an os surface
      *
      *
@@ -220,7 +254,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Bind an os surface
      *
      * @param w
@@ -237,7 +274,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * return the height of the last set surface.
      *
      * @return int
@@ -247,7 +287,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * return the width of the last set surface.
      *
      * @return int
@@ -257,7 +300,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Temporarly halt calls to the root rendering script.
      *
      */
@@ -267,7 +313,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Resume calls to the root rendering script.
      *
      */
@@ -278,7 +327,10 @@ public class RenderScriptGL extends RenderScript {
 
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set the script to handle calls to render the primary surface.
      *
      * @param s Graphics script to process rendering requests.
@@ -289,7 +341,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set the default ProgramStore object seen as the parent state by the root
      * rendering script.
      *
@@ -301,7 +356,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set the default ProgramFragment object seen as the parent state by the
      * root rendering script.
      *
@@ -313,7 +371,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set the default ProgramRaster object seen as the parent state by the
      * root rendering script.
      *
@@ -325,7 +386,10 @@ public class RenderScriptGL extends RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set the default ProgramVertex object seen as the parent state by the
      * root rendering script.
      *

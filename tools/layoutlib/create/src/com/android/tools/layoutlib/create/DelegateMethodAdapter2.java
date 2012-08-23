@@ -71,7 +71,11 @@ import java.util.ArrayList;
  * Instances of this class are not re-usable.
  * The class adapter creates a new instance for each method.
  */
+<<<<<<< HEAD
 class DelegateMethodAdapter2 extends MethodVisitor {
+=======
+class DelegateMethodAdapter2 implements MethodVisitor {
+>>>>>>> upstream/master
 
     /** Suffix added to delegate classes. */
     public static final String DELEGATE_SUFFIX = "_Delegate";
@@ -121,7 +125,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
             String methodName,
             String desc,
             boolean isStatic) {
+<<<<<<< HEAD
         super(Opcodes.ASM4);
+=======
+>>>>>>> upstream/master
         mLog = log;
         mOrgWriter = mvOriginal;
         mDelWriter = mvDelegate;
@@ -266,7 +273,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     }
 
     /* Pass down to visitor writer. In this implementation, either do nothing. */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitCode() {
         if (mOrgWriter != null) {
             mOrgWriter.visitCode();
@@ -276,7 +286,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     /*
      * visitMaxs is called just before visitEnd if there was any code to rewrite.
      */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitMaxs(int maxStack, int maxLocals) {
         if (mOrgWriter != null) {
             mOrgWriter.visitMaxs(maxStack, maxLocals);
@@ -284,7 +297,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     }
 
     /** End of visiting. Generate the delegating code. */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitEnd() {
         if (mOrgWriter != null) {
             mOrgWriter.visitEnd();
@@ -293,7 +309,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     }
 
     /* Writes all annotation from the original method. */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         if (mOrgWriter != null) {
             return mOrgWriter.visitAnnotation(desc, visible);
@@ -303,7 +322,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     }
 
     /* Writes all annotation default values from the original method. */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public AnnotationVisitor visitAnnotationDefault() {
         if (mOrgWriter != null) {
             return mOrgWriter.visitAnnotationDefault();
@@ -312,7 +334,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public AnnotationVisitor visitParameterAnnotation(int parameter, String desc,
             boolean visible) {
         if (mOrgWriter != null) {
@@ -323,7 +348,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
     }
 
     /* Writes all attributes from the original method. */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitAttribute(Attribute attr) {
         if (mOrgWriter != null) {
             mOrgWriter.visitAttribute(attr);
@@ -334,7 +362,10 @@ class DelegateMethodAdapter2 extends MethodVisitor {
      * Only writes the first line number present in the original code so that source
      * viewers can direct to the correct method, even if the content doesn't match.
      */
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitLineNumber(int line, Label start) {
         // Capture the first line values for the new delegate method
         if (mDelegateLineNumber == null) {
@@ -345,77 +376,110 @@ class DelegateMethodAdapter2 extends MethodVisitor {
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitInsn(int opcode) {
         if (mOrgWriter != null) {
             mOrgWriter.visitInsn(opcode);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitLabel(Label label) {
         if (mOrgWriter != null) {
             mOrgWriter.visitLabel(label);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
         if (mOrgWriter != null) {
             mOrgWriter.visitTryCatchBlock(start, end, handler, type);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitMethodInsn(int opcode, String owner, String name, String desc) {
         if (mOrgWriter != null) {
             mOrgWriter.visitMethodInsn(opcode, owner, name, desc);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitFieldInsn(int opcode, String owner, String name, String desc) {
         if (mOrgWriter != null) {
             mOrgWriter.visitFieldInsn(opcode, owner, name, desc);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitFrame(int type, int nLocal, Object[] local, int nStack, Object[] stack) {
         if (mOrgWriter != null) {
             mOrgWriter.visitFrame(type, nLocal, local, nStack, stack);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitIincInsn(int var, int increment) {
         if (mOrgWriter != null) {
             mOrgWriter.visitIincInsn(var, increment);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitIntInsn(int opcode, int operand) {
         if (mOrgWriter != null) {
             mOrgWriter.visitIntInsn(opcode, operand);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitJumpInsn(int opcode, Label label) {
         if (mOrgWriter != null) {
             mOrgWriter.visitJumpInsn(opcode, label);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitLdcInsn(Object cst) {
         if (mOrgWriter != null) {
             mOrgWriter.visitLdcInsn(cst);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitLocalVariable(String name, String desc, String signature,
             Label start, Label end, int index) {
         if (mOrgWriter != null) {
@@ -423,35 +487,50 @@ class DelegateMethodAdapter2 extends MethodVisitor {
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
         if (mOrgWriter != null) {
             mOrgWriter.visitLookupSwitchInsn(dflt, keys, labels);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitMultiANewArrayInsn(String desc, int dims) {
         if (mOrgWriter != null) {
             mOrgWriter.visitMultiANewArrayInsn(desc, dims);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitTableSwitchInsn(int min, int max, Label dflt, Label[] labels) {
         if (mOrgWriter != null) {
             mOrgWriter.visitTableSwitchInsn(min, max, dflt, labels);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitTypeInsn(int opcode, String type) {
         if (mOrgWriter != null) {
             mOrgWriter.visitTypeInsn(opcode, type);
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitVarInsn(int opcode, int var) {
         if (mOrgWriter != null) {
             mOrgWriter.visitVarInsn(opcode, var);

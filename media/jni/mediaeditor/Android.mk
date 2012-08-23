@@ -36,6 +36,7 @@ LOCAL_C_INCLUDES += \
     $(TOP)/frameworks/base/media/libstagefright/rtsp \
     $(JNI_H_INCLUDE) \
     $(call include-path-for, corecg graphics) \
+<<<<<<< HEAD
     $(TOP)/frameworks/native/include/media/editor \
     $(TOP)/frameworks/base/core/jni/mediaeditor \
     $(TOP)/frameworks/av/libvideoeditor/vss/inc \
@@ -64,6 +65,31 @@ LOCAL_SHARED_LIBRARIES := \
     libvideoeditor_osal \
     libvideoeditor_videofilters \
     libvideoeditorplayer \
+=======
+    $(TOP)/frameworks/base/include/media/stagefright/openmax \
+    $(TOP)/frameworks/base/core/jni/mediaeditor \
+    $(TOP)/frameworks/media/libvideoeditor/vss/inc \
+    $(TOP)/frameworks/media/libvideoeditor/vss/common/inc \
+    $(TOP)/frameworks/media/libvideoeditor/vss/mcs/inc \
+    $(TOP)/frameworks/media/libvideoeditor/vss/stagefrightshells/inc \
+    $(TOP)/frameworks/media/libvideoeditor/include \
+    $(TOP)/frameworks/media/libvideoeditor/lvpp \
+    $(TOP)/frameworks/media/libvideoeditor/osal/inc
+
+LOCAL_SHARED_LIBRARIES := \
+    libcutils \
+    libdl \
+    libutils \
+    libandroid_runtime \
+    libnativehelper \
+    libmedia \
+    libaudioflinger \
+    libbinder \
+    libstagefright \
+    libstagefright_omx \
+    libgui \
+    libvideoeditorplayer
+>>>>>>> upstream/master
 
 
 LOCAL_CFLAGS += \
@@ -75,6 +101,18 @@ LOCAL_CFLAGS += \
     -DUSE_STAGEFRIGHT_READERS \
     -DUSE_STAGEFRIGHT_3GPP_READER
 
+<<<<<<< HEAD
+=======
+LOCAL_STATIC_LIBRARIES := \
+    libvideoeditor_core \
+    libstagefright_color_conversion \
+    libvideoeditor_3gpwriter \
+    libvideoeditor_mcs \
+    libvideoeditor_videofilters \
+    libvideoeditor_stagefrightshells \
+    libvideoeditor_osal
+
+>>>>>>> upstream/master
 LOCAL_MODULE:= libvideoeditor_jni
 
 LOCAL_MODULE_TAGS := optional

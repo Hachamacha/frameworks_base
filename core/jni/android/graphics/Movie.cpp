@@ -5,8 +5,13 @@
 #include "SkUtils.h"
 #include "CreateJavaOutputStreamAdaptor.h"
 
+<<<<<<< HEAD
 #include <androidfw/Asset.h>
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/Asset.h>
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 #include <netinet/in.h>
 
 #if 0

@@ -28,7 +28,10 @@ import junit.framework.TestResult;
 import junit.framework.TestSuite;
 import junit.runner.BaseTestRunner;
 
+<<<<<<< HEAD
 import java.lang.reflect.Constructor;
+=======
+>>>>>>> upstream/master
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -92,6 +95,7 @@ public class AndroidTestRunner extends BaseTestRunner {
 
     private TestCase buildSingleTestMethod(Class testClass, String testMethodName) {
         try {
+<<<<<<< HEAD
             Constructor c = testClass.getConstructor();
             return newSingleTestMethod(testClass, testMethodName, c);
         } catch (NoSuchMethodException e) {
@@ -110,17 +114,25 @@ public class AndroidTestRunner extends BaseTestRunner {
             Constructor constructor, Object... args) {
         try {
             TestCase testCase = (TestCase) constructor.newInstance(args);
+=======
+            TestCase testCase = (TestCase) testClass.newInstance();
+>>>>>>> upstream/master
             testCase.setName(testMethodName);
             return testCase;
         } catch (IllegalAccessException e) {
             runFailed("Could not access test class. Class: " + testClass.getName());
         } catch (InstantiationException e) {
             runFailed("Could not instantiate test class. Class: " + testClass.getName());
+<<<<<<< HEAD
         } catch (IllegalArgumentException e) {
             runFailed("Illegal argument passed to constructor. Class: " + testClass.getName());
         } catch (InvocationTargetException e) {
             runFailed("Constructor thew an exception. Class: " + testClass.getName());
         }
+=======
+        }
+
+>>>>>>> upstream/master
         return null;
     }
 

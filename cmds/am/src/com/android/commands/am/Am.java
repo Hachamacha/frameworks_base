@@ -31,7 +31,10 @@ import android.content.Intent;
 import android.content.pm.IPackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.os.Binder;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -57,14 +60,24 @@ public class Am {
     private int mNextArg;
     private String mCurArgData;
 
+<<<<<<< HEAD
     private int mStartFlags = 0;
+=======
+    private boolean mDebugOption = false;
+>>>>>>> upstream/master
     private boolean mWaitOption = false;
     private boolean mStopOption = false;
 
     private int mRepeat = 0;
+<<<<<<< HEAD
     private int mUserId = 0;
 
     private String mProfileFile;
+=======
+
+    private String mProfileFile;
+    private boolean mProfileAutoStop;
+>>>>>>> upstream/master
 
     // These are magic strings understood by the Eclipse plugin.
     private static final String FATAL_ERROR_CODE = "Error type 1";
@@ -136,8 +149,11 @@ public class Am {
             runToUri(false);
         } else if (op.equals("to-intent-uri")) {
             runToUri(true);
+<<<<<<< HEAD
         } else if (op.equals("switch-user")) {
             runSwitchUser();
+=======
+>>>>>>> upstream/master
         } else {
             throw new IllegalArgumentException("Unknown command: " + op);
         }
@@ -148,12 +164,19 @@ public class Am {
         Intent baseIntent = intent;
         boolean hasIntentInfo = false;
 
+<<<<<<< HEAD
         mStartFlags = 0;
+=======
+        mDebugOption = false;
+>>>>>>> upstream/master
         mWaitOption = false;
         mStopOption = false;
         mRepeat = 0;
         mProfileFile = null;
+<<<<<<< HEAD
         mUserId = 0;
+=======
+>>>>>>> upstream/master
         Uri data = null;
         String type = null;
 
@@ -194,12 +217,15 @@ public class Am {
                 String key = nextArgRequired();
                 String value = nextArgRequired();
                 intent.putExtra(key, Uri.parse(value));
+<<<<<<< HEAD
             } else if (opt.equals("--ecn")) {
                 String key = nextArgRequired();
                 String value = nextArgRequired();
                 ComponentName cn = ComponentName.unflattenFromString(value);
                 if (cn == null) throw new IllegalArgumentException("Bad component name: " + value);
                 intent.putExtra(key, cn);
+=======
+>>>>>>> upstream/master
             } else if (opt.equals("--eia")) {
                 String key = nextArgRequired();
                 String value = nextArgRequired();
@@ -222,6 +248,7 @@ public class Am {
                     list[i] = Long.valueOf(strings[i]);
                 }
                 intent.putExtra(key, list);
+<<<<<<< HEAD
                 hasIntentInfo = true;
             } else if (opt.equals("--ef")) {
                 String key = nextArgRequired();
@@ -238,6 +265,8 @@ public class Am {
                 }
                 intent.putExtra(key, list);
                 hasIntentInfo = true;
+=======
+>>>>>>> upstream/master
             } else if (opt.equals("--ez")) {
                 String key = nextArgRequired();
                 String value = nextArgRequired();
@@ -301,23 +330,37 @@ public class Am {
                 intent.setDataAndType(data, type);
                 intent = new Intent();
             } else if (opt.equals("-D")) {
+<<<<<<< HEAD
                 mStartFlags |= ActivityManager.START_FLAG_DEBUG;
+=======
+                mDebugOption = true;
+>>>>>>> upstream/master
             } else if (opt.equals("-W")) {
                 mWaitOption = true;
             } else if (opt.equals("-P")) {
                 mProfileFile = nextArgRequired();
+<<<<<<< HEAD
                 mStartFlags |= ActivityManager.START_FLAG_AUTO_STOP_PROFILER;
             } else if (opt.equals("--start-profiler")) {
                 mProfileFile = nextArgRequired();
                 mStartFlags &= ~ActivityManager.START_FLAG_AUTO_STOP_PROFILER;
+=======
+                mProfileAutoStop = true;
+            } else if (opt.equals("--start-profiler")) {
+                mProfileFile = nextArgRequired();
+                mProfileAutoStop = false;
+>>>>>>> upstream/master
             } else if (opt.equals("-R")) {
                 mRepeat = Integer.parseInt(nextArgRequired());
             } else if (opt.equals("-S")) {
                 mStopOption = true;
+<<<<<<< HEAD
             } else if (opt.equals("--opengl-trace")) {
                 mStartFlags |= ActivityManager.START_FLAG_OPENGL_TRACES;
             } else if (opt.equals("--user")) {
                 mUserId = Integer.parseInt(nextArgRequired());
+=======
+>>>>>>> upstream/master
             } else {
                 System.err.println("Error: Unknown option: " + opt);
                 showUsage();
@@ -417,8 +460,12 @@ public class Am {
                         System.err.println("Error: Package manager not running; aborting");
                         return;
                     }
+<<<<<<< HEAD
                     List<ResolveInfo> activities = pm.queryIntentActivities(intent, mimeType, 0,
                             mUserId);
+=======
+                    List<ResolveInfo> activities = pm.queryIntentActivities(intent, mimeType, 0);
+>>>>>>> upstream/master
                     if (activities == null || activities.size() <= 0) {
                         System.err.println("Error: Intent does not match any activities: "
                                 + intent);
@@ -452,65 +499,114 @@ public class Am {
                     return;
                 }
             }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
             IActivityManager.WaitResult result = null;
             int res;
             if (mWaitOption) {
                 result = mAm.startActivityAndWait(null, intent, mimeType,
+<<<<<<< HEAD
                             null, null, 0, mStartFlags, mProfileFile, fd, null);
                 res = result.result;
             } else {
                 res = mAm.startActivity(null, intent, mimeType,
                         null, null, 0, mStartFlags, mProfileFile, fd, null);
+=======
+                            null, 0, null, null, 0, false, mDebugOption,
+                            mProfileFile, fd, mProfileAutoStop);
+                res = result.result;
+            } else {
+                res = mAm.startActivity(null, intent, mimeType,
+                        null, 0, null, null, 0, false, mDebugOption,
+                        mProfileFile, fd, mProfileAutoStop);
+>>>>>>> upstream/master
             }
             PrintStream out = mWaitOption ? System.out : System.err;
             boolean launched = false;
             switch (res) {
+<<<<<<< HEAD
                 case ActivityManager.START_SUCCESS:
                     launched = true;
                     break;
                 case ActivityManager.START_SWITCHES_CANCELED:
+=======
+                case IActivityManager.START_SUCCESS:
+                    launched = true;
+                    break;
+                case IActivityManager.START_SWITCHES_CANCELED:
+>>>>>>> upstream/master
                     launched = true;
                     out.println(
                             "Warning: Activity not started because the "
                             + " current activity is being kept for the user.");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_DELIVERED_TO_TOP:
+=======
+                case IActivityManager.START_DELIVERED_TO_TOP:
+>>>>>>> upstream/master
                     launched = true;
                     out.println(
                             "Warning: Activity not started, intent has "
                             + "been delivered to currently running "
                             + "top-most instance.");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_RETURN_INTENT_TO_CALLER:
+=======
+                case IActivityManager.START_RETURN_INTENT_TO_CALLER:
+>>>>>>> upstream/master
                     launched = true;
                     out.println(
                             "Warning: Activity not started because intent "
                             + "should be handled by the caller");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_TASK_TO_FRONT:
+=======
+                case IActivityManager.START_TASK_TO_FRONT:
+>>>>>>> upstream/master
                     launched = true;
                     out.println(
                             "Warning: Activity not started, its current "
                             + "task has been brought to the front");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_INTENT_NOT_RESOLVED:
+=======
+                case IActivityManager.START_INTENT_NOT_RESOLVED:
+>>>>>>> upstream/master
                     out.println(
                             "Error: Activity not started, unable to "
                             + "resolve " + intent.toString());
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_CLASS_NOT_FOUND:
+=======
+                case IActivityManager.START_CLASS_NOT_FOUND:
+>>>>>>> upstream/master
                     out.println(NO_CLASS_ERROR_CODE);
                     out.println("Error: Activity class " +
                             intent.getComponent().toShortString()
                             + " does not exist.");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_FORWARD_AND_REQUEST_CONFLICT:
+=======
+                case IActivityManager.START_FORWARD_AND_REQUEST_CONFLICT:
+>>>>>>> upstream/master
                     out.println(
                             "Error: Activity not started, you requested to "
                             + "both forward and receive its result");
                     break;
+<<<<<<< HEAD
                 case ActivityManager.START_PERMISSION_DENIED:
+=======
+                case IActivityManager.START_PERMISSION_DENIED:
+>>>>>>> upstream/master
                     out.println(
                             "Error: Activity not started, you do not "
                             + "have permission to access it.");
@@ -560,8 +656,12 @@ public class Am {
         Intent intent = makeIntent();
         IntentReceiver receiver = new IntentReceiver();
         System.out.println("Broadcasting: " + intent);
+<<<<<<< HEAD
         mAm.broadcastIntent(null, intent, null, receiver, 0, null, null, null, true, false,
                 mUserId);
+=======
+        mAm.broadcastIntent(null, intent, null, receiver, 0, null, null, null, true, false);
+>>>>>>> upstream/master
         receiver.waitForFinish();
     }
 
@@ -645,6 +745,13 @@ public class Am {
         String process = null;
         
         String cmd = nextArgRequired();
+<<<<<<< HEAD
+=======
+        if ("looper".equals(cmd)) {
+            cmd = nextArgRequired();
+            profileType = 1;
+        }
+>>>>>>> upstream/master
 
         if ("start".equals(cmd)) {
             start = true;
@@ -748,6 +855,7 @@ public class Am {
         mAm.setDebugApp(null, false, true);
     }
 
+<<<<<<< HEAD
     private void runSwitchUser() throws Exception {
         if (android.os.Process.myUid() != 0) {
             throw new RuntimeException("switchuser can only be run as root");
@@ -756,6 +864,8 @@ public class Am {
         mAm.switchUser(Integer.parseInt(user));
     }
 
+=======
+>>>>>>> upstream/master
     class MyActivityController extends IActivityController.Stub {
         final String mGdbPort;
 
@@ -1283,7 +1393,11 @@ public class Am {
         System.err.println(
                 "usage: am [subcommand] [options]\n" +
                 "usage: am start [-D] [-W] [-P <FILE>] [--start-profiler <FILE>]\n" +
+<<<<<<< HEAD
                 "               [--R COUNT] [-S] [--opengl-trace] <INTENT>\n" +
+=======
+                "               [--R COUNT] [-S] <INTENT>\n" +
+>>>>>>> upstream/master
                 "       am startservice <INTENT>\n" +
                 "       am force-stop <PACKAGE>\n" +
                 "       am kill <PACKAGE>\n" +
@@ -1291,8 +1405,13 @@ public class Am {
                 "       am broadcast <INTENT>\n" +
                 "       am instrument [-r] [-e <NAME> <VALUE>] [-p <FILE>] [-w]\n" +
                 "               [--no-window-animation] <COMPONENT>\n" +
+<<<<<<< HEAD
                 "       am profile start <PROCESS> <FILE>\n" +
                 "       am profile stop [<PROCESS>]\n" +
+=======
+                "       am profile [looper] start <PROCESS> <FILE>\n" +
+                "       am profile [looper] stop [<PROCESS>]\n" +
+>>>>>>> upstream/master
                 "       am dumpheap [flags] <PROCESS> <FILE>\n" +
                 "       am set-debug-app [-w] [--persistent] <PACKAGE>\n" +
                 "       am clear-debug-app\n" +
@@ -1310,7 +1429,10 @@ public class Am {
                 "    -R: repeat the activity launch <COUNT> times.  Prior to each repeat,\n" +
                 "        the top activity will be finished.\n" +
                 "    -S: force stop the target app before starting the activity\n" +
+<<<<<<< HEAD
                 "    --opengl-trace: enable tracing of OpenGL functions\n" +
+=======
+>>>>>>> upstream/master
                 "\n" +
                 "am startservice: start a Service.\n" +
                 "\n" +
@@ -1365,12 +1487,18 @@ public class Am {
                 "    [--ez <EXTRA_KEY> <EXTRA_BOOLEAN_VALUE> ...]\n" +
                 "    [--ei <EXTRA_KEY> <EXTRA_INT_VALUE> ...]\n" +
                 "    [--el <EXTRA_KEY> <EXTRA_LONG_VALUE> ...]\n" +
+<<<<<<< HEAD
                 "    [--ef <EXTRA_KEY> <EXTRA_FLOAT_VALUE> ...]\n" +
                 "    [--eu <EXTRA_KEY> <EXTRA_URI_VALUE> ...]\n" +
                 "    [--ecn <EXTRA_KEY> <EXTRA_COMPONENT_NAME_VALUE>]\n" +
                 "    [--eia <EXTRA_KEY> <EXTRA_INT_VALUE>[,<EXTRA_INT_VALUE...]]\n" +
                 "    [--ela <EXTRA_KEY> <EXTRA_LONG_VALUE>[,<EXTRA_LONG_VALUE...]]\n" +
                 "    [--efa <EXTRA_KEY> <EXTRA_FLOAT_VALUE>[,<EXTRA_FLOAT_VALUE...]]\n" +
+=======
+                "    [--eu <EXTRA_KEY> <EXTRA_URI_VALUE> ...]\n" +
+                "    [--eia <EXTRA_KEY> <EXTRA_INT_VALUE>[,<EXTRA_INT_VALUE...]]\n" +
+                "    [--ela <EXTRA_KEY> <EXTRA_LONG_VALUE>[,<EXTRA_LONG_VALUE...]]\n" +
+>>>>>>> upstream/master
                 "    [-n <COMPONENT>] [-f <FLAGS>]\n" +
                 "    [--grant-read-uri-permission] [--grant-write-uri-permission]\n" +
                 "    [--debug-log-resolution] [--exclude-stopped-packages]\n" +

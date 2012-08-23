@@ -30,6 +30,7 @@ class Record {
             "com.google.android.apps.maps\\u003Adriveabout",
             "com.google.android.apps.maps:LocationFriendService",
             "com.google.android.apps.maps\\u003ALocationFriendService",
+<<<<<<< HEAD
             "com.google.android.apps.maps:MapsBackgroundService",
             "com.google.android.apps.maps\\u003AMapsBackgroundService",
             "com.google.android.apps.maps:NetworkLocationService",
@@ -46,6 +47,10 @@ class Record {
             "com.google.android.setupwarlock\\u003Abroker",
             "android:ui",
             "android\\u003Aui",
+=======
+            "com.google.android.apps.maps:NetworkLocationService",
+            "com.google.android.apps.maps\\u003ANetworkLocationService",
+>>>>>>> upstream/master
     };
 
     enum Type {

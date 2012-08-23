@@ -22,7 +22,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.KeyEvent;
+=======
+>>>>>>> upstream/master
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +34,10 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 
 import com.android.systemui.R;
+<<<<<<< HEAD
 import com.android.systemui.statusbar.BaseStatusBar;
+=======
+>>>>>>> upstream/master
 import com.android.systemui.statusbar.policy.FixedSizeDrawable;
 
 public class PhoneStatusBarView extends FrameLayout {
@@ -66,7 +72,11 @@ public class PhoneStatusBarView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+<<<<<<< HEAD
         //mService.onBarViewAttached();
+=======
+        mService.onBarViewAttached();
+>>>>>>> upstream/master
     }
     
     @Override
@@ -92,6 +102,7 @@ public class PhoneStatusBarView extends FrameLayout {
         return mEndAlpha
                 - (int)(((mEndAlpha-mStartAlpha) * (mEndTime-time) / DIM_ANIM_TIME));
     }
+<<<<<<< HEAD
    
     @Override
     protected void onDetachedFromWindow() {
@@ -103,6 +114,19 @@ public class PhoneStatusBarView extends FrameLayout {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mService.updateExpandedViewPos(BaseStatusBar.EXPANDED_LEAVE_ALONE);
+=======
+	
+	@Override
+	protected void onDetachedFromWindow() {
+	    super.onDetachedFromWindow();
+		mService.onBarViewDetached();
+	}
+    
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mService.updateExpandedViewPos(PhoneStatusBar.EXPANDED_LEAVE_ALONE);
+>>>>>>> upstream/master
     }
 
     @Override

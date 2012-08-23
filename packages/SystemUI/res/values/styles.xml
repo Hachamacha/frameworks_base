@@ -16,6 +16,15 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+<<<<<<< HEAD
+=======
+    <style name="TextAppearance.StatusBar.Title" parent="@*android:style/TextAppearance.StatusBar">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+>>>>>>> upstream/master
     <style name="TextAppearance.StatusBar.IntruderAlert"
         parent="@*android:style/TextAppearance.StatusBar">
     </style>
@@ -34,6 +43,7 @@
         <item name="android:textColor">#FFFFFFFF</item>
     </style>
 
+<<<<<<< HEAD
     <style name="TextAppearance.StatusBar.Battery" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">16dp</item>
@@ -41,6 +51,8 @@
         <item name="android:textColor">@android:color/holo_blue_light</item>
     </style>
 
+=======
+>>>>>>> upstream/master
     <style name="TextAppearance.StatusBar.Clock" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">16dp</item>
@@ -49,6 +61,7 @@
     </style>
 
     <style name="TextAppearance.StatusBar.Date" parent="@*android:style/TextAppearance.StatusBar.Icon">
+<<<<<<< HEAD
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/holo_blue_light</item>
@@ -77,6 +90,9 @@
     <style name="TextAppearance.StatusBar.Signal" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">12dp</item>
+=======
+        <item name="android:textSize">16sp</item>
+>>>>>>> upstream/master
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/holo_blue_light</item>
     </style>
@@ -95,6 +111,11 @@
 
     <!-- Standard animations for hiding and showing the status bar. -->
     <style name="Animation.StatusBar">
+<<<<<<< HEAD
+=======
+        <item name="android:windowEnterAnimation">@anim/status_bar_enter</item>
+        <item name="android:windowExitAnimation">@anim/status_bar_exit</item>
+>>>>>>> upstream/master
     </style>
 
     <style name="Animation.StatusBar.IntruderAlert">

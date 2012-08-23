@@ -25,6 +25,7 @@ import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+<<<<<<< HEAD
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -32,6 +33,12 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
 import android.view.View;
+=======
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.AttributeSet;
+import android.util.Xml;
+>>>>>>> upstream/master
 import android.view.accessibility.AccessibilityEvent;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -44,6 +51,7 @@ import java.io.IOException;
  * {@link AccessibilityService} for {@link android.view.accessibility.AccessibilityEvent}s
  * according to the information encapsulated in this class.
  *
+<<<<<<< HEAD
  * <div class="special reference">
  * <h3>Developer Guides</h3>
  * <p>For more information about creating AccessibilityServices, read the
@@ -51,6 +59,8 @@ import java.io.IOException;
  * developer guide.</p>
  * </div>
  *
+=======
+>>>>>>> upstream/master
  * @see AccessibilityService
  * @see android.view.accessibility.AccessibilityEvent
  * @see android.view.accessibility.AccessibilityManager
@@ -103,6 +113,7 @@ public class AccessibilityServiceInfo implements Parcelable {
     public static final int DEFAULT = 0x0000001;
 
     /**
+<<<<<<< HEAD
      * If this flag is set the system will regard views that are not important
      * for accessibility in addition to the ones that are important for accessibility.
      * That is, views that are marked as not important for accessibility via
@@ -146,6 +157,8 @@ public class AccessibilityServiceInfo implements Parcelable {
     public static final int FLAG_REQUEST_TOUCH_EXPLORATION_MODE= 0x0000004;
 
     /**
+=======
+>>>>>>> upstream/master
      * The event types an {@link AccessibilityService} is interested in.
      * <p>
      *   <strong>Can be dynamically set at runtime.</strong>
@@ -210,8 +223,11 @@ public class AccessibilityServiceInfo implements Parcelable {
      *   <strong>Can be dynamically set at runtime.</strong>
      * </p>
      * @see #DEFAULT
+<<<<<<< HEAD
      * @see #FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
      * @see #FLAG_REQUEST_TOUCH_EXPLORATION_MODE
+=======
+>>>>>>> upstream/master
      */
     public int flags;
 
@@ -237,6 +253,7 @@ public class AccessibilityServiceInfo implements Parcelable {
     private boolean mCanRetrieveWindowContent;
 
     /**
+<<<<<<< HEAD
      * Resource id of the description of the accessibility service.
      */
     private int mDescriptionResId;
@@ -245,6 +262,11 @@ public class AccessibilityServiceInfo implements Parcelable {
      * Non localized description of the accessibility service.
      */
     private String mNonLocalizedDescription;
+=======
+     * Description of the accessibility service.
+     */
+    private String mDescription;
+>>>>>>> upstream/master
 
     /**
      * Creates a new instance.
@@ -316,6 +338,7 @@ public class AccessibilityServiceInfo implements Parcelable {
             mCanRetrieveWindowContent = asAttributes.getBoolean(
                     com.android.internal.R.styleable.AccessibilityService_canRetrieveWindowContent,
                     false);
+<<<<<<< HEAD
             TypedValue peekedValue = asAttributes.peekValue(
                     com.android.internal.R.styleable.AccessibilityService_description);
             if (peekedValue != null) {
@@ -325,6 +348,10 @@ public class AccessibilityServiceInfo implements Parcelable {
                     mNonLocalizedDescription = nonLocalizedDescription.toString().trim();
                 }
             }
+=======
+            mDescription = asAttributes.getString(
+                    com.android.internal.R.styleable.AccessibilityService_description);
+>>>>>>> upstream/master
             asAttributes.recycle();
         } catch (NameNotFoundException e) {
             throw new XmlPullParserException( "Unable to create context for: "
@@ -391,19 +418,28 @@ public class AccessibilityServiceInfo implements Parcelable {
      *    <strong>Statically set from
      *    {@link AccessibilityService#SERVICE_META_DATA meta-data}.</strong>
      * </p>
+<<<<<<< HEAD
      * @return True if window content can be retrieved.
+=======
+     * @return True window content can be retrieved.
+>>>>>>> upstream/master
      */
     public boolean getCanRetrieveWindowContent() {
         return mCanRetrieveWindowContent;
     }
 
     /**
+<<<<<<< HEAD
      * Gets the non-localized description of the accessibility service.
+=======
+     * Description of the accessibility service.
+>>>>>>> upstream/master
      * <p>
      *    <strong>Statically set from
      *    {@link AccessibilityService#SERVICE_META_DATA meta-data}.</strong>
      * </p>
      * @return The description.
+<<<<<<< HEAD
      *
      * @deprecated Use {@link #loadDescription(PackageManager)}.
      */
@@ -430,6 +466,11 @@ public class AccessibilityServiceInfo implements Parcelable {
             return description.toString().trim();
         }
         return null;
+=======
+     */
+    public String getDescription() {
+        return mDescription;
+>>>>>>> upstream/master
     }
 
     /**
@@ -449,8 +490,12 @@ public class AccessibilityServiceInfo implements Parcelable {
         parcel.writeParcelable(mResolveInfo, 0);
         parcel.writeString(mSettingsActivityName);
         parcel.writeInt(mCanRetrieveWindowContent ? 1 : 0);
+<<<<<<< HEAD
         parcel.writeInt(mDescriptionResId);
         parcel.writeString(mNonLocalizedDescription);
+=======
+        parcel.writeString(mDescription);
+>>>>>>> upstream/master
     }
 
     private void initFromParcel(Parcel parcel) {
@@ -463,8 +508,12 @@ public class AccessibilityServiceInfo implements Parcelable {
         mResolveInfo = parcel.readParcelable(null);
         mSettingsActivityName = parcel.readString();
         mCanRetrieveWindowContent = (parcel.readInt() == 1);
+<<<<<<< HEAD
         mDescriptionResId = parcel.readInt();
         mNonLocalizedDescription = parcel.readString();
+=======
+        mDescription = parcel.readString();
+>>>>>>> upstream/master
     }
 
     @Override
@@ -557,6 +606,7 @@ public class AccessibilityServiceInfo implements Parcelable {
     public static String feedbackTypeToString(int feedbackType) {
         StringBuilder builder = new StringBuilder();
         builder.append("[");
+<<<<<<< HEAD
         while (feedbackType != 0) {
             final int feedbackTypeFlag = 1 << Integer.numberOfTrailingZeros(feedbackType);
             feedbackType &= ~feedbackTypeFlag;
@@ -589,6 +639,28 @@ public class AccessibilityServiceInfo implements Parcelable {
                     if (builder.length() > 1) {
                         builder.append(", ");
                     }
+=======
+        while (feedbackType > 0) {
+            final int feedbackTypeFlag = 1 << Integer.numberOfTrailingZeros(feedbackType);
+            feedbackType &= ~feedbackTypeFlag;
+            if (builder.length() > 1) {
+                builder.append(", ");
+            }
+            switch (feedbackTypeFlag) {
+                case FEEDBACK_AUDIBLE:
+                    builder.append("FEEDBACK_AUDIBLE");
+                    break;
+                case FEEDBACK_HAPTIC:
+                    builder.append("FEEDBACK_HAPTIC");
+                    break;
+                case FEEDBACK_GENERIC:
+                    builder.append("FEEDBACK_GENERIC");
+                    break;
+                case FEEDBACK_SPOKEN:
+                    builder.append("FEEDBACK_SPOKEN");
+                    break;
+                case FEEDBACK_VISUAL:
+>>>>>>> upstream/master
                     builder.append("FEEDBACK_VISUAL");
                     break;
             }
@@ -608,10 +680,13 @@ public class AccessibilityServiceInfo implements Parcelable {
         switch (flag) {
             case DEFAULT:
                 return "DEFAULT";
+<<<<<<< HEAD
             case FLAG_INCLUDE_NOT_IMPORTANT_VIEWS:
                 return "FLAG_INCLUDE_NOT_IMPORTANT_VIEWS";
             case FLAG_REQUEST_TOUCH_EXPLORATION_MODE:
                 return "FLAG_REQUEST_TOUCH_EXPLORATION_MODE";
+=======
+>>>>>>> upstream/master
             default:
                 return null;
         }

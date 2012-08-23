@@ -18,10 +18,15 @@ package android.content;
 
 import com.android.internal.R;
 import com.android.internal.app.ThemeUtils;
+<<<<<<< HEAD
+=======
+import com.android.internal.util.ArrayUtils;
+>>>>>>> upstream/master
 import com.google.android.collect.Lists;
 import com.google.android.collect.Maps;
 
 import android.accounts.Account;
+<<<<<<< HEAD
 import android.accounts.AccountAndUser;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerService;
@@ -33,13 +38,25 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.SyncStorageEngine.OnSyncRequestListener;
+=======
+import android.accounts.AccountManager;
+import android.accounts.OnAccountsUpdateListener;
+import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+>>>>>>> upstream/master
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.RegisteredServicesCache;
 import android.content.pm.RegisteredServicesCacheListener;
 import android.content.pm.ResolveInfo;
+<<<<<<< HEAD
 import android.content.pm.UserInfo;
+=======
+>>>>>>> upstream/master
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -53,7 +70,10 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.os.WorkSource;
 import android.provider.Settings;
 import android.text.format.DateUtils;
@@ -139,9 +159,13 @@ public class SyncManager implements OnAccountsUpdateListener {
     private Context mContext;
     private Context mUiContext;
 
+<<<<<<< HEAD
     private static final AccountAndUser[] INITIAL_ACCOUNTS_ARRAY = new AccountAndUser[0];
 
     private volatile AccountAndUser[] mAccounts = INITIAL_ACCOUNTS_ARRAY;
+=======
+    private volatile Account[] mAccounts = INITIAL_ACCOUNTS_ARRAY;
+>>>>>>> upstream/master
 
     volatile private PowerManager.WakeLock mHandleAlarmWakeLock;
     volatile private PowerManager.WakeLock mSyncManagerWakeLock;
@@ -175,8 +199,12 @@ public class SyncManager implements OnAccountsUpdateListener {
                             Log.v(TAG, "Internal storage is low.");
                         }
                         mStorageIsLow = true;
+<<<<<<< HEAD
                         cancelActiveSync(null /* any account */, UserId.USER_ALL,
                                 null /* any authority */);
+=======
+                        cancelActiveSync(null /* any account */, null /* any authority */);
+>>>>>>> upstream/master
                     } else if (Intent.ACTION_DEVICE_STORAGE_OK.equals(action)) {
                         if (Log.isLoggable(TAG, Log.VERBOSE)) {
                             Log.v(TAG, "Internal storage is ok.");
@@ -202,21 +230,32 @@ public class SyncManager implements OnAccountsUpdateListener {
     private BroadcastReceiver mBackgroundDataSettingChanged = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             if (getConnectivityManager().getBackgroundDataSetting()) {
+<<<<<<< HEAD
                 scheduleSync(null /* account */, UserId.USER_ALL, null /* authority */,
                         new Bundle(), 0 /* delay */,
+=======
+                scheduleSync(null /* account */, null /* authority */, new Bundle(), 0 /* delay */,
+>>>>>>> upstream/master
                         false /* onlyThoseWithUnknownSyncableState */);
             }
         }
     };
 
+<<<<<<< HEAD
     private final PowerManager mPowerManager;
 
     // Use this as a random offset to seed all periodic syncs
     private int mSyncRandomOffsetMillis;
+=======
+    private static final Account[] INITIAL_ACCOUNTS_ARRAY = new Account[0];
+
+    private final PowerManager mPowerManager;
+>>>>>>> upstream/master
 
     private static final long SYNC_ALARM_TIMEOUT_MIN = 30 * 1000; // 30 seconds
     private static final long SYNC_ALARM_TIMEOUT_MAX = 2 * 60 * 60 * 1000; // two hours
 
+<<<<<<< HEAD
     private List<UserInfo> getAllUsers() {
         try {
             return AppGlobals.getPackageManager().getUsers();
@@ -264,6 +303,17 @@ public class SyncManager implements OnAccountsUpdateListener {
             if (!containsAccountAndUser(allAccounts,
                     currentSyncContext.mSyncOperation.account,
                     currentSyncContext.mSyncOperation.userId)) {
+=======
+    public void onAccountsUpdated(Account[] accounts) {
+        // remember if this was the first time this was called after an update
+        final boolean justBootedUp = mAccounts == INITIAL_ACCOUNTS_ARRAY;
+        mAccounts = accounts;
+
+        // if a sync is in progress yet it is no longer in the accounts list,
+        // cancel it
+        for (ActiveSyncContext currentSyncContext : mActiveSyncContexts) {
+            if (!ArrayUtils.contains(accounts, currentSyncContext.mSyncOperation.account)) {
+>>>>>>> upstream/master
                 Log.d(TAG, "canceling sync since the account has been removed");
                 sendSyncFinishedOrCanceledMessage(currentSyncContext,
                         null /* no result since this is a cancel */);
@@ -274,7 +324,15 @@ public class SyncManager implements OnAccountsUpdateListener {
         // the accounts are not set yet
         sendCheckAlarmsMessage();
 
+<<<<<<< HEAD
         if (allAccounts.length > 0) {
+=======
+        if (mBootCompleted) {
+            mSyncStorageEngine.doDatabaseCleanup(accounts);
+        }
+
+        if (accounts.length > 0) {
+>>>>>>> upstream/master
             // If this is the first time this was called after a bootup then
             // the accounts haven't really changed, instead they were just loaded
             // from the AccountManager. Otherwise at least one of the accounts
@@ -290,8 +348,12 @@ public class SyncManager implements OnAccountsUpdateListener {
             // a chance to set their syncable state.
 
             boolean onlyThoseWithUnkownSyncableState = justBootedUp;
+<<<<<<< HEAD
             scheduleSync(null, UserId.USER_ALL, null, null, 0 /* no delay */,
                     onlyThoseWithUnkownSyncableState);
+=======
+            scheduleSync(null, null, null, 0 /* no delay */, onlyThoseWithUnkownSyncableState);
+>>>>>>> upstream/master
         }
     }
 
@@ -328,6 +390,7 @@ public class SyncManager implements OnAccountsUpdateListener {
         }
     };
 
+<<<<<<< HEAD
     private BroadcastReceiver mUserIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -337,6 +400,11 @@ public class SyncManager implements OnAccountsUpdateListener {
 
     private static final String ACTION_SYNC_ALARM = "android.content.syncmanager.SYNC_ALARM";
     private final SyncHandler mSyncHandler;
+=======
+    private static final String ACTION_SYNC_ALARM = "android.content.syncmanager.SYNC_ALARM";
+    private final SyncHandler mSyncHandler;
+    private final Handler mMainHandler;
+>>>>>>> upstream/master
 
     private volatile boolean mBootCompleted = false;
 
@@ -356,6 +424,7 @@ public class SyncManager implements OnAccountsUpdateListener {
         mContext = context;
         SyncStorageEngine.init(context);
         mSyncStorageEngine = SyncStorageEngine.getSingleton();
+<<<<<<< HEAD
         mSyncStorageEngine.setOnSyncRequestListener(new OnSyncRequestListener() {
             public void onSyncRequest(Account account, int userId, String authority,
                     Bundle extras) {
@@ -363,6 +432,8 @@ public class SyncManager implements OnAccountsUpdateListener {
             }
         });
 
+=======
+>>>>>>> upstream/master
         mSyncAdapters = new SyncAdaptersCache(mContext);
         mSyncQueue = new SyncQueue(mSyncStorageEngine, mSyncAdapters);
 
@@ -370,11 +441,19 @@ public class SyncManager implements OnAccountsUpdateListener {
                 Process.THREAD_PRIORITY_BACKGROUND);
         syncThread.start();
         mSyncHandler = new SyncHandler(syncThread.getLooper());
+<<<<<<< HEAD
+=======
+        mMainHandler = new Handler(mContext.getMainLooper());
+>>>>>>> upstream/master
 
         mSyncAdapters.setListener(new RegisteredServicesCacheListener<SyncAdapterType>() {
             public void onServiceChanged(SyncAdapterType type, boolean removed) {
                 if (!removed) {
+<<<<<<< HEAD
                     scheduleSync(null, UserId.USER_ALL, type.authority, null, 0 /* no delay */,
+=======
+                    scheduleSync(null, type.authority, null, 0 /* no delay */,
+>>>>>>> upstream/master
                             false /* onlyThoseWithUnkownSyncableState */);
                 }
             }
@@ -402,10 +481,13 @@ public class SyncManager implements OnAccountsUpdateListener {
         intentFilter.setPriority(100);
         context.registerReceiver(mShutdownIntentReceiver, intentFilter);
 
+<<<<<<< HEAD
         intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_USER_REMOVED);
         mContext.registerReceiver(mUserIntentReceiver, intentFilter);
 
+=======
+>>>>>>> upstream/master
         ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
 
         if (!factoryTest) {
@@ -447,11 +529,16 @@ public class SyncManager implements OnAccountsUpdateListener {
             AccountManager.get(mContext).addOnAccountsUpdatedListener(SyncManager.this,
                 mSyncHandler, false /* updateImmediately */);
             // do this synchronously to ensure we have the accounts before this call returns
+<<<<<<< HEAD
             onAccountsUpdated(null);
         }
 
         // Pick a random second in a day to seed all periodic syncs
         mSyncRandomOffsetMillis = mSyncStorageEngine.getSyncRandomOffset() * 1000;
+=======
+            onAccountsUpdated(AccountManager.get(mContext).getAccounts());
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -478,6 +565,85 @@ public class SyncManager implements OnAccountsUpdateListener {
         }
     }
 
+<<<<<<< HEAD
+=======
+    private void initializeSyncAdapter(Account account, String authority) {
+        if (Log.isLoggable(TAG, Log.VERBOSE)) {
+            Log.v(TAG, "initializeSyncAdapter: " + account + ", authority " + authority);
+        }
+        SyncAdapterType syncAdapterType = SyncAdapterType.newKey(authority, account.type);
+        RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterInfo =
+                mSyncAdapters.getServiceInfo(syncAdapterType);
+        if (syncAdapterInfo == null) {
+            Log.w(TAG, "can't find a sync adapter for " + syncAdapterType + ", removing");
+            mSyncStorageEngine.removeAuthority(account, authority);
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.setAction("android.content.SyncAdapter");
+        intent.setComponent(syncAdapterInfo.componentName);
+        if (!mContext.bindService(intent,
+                new InitializerServiceConnection(account, authority, mContext, mMainHandler),
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND
+                | Context.BIND_ALLOW_OOM_MANAGEMENT)) {
+            Log.w(TAG, "initializeSyncAdapter: failed to bind to " + intent);
+        }
+    }
+
+    private static class InitializerServiceConnection implements ServiceConnection {
+        private final Account mAccount;
+        private final String mAuthority;
+        private final Handler mHandler;
+        private volatile Context mContext;
+        private volatile boolean mInitialized;
+
+        public InitializerServiceConnection(Account account, String authority, Context context,
+                Handler handler) {
+            mAccount = account;
+            mAuthority = authority;
+            mContext = context;
+            mHandler = handler;
+            mInitialized = false;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            try {
+                if (!mInitialized) {
+                    mInitialized = true;
+                    if (Log.isLoggable(TAG, Log.VERBOSE)) {
+                        Log.v(TAG, "calling initialize: " + mAccount + ", authority " + mAuthority);
+                    }
+                    ISyncAdapter.Stub.asInterface(service).initialize(mAccount, mAuthority);
+                }
+            } catch (RemoteException e) {
+                // doesn't matter, we will retry again later
+                Log.d(TAG, "error while initializing: " + mAccount + ", authority " + mAuthority,
+                        e);
+            } finally {
+                // give the sync adapter time to initialize before unbinding from it
+                // TODO: change this API to not rely on this timing, http://b/2500805
+                mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (mContext != null) {
+                            mContext.unbindService(InitializerServiceConnection.this);
+                            mContext = null;
+                        }
+                    }
+                }, INITIALIZATION_UNBIND_DELAY_MS);
+            }
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            if (mContext != null) {
+                mContext.unbindService(InitializerServiceConnection.this);
+                mContext = null;
+            }
+        }
+
+    }
+
+>>>>>>> upstream/master
     /**
      * Initiate a sync. This can start a sync for all providers
      * (pass null to url, set onlyTicklable to false), only those
@@ -498,8 +664,11 @@ public class SyncManager implements OnAccountsUpdateListener {
      * <p>You'll start getting callbacks after this.
      *
      * @param requestedAccount the account to sync, may be null to signify all accounts
+<<<<<<< HEAD
      * @param userId the id of the user whose accounts are to be synced. If userId is USER_ALL,
      *          then all users' accounts are considered.
+=======
+>>>>>>> upstream/master
      * @param requestedAuthority the authority to sync, may be null to indicate all authorities
      * @param extras a Map of SyncAdapter-specific information to control
      *          syncs of a specific provider. Can be null. Is ignored
@@ -507,7 +676,11 @@ public class SyncManager implements OnAccountsUpdateListener {
      * @param delay how many milliseconds in the future to wait before performing this
      * @param onlyThoseWithUnkownSyncableState
      */
+<<<<<<< HEAD
     public void scheduleSync(Account requestedAccount, int userId, String requestedAuthority,
+=======
+    public void scheduleSync(Account requestedAccount, String requestedAuthority,
+>>>>>>> upstream/master
             Bundle extras, long delay, boolean onlyThoseWithUnkownSyncableState) {
         boolean isLoggable = Log.isLoggable(TAG, Log.VERBOSE);
 
@@ -521,9 +694,15 @@ public class SyncManager implements OnAccountsUpdateListener {
             delay = -1; // this means schedule at the front of the queue
         }
 
+<<<<<<< HEAD
         AccountAndUser[] accounts;
         if (requestedAccount != null && userId != UserId.USER_ALL) {
             accounts = new AccountAndUser[] { new AccountAndUser(requestedAccount, userId) };
+=======
+        Account[] accounts;
+        if (requestedAccount != null) {
+            accounts = new Account[]{requestedAccount};
+>>>>>>> upstream/master
         } else {
             // if the accounts aren't configured yet then we can't support an account-less
             // sync request
@@ -574,23 +753,39 @@ public class SyncManager implements OnAccountsUpdateListener {
             if (hasSyncAdapter) syncableAuthorities.add(requestedAuthority);
         }
 
+<<<<<<< HEAD
         for (String authority : syncableAuthorities) {
             for (AccountAndUser account : accounts) {
                 int isSyncable = mSyncStorageEngine.getIsSyncable(account.account, account.userId,
                         authority);
+=======
+        final boolean masterSyncAutomatically = mSyncStorageEngine.getMasterSyncAutomatically();
+
+        for (String authority : syncableAuthorities) {
+            for (Account account : accounts) {
+                int isSyncable = mSyncStorageEngine.getIsSyncable(account, authority);
+>>>>>>> upstream/master
                 if (isSyncable == 0) {
                     continue;
                 }
                 final RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterInfo =
                         mSyncAdapters.getServiceInfo(
+<<<<<<< HEAD
                                 SyncAdapterType.newKey(authority, account.account.type));
+=======
+                                SyncAdapterType.newKey(authority, account.type));
+>>>>>>> upstream/master
                 if (syncAdapterInfo == null) {
                     continue;
                 }
                 final boolean allowParallelSyncs = syncAdapterInfo.type.allowParallelSyncs();
                 final boolean isAlwaysSyncable = syncAdapterInfo.type.isAlwaysSyncable();
                 if (isSyncable < 0 && isAlwaysSyncable) {
+<<<<<<< HEAD
                     mSyncStorageEngine.setIsSyncable(account.account, account.userId, authority, 1);
+=======
+                    mSyncStorageEngine.setIsSyncable(account, authority, 1);
+>>>>>>> upstream/master
                     isSyncable = 1;
                 }
                 if (onlyThoseWithUnkownSyncableState && isSyncable >= 0) {
@@ -604,10 +799,15 @@ public class SyncManager implements OnAccountsUpdateListener {
                 boolean syncAllowed =
                         (isSyncable < 0)
                         || ignoreSettings
+<<<<<<< HEAD
                         || (backgroundDataUsageAllowed
                                 && mSyncStorageEngine.getMasterSyncAutomatically(account.userId)
                                 && mSyncStorageEngine.getSyncAutomatically(account.account,
                                         account.userId, authority));
+=======
+                        || (backgroundDataUsageAllowed && masterSyncAutomatically
+                            && mSyncStorageEngine.getSyncAutomatically(account, authority));
+>>>>>>> upstream/master
                 if (!syncAllowed) {
                     if (isLoggable) {
                         Log.d(TAG, "scheduleSync: sync of " + account + ", " + authority
@@ -616,10 +816,15 @@ public class SyncManager implements OnAccountsUpdateListener {
                     continue;
                 }
 
+<<<<<<< HEAD
                 Pair<Long, Long> backoff = mSyncStorageEngine
                         .getBackoff(account.account, account.userId, authority);
                 long delayUntil = mSyncStorageEngine.getDelayUntilTime(account.account,
                         account.userId, authority);
+=======
+                Pair<Long, Long> backoff = mSyncStorageEngine.getBackoff(account, authority);
+                long delayUntil = mSyncStorageEngine.getDelayUntilTime(account, authority);
+>>>>>>> upstream/master
                 final long backoffTime = backoff != null ? backoff.first : 0;
                 if (isSyncable < 0) {
                     Bundle newExtras = new Bundle();
@@ -633,8 +838,14 @@ public class SyncManager implements OnAccountsUpdateListener {
                                 + ", extras " + newExtras);
                     }
                     scheduleSyncOperation(
+<<<<<<< HEAD
                             new SyncOperation(account.account, account.userId, source, authority,
                                     newExtras, 0, backoffTime, delayUntil, allowParallelSyncs));
+=======
+                            new SyncOperation(account, source, authority, newExtras, 0,
+                                    backoffTime, delayUntil,
+                                    allowParallelSyncs));
+>>>>>>> upstream/master
                 }
                 if (!onlyThoseWithUnkownSyncableState) {
                     if (isLoggable) {
@@ -646,17 +857,30 @@ public class SyncManager implements OnAccountsUpdateListener {
                                 + ", extras " + extras);
                     }
                     scheduleSyncOperation(
+<<<<<<< HEAD
                             new SyncOperation(account.account, account.userId, source, authority,
                                     extras, delay, backoffTime, delayUntil, allowParallelSyncs));
+=======
+                            new SyncOperation(account, source, authority, extras, delay,
+                                    backoffTime, delayUntil,
+                                    allowParallelSyncs));
+>>>>>>> upstream/master
                 }
             }
         }
     }
 
+<<<<<<< HEAD
     public void scheduleLocalSync(Account account, int userId, String authority) {
         final Bundle extras = new Bundle();
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, true);
         scheduleSync(account, userId, authority, extras, LOCAL_SYNC_DELAY,
+=======
+    public void scheduleLocalSync(Account account, String authority) {
+        final Bundle extras = new Bundle();
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, true);
+        scheduleSync(account, authority, extras, LOCAL_SYNC_DELAY,
+>>>>>>> upstream/master
                 false /* onlyThoseWithUnkownSyncableState */);
     }
 
@@ -680,7 +904,10 @@ public class SyncManager implements OnAccountsUpdateListener {
 
     private void sendCheckAlarmsMessage() {
         if (Log.isLoggable(TAG, Log.VERBOSE)) Log.v(TAG, "sending MESSAGE_CHECK_ALARMS");
+<<<<<<< HEAD
         mSyncHandler.removeMessages(SyncHandler.MESSAGE_CHECK_ALARMS);
+=======
+>>>>>>> upstream/master
         mSyncHandler.sendEmptyMessage(SyncHandler.MESSAGE_CHECK_ALARMS);
     }
 
@@ -693,13 +920,20 @@ public class SyncManager implements OnAccountsUpdateListener {
         mSyncHandler.sendMessage(msg);
     }
 
+<<<<<<< HEAD
     private void sendCancelSyncsMessage(final Account account, final int userId,
             final String authority) {
+=======
+    private void sendCancelSyncsMessage(final Account account, final String authority) {
+>>>>>>> upstream/master
         if (Log.isLoggable(TAG, Log.VERBOSE)) Log.v(TAG, "sending MESSAGE_CANCEL");
         Message msg = mSyncHandler.obtainMessage();
         msg.what = SyncHandler.MESSAGE_CANCEL;
         msg.obj = Pair.create(account, authority);
+<<<<<<< HEAD
         msg.arg1 = userId;
+=======
+>>>>>>> upstream/master
         mSyncHandler.sendMessage(msg);
     }
 
@@ -721,20 +955,34 @@ public class SyncManager implements OnAccountsUpdateListener {
     }
 
     private void clearBackoffSetting(SyncOperation op) {
+<<<<<<< HEAD
         mSyncStorageEngine.setBackoff(op.account, op.userId, op.authority,
                 SyncStorageEngine.NOT_IN_BACKOFF_MODE, SyncStorageEngine.NOT_IN_BACKOFF_MODE);
         synchronized (mSyncQueue) {
             mSyncQueue.onBackoffChanged(op.account, op.userId, op.authority, 0);
+=======
+        mSyncStorageEngine.setBackoff(op.account, op.authority,
+                SyncStorageEngine.NOT_IN_BACKOFF_MODE, SyncStorageEngine.NOT_IN_BACKOFF_MODE);
+        synchronized (mSyncQueue) {
+            mSyncQueue.onBackoffChanged(op.account, op.authority, 0);
+>>>>>>> upstream/master
         }
     }
 
     private void increaseBackoffSetting(SyncOperation op) {
+<<<<<<< HEAD
         // TODO: Use this function to align it to an already scheduled sync
         //       operation in the specified window
         final long now = SystemClock.elapsedRealtime();
 
         final Pair<Long, Long> previousSettings =
                 mSyncStorageEngine.getBackoff(op.account, op.userId, op.authority);
+=======
+        final long now = SystemClock.elapsedRealtime();
+
+        final Pair<Long, Long> previousSettings =
+                mSyncStorageEngine.getBackoff(op.account, op.authority);
+>>>>>>> upstream/master
         long newDelayInMs = -1;
         if (previousSettings != null) {
             // don't increase backoff before current backoff is expired. This will happen for op's
@@ -765,14 +1013,22 @@ public class SyncManager implements OnAccountsUpdateListener {
 
         final long backoff = now + newDelayInMs;
 
+<<<<<<< HEAD
         mSyncStorageEngine.setBackoff(op.account, op.userId, op.authority,
+=======
+        mSyncStorageEngine.setBackoff(op.account, op.authority,
+>>>>>>> upstream/master
                 backoff, newDelayInMs);
 
         op.backoff = backoff;
         op.updateEffectiveRunTime();
 
         synchronized (mSyncQueue) {
+<<<<<<< HEAD
             mSyncQueue.onBackoffChanged(op.account, op.userId, op.authority, backoff);
+=======
+            mSyncQueue.onBackoffChanged(op.account, op.authority, backoff);
+>>>>>>> upstream/master
         }
     }
 
@@ -785,8 +1041,12 @@ public class SyncManager implements OnAccountsUpdateListener {
         } else {
             newDelayUntilTime = 0;
         }
+<<<<<<< HEAD
         mSyncStorageEngine
                 .setDelayUntilTime(op.account, op.userId, op.authority, newDelayUntilTime);
+=======
+        mSyncStorageEngine.setDelayUntilTime(op.account, op.authority, newDelayUntilTime);
+>>>>>>> upstream/master
         synchronized (mSyncQueue) {
             mSyncQueue.onDelayUntilTimeChanged(op.account, op.authority, newDelayUntilTime);
         }
@@ -797,8 +1057,13 @@ public class SyncManager implements OnAccountsUpdateListener {
      * @param account limit the cancelations to syncs with this account, if non-null
      * @param authority limit the cancelations to syncs with this authority, if non-null
      */
+<<<<<<< HEAD
     public void cancelActiveSync(Account account, int userId, String authority) {
         sendCancelSyncsMessage(account, userId, authority);
+=======
+    public void cancelActiveSync(Account account, String authority) {
+        sendCancelSyncsMessage(account, authority);
+>>>>>>> upstream/master
     }
 
     /**
@@ -830,11 +1095,19 @@ public class SyncManager implements OnAccountsUpdateListener {
      * @param account limit the removals to operations with this account, if non-null
      * @param authority limit the removals to operations with this authority, if non-null
      */
+<<<<<<< HEAD
     public void clearScheduledSyncOperations(Account account, int userId, String authority) {
         synchronized (mSyncQueue) {
             mSyncQueue.remove(account, userId, authority);
         }
         mSyncStorageEngine.setBackoff(account, userId, authority,
+=======
+    public void clearScheduledSyncOperations(Account account, String authority) {
+        synchronized (mSyncQueue) {
+            mSyncQueue.remove(account, authority);
+        }
+        mSyncStorageEngine.setBackoff(account, authority,
+>>>>>>> upstream/master
                 SyncStorageEngine.NOT_IN_BACKOFF_MODE, SyncStorageEngine.NOT_IN_BACKOFF_MODE);
     }
 
@@ -882,8 +1155,12 @@ public class SyncManager implements OnAccountsUpdateListener {
                 Log.d(TAG, "retrying sync operation that failed because there was already a "
                         + "sync in progress: " + operation);
             }
+<<<<<<< HEAD
             scheduleSyncOperation(new SyncOperation(operation.account, operation.userId,
                     operation.syncSource,
+=======
+            scheduleSyncOperation(new SyncOperation(operation.account, operation.syncSource,
+>>>>>>> upstream/master
                     operation.authority, operation.extras,
                     DELAY_RETRY_SYNC_IN_PROGRESS_IN_SECONDS * 1000,
                     operation.backoff, operation.delayUntil, operation.allowParallelSyncs));
@@ -899,6 +1176,7 @@ public class SyncManager implements OnAccountsUpdateListener {
         }
     }
 
+<<<<<<< HEAD
     private void onUserRemoved(Intent intent) {
         int userId = intent.getIntExtra(Intent.EXTRA_USERID, -1);
         if (userId == -1) return;
@@ -911,6 +1189,8 @@ public class SyncManager implements OnAccountsUpdateListener {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private Context getUiContext() {
         if (mUiContext == null) {
             mUiContext = ThemeUtils.createUiContext(mContext);
@@ -1006,8 +1286,12 @@ public class SyncManager implements OnAccountsUpdateListener {
             mBound = true;
             final boolean bindResult = mContext.bindService(intent, this,
                     Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND
+<<<<<<< HEAD
                     | Context.BIND_ALLOW_OOM_MANAGEMENT,
                     mSyncOperation.userId);
+=======
+                    | Context.BIND_ALLOW_OOM_MANAGEMENT);
+>>>>>>> upstream/master
             if (!bindResult) {
                 mBound = false;
             }
@@ -1062,6 +1346,7 @@ public class SyncManager implements OnAccountsUpdateListener {
 
     protected void dumpSyncState(PrintWriter pw) {
         pw.print("data connected: "); pw.println(mDataConnectionIsConnected);
+<<<<<<< HEAD
         pw.print("auto sync: ");
         List<UserInfo> users = getAllUsers();
         if (users != null) {
@@ -1075,6 +1360,11 @@ public class SyncManager implements OnAccountsUpdateListener {
 
         final AccountAndUser[] accounts = mAccounts;
 
+=======
+        pw.print("memory low: "); pw.println(mStorageIsLow);
+
+        final Account[] accounts = mAccounts;
+>>>>>>> upstream/master
         pw.print("accounts: ");
         if (accounts != INITIAL_ACCOUNTS_ARRAY) {
             pw.println(accounts.length);
@@ -1084,8 +1374,11 @@ public class SyncManager implements OnAccountsUpdateListener {
         final long now = SystemClock.elapsedRealtime();
         pw.print("now: "); pw.print(now);
         pw.println(" (" + formatTime(System.currentTimeMillis()) + ")");
+<<<<<<< HEAD
         pw.print("offset: "); pw.print(DateUtils.formatElapsedTime(mSyncRandomOffsetMillis/1000));
         pw.println(" (HH:MM:SS)");
+=======
+>>>>>>> upstream/master
         pw.print("uptime: "); pw.print(DateUtils.formatElapsedTime(now/1000));
                 pw.println(" (HH:MM:SS)");
         pw.print("time spent syncing: ");
@@ -1129,6 +1422,7 @@ public class SyncManager implements OnAccountsUpdateListener {
         // join the installed sync adapter with the accounts list and emit for everything
         pw.println();
         pw.println("Sync Status");
+<<<<<<< HEAD
         for (AccountAndUser account : accounts) {
             pw.print("  Account "); pw.print(account.account.name);
                     pw.print(" u"); pw.print(account.userId);
@@ -1143,6 +1437,20 @@ public class SyncManager implements OnAccountsUpdateListener {
                 SyncStorageEngine.AuthorityInfo settings =
                         mSyncStorageEngine.getOrCreateAuthority(
                                 account.account, account.userId, syncAdapterType.type.authority);
+=======
+        for (Account account : accounts) {
+            pw.print("  Account "); pw.print(account.name);
+                    pw.print(" "); pw.print(account.type);
+                    pw.println(":");
+            for (RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterType :
+                    mSyncAdapters.getAllServices()) {
+                if (!syncAdapterType.type.accountType.equals(account.type)) {
+                    continue;
+                }
+
+                SyncStorageEngine.AuthorityInfo settings = mSyncStorageEngine.getOrCreateAuthority(
+                        account, syncAdapterType.type.authority);
+>>>>>>> upstream/master
                 SyncStatusInfo status = mSyncStorageEngine.getOrCreateSyncStatus(settings);
                 pw.print("    "); pw.print(settings.authority);
                 pw.println(":");
@@ -1314,6 +1622,7 @@ public class SyncManager implements OnAccountsUpdateListener {
 
             }
 
+<<<<<<< HEAD
             if (totalElapsedTime > 0) {
                 pw.println();
                 pw.printf("Detailed Statistics (Recent history):  "
@@ -1325,6 +1634,59 @@ public class SyncManager implements OnAccountsUpdateListener {
                 Collections.sort(sortedAuthorities, new Comparator<AuthoritySyncStats>() {
                     @Override
                     public int compare(AuthoritySyncStats lhs, AuthoritySyncStats rhs) {
+=======
+            pw.println();
+            pw.printf("Detailed Statistics (Recent history):  %d (# of times) %ds (sync time)\n",
+                    totalTimes, totalElapsedTime / 1000);
+
+            final List<AuthoritySyncStats> sortedAuthorities =
+                    new ArrayList<AuthoritySyncStats>(authorityMap.values());
+            Collections.sort(sortedAuthorities, new Comparator<AuthoritySyncStats>() {
+                @Override
+                public int compare(AuthoritySyncStats lhs, AuthoritySyncStats rhs) {
+                    // reverse order
+                    int compare = Integer.compare(rhs.times, lhs.times);
+                    if (compare == 0) {
+                        compare = Long.compare(rhs.elapsedTime, lhs.elapsedTime);
+                    }
+                    return compare;
+                }
+            });
+
+            final int maxLength = Math.max(maxAuthority, maxAccount + 3);
+            final int padLength = 2 + 2 + maxLength + 2 + 10 + 11;
+            final char chars[] = new char[padLength];
+            Arrays.fill(chars, '-');
+            final String separator = new String(chars);
+
+            final String authorityFormat = String.format("  %%-%ds: %%-9s  %%-11s\n", maxLength + 2);
+            final String accountFormat = String.format("    %%-%ds:   %%-9s  %%-11s\n", maxLength);
+
+            pw.println(separator);
+            for (AuthoritySyncStats authoritySyncStats : sortedAuthorities) {
+                String name = authoritySyncStats.name;
+                long elapsedTime;
+                int times;
+                String timeStr;
+                String timesStr;
+
+                elapsedTime = authoritySyncStats.elapsedTime;
+                times = authoritySyncStats.times;
+                timeStr = String.format("%ds/%d%%",
+                        elapsedTime / 1000,
+                        elapsedTime * 100 / totalElapsedTime);
+                timesStr = String.format("%d/%d%%",
+                        times,
+                        times * 100 / totalTimes);
+                pw.printf(authorityFormat, name, timesStr, timeStr);
+
+                final List<AccountSyncStats> sortedAccounts =
+                        new ArrayList<AccountSyncStats>(
+                                authoritySyncStats.accountMap.values());
+                Collections.sort(sortedAccounts, new Comparator<AccountSyncStats>() {
+                    @Override
+                    public int compare(AccountSyncStats lhs, AccountSyncStats rhs) {
+>>>>>>> upstream/master
                         // reverse order
                         int compare = Integer.compare(rhs.times, lhs.times);
                         if (compare == 0) {
@@ -1333,6 +1695,7 @@ public class SyncManager implements OnAccountsUpdateListener {
                         return compare;
                     }
                 });
+<<<<<<< HEAD
 
                 final int maxLength = Math.max(maxAuthority, maxAccount + 3);
                 final int padLength = 2 + 2 + maxLength + 2 + 10 + 11;
@@ -1355,12 +1718,18 @@ public class SyncManager implements OnAccountsUpdateListener {
 
                     elapsedTime = authoritySyncStats.elapsedTime;
                     times = authoritySyncStats.times;
+=======
+                for (AccountSyncStats stats: sortedAccounts) {
+                    elapsedTime = stats.elapsedTime;
+                    times = stats.times;
+>>>>>>> upstream/master
                     timeStr = String.format("%ds/%d%%",
                             elapsedTime / 1000,
                             elapsedTime * 100 / totalElapsedTime);
                     timesStr = String.format("%d/%d%%",
                             times,
                             times * 100 / totalTimes);
+<<<<<<< HEAD
                     pw.printf(authorityFormat, name, timesStr, timeStr);
 
                     final List<AccountSyncStats> sortedAccounts =
@@ -1390,6 +1759,11 @@ public class SyncManager implements OnAccountsUpdateListener {
                     }
                     pw.println(separator);
                 }
+=======
+                    pw.printf(accountFormat, stats.name, timesStr, timeStr);
+                }
+                pw.println(separator);
+>>>>>>> upstream/master
             }
 
             pw.println();
@@ -1595,6 +1969,7 @@ public class SyncManager implements OnAccountsUpdateListener {
         private volatile CountDownLatch mReadyToRunLatch = new CountDownLatch(1);
         public void onBootCompleted() {
             mBootCompleted = true;
+<<<<<<< HEAD
             // TODO: Handle bootcompleted event for specific user. Now let's just iterate through
             // all the users.
             List<UserInfo> users = getAllUsers();
@@ -1605,6 +1980,9 @@ public class SyncManager implements OnAccountsUpdateListener {
                             user.id);
                 }
             }
+=======
+            mSyncStorageEngine.doDatabaseCleanup(AccountManager.get(mContext).getAccounts());
+>>>>>>> upstream/master
             if (mReadyToRunLatch != null) {
                 mReadyToRunLatch.countDown();
             }
@@ -1685,7 +2063,11 @@ public class SyncManager implements OnAccountsUpdateListener {
                             Log.d(TAG, "handleSyncHandlerMessage: MESSAGE_SERVICE_CANCEL: "
                                     + payload.first + ", " + payload.second);
                         }
+<<<<<<< HEAD
                         cancelActiveSyncLocked(payload.first, msg.arg1, payload.second);
+=======
+                        cancelActiveSyncLocked(payload.first, payload.second);
+>>>>>>> upstream/master
                         nextPendingSyncTime = maybeStartNextSyncLocked();
                         break;
                     }
@@ -1790,6 +2172,7 @@ public class SyncManager implements OnAccountsUpdateListener {
             final boolean backgroundDataUsageAllowed =
                     getConnectivityManager().getBackgroundDataSetting();
             long earliestFuturePollTime = Long.MAX_VALUE;
+<<<<<<< HEAD
             if (!backgroundDataUsageAllowed) {
                 return earliestFuturePollTime;
             }
@@ -1815,12 +2198,31 @@ public class SyncManager implements OnAccountsUpdateListener {
 
                 if (mSyncStorageEngine.getIsSyncable(info.account, info.userId, info.authority)
                         == 0) {
+=======
+            if (!backgroundDataUsageAllowed || !mSyncStorageEngine.getMasterSyncAutomatically()) {
+                return earliestFuturePollTime;
+            }
+            final long nowAbsolute = System.currentTimeMillis();
+            ArrayList<SyncStorageEngine.AuthorityInfo> infos = mSyncStorageEngine.getAuthorities();
+            for (SyncStorageEngine.AuthorityInfo info : infos) {
+                // skip the sync if the account of this operation no longer exists
+                if (!ArrayUtils.contains(mAccounts, info.account)) {
+                    continue;
+                }
+
+                if (!mSyncStorageEngine.getSyncAutomatically(info.account, info.authority)) {
+                    continue;
+                }
+
+                if (mSyncStorageEngine.getIsSyncable(info.account, info.authority) == 0) {
+>>>>>>> upstream/master
                     continue;
                 }
 
                 SyncStatusInfo status = mSyncStorageEngine.getOrCreateSyncStatus(info);
                 for (int i = 0, N = info.periodicSyncs.size(); i < N; i++) {
                     final Bundle extras = info.periodicSyncs.get(i).first;
+<<<<<<< HEAD
                     final Long periodInMillis = info.periodicSyncs.get(i).second * 1000;
                     // find when this periodic sync was last scheduled to run
                     final long lastPollTimeAbsolute = status.getPeriodicSyncTime(i);
@@ -1849,6 +2251,20 @@ public class SyncManager implements OnAccountsUpdateListener {
                         // Sync now
                         final Pair<Long, Long> backoff = mSyncStorageEngine.getBackoff(
                                 info.account, info.userId, info.authority);
+=======
+                    final Long periodInSeconds = info.periodicSyncs.get(i).second;
+                    // find when this periodic sync was last scheduled to run
+                    final long lastPollTimeAbsolute = status.getPeriodicSyncTime(i);
+                    // compute when this periodic sync should next run - this can be in the future
+                    // for example if the user changed the time, synced and changed back.
+                    final long nextPollTimeAbsolute = lastPollTimeAbsolute > nowAbsolute
+                            ? nowAbsolute
+                            : lastPollTimeAbsolute + periodInSeconds * 1000;
+                    // if it is ready to run then schedule it and mark it as having been scheduled
+                    if (nextPollTimeAbsolute <= nowAbsolute) {
+                        final Pair<Long, Long> backoff =
+                                mSyncStorageEngine.getBackoff(info.account, info.authority);
+>>>>>>> upstream/master
                         final RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterInfo =
                                 mSyncAdapters.getServiceInfo(
                                         SyncAdapterType.newKey(info.authority, info.account.type));
@@ -1856,6 +2272,7 @@ public class SyncManager implements OnAccountsUpdateListener {
                             continue;
                         }
                         scheduleSyncOperation(
+<<<<<<< HEAD
                                 new SyncOperation(info.account, info.userId,
                                         SyncStorageEngine.SOURCE_PERIODIC,
                                         info.authority, extras, 0 /* delay */,
@@ -1871,6 +2288,21 @@ public class SyncManager implements OnAccountsUpdateListener {
                     // remember this time if it is earlier than earliestFuturePollTime
                     if (nextPollTimeAbsolute < earliestFuturePollTime) {
                         earliestFuturePollTime = nextPollTimeAbsolute;
+=======
+                                new SyncOperation(info.account, SyncStorageEngine.SOURCE_PERIODIC,
+                                        info.authority, extras, 0 /* delay */,
+                                        backoff != null ? backoff.first : 0,
+                                        mSyncStorageEngine.getDelayUntilTime(
+                                                info.account, info.authority),
+                                        syncAdapterInfo.type.allowParallelSyncs()));
+                        status.setPeriodicSyncTime(i, nowAbsolute);
+                    } else {
+                        // it isn't ready to run, remember this time if it is earlier than
+                        // earliestFuturePollTime
+                        if (nextPollTimeAbsolute < earliestFuturePollTime) {
+                            earliestFuturePollTime = nextPollTimeAbsolute;
+                        }
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -1907,7 +2339,11 @@ public class SyncManager implements OnAccountsUpdateListener {
 
             // If the accounts aren't known yet then we aren't ready to run. We will be kicked
             // when the account lookup request does complete.
+<<<<<<< HEAD
             AccountAndUser[] accounts = mAccounts;
+=======
+            Account[] accounts = mAccounts;
+>>>>>>> upstream/master
             if (accounts == INITIAL_ACCOUNTS_ARRAY) {
                 if (isLoggable) {
                     Log.v(TAG, "maybeStartNextSync: accounts not known, skipping");
@@ -1920,6 +2356,10 @@ public class SyncManager implements OnAccountsUpdateListener {
             // start it, otherwise just get out.
             final boolean backgroundDataUsageAllowed =
                     getConnectivityManager().getBackgroundDataSetting();
+<<<<<<< HEAD
+=======
+            final boolean masterSyncAutomatically = mSyncStorageEngine.getMasterSyncAutomatically();
+>>>>>>> upstream/master
 
             final long now = SystemClock.elapsedRealtime();
 
@@ -1939,15 +2379,23 @@ public class SyncManager implements OnAccountsUpdateListener {
                     final SyncOperation op = operationIterator.next();
 
                     // drop the sync if the account of this operation no longer exists
+<<<<<<< HEAD
                     if (!containsAccountAndUser(accounts, op.account, op.userId)) {
+=======
+                    if (!ArrayUtils.contains(mAccounts, op.account)) {
+>>>>>>> upstream/master
                         operationIterator.remove();
                         mSyncStorageEngine.deleteFromPending(op.pendingOperation);
                         continue;
                     }
 
                     // drop this sync request if it isn't syncable
+<<<<<<< HEAD
                     int syncableState = mSyncStorageEngine.getIsSyncable(
                             op.account, op.userId, op.authority);
+=======
+                    int syncableState = mSyncStorageEngine.getIsSyncable(op.account, op.authority);
+>>>>>>> upstream/master
                     if (syncableState == 0) {
                         operationIterator.remove();
                         mSyncStorageEngine.deleteFromPending(op.pendingOperation);
@@ -1982,11 +2430,19 @@ public class SyncManager implements OnAccountsUpdateListener {
                     // disconnected for the target UID.
                     if (!op.extras.getBoolean(ContentResolver.SYNC_EXTRAS_IGNORE_SETTINGS, false)
                             && (syncableState > 0)
+<<<<<<< HEAD
                             && (!mSyncStorageEngine.getMasterSyncAutomatically(op.userId)
                                 || !backgroundDataUsageAllowed
                                 || !uidNetworkConnected
                                 || !mSyncStorageEngine.getSyncAutomatically(
                                        op.account, op.userId, op.authority))) {
+=======
+                            && (!masterSyncAutomatically
+                                || !backgroundDataUsageAllowed
+                                || !uidNetworkConnected
+                                || !mSyncStorageEngine.getSyncAutomatically(
+                                       op.account, op.authority))) {
+>>>>>>> upstream/master
                         operationIterator.remove();
                         mSyncStorageEngine.deleteFromPending(op.pendingOperation);
                         continue;
@@ -2013,7 +2469,10 @@ public class SyncManager implements OnAccountsUpdateListener {
                 ActiveSyncContext conflict = null;
                 ActiveSyncContext longRunning = null;
                 ActiveSyncContext toReschedule = null;
+<<<<<<< HEAD
                 ActiveSyncContext oldestNonExpeditedRegular = null;
+=======
+>>>>>>> upstream/master
 
                 for (ActiveSyncContext activeSyncContext : mActiveSyncContexts) {
                     final SyncOperation activeOp = activeSyncContext.mSyncOperation;
@@ -2021,6 +2480,7 @@ public class SyncManager implements OnAccountsUpdateListener {
                         numInit++;
                     } else {
                         numRegular++;
+<<<<<<< HEAD
                         if (!activeOp.isExpedited()) {
                             if (oldestNonExpeditedRegular == null
                                 || (oldestNonExpeditedRegular.mStartTime
@@ -2032,6 +2492,11 @@ public class SyncManager implements OnAccountsUpdateListener {
                     if (activeOp.account.type.equals(candidate.account.type)
                             && activeOp.authority.equals(candidate.authority)
                             && activeOp.userId == candidate.userId
+=======
+                    }
+                    if (activeOp.account.type.equals(candidate.account.type)
+                            && activeOp.authority.equals(candidate.authority)
+>>>>>>> upstream/master
                             && (!activeOp.allowParallelSyncs
                                 || activeOp.account.name.equals(candidate.account.name))) {
                         conflict = activeSyncContext;
@@ -2050,6 +2515,7 @@ public class SyncManager implements OnAccountsUpdateListener {
                     Log.v(TAG, "  numActiveInit=" + numInit + ", numActiveRegular=" + numRegular);
                     Log.v(TAG, "  longRunning: " + longRunning);
                     Log.v(TAG, "  conflict: " + conflict);
+<<<<<<< HEAD
                     Log.v(TAG, "  oldestNonExpeditedRegular: " + oldestNonExpeditedRegular);
                 }
 
@@ -2057,6 +2523,10 @@ public class SyncManager implements OnAccountsUpdateListener {
                         ? numInit < MAX_SIMULTANEOUS_INITIALIZATION_SYNCS
                         : numRegular < MAX_SIMULTANEOUS_REGULAR_SYNCS;
 
+=======
+                }
+
+>>>>>>> upstream/master
                 if (conflict != null) {
                     if (candidateIsInitialization && !conflict.mSyncOperation.isInitialization()
                             && numInit < MAX_SIMULTANEOUS_INITIALIZATION_SYNCS) {
@@ -2076,6 +2546,7 @@ public class SyncManager implements OnAccountsUpdateListener {
                     } else {
                         continue;
                     }
+<<<<<<< HEAD
                 } else if (roomAvailable) {
                     // dispatch candidate
                 } else if (candidate.isExpedited() && oldestNonExpeditedRegular != null
@@ -2102,6 +2573,25 @@ public class SyncManager implements OnAccountsUpdateListener {
                     // we were unable to find or make space to run this candidate, go on to
                     // the next one
                     continue;
+=======
+                } else {
+                    final boolean roomAvailable = candidateIsInitialization
+                            ? numInit < MAX_SIMULTANEOUS_INITIALIZATION_SYNCS
+                            : numRegular < MAX_SIMULTANEOUS_REGULAR_SYNCS;
+                    if (roomAvailable) {
+                        // dispatch candidate
+                    } else if (longRunning != null
+                            && (candidateIsInitialization
+                                == longRunning.mSyncOperation.isInitialization())) {
+                        toReschedule = longRunning;
+                        if (Log.isLoggable(TAG, Log.VERBOSE)) {
+                            Log.v(TAG, "canceling and rescheduling sync since it ran roo long, "
+                                    + longRunning);
+                        }
+                    } else {
+                        continue;
+                    }
+>>>>>>> upstream/master
                 }
 
                 if (toReschedule != null) {
@@ -2133,7 +2623,11 @@ public class SyncManager implements OnAccountsUpdateListener {
             if (syncAdapterInfo == null) {
                 Log.d(TAG, "can't find a sync adapter for " + syncAdapterType
                         + ", removing settings for it");
+<<<<<<< HEAD
                 mSyncStorageEngine.removeAuthority(op.account, op.userId, op.authority);
+=======
+                mSyncStorageEngine.removeAuthority(op.account, op.authority);
+>>>>>>> upstream/master
                 return false;
             }
 
@@ -2174,7 +2668,11 @@ public class SyncManager implements OnAccountsUpdateListener {
             }
         }
 
+<<<<<<< HEAD
         private void cancelActiveSyncLocked(Account account, int userId, String authority) {
+=======
+        private void cancelActiveSyncLocked(Account account, String authority) {
+>>>>>>> upstream/master
             ArrayList<ActiveSyncContext> activeSyncs =
                     new ArrayList<ActiveSyncContext>(mActiveSyncContexts);
             for (ActiveSyncContext activeSyncContext : activeSyncs) {
@@ -2182,12 +2680,17 @@ public class SyncManager implements OnAccountsUpdateListener {
                     // if an authority was specified then only cancel the sync if it matches
                     if (account != null) {
                         if (!account.equals(activeSyncContext.mSyncOperation.account)) {
+<<<<<<< HEAD
                             continue;
+=======
+                            return;
+>>>>>>> upstream/master
                         }
                     }
                     // if an account was specified then only cancel the sync if it matches
                     if (authority != null) {
                         if (!authority.equals(activeSyncContext.mSyncOperation.authority)) {
+<<<<<<< HEAD
                             continue;
                         }
                     }
@@ -2196,6 +2699,11 @@ public class SyncManager implements OnAccountsUpdateListener {
                             && userId != activeSyncContext.mSyncOperation.userId) {
                         continue;
                     }
+=======
+                            return;
+                        }
+                    }
+>>>>>>> upstream/master
                     runSyncFinishedOrCanceledLocked(null /* no result since this is a cancel */,
                             activeSyncContext);
                 }
@@ -2274,7 +2782,11 @@ public class SyncManager implements OnAccountsUpdateListener {
             }
 
             if (syncResult != null && syncResult.fullSyncRequested) {
+<<<<<<< HEAD
                 scheduleSyncOperation(new SyncOperation(syncOperation.account, syncOperation.userId,
+=======
+                scheduleSyncOperation(new SyncOperation(syncOperation.account,
+>>>>>>> upstream/master
                         syncOperation.syncSource, syncOperation.authority, new Bundle(), 0,
                         syncOperation.backoff, syncOperation.delayUntil,
                         syncOperation.allowParallelSyncs));
@@ -2285,8 +2797,12 @@ public class SyncManager implements OnAccountsUpdateListener {
         private void closeActiveSyncContext(ActiveSyncContext activeSyncContext) {
             activeSyncContext.close();
             mActiveSyncContexts.remove(activeSyncContext);
+<<<<<<< HEAD
             mSyncStorageEngine.removeActiveSync(activeSyncContext.mSyncInfo,
                     activeSyncContext.mSyncOperation.userId);
+=======
+            mSyncStorageEngine.removeActiveSync(activeSyncContext.mSyncInfo);
+>>>>>>> upstream/master
         }
 
         /**
@@ -2552,8 +3068,12 @@ public class SyncManager implements OnAccountsUpdateListener {
                                 syncOperation.account.name.hashCode());
 
             return mSyncStorageEngine.insertStartSyncEvent(
+<<<<<<< HEAD
                     syncOperation.account, syncOperation.userId, syncOperation.authority,
                     now, source, syncOperation.isInitialization());
+=======
+                    syncOperation.account, syncOperation.authority, now, source);
+>>>>>>> upstream/master
         }
 
         public void stopSyncEvent(long rowId, SyncOperation syncOperation, String resultMessage,

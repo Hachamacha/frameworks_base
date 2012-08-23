@@ -33,8 +33,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,11 @@ import java.util.List;
  * page. The individual elements are typically controlled using this container object, rather than
  * setting values on the child elements themselves.
  *
+<<<<<<< HEAD
+=======
+ * <p>See the <a href="{@docRoot}resources/tutorials/views/hello-tabwidget.html">Tab Layout
+ * tutorial</a>.</p>
+>>>>>>> upstream/master
  */
 public class TabHost extends FrameLayout implements ViewTreeObserver.OnTouchModeChangeListener {
 
@@ -321,6 +329,7 @@ mTabHost.addTab(TAB_TAG_1, "Hello, world!", "Tab 1");
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -333,6 +342,8 @@ mTabHost.addTab(TAB_TAG_1, "Hello, world!", "Tab 1");
         info.setClassName(TabHost.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     public void setCurrentTab(int index) {
         if (index < 0 || index >= mTabSpecs.size()) {
             return;

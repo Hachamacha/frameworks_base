@@ -24,9 +24,14 @@ public class ZoomManagerTest extends AndroidTestCase {
     @Override
     public void setUp() {
         WebView webView = new WebView(this.getContext());
+<<<<<<< HEAD
         WebViewClassic webViewClassic = WebViewClassic.fromWebView(webView);
         CallbackProxy callbackProxy = new CallbackProxy(this.getContext(), webViewClassic);
         zoomManager = new ZoomManager(webViewClassic, callbackProxy);
+=======
+        CallbackProxy callbackProxy = new CallbackProxy(this.getContext(), webView);
+        zoomManager = new ZoomManager(webView, callbackProxy);
+>>>>>>> upstream/master
 
         zoomManager.init(1.00f);
     }

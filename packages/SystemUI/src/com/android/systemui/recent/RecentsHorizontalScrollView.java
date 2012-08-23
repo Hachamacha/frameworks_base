@@ -22,6 +22,7 @@ import android.content.res.Configuration;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.util.Log;
@@ -34,6 +35,13 @@ import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+=======
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.View.OnTouchListener;
+>>>>>>> upstream/master
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -41,11 +49,16 @@ import com.android.systemui.R;
 import com.android.systemui.SwipeHelper;
 import com.android.systemui.recent.RecentsPanelView.TaskDescriptionAdapter;
 
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class RecentsHorizontalScrollView extends HorizontalScrollView
         implements SwipeHelper.Callback, RecentsPanelView.RecentsScrollView {
+=======
+public class RecentsHorizontalScrollView extends HorizontalScrollView
+    implements SwipeHelper.Callback {
+>>>>>>> upstream/master
     private static final String TAG = RecentsPanelView.TAG;
     private static final boolean DEBUG = RecentsPanelView.DEBUG;
     private LinearLayout mLinearLayout;
@@ -54,8 +67,11 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
     protected int mLastScrollPosition;
     private SwipeHelper mSwipeHelper;
     private RecentsScrollViewPerformanceHelper mPerformanceHelper;
+<<<<<<< HEAD
     private HashSet<View> mRecycledViews;
     private int mNumItemsInOneScreenful;
+=======
+>>>>>>> upstream/master
 
     public RecentsHorizontalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
@@ -63,17 +79,21 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
         float pagingTouchSlop = ViewConfiguration.get(mContext).getScaledPagingTouchSlop();
         mSwipeHelper = new SwipeHelper(SwipeHelper.Y, this, densityScale, pagingTouchSlop);
         mPerformanceHelper = RecentsScrollViewPerformanceHelper.create(context, attrs, this, false);
+<<<<<<< HEAD
         mRecycledViews = new HashSet<View>();
     }
 
     public void setMinSwipeAlpha(float minAlpha) {
         mSwipeHelper.setMinAlpha(minAlpha);
+=======
+>>>>>>> upstream/master
     }
 
     private int scrollPositionOfMostRecent() {
         return mLinearLayout.getWidth() - getWidth();
     }
 
+<<<<<<< HEAD
     private void addToRecycledViews(View v) {
         if (mRecycledViews.size() < mNumItemsInOneScreenful) {
             mRecycledViews.add(v);
@@ -100,6 +120,12 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
             }
 
             final View view = mAdapter.getView(i, old, mLinearLayout);
+=======
+    private void update() {
+        mLinearLayout.removeAllViews();
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            final View view = mAdapter.getView(i, null, mLinearLayout);
+>>>>>>> upstream/master
 
             if (mPerformanceHelper != null) {
                 mPerformanceHelper.addViewCallback(view);
@@ -126,8 +152,12 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
                 }
             };
 
+<<<<<<< HEAD
             RecentsPanelView.ViewHolder holder = (RecentsPanelView.ViewHolder) view.getTag();
             final View thumbnailView = holder.thumbnailView;
+=======
+            final View thumbnailView = view.findViewById(R.id.app_thumbnail);
+>>>>>>> upstream/master
             OnLongClickListener longClickListener = new OnLongClickListener() {
                 public boolean onLongClick(View v) {
                     final View anchorView = view.findViewById(R.id.app_description);
@@ -147,6 +177,7 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
             appTitle.setOnTouchListener(noOpListener);
             mLinearLayout.addView(view);
         }
+<<<<<<< HEAD
         setLayoutTransition(transitioner);
 
         // Scroll to end after layout.
@@ -162,6 +193,15 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
                 }
             };
         observer.addOnGlobalLayoutListener(updateScroll);
+=======
+        // Scroll to end after layout.
+        post(new Runnable() {
+            public void run() {
+                mLastScrollPosition = scrollPositionOfMostRecent();
+                scrollTo(mLastScrollPosition, 0);
+            }
+        });
+>>>>>>> upstream/master
     }
 
     @Override
@@ -190,6 +230,7 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
     }
 
     public void onChildDismissed(View v) {
+<<<<<<< HEAD
         addToRecycledViews(v);
         mLinearLayout.removeView(v);
         mCallback.handleSwipe(v);
@@ -198,15 +239,27 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
         View contentView = getChildContentView(v);
         contentView.setAlpha(1f);
         contentView.setTranslationY(0);
+=======
+        mLinearLayout.removeView(v);
+        mCallback.handleSwipe(v);
+>>>>>>> upstream/master
     }
 
     public void onBeginDrag(View v) {
         // We do this so the underlying ScrollView knows that it won't get
         // the chance to intercept events anymore
         requestDisallowInterceptTouchEvent(true);
+<<<<<<< HEAD
     }
 
     public void onDragCancelled(View v) {
+=======
+        v.setActivated(true);
+    }
+
+    public void onDragCancelled(View v) {
+        v.setActivated(false);
+>>>>>>> upstream/master
     }
 
     public View getChildAtPosition(MotionEvent ev) {
@@ -227,6 +280,17 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    protected void onLayout (boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (mPerformanceHelper != null) {
+            mPerformanceHelper.onLayoutCallback();
+        }
+    }
+
+    @Override
+>>>>>>> upstream/master
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
@@ -329,6 +393,15 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
         });
     }
 
+<<<<<<< HEAD
+=======
+    public void onRecentsVisibilityChanged() {
+        if (mPerformanceHelper != null) {
+            mPerformanceHelper.updateShowBackground();
+        }
+    }
+
+>>>>>>> upstream/master
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
@@ -353,6 +426,7 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
                 update();
             }
         });
+<<<<<<< HEAD
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int childWidthMeasureSpec =
                 MeasureSpec.makeMeasureSpec(dm.widthPixels, MeasureSpec.AT_MOST);
@@ -371,10 +445,18 @@ public class RecentsHorizontalScrollView extends HorizontalScrollView
 
     public int numItemsInOneScreenful() {
         return mNumItemsInOneScreenful;
+=======
+>>>>>>> upstream/master
     }
 
     @Override
     public void setLayoutTransition(LayoutTransition transition) {
+<<<<<<< HEAD
+=======
+        if (mPerformanceHelper != null) {
+            mPerformanceHelper.setLayoutTransitionCallback(transition);
+        }
+>>>>>>> upstream/master
         // The layout transition applies to our embedded LinearLayout
         mLinearLayout.setLayoutTransition(transition);
     }

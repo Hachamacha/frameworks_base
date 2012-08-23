@@ -22,12 +22,19 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.os.CountDownTimer;
 import android.util.Log;
+=======
+>>>>>>> upstream/master
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+<<<<<<< HEAD
+=======
+import android.webkit.WebSettings;
+>>>>>>> upstream/master
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -50,8 +57,11 @@ import java.io.ObjectOutputStream;
  */
 public class ProfileActivity extends Activity {
 
+<<<<<<< HEAD
     private static final int TIMED_RECORD_MILLIS = 2000;
 
+=======
+>>>>>>> upstream/master
     public interface ProfileCallback {
         public void profileCallback(RunData data);
     }
@@ -68,7 +78,10 @@ public class ProfileActivity extends Activity {
 
     LoggingWebViewClient mLoggingWebViewClient = new LoggingWebViewClient();
     AutoLoggingWebViewClient mAutoLoggingWebViewClient = new AutoLoggingWebViewClient();
+<<<<<<< HEAD
     TimedLoggingWebViewClient mTimedLoggingWebViewClient = new TimedLoggingWebViewClient();
+=======
+>>>>>>> upstream/master
 
     private enum TestingState {
         NOT_TESTING,
@@ -97,6 +110,7 @@ public class ProfileActivity extends Activity {
         public void onItemSelected(AdapterView<?> parent, View view,
                 int position, long id) {
             String movementStr = parent.getItemAtPosition(position).toString();
+<<<<<<< HEAD
             if (movementStr == getResources().getString(R.string.movement_auto_scroll)) {
                 mWeb.setWebViewClient(mAutoLoggingWebViewClient);
                 mCaptureButton.setEnabled(false);
@@ -109,6 +123,20 @@ public class ProfileActivity extends Activity {
                 mWeb.setWebViewClient(mTimedLoggingWebViewClient);
                 mCaptureButton.setEnabled(false);
                 mVelocitySpinner.setEnabled(false);
+=======
+            if (movementStr == getResources().getString(
+                    R.string.movement_auto_scroll)
+                    || movementStr == getResources().getString(
+                            R.string.movement_auto_fling)) {
+                mWeb.setWebViewClient(mAutoLoggingWebViewClient);
+                mCaptureButton.setEnabled(false);
+                mVelocitySpinner.setEnabled(true);
+            } else if (movementStr == getResources().getString(
+                    R.string.movement_manual)) {
+                mWeb.setWebViewClient(mLoggingWebViewClient);
+                mCaptureButton.setEnabled(true);
+                mVelocitySpinner.setEnabled(false);
+>>>>>>> upstream/master
             }
         }
 
@@ -128,6 +156,7 @@ public class ProfileActivity extends Activity {
             super.onPageStarted(view, url, favicon);
             mUrl.setText(url);
         }
+<<<<<<< HEAD
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -168,6 +197,18 @@ public class ProfileActivity extends Activity {
                     mWeb.stopScrollTest();
                 }
             }.start();
+=======
+    }
+
+    private class AutoLoggingWebViewClient extends LoggingWebViewClient {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            view.requestFocus();
+
+            startViewProfiling(true);
+>>>>>>> upstream/master
         }
 
         @Override
@@ -212,13 +253,19 @@ public class ProfileActivity extends Activity {
                 mMovementSpinner.setEnabled(false);
                 break;
             case START_TESTING:
+<<<<<<< HEAD
                 mCaptureButton.setChecked(true);
+=======
+>>>>>>> upstream/master
                 mUrl.setBackgroundResource(R.color.background_start_testing);
                 mInspectButton.setEnabled(false);
                 mMovementSpinner.setEnabled(false);
                 break;
             case STOP_TESTING:
+<<<<<<< HEAD
                 mCaptureButton.setChecked(false);
+=======
+>>>>>>> upstream/master
                 mUrl.setBackgroundResource(R.color.background_stop_testing);
                 break;
             case SAVED_TESTING:
@@ -231,6 +278,10 @@ public class ProfileActivity extends Activity {
     /** auto - automatically scroll. */
     private void startViewProfiling(boolean auto) {
         // toggle capture button to indicate capture state to user
+<<<<<<< HEAD
+=======
+        mCaptureButton.setChecked(true);
+>>>>>>> upstream/master
         mWeb.startScrollTest(mCallback, auto);
         setTestingState(TestingState.START_TESTING);
     }
@@ -252,7 +303,11 @@ public class ProfileActivity extends Activity {
             public void profileCallback(RunData data) {
                 new StoreFileTask().execute(new Pair<String, RunData>(
                         TEMP_FILENAME, data));
+<<<<<<< HEAD
                 Log.d("ProfileActivity", "stored " + data.frames.length + " frames in file");
+=======
+                mCaptureButton.setChecked(false);
+>>>>>>> upstream/master
                 setTestingState(TestingState.STOP_TESTING);
             }
         });
@@ -280,8 +335,13 @@ public class ProfileActivity extends Activity {
         // Movement spinner
         String content[] = {
                 getResources().getString(R.string.movement_auto_scroll),
+<<<<<<< HEAD
                 getResources().getString(R.string.movement_manual),
                 getResources().getString(R.string.movement_timed)
+=======
+                getResources().getString(R.string.movement_auto_fling),
+                getResources().getString(R.string.movement_manual)
+>>>>>>> upstream/master
         };
         adapter = new ArrayAdapter<CharSequence>(this,
                 android.R.layout.simple_spinner_item, content);
@@ -305,7 +365,16 @@ public class ProfileActivity extends Activity {
         });
 
         // Custom profiling WebView
+<<<<<<< HEAD
         mWeb.init(this);
+=======
+        WebSettings settings = mWeb.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setSupportZoom(true);
+        settings.setEnableSmoothTransition(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setLoadWithOverviewMode(true);
+>>>>>>> upstream/master
         mWeb.setWebViewClient(new LoggingWebViewClient());
 
         // URL text entry

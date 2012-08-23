@@ -20,10 +20,13 @@
 #include <utils/Log.h>
 #include "android_media_Utils.h"
 
+<<<<<<< HEAD
 #include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/foundation/ABuffer.h>
 #include <media/stagefright/foundation/AMessage.h>
 
+=======
+>>>>>>> upstream/master
 namespace android {
 
 bool ConvertKeyValueArraysToKeyedVector(
@@ -43,7 +46,11 @@ bool ConvertKeyValueArraysToKeyedVector(
     }
 
     if (failed) {
+<<<<<<< HEAD
         ALOGE("keys and values arrays have different length");
+=======
+        LOGE("keys and values arrays have different length");
+>>>>>>> upstream/master
         jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return false;
     }
@@ -75,6 +82,7 @@ bool ConvertKeyValueArraysToKeyedVector(
     return true;
 }
 
+<<<<<<< HEAD
 static jobject makeIntegerObject(JNIEnv *env, int32_t value) {
     jclass clazz = env->FindClass("java/lang/Integer");
     CHECK(clazz != NULL);
@@ -400,5 +408,7 @@ status_t ConvertKeyValueArraysToMessage(
     return OK;
 }
 
+=======
+>>>>>>> upstream/master
 }  // namespace android
 

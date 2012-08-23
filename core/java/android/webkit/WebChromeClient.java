@@ -216,6 +216,7 @@ public class WebChromeClient {
     }
 
    /**
+<<<<<<< HEAD
     * Tell the client that the quota has been exceeded for the Web SQL Database
     * API for a particular origin and request a new quota. The client must
     * respond by invoking the
@@ -276,15 +277,57 @@ public class WebChromeClient {
      *               Geolocation API.
      * @param callback The callback to use to set the permission state for the
      *                 origin.
+=======
+    * Tell the client that the database quota for the origin has been exceeded.
+    * @param url The URL that triggered the notification
+    * @param databaseIdentifier The identifier of the database that caused the
+    *     quota overflow.
+    * @param currentQuota The current quota for the origin.
+    * @param estimatedSize The estimated size of the database.
+    * @param totalUsedQuota is the sum of all origins' quota.
+    * @param quotaUpdater A callback to inform the WebCore thread that a new
+    *     quota is available. This callback must always be executed at some
+    *     point to ensure that the sleeping WebCore thread is woken up.
+    */
+    public void onExceededDatabaseQuota(String url, String databaseIdentifier,
+        long currentQuota, long estimatedSize, long totalUsedQuota,
+        WebStorage.QuotaUpdater quotaUpdater) {
+        // This default implementation passes the current quota back to WebCore.
+        // WebCore will interpret this that new quota was declined.
+        quotaUpdater.updateQuota(currentQuota);
+    }
+
+   /**
+    * Tell the client that the Application Cache has exceeded its max size.
+    * @param spaceNeeded is the amount of disk space that would be needed
+    * in order for the last appcache operation to succeed.
+    * @param totalUsedQuota is the sum of all origins' quota.
+    * @param quotaUpdater A callback to inform the WebCore thread that a new
+    * app cache size is available. This callback must always be executed at
+    * some point to ensure that the sleeping WebCore thread is woken up.
+    */
+    public void onReachedMaxAppCacheSize(long spaceNeeded, long totalUsedQuota,
+            WebStorage.QuotaUpdater quotaUpdater) {
+        quotaUpdater.updateQuota(0);
+    }
+
+    /**
+     * Instructs the client to show a prompt to ask the user to set the
+     * Geolocation permission state for the specified origin.
+>>>>>>> upstream/master
      */
     public void onGeolocationPermissionsShowPrompt(String origin,
             GeolocationPermissions.Callback callback) {}
 
     /**
+<<<<<<< HEAD
      * Notify the host application that a request for Geolocation permissions,
      * made with a previous call to
      * {@link #onGeolocationPermissionsShowPrompt(String,GeolocationPermissions.Callback) onGeolocationPermissionsShowPrompt()}
      * has been canceled. Any related UI should therefore be hidden.
+=======
+     * Instructs the client to hide the Geolocation permissions prompt.
+>>>>>>> upstream/master
      */
     public void onGeolocationPermissionsHidePrompt() {}
 
@@ -363,11 +406,17 @@ public class WebChromeClient {
      *      onReceiveValue must be called to wake up the thread.a
      * @param acceptType The value of the 'accept' attribute of the input tag
      *         associated with this file picker.
+<<<<<<< HEAD
      * @param capture The value of the 'capture' attribute of the input tag
      *         associated with this file picker.
      * @hide
      */
     public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String capture) {
+=======
+     * @hide
+     */
+    public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType) {
+>>>>>>> upstream/master
         uploadFile.onReceiveValue(null);
     }
 

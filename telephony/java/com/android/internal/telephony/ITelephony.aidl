@@ -19,7 +19,10 @@ package com.android.internal.telephony;
 import android.os.Bundle;
 import java.util.List;
 import android.telephony.NeighboringCellInfo;
+<<<<<<< HEAD
 import android.telephony.CellInfo;
+=======
+>>>>>>> upstream/master
 
 /**
  * Interface used to interact with the phone.  Mostly this is used by the
@@ -285,6 +288,7 @@ interface ITelephony {
      * or {@link PHone#LTE_ON_CDMA_TRUE}
      */
     int getLteOnCdmaMode();
+<<<<<<< HEAD
 
     /**
      * Returns the all observed cell information of the device.
@@ -292,5 +296,7 @@ interface ITelephony {
     List<CellInfo> getAllCellInfo();
 
     int getLteOnGsmMode();
+=======
+>>>>>>> upstream/master
 }
 

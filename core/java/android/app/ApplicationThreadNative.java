@@ -267,7 +267,10 @@ public abstract class ApplicationThreadNative extends Binder
             IBinder binder = data.readStrongBinder();
             IInstrumentationWatcher testWatcher = IInstrumentationWatcher.Stub.asInterface(binder);
             int testMode = data.readInt();
+<<<<<<< HEAD
             boolean openGlTrace = data.readInt() != 0;
+=======
+>>>>>>> upstream/master
             boolean restrictedBackupMode = (data.readInt() != 0);
             boolean persistent = (data.readInt() != 0);
             Configuration config = Configuration.CREATOR.createFromParcel(data);
@@ -276,11 +279,19 @@ public abstract class ApplicationThreadNative extends Binder
             Bundle coreSettings = data.readBundle();
             bindApplication(packageName, info,
                             providers, testName, profileName, profileFd, autoStopProfiler,
+<<<<<<< HEAD
                             testArgs, testWatcher, testMode, openGlTrace, restrictedBackupMode,
                             persistent, config, compatInfo, services, coreSettings);
             return true;
         }
 
+=======
+                            testArgs, testWatcher, testMode, restrictedBackupMode, persistent,
+                            config, compatInfo, services, coreSettings);
+            return true;
+        }
+        
+>>>>>>> upstream/master
         case SCHEDULE_EXIT_TRANSACTION:
         {
             data.enforceInterface(IApplicationThread.descriptor);
@@ -353,6 +364,7 @@ public abstract class ApplicationThreadNative extends Binder
             return true;
         }
         
+<<<<<<< HEAD
         case DUMP_PROVIDER_TRANSACTION: {
             data.enforceInterface(IApplicationThread.descriptor);
             ParcelFileDescriptor fd = data.readFileDescriptor();
@@ -368,6 +380,8 @@ public abstract class ApplicationThreadNative extends Binder
             return true;
         }
 
+=======
+>>>>>>> upstream/master
         case SCHEDULE_REGISTERED_RECEIVER_TRANSACTION: {
             data.enforceInterface(IApplicationThread.descriptor);
             IIntentReceiver receiver = IIntentReceiver.Stub.asInterface(
@@ -555,6 +569,7 @@ public abstract class ApplicationThreadNative extends Binder
             reply.writeNoException();
             return true;
         }
+<<<<<<< HEAD
 
         case DUMP_DB_INFO_TRANSACTION:
         {
@@ -584,6 +599,8 @@ public abstract class ApplicationThreadNative extends Binder
             reply.writeNoException();
             return true;
         }
+=======
+>>>>>>> upstream/master
         }
 
         return super.onTransact(code, data, reply, flags);
@@ -859,9 +876,14 @@ class ApplicationThreadProxy implements IApplicationThread {
     public final void bindApplication(String packageName, ApplicationInfo info,
             List<ProviderInfo> providers, ComponentName testName, String profileName,
             ParcelFileDescriptor profileFd, boolean autoStopProfiler, Bundle testArgs,
+<<<<<<< HEAD
             IInstrumentationWatcher testWatcher, int debugMode, boolean openGlTrace,
             boolean restrictedBackupMode, boolean persistent,
             Configuration config, CompatibilityInfo compatInfo,
+=======
+            IInstrumentationWatcher testWatcher, int debugMode, boolean restrictedBackupMode,
+            boolean persistent, Configuration config, CompatibilityInfo compatInfo,
+>>>>>>> upstream/master
             Map<String, IBinder> services, Bundle coreSettings) throws RemoteException {
         Parcel data = Parcel.obtain();
         data.writeInterfaceToken(IApplicationThread.descriptor);
@@ -885,7 +907,10 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.writeBundle(testArgs);
         data.writeStrongInterface(testWatcher);
         data.writeInt(debugMode);
+<<<<<<< HEAD
         data.writeInt(openGlTrace ? 1 : 0);
+=======
+>>>>>>> upstream/master
         data.writeInt(restrictedBackupMode ? 1 : 0);
         data.writeInt(persistent ? 1 : 0);
         config.writeToParcel(data, 0);
@@ -978,6 +1003,7 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.recycle();
     }
     
+<<<<<<< HEAD
     public void dumpProvider(FileDescriptor fd, IBinder token, String[] args)
             throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -989,6 +1015,8 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.recycle();
     }
 
+=======
+>>>>>>> upstream/master
     public void scheduleRegisteredReceiver(IIntentReceiver receiver, Intent intent,
             int resultCode, String dataStr, Bundle extras, boolean ordered, boolean sticky)
             throws RemoteException {
@@ -1163,6 +1191,7 @@ class ApplicationThreadProxy implements IApplicationThread {
         mRemote.transact(DUMP_GFX_INFO_TRANSACTION, data, null, IBinder.FLAG_ONEWAY);
         data.recycle();
     }
+<<<<<<< HEAD
 
     public void dumpDbInfo(FileDescriptor fd, String[] args) throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -1180,4 +1209,6 @@ class ApplicationThreadProxy implements IApplicationThread {
         mRemote.transact(UNSTABLE_PROVIDER_DIED_TRANSACTION, data, null, IBinder.FLAG_ONEWAY);
         data.recycle();
     }
+=======
+>>>>>>> upstream/master
 }

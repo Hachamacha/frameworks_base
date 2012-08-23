@@ -23,7 +23,10 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.opengl.ManagedEGLContext;
 import android.os.IBinder;
+<<<<<<< HEAD
 import android.os.SystemProperties;
+=======
+>>>>>>> upstream/master
 import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -74,11 +77,14 @@ public class WindowManagerImpl implements WindowManager {
      * The window manager has changed the surface from the last call.
      */
     public static final int RELAYOUT_RES_SURFACE_CHANGED = 0x4;
+<<<<<<< HEAD
     /**
      * The window manager is currently animating.  It will call
      * IWindow.doneAnimating() when done.
      */
     public static final int RELAYOUT_RES_ANIMATING = 0x8;
+=======
+>>>>>>> upstream/master
 
     /**
      * Flag for relayout: the client will be later giving
@@ -111,9 +117,12 @@ public class WindowManagerImpl implements WindowManager {
     private View[] mViews;
     private ViewRootImpl[] mRoots;
     private WindowManager.LayoutParams[] mParams;
+<<<<<<< HEAD
     private boolean mNeedsEglTerminate;
 
     private Runnable mSystemPropertyUpdater = null;
+=======
+>>>>>>> upstream/master
 
     private final static Object sLock = new Object();
     private final static WindowManagerImpl sWindowManager = new WindowManagerImpl();
@@ -240,6 +249,7 @@ public class WindowManagerImpl implements WindowManager {
         View panelParentView = null;
         
         synchronized (this) {
+<<<<<<< HEAD
             // Start watching for system property changes.
             if (mSystemPropertyUpdater == null) {
                 mSystemPropertyUpdater = new Runnable() {
@@ -256,6 +266,8 @@ public class WindowManagerImpl implements WindowManager {
                 SystemProperties.addChangeCallback(mSystemPropertyUpdater);
             }
 
+=======
+>>>>>>> upstream/master
             // Here's an odd/questionable case: if someone tries to add a
             // view multiple times, then we simply bump up a nesting count
             // and they need to remove the view the corresponding number of
@@ -364,6 +376,7 @@ public class WindowManagerImpl implements WindowManager {
             View curView = root.getView();
             
             root.mAddNesting = 0;
+<<<<<<< HEAD
 
             if (view != null) {
                 InputMethodManager imm = InputMethodManager.getInstance(view.getContext());
@@ -372,6 +385,8 @@ public class WindowManagerImpl implements WindowManager {
                 }
             }
 
+=======
+>>>>>>> upstream/master
             root.die(true);
             finishRemoveViewLocked(curView, index);
             if (curView == view) {
@@ -386,7 +401,11 @@ public class WindowManagerImpl implements WindowManager {
     View removeViewLocked(int index) {
         ViewRootImpl root = mRoots[index];
         View view = root.getView();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         // Don't really remove until we have matched all calls to add().
         root.mAddNesting--;
         if (root.mAddNesting > 0) {
@@ -461,6 +480,7 @@ public class WindowManagerImpl implements WindowManager {
 
     /**
      * @param level See {@link android.content.ComponentCallbacks}
+<<<<<<< HEAD
      *
      * @hide
      */
@@ -499,6 +519,35 @@ public class WindowManagerImpl implements WindowManager {
         if (mNeedsEglTerminate) {
             ManagedEGLContext.doTerminate();
             mNeedsEglTerminate = false;
+=======
+     */
+    public void trimMemory(int level) {
+        if (HardwareRenderer.isAvailable()) {
+            switch (level) {
+                case ComponentCallbacks2.TRIM_MEMORY_COMPLETE:
+                case ComponentCallbacks2.TRIM_MEMORY_MODERATE:
+                    // On low and medium end gfx devices
+                    if (!ActivityManager.isHighEndGfx(getDefaultDisplay())) {
+                        // Force a full memory flush
+                        HardwareRenderer.trimMemory(ComponentCallbacks2.TRIM_MEMORY_COMPLETE);
+                        // Destroy all hardware surfaces and resources associated to
+                        // known windows
+                        synchronized (this) {
+                            if (mViews == null) return;
+                            int count = mViews.length;
+                            for (int i = 0; i < count; i++) {
+                                mRoots[i].terminateHardwareResources();
+                            }
+                        }
+                        // Terminate the hardware renderer to free all resources
+                        ManagedEGLContext.doTerminate();
+                        break;
+                    }
+                    // high end gfx devices fall through to next case
+                default:
+                    HardwareRenderer.trimMemory(level);
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -524,6 +573,7 @@ public class WindowManagerImpl implements WindowManager {
         try {
             synchronized (this) {
                 if (mViews != null) {
+<<<<<<< HEAD
                     final int count = mViews.length;
                     
                     pw.println("Profile data in ms:");
@@ -540,6 +590,11 @@ public class WindowManagerImpl implements WindowManager {
                     }
 
                     pw.println("\nView hierarchy:\n");
+=======
+                    pw.println("View hierarchy:");
+
+                    final int count = mViews.length;
+>>>>>>> upstream/master
 
                     int viewsCount = 0;
                     int displayListsSize = 0;
@@ -547,6 +602,7 @@ public class WindowManagerImpl implements WindowManager {
 
                     for (int i = 0; i < count; i++) {
                         ViewRootImpl root = mRoots[i];
+<<<<<<< HEAD
                         root.dumpGfxInfo(info);
 
                         String name = getWindowName(root);
@@ -557,6 +613,14 @@ public class WindowManagerImpl implements WindowManager {
                             pw.printf(", %d frames rendered", renderer.getFrameCount());
                         }
                         pw.printf("\n\n");
+=======
+                        root.dumpGfxInfo(pw, info);
+
+                        String name = root.getClass().getName() + '@' +
+                                Integer.toHexString(hashCode());                        
+                        pw.printf("  %s: %d views, %.2f kB (display lists)\n",
+                                name, info[0], info[1] / 1024.0f);
+>>>>>>> upstream/master
 
                         viewsCount += info[0];
                         displayListsSize += info[1];
@@ -572,11 +636,14 @@ public class WindowManagerImpl implements WindowManager {
         }        
     }
 
+<<<<<<< HEAD
     private static String getWindowName(ViewRootImpl root) {
         return root.mWindowAttributes.getTitle() + "/" +
                 root.getClass().getName() + '@' + Integer.toHexString(root.hashCode());
     }
 
+=======
+>>>>>>> upstream/master
     public void setStoppedState(IBinder token, boolean stopped) {
         synchronized (this) {
             if (mViews == null)

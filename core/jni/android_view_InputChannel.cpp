@@ -21,9 +21,14 @@
 #include <android_runtime/AndroidRuntime.h>
 #include <binder/Parcel.h>
 #include <utils/Log.h>
+<<<<<<< HEAD
 #include <androidfw/InputTransport.h>
 #include "android_view_InputChannel.h"
 #include "android_os_Parcel.h"
+=======
+#include <ui/InputTransport.h>
+#include "android_view_InputChannel.h"
+>>>>>>> upstream/master
 #include "android_util_Binder.h"
 
 namespace android {
@@ -102,7 +107,11 @@ void android_view_InputChannel_setDisposeCallback(JNIEnv* env, jobject inputChan
     NativeInputChannel* nativeInputChannel =
             android_view_InputChannel_getNativeInputChannel(env, inputChannelObj);
     if (nativeInputChannel == NULL) {
+<<<<<<< HEAD
         ALOGW("Cannot set dispose callback because input channel object has not been initialized.");
+=======
+        LOGW("Cannot set dispose callback because input channel object has not been initialized.");
+>>>>>>> upstream/master
     } else {
         nativeInputChannel->setDisposeCallback(callback, data);
     }
@@ -162,7 +171,11 @@ static void android_view_InputChannel_nativeDispose(JNIEnv* env, jobject obj, jb
             android_view_InputChannel_getNativeInputChannel(env, obj);
     if (nativeInputChannel) {
         if (finalized) {
+<<<<<<< HEAD
             ALOGW("Input channel object '%s' was finalized without being disposed!",
+=======
+            LOGW("Input channel object '%s' was finalized without being disposed!",
+>>>>>>> upstream/master
                     nativeInputChannel->getInputChannel()->getName().string());
         }
 
@@ -200,16 +213,43 @@ static void android_view_InputChannel_nativeReadFromParcel(JNIEnv* env, jobject 
         bool isInitialized = parcel->readInt32();
         if (isInitialized) {
             String8 name = parcel->readString8();
+<<<<<<< HEAD
             int rawFd = parcel->readFileDescriptor();
             int dupFd = dup(rawFd);
             if (dupFd < 0) {
                 ALOGE("Error %d dup channel fd %d.", errno, rawFd);
+=======
+            int32_t parcelAshmemFd = parcel->readFileDescriptor();
+            int32_t ashmemFd = dup(parcelAshmemFd);
+            if (ashmemFd < 0) {
+                LOGE("Error %d dup ashmem fd %d.", errno, parcelAshmemFd);
+            }
+            int32_t parcelReceivePipeFd = parcel->readFileDescriptor();
+            int32_t receivePipeFd = dup(parcelReceivePipeFd);
+            if (receivePipeFd < 0) {
+                LOGE("Error %d dup receive pipe fd %d.", errno, parcelReceivePipeFd);
+            }
+            int32_t parcelSendPipeFd = parcel->readFileDescriptor();
+            int32_t sendPipeFd = dup(parcelSendPipeFd);
+            if (sendPipeFd < 0) {
+                LOGE("Error %d dup send pipe fd %d.", errno, parcelSendPipeFd);
+            }
+            if (ashmemFd < 0 || receivePipeFd < 0 || sendPipeFd < 0) {
+                if (ashmemFd >= 0) ::close(ashmemFd);
+                if (receivePipeFd >= 0) ::close(receivePipeFd);
+                if (sendPipeFd >= 0) ::close(sendPipeFd);
+>>>>>>> upstream/master
                 jniThrowRuntimeException(env,
                         "Could not read input channel file descriptors from parcel.");
                 return;
             }
 
+<<<<<<< HEAD
             InputChannel* inputChannel = new InputChannel(name, dupFd);
+=======
+            InputChannel* inputChannel = new InputChannel(name, ashmemFd,
+                    receivePipeFd, sendPipeFd);
+>>>>>>> upstream/master
             NativeInputChannel* nativeInputChannel = new NativeInputChannel(inputChannel);
 
             android_view_InputChannel_setNativeInputChannel(env, obj, nativeInputChannel);
@@ -228,7 +268,13 @@ static void android_view_InputChannel_nativeWriteToParcel(JNIEnv* env, jobject o
 
             parcel->writeInt32(1);
             parcel->writeString8(inputChannel->getName());
+<<<<<<< HEAD
             parcel->writeDupFileDescriptor(inputChannel->getFd());
+=======
+            parcel->writeDupFileDescriptor(inputChannel->getAshmemFd());
+            parcel->writeDupFileDescriptor(inputChannel->getReceivePipeFd());
+            parcel->writeDupFileDescriptor(inputChannel->getSendPipeFd());
+>>>>>>> upstream/master
         } else {
             parcel->writeInt32(0);
         }

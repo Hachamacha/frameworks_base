@@ -66,8 +66,11 @@ public class UsbManager {
      * PTP function is enabled
      * <li> {@link #USB_FUNCTION_PTP} boolean extra indicating whether the
      * accessory function is enabled
+<<<<<<< HEAD
      * <li> {@link #USB_FUNCTION_AUDIO_SOURCE} boolean extra indicating whether the
      * audio source function is enabled
+=======
+>>>>>>> upstream/master
      * </ul>
      *
      * {@hide}
@@ -180,6 +183,7 @@ public class UsbManager {
     public static final String USB_FUNCTION_PTP = "ptp";
 
     /**
+<<<<<<< HEAD
      * Name of the audio source USB function.
      * Used in extras for the {@link #ACTION_USB_STATE} broadcast
      *
@@ -188,6 +192,8 @@ public class UsbManager {
     public static final String USB_FUNCTION_AUDIO_SOURCE = "audio_source";
 
     /**
+=======
+>>>>>>> upstream/master
      * Name of the Accessory USB function.
      * Used in extras for the {@link #ACTION_USB_STATE} broadcast
      *

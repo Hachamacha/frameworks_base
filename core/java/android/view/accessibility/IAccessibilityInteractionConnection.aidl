@@ -16,7 +16,10 @@
 
 package android.view.accessibility;
 
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.IAccessibilityInteractionConnectionCallback;
 
@@ -28,6 +31,7 @@ import android.view.accessibility.IAccessibilityInteractionConnectionCallback;
  */
 oneway interface IAccessibilityInteractionConnection {
 
+<<<<<<< HEAD
     void findAccessibilityNodeInfoByAccessibilityId(long accessibilityNodeId, int windowLeft,
         int windowTop, int interactionId, IAccessibilityInteractionConnectionCallback callback,
         int flags, int interrogatingPid, long interrogatingTid);
@@ -51,4 +55,21 @@ oneway interface IAccessibilityInteractionConnection {
     void performAccessibilityAction(long accessibilityNodeId, int action, in Bundle arguments,
         int interactionId, IAccessibilityInteractionConnectionCallback callback, int flags,
         int interrogatingPid, long interrogatingTid);
+=======
+    void findAccessibilityNodeInfoByAccessibilityId(int accessibilityViewId, int interactionId,
+        IAccessibilityInteractionConnectionCallback callback,
+        int interrogatingPid, long interrogatingTid);
+
+    void findAccessibilityNodeInfoByViewId(int id, int interactionId,
+        IAccessibilityInteractionConnectionCallback callback,
+        int interrogatingPid, long interrogatingTid);
+
+    void findAccessibilityNodeInfosByViewText(String text, int accessibilityViewId,
+        int interactionId, IAccessibilityInteractionConnectionCallback callback,
+        int interrogatingPid, long interrogatingTid);
+
+    void performAccessibilityAction(int accessibilityId, int action, int interactionId,
+        IAccessibilityInteractionConnectionCallback callback, int interrogatingPid,
+        long interrogatingTid);
+>>>>>>> upstream/master
 }

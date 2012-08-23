@@ -16,6 +16,11 @@
 
 package com.android.vpndialogs;
 
+<<<<<<< HEAD
+=======
+import android.app.Activity;
+import android.app.AlertDialog;
+>>>>>>> upstream/master
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,24 +38,39 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.android.internal.app.AlertActivity;
+=======
+>>>>>>> upstream/master
 import com.android.internal.net.VpnConfig;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 
+<<<<<<< HEAD
 public class ManageDialog extends AlertActivity implements
         DialogInterface.OnClickListener, Handler.Callback {
+=======
+public class ManageDialog extends Activity implements Handler.Callback,
+        DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+>>>>>>> upstream/master
     private static final String TAG = "VpnManage";
 
     private VpnConfig mConfig;
 
     private IConnectivityManager mService;
 
+<<<<<<< HEAD
     private TextView mDuration;
     private TextView mDataTransmitted;
     private TextView mDataReceived;
     private boolean mDataRowsHidden;
+=======
+    private AlertDialog mDialog;
+    private TextView mDuration;
+    private TextView mDataTransmitted;
+    private TextView mDataReceived;
+>>>>>>> upstream/master
 
     private Handler mHandler;
 
@@ -77,6 +97,7 @@ public class ManageDialog extends AlertActivity implements
             mDuration = (TextView) view.findViewById(R.id.duration);
             mDataTransmitted = (TextView) view.findViewById(R.id.data_transmitted);
             mDataReceived = (TextView) view.findViewById(R.id.data_received);
+<<<<<<< HEAD
             mDataRowsHidden = true;
 
             if (mConfig.user.equals(VpnConfig.LEGACY_VPN)) {
@@ -98,6 +119,35 @@ public class ManageDialog extends AlertActivity implements
             mAlertParams.mNegativeButtonListener = this;
             mAlertParams.mView = view;
             setupAlert();
+=======
+
+            if (mConfig.user.equals(VpnConfig.LEGACY_VPN)) {
+                mDialog = new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setTitle(R.string.legacy_title)
+                        .setView(view)
+                        .setNeutralButton(R.string.disconnect, this)
+                        .setNegativeButton(android.R.string.cancel, this)
+                        .create();
+            } else {
+                PackageManager pm = getPackageManager();
+                ApplicationInfo app = pm.getApplicationInfo(mConfig.user, 0);
+                mDialog = new AlertDialog.Builder(this)
+                        .setIcon(app.loadIcon(pm))
+                        .setTitle(app.loadLabel(pm))
+                        .setView(view)
+                        .setNeutralButton(R.string.disconnect, this)
+                        .setNegativeButton(android.R.string.cancel, this)
+                        .create();
+            }
+
+            if (mConfig.configureIntent != null) {
+                mDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                        getText(R.string.configure), this);
+            }
+            mDialog.setOnDismissListener(this);
+            mDialog.show();
+>>>>>>> upstream/master
 
             if (mHandler == null) {
                 mHandler = new Handler(this);
@@ -112,17 +162,29 @@ public class ManageDialog extends AlertActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+<<<<<<< HEAD
         if (!isFinishing()) {
             finish();
+=======
+        if (mDialog != null) {
+            mDialog.setOnDismissListener(null);
+            mDialog.dismiss();
+>>>>>>> upstream/master
         }
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
         try {
+<<<<<<< HEAD
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 mConfig.configureIntent.send();
             } else if (which == DialogInterface.BUTTON_NEUTRAL) {
+=======
+            if (which == AlertDialog.BUTTON_POSITIVE) {
+                mConfig.configureIntent.send();
+            } else if (which == AlertDialog.BUTTON_NEUTRAL) {
+>>>>>>> upstream/master
                 mService.prepareVpn(mConfig.user, VpnConfig.LEGACY_VPN);
             }
         } catch (Exception e) {
@@ -132,16 +194,29 @@ public class ManageDialog extends AlertActivity implements
     }
 
     @Override
+<<<<<<< HEAD
     public boolean handleMessage(Message message) {
         mHandler.removeMessages(0);
 
         if (!isFinishing()) {
+=======
+    public void onDismiss(DialogInterface dialog) {
+        finish();
+    }
+
+    @Override
+    public boolean handleMessage(Message message) {
+        mHandler.removeMessages(0);
+
+        if (mDialog.isShowing()) {
+>>>>>>> upstream/master
             if (mConfig.startTime != 0) {
                 long seconds = (SystemClock.elapsedRealtime() - mConfig.startTime) / 1000;
                 mDuration.setText(String.format("%02d:%02d:%02d",
                         seconds / 3600, seconds / 60 % 60, seconds % 60));
             }
 
+<<<<<<< HEAD
             String[] numbers = getNumbers();
             if (numbers != null) {
                 // First unhide the related data rows.
@@ -151,6 +226,10 @@ public class ManageDialog extends AlertActivity implements
                     mDataRowsHidden = false;
                 }
 
+=======
+            String[] numbers = getStatistics();
+            if (numbers != null) {
+>>>>>>> upstream/master
                 // [1] and [2] are received data in bytes and packets.
                 mDataReceived.setText(getString(R.string.data_value_format,
                         numbers[1], numbers[2]));
@@ -164,7 +243,11 @@ public class ManageDialog extends AlertActivity implements
         return true;
     }
 
+<<<<<<< HEAD
     private String[] getNumbers() {
+=======
+    private String[] getStatistics() {
+>>>>>>> upstream/master
         DataInputStream in = null;
         try {
             // See dev_seq_printf_stats() in net/core/dev.c.

@@ -120,12 +120,16 @@ public class Toast {
      */
     public void cancel() {
         mTN.hide();
+<<<<<<< HEAD
 
         try {
             getService().cancelToast(mContext.getPackageName(), mTN);
         } catch (RemoteException e) {
             // Empty
         }
+=======
+        // TODO this still needs to cancel the inflight notification if any
+>>>>>>> upstream/master
     }
     
     /**

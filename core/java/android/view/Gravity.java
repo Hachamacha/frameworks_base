@@ -153,8 +153,11 @@ public class Gravity
      *                container.
      * @param layoutDirection The layout direction.
      *
+<<<<<<< HEAD
      * @see {@link View#LAYOUT_DIRECTION_LTR}
      * @see {@link View#LAYOUT_DIRECTION_RTL}
+=======
+>>>>>>> upstream/master
      * @hide
      */
     public static void apply(int gravity, int w, int h, Rect container,
@@ -270,6 +273,7 @@ public class Gravity
     }
 
     /**
+<<<<<<< HEAD
      * Apply a gravity constant to an object.
      *
      * @param gravity The desired placement of the object, as defined by the
@@ -302,6 +306,8 @@ public class Gravity
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Apply additional gravity behavior based on the overall "display" that an
      * object exists in.  This can be used after
      * {@link #apply(int, int, int, Rect, int, int, Rect)} to place the object
@@ -354,6 +360,7 @@ public class Gravity
             }
         }
     }
+<<<<<<< HEAD
 
     /**
      * Apply additional gravity behavior based on the overall "display" that an
@@ -381,6 +388,9 @@ public class Gravity
         applyDisplay(absGravity, display, inoutObj);
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * <p>Indicate whether the supplied gravity has a vertical pull.</p>
      *
@@ -411,7 +421,10 @@ public class Gravity
      * @param gravity The gravity to convert to absolute (horizontal) values.
      * @param layoutDirection The layout direction.
      * @return gravity converted to absolute (horizontal) values.
+<<<<<<< HEAD
      * @hide
+=======
+>>>>>>> upstream/master
      */
     public static int getAbsoluteGravity(int gravity, int layoutDirection) {
         int result = gravity;

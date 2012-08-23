@@ -1,10 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
         package="com.android.vpndialogs">
+=======
+        package="com.android.vpndialogs"
+        android:sharedUserId="android.uid.system">
+>>>>>>> upstream/master
 
     <application android:label="VpnDialogs"
             android:allowBackup="false" >
         <activity android:name=".ConfirmDialog"
+<<<<<<< HEAD
                 android:theme="@*android:style/Theme.Holo.Dialog.Alert">
+=======
+                android:theme="@style/transparent">
+>>>>>>> upstream/master
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -12,7 +21,11 @@
         </activity>
 
         <activity android:name=".ManageDialog"
+<<<<<<< HEAD
                 android:theme="@*android:style/Theme.Holo.Dialog.Alert"
+=======
+                android:theme="@style/transparent"
+>>>>>>> upstream/master
                 android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

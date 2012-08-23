@@ -18,8 +18,13 @@
 
 #include <android/obb.h>
 
+<<<<<<< HEAD
 #include <androidfw/ObbFile.h>
 #include <utils/Log.h>
+=======
+#include <utils/Log.h>
+#include <utils/ObbFile.h>
+>>>>>>> upstream/master
 
 using namespace android;
 

@@ -25,14 +25,23 @@ void root(uchar4 *v_out, uint32_t x, uint32_t y) {
     p.y = -1.f + ((float)y / gDimY) * 2.f;
 
     float2 t = 0;
+<<<<<<< HEAD
     float2 t2 = t * t;
     int iteration = 0;
     while((t2.x + t2.y < 4.f) && (iteration < gMaxIteration)) {
+=======
+    int iteration = 0;
+    while((t.x*t.x + t.y*t.y < 4.f) && (iteration < gMaxIteration)) {
+        float2 t2 = t * t;
+>>>>>>> upstream/master
         float xtemp = t2.x - t2.y + p.x;
         t.y = 2 * t.x * t.y + p.y;
         t.x = xtemp;
         iteration++;
+<<<<<<< HEAD
         t2 = t * t;
+=======
+>>>>>>> upstream/master
     }
 
     if(iteration >= gMaxIteration) {

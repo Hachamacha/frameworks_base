@@ -405,6 +405,7 @@ public class AccountManager {
     }
 
     /**
+<<<<<<< HEAD
      * Change whether or not an app (identified by its uid) is allowed to retrieve an authToken
      * for an account.
      * <p>
@@ -454,6 +455,8 @@ public class AccountManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Finds out whether a particular account has all the specified features.
      * Account features are authenticator-specific string tokens identifying
      * boolean account properties.  For example, features are used to tell
@@ -1916,8 +1919,12 @@ public class AccountManager {
      *
      * <p>It is safe to call this method from the main thread.
      *
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#GET_ACCOUNTS}.
+=======
+     * <p>No permission is required to call this method.
+>>>>>>> upstream/master
      *
      * @param listener The listener to send notifications to
      * @param handler {@link Handler} identifying the thread to use

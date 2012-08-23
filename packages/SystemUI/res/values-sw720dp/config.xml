@@ -21,6 +21,7 @@
      for different hardware and product builds. -->
 <resources>
     <integer name="config_maxNotificationIcons">5</integer>
+<<<<<<< HEAD
 
     <!-- Whether we're using the tablet-optimized recents interface (we use this
      value at runtime for some things) -->
@@ -29,5 +30,7 @@
     <!-- Whether recents thumbnails should stretch in both x and y to fill their
      ImageView -->
     <bool name="config_recents_thumbnail_image_fits_to_xy">true</bool>
+=======
+>>>>>>> upstream/master
 </resources>
 

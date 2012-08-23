@@ -26,7 +26,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+<<<<<<< HEAD
 import android.os.ICancellationSignal;
+=======
+>>>>>>> upstream/master
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 
@@ -73,7 +76,11 @@ public class MockIContentProvider implements IContentProvider {
     }
 
     public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs,
+<<<<<<< HEAD
             String sortOrder, ICancellationSignal cancellationSignal) {
+=======
+            String sortOrder) {
+>>>>>>> upstream/master
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
@@ -104,9 +111,12 @@ public class MockIContentProvider implements IContentProvider {
             throws RemoteException, FileNotFoundException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
+<<<<<<< HEAD
 
     @Override
     public ICancellationSignal createCancellationSignal() throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
+=======
+>>>>>>> upstream/master
 }

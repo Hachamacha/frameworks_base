@@ -65,7 +65,11 @@ android_mtp_MtpServer_setup(JNIEnv *env, jobject thiz, jobject javaDatabase, jbo
                 usePtp, AID_MEDIA_RW, 0664, 0775);
         env->SetIntField(thiz, field_MtpServer_nativeContext, (int)server);
     } else {
+<<<<<<< HEAD
         ALOGE("could not open MTP driver, errno: %d", errno);
+=======
+        LOGE("could not open MTP driver, errno: %d", errno);
+>>>>>>> upstream/master
     }
 }
 
@@ -76,7 +80,11 @@ android_mtp_MtpServer_run(JNIEnv *env, jobject thiz)
     if (server)
         server->run();
     else
+<<<<<<< HEAD
         ALOGE("server is null in run");
+=======
+        LOGE("server is null in run");
+>>>>>>> upstream/master
 }
 
 static void
@@ -89,7 +97,11 @@ android_mtp_MtpServer_cleanup(JNIEnv *env, jobject thiz)
         delete server;
         env->SetIntField(thiz, field_MtpServer_nativeContext, 0);
     } else {
+<<<<<<< HEAD
         ALOGE("server is null in cleanup");
+=======
+        LOGE("server is null in cleanup");
+>>>>>>> upstream/master
     }
 }
 
@@ -102,7 +114,11 @@ android_mtp_MtpServer_send_object_added(JNIEnv *env, jobject thiz, jint handle)
     if (server)
         server->sendObjectAdded(handle);
     else
+<<<<<<< HEAD
         ALOGE("server is null in send_object_added");
+=======
+        LOGE("server is null in send_object_added");
+>>>>>>> upstream/master
 }
 
 static void
@@ -114,7 +130,11 @@ android_mtp_MtpServer_send_object_removed(JNIEnv *env, jobject thiz, jint handle
     if (server)
         server->sendObjectRemoved(handle);
     else
+<<<<<<< HEAD
         ALOGE("server is null in send_object_removed");
+=======
+        LOGE("server is null in send_object_removed");
+>>>>>>> upstream/master
 }
 
 static void
@@ -145,7 +165,11 @@ android_mtp_MtpServer_add_storage(JNIEnv *env, jobject thiz, jobject jstorage)
             }
         }
     } else {
+<<<<<<< HEAD
         ALOGE("server is null in add_storage");
+=======
+        LOGE("server is null in add_storage");
+>>>>>>> upstream/master
     }
 }
 
@@ -162,7 +186,11 @@ android_mtp_MtpServer_remove_storage(JNIEnv *env, jobject thiz, jint storageId)
             delete storage;
         }
     } else
+<<<<<<< HEAD
         ALOGE("server is null in remove_storage");
+=======
+        LOGE("server is null in remove_storage");
+>>>>>>> upstream/master
 }
 
 // ----------------------------------------------------------------------------
@@ -187,48 +215,84 @@ int register_android_mtp_MtpServer(JNIEnv *env)
 
     clazz = env->FindClass("android/mtp/MtpStorage");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpStorage");
+=======
+        LOGE("Can't find android/mtp/MtpStorage");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_storageId = env->GetFieldID(clazz, "mStorageId", "I");
     if (field_MtpStorage_storageId == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mStorageId");
+=======
+        LOGE("Can't find MtpStorage.mStorageId");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_path = env->GetFieldID(clazz, "mPath", "Ljava/lang/String;");
     if (field_MtpStorage_path == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mPath");
+=======
+        LOGE("Can't find MtpStorage.mPath");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_description = env->GetFieldID(clazz, "mDescription", "Ljava/lang/String;");
     if (field_MtpStorage_description == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mDescription");
+=======
+        LOGE("Can't find MtpStorage.mDescription");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_reserveSpace = env->GetFieldID(clazz, "mReserveSpace", "J");
     if (field_MtpStorage_reserveSpace == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mReserveSpace");
+=======
+        LOGE("Can't find MtpStorage.mReserveSpace");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_removable = env->GetFieldID(clazz, "mRemovable", "Z");
     if (field_MtpStorage_removable == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mRemovable");
+=======
+        LOGE("Can't find MtpStorage.mRemovable");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpStorage_maxFileSize = env->GetFieldID(clazz, "mMaxFileSize", "J");
     if (field_MtpStorage_maxFileSize == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpStorage.mMaxFileSize");
+=======
+        LOGE("Can't find MtpStorage.mMaxFileSize");
+>>>>>>> upstream/master
         return -1;
     }
 
     clazz = env->FindClass("android/mtp/MtpServer");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/mtp/MtpServer");
+=======
+        LOGE("Can't find android/mtp/MtpServer");
+>>>>>>> upstream/master
         return -1;
     }
     field_MtpServer_nativeContext = env->GetFieldID(clazz, "mNativeContext", "I");
     if (field_MtpServer_nativeContext == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find MtpServer.mNativeContext");
+=======
+        LOGE("Can't find MtpServer.mNativeContext");
+>>>>>>> upstream/master
         return -1;
     }
 

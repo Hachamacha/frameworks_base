@@ -25,13 +25,19 @@ import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+<<<<<<< HEAD
 import android.content.pm.PackageManager;
+=======
+>>>>>>> upstream/master
 import android.content.pm.ServiceInfo;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.Slog;
 import android.util.TimeUtils;
 
@@ -62,7 +68,10 @@ class ServiceRecord extends Binder {
                             // all information about the service.
     final ApplicationInfo appInfo;
                             // information about service's app.
+<<<<<<< HEAD
     final int userId;       // user that this service is running as
+=======
+>>>>>>> upstream/master
     final String packageName; // the package implementing intent's component
     final String processName; // process where this component wants to run
     final String permission;// permission needed to access service
@@ -80,7 +89,10 @@ class ServiceRecord extends Binder {
                             // IBinder -> ConnectionRecord of all bound clients
 
     ProcessRecord app;      // where this service is running or null.
+<<<<<<< HEAD
     ProcessRecord isolatedProc; // keep track of isolated process, if requested
+=======
+>>>>>>> upstream/master
     boolean isForeground;   // is service currently in foreground mode?
     int foregroundId;       // Notification ID of last foreground req.
     Notification foregroundNoti; // Notification record of foreground state.
@@ -106,7 +118,11 @@ class ServiceRecord extends Binder {
         final boolean taskRemoved;
         final int id;
         final Intent intent;
+<<<<<<< HEAD
         final ActivityManagerService.NeededUriGrants neededGrants;
+=======
+        final int targetPermissionUid;
+>>>>>>> upstream/master
         long deliveredTime;
         int deliveryCount;
         int doneExecutingCount;
@@ -115,12 +131,20 @@ class ServiceRecord extends Binder {
         String stringName;      // caching of toString
 
         StartItem(ServiceRecord _sr, boolean _taskRemoved, int _id, Intent _intent,
+<<<<<<< HEAD
                 ActivityManagerService.NeededUriGrants _neededGrants) {
+=======
+                int _targetPermissionUid) {
+>>>>>>> upstream/master
             sr = _sr;
             taskRemoved = _taskRemoved;
             id = _id;
             intent = _intent;
+<<<<<<< HEAD
             neededGrants = _neededGrants;
+=======
+            targetPermissionUid = _targetPermissionUid;
+>>>>>>> upstream/master
         }
 
         UriPermissionOwner getUriPermissionsLocked() {
@@ -177,9 +201,15 @@ class ServiceRecord extends Binder {
             pw.print(prefix); pw.print("  intent=");
                     if (si.intent != null) pw.println(si.intent.toString());
                     else pw.println("null");
+<<<<<<< HEAD
             if (si.neededGrants != null) {
                 pw.print(prefix); pw.print("  neededGrants=");
                         pw.println(si.neededGrants);
+=======
+            if (si.targetPermissionUid >= 0) {
+                pw.print(prefix); pw.print("  targetPermissionUid=");
+                        pw.println(si.targetPermissionUid);
+>>>>>>> upstream/master
             }
             if (si.uriPermissions != null) {
                 if (si.uriPermissions.readUriPermissions != null) {
@@ -196,7 +226,11 @@ class ServiceRecord extends Binder {
     
     void dump(PrintWriter pw, String prefix) {
         pw.print(prefix); pw.print("intent={");
+<<<<<<< HEAD
                 pw.print(intent.getIntent().toShortString(false, true, false, true));
+=======
+                pw.print(intent.getIntent().toShortString(false, true, false));
+>>>>>>> upstream/master
                 pw.println('}');
         pw.print(prefix); pw.print("packageName="); pw.println(packageName);
         pw.print(prefix); pw.print("processName="); pw.println(processName);
@@ -211,9 +245,12 @@ class ServiceRecord extends Binder {
         }
         pw.print(prefix); pw.print("dataDir="); pw.println(dataDir);
         pw.print(prefix); pw.print("app="); pw.println(app);
+<<<<<<< HEAD
         if (isolatedProc != null) {
             pw.print(prefix); pw.print("isolatedProc="); pw.println(isolatedProc);
         }
+=======
+>>>>>>> upstream/master
         if (isForeground || foregroundId != 0) {
             pw.print(prefix); pw.print("isForeground="); pw.print(isForeground);
                     pw.print(" foregroundId="); pw.print(foregroundId);
@@ -296,7 +333,10 @@ class ServiceRecord extends Binder {
         this.restarter = restarter;
         createTime = SystemClock.elapsedRealtime();
         lastActivity = SystemClock.uptimeMillis();
+<<<<<<< HEAD
         userId = UserId.getUserId(appInfo.uid);
+=======
+>>>>>>> upstream/master
     }
 
     public AppBindRecord retrieveAppBindingLocked(Intent intent,

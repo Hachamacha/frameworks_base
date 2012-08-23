@@ -92,24 +92,30 @@ public class Process {
     public static final int MEDIA_UID = 1013;
 
     /**
+<<<<<<< HEAD
      * Defines the UID/GID for the DRM process.
      * @hide
      */
     public static final int DRM_UID = 1019;
 
     /**
+=======
+>>>>>>> upstream/master
      * Defines the GID for the group that allows write access to the SD card.
      * @hide
      */
     public static final int SDCARD_RW_GID = 1015;
 
     /**
+<<<<<<< HEAD
      * Defines the UID/GID for the group that controls VPN services.
      * @hide
      */
     public static final int VPN_UID = 1016;
 
     /**
+=======
+>>>>>>> upstream/master
      * Defines the UID/GID for the NFC service process.
      * @hide
      */
@@ -131,6 +137,7 @@ public class Process {
      * Last of application-specific UIDs starting at
      * {@link #FIRST_APPLICATION_UID}.
      */
+<<<<<<< HEAD
     public static final int LAST_APPLICATION_UID = 19999;
 
     /**
@@ -144,6 +151,9 @@ public class Process {
      * @hide
      */
     public static final int LAST_ISOLATED_UID = 99999;
+=======
+    public static final int LAST_APPLICATION_UID = 99999;
+>>>>>>> upstream/master
 
     /**
      * Defines a secondary group id for access to the bluetooth hardware.
@@ -243,6 +253,7 @@ public class Process {
     public static final int THREAD_PRIORITY_LESS_FAVORABLE = +1;
 
     /**
+<<<<<<< HEAD
      * Default scheduling policy
      * @hide
      */
@@ -322,6 +333,26 @@ public class Process {
      * @hide
      **/
     public static final int THREAD_GROUP_AUDIO_SYS = 4;
+=======
+     * Default thread group - gets a 'normal' share of the CPU
+     * @hide
+     */
+    public static final int THREAD_GROUP_DEFAULT = 0;
+
+    /**
+     * Background non-interactive thread group - All threads in
+     * this group are scheduled with a reduced share of the CPU.
+     * @hide
+     */
+    public static final int THREAD_GROUP_BG_NONINTERACTIVE = 1;
+
+    /**
+     * Foreground 'boost' thread group - All threads in
+     * this group are scheduled with an increased share of the CPU
+     * @hide
+     **/
+    public static final int THREAD_GROUP_FG_BOOST = 2;
+>>>>>>> upstream/master
 
     public static final int SIGNAL_QUIT = 3;
     public static final int SIGNAL_KILL = 9;
@@ -631,6 +662,7 @@ public class Process {
     public static final native int myUid();
 
     /**
+<<<<<<< HEAD
      * Returns whether the current process is in an isolated sandbox.
      * @hide
      */
@@ -640,6 +672,8 @@ public class Process {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns the UID assigned to a particular user name, or -1 if there is
      * none.  If the given string consists of only numbers, it is converted
      * directly to a uid.
@@ -682,6 +716,7 @@ public class Process {
     }
 
     /**
+<<<<<<< HEAD
      * Returns the thread group leader id for a currently running thread.
      * @param tid the thread id
      * @return the thread group leader id of the thread, or -1 if the thread is not running.
@@ -697,6 +732,8 @@ public class Process {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set the priority of a thread, based on Linux priorities.
      * 
      * @param tid The identifier of the thread/process to change.
@@ -724,14 +761,20 @@ public class Process {
     /**
      * Sets the scheduling group for a thread.
      * @hide
+<<<<<<< HEAD
      * @param tid The identifier of the thread to change.
      * @param group The target group for this thread from THREAD_GROUP_*.
+=======
+     * @param tid The indentifier of the thread/process to change.
+     * @param group The target group for this thread/process.
+>>>>>>> upstream/master
      * 
      * @throws IllegalArgumentException Throws IllegalArgumentException if
      * <var>tid</var> does not exist.
      * @throws SecurityException Throws SecurityException if your process does
      * not have permission to modify the given thread, or to use the given
      * priority.
+<<<<<<< HEAD
      * If the thread is a thread group leader, that is it's gettid() == getpid(),
      * then the other threads in the same thread group are _not_ affected.
      */
@@ -743,18 +786,31 @@ public class Process {
      * @hide
      * @param pid The identifier of the process to change.
      * @param group The target group for this process from THREAD_GROUP_*.
+=======
+     */
+    public static final native void setThreadGroup(int tid, int group)
+            throws IllegalArgumentException, SecurityException;
+    /**
+     * Sets the scheduling group for a process and all child threads
+     * @hide
+     * @param pid The indentifier of the process to change.
+     * @param group The target group for this process.
+>>>>>>> upstream/master
      * 
      * @throws IllegalArgumentException Throws IllegalArgumentException if
      * <var>tid</var> does not exist.
      * @throws SecurityException Throws SecurityException if your process does
      * not have permission to modify the given thread, or to use the given
      * priority.
+<<<<<<< HEAD
      *
      * group == THREAD_GROUP_DEFAULT means to move all non-background priority
      * threads to the foreground scheduling group, but to leave background
      * priority threads alone.  group == THREAD_GROUP_BG_NONINTERACTIVE moves all
      * threads, regardless of priority, to the background scheduling group.
      * group == THREAD_GROUP_FOREGROUND is not allowed.
+=======
+>>>>>>> upstream/master
      */
     public static final native void setProcessGroup(int pid, int group)
             throws IllegalArgumentException, SecurityException;
@@ -793,6 +849,7 @@ public class Process {
             throws IllegalArgumentException;
     
     /**
+<<<<<<< HEAD
      * Set the scheduling policy and priority of a thread, based on Linux.
      *
      * @param tid The identifier of the thread/process to change.
@@ -811,6 +868,8 @@ public class Process {
             throws IllegalArgumentException;
 
     /**
+=======
+>>>>>>> upstream/master
      * Determine whether the current environment supports multiple processes.
      * 
      * @return Returns true if the system can run in multiple processes, else
@@ -897,9 +956,12 @@ public class Process {
     public static final native long getFreeMemory();
     
     /** @hide */
+<<<<<<< HEAD
     public static final native long getTotalMemory();
     
     /** @hide */
+=======
+>>>>>>> upstream/master
     public static final native void readProcLines(String path,
             String[] reqFields, long[] outSizes);
     
@@ -933,9 +995,12 @@ public class Process {
     public static final native boolean parseProcLine(byte[] buffer, int startIndex, 
             int endIndex, int[] format, String[] outStrings, long[] outLongs, float[] outFloats);
 
+<<<<<<< HEAD
     /** @hide */
     public static final native int[] getPidsForCommands(String[] cmds);
 
+=======
+>>>>>>> upstream/master
     /**
      * Gets the total Pss value for a given process, in bytes.
      * 

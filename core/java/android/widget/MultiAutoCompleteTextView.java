@@ -23,8 +23,12 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.QwertyKeyListener;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+import android.widget.MultiAutoCompleteTextView.Tokenizer;
+>>>>>>> upstream/master
 
 /**
  * An editable text view, extending {@link AutoCompleteTextView}, that
@@ -197,6 +201,7 @@ public class MultiAutoCompleteTextView extends AutoCompleteTextView {
         editable.replace(start, end, mTokenizer.terminateToken(text));
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -209,6 +214,8 @@ public class MultiAutoCompleteTextView extends AutoCompleteTextView {
         info.setClassName(MultiAutoCompleteTextView.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     public static interface Tokenizer {
         /**
          * Returns the start of the token that ends at offset

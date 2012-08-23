@@ -49,6 +49,7 @@ public class DrmInfo {
         mInfoType = infoType;
         mMimeType = mimeType;
         mData = data;
+<<<<<<< HEAD
         if (!isValid()) {
             final String msg = "infoType: " + infoType + "," +
                                "mimeType: " + mimeType + "," +
@@ -56,6 +57,8 @@ public class DrmInfo {
 
             throw new IllegalArgumentException(msg);
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -76,6 +79,7 @@ public class DrmInfo {
             // call would fail with IllegalArgumentException because of mData = null
             mData = null;
         }
+<<<<<<< HEAD
         if (!isValid()) {
             final String msg = "infoType: " + infoType + "," +
                                "mimeType: " + mimeType + "," +
@@ -83,6 +87,8 @@ public class DrmInfo {
 
             throw new IllegalArgumentException();
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**

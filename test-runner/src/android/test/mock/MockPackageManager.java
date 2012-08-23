@@ -22,7 +22,10 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+<<<<<<< HEAD
 import android.content.pm.ContainerEncryptionParams;
+=======
+>>>>>>> upstream/master
 import android.content.pm.FeatureInfo;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageDeleteObserver;
@@ -30,7 +33,10 @@ import android.content.pm.IPackageInstallObserver;
 import android.content.pm.IPackageMoveObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.InstrumentationInfo;
+<<<<<<< HEAD
 import android.content.pm.ManifestDigest;
+=======
+>>>>>>> upstream/master
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
@@ -38,8 +44,16 @@ import android.content.pm.PermissionInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
+<<<<<<< HEAD
 import android.content.pm.UserInfo;
 import android.content.pm.VerifierDeviceIdentity;
+=======
+import android.content.pm.Signature;
+import android.content.pm.UserInfo;
+import android.content.pm.ManifestDigest;
+import android.content.pm.VerifierDeviceIdentity;
+import android.content.pm.VerifierInfo;
+>>>>>>> upstream/master
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
@@ -158,6 +172,7 @@ public class MockPackageManager extends PackageManager {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public void grantPermission(String packageName, String permissionName) {
@@ -170,6 +185,8 @@ public class MockPackageManager extends PackageManager {
         throw new UnsupportedOperationException();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public int checkSignatures(String pkg1, String pkg2) {
         throw new UnsupportedOperationException();
@@ -529,6 +546,7 @@ public class MockPackageManager extends PackageManager {
      * @hide
      */
     @Override
+<<<<<<< HEAD
     public UserInfo getUser(int userId) {
         throw new UnsupportedOperationException();
     }
@@ -537,6 +555,8 @@ public class MockPackageManager extends PackageManager {
      * @hide
      */
     @Override
+=======
+>>>>>>> upstream/master
     public boolean removeUser(int id) {
         throw new UnsupportedOperationException();
     }
@@ -558,6 +578,7 @@ public class MockPackageManager extends PackageManager {
     }
 
     /**
+<<<<<<< HEAD
      * @hide - to match hiding in superclass
      */
     @Override
@@ -566,12 +587,18 @@ public class MockPackageManager extends PackageManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @hide
      */
     @Override
     public void installPackageWithVerification(Uri packageURI, IPackageInstallObserver observer,
             int flags, String installerPackageName, Uri verificationURI,
+<<<<<<< HEAD
             ManifestDigest manifestDigest, ContainerEncryptionParams encryptionParams) {
+=======
+            ManifestDigest manifestDigest) {
+>>>>>>> upstream/master
         throw new UnsupportedOperationException();
     }
 
@@ -581,6 +608,17 @@ public class MockPackageManager extends PackageManager {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @hide - to match hiding in superclass
+     */
+    @Override
+    public List<PackageInfo> getInstalledThemePackages() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+>>>>>>> upstream/master
      * @hide
      */
     @Override

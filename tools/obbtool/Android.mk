@@ -19,7 +19,10 @@ LOCAL_CFLAGS := -Wall -Werror
 
 LOCAL_STATIC_LIBRARIES := \
 	libutils \
+<<<<<<< HEAD
 	libandroidfw \
+=======
+>>>>>>> upstream/master
 	libcutils
 
 ifeq ($(HOST_OS),linux)

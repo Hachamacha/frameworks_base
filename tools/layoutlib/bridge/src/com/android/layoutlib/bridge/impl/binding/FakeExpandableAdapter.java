@@ -99,28 +99,43 @@ public class FakeExpandableAdapter extends BaseAdapter implements ExpandableList
 
     // ---- ExpandableListAdapter
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getGroupCount() {
         return mItems.size();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getChildrenCount(int groupPosition) {
         AdapterItem item = mItems.get(groupPosition);
         return item.getChildren().size();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public Object getGroup(int groupPosition) {
         return mItems.get(groupPosition);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public Object getChild(int groupPosition, int childPosition) {
         return getChildItem(groupPosition, childPosition);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
             ViewGroup parent) {
         // we don't care about recycling here because we never scroll.
@@ -128,7 +143,10 @@ public class FakeExpandableAdapter extends BaseAdapter implements ExpandableList
         return getView(item, null /*parentItem*/, convertView, parent);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
             View convertView, ViewGroup parent) {
         // we don't care about recycling here because we never scroll.
@@ -137,59 +155,92 @@ public class FakeExpandableAdapter extends BaseAdapter implements ExpandableList
         return getView(item, parentItem, convertView, parent);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public long getCombinedGroupId(long groupId) {
         return groupId << 16 | 0x0000FFFF;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public long getCombinedChildId(long groupId, long childId) {
         return groupId << 16 | childId;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void onGroupCollapsed(int groupPosition) {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void onGroupExpanded(int groupPosition) {
         // pass
     }
 
     // ---- HeterogeneousExpandableList
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getChildType(int groupPosition, int childPosition) {
         return getChildItem(groupPosition, childPosition).getType();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getChildTypeCount() {
         return mChildrenTypes.size();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getGroupType(int groupPosition) {
         return mItems.get(groupPosition).getType();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getGroupTypeCount() {
         return mGroupTypes.size();
     }

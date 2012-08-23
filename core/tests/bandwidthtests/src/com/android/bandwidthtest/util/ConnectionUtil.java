@@ -74,7 +74,10 @@ public class ConnectionUtil {
     private int mWifiState;
     private NetworkInfo mWifiNetworkInfo;
     private WifiManager mWifiManager;
+<<<<<<< HEAD
     private WifiManager.Channel mChannel;
+=======
+>>>>>>> upstream/master
     private Context mContext;
     // Verify connectivity state
     private static final int NUM_NETWORK_TYPES = ConnectivityManager.MAX_NETWORK_TYPE + 1;
@@ -115,7 +118,11 @@ public class ConnectionUtil {
 
         // Get an instance of WifiManager
         mWifiManager =(WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+<<<<<<< HEAD
         mChannel = mWifiManager.initialize(mContext, mContext.getMainLooper(), null);
+=======
+        mWifiManager.asyncConnect(mContext, new WifiServiceHandler());
+>>>>>>> upstream/master
 
         mDownloadManager = (DownloadManager)mContext.getSystemService(Context.DOWNLOAD_SERVICE);
 
@@ -574,6 +581,7 @@ public class ConnectionUtil {
                         Log.v(LOG_TAG, "Found " + ssid + " in the scan result list.");
                         Log.v(LOG_TAG, "Retry: " + retry);
                         foundApInScanResults = true;
+<<<<<<< HEAD
                         mWifiManager.connect(mChannel, config, new WifiManager.ActionListener() {
                                 public void onSuccess() {
                                 }
@@ -582,6 +590,9 @@ public class ConnectionUtil {
                                 }
                             });
 
+=======
+                        mWifiManager.connectNetwork(config);
+>>>>>>> upstream/master
                         break;
                     }
                 }
@@ -628,6 +639,7 @@ public class ConnectionUtil {
         for (WifiConfiguration wifiConfig: wifiConfigList) {
             Log.v(LOG_TAG, "Remove wifi configuration: " + wifiConfig.networkId);
             int netId = wifiConfig.networkId;
+<<<<<<< HEAD
             mWifiManager.forget(mChannel, netId, new WifiManager.ActionListener() {
                     public void onSuccess() {
                     }
@@ -635,6 +647,9 @@ public class ConnectionUtil {
                         Log.e(LOG_TAG, "forget failed " + reason);
                     }
                 });
+=======
+            mWifiManager.forgetNetwork(netId);
+>>>>>>> upstream/master
         }
         return true;
     }
@@ -743,4 +758,8 @@ public class ConnectionUtil {
         }
         return false;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> upstream/master

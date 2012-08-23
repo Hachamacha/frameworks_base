@@ -69,7 +69,11 @@ sensors_module_get_next_sensor(JNIEnv *env, jobject clazz, jobject sensor, jint 
     jstring vendor = env->NewStringUTF(list->getVendor().string());
     env->SetObjectField(sensor, sensorOffsets.name,      name);
     env->SetObjectField(sensor, sensorOffsets.vendor,    vendor);
+<<<<<<< HEAD
     env->SetIntField(sensor, sensorOffsets.version,      list->getVersion());
+=======
+    env->SetIntField(sensor, sensorOffsets.version,      1);
+>>>>>>> upstream/master
     env->SetIntField(sensor, sensorOffsets.handle,       list->getHandle());
     env->SetIntField(sensor, sensorOffsets.type,         list->getType());
     env->SetFloatField(sensor, sensorOffsets.range,      list->getMaxValue());
@@ -126,6 +130,7 @@ sensors_data_poll(JNIEnv *env, jclass clazz, jint nativeQueue,
     ASensorEvent event;
 
     res = queue->read(&event, 1);
+<<<<<<< HEAD
     if (res == 0) {
         res = queue->waitForEvent();
         if (res != NO_ERROR)
@@ -137,6 +142,16 @@ sensors_data_poll(JNIEnv *env, jclass clazz, jint nativeQueue,
     if (res <= 0) {
         return -1;
     }
+=======
+    if (res == -EAGAIN) {
+        res = queue->waitForEvent();
+        if (res != NO_ERROR)
+            return -1;
+        res = queue->read(&event, 1);
+    }
+    if (res < 0)
+        return -1;
+>>>>>>> upstream/master
 
     jint accuracy = event.vector.status;
     env->SetFloatArrayRegion(values, 0, 3, event.vector.v);
@@ -182,6 +197,10 @@ using namespace android;
 
 int register_android_hardware_SensorManager(JNIEnv *env)
 {
+<<<<<<< HEAD
     return jniRegisterNativeMethods(env, "android/hardware/SystemSensorManager",
+=======
+    return jniRegisterNativeMethods(env, "android/hardware/SensorManager",
+>>>>>>> upstream/master
             gMethods, NELEM(gMethods));
 }

@@ -17,7 +17,10 @@
 package com.android.internal.policy.impl;
 
 import android.content.Context;
+<<<<<<< HEAD
 import com.android.internal.policy.impl.KeyguardViewCallback;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccCard;
 import android.content.res.Configuration;
 import android.test.AndroidTestCase;
@@ -134,10 +137,16 @@ public class LockPatternKeyguardViewTest extends AndroidTestCase {
 
 
 
+<<<<<<< HEAD
         private TestableLockPatternKeyguardView(Context context, KeyguardViewCallback callback,
                 KeyguardUpdateMonitor updateMonitor,
                 LockPatternUtils lockPatternUtils, KeyguardWindowController controller) {
             super(context, callback, updateMonitor, lockPatternUtils, controller);
+=======
+        private TestableLockPatternKeyguardView(Context context, KeyguardUpdateMonitor updateMonitor,
+                LockPatternUtils lockPatternUtils, KeyguardWindowController controller) {
+            super(context, updateMonitor, lockPatternUtils, controller);
+>>>>>>> upstream/master
         }
 
         @Override
@@ -200,6 +209,7 @@ public class LockPatternKeyguardViewTest extends AndroidTestCase {
         super.setUp();
         mUpdateMonitor = new MockUpdateMonitor(getContext());
         mLockPatternUtils = new MockLockPatternUtils(getContext());
+<<<<<<< HEAD
         mKeyguardViewCallback = new MockKeyguardCallback();
 
         mLPKV = new TestableLockPatternKeyguardView(getContext(), mKeyguardViewCallback,
@@ -207,6 +217,16 @@ public class LockPatternKeyguardViewTest extends AndroidTestCase {
             public void setNeedsInput(boolean needsInput) {
             }
         });
+=======
+
+        mLPKV = new TestableLockPatternKeyguardView(getContext(), mUpdateMonitor,
+                mLockPatternUtils, new KeyguardWindowController() {
+            public void setNeedsInput(boolean needsInput) {
+            }
+        });
+        mKeyguardViewCallback = new MockKeyguardCallback();
+        mLPKV.setCallback(mKeyguardViewCallback);
+>>>>>>> upstream/master
     }
 
     public void testStateAfterCreatedWhileScreenOff() {

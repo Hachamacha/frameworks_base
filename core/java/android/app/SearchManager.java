@@ -22,7 +22,10 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+<<<<<<< HEAD
 import android.content.pm.PackageManager;
+=======
+>>>>>>> upstream/master
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -33,7 +36,10 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.text.TextUtils;
 import android.util.Log;
+<<<<<<< HEAD
 import android.util.Slog;
+=======
+>>>>>>> upstream/master
 import android.view.KeyEvent;
 
 import java.util.List;
@@ -397,7 +403,15 @@ public class SearchManager
 
     /**
      * Intent action to be broadcast to inform that the global search provider
+<<<<<<< HEAD
      * has changed.
+=======
+     * has changed. Normal components will have no need to handle this intent since
+     * they should be using API methods from this class to access the global search
+     * activity
+     *
+     * @hide
+>>>>>>> upstream/master
      */
     public final static String INTENT_GLOBAL_SEARCH_ACTIVITY_CHANGED
             = "android.search.action.GLOBAL_SEARCH_ACTIVITY_CHANGED";
@@ -588,6 +602,11 @@ public class SearchManager
 
     /**
      * Gets the name of the global search activity.
+<<<<<<< HEAD
+=======
+     *
+     * @hide
+>>>>>>> upstream/master
      */
     public ComponentName getGlobalSearchActivity() {
         try {
@@ -839,6 +858,7 @@ public class SearchManager
         }
     }
 
+<<<<<<< HEAD
     /**
      * Gets an intent for launching installed assistant activity, or null if not available.
      * @return The assist intent.
@@ -855,4 +875,6 @@ public class SearchManager
         }
         return null;
     }
+=======
+>>>>>>> upstream/master
 }

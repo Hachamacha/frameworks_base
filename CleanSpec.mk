@@ -117,6 +117,7 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/fonts/DroidSans*)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/media/audio/)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/fonts/DroidSans*)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/media/audio/)
+<<<<<<< HEAD
 $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/framework_intermediates/src/core/java/android/content)
 $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/android_stubs_current_intermediates/src/android/content)
 $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/APPS/*/src/renderscript)
@@ -133,6 +134,8 @@ $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/framew
 $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/framework_intermediates/src/core/java/android/accessibilityservice/IAccessibilityServiceClientCallback.P)
 $(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/framework_intermediates/src/core/java/android/accessibilityservice/IAccessibilityServiceClient.P)
 $(call add-clean-step, rm -f $(PRODUCT_OUT)/system/media/video/Disco*)
+=======
+>>>>>>> upstream/master
 # ************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
 # ************************************************

@@ -9,7 +9,10 @@ test_src_files := \
 
 shared_libraries := \
     libcutils \
+<<<<<<< HEAD
     libandroidfw \
+=======
+>>>>>>> upstream/master
     libutils \
     libhardware \
     libhardware_legacy \

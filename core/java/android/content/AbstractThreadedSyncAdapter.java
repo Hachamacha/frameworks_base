@@ -21,7 +21,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
+<<<<<<< HEAD
 import android.os.Trace;
+=======
+>>>>>>> upstream/master
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -234,6 +237,7 @@ public abstract class AbstractThreadedSyncAdapter {
             mThreadsKey = toSyncKey(account);
         }
 
+<<<<<<< HEAD
         @Override
         public void run() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -243,6 +247,11 @@ public abstract class AbstractThreadedSyncAdapter {
             // threads in order to track overlapping operations, so we'll do it here for now.
             Trace.traceBegin(Trace.TRACE_TAG_SYNC_MANAGER, mAuthority);
 
+=======
+        public void run() {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+
+>>>>>>> upstream/master
             SyncResult syncResult = new SyncResult();
             ContentProviderClient provider = null;
             try {
@@ -257,8 +266,11 @@ public abstract class AbstractThreadedSyncAdapter {
                     syncResult.databaseError = true;
                 }
             } finally {
+<<<<<<< HEAD
                 Trace.traceEnd(Trace.TRACE_TAG_SYNC_MANAGER);
 
+=======
+>>>>>>> upstream/master
                 if (provider != null) {
                     provider.release();
                 }

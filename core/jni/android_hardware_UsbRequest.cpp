@@ -42,11 +42,19 @@ static jboolean
 android_hardware_UsbRequest_init(JNIEnv *env, jobject thiz, jobject java_device,
         jint ep_address, jint ep_attributes, jint ep_max_packet_size, jint ep_interval)
 {
+<<<<<<< HEAD
     ALOGD("init\n");
 
     struct usb_device* device = get_device_from_object(env, java_device);
     if (!device) {
         ALOGE("device null in native_init");
+=======
+    LOGD("init\n");
+
+    struct usb_device* device = get_device_from_object(env, java_device);
+    if (!device) {
+        LOGE("device null in native_init");
+>>>>>>> upstream/master
         return false;
     }
 
@@ -68,7 +76,11 @@ android_hardware_UsbRequest_init(JNIEnv *env, jobject thiz, jobject java_device,
 static void
 android_hardware_UsbRequest_close(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGD("close\n");
+=======
+    LOGD("close\n");
+>>>>>>> upstream/master
     struct usb_request* request = get_request_from_object(env, thiz);
     if (request) {
         usb_request_free(request);
@@ -82,7 +94,11 @@ android_hardware_UsbRequest_queue_array(JNIEnv *env, jobject thiz,
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
+<<<<<<< HEAD
         ALOGE("request is closed in native_queue");
+=======
+        LOGE("request is closed in native_queue");
+>>>>>>> upstream/master
         return false;
     }
 
@@ -119,7 +135,11 @@ android_hardware_UsbRequest_dequeue_array(JNIEnv *env, jobject thiz,
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
+<<<<<<< HEAD
         ALOGE("request is closed in native_dequeue");
+=======
+        LOGE("request is closed in native_dequeue");
+>>>>>>> upstream/master
         return;
     }
 
@@ -138,7 +158,11 @@ android_hardware_UsbRequest_queue_direct(JNIEnv *env, jobject thiz,
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
+<<<<<<< HEAD
         ALOGE("request is closed in native_queue");
+=======
+        LOGE("request is closed in native_queue");
+>>>>>>> upstream/master
         return false;
     }
 
@@ -168,7 +192,11 @@ android_hardware_UsbRequest_dequeue_direct(JNIEnv *env, jobject thiz)
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
+<<<<<<< HEAD
         ALOGE("request is closed in native_dequeue");
+=======
+        LOGE("request is closed in native_dequeue");
+>>>>>>> upstream/master
         return;
     }
     // all we need to do is delete our global ref
@@ -180,7 +208,11 @@ android_hardware_UsbRequest_cancel(JNIEnv *env, jobject thiz)
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
+<<<<<<< HEAD
         ALOGE("request is closed in native_cancel");
+=======
+        LOGE("request is closed in native_cancel");
+>>>>>>> upstream/master
         return false;
     }
     return (usb_request_cancel(request) == 0);
@@ -202,12 +234,20 @@ int register_android_hardware_UsbRequest(JNIEnv *env)
 {
     jclass clazz = env->FindClass("android/hardware/usb/UsbRequest");
     if (clazz == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find android/hardware/usb/UsbRequest");
+=======
+        LOGE("Can't find android/hardware/usb/UsbRequest");
+>>>>>>> upstream/master
         return -1;
     }
     field_context = env->GetFieldID(clazz, "mNativeContext", "I");
     if (field_context == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find UsbRequest.mNativeContext");
+=======
+        LOGE("Can't find UsbRequest.mNativeContext");
+>>>>>>> upstream/master
         return -1;
     }
 

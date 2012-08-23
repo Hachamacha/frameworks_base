@@ -109,7 +109,11 @@ void TextureCache::operator()(SkBitmap*& bitmap, Texture*& texture) {
         TEXTURE_LOGD("TextureCache::callback: name, removed size, mSize = %d, %d, %d",
                 texture->id, texture->bitmapSize, mSize);
         if (mDebugEnabled) {
+<<<<<<< HEAD
             ALOGD("Texture deleted, size = %d", texture->bitmapSize);
+=======
+            LOGD("Texture deleted, size = %d", texture->bitmapSize);
+>>>>>>> upstream/master
         }
         glDeleteTextures(1, &texture->id);
         delete texture;
@@ -125,8 +129,12 @@ Texture* TextureCache::get(SkBitmap* bitmap) {
 
     if (!texture) {
         if (bitmap->width() > mMaxTextureSize || bitmap->height() > mMaxTextureSize) {
+<<<<<<< HEAD
             ALOGW("Bitmap too large to be uploaded into a texture (%dx%d, max=%dx%d)",
                     bitmap->width(), bitmap->height(), mMaxTextureSize, mMaxTextureSize);
+=======
+            LOGW("Bitmap too large to be uploaded into a texture");
+>>>>>>> upstream/master
             return NULL;
         }
 
@@ -147,7 +155,11 @@ Texture* TextureCache::get(SkBitmap* bitmap) {
             TEXTURE_LOGD("TextureCache::get: create texture(%p): name, size, mSize = %d, %d, %d",
                      bitmap, texture->id, size, mSize);
             if (mDebugEnabled) {
+<<<<<<< HEAD
                 ALOGD("Texture created, size = %d", size);
+=======
+                LOGD("Texture created, size = %d", size);
+>>>>>>> upstream/master
             }
             mCache.put(bitmap, texture);
         } else {
@@ -160,6 +172,7 @@ Texture* TextureCache::get(SkBitmap* bitmap) {
     return texture;
 }
 
+<<<<<<< HEAD
 Texture* TextureCache::getTransient(SkBitmap* bitmap) {
     Texture* texture = new Texture;
     texture->bitmapSize = bitmap->rowBytes() * bitmap->height();
@@ -170,6 +183,8 @@ Texture* TextureCache::getTransient(SkBitmap* bitmap) {
     return texture;
 }
 
+=======
+>>>>>>> upstream/master
 void TextureCache::remove(SkBitmap* bitmap) {
     mCache.remove(bitmap);
 }
@@ -212,7 +227,11 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
     SkAutoLockPixels alp(*bitmap);
 
     if (!bitmap->readyToDraw()) {
+<<<<<<< HEAD
         ALOGE("Cannot generate texture from bitmap");
+=======
+        LOGE("Cannot generate texture from bitmap");
+>>>>>>> upstream/master
         return;
     }
 
@@ -228,6 +247,7 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
     texture->height = bitmap->height();
 
     glBindTexture(GL_TEXTURE_2D, texture->id);
+<<<<<<< HEAD
     if (!regenerate) {
         glPixelStorei(GL_UNPACK_ALIGNMENT, bitmap->bytesPerPixel());
     }
@@ -237,6 +257,13 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
         if (!regenerate) {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         }
+=======
+    glPixelStorei(GL_UNPACK_ALIGNMENT, bitmap->bytesPerPixel());
+
+    switch (bitmap->getConfig()) {
+    case SkBitmap::kA8_Config:
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+>>>>>>> upstream/master
         uploadToTexture(resize, GL_ALPHA, bitmap->rowBytesAsPixels(), texture->height,
                 GL_UNSIGNED_BYTE, bitmap->getPixels());
         texture->blend = true;
@@ -259,6 +286,7 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
         texture->blend = !bitmap->isOpaque();
         break;
     default:
+<<<<<<< HEAD
         ALOGW("Unsupported bitmap config: %d", bitmap->getConfig());
         break;
     }
@@ -267,6 +295,14 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
         texture->setFilter(GL_NEAREST);
         texture->setWrap(GL_CLAMP_TO_EDGE);
     }
+=======
+        LOGW("Unsupported bitmap config: %d", bitmap->getConfig());
+        break;
+    }
+
+    texture->setFilter(GL_LINEAR, GL_LINEAR);
+    texture->setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+>>>>>>> upstream/master
 }
 
 void TextureCache::uploadLoFiTexture(bool resize, SkBitmap* bitmap,

@@ -21,7 +21,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.text.TextPaint;
+=======
+>>>>>>> upstream/master
 import android.view.View;
 
 @SuppressWarnings({"UnusedDeclaration"})
@@ -40,7 +43,10 @@ public class TextActivity extends Activity {
         private final Paint mScaledPaint;
         private final Paint mSkewPaint;
         private final Paint mHugePaint;
+<<<<<<< HEAD
         private final TextPaint mEventPaint;
+=======
+>>>>>>> upstream/master
 
         CustomTextView(Context c) {
             super(c);
@@ -72,11 +78,14 @@ public class TextActivity extends Activity {
             mHugePaint.setAntiAlias(true);
             mHugePaint.setColor(0xff000000);
             mHugePaint.setTextSize(300f);
+<<<<<<< HEAD
 
             mEventPaint = new TextPaint();
             mEventPaint.setFakeBoldText(true);
             mEventPaint.setAntiAlias(true);
             mEventPaint.setTextSize(14);
+=======
+>>>>>>> upstream/master
         }
 
         @Override
@@ -84,8 +93,11 @@ public class TextActivity extends Activity {
             super.onDraw(canvas);
             canvas.drawRGB(255, 255, 255);
 
+<<<<<<< HEAD
             canvas.drawText("Hello OpenGL renderer!", 300, 20, mEventPaint);
             
+=======
+>>>>>>> upstream/master
             mMediumPaint.setStyle(Paint.Style.FILL_AND_STROKE);
             mMediumPaint.setStrokeWidth(2.0f);
             canvas.drawText("Hello OpenGL renderer!", 100, 20, mMediumPaint);

@@ -35,7 +35,10 @@
 
 #include <gui/ISensorServer.h>
 #include <gui/ISensorEventConnection.h>
+<<<<<<< HEAD
 #include <gui/SensorEventQueue.h>
+=======
+>>>>>>> upstream/master
 
 #include <hardware/sensors.h>
 
@@ -66,7 +69,11 @@ SensorService::SensorService()
 
 void SensorService::onFirstRef()
 {
+<<<<<<< HEAD
     ALOGD("nuSensorService starting...");
+=======
+    LOGD("nuSensorService starting...");
+>>>>>>> upstream/master
 
     SensorDevice& dev(SensorDevice::getInstance());
 
@@ -223,12 +230,20 @@ status_t SensorService::dump(int fd, const Vector<String16>& args)
 
 bool SensorService::threadLoop()
 {
+<<<<<<< HEAD
     ALOGD("nuSensorService thread starting...");
 
     const size_t numEventMax = 16;
     const size_t minBufferSize = numEventMax + numEventMax * mVirtualSensorList.size();
     sensors_event_t buffer[minBufferSize];
     sensors_event_t scratch[minBufferSize];
+=======
+    LOGD("nuSensorService thread starting...");
+
+    const size_t numEventMax = 16 * (1 + mVirtualSensorList.size());
+    sensors_event_t buffer[numEventMax];
+    sensors_event_t scratch[numEventMax];
+>>>>>>> upstream/master
     SensorDevice& device(SensorDevice::getInstance());
     const size_t vcount = mVirtualSensorList.size();
 
@@ -236,7 +251,11 @@ bool SensorService::threadLoop()
     do {
         count = device.poll(buffer, numEventMax);
         if (count<0) {
+<<<<<<< HEAD
             ALOGE("sensor poll failed (%s)", strerror(-count));
+=======
+            LOGE("sensor poll failed (%s)", strerror(-count));
+>>>>>>> upstream/master
             break;
         }
 
@@ -256,6 +275,7 @@ bool SensorService::threadLoop()
                         fusion.process(event[i]);
                     }
                 }
+<<<<<<< HEAD
                 for (size_t i=0 ; i<size_t(count) && k<minBufferSize ; i++) {
                     for (size_t j=0 ; j<activeVirtualSensorCount ; j++) {
                         if (count + k >= minBufferSize) {
@@ -267,6 +287,12 @@ bool SensorService::threadLoop()
                         sensors_event_t out;
                         SensorInterface* si = virtualSensors.valueAt(j);
                         if (si->process(&out, event[i])) {
+=======
+                for (size_t i=0 ; i<size_t(count) ; i++) {
+                    for (size_t j=0 ; j<activeVirtualSensorCount ; j++) {
+                        sensors_event_t out;
+                        if (virtualSensors.valueAt(j)->process(&out, event[i])) {
+>>>>>>> upstream/master
                             buffer[count + k] = out;
                             k++;
                         }
@@ -295,7 +321,11 @@ bool SensorService::threadLoop()
         }
     } while (count >= 0 || Thread::exitPending());
 
+<<<<<<< HEAD
     ALOGW("Exiting SensorService::threadLoop => aborting...");
+=======
+    LOGW("Exiting SensorService::threadLoop => aborting...");
+>>>>>>> upstream/master
     abort();
     return false;
 }
@@ -324,7 +354,11 @@ void SensorService::sortEventBuffer(sensors_event_t* buffer, size_t count)
         static int cmp(void const* lhs, void const* rhs) {
             sensors_event_t const* l = static_cast<sensors_event_t const*>(lhs);
             sensors_event_t const* r = static_cast<sensors_event_t const*>(rhs);
+<<<<<<< HEAD
             return l->timestamp - r->timestamp;
+=======
+            return r->timestamp - l->timestamp;
+>>>>>>> upstream/master
         }
     };
     qsort(buffer, count, sizeof(sensors_event_t), compar::cmp);
@@ -372,6 +406,7 @@ void SensorService::cleanupConnection(SensorEventConnection* c)
     Mutex::Autolock _l(mLock);
     const wp<SensorEventConnection> connection(c);
     size_t size = mActiveSensors.size();
+<<<<<<< HEAD
     ALOGD_IF(DEBUG_CONNECTIONS, "%d active sensors", size);
     for (size_t i=0 ; i<size ; ) {
         int handle = mActiveSensors.keyAt(i);
@@ -379,18 +414,36 @@ void SensorService::cleanupConnection(SensorEventConnection* c)
             ALOGD_IF(DEBUG_CONNECTIONS, "%i: disabling handle=0x%08x", i, handle);
             SensorInterface* sensor = mSensorMap.valueFor( handle );
             ALOGE_IF(!sensor, "mSensorMap[handle=0x%08x] is null!", handle);
+=======
+    LOGD_IF(DEBUG_CONNECTIONS, "%d active sensors", size);
+    for (size_t i=0 ; i<size ; ) {
+        int handle = mActiveSensors.keyAt(i);
+        if (c->hasSensor(handle)) {
+            LOGD_IF(DEBUG_CONNECTIONS, "%i: disabling handle=0x%08x", i, handle);
+            SensorInterface* sensor = mSensorMap.valueFor( handle );
+            LOGE_IF(!sensor, "mSensorMap[handle=0x%08x] is null!", handle);
+>>>>>>> upstream/master
             if (sensor) {
                 sensor->activate(c, false);
             }
         }
         SensorRecord* rec = mActiveSensors.valueAt(i);
+<<<<<<< HEAD
         ALOGE_IF(!rec, "mActiveSensors[%d] is null (handle=0x%08x)!", i, handle);
         ALOGD_IF(DEBUG_CONNECTIONS,
+=======
+        LOGE_IF(!rec, "mActiveSensors[%d] is null (handle=0x%08x)!", i, handle);
+        LOGD_IF(DEBUG_CONNECTIONS,
+>>>>>>> upstream/master
                 "removing connection %p for sensor[%d].handle=0x%08x",
                 c, i, handle);
 
         if (rec && rec->removeConnection(connection)) {
+<<<<<<< HEAD
             ALOGD_IF(DEBUG_CONNECTIONS, "... and it was the last connection");
+=======
+            LOGD_IF(DEBUG_CONNECTIONS, "... and it was the last connection");
+>>>>>>> upstream/master
             mActiveSensors.removeItemsAt(i, 1);
             mActiveVirtualSensors.removeItem(handle);
             delete rec;
@@ -531,13 +584,21 @@ bool SensorService::SensorRecord::removeConnection(
 
 SensorService::SensorEventConnection::SensorEventConnection(
         const sp<SensorService>& service)
+<<<<<<< HEAD
     : mService(service), mChannel(new BitTube())
+=======
+    : mService(service), mChannel(new SensorChannel())
+>>>>>>> upstream/master
 {
 }
 
 SensorService::SensorEventConnection::~SensorEventConnection()
 {
+<<<<<<< HEAD
     ALOGD_IF(DEBUG_CONNECTIONS, "~SensorEventConnection(%p)", this);
+=======
+    LOGD_IF(DEBUG_CONNECTIONS, "~SensorEventConnection(%p)", this);
+>>>>>>> upstream/master
     mService->cleanupConnection(this);
 }
 
@@ -596,6 +657,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
         count = numEvents;
     }
 
+<<<<<<< HEAD
     // NOTE: ASensorEvent and sensors_event_t are the same type
     ssize_t size = SensorEventQueue::write(mChannel,
             reinterpret_cast<ASensorEvent const*>(scratch), count);
@@ -610,6 +672,26 @@ status_t SensorService::SensorEventConnection::sendEvents(
 }
 
 sp<BitTube> SensorService::SensorEventConnection::getSensorChannel() const
+=======
+    if (count == 0)
+        return 0;
+
+    ssize_t size = mChannel->write(scratch, count*sizeof(sensors_event_t));
+    if (size == -EAGAIN) {
+        // the destination doesn't accept events anymore, it's probably
+        // full. For now, we just drop the events on the floor.
+        //LOGW("dropping %d events on the floor", count);
+        return size;
+    }
+
+    //LOGE_IF(size<0, "dropping %d events on the floor (%s)",
+    //        count, strerror(-size));
+
+    return size < 0 ? status_t(size) : status_t(NO_ERROR);
+}
+
+sp<SensorChannel> SensorService::SensorEventConnection::getSensorChannel() const
+>>>>>>> upstream/master
 {
     return mChannel;
 }

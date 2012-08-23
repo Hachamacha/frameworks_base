@@ -18,11 +18,15 @@ package com.android.internal.app;
 
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+<<<<<<< HEAD
 import android.content.pm.ContainerEncryptionParams;
+=======
+>>>>>>> upstream/master
 import android.content.pm.PackageInfoLite;
 import android.content.res.ObbInfo;
 
 interface IMediaContainerService {
+<<<<<<< HEAD
     String copyResourceToContainer(in Uri packageURI, String containerId, String key,
             String resFileName, String publicResFileName, boolean isExternal,
             boolean isForwardLocked);
@@ -36,4 +40,16 @@ interface IMediaContainerService {
     /** Return file system stats: [0] is total bytes, [1] is available bytes */
     long[] getFileSystemStats(in String path);
     void clearDirectory(in String directory);
+=======
+    String copyResourceToContainer(in Uri packageURI,
+                String containerId,
+                String key, String resFileName);
+    int copyResource(in Uri packageURI,
+                in ParcelFileDescriptor outStream);
+    PackageInfoLite getMinimalPackageInfo(in Uri fileUri, in int flags, in long threshold);
+    boolean checkInternalFreeStorage(in Uri fileUri, in long threshold);
+    boolean checkExternalFreeStorage(in Uri fileUri);
+    ObbInfo getObbInfo(in String filename);
+    long calculateDirectorySize(in String directory);
+>>>>>>> upstream/master
 }

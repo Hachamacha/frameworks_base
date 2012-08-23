@@ -24,10 +24,13 @@ import java.util.HashMap;
  *
  */
 public class DrmErrorEvent extends DrmEvent {
+<<<<<<< HEAD
 
     // Please add newly defined type constants to the end of the list,
     // and modify checkTypeValidity() accordingly.
 
+=======
+>>>>>>> upstream/master
     /**
      * Something went wrong installing the rights.
      */
@@ -64,6 +67,7 @@ public class DrmErrorEvent extends DrmEvent {
      */
     public static final int TYPE_ACQUIRE_DRM_INFO_FAILED = 2008;
 
+<<<<<<< HEAD
     // Add more type constants here...
 
     // FIXME:
@@ -72,30 +76,48 @@ public class DrmErrorEvent extends DrmEvent {
     // cases.
 
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a <code>DrmErrorEvent</code> object with the specified parameters.
      *
      * @param uniqueId Unique session identifier.
+<<<<<<< HEAD
      * @param type Type of the event. Must be any of the event types defined above.
      * @param message Message description. It can be null.
      */
     public DrmErrorEvent(int uniqueId, int type, String message) {
         super(uniqueId, type, message);
         checkTypeValidity(type);
+=======
+     * @param type Type of the event. Could be any of the event types defined above.
+     * @param message Message description.
+     */
+    public DrmErrorEvent(int uniqueId, int type, String message) {
+        super(uniqueId, type, message);
+>>>>>>> upstream/master
     }
 
     /**
      * Creates a <code>DrmErrorEvent</code> object with the specified parameters.
      *
      * @param uniqueId Unique session identifier.
+<<<<<<< HEAD
      * @param type Type of the event. Must be any of the event types defined above.
      * @param message Message description.
      * @param attributes Attributes for extensible information. Could be any
      * information provided by the plug-in. It can be null.
+=======
+     * @param type Type of the event. Could be any of the event types defined above.
+     * @param message Message description.
+     * @param attributes Attributes for extensible information. Could be any
+     * information provided by the plug-in.
+>>>>>>> upstream/master
      */
     public DrmErrorEvent(int uniqueId, int type, String message,
                             HashMap<String, Object> attributes) {
         super(uniqueId, type, message, attributes);
+<<<<<<< HEAD
         checkTypeValidity(type);
     }
 
@@ -105,5 +127,7 @@ public class DrmErrorEvent extends DrmEvent {
             final String msg = "Unsupported type: " + type;
             throw new IllegalArgumentException(msg);
         }
+=======
+>>>>>>> upstream/master
     }
 }

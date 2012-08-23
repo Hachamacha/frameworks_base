@@ -35,6 +35,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
+import android.os.Handler;
+>>>>>>> upstream/master
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.InputType;
@@ -50,8 +54,11 @@ import android.view.CollapsibleActionView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView.OnItemClickListener;
@@ -381,6 +388,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     }
 
     /**
+<<<<<<< HEAD
      * Returns the IME options set on the query text field.
      * @return the ime options
      * @see TextView#setImeOptions(int)
@@ -392,6 +400,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the input type on the query text field.
      *
      * @see TextView#setInputType(int)
@@ -403,6 +413,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         mQueryTextView.setInputType(inputType);
     }
 
+<<<<<<< HEAD
     /**
      * Returns the input type set on the query text field.
      * @return the input type
@@ -413,6 +424,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         return mQueryTextView.getInputType();
     }
 
+=======
+>>>>>>> upstream/master
     /** @hide */
     @Override
     public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
@@ -511,7 +524,11 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     public void setQuery(CharSequence query, boolean submit) {
         mQueryTextView.setText(query);
         if (query != null) {
+<<<<<<< HEAD
             mQueryTextView.setSelection(mQueryTextView.length());
+=======
+            mQueryTextView.setSelection(query.length());
+>>>>>>> upstream/master
             mUserQuery = query;
         }
 
@@ -535,6 +552,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the hint text to display in the query text field.
      * @return the query hint text, if specified, null otherwise.
      *
@@ -555,6 +573,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the default or resting state of the search field. If true, a single search icon is
      * shown by default and expands to show the text field and other buttons when pressed. Also,
      * if the default state is iconified, then it collapses to that state when the close button
@@ -576,8 +596,11 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
     /**
      * Returns the default iconified state of the search field.
      * @return
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#SearchView_iconifiedByDefault
+=======
+>>>>>>> upstream/master
      */
     public boolean isIconfiedByDefault() {
         return mIconifiedByDefault;
@@ -694,6 +717,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         requestLayout();
     }
 
+<<<<<<< HEAD
     /**
      * Gets the specified maximum width in pixels, if set. Returns zero if
      * no maximum width was specified.
@@ -705,6 +729,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         return mMaxWidth;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Let the standard measurements take effect in iconified state.
@@ -1091,6 +1117,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
             inputType &= ~InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
             if (mSearchable.getSuggestAuthority() != null) {
                 inputType |= InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
+<<<<<<< HEAD
                 // TYPE_TEXT_FLAG_AUTO_COMPLETE means that the text editor is performing
                 // auto-completion based on its own semantics, which it will present to the user
                 // as they type. This generally means that the input method should not show its
@@ -1098,6 +1125,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
                 // supplies its candidates by calling InputMethodManager.displayCompletions(),
                 // which in turn will call InputMethodSession.displayCompletions().
                 inputType |= InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+=======
+>>>>>>> upstream/master
             }
         }
         mQueryTextView.setInputType(inputType);
@@ -1268,6 +1297,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         setIconified(false);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -1280,6 +1310,8 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
         info.setClassName(SearchView.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     private void adjustDropDownSizeAndPosition() {
         if (mDropDownAnchor.getWidth() > 1) {
             Resources res = getContext().getResources();

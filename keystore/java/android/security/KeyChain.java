@@ -27,7 +27,10 @@ import android.os.RemoteException;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.security.InvalidKeyException;
+=======
+>>>>>>> upstream/master
 import java.security.KeyPair;
 import java.security.Principal;
 import java.security.PrivateKey;
@@ -40,8 +43,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import libcore.util.Objects;
+<<<<<<< HEAD
 
 import org.apache.harmony.xnet.provider.jsse.OpenSSLEngine;
+=======
+>>>>>>> upstream/master
 import org.apache.harmony.xnet.provider.jsse.TrustedCertificateStore;
 
 /**
@@ -127,7 +133,11 @@ public final class KeyChain {
     public static final String EXTRA_SENDER = "sender";
 
     /**
+<<<<<<< HEAD
      * Action to bring up the CertInstaller.
+=======
+     * Action to bring up the CertInstaller
+>>>>>>> upstream/master
      */
     private static final String ACTION_INSTALL = "android.credentials.INSTALL";
 
@@ -170,6 +180,7 @@ public final class KeyChain {
     // Compatible with old android.security.Credentials.PKCS12
     public static final String EXTRA_PKCS12 = "PKCS12";
 
+<<<<<<< HEAD
 
     /**
      * Broadcast Action: Indicates the trusted storage has changed. Sent when
@@ -185,6 +196,8 @@ public final class KeyChain {
      */
     public static final String ACTION_STORAGE_CHANGED = "android.security.STORAGE_CHANGED";
 
+=======
+>>>>>>> upstream/master
     /**
      * Returns an {@code Intent} that can be used for credential
      * installation. The intent may be used without any extras, in
@@ -226,6 +239,12 @@ public final class KeyChain {
      * <p>{@code alias} allows the chooser to preselect an existing
      * alias which will still be subject to user confirmation.
      *
+<<<<<<< HEAD
+=======
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#USE_CREDENTIALS}.
+     *
+>>>>>>> upstream/master
      * @param activity The {@link Activity} context to use for
      *     launching the new sub-Activity to prompt the user to select
      *     a private key; used only to call startActivity(); must not
@@ -293,6 +312,12 @@ public final class KeyChain {
      * Returns the {@code PrivateKey} for the requested alias, or null
      * if no there is no result.
      *
+<<<<<<< HEAD
+=======
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#USE_CREDENTIALS}.
+     *
+>>>>>>> upstream/master
      * @param alias The alias of the desired private key, typically
      * returned via {@link KeyChainAliasCallback#alias}.
      * @throws KeyChainException if the alias was valid but there was some problem accessing it.
@@ -304,6 +329,7 @@ public final class KeyChain {
         }
         KeyChainConnection keyChainConnection = bind(context);
         try {
+<<<<<<< HEAD
             final IKeyChainService keyChainService = keyChainConnection.getService();
             final String keyId = keyChainService.requestPrivateKey(alias);
             if (keyId == null) {
@@ -312,13 +338,21 @@ public final class KeyChain {
 
             final OpenSSLEngine engine = OpenSSLEngine.getInstance("keystore");
             return engine.getPrivateKeyById(keyId);
+=======
+            IKeyChainService keyChainService = keyChainConnection.getService();
+            byte[] privateKeyBytes = keyChainService.getPrivateKey(alias);
+            return toPrivateKey(privateKeyBytes);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             throw new KeyChainException(e);
         } catch (RuntimeException e) {
             // only certain RuntimeExceptions can be propagated across the IKeyChainService call
             throw new KeyChainException(e);
+<<<<<<< HEAD
         } catch (InvalidKeyException e) {
             throw new KeyChainException(e);
+=======
+>>>>>>> upstream/master
         } finally {
             keyChainConnection.close();
         }
@@ -328,6 +362,12 @@ public final class KeyChain {
      * Returns the {@code X509Certificate} chain for the requested
      * alias, or null if no there is no result.
      *
+<<<<<<< HEAD
+=======
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#USE_CREDENTIALS}.
+     *
+>>>>>>> upstream/master
      * @param alias The alias of the desired certificate chain, typically
      * returned via {@link KeyChainAliasCallback#alias}.
      * @throws KeyChainException if the alias was valid but there was some problem accessing it.
@@ -366,6 +406,21 @@ public final class KeyChain {
         }
     }
 
+<<<<<<< HEAD
+=======
+    private static PrivateKey toPrivateKey(byte[] bytes) {
+        if (bytes == null) {
+            throw new IllegalArgumentException("bytes == null");
+        }
+        try {
+            KeyPair keyPair = (KeyPair) Credentials.convertFromPem(bytes).get(0);
+            return keyPair.getPrivate();
+        } catch (IOException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+>>>>>>> upstream/master
     private static X509Certificate toCertificate(byte[] bytes) {
         if (bytes == null) {
             throw new IllegalArgumentException("bytes == null");

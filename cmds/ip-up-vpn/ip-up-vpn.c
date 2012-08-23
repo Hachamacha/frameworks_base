@@ -67,7 +67,11 @@ int main(int argc, char **argv)
 {
     FILE *state = fopen(DIR ".tmp", "wb");
     if (!state) {
+<<<<<<< HEAD
         ALOGE("Cannot create state: %s", strerror(errno));
+=======
+        LOGE("Cannot create state: %s", strerror(errno));
+>>>>>>> upstream/master
         return 1;
     }
 
@@ -97,7 +101,11 @@ int main(int argc, char **argv)
             while (!ioctl(s, SIOCDELRT, &rt));
         }
         if (errno != ESRCH) {
+<<<<<<< HEAD
             ALOGE("Cannot remove host route: %s", strerror(errno));
+=======
+            LOGE("Cannot remove host route: %s", strerror(errno));
+>>>>>>> upstream/master
             return 1;
         }
 
@@ -105,7 +113,11 @@ int main(int argc, char **argv)
         rt.rt_flags |= RTF_GATEWAY;
         if (!set_address(&rt.rt_gateway, argv[1]) ||
                 (ioctl(s, SIOCADDRT, &rt) && errno != EEXIST)) {
+<<<<<<< HEAD
             ALOGE("Cannot create host route: %s", strerror(errno));
+=======
+            LOGE("Cannot create host route: %s", strerror(errno));
+>>>>>>> upstream/master
             return 1;
         }
 
@@ -113,21 +125,33 @@ int main(int argc, char **argv)
         ifr.ifr_flags = IFF_UP;
         strncpy(ifr.ifr_name, interface, IFNAMSIZ);
         if (ioctl(s, SIOCSIFFLAGS, &ifr)) {
+<<<<<<< HEAD
             ALOGE("Cannot bring up %s: %s", interface, strerror(errno));
+=======
+            LOGE("Cannot bring up %s: %s", interface, strerror(errno));
+>>>>>>> upstream/master
             return 1;
         }
 
         /* Set the address. */
         if (!set_address(&ifr.ifr_addr, address) ||
                 ioctl(s, SIOCSIFADDR, &ifr)) {
+<<<<<<< HEAD
             ALOGE("Cannot set address: %s", strerror(errno));
+=======
+            LOGE("Cannot set address: %s", strerror(errno));
+>>>>>>> upstream/master
             return 1;
         }
 
         /* Set the netmask. */
         if (set_address(&ifr.ifr_netmask, env("INTERNAL_NETMASK4"))) {
             if (ioctl(s, SIOCSIFNETMASK, &ifr)) {
+<<<<<<< HEAD
                 ALOGE("Cannot set netmask: %s", strerror(errno));
+=======
+                LOGE("Cannot set netmask: %s", strerror(errno));
+>>>>>>> upstream/master
                 return 1;
             }
         }
@@ -140,13 +164,21 @@ int main(int argc, char **argv)
         fprintf(state, "%s\n", env("INTERNAL_DNS4_LIST"));
         fprintf(state, "%s\n", env("DEFAULT_DOMAIN"));
     } else {
+<<<<<<< HEAD
         ALOGE("Cannot parse parameters");
+=======
+        LOGE("Cannot parse parameters");
+>>>>>>> upstream/master
         return 1;
     }
 
     fclose(state);
     if (chmod(DIR ".tmp", 0444) || rename(DIR ".tmp", DIR "state")) {
+<<<<<<< HEAD
         ALOGE("Cannot write state: %s", strerror(errno));
+=======
+        LOGE("Cannot write state: %s", strerror(errno));
+>>>>>>> upstream/master
         return 1;
     }
     return 0;

@@ -232,8 +232,12 @@ public class ThrottleServiceTest extends AndroidTestCase {
         final INetworkManagementService nmService = INetworkManagementService.Stub.asInterface(b);
 
         // test is currently no-op, just exercises stats apis
+<<<<<<< HEAD
         Log.d(TAG, nmService.getNetworkStatsSummaryDev().toString());
         Log.d(TAG, nmService.getNetworkStatsSummaryXt().toString());
+=======
+        Log.d(TAG, nmService.getNetworkStatsSummary().toString());
+>>>>>>> upstream/master
         Log.d(TAG, nmService.getNetworkStatsDetail().toString());
     }
 
@@ -287,7 +291,11 @@ public class ThrottleServiceTest extends AndroidTestCase {
     }
 
     /**
+<<<<<<< HEAD
      * Expect {@link NetworkManagementService#getNetworkStatsSummaryDev()} mock
+=======
+     * Expect {@link NetworkManagementService#getNetworkStatsSummary()} mock
+>>>>>>> upstream/master
      * calls, responding with the given counter values.
      */
     public void expectGetInterfaceCounter(long rx, long tx) throws Exception {
@@ -295,7 +303,11 @@ public class ThrottleServiceTest extends AndroidTestCase {
         final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), 1);
         stats.addValues(TEST_IFACE, UID_ALL, SET_DEFAULT, TAG_NONE, rx, 0L, tx, 0L, 0);
 
+<<<<<<< HEAD
         expect(mMockNMService.getNetworkStatsSummaryDev()).andReturn(stats).atLeastOnce();
+=======
+        expect(mMockNMService.getNetworkStatsSummary()).andReturn(stats).atLeastOnce();
+>>>>>>> upstream/master
     }
 
     /**

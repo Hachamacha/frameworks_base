@@ -382,10 +382,14 @@ public final class MenuItemImpl implements MenuItem {
         }
 
         if (mIconResId != NO_ICON) {
+<<<<<<< HEAD
             Drawable icon =  mMenu.getResources().getDrawable(mIconResId);
             mIconResId = NO_ICON;
             mIconDrawable = icon;
             return icon;
+=======
+            return mMenu.getResources().getDrawable(mIconResId);
+>>>>>>> upstream/master
         }
         
         return null;
@@ -456,9 +460,12 @@ public final class MenuItemImpl implements MenuItem {
     }
     
     public boolean isVisible() {
+<<<<<<< HEAD
         if (mActionProvider != null && mActionProvider.overridesItemVisibility()) {
             return (mFlags & HIDDEN) == 0 && mActionProvider.isVisible();
         }
+=======
+>>>>>>> upstream/master
         return (mFlags & HIDDEN) == 0;
     }
 
@@ -577,7 +584,11 @@ public final class MenuItemImpl implements MenuItem {
         if (mActionView != null) {
             return mActionView;
         } else if (mActionProvider != null) {
+<<<<<<< HEAD
             mActionView = mActionProvider.onCreateActionView(this);
+=======
+            mActionView = mActionProvider.onCreateActionView();
+>>>>>>> upstream/master
             return mActionView;
         } else {
             return null;
@@ -589,6 +600,7 @@ public final class MenuItemImpl implements MenuItem {
     }
 
     public MenuItem setActionProvider(ActionProvider actionProvider) {
+<<<<<<< HEAD
         if (mActionProvider != null) {
             mActionProvider.setVisibilityListener(null);
         }
@@ -600,6 +612,11 @@ public final class MenuItemImpl implements MenuItem {
                 mMenu.onItemVisibleChanged(MenuItemImpl.this);
             }
         });
+=======
+        mActionView = null;
+        mActionProvider = actionProvider;
+        mMenu.onItemsChanged(true); // Measurement can be changed
+>>>>>>> upstream/master
         return this;
     }
 

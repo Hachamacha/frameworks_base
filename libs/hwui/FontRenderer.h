@@ -24,8 +24,11 @@
 
 #include <SkScalerContext.h>
 #include <SkPaint.h>
+<<<<<<< HEAD
 #include <SkPathMeasure.h>
 #include <SkPoint.h>
+=======
+>>>>>>> upstream/master
 
 #include <GLES2/gl2.h>
 
@@ -41,13 +44,19 @@ namespace uirenderer {
 
 #if RENDER_TEXT_AS_GLYPHS
     typedef uint16_t glyph_t;
+<<<<<<< HEAD
     #define TO_GLYPH(g) g
+=======
+>>>>>>> upstream/master
     #define GET_METRICS(paint, glyph) paint->getGlyphMetrics(glyph)
     #define GET_GLYPH(text) nextGlyph((const uint16_t**) &text)
     #define IS_END_OF_STRING(glyph) false
 #else
     typedef SkUnichar glyph_t;
+<<<<<<< HEAD
     #define TO_GLYPH(g) ((SkUnichar) g)
+=======
+>>>>>>> upstream/master
     #define GET_METRICS(paint, glyph) paint->getUnicharMetrics(glyph)
     #define GET_GLYPH(text) SkUTF16_NextUnichar((const uint16_t**) &text)
     #define IS_END_OF_STRING(glyph) glyph < 0
@@ -59,6 +68,7 @@ namespace uirenderer {
 
 class FontRenderer;
 
+<<<<<<< HEAD
 class CacheTexture {
 public:
     CacheTexture() { }
@@ -132,6 +142,8 @@ struct CachedGlyphInfo {
 };
 
 
+=======
+>>>>>>> upstream/master
 ///////////////////////////////////////////////////////////////////////////////
 // Font
 ///////////////////////////////////////////////////////////////////////////////
@@ -155,6 +167,7 @@ public:
     void render(SkPaint* paint, const char *text, uint32_t start, uint32_t len,
             int numGlyphs, int x, int y, uint8_t *bitmap = NULL,
             uint32_t bitmapW = 0, uint32_t bitmapH = 0);
+<<<<<<< HEAD
 
     void render(SkPaint* paint, const char *text, uint32_t start, uint32_t len,
             int numGlyphs, int x, int y, const float* positions);
@@ -162,6 +175,8 @@ public:
     void render(SkPaint* paint, const char *text, uint32_t start, uint32_t len,
             int numGlyphs, SkPath* path, float hOffset, float vOffset);
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a new font associated with the specified font state.
      */
@@ -171,8 +186,11 @@ public:
 
 protected:
     friend class FontRenderer;
+<<<<<<< HEAD
     typedef void (Font::*RenderGlyph)(CachedGlyphInfo*, int, int, uint8_t*,
             uint32_t, uint32_t, Rect*, const float*);
+=======
+>>>>>>> upstream/master
 
     enum RenderMode {
         FRAMEBUFFER,
@@ -182,17 +200,52 @@ protected:
 
     void render(SkPaint* paint, const char *text, uint32_t start, uint32_t len,
             int numGlyphs, int x, int y, RenderMode mode, uint8_t *bitmap,
+<<<<<<< HEAD
             uint32_t bitmapW, uint32_t bitmapH, Rect *bounds, const float* positions);
+=======
+            uint32_t bitmapW, uint32_t bitmapH, Rect *bounds);
+>>>>>>> upstream/master
 
     void measure(SkPaint* paint, const char* text, uint32_t start, uint32_t len,
             int numGlyphs, Rect *bounds);
 
+<<<<<<< HEAD
+=======
+    struct CachedGlyphInfo {
+        // Has the cache been invalidated?
+        bool mIsValid;
+        // Location of the cached glyph in the bitmap
+        // in case we need to resize the texture or
+        // render to bitmap
+        uint32_t mStartX;
+        uint32_t mStartY;
+        uint32_t mBitmapWidth;
+        uint32_t mBitmapHeight;
+        // Also cache texture coords for the quad
+        float mBitmapMinU;
+        float mBitmapMinV;
+        float mBitmapMaxU;
+        float mBitmapMaxV;
+        // Minimize how much we call freetype
+        uint32_t mGlyphIndex;
+        uint32_t mAdvanceX;
+        uint32_t mAdvanceY;
+        // Values below contain a glyph's origin in the bitmap
+        int32_t mBitmapLeft;
+        int32_t mBitmapTop;
+        // Auto-kerning
+        SkFixed mLsbDelta;
+        SkFixed mRsbDelta;
+    };
+
+>>>>>>> upstream/master
     Font(FontRenderer* state, uint32_t fontId, float fontSize, int flags, uint32_t italicStyle,
             uint32_t scaleX, SkPaint::Style style, uint32_t strokeWidth);
 
     // Cache of glyphs
     DefaultKeyedVector<glyph_t, CachedGlyphInfo*> mCachedGlyphs;
 
+<<<<<<< HEAD
     void invalidateTextureCache(CacheTextureLine *cacheLine = NULL);
 
     CachedGlyphInfo* cacheGlyph(SkPaint* paint, glyph_t glyph);
@@ -209,6 +262,16 @@ protected:
             Rect* bounds, const float* pos);
     void drawCachedGlyph(CachedGlyphInfo* glyph, float x, float hOffset, float vOffset,
             SkPathMeasure& measure, SkPoint* position, SkVector* tangent);
+=======
+    void invalidateTextureCache();
+
+    CachedGlyphInfo* cacheGlyph(SkPaint* paint, glyph_t glyph);
+    void updateGlyphCache(SkPaint* paint, const SkGlyph& skiaGlyph, CachedGlyphInfo *glyph);
+    void measureCachedGlyph(CachedGlyphInfo *glyph, int x, int y, Rect *bounds);
+    void drawCachedGlyph(CachedGlyphInfo *glyph, int x, int y);
+    void drawCachedGlyph(CachedGlyphInfo *glyph, int x, int y,
+            uint8_t *bitmap, uint32_t bitmapW, uint32_t bitmapH);
+>>>>>>> upstream/master
 
     CachedGlyphInfo* getCachedGlyph(SkPaint* paint, glyph_t textUnit);
 
@@ -238,12 +301,18 @@ public:
     FontRenderer();
     ~FontRenderer();
 
+<<<<<<< HEAD
     void flushLargeCaches();
+=======
+    void init();
+    void deinit();
+>>>>>>> upstream/master
 
     void setGammaTable(const uint8_t* gammaTable) {
         mGammaTable = gammaTable;
     }
 
+<<<<<<< HEAD
     void setFont(SkPaint* paint, uint32_t fontId, float fontSize);
     // bounds is an out parameter
     bool renderText(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
@@ -254,6 +323,16 @@ public:
     // bounds is an out parameter
     bool renderTextOnPath(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
             uint32_t len, int numGlyphs, SkPath* path, float hOffset, float vOffset, Rect* bounds);
+=======
+    void setAttributeBindingSlots(int positionSlot, int texCoordSlot) {
+        mPositionAttrSlot = positionSlot;
+        mTexcoordAttrSlot = texCoordSlot;
+    }
+
+    void setFont(SkPaint* paint, uint32_t fontId, float fontSize);
+    bool renderText(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
+            uint32_t len, int numGlyphs, int x, int y, Rect* bounds);
+>>>>>>> upstream/master
 
     struct DropShadow {
         DropShadow() { };
@@ -278,6 +357,7 @@ public:
 
     GLuint getTexture(bool linearFiltering = false) {
         checkInit();
+<<<<<<< HEAD
 
         if (linearFiltering != mCurrentCacheTexture->mLinearFiltering) {
             mCurrentCacheTexture->mLinearFiltering = linearFiltering;
@@ -307,6 +387,25 @@ public:
             size += mCacheTexture512->mWidth * mCacheTexture512->mHeight;
         }
         return size;
+=======
+        if (linearFiltering != mLinearFiltering) {
+            mLinearFiltering = linearFiltering;
+            const GLenum filtering = linearFiltering ? GL_LINEAR : GL_NEAREST;
+
+            glBindTexture(GL_TEXTURE_2D, mTextureId);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering);
+        }
+        return mTextureId;
+    }
+
+    uint32_t getCacheWidth() const {
+        return mCacheWidth;
+    }
+
+    uint32_t getCacheHeight() const {
+        return mCacheHeight;
+>>>>>>> upstream/master
     }
 
 protected:
@@ -314,17 +413,56 @@ protected:
 
     const uint8_t* mGammaTable;
 
+<<<<<<< HEAD
     void allocateTextureMemory(CacheTexture* cacheTexture);
     void deallocateTextureMemory(CacheTexture* cacheTexture);
     void initTextTexture();
     CacheTexture* createCacheTexture(int width, int height, bool allocate);
     void cacheBitmap(const SkGlyph& glyph, CachedGlyphInfo* cachedGlyph,
             uint32_t *retOriginX, uint32_t *retOriginY);
+=======
+    struct CacheTextureLine {
+        uint16_t mMaxHeight;
+        uint16_t mMaxWidth;
+        uint32_t mCurrentRow;
+        uint32_t mCurrentCol;
+        bool mDirty;
+
+        CacheTextureLine(uint16_t maxWidth, uint16_t maxHeight, uint32_t currentRow,
+                uint32_t currentCol):
+                    mMaxHeight(maxHeight),
+                    mMaxWidth(maxWidth),
+                    mCurrentRow(currentRow),
+                    mCurrentCol(currentCol),
+                    mDirty(false) {
+        }
+
+        bool fitBitmap(const SkGlyph& glyph, uint32_t *retOriginX, uint32_t *retOriginY) {
+            if (glyph.fHeight + 2 > mMaxHeight) {
+                return false;
+            }
+
+            if (mCurrentCol + glyph.fWidth + 2 < mMaxWidth) {
+                *retOriginX = mCurrentCol + 1;
+                *retOriginY = mCurrentRow + 1;
+                mCurrentCol += glyph.fWidth + 2;
+                mDirty = true;
+                return true;
+            }
+
+            return false;
+        }
+    };
+
+    void initTextTexture(bool largeFonts = false);
+    bool cacheBitmap(const SkGlyph& glyph, uint32_t *retOriginX, uint32_t *retOriginY);
+>>>>>>> upstream/master
 
     void flushAllAndInvalidate();
     void initVertexArrayBuffers();
 
     void checkInit();
+<<<<<<< HEAD
     void initRender(const Rect* clip, Rect* bounds);
     void finishRender();
 
@@ -346,6 +484,19 @@ protected:
 
     uint32_t mSmallCacheWidth;
     uint32_t mSmallCacheHeight;
+=======
+
+    String16 mLatinPrecache;
+    void precacheLatin(SkPaint* paint);
+
+    void issueDrawCommand();
+    void appendMeshQuad(float x1, float y1, float z1, float u1, float v1, float x2, float y2,
+            float z2, float u2, float v2, float x3, float y3, float z3, float u3, float v3,
+            float x4, float y4, float z4, float u4, float v4);
+
+    uint32_t mCacheWidth;
+    uint32_t mCacheHeight;
+>>>>>>> upstream/master
 
     Vector<CacheTextureLine*> mCacheLines;
     uint32_t getRemainingCacheCapacity();
@@ -353,6 +504,7 @@ protected:
     Font* mCurrentFont;
     Vector<Font*> mActiveFonts;
 
+<<<<<<< HEAD
     CacheTexture* mCurrentCacheTexture;
     CacheTexture* mLastCacheTexture;
     CacheTexture* mCacheTextureSmall;
@@ -360,6 +512,14 @@ protected:
     CacheTexture* mCacheTexture256;
     CacheTexture* mCacheTexture512;
 
+=======
+    // Texture to cache glyph bitmaps
+    uint8_t* mTextTexture;
+    const uint8_t* getTextTextureData() const {
+        return mTextTexture;
+    }
+    GLuint mTextureId;
+>>>>>>> upstream/master
     void checkTextureUpdate();
     bool mUploadTexture;
 
@@ -370,6 +530,12 @@ protected:
 
     uint32_t mIndexBufferID;
 
+<<<<<<< HEAD
+=======
+    int32_t mPositionAttrSlot;
+    int32_t mTexcoordAttrSlot;
+
+>>>>>>> upstream/master
     const Rect* mClip;
     Rect* mBounds;
     bool mDrawn;

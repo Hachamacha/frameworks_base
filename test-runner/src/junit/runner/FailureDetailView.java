@@ -1,7 +1,11 @@
 package junit.runner;
 
 // The following line was removed for compatibility with Android libraries.
+<<<<<<< HEAD
 //import java.awt.Component;
+=======
+//import java.awt.Component; 
+>>>>>>> upstream/master
 
 import junit.framework.*;
 
@@ -17,6 +21,7 @@ public interface FailureDetailView {
     //   */
     //  public Component getComponent();
 
+<<<<<<< HEAD
     /**
      * Shows details of a TestFailure
      */
@@ -25,4 +30,14 @@ public interface FailureDetailView {
      * Clears the view
      */
     public void clear();
+=======
+	/**
+	 * Shows details of a TestFailure
+	 */
+	public void showFailure(TestFailure failure);
+	/**
+	 * Clears the view
+	 */
+	public void clear();
+>>>>>>> upstream/master
 }

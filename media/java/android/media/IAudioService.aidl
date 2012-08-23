@@ -17,6 +17,7 @@
 package android.media;
 
 import android.app.PendingIntent;
+<<<<<<< HEAD
 import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.media.AudioRoutesInfo;
@@ -28,6 +29,12 @@ import android.media.IRemoteVolumeObserver;
 import android.media.IRingtonePlayer;
 import android.net.Uri;
 import android.view.KeyEvent;
+=======
+import android.content.ComponentName;
+import android.media.IAudioFocusDispatcher;
+import android.media.IRemoteControlClient;
+import android.media.IRemoteControlDisplay;
+>>>>>>> upstream/master
 
 /**
  * {@hide}
@@ -36,6 +43,7 @@ interface IAudioService {
     
     void adjustVolume(int direction, int flags);
 
+<<<<<<< HEAD
     oneway void adjustLocalOrRemoteStreamVolume(int streamType, int direction);
 
     void adjustSuggestedStreamVolume(int direction, int suggestedStreamType, int flags);
@@ -49,6 +57,13 @@ interface IAudioService {
     oneway void setRemoteStreamVolume(int index);
 
     void setMasterVolume(int index, int flags);
+=======
+    void adjustSuggestedStreamVolume(int direction, int suggestedStreamType, int flags);
+    
+    void adjustStreamVolume(int streamType, int direction, int flags);
+    
+    void setStreamVolume(int streamType, int index, int flags);
+>>>>>>> upstream/master
     
     void setStreamSolo(int streamType, boolean state, IBinder cb);
    	
@@ -56,6 +71,7 @@ interface IAudioService {
 
     boolean isStreamMute(int streamType);
 
+<<<<<<< HEAD
     void setMasterMute(boolean state, int flags, IBinder cb);
 
     boolean isMasterMute();
@@ -72,6 +88,14 @@ interface IAudioService {
 
     int getLastAudibleMasterVolume();
 
+=======
+    int getStreamVolume(int streamType);
+    
+    int getStreamMaxVolume(int streamType);
+    
+    int getLastAudibleStreamVolume(int streamType);
+
+>>>>>>> upstream/master
     void setRingerMode(int ringerMode);
     
     int getRingerMode();
@@ -104,10 +128,13 @@ interface IAudioService {
 
     boolean isBluetoothScoOn();
 
+<<<<<<< HEAD
     void setBluetoothA2dpOn(boolean on);
 
     boolean isBluetoothA2dpOn();
 
+=======
+>>>>>>> upstream/master
     int requestAudioFocus(int mainStreamType, int durationHint, IBinder cb, IAudioFocusDispatcher l,
             String clientId, String callingPackageName);
 
@@ -115,6 +142,7 @@ interface IAudioService {
     
     void unregisterAudioFocusClient(String clientId);
 
+<<<<<<< HEAD
     oneway void dispatchMediaKeyEvent(in KeyEvent keyEvent);
     void dispatchMediaKeyEventUnderWakelock(in KeyEvent keyEvent);
 
@@ -125,6 +153,12 @@ interface IAudioService {
     oneway void unregisterMediaButtonEventReceiverForCalls();
 
     int registerRemoteControlClient(in PendingIntent mediaIntent,
+=======
+    oneway void registerMediaButtonIntent(in PendingIntent pi, in ComponentName c);
+    oneway void unregisterMediaButtonIntent(in PendingIntent pi,  in ComponentName c);
+
+    oneway void registerRemoteControlClient(in PendingIntent mediaIntent,
+>>>>>>> upstream/master
            in IRemoteControlClient rcClient, in String callingPackageName);
     oneway void unregisterRemoteControlClient(in PendingIntent mediaIntent,
            in IRemoteControlClient rcClient);
@@ -133,6 +167,7 @@ interface IAudioService {
     oneway void unregisterRemoteControlDisplay(in IRemoteControlDisplay rcd);
     oneway void remoteControlDisplayUsesBitmapSize(in IRemoteControlDisplay rcd, int w, int h);
 
+<<<<<<< HEAD
     oneway void setPlaybackInfoForRcc(int rccId, int what, int value);
            int  getRemoteStreamMaxVolume();
            int  getRemoteStreamVolume();
@@ -151,4 +186,9 @@ interface IAudioService {
     int setBluetoothA2dpDeviceConnectionState(in BluetoothDevice device, int state);
 
     AudioRoutesInfo startWatchingRoutes(in IAudioRoutesObserver observer);
+=======
+    void startBluetoothSco(IBinder cb);
+
+    void stopBluetoothSco(IBinder cb);
+>>>>>>> upstream/master
 }

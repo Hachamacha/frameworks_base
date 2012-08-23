@@ -28,7 +28,10 @@ import android.os.Parcelable;
 import android.util.AndroidRuntimeException;
 import android.util.AttributeSet;
 import android.util.DebugUtils;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> upstream/master
 import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -109,9 +112,13 @@ final class FragmentState implements Parcelable {
         mInstance.mRetainInstance = mRetainInstance;
         mInstance.mDetached = mDetached;
         mInstance.mFragmentManager = activity.mFragments;
+<<<<<<< HEAD
         if (FragmentManagerImpl.DEBUG) Log.v(FragmentManagerImpl.TAG,
                 "Instantiated fragment " + mInstance);
 
+=======
+        
+>>>>>>> upstream/master
         return mInstance;
     }
     
@@ -206,7 +213,11 @@ final class FragmentState implements Parcelable {
  * <li> {@link #onCreateView} creates and returns the view hierarchy associated
  * with the fragment.
  * <li> {@link #onActivityCreated} tells the fragment that its activity has
+<<<<<<< HEAD
  * completed its own {@link Activity#onCreate Activity.onCreate()}.
+=======
+ * completed its own {@link Activity#onCreate Activity.onCreaate}.
+>>>>>>> upstream/master
  * <li> {@link #onStart} makes the fragment visible to the user (based on its
  * containing activity being started).
  * <li> {@link #onResume} makes the fragment interacting with the user (based on its
@@ -964,6 +975,7 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
         mLoaderManager = mActivity.getLoaderManager(mIndex, mLoadersStarted, true);
         return mLoaderManager;
     }
+<<<<<<< HEAD
 
     /**
      * Call {@link Activity#startActivity(Intent)} on the fragment's
@@ -997,11 +1009,26 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
         }
     }
 
+=======
+    
+    /**
+     * Call {@link Activity#startActivity(Intent)} on the fragment's
+     * containing Activity.
+     */
+    public void startActivity(Intent intent) {
+        if (mActivity == null) {
+            throw new IllegalStateException("Fragment " + this + " not attached to Activity");
+        }
+        mActivity.startActivityFromFragment(this, intent, -1);
+    }
+    
+>>>>>>> upstream/master
     /**
      * Call {@link Activity#startActivityForResult(Intent, int)} on the fragment's
      * containing Activity.
      */
     public void startActivityForResult(Intent intent, int requestCode) {
+<<<<<<< HEAD
         startActivityForResult(intent, requestCode, null);
     }
 
@@ -1020,6 +1047,12 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
             // applications that may have overridden the method.
             mActivity.startActivityFromFragment(this, intent, requestCode, options);
         }
+=======
+        if (mActivity == null) {
+            throw new IllegalStateException("Fragment " + this + " not attached to Activity");
+        }
+        mActivity.startActivityFromFragment(this, intent, requestCode);
+>>>>>>> upstream/master
     }
     
     /**
@@ -1503,7 +1536,11 @@ public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListene
     public void dump(String prefix, FileDescriptor fd, PrintWriter writer, String[] args) {
         writer.print(prefix); writer.print("mFragmentId=#");
                 writer.print(Integer.toHexString(mFragmentId));
+<<<<<<< HEAD
                 writer.print(" mContainerId=#");
+=======
+                writer.print(" mContainerId#=");
+>>>>>>> upstream/master
                 writer.print(Integer.toHexString(mContainerId));
                 writer.print(" mTag="); writer.println(mTag);
         writer.print(prefix); writer.print("mState="); writer.print(mState);

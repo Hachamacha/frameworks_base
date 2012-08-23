@@ -19,7 +19,10 @@ package android.graphics.drawable;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+<<<<<<< HEAD
 import android.graphics.Insets;
+=======
+>>>>>>> upstream/master
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.SystemClock;
@@ -91,6 +94,7 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
         }
     }
 
+<<<<<<< HEAD
     /**
      * @hide
      */
@@ -99,6 +103,8 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
         return (mCurrDrawable == null) ? Insets.NONE : mCurrDrawable.getLayoutInsets();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void setAlpha(int alpha) {
         if (mAlpha != alpha) {

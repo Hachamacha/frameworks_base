@@ -14,12 +14,20 @@
 
 package android.accessibilityservice;
 
+<<<<<<< HEAD
+=======
+import com.android.frameworks.coretests.R;
+
+>>>>>>> upstream/master
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+<<<<<<< HEAD
 import com.android.frameworks.coretests.R;
 
+=======
+>>>>>>> upstream/master
 /**
  * Activity for testing the accessibility APIs for "interrogation" of
  * the screen content. These APIs allow exploring the screen and

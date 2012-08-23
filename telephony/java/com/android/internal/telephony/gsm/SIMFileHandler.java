@@ -19,25 +19,46 @@ package com.android.internal.telephony.gsm;
 import android.os.Message;
 import android.util.Log;
 
+<<<<<<< HEAD
 import com.android.internal.telephony.CommandsInterface;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccCardApplication;
 import com.android.internal.telephony.IccConstants;
 import com.android.internal.telephony.IccFileHandler;
+<<<<<<< HEAD
 import com.android.internal.telephony.PhoneBase;
+=======
+import com.android.internal.telephony.Phone;
+>>>>>>> upstream/master
 
 /**
  * {@hide}
  */
 public final class SIMFileHandler extends IccFileHandler implements IccConstants {
     static final String LOG_TAG = "GSM";
+<<<<<<< HEAD
+=======
+    private Phone mPhone;
+>>>>>>> upstream/master
 
     //***** Instance Variables
 
     //***** Constructor
 
+<<<<<<< HEAD
     public SIMFileHandler(IccCard card, String aid, CommandsInterface ci) {
         super(card, aid, ci);
+=======
+    SIMFileHandler(GSMPhone phone) {
+        super(phone);
+        mPhone = phone;
+    }
+
+    public void dispose() {
+        super.dispose();
+>>>>>>> upstream/master
     }
 
     protected void finalize() {
@@ -88,8 +109,13 @@ public final class SIMFileHandler extends IccFileHandler implements IccConstants
             // The EFids in USIM phone book entries are decided by the card manufacturer.
             // So if we don't match any of the cases above and if its a USIM return
             // the phone book path.
+<<<<<<< HEAD
             if (mParentCard != null
                     && mParentCard.isApplicationOnIcc(IccCardApplication.AppType.APPTYPE_USIM)) {
+=======
+            IccCard card = phone.getIccCard();
+            if (card != null && card.isApplicationOnIcc(IccCardApplication.AppType.APPTYPE_USIM)) {
+>>>>>>> upstream/master
                 return MF_SIM + DF_TELECOM + DF_PHONEBOOK;
             }
             Log.e(LOG_TAG, "Error: EF Path being returned in null");

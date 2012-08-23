@@ -57,7 +57,11 @@ next.link=ancestral-temporal.html
 
 <h2 id="buttons">Buttons and Simple Targets</h2>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Button Design</strong></p>
   <p>For design guidelines, read Android Design's <a
   href="{@docRoot}design/building-blocks/buttons.html">Buttons</a> guide.</p>
@@ -79,7 +83,11 @@ next.link=ancestral-temporal.html
 
 <h2 id="lists">Lists, Grids, Carousels, and Stacks</h2>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>List and Grid List Design</strong></p>
   <p>For design guidelines, read Android Design's <a
   href="{@docRoot}design/building-blocks/lists.html">Lists</a> and <a
@@ -102,7 +110,11 @@ next.link=ancestral-temporal.html
 
 <h2 id="tabs">Tabs</h2>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Tab Design</strong></p>
   <p>For design guidelines, read Android Design's <a
   href="{@docRoot}design/building-blocks/tabs.html">Tabs</a> guide.</p>
@@ -140,7 +152,11 @@ screen</em>, and should not be aligned to the bottom of the screen.</p>
 
 <h2 id="paging">Horizontal Paging (Swipe Views)</h2>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Swipe Views Design</strong></p>
   <p>For design guidelines, read Android Design's <a
   href="{@docRoot}design/patterns/swipe-views.html">Swipe Views</a> pattern guides.</p>

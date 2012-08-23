@@ -150,6 +150,7 @@ public class AsyncChannel {
      */
     public static final int CMD_CHANNEL_DISCONNECTED = BASE + 4;
 
+<<<<<<< HEAD
     private static final int CMD_TO_STRING_COUNT = CMD_CHANNEL_DISCONNECTED - BASE + 1;
     private static String[] sCmdToString = new String[CMD_TO_STRING_COUNT];
     static {
@@ -168,6 +169,8 @@ public class AsyncChannel {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /** Successful status always 0, !0 is an unsuccessful status */
     public static final int STATUS_SUCCESSFUL = 0;
 

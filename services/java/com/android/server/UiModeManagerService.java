@@ -92,10 +92,15 @@ class UiModeManagerService extends IUiModeManager.Stub {
     private int mNightMode = UiModeManager.MODE_NIGHT_NO;
     private boolean mCarModeEnabled = false;
     private boolean mCharging = false;
+<<<<<<< HEAD
     private final int mDefaultUiModeType;
     private final boolean mCarModeKeepsScreenOn;
     private final boolean mDeskModeKeepsScreenOn;
     private final boolean mTelevision;
+=======
+    private final boolean mCarModeKeepsScreenOn;
+    private final boolean mDeskModeKeepsScreenOn;
+>>>>>>> upstream/master
 
     private boolean mComputedNightMode;
     private int mCurUiMode = 0;
@@ -122,7 +127,11 @@ class UiModeManagerService extends IUiModeManager.Stub {
                 | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         return intent;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     // The broadcast receiver which receives the result of the ordered broadcast sent when
     // the dock state changes. The original ordered broadcast is sent with an initial result
     // code of RESULT_OK. If any of the registered broadcast receivers changes this value, e.g.,
@@ -132,7 +141,11 @@ class UiModeManagerService extends IUiModeManager.Stub {
         public void onReceive(Context context, Intent intent) {
             if (getResultCode() != Activity.RESULT_OK) {
                 if (LOG) {
+<<<<<<< HEAD
                     Slog.v(TAG, "Handling broadcast result for action " + intent.getAction()
+=======
+                    Slog.v(TAG, "Handling broadcast result for action " + intent.getAction() 
+>>>>>>> upstream/master
                             + ": canceled: " + getResultCode());
                 }
                 return;
@@ -140,7 +153,11 @@ class UiModeManagerService extends IUiModeManager.Stub {
 
             final int  enableFlags = intent.getIntExtra("enableFlags", 0);
             final int  disableFlags = intent.getIntExtra("disableFlags", 0);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> upstream/master
             synchronized (mLock) {
                 // Launch a dock activity
                 String category = null;
@@ -168,15 +185,26 @@ class UiModeManagerService extends IUiModeManager.Stub {
 
                 if (LOG) {
                     Slog.v(TAG, String.format(
+<<<<<<< HEAD
                         "Handling broadcast result for action %s: enable=0x%08x disable=0x%08x category=%s",
                         intent.getAction(), enableFlags, disableFlags, category));
                 }
 
+=======
+                        "Handling broadcast result for action %s: enable=0x%08x disable=0x%08x category=%s", 
+                        intent.getAction(), enableFlags, disableFlags, category));
+                }
+                
+>>>>>>> upstream/master
                 if (category != null) {
                     // This is the new activity that will serve as home while
                     // we are in care mode.
                     Intent homeIntent = buildHomeIntent(category);
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> upstream/master
                     // Now we are going to be careful about switching the
                     // configuration and starting the activity -- we need to
                     // do this in a specific order under control of the
@@ -192,8 +220,13 @@ class UiModeManagerService extends IUiModeManager.Stub {
                     }
                     try {
                         ActivityManagerNative.getDefault().startActivityWithConfig(
+<<<<<<< HEAD
                                 null, homeIntent, null, null, null, 0, 0,
                                 newConfig, null);
+=======
+                                null, homeIntent, null, null, 0, null, null, 0, false, false,
+                                newConfig);
+>>>>>>> upstream/master
                         mHoldingConfiguration = false;
                     } catch (RemoteException e) {
                         Slog.w(TAG, e.getCause());
@@ -360,15 +393,22 @@ class UiModeManagerService extends IUiModeManager.Stub {
 
         mConfiguration.setToDefaults();
 
+<<<<<<< HEAD
         mDefaultUiModeType = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
+=======
+>>>>>>> upstream/master
         mCarModeKeepsScreenOn = (context.getResources().getInteger(
                 com.android.internal.R.integer.config_carDockKeepsScreenOn) == 1);
         mDeskModeKeepsScreenOn = (context.getResources().getInteger(
                 com.android.internal.R.integer.config_deskDockKeepsScreenOn) == 1);
+<<<<<<< HEAD
         mTelevision = context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_TELEVISION);
 
+=======
+        
+>>>>>>> upstream/master
         mNightMode = Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.UI_NIGHT_MODE, UiModeManager.MODE_NIGHT_AUTO);
     }
@@ -469,8 +509,12 @@ class UiModeManagerService extends IUiModeManager.Stub {
     }
 
     final void updateConfigurationLocked(boolean sendIt) {
+<<<<<<< HEAD
         int uiMode = mTelevision ? Configuration.UI_MODE_TYPE_TELEVISION
                 : mDefaultUiModeType;
+=======
+        int uiMode = Configuration.UI_MODE_TYPE_NORMAL;
+>>>>>>> upstream/master
         if (mCarModeEnabled) {
             uiMode = Configuration.UI_MODE_TYPE_CAR;
         } else if (isDeskDockState(mDockState)) {
@@ -490,8 +534,13 @@ class UiModeManagerService extends IUiModeManager.Stub {
         }
 
         if (LOG) {
+<<<<<<< HEAD
             Slog.d(TAG,
                 "updateConfigurationLocked: mDockState=" + mDockState
+=======
+            Slog.d(TAG, 
+                "updateConfigurationLocked: mDockState=" + mDockState 
+>>>>>>> upstream/master
                 + "; mCarMode=" + mCarModeEnabled
                 + "; mNightMode=" + mNightMode
                 + "; uiMode=" + uiMode);
@@ -668,7 +717,11 @@ class UiModeManagerService extends IUiModeManager.Stub {
         boolean mNetworkListenerEnabled;
         boolean mDidFirstInit;
         long mLastNetworkRegisterTime = -MIN_LOCATION_UPDATE_MS;
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -693,12 +746,20 @@ class UiModeManagerService extends IUiModeManager.Stub {
                         // since we last requested an update.
                         return;
                     }
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> upstream/master
                     // Unregister the current location monitor, so we can
                     // register a new one for it to get an immediate update.
                     mNetworkListenerEnabled = false;
                     mLocationManager.removeUpdates(mEmptyLocationListener);
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> upstream/master
                     // Fall through to re-register listener.
                 case MSG_ENABLE_LOCATION_UPDATES:
                     // enable network provider to receive at least location updates for a given

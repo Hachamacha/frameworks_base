@@ -23,7 +23,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.io.FileDescriptor;
+<<<<<<< HEAD
 import java.io.FileInputStream;
+=======
+>>>>>>> upstream/master
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -58,6 +61,7 @@ public class MediaMetadataRetriever
      * @param path The path of the input media file.
      * @throws IllegalArgumentException If the path is invalid.
      */
+<<<<<<< HEAD
     public void setDataSource(String path) throws IllegalArgumentException {
         FileInputStream is = null;
         try {
@@ -76,6 +80,9 @@ public class MediaMetadataRetriever
             }
         } catch (Exception e) {}
     }
+=======
+    public native void setDataSource(String path) throws IllegalArgumentException;
+>>>>>>> upstream/master
 
     /**
      * Sets the data source (URI) to use. Call this

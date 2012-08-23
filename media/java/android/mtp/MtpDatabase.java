@@ -266,7 +266,11 @@ public class MtpDatabase {
             Cursor c = null;
             try {
                 c = mMediaProvider.query(mObjectsUri, ID_PROJECTION, PATH_WHERE,
+<<<<<<< HEAD
                         new String[] { path }, null, null);
+=======
+                        new String[] { path }, null);
+>>>>>>> upstream/master
                 if (c != null && c.getCount() > 0) {
                     Log.w(TAG, "file already exists in beginSendObject: " + path);
                     return -1;
@@ -433,7 +437,11 @@ public class MtpDatabase {
             }
         }
 
+<<<<<<< HEAD
         return mMediaProvider.query(mObjectsUri, ID_PROJECTION, where, whereArgs, null, null);
+=======
+        return mMediaProvider.query(mObjectsUri, ID_PROJECTION, where, whereArgs, null);
+>>>>>>> upstream/master
     }
 
     private int[] getObjectList(int storageID, int format, int parent) {
@@ -699,7 +707,11 @@ public class MtpDatabase {
         String path = null;
         String[] whereArgs = new String[] {  Integer.toString(handle) };
         try {
+<<<<<<< HEAD
             c = mMediaProvider.query(mObjectsUri, PATH_PROJECTION, ID_WHERE, whereArgs, null, null);
+=======
+            c = mMediaProvider.query(mObjectsUri, PATH_PROJECTION, ID_WHERE, whereArgs, null);
+>>>>>>> upstream/master
             if (c != null && c.moveToNext()) {
                 path = c.getString(1);
             }
@@ -752,6 +764,7 @@ public class MtpDatabase {
             return MtpConstants.RESPONSE_GENERAL_ERROR;
         }
 
+<<<<<<< HEAD
         // check if nomedia status changed
         if (newFile.isDirectory()) {
             // for directories, check if renamed from something hidden to something non-hidden
@@ -775,6 +788,8 @@ public class MtpDatabase {
             }
         }
 
+=======
+>>>>>>> upstream/master
         return MtpConstants.RESPONSE_OK;
     }
 
@@ -838,7 +853,11 @@ public class MtpDatabase {
         Cursor c = null;
         try {
             c = mMediaProvider.query(mObjectsUri, OBJECT_INFO_PROJECTION,
+<<<<<<< HEAD
                             ID_WHERE, new String[] {  Integer.toString(handle) }, null, null);
+=======
+                            ID_WHERE, new String[] {  Integer.toString(handle) }, null);
+>>>>>>> upstream/master
             if (c != null && c.moveToNext()) {
                 outStorageFormatParent[0] = c.getInt(1);
                 outStorageFormatParent[1] = c.getInt(2);
@@ -881,7 +900,11 @@ public class MtpDatabase {
         Cursor c = null;
         try {
             c = mMediaProvider.query(mObjectsUri, PATH_SIZE_FORMAT_PROJECTION,
+<<<<<<< HEAD
                             ID_WHERE, new String[] {  Integer.toString(handle) }, null, null);
+=======
+                            ID_WHERE, new String[] {  Integer.toString(handle) }, null);
+>>>>>>> upstream/master
             if (c != null && c.moveToNext()) {
                 String path = c.getString(1);
                 path.getChars(0, path.length(), outFilePath, 0);
@@ -910,7 +933,11 @@ public class MtpDatabase {
         Cursor c = null;
         try {
             c = mMediaProvider.query(mObjectsUri, PATH_SIZE_FORMAT_PROJECTION,
+<<<<<<< HEAD
                             ID_WHERE, new String[] {  Integer.toString(handle) }, null, null);
+=======
+                            ID_WHERE, new String[] {  Integer.toString(handle) }, null);
+>>>>>>> upstream/master
             if (c != null && c.moveToNext()) {
                 // don't convert to media path here, since we will be matching
                 // against paths in the database matching /data/media
@@ -932,15 +959,21 @@ public class MtpDatabase {
             if (format == MtpConstants.FORMAT_ASSOCIATION) {
                 // recursive case - delete all children first
                 Uri uri = Files.getMtpObjectsUri(mVolumeName);
+<<<<<<< HEAD
                 int count = mMediaProvider.delete(uri,
                     // the 'like' makes it use the index, the 'lower()' makes it correct
                     // when the path contains sqlite wildcard characters
                     "_data LIKE ?1 AND lower(substr(_data,1,?2))=lower(?3)",
                     new String[] { path + "/%",Integer.toString(path.length() + 1), path + "/"});
+=======
+                int count = mMediaProvider.delete(uri, "_data LIKE ?",
+                        new String[] { path + "/%"});
+>>>>>>> upstream/master
             }
 
             Uri uri = Files.getMtpObjectsUri(mVolumeName, handle);
             if (mMediaProvider.delete(uri, null, null) > 0) {
+<<<<<<< HEAD
                 if (format != MtpConstants.FORMAT_ASSOCIATION
                         && path.toLowerCase(Locale.US).endsWith("/.nomedia")) {
                     try {
@@ -950,6 +983,8 @@ public class MtpDatabase {
                         Log.e(TAG, "failed to unhide/rescan for " + path);
                     }
                 }
+=======
+>>>>>>> upstream/master
                 return MtpConstants.RESPONSE_OK;
             } else {
                 return MtpConstants.RESPONSE_INVALID_OBJECT_HANDLE;
@@ -968,7 +1003,11 @@ public class MtpDatabase {
         Uri uri = Files.getMtpReferencesUri(mVolumeName, handle);
         Cursor c = null;
         try {
+<<<<<<< HEAD
             c = mMediaProvider.query(uri, ID_PROJECTION, null, null, null, null);
+=======
+            c = mMediaProvider.query(uri, ID_PROJECTION, null, null, null);
+>>>>>>> upstream/master
             if (c == null) {
                 return null;
             }

@@ -48,8 +48,12 @@ conventions of a different platform.</p>
 document or deleting.</p>
 <p>As you are migrating your app to Android, please swap out platform-specific icons with their Android
 counterparts.</p>
+<<<<<<< HEAD
 <p>You can find a wide variety of icons for use in your app on the
 <a href="{@docRoot}design/downloads/index.html">Downloads</a> page.</p>
+=======
+<p>You can find a wide variety of icons for use in your app in the Android SDK.</p>
+>>>>>>> upstream/master
 
   </div>
   <div class="layout-content-col span-8">
@@ -90,6 +94,7 @@ platform and to avoid confusion between actions and view switching on Android.</
 <div class="layout-content-row">
   <div class="layout-content-col span-5">
 
+<<<<<<< HEAD
 <h4>Don't hardcode links to other apps</h4>
 <p>In some cases you might want your app to take advantage of another app's feature set. For
 example, you may want to share the content that your app created via a social network or messaging
@@ -117,6 +122,8 @@ sharing target.</p>
 <div class="layout-content-row">
   <div class="layout-content-col span-5">
 
+=======
+>>>>>>> upstream/master
 <h4>Don't use labeled back buttons on action bars</h4>
 <p>Other platforms use an explicit back button with label to allow the user to navigate up the
 application's hierarchy. Instead, Android uses the main action bar's app icon for hierarchical

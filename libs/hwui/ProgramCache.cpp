@@ -388,7 +388,11 @@ Program* ProgramCache::generateProgram(const ProgramDescription& description, pr
     String8 vertexShader = generateVertexShader(description);
     String8 fragmentShader = generateFragmentShader(description);
 
+<<<<<<< HEAD
     Program* program = new Program(description, vertexShader.string(), fragmentShader.string());
+=======
+    Program* program = new Program(vertexShader.string(), fragmentShader.string());
+>>>>>>> upstream/master
     return program;
 }
 

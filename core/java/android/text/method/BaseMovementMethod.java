@@ -350,7 +350,11 @@ public class BaseMovementMethod implements MovementMethod {
     }
 
     /**
+<<<<<<< HEAD
      * Performs a line-end movement action.
+=======
+     * Performs an line-end movement action.
+>>>>>>> upstream/master
      * Moves the cursor or scrolls to the end of the line.
      *
      * @param widget The text view.

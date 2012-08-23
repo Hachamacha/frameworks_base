@@ -106,7 +106,11 @@ abstract public class AsyncService extends Service {
 
     /**
      * Called when service is destroyed. After returning the
+<<<<<<< HEAD
      * service is dead and no more processing should be expected
+=======
+     * service is dead an no more processing should be expected
+>>>>>>> upstream/master
      * to occur.
      */
     @Override

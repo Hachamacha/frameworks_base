@@ -22,7 +22,10 @@ class NetworkUpdateResult {
     int netId;
     boolean ipChanged;
     boolean proxyChanged;
+<<<<<<< HEAD
     boolean isNewNetwork = false;
+=======
+>>>>>>> upstream/master
 
     public NetworkUpdateResult(int id) {
         netId = id;
@@ -59,6 +62,7 @@ class NetworkUpdateResult {
     public boolean hasProxyChanged() {
         return proxyChanged;
     }
+<<<<<<< HEAD
 
     public boolean isNewNetwork() {
         return isNewNetwork;
@@ -67,4 +71,6 @@ class NetworkUpdateResult {
     public void setIsNewNetwork(boolean isNew) {
         isNewNetwork = isNew;
     }
+=======
+>>>>>>> upstream/master
 }

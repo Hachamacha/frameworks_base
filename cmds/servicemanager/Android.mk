@@ -9,4 +9,10 @@ include $(CLEAR_VARS)
 LOCAL_SHARED_LIBRARIES := liblog
 LOCAL_SRC_FILES := service_manager.c binder.c
 LOCAL_MODULE := servicemanager
+<<<<<<< HEAD
+=======
+ifeq ($(BOARD_USE_LVMX),true)
+    LOCAL_CFLAGS += -DLVMX
+endif
+>>>>>>> upstream/master
 include $(BUILD_EXECUTABLE)

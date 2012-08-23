@@ -370,7 +370,11 @@ class UsbSettingsManager {
         synchronized (mLock) {
             readSettingsLocked();
         }
+<<<<<<< HEAD
         mPackageMonitor.register(context, null, true);
+=======
+        mPackageMonitor.register(context, true);
+>>>>>>> upstream/master
     }
 
     private void readPreference(XmlPullParser parser)

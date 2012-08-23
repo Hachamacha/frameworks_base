@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 page.title=Search Overview
+=======
+page.title=Search
+>>>>>>> upstream/master
 @jd:body
 
 <div id="qv-wrapper">

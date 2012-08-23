@@ -55,13 +55,21 @@ public class Looper {
 
     // sThreadLocal.get() will return null unless you've called prepare().
     static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+<<<<<<< HEAD
     private static Looper sMainLooper;  // guarded by Looper.class
+=======
+>>>>>>> upstream/master
 
     final MessageQueue mQueue;
     final Thread mThread;
     volatile boolean mRun;
 
+<<<<<<< HEAD
     private Printer mLogging;
+=======
+    private Printer mLogging = null;
+    private static Looper mMainLooper = null;  // guarded by Looper.class
+>>>>>>> upstream/master
 
      /** Initialize the current thread as a looper.
       * This gives you a chance to create handlers that then reference
@@ -70,6 +78,7 @@ public class Looper {
       * {@link #quit()}.
       */
     public static void prepare() {
+<<<<<<< HEAD
         prepare(true);
     }
 
@@ -78,6 +87,12 @@ public class Looper {
             throw new RuntimeException("Only one Looper may be created per thread");
         }
         sThreadLocal.set(new Looper(quitAllowed));
+=======
+        if (sThreadLocal.get() != null) {
+            throw new RuntimeException("Only one Looper may be created per thread");
+        }
+        sThreadLocal.set(new Looper());
+>>>>>>> upstream/master
     }
 
     /**
@@ -87,6 +102,7 @@ public class Looper {
      * to call this function yourself.  See also: {@link #prepare()}
      */
     public static void prepareMainLooper() {
+<<<<<<< HEAD
         prepare(false);
         synchronized (Looper.class) {
             if (sMainLooper != null) {
@@ -94,14 +110,28 @@ public class Looper {
             }
             sMainLooper = myLooper();
         }
+=======
+        prepare();
+        setMainLooper(myLooper());
+        myLooper().mQueue.mQuitAllowed = false;
+    }
+
+    private synchronized static void setMainLooper(Looper looper) {
+        mMainLooper = looper;
+>>>>>>> upstream/master
     }
 
     /** Returns the application's main looper, which lives in the main thread of the application.
      */
+<<<<<<< HEAD
     public static Looper getMainLooper() {
         synchronized (Looper.class) {
             return sMainLooper;
         }
+=======
+    public synchronized static Looper getMainLooper() {
+        return mMainLooper;
+>>>>>>> upstream/master
     }
 
     /**
@@ -109,16 +139,26 @@ public class Looper {
      * {@link #quit()} to end the loop.
      */
     public static void loop() {
+<<<<<<< HEAD
         final Looper me = myLooper();
         if (me == null) {
             throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
         }
         final MessageQueue queue = me.mQueue;
 
+=======
+        Looper me = myLooper();
+        if (me == null) {
+            throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
+        }
+        MessageQueue queue = me.mQueue;
+        
+>>>>>>> upstream/master
         // Make sure the identity of this thread is that of the local process,
         // and keep track of what that identity token actually is.
         Binder.clearCallingIdentity();
         final long ident = Binder.clearCallingIdentity();
+<<<<<<< HEAD
 
         for (;;) {
             Message msg = queue.next(); // might block
@@ -152,6 +192,55 @@ public class Looper {
             }
 
             msg.recycle();
+=======
+        
+        while (true) {
+            Message msg = queue.next(); // might block
+            if (msg != null) {
+                if (msg.target == null) {
+                    // No target is a magic identifier for the quit message.
+                    return;
+                }
+
+                long wallStart = 0;
+                long threadStart = 0;
+
+                // This must be in a local variable, in case a UI event sets the logger
+                Printer logging = me.mLogging;
+                if (logging != null) {
+                    logging.println(">>>>> Dispatching to " + msg.target + " " +
+                            msg.callback + ": " + msg.what);
+                    wallStart = SystemClock.currentTimeMicro();
+                    threadStart = SystemClock.currentThreadTimeMicro();
+                }
+
+                msg.target.dispatchMessage(msg);
+
+                if (logging != null) {
+                    long wallTime = SystemClock.currentTimeMicro() - wallStart;
+                    long threadTime = SystemClock.currentThreadTimeMicro() - threadStart;
+
+                    logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
+                    if (logging instanceof Profiler) {
+                        ((Profiler) logging).profile(msg, wallStart, wallTime,
+                                threadStart, threadTime);
+                    }
+                }
+
+                // Make sure that during the course of dispatching the
+                // identity of the thread wasn't corrupted.
+                final long newIdent = Binder.clearCallingIdentity();
+                if (ident != newIdent) {
+                    Log.wtf(TAG, "Thread identity changed from 0x"
+                            + Long.toHexString(ident) + " to 0x"
+                            + Long.toHexString(newIdent) + " while dispatching to "
+                            + msg.target.getClass().getName() + " "
+                            + msg.callback + " what=" + msg.what);
+                }
+                
+                msg.recycle();
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -185,12 +274,18 @@ public class Looper {
         return myLooper().mQueue;
     }
 
+<<<<<<< HEAD
     private Looper(boolean quitAllowed) {
         mQueue = new MessageQueue(quitAllowed);
+=======
+    private Looper() {
+        mQueue = new MessageQueue();
+>>>>>>> upstream/master
         mRun = true;
         mThread = Thread.currentThread();
     }
 
+<<<<<<< HEAD
     /**
      * Quits the looper.
      *
@@ -240,6 +335,14 @@ public class Looper {
      */
     public final void removeSyncBarrier(int token) {
         mQueue.removeSyncBarrier(token);
+=======
+    public void quit() {
+        Message msg = Message.obtain();
+        // NOTE: By enqueueing directly into the message queue, the
+        // message is left with a null target.  This is how we know it is
+        // a quit message.
+        mQueue.enqueueMessage(msg, 0);
+>>>>>>> upstream/master
     }
 
     /**
@@ -278,4 +381,15 @@ public class Looper {
     public String toString() {
         return "Looper{" + Integer.toHexString(System.identityHashCode(this)) + "}";
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * @hide
+     */
+    public static interface Profiler {
+        void profile(Message message, long wallStart, long wallTime,
+                long threadStart, long threadTime);
+    }
+>>>>>>> upstream/master
 }

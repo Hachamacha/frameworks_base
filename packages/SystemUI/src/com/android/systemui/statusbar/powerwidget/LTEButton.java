@@ -24,6 +24,7 @@ public class LTEButton extends PowerButton{
     public LTEButton() { mType = BUTTON_LTE; }
 
     @Override
+<<<<<<< HEAD
     protected void updateState(Context context) {
         ContentResolver resolver = context.getContentResolver();
         int network = getCurrentPreferredNetworkMode(context);
@@ -31,11 +32,22 @@ public class LTEButton extends PowerButton{
             case Phone.NT_MODE_GLOBAL:
             case Phone.NT_MODE_LTE_GSM_WCDMA:
             case Phone.NT_MODE_LTE_ONLY:
+=======
+    protected void updateState() {
+        ContentResolver resolver = mView.getContext().getContentResolver();
+        int network = getCurrentPreferredNetworkMode(mView.getContext());
+        switch(network) {
+            case Phone.NT_MODE_GLOBAL:
+>>>>>>> upstream/master
                 mIcon = R.drawable.stat_lte_on;
                 mState = STATE_ENABLED;
                 Settings.System.putInt(resolver, Settings.System.LTE_MODE, 1);
                 break;
+<<<<<<< HEAD
             default:
+=======
+            case Phone.NT_MODE_CDMA:
+>>>>>>> upstream/master
                 mIcon = R.drawable.stat_lte_off;
                 mState = STATE_DISABLED;
                 Settings.System.putInt(resolver, Settings.System.LTE_MODE, 0);
@@ -44,6 +56,7 @@ public class LTEButton extends PowerButton{
     }
 
     @Override
+<<<<<<< HEAD
     protected void toggleState(Context context) {
         TelephonyManager tm = (TelephonyManager)
             context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -56,6 +69,18 @@ public class LTEButton extends PowerButton{
             Settings.System.putInt(resolver, Settings.System.LTE_MODE, 0);
         } else if (Phone.NT_MODE_CDMA == network ||
                      tm.getLteOnGsmMode() != 0) {
+=======
+    protected void toggleState() {
+        TelephonyManager tm = (TelephonyManager) mView.getContext()
+            .getSystemService(Context.TELEPHONY_SERVICE);
+        int network = getCurrentPreferredNetworkMode(mView.getContext());
+        ContentResolver resolver = mView.getContext().getContentResolver();
+        if (Phone.NT_MODE_GLOBAL == network) {
+            tm.toggleLTE(false);
+            mState = STATE_DISABLED;
+            Settings.System.putInt(resolver, Settings.System.LTE_MODE, 0);
+        } else if (Phone.NT_MODE_CDMA == network) {
+>>>>>>> upstream/master
             tm.toggleLTE(true);
             mState = STATE_ENABLED;
             Settings.System.putInt(resolver, Settings.System.LTE_MODE, 1);
@@ -63,11 +88,19 @@ public class LTEButton extends PowerButton{
     }
 
     @Override
+<<<<<<< HEAD
     protected boolean handleLongClick(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.phone", "com.android.phone.Settings");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+=======
+    protected boolean handleLongClick() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.phone", "com.android.phone.Settings");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mView.getContext().startActivity(intent);
+>>>>>>> upstream/master
         return true;
     }
 
@@ -86,4 +119,8 @@ public class LTEButton extends PowerButton{
         }
         return network;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> upstream/master

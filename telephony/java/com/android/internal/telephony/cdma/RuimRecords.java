@@ -18,7 +18,10 @@ package com.android.internal.telephony.cdma;
 
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC;
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
@@ -30,10 +33,15 @@ import com.android.internal.telephony.AdnRecord;
 import com.android.internal.telephony.AdnRecordCache;
 import com.android.internal.telephony.AdnRecordLoader;
 import com.android.internal.telephony.CommandsInterface;
+<<<<<<< HEAD
 import com.android.internal.telephony.IccRefreshResponse;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.TelephonyProperties;
+=======
+import com.android.internal.telephony.TelephonyProperties;
+import com.android.internal.telephony.cdma.RuimCard;
+>>>>>>> upstream/master
 import com.android.internal.telephony.MccTable;
 
 // can't be used since VoiceMailConstants is not public
@@ -63,6 +71,10 @@ public final class RuimRecords extends IccRecords {
 
     // ***** Event Constants
 
+<<<<<<< HEAD
+=======
+    private static final int EVENT_RUIM_READY = 1;
+>>>>>>> upstream/master
     private static final int EVENT_RADIO_OFF_OR_NOT_AVAILABLE = 2;
     private static final int EVENT_GET_IMSI_DONE = 3;
     private static final int EVENT_GET_DEVICE_IDENTITY_DONE = 4;
@@ -79,19 +91,34 @@ public final class RuimRecords extends IccRecords {
     private static final int EVENT_RUIM_REFRESH = 31;
 
 
+<<<<<<< HEAD
     public RuimRecords(IccCard card, Context c, CommandsInterface ci) {
         super(card, c, ci);
 
         adnCache = new AdnRecordCache(mFh);
+=======
+    RuimRecords(CDMAPhone p) {
+        super(p);
+
+        adnCache = new AdnRecordCache(phone);
+>>>>>>> upstream/master
 
         recordsRequested = false;  // No load request is made till SIM ready
 
         // recordsToLoad is set to 0 because no requests are made yet
         recordsToLoad = 0;
 
+<<<<<<< HEAD
         mCi.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
         // NOTE the EVENT_SMS_ON_RUIM is not registered
         mCi.registerForIccRefresh(this, EVENT_RUIM_REFRESH, null);
+=======
+
+        p.mCM.registerForRUIMReady(this, EVENT_RUIM_READY, null);
+        p.mCM.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
+        // NOTE the EVENT_SMS_ON_RUIM is not registered
+        p.mCM.registerForIccRefresh(this, EVENT_RUIM_REFRESH, null);
+>>>>>>> upstream/master
 
         // Start off by setting empty state
         onRadioOffOrNotAvailable();
@@ -100,16 +127,27 @@ public final class RuimRecords extends IccRecords {
 
     @Override
     public void dispose() {
+<<<<<<< HEAD
         if (DBG) log("Disposing RuimRecords " + this);
         //Unregister for all events
         mCi.unregisterForOffOrNotAvailable( this);
         mCi.unregisterForIccRefresh(this);
         super.dispose();
+=======
+        //Unregister for all events
+        phone.mCM.unregisterForRUIMReady(this);
+        phone.mCM.unregisterForOffOrNotAvailable( this);
+        phone.mCM.unregisterForIccRefresh(this);
+>>>>>>> upstream/master
     }
 
     @Override
     protected void finalize() {
+<<<<<<< HEAD
         if(DBG) log("RuimRecords finalized");
+=======
+        if(DBG) Log.d(LOG_TAG, "RuimRecords finalized");
+>>>>>>> upstream/master
     }
 
     @Override
@@ -151,7 +189,11 @@ public final class RuimRecords extends IccRecords {
         AsyncResult.forMessage((onComplete)).exception =
                 new IccException("setVoiceMailNumber not implemented");
         onComplete.sendToTarget();
+<<<<<<< HEAD
         loge("method setVoiceMailNumber is not implemented");
+=======
+        Log.e(LOG_TAG, "method setVoiceMailNumber is not implemented");
+>>>>>>> upstream/master
     }
 
     /**
@@ -199,6 +241,7 @@ public final class RuimRecords extends IccRecords {
 
         boolean isRecordLoadResponse = false;
 
+<<<<<<< HEAD
         if (mDestroyed) {
             loge("Received message " + msg +
                     "[" + msg.what + "] while being destroyed. Ignoring.");
@@ -206,12 +249,23 @@ public final class RuimRecords extends IccRecords {
         }
 
         try { switch (msg.what) {
+=======
+        try { switch (msg.what) {
+            case EVENT_RUIM_READY:
+                onRuimReady();
+            break;
+
+>>>>>>> upstream/master
             case EVENT_RADIO_OFF_OR_NOT_AVAILABLE:
                 onRadioOffOrNotAvailable();
             break;
 
             case EVENT_GET_DEVICE_IDENTITY_DONE:
+<<<<<<< HEAD
                 log("Event EVENT_GET_DEVICE_IDENTITY_DONE Received");
+=======
+                Log.d(LOG_TAG, "Event EVENT_GET_DEVICE_IDENTITY_DONE Received");
+>>>>>>> upstream/master
             break;
 
             /* IO events */
@@ -220,7 +274,11 @@ public final class RuimRecords extends IccRecords {
 
                 ar = (AsyncResult)msg.obj;
                 if (ar.exception != null) {
+<<<<<<< HEAD
                     loge("Exception querying IMSI, Exception:" + ar.exception);
+=======
+                    Log.e(LOG_TAG, "Exception querying IMSI, Exception:" + ar.exception);
+>>>>>>> upstream/master
                     break;
                 }
 
@@ -229,16 +287,28 @@ public final class RuimRecords extends IccRecords {
                 // IMSI (MCC+MNC+MSIN) is at least 6 digits, but not more
                 // than 15 (and usually 15).
                 if (mImsi != null && (mImsi.length() < 6 || mImsi.length() > 15)) {
+<<<<<<< HEAD
                     loge("invalid IMSI " + mImsi);
                     mImsi = null;
                 }
 
                 log("IMSI: " + mImsi.substring(0, 6) + "xxxxxxxxx");
+=======
+                    Log.e(LOG_TAG, "invalid IMSI " + mImsi);
+                    mImsi = null;
+                }
+
+                Log.d(LOG_TAG, "IMSI: " + mImsi.substring(0, 6) + "xxxxxxxxx");
+>>>>>>> upstream/master
 
                 String operatorNumeric = getRUIMOperatorNumeric();
                 if (operatorNumeric != null) {
                     if(operatorNumeric.length() <= 6){
+<<<<<<< HEAD
                         MccTable.updateMccMncConfiguration(mContext, operatorNumeric);
+=======
+                        MccTable.updateMccMncConfiguration(phone, operatorNumeric);
+>>>>>>> upstream/master
                     }
                 }
             break;
@@ -254,7 +324,11 @@ public final class RuimRecords extends IccRecords {
                 mMin2Min1 = localTemp[3];
                 mPrlVersion = localTemp[4];
 
+<<<<<<< HEAD
                 log("MDN: " + mMyMobileNumber + " MIN: " + mMin2Min1);
+=======
+                Log.d(LOG_TAG, "MDN: " + mMyMobileNumber + " MIN: " + mMin2Min1);
+>>>>>>> upstream/master
 
             break;
 
@@ -270,7 +344,11 @@ public final class RuimRecords extends IccRecords {
 
                 iccid = IccUtils.bcdToString(data, 0, data.length);
 
+<<<<<<< HEAD
                 log("iccid: " + iccid);
+=======
+                Log.d(LOG_TAG, "iccid: " + iccid);
+>>>>>>> upstream/master
 
             break;
 
@@ -290,14 +368,22 @@ public final class RuimRecords extends IccRecords {
 
             // TODO: probably EF_CST should be read instead
             case EVENT_GET_SST_DONE:
+<<<<<<< HEAD
                 log("Event EVENT_GET_SST_DONE Received");
+=======
+                Log.d(LOG_TAG, "Event EVENT_GET_SST_DONE Received");
+>>>>>>> upstream/master
             break;
 
             case EVENT_RUIM_REFRESH:
                 isRecordLoadResponse = false;
                 ar = (AsyncResult)msg.obj;
                 if (ar.exception == null) {
+<<<<<<< HEAD
                     handleRuimRefresh((IccRefreshResponse)ar.result);
+=======
+                    handleRuimRefresh((int[])(ar.result));
+>>>>>>> upstream/master
                 }
                 break;
 
@@ -317,23 +403,38 @@ public final class RuimRecords extends IccRecords {
         // One record loaded successfully or failed, In either case
         // we need to update the recordsToLoad count
         recordsToLoad -= 1;
+<<<<<<< HEAD
         if (DBG) log("RuimRecords:onRecordLoaded " + recordsToLoad + " requested: " + recordsRequested);
+=======
+>>>>>>> upstream/master
 
         if (recordsToLoad == 0 && recordsRequested == true) {
             onAllRecordsLoaded();
         } else if (recordsToLoad < 0) {
+<<<<<<< HEAD
             loge("RuimRecords: recordsToLoad <0, programmer error suspected");
+=======
+            Log.e(LOG_TAG, "RuimRecords: recordsToLoad <0, programmer error suspected");
+>>>>>>> upstream/master
             recordsToLoad = 0;
         }
     }
 
     @Override
     protected void onAllRecordsLoaded() {
+<<<<<<< HEAD
         // Further records that can be inserted are Operator/OEM dependent
 
         String operator = getRUIMOperatorNumeric();
         log("RuimRecords: onAllRecordsLoaded set 'gsm.sim.operator.numeric' to operator='" +
                 operator + "'");
+=======
+        Log.d(LOG_TAG, "RuimRecords: record load complete");
+
+        // Further records that can be inserted are Operator/OEM dependent
+
+        String operator = getRUIMOperatorNumeric();
+>>>>>>> upstream/master
         SystemProperties.set(PROPERTY_ICC_OPERATOR_NUMERIC, operator);
 
         if (mImsi != null) {
@@ -342,22 +443,40 @@ public final class RuimRecords extends IccRecords {
         }
         recordsLoadedRegistrants.notifyRegistrants(
             new AsyncResult(null, null, null));
+<<<<<<< HEAD
         mParentCard.broadcastIccStateChangedIntent(
                 IccCard.INTENT_VALUE_ICC_LOADED, null);
     }
 
     @Override
     public void onReady() {
+=======
+        phone.mIccCard.broadcastIccStateChangedIntent(
+                RuimCard.INTENT_VALUE_ICC_LOADED, null);
+    }
+
+    private void onRuimReady() {
+>>>>>>> upstream/master
         /* broadcast intent ICC_READY here so that we can make sure
           READY is sent before IMSI ready
         */
 
+<<<<<<< HEAD
         mParentCard.broadcastIccStateChangedIntent(
                 IccCard.INTENT_VALUE_ICC_READY, null);
 
         fetchRuimRecords();
 
         mCi.getCDMASubscription(obtainMessage(EVENT_GET_CDMA_SUBSCRIPTION_DONE));
+=======
+        phone.mIccCard.broadcastIccStateChangedIntent(
+                RuimCard.INTENT_VALUE_ICC_READY, null);
+
+        fetchRuimRecords();
+
+        phone.mCM.getCDMASubscription(obtainMessage(EVENT_GET_CDMA_SUBSCRIPTION_DONE));
+
+>>>>>>> upstream/master
     }
 
 
@@ -366,6 +485,7 @@ public final class RuimRecords extends IccRecords {
 
         Log.v(LOG_TAG, "RuimRecords:fetchRuimRecords " + recordsToLoad);
 
+<<<<<<< HEAD
         mCi.getIMSI(obtainMessage(EVENT_GET_IMSI_DONE));
         recordsToLoad++;
 
@@ -374,6 +494,15 @@ public final class RuimRecords extends IccRecords {
         recordsToLoad++;
 
         log("RuimRecords:fetchRuimRecords " + recordsToLoad + " requested: " + recordsRequested);
+=======
+        phone.mCM.getIMSI(obtainMessage(EVENT_GET_IMSI_DONE));
+        recordsToLoad++;
+
+        phone.getIccFileHandler().loadEFTransparent(EF_ICCID,
+                obtainMessage(EVENT_GET_ICCID_DONE));
+        recordsToLoad++;
+
+>>>>>>> upstream/master
         // Further records that can be inserted are Operator/OEM dependent
     }
 
@@ -405,6 +534,7 @@ public final class RuimRecords extends IccRecords {
         }
         countVoiceMessages = countWaiting;
 
+<<<<<<< HEAD
         mRecordsEventsRegistrants.notifyResult(EVENT_MWI);
     }
 
@@ -422,18 +552,41 @@ public final class RuimRecords extends IccRecords {
 
         switch (refreshResponse.refreshResult) {
             case IccRefreshResponse.REFRESH_RESULT_FILE_UPDATE:
+=======
+        ((CDMAPhone) phone).notifyMessageWaitingIndicator();
+    }
+
+    private void handleRuimRefresh(int[] result) {
+        if (result == null || result.length == 0) {
+            if (DBG) log("handleRuimRefresh without input");
+            return;
+        }
+
+        switch ((result[0])) {
+            case CommandsInterface.SIM_REFRESH_FILE_UPDATED:
+>>>>>>> upstream/master
                 if (DBG) log("handleRuimRefresh with SIM_REFRESH_FILE_UPDATED");
                 adnCache.reset();
                 fetchRuimRecords();
                 break;
+<<<<<<< HEAD
             case IccRefreshResponse.REFRESH_RESULT_INIT:
+=======
+            case CommandsInterface.SIM_REFRESH_INIT:
+>>>>>>> upstream/master
                 if (DBG) log("handleRuimRefresh with SIM_REFRESH_INIT");
                 // need to reload all files (that we care about)
                 fetchRuimRecords();
                 break;
+<<<<<<< HEAD
             case IccRefreshResponse.REFRESH_RESULT_RESET:
                 if (DBG) log("handleRuimRefresh with SIM_REFRESH_RESET");
                 mCi.setRadioPower(false, null);
+=======
+            case CommandsInterface.SIM_REFRESH_RESET:
+                if (DBG) log("handleRuimRefresh with SIM_REFRESH_RESET");
+                phone.mCM.setRadioPower(false, null);
+>>>>>>> upstream/master
                 /* Note: no need to call setRadioPower(true).  Assuming the desired
                 * radio power state is still ON (as tracked by ServiceStateTracker),
                 * ServiceStateTracker will call setRadioPower when it receives the

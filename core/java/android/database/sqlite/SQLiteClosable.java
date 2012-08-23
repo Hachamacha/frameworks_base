@@ -16,6 +16,7 @@
 
 package android.database.sqlite;
 
+<<<<<<< HEAD
 import java.io.Closeable;
 
 /**
@@ -49,22 +50,42 @@ public abstract class SQLiteClosable implements Closeable {
      * @throws IllegalStateException if the last reference to the object has already
      * been released.
      */
+=======
+import android.database.CursorWindow;
+
+/**
+ * An object created from a SQLiteDatabase that can be closed.
+ */
+public abstract class SQLiteClosable {
+    private int mReferenceCount = 1;
+
+    protected abstract void onAllReferencesReleased();
+    protected void onAllReferencesReleasedFromContainer() {}
+
+>>>>>>> upstream/master
     public void acquireReference() {
         synchronized(this) {
             if (mReferenceCount <= 0) {
                 throw new IllegalStateException(
+<<<<<<< HEAD
                         "attempt to re-open an already-closed object: " + this);
+=======
+                        "attempt to re-open an already-closed object: " + getObjInfo());
+>>>>>>> upstream/master
             }
             mReferenceCount++;
         }
     }
 
+<<<<<<< HEAD
     /**
      * Releases a reference to the object, closing the object if the last reference
      * was released.
      *
      * @see #onAllReferencesReleased()
      */
+=======
+>>>>>>> upstream/master
     public void releaseReference() {
         boolean refCountIsZero = false;
         synchronized(this) {
@@ -75,6 +96,7 @@ public abstract class SQLiteClosable implements Closeable {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Releases a reference to the object that was owned by the container of the object,
      * closing the object if the last reference was released.
@@ -83,6 +105,8 @@ public abstract class SQLiteClosable implements Closeable {
      * @deprecated Do not use.
      */
     @Deprecated
+=======
+>>>>>>> upstream/master
     public void releaseReferenceFromContainer() {
         boolean refCountIsZero = false;
         synchronized(this) {
@@ -93,6 +117,7 @@ public abstract class SQLiteClosable implements Closeable {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Releases a reference to the object, closing the object if the last reference
      * was released.
@@ -104,5 +129,23 @@ public abstract class SQLiteClosable implements Closeable {
      */
     public void close() {
         releaseReference();
+=======
+    private String getObjInfo() {
+        StringBuilder buff = new StringBuilder();
+        buff.append(this.getClass().getName());
+        buff.append(" (");
+        if (this instanceof SQLiteDatabase) {
+            buff.append("database = ");
+            buff.append(((SQLiteDatabase)this).getPath());
+        } else if (this instanceof SQLiteProgram) {
+            buff.append("mSql = ");
+            buff.append(((SQLiteProgram)this).mSql);
+        } else if (this instanceof CursorWindow) {
+            buff.append("mStartPos = ");
+            buff.append(((CursorWindow)this).getStartPosition());
+        }
+        buff.append(") ");
+        return buff.toString();
+>>>>>>> upstream/master
     }
 }

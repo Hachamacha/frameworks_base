@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 page.title=Renderscript Computation 
 parent.title=Computation
+=======
+page.title=Compute
+parent.title=Renderscript
+>>>>>>> upstream/master
 parent.link=index.html
 
 @jd:body
@@ -9,12 +14,20 @@ parent.link=index.html
     <h2>In this document</h2>
 
     <ol>
+<<<<<<< HEAD
       <li><a href="#overview">Renderscript System Overview</a></li>
       <li>
         <a href="#creating-renderscript">Creating a Computation Renderscript</a>
 
         <ol>
           <li><a href="#creating-rs-file">Creating the Renderscript file</a></li>
+=======
+      <li>
+        <a href="#creating">Creating a Compute Renderscript</a>
+
+        <ol>
+          <li><a href="#creating-renderscript">Creating the Renderscript file</a></li>
+>>>>>>> upstream/master
 
           <li><a href="#calling">Calling the Renderscript code</a></li>
         </ol>
@@ -26,10 +39,16 @@ parent.link=index.html
     <ol>
       <li><a href="{@docRoot}resources/samples/RenderScript/HelloCompute/index.html">Hello
       Compute</a></li>
+<<<<<<< HEAD
+=======
+
+      <li><a href="{@docRoot}resources/samples/RenderScript/Balls/index.html">Balls</a></li>
+>>>>>>> upstream/master
     </ol>
   </div>
 </div>
 
+<<<<<<< HEAD
  <p>Renderscript offers a high performance computation API at the native
 level that you write in C (C99 standard). Renderscript gives your apps the ability to run
 operations with automatic parallelization across all available processor cores.
@@ -131,17 +150,52 @@ Renderscript is set up:</p><img src="{@docRoot}images/rs_compute.png">
 <p class="img-caption"><strong>Figure 1.</strong> Renderscript overview</p>
 
 <p>The following sections describe how to create a simple Renderscript and use it in an
+=======
+<p>Renderscript exposes a set of compute APIs that you can use to do intensive computational
+operations. You can use the compute APIs in the context of a graphics Renderscript such as
+calculating the positions of many objects in a scene. You can also create standalone compute
+Renderscripts such as one that does image processing for a photo editor application.</p>
+
+<p>Compute Renderscripts scale to the amount of
+processing cores available on the device. This is enabled through a function named
+<code>rsForEach()</code> (or the <code>forEach_root()</code> method at the Android framework level).
+that automatically partitions work across available processing cores on the device. 
+For now, compute Renderscripts can only take advantage of CPU
+cores, but in the future, they can potentially run on other types of processors such as GPUs and
+DSPs.</p>
+
+<h2 id="creating-renderscript">Creating a Compute Renderscript</h2>
+
+<p>Implementing a compute Renderscript creating a <code>.rs</code> file that contains
+your Renderscript code and calling it at the Android framework level with the
+<code>forEach_root()</code> or at the Renderscript runtime level with the
+<code>rsForEach()</code> function. The following diagram describes how a typical compute
+Renderscript is set up:</p><img src="{@docRoot}images/rs_compute.png">
+
+<p class="img-caption"><strong>Figure 1.</strong> Compute Renderscript overview</p>
+
+<p>The following sections describe how to create a simple compute Renderscript and use it in an
+>>>>>>> upstream/master
 Android application. This example uses the <a href=
 "{@docRoot}resources/samples/RenderScript/HelloCompute/index.html">HelloCompute Renderscript
 sample</a> that is provided in the SDK as a guide (some code has been modified from its original
 form for simplicity).</p>
 
+<<<<<<< HEAD
 <h3 id="creating-rs-file">Creating the Renderscript file</h3>
 
 <p>Your Renderscript code resides in <code>.rs</code> and <code>.rsh</code> files in the
 <code>&lt;project_root&gt;/src/</code> directory. This code contains the computation logic
 and declares all necessary variables and pointers.
 Every <code>.rs</code> file generally contains the following items:</p>
+=======
+<h3 id="creating-renderscript">Creating the Renderscript file</h3>
+
+<p>Your Renderscript code resides in <code>.rs</code> and <code>.rsh</code> files in the
+<code>&lt;project_root&gt;/src/</code> directory. This code contains the compute logic
+and declares all necessary variables and pointers.
+Every compute <code>.rs</code> file generally contains the following items:</p>
+>>>>>>> upstream/master
 
 <ul>
   <li>A pragma declaration (<code>#pragma rs java_package_name(<em>package.name</em>)</code>)
@@ -150,6 +204,7 @@ Every <code>.rs</code> file generally contains the following items:</p>
   <li>A pragma declaration (<code>#pragma version(1)</code>) that declares the version of
   Renderscript that you are using (1 is the only value for now).</li>
 
+<<<<<<< HEAD
   <li><p>A <code>root()</code> function that is the main worker function. The root function is
   called by the <code>rsForEach</code> function, which allows the Renderscript code to be called and
   executed on multiple cores if they are available. The <code>root()</code> function must return
@@ -157,6 +212,15 @@ Every <code>.rs</code> file generally contains the following items:</p>
 
     <ul>
       <li>Pointers to memory allocations that are used for the input and output of the
+=======
+  <li>A <code>root()</code> function that is the main worker function. The root function is
+  called by the <code>rsForEach</code> function, which allows the Renderscript code to be called and
+  executed on multiple cores if they are available. The <code>root()</code> function must return
+  <code>void</code> and accept the following arguments:
+
+    <ul>
+      <li>Pointers to memory allocations that are used for the input and output of the compute
+>>>>>>> upstream/master
       Renderscript. Both of these pointers are required for Android 3.2 (API level 13) platform
       versions or older. Android 4.0 (API level 14) and later requires one or both of these
       allocations.</li>
@@ -205,19 +269,41 @@ void root(const uchar4 *v_in, uchar4 *v_out) {
 
 <h3 id="calling">Calling the Renderscript code</h3>
 
+<<<<<<< HEAD
 <p>You can call the Renderscript from your Android framework code by
+=======
+<p>You can do Renderscript to Renderscript calls with <code>rsForEach</code> in situations
+such as when a graphics Renderscript needs to do a lot of computational operations. The Renderscript
+<a href="{@docRoot}resources/samples/RenderScript/Balls/index.html">Balls</a> sample shows how
+this is setup. The <a href=
+"resources/samples/RenderScript/Balls/src/com/example/android/rs/balls/balls.html">balls.rs</a>
+graphics Renderscript calls the <a href=
+"resources/samples/RenderScript/Balls/src/com/example/android/rs/balls/balls.html">balls_physics.rs</a>
+compute Renderscript to calculate the location of the balls that are rendered to the screen.</p>
+
+<p>Another way to use a compute Renderscript is to call it from your Android framework code by
+>>>>>>> upstream/master
 creating a Renderscript object by instantiating the (<code>ScriptC_<em>script_name</em></code>)
 class. This class contains a method, <code>forEach_root()</code>, that lets you invoke
 <code>rsForEach</code>. You give it the same parameters that you would if you were invoking it
 at the Renderscript runtime level. This technique allows your Android application to offload
 intensive mathematical calculations to Renderscript. See the <a href=
 "{@docRoot}resources/samples/RenderScript/HelloCompute/index.html">HelloCompute</a> sample to see
+<<<<<<< HEAD
 how a simple Android application can utilize Renderscript.</p>
 
 <p>To call Renderscript at the Android framework level:</p>
 
 <ol>
   <li>Allocate memory that is needed by the Renderscript in your Android framework code.
+=======
+how a simple Android application can utilize a compute Renderscript.</p>
+
+<p>To call a compute Renderscript at the Android framework level:</p>
+
+<ol>
+  <li>Allocate memory that is needed by the compute Renderscript in your Android framework code.
+>>>>>>> upstream/master
   You need an input and output {@link android.renderscript.Allocation} for Android 3.2 (API level
   13) platform versions and older. The Android 4.0 (API level 14) platform version requires only
   one or both {@link android.renderscript.Allocation}s.</li>
@@ -226,6 +312,7 @@ how a simple Android application can utilize Renderscript.</p>
 
   <li>Call <code>forEach_root()</code>, passing in the allocations, the
   Renderscript, and any optional user-defined data. The output allocation will contain the output
+<<<<<<< HEAD
   of the Renderscript.</li>
 </ol>
 
@@ -233,6 +320,15 @@ how a simple Android application can utilize Renderscript.</p>
 "{@docRoot}resources/samples/RenderScript/HelloCompute/index.html">HelloCompute</a> sample, processes
 a bitmap and outputs a black and white version of it. The
 <code>createScript()</code> method carries out the steps described previously. This method calls the
+=======
+  of the compute Renderscript.</li>
+</ol>
+
+<p>In the following example, taken from the <a href=
+"{@docRoot}resources/samples/RenderScript/HelloCompute/index.html">HelloCompute</a> sample, processes
+a bitmap and outputs a black and white version of it. The
+<code>createScript()</code> method carries out the steps described previously. This method the compute
+>>>>>>> upstream/master
 Renderscript, <code>mono.rs</code>, passing in memory allocations that store the bitmap to be processed
 as well as the eventual output bitmap. It then displays the processed bitmap onto the screen:</p>
 <pre>
@@ -291,17 +387,31 @@ public class HelloCompute extends Activity {
 }
 </pre>
 
+<<<<<<< HEAD
 <p>To call Renderscript from another Renderscript file:</p>
 <ol>
  <li>Allocate memory that is needed by the Renderscript in your Android framework code.
+=======
+<p>To call a compute Renderscript from another Renderscript file:</p>
+<ol>
+ <li>Allocate memory that is needed by the compute Renderscript in your Android framework code.
+>>>>>>> upstream/master
   You need an input and output {@link android.renderscript.Allocation} for Android 3.2 (API level
   13) platform versions and older. The Android 4.0 (API level 14) platform version requires only
   one or both {@link android.renderscript.Allocation}s.</li>
 
   <li>Call <code>rsForEach()</code>, passing in the allocations and any optional user-defined data.
+<<<<<<< HEAD
   The output allocation will contain the output of the Renderscript.</li>
 </ol>
  
+=======
+  The output allocation will contain the output of the compute Renderscript.</li>
+</ol>
+<p>The following example, taken from the <a href=
+"{@docRoot}resources/samples/RenderScript/Balls/src/com/example/android/rs/balls/balls.html">Renderscript
+Balls sample</a>, demonstrates how to do make a script to script call:</p>
+>>>>>>> upstream/master
 <pre>
 rs_script script;
 rs_allocation in_allocation;
@@ -310,6 +420,7 @@ UserData_t data;
 ...
 rsForEach(script, in_allocation, out_allocation, &amp;data, sizeof(data));
 </pre>
+<<<<<<< HEAD
 </p>
 <p>In this example, assume that the script and memory allocations have already been
 allocated and bound at the Android framework level and that <code>UserData_t</code> is a struct
@@ -338,3 +449,11 @@ the floating-point precision level of your script with the following pragmas:</p
 </ul>
 </li>
 </ul>
+=======
+
+<p>In this example, assume that the script and memory allocations have already been
+allocated and bound at the Android framework level and that <code>UserData_t</code> is a struct
+declared previously. Passing a pointer to a struct and the size of the struct to <code>rsForEach</code>
+is optional, but useful if your compute Renderscript requires additional information other than
+the necessary memory allocations.</p>
+>>>>>>> upstream/master

@@ -155,11 +155,14 @@ public class ImageWallpaper extends WallpaperService {
             }
         }
 
+<<<<<<< HEAD
         public DrawableEngine() {
             super();
             setFixedSizeAllowed(true);
         }
 
+=======
+>>>>>>> upstream/master
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             if (DEBUG) {
@@ -281,6 +284,7 @@ public class ImageWallpaper extends WallpaperService {
                 return;
             }
 
+<<<<<<< HEAD
             // If we don't yet know the size of the wallpaper bitmap,
             // we need to get it now.
             boolean updateWallpaper = mBackgroundWidth < 0 || mBackgroundHeight < 0 ;
@@ -291,6 +295,11 @@ public class ImageWallpaper extends WallpaperService {
             updateWallpaper = updateWallpaper || mBackground == null;
 
             if (updateWallpaper) {
+=======
+            if (mBackgroundWidth < 0 || mBackgroundHeight < 0) {
+                // If we don't yet know the size of the wallpaper bitmap,
+                // we need to get it now.
+>>>>>>> upstream/master
                 updateWallpaperLocked();
             }
 
@@ -315,6 +324,15 @@ public class ImageWallpaper extends WallpaperService {
             mLastXTranslation = xPixels;
             mLastYTranslation = yPixels;
 
+<<<<<<< HEAD
+=======
+            if (mBackground == null) {
+                // If we somehow got to this point after we have last flushed
+                // the wallpaper, well we really need it to draw again.  So
+                // seems like we need to reload it.  Ouch.
+                updateWallpaperLocked();
+            }
+>>>>>>> upstream/master
 
             if (mIsHwAccelerated) {
                 if (!drawWallpaperWithOpenGL(sh, availw, availh, xPixels, yPixels)) {

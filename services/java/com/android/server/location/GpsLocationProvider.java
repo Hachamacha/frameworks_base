@@ -192,11 +192,14 @@ public class GpsLocationProvider implements LocationProviderInterface {
     // stop trying if we do not receive a fix within 60 seconds
     private static final int NO_FIX_TIMEOUT = 60 * 1000;
 
+<<<<<<< HEAD
     // if the fix interval is below this we leave GPS on,
     // if above then we cycle the GPS driver.
     // Typical hot TTTF is ~5 seconds, so 10 seconds seems sane.
     private static final int GPS_POLLING_THRESHOLD_INTERVAL = 10 * 1000;
 
+=======
+>>>>>>> upstream/master
     // true if we are enabled
     private volatile boolean mEnabled;
     
@@ -559,6 +562,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         long delay;
 
+<<<<<<< HEAD
         // force refresh NTP cache when outdated
         if (mNtpTime.getCacheAge() >= NTP_INTERVAL) {
             mNtpTime.forceRefresh();
@@ -566,6 +570,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         // only update when NTP time is fresh
         if (mNtpTime.getCacheAge() < NTP_INTERVAL) {
+=======
+        // GPS requires fresh NTP time
+        if (mNtpTime.forceRefresh()) {
+>>>>>>> upstream/master
             long time = mNtpTime.getCachedNtpTime();
             long timeReference = mNtpTime.getCachedNtpTimeReference();
             long certainty = mNtpTime.getCacheCertainty();
@@ -847,6 +855,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     }
 
     public String getInternalState() {
+<<<<<<< HEAD
         StringBuilder s = new StringBuilder();
         s.append("  mFixInterval=").append(mFixInterval).append("\n");
         s.append("  mEngineCapabilities=0x").append(Integer.toHexString(mEngineCapabilities)).append(" (");
@@ -859,6 +868,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         s.append(native_get_internal_state());
         return s.toString();
+=======
+        return native_get_internal_state();
+>>>>>>> upstream/master
     }
 
     private final class Listener implements IBinder.DeathRecipient {
@@ -1098,7 +1110,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
             } else {
                 mLocation.removeAccuracy();
             }
+<<<<<<< HEAD
             mLocation.setExtras(mLocationExtras);
+=======
+>>>>>>> upstream/master
 
             try {
                 mLocationManager.reportLocation(mLocation, false);
@@ -1147,8 +1162,12 @@ public class GpsLocationProvider implements LocationProviderInterface {
             updateStatus(LocationProvider.AVAILABLE, mSvCount);
         }
 
+<<<<<<< HEAD
        if (!hasCapability(GPS_CAPABILITY_SCHEDULING) && mStarted &&
                mFixInterval > GPS_POLLING_THRESHOLD_INTERVAL) {
+=======
+       if (!hasCapability(GPS_CAPABILITY_SCHEDULING) && mStarted && mFixInterval > 1000) {
+>>>>>>> upstream/master
             if (DEBUG) Log.d(TAG, "got fix, hibernating");
             hibernate();
         }

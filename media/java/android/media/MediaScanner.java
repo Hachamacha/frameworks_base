@@ -31,6 +31,7 @@ import android.graphics.BitmapFactory;
 import android.mtp.MtpConstants;
 import android.net.Uri;
 import android.os.Environment;
+<<<<<<< HEAD
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.MediaStore;
@@ -41,6 +42,18 @@ import android.provider.MediaStore.Files.FileColumns;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
 import android.provider.Settings;
+=======
+import android.os.Process;
+import android.os.RemoteException;
+import android.os.SystemProperties;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.provider.MediaStore.Audio;
+import android.provider.MediaStore.Files;
+import android.provider.MediaStore.Images;
+import android.provider.MediaStore.Video;
+import android.provider.MediaStore.Audio.Playlists;
+>>>>>>> upstream/master
 import android.sax.Element;
 import android.sax.ElementListener;
 import android.sax.RootElement;
@@ -55,12 +68,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 
 import libcore.io.ErrnoException;
 import libcore.io.Libcore;
+=======
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+>>>>>>> upstream/master
 
 /**
  * Internal service helper that no-one should use directly.
@@ -72,7 +91,11 @@ import libcore.io.Libcore;
  * - the processDirectory() JNI method wraps the provided mediascanner client in a native
  *   'MyMediaScannerClient' class, then calls processDirectory() on the native MediaScanner
  *   object (which got created when the Java MediaScanner was created).
+<<<<<<< HEAD
  * - native MediaScanner.processDirectory() calls
+=======
+ * - native MediaScanner.processDirectory() (currently part of opencore) calls
+>>>>>>> upstream/master
  *   doProcessDirectory(), which recurses over the folder, and calls
  *   native MyMediaScannerClient.scanFile() for every file whose extension matches.
  * - native MyMediaScannerClient.scanFile() calls back on Java MediaScannerClient.scanFile,
@@ -315,8 +338,22 @@ public class MediaScanner
 
     private final String mExternalStoragePath;
 
+<<<<<<< HEAD
     /** whether to use bulk inserts or individual inserts for each item */
     private static final boolean ENABLE_BULK_INSERTS = true;
+=======
+    // WARNING: Bulk inserts sounded like a great idea and gave us a good performance improvement,
+    // but unfortunately it also introduced a number of bugs.  Many of those bugs were fixed,
+    // but (at least) one problem is still outstanding:
+    //
+    // - Bulk inserts broke the code that sets the default ringtones, notifications, and alarms
+    //   on first boot
+    //
+    // This problem might be solvable by moving the logic to the media provider or disabling bulk
+    // inserts only for those cases. For now, we are disabling bulk inserts until we have a solid
+    // fix for this problem.
+    private static final boolean ENABLE_BULK_INSERTS = false;
+>>>>>>> upstream/master
 
     // used when scanning the image database so we know whether we have to prune
     // old thumbnail files
@@ -346,20 +383,37 @@ public class MediaScanner
     // this should be set when scanning files on a case insensitive file system.
     private boolean mCaseInsensitivePaths;
 
+<<<<<<< HEAD
     private final BitmapFactory.Options mBitmapOptions = new BitmapFactory.Options();
 
     private static class FileEntry {
+=======
+    private BitmapFactory.Options mBitmapOptions = new BitmapFactory.Options();
+
+    private static class FileCacheEntry {
+>>>>>>> upstream/master
         long mRowId;
         String mPath;
         long mLastModified;
         int mFormat;
+<<<<<<< HEAD
         boolean mLastModifiedChanged;
 
         FileEntry(long rowId, String path, long lastModified, int format) {
+=======
+        boolean mSeenInFileSystem;
+        boolean mLastModifiedChanged;
+
+        FileCacheEntry(long rowId, String path, long lastModified, int format) {
+>>>>>>> upstream/master
             mRowId = rowId;
             mPath = path;
             mLastModified = lastModified;
             mFormat = format;
+<<<<<<< HEAD
+=======
+            mSeenInFileSystem = false;
+>>>>>>> upstream/master
             mLastModifiedChanged = false;
         }
 
@@ -369,6 +423,7 @@ public class MediaScanner
         }
     }
 
+<<<<<<< HEAD
     private static class PlaylistEntry {
         String path;
         long bestmatchid;
@@ -380,6 +435,15 @@ public class MediaScanner
     private MediaInserter mMediaInserter;
 
     private ArrayList<FileEntry> mPlayLists;
+=======
+    private MediaInserter mMediaInserter;
+
+    // hashes file path to FileCacheEntry.
+    // path should be lower case if mCaseInsensitivePaths is true
+    private HashMap<String, FileCacheEntry> mFileCache;
+
+    private ArrayList<FileCacheEntry> mPlayLists;
+>>>>>>> upstream/master
 
     private DrmManagerClient mDrmManagerClient = null;
 
@@ -392,7 +456,10 @@ public class MediaScanner
         setDefaultRingtoneFileNames();
 
         mExternalStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+<<<<<<< HEAD
         //mClient.testGenreNameConverter();
+=======
+>>>>>>> upstream/master
     }
 
     private void setDefaultRingtoneFileNames() {
@@ -404,7 +471,11 @@ public class MediaScanner
                 + Settings.System.ALARM_ALERT);
     }
 
+<<<<<<< HEAD
     private final MyMediaScannerClient mClient = new MyMediaScannerClient();
+=======
+    private MyMediaScannerClient mClient = new MyMediaScannerClient();
+>>>>>>> upstream/master
 
     private boolean isDrmEnabled() {
         String prop = SystemProperties.get("drm.service.enabled");
@@ -434,7 +505,11 @@ public class MediaScanner
         private int mWidth;
         private int mHeight;
 
+<<<<<<< HEAD
         public FileEntry beginFile(String path, String mimeType, long lastModified,
+=======
+        public FileCacheEntry beginFile(String path, String mimeType, long lastModified,
+>>>>>>> upstream/master
                 long fileSize, boolean isDirectory, boolean noMedia) {
             mMimeType = mimeType;
             mFileType = 0;
@@ -467,7 +542,15 @@ public class MediaScanner
                 }
             }
 
+<<<<<<< HEAD
             FileEntry entry = makeEntryFor(path);
+=======
+            String key = path;
+            if (mCaseInsensitivePaths) {
+                key = path.toLowerCase();
+            }
+            FileCacheEntry entry = mFileCache.get(key);
+>>>>>>> upstream/master
             // add some slack to avoid a rounding error
             long delta = (entry != null) ? (lastModified - entry.mLastModified) : 0;
             boolean wasModified = delta > 1 || delta < -1;
@@ -475,11 +558,21 @@ public class MediaScanner
                 if (wasModified) {
                     entry.mLastModified = lastModified;
                 } else {
+<<<<<<< HEAD
                     entry = new FileEntry(0, path, lastModified,
                             (isDirectory ? MtpConstants.FORMAT_ASSOCIATION : 0));
                 }
                 entry.mLastModifiedChanged = true;
             }
+=======
+                    entry = new FileCacheEntry(0, path, lastModified,
+                            (isDirectory ? MtpConstants.FORMAT_ASSOCIATION : 0));
+                    mFileCache.put(key, entry);
+                }
+                entry.mLastModifiedChanged = true;
+            }
+            entry.mSeenInFileSystem = true;
+>>>>>>> upstream/master
 
             if (mProcessPlaylists && MediaFile.isPlayListFileType(mFileType)) {
                 mPlayLists.add(entry);
@@ -521,6 +614,7 @@ public class MediaScanner
             Uri result = null;
 //            long t1 = System.currentTimeMillis();
             try {
+<<<<<<< HEAD
                 FileEntry entry = beginFile(path, mimeType, lastModified,
                         fileSize, isDirectory, noMedia);
 
@@ -530,6 +624,10 @@ public class MediaScanner
                 if (mMtpObjectHandle != 0) {
                     entry.mRowId = 0;
                 }
+=======
+                FileCacheEntry entry = beginFile(path, mimeType, lastModified,
+                        fileSize, isDirectory, noMedia);
+>>>>>>> upstream/master
                 // rescan for metadata if file was modified since last scan
                 if (entry != null && (entry.mLastModifiedChanged || scanAlways)) {
                     if (noMedia) {
@@ -621,6 +719,7 @@ public class MediaScanner
                 mCompilation = parseSubstring(value, 0, 0);
             } else if (name.equalsIgnoreCase("isdrm")) {
                 mIsDrm = (parseSubstring(value, 0, 0) == 1);
+<<<<<<< HEAD
             } else if (name.equalsIgnoreCase("width")) {
                 mWidth = parseSubstring(value, 0, 0);
             } else if (name.equalsIgnoreCase("height")) {
@@ -656,6 +755,11 @@ public class MediaScanner
             convertGenreCode("200) Foo", "200) Foo");
         }
 
+=======
+            }
+        }
+
+>>>>>>> upstream/master
         public String getGenreName(String genreTagValue) {
 
             if (genreTagValue == null) {
@@ -663,6 +767,7 @@ public class MediaScanner
             }
             final int length = genreTagValue.length();
 
+<<<<<<< HEAD
             if (length > 0) {
                 boolean parenthesized = false;
                 StringBuffer number = new StringBuffer();
@@ -672,14 +777,26 @@ public class MediaScanner
                     if (i == 0 && c == '(') {
                         parenthesized = true;
                     } else if (Character.isDigit(c)) {
+=======
+            if (length > 0 && genreTagValue.charAt(0) == '(') {
+                StringBuffer number = new StringBuffer();
+                int i = 1;
+                for (; i < length - 1; ++i) {
+                    char c = genreTagValue.charAt(i);
+                    if (Character.isDigit(c)) {
+>>>>>>> upstream/master
                         number.append(c);
                     } else {
                         break;
                     }
                 }
+<<<<<<< HEAD
                 char charAfterNumber = i < length ? genreTagValue.charAt(i) : ' ';
                 if ((parenthesized && charAfterNumber == ')')
                         || !parenthesized && Character.isWhitespace(charAfterNumber)) {
+=======
+                if (genreTagValue.charAt(i) == ')') {
+>>>>>>> upstream/master
                     try {
                         short genreIndex = Short.parseShort(number.toString());
                         if (genreIndex >= 0) {
@@ -690,6 +807,7 @@ public class MediaScanner
                             } else if (genreIndex < 0xFF && (i + 1) < length) {
                                 // genre is valid but unknown,
                                 // if there is a string after the value we take it
+<<<<<<< HEAD
                                 if (parenthesized && charAfterNumber == ')') {
                                     i++;
                                 }
@@ -697,6 +815,9 @@ public class MediaScanner
                                 if (ret.length() != 0) {
                                     return ret;
                                 }
+=======
+                                return genreTagValue.substring(i + 1);
+>>>>>>> upstream/master
                             } else {
                                 // else return the number, without parentheses
                                 return number.toString();
@@ -750,11 +871,17 @@ public class MediaScanner
             map.put(MediaStore.MediaColumns.MIME_TYPE, mMimeType);
             map.put(MediaStore.MediaColumns.IS_DRM, mIsDrm);
 
+<<<<<<< HEAD
             String resolution = null;
             if (mWidth > 0 && mHeight > 0) {
                 map.put(MediaStore.MediaColumns.WIDTH, mWidth);
                 map.put(MediaStore.MediaColumns.HEIGHT, mHeight);
                 resolution = mWidth + "x" + mHeight;
+=======
+            if (mWidth > 0 && mHeight > 0) {
+                map.put(MediaStore.MediaColumns.WIDTH, mWidth);
+                map.put(MediaStore.MediaColumns.HEIGHT, mHeight);
+>>>>>>> upstream/master
             }
 
             if (!mNoMedia) {
@@ -764,9 +891,13 @@ public class MediaScanner
                     map.put(Video.Media.ALBUM, (mAlbum != null && mAlbum.length() > 0
                             ? mAlbum : MediaStore.UNKNOWN_STRING));
                     map.put(Video.Media.DURATION, mDuration);
+<<<<<<< HEAD
                     if (resolution != null) {
                         map.put(Video.Media.RESOLUTION, resolution);
                     }
+=======
+                    // FIXME - add RESOLUTION
+>>>>>>> upstream/master
                 } else if (MediaFile.isImageFileType(mFileType)) {
                     // FIXME - add DESCRIPTION
                 } else if (MediaFile.isAudioFileType(mFileType)) {
@@ -789,7 +920,11 @@ public class MediaScanner
             return map;
         }
 
+<<<<<<< HEAD
         private Uri endFile(FileEntry entry, boolean ringtones, boolean notifications,
+=======
+        private Uri endFile(FileCacheEntry entry, boolean ringtones, boolean notifications,
+>>>>>>> upstream/master
                 boolean alarms, boolean music, boolean podcasts)
                 throws RemoteException {
             // update database
@@ -859,7 +994,11 @@ public class MediaScanner
                         // and EXIF local time is not less than 1 Day, otherwise MediaProvider
                         // will use file time as taken time.
                         time = exif.getDateTime();
+<<<<<<< HEAD
                         if (time != -1 && Math.abs(mLastModified * 1000 - time) >= 86400000) {
+=======
+                        if (Math.abs(mLastModified * 1000 - time) >= 86400000) {
+>>>>>>> upstream/master
                             values.put(Images.Media.DATE_TAKEN, time);
                         }
                     }
@@ -900,7 +1039,10 @@ public class MediaScanner
                 }
             }
             Uri result = null;
+<<<<<<< HEAD
             boolean needToSetSettings = false;
+=======
+>>>>>>> upstream/master
             if (rowId == 0) {
                 if (mMtpObjectHandle != 0) {
                     values.put(MediaStore.MediaColumns.MEDIA_SCANNER_NEW_OBJECT_ID, mMtpObjectHandle);
@@ -912,6 +1054,7 @@ public class MediaScanner
                     }
                     values.put(Files.FileColumns.FORMAT, format);
                 }
+<<<<<<< HEAD
                 // Setting a flag in order not to use bulk insert for the file related with
                 // notifications, ringtones, and alarms, because the rowId of the inserted file is
                 // needed.
@@ -943,6 +1086,15 @@ public class MediaScanner
                     result = mMediaProvider.insert(tableUri, values);
                 } else if (entry.mFormat == MtpConstants.FORMAT_ASSOCIATION) {
                     inserter.insertwithPriority(tableUri, values);
+=======
+                // new file, insert it
+                // We insert directories immediately to ensure they are in the database
+                // before the files they contain.
+                // Otherwise we can get duplicate directory entries in the database
+                // if one of the media FileInserters is flushed before the files table FileInserter
+                if (inserter == null || entry.mFormat == MtpConstants.FORMAT_ASSOCIATION) {
+                    result = mMediaProvider.insert(tableUri, values);
+>>>>>>> upstream/master
                 } else {
                     inserter.insert(tableUri, values);
                 }
@@ -957,6 +1109,7 @@ public class MediaScanner
                 // path should never change, and we want to avoid replacing mixed cased paths
                 // with squashed lower case paths
                 values.remove(MediaStore.MediaColumns.DATA);
+<<<<<<< HEAD
 
                 int mediaType = 0;
                 if (!MediaScanner.isNoMediaPath(entry.mPath)) {
@@ -984,6 +1137,26 @@ public class MediaScanner
                     setSettingIfNotSet(Settings.System.RINGTONE, tableUri, rowId);
                     mDefaultRingtoneSet = true;
                 } else if (alarms) {
+=======
+                mMediaProvider.update(result, values, null, null);
+            }
+
+            if (notifications && mWasEmptyPriorToScan && !mDefaultNotificationSet) {
+                if (TextUtils.isEmpty(mDefaultNotificationFilename) ||
+                        doesPathHaveFilename(entry.mPath, mDefaultNotificationFilename)) {
+                    setSettingIfNotSet(Settings.System.NOTIFICATION_SOUND, tableUri, rowId);
+                    mDefaultNotificationSet = true;
+                }
+            } else if (ringtones && mWasEmptyPriorToScan && !mDefaultRingtoneSet) {
+                if (TextUtils.isEmpty(mDefaultRingtoneFilename) ||
+                        doesPathHaveFilename(entry.mPath, mDefaultRingtoneFilename)) {
+                    setSettingIfNotSet(Settings.System.RINGTONE, tableUri, rowId);
+                    mDefaultRingtoneSet = true;
+                }
+            } else if (alarms && mWasEmptyPriorToScan && !mDefaultAlarmSet) {
+                if (TextUtils.isEmpty(mDefaultAlarmAlertFilename) ||
+                        doesPathHaveFilename(entry.mPath, mDefaultAlarmAlertFilename)) {
+>>>>>>> upstream/master
                     setSettingIfNotSet(Settings.System.ALARM_ALERT, tableUri, rowId);
                     mDefaultAlarmSet = true;
                 }
@@ -1039,14 +1212,25 @@ public class MediaScanner
         String where = null;
         String[] selectionArgs = null;
 
+<<<<<<< HEAD
         if (mPlayLists == null) {
             mPlayLists = new ArrayList<FileEntry>();
+=======
+        if (mFileCache == null) {
+            mFileCache = new HashMap<String, FileCacheEntry>();
+        } else {
+            mFileCache.clear();
+        }
+        if (mPlayLists == null) {
+            mPlayLists = new ArrayList<FileCacheEntry>();
+>>>>>>> upstream/master
         } else {
             mPlayLists.clear();
         }
 
         if (filePath != null) {
             // query for only one file
+<<<<<<< HEAD
             where = MediaStore.Files.FileColumns._ID + ">?" +
                 " AND " + Files.FileColumns.DATA + "=?";
             selectionArgs = new String[] { "", filePath };
@@ -1092,17 +1276,37 @@ public class MediaScanner
                         break;
                     }
                     mWasEmptyPriorToScan = false;
+=======
+            where = Files.FileColumns.DATA + "=?";
+            selectionArgs = new String[] { filePath };
+        }
+
+        // Build the list of files from the content provider
+        try {
+            if (prescanFiles) {
+                // First read existing files from the files table
+
+                c = mMediaProvider.query(mFilesUri, FILES_PRESCAN_PROJECTION,
+                        where, selectionArgs, null);
+
+                if (c != null) {
+                    mWasEmptyPriorToScan = c.getCount() == 0;
+>>>>>>> upstream/master
                     while (c.moveToNext()) {
                         long rowId = c.getLong(FILES_PRESCAN_ID_COLUMN_INDEX);
                         String path = c.getString(FILES_PRESCAN_PATH_COLUMN_INDEX);
                         int format = c.getInt(FILES_PRESCAN_FORMAT_COLUMN_INDEX);
                         long lastModified = c.getLong(FILES_PRESCAN_DATE_MODIFIED_COLUMN_INDEX);
+<<<<<<< HEAD
                         lastId = rowId;
+=======
+>>>>>>> upstream/master
 
                         // Only consider entries with absolute path names.
                         // This allows storing URIs in the database without the
                         // media scanner removing them.
                         if (path != null && path.startsWith("/")) {
+<<<<<<< HEAD
                             boolean exists = false;
                             try {
                                 exists = Libcore.os.access(path, libcore.io.OsConstants.F_OK);
@@ -1127,6 +1331,20 @@ public class MediaScanner
                             }
                         }
                     }
+=======
+                            String key = path;
+                            if (mCaseInsensitivePaths) {
+                                key = path.toLowerCase();
+                            }
+
+                            FileCacheEntry entry = new FileCacheEntry(rowId, path,
+                                    lastModified, format);
+                            mFileCache.put(key, entry);
+                        }
+                    }
+                    c.close();
+                    c = null;
+>>>>>>> upstream/master
                 }
             }
         }
@@ -1134,12 +1352,19 @@ public class MediaScanner
             if (c != null) {
                 c.close();
             }
+<<<<<<< HEAD
             deleter.flush();
+=======
+>>>>>>> upstream/master
         }
 
         // compute original size of images
         mOriginalCount = 0;
+<<<<<<< HEAD
         c = mMediaProvider.query(mImagesUri, ID_PROJECTION, null, null, null, null);
+=======
+        c = mMediaProvider.query(mImagesUri, ID_PROJECTION, null, null, null);
+>>>>>>> upstream/master
         if (c != null) {
             mOriginalCount = c.getCount();
             c.close();
@@ -1174,7 +1399,11 @@ public class MediaScanner
                     new String [] { "_data" },
                     null,
                     null,
+<<<<<<< HEAD
                     null, null);
+=======
+                    null);
+>>>>>>> upstream/master
             Log.v(TAG, "pruneDeadThumbnailFiles... " + c);
             if (c != null && c.moveToFirst()) {
                 do {
@@ -1201,6 +1430,7 @@ public class MediaScanner
         }
     }
 
+<<<<<<< HEAD
     static class MediaBulkDeleter {
         StringBuilder whereClause = new StringBuilder();
         ArrayList<String> whereArgs = new ArrayList<String>(100);
@@ -1237,6 +1467,57 @@ public class MediaScanner
     }
 
     private void postscan(String[] directories) throws RemoteException {
+=======
+    private void postscan(String[] directories) throws RemoteException {
+        Iterator<FileCacheEntry> iterator = mFileCache.values().iterator();
+
+        while (iterator.hasNext()) {
+            FileCacheEntry entry = iterator.next();
+            String path = entry.mPath;
+
+            // remove database entries for files that no longer exist.
+            boolean fileMissing = false;
+
+            if (!entry.mSeenInFileSystem && !MtpConstants.isAbstractObject(entry.mFormat)) {
+                if (inScanDirectory(path, directories)) {
+                    // we didn't see this file in the scan directory.
+                    fileMissing = true;
+                } else {
+                    // the file actually a directory or other abstract object
+                    // or is outside of our scan directory,
+                    // so we need to check for file existence here.
+                    File testFile = new File(path);
+                    if (!testFile.exists()) {
+                        fileMissing = true;
+                    }
+                }
+            }
+
+            if (fileMissing) {
+                // Clear the file path to prevent the _DELETE_FILE database hook
+                // in the media provider from deleting the file.
+                // If the file is truly gone the delete is unnecessary, and we want to avoid
+                // accidentally deleting files that are really there.
+                ContentValues values = new ContentValues();
+                values.put(Files.FileColumns.DATA, "");
+                values.put(Files.FileColumns.DATE_MODIFIED, 0);
+                mMediaProvider.update(ContentUris.withAppendedId(mFilesUri, entry.mRowId),
+                        values, null, null);
+
+                // do not delete missing playlists, since they may have been modified by the user.
+                // the user can delete them in the media player instead.
+                // instead, clear the path and lastModified fields in the row
+                MediaFile.MediaFileType mediaFileType = MediaFile.getFileType(path);
+                int fileType = (mediaFileType == null ? 0 : mediaFileType.fileType);
+
+                if (!MediaFile.isPlayListFileType(fileType)) {
+                    mMediaProvider.delete(ContentUris.withAppendedId(mFilesUri, entry.mRowId),
+                            null, null);
+                    iterator.remove();
+                }
+            }
+        }
+>>>>>>> upstream/master
 
         // handle playlists last, after we know what media files are on the storage.
         if (mProcessPlaylists) {
@@ -1248,6 +1529,10 @@ public class MediaScanner
 
         // allow GC to clean up
         mPlayLists = null;
+<<<<<<< HEAD
+=======
+        mFileCache = null;
+>>>>>>> upstream/master
         mMediaProvider = null;
     }
 
@@ -1416,17 +1701,30 @@ public class MediaScanner
         }
 
         mMtpObjectHandle = objectHandle;
+<<<<<<< HEAD
         Cursor fileList = null;
+=======
+>>>>>>> upstream/master
         try {
             if (MediaFile.isPlayListFileType(fileType)) {
                 // build file cache so we can look up tracks in the playlist
                 prescan(null, true);
 
+<<<<<<< HEAD
                 FileEntry entry = makeEntryFor(path);
                 if (entry != null) {
                     fileList = mMediaProvider.query(mFilesUri, FILES_PRESCAN_PROJECTION,
                             null, null, null, null);
                     processPlayList(entry, fileList);
+=======
+                String key = path;
+                if (mCaseInsensitivePaths) {
+                    key = path.toLowerCase();
+                }
+                FileCacheEntry entry = mFileCache.get(key);
+                if (entry != null) {
+                    processPlayList(entry);
+>>>>>>> upstream/master
                 }
             } else {
                 // MTP will create a file entry for us so we don't want to do it in prescan
@@ -1440,6 +1738,7 @@ public class MediaScanner
             Log.e(TAG, "RemoteException in MediaScanner.scanFile()", e);
         } finally {
             mMtpObjectHandle = 0;
+<<<<<<< HEAD
             if (fileList != null) {
                 fileList.close();
             }
@@ -1477,6 +1776,9 @@ public class MediaScanner
             }
         }
         return null;
+=======
+        }
+>>>>>>> upstream/master
     }
 
     // returns the number of matching file/directory names, starting from the right
@@ -1506,6 +1808,7 @@ public class MediaScanner
         return result;
     }
 
+<<<<<<< HEAD
     private boolean matchEntries(long rowId, String data) {
 
         int len = mPlaylistEntries.size();
@@ -1587,6 +1890,87 @@ public class MediaScanner
 
     private void processM3uPlayList(String path, String playListDirectory, Uri uri,
             ContentValues values, Cursor fileList) {
+=======
+    private boolean addPlayListEntry(String entry, String playListDirectory,
+            Uri uri, ContentValues values, int index) {
+
+        // watch for trailing whitespace
+        int entryLength = entry.length();
+        while (entryLength > 0 && Character.isWhitespace(entry.charAt(entryLength - 1))) entryLength--;
+        // path should be longer than 3 characters.
+        // avoid index out of bounds errors below by returning here.
+        if (entryLength < 3) return false;
+        if (entryLength < entry.length()) entry = entry.substring(0, entryLength);
+
+        // does entry appear to be an absolute path?
+        // look for Unix or DOS absolute paths
+        char ch1 = entry.charAt(0);
+        boolean fullPath = (ch1 == '/' ||
+                (Character.isLetter(ch1) && entry.charAt(1) == ':' && entry.charAt(2) == '\\'));
+        // if we have a relative path, combine entry with playListDirectory
+        if (!fullPath)
+            entry = playListDirectory + entry;
+
+        //FIXME - should we look for "../" within the path?
+
+        // best matching MediaFile for the play list entry
+        FileCacheEntry bestMatch = null;
+
+        // number of rightmost file/directory names for bestMatch
+        int bestMatchLength = 0;
+
+        Iterator<FileCacheEntry> iterator = mFileCache.values().iterator();
+        while (iterator.hasNext()) {
+            FileCacheEntry cacheEntry = iterator.next();
+            String path = cacheEntry.mPath;
+
+            if (path.equalsIgnoreCase(entry)) {
+                bestMatch = cacheEntry;
+                break;    // don't bother continuing search
+            }
+
+            int matchLength = matchPaths(path, entry);
+            if (matchLength > bestMatchLength) {
+                bestMatch = cacheEntry;
+                bestMatchLength = matchLength;
+            }
+        }
+
+        if (bestMatch == null) {
+            return false;
+        }
+
+        try {
+            // check rowid is set. Rowid may be missing if it is inserted by bulkInsert().
+            if (bestMatch.mRowId == 0) {
+                Cursor c = mMediaProvider.query(mAudioUri, ID_PROJECTION,
+                        MediaStore.Files.FileColumns.DATA + "=?",
+                        new String[] { bestMatch.mPath }, null);
+                if (c != null) {
+                    if (c.moveToNext()) {
+                        bestMatch.mRowId = c.getLong(0);
+                    }
+                    c.close();
+                }
+                if (bestMatch.mRowId == 0) {
+                    return false;
+                }
+            }
+            // OK, now we are ready to add this to the database
+            values.clear();
+            values.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, Integer.valueOf(index));
+            values.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, Long.valueOf(bestMatch.mRowId));
+            mMediaProvider.insert(uri, values);
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException in MediaScanner.addPlayListEntry()", e);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void processM3uPlayList(String path, String playListDirectory, Uri uri, ContentValues values) {
+>>>>>>> upstream/master
         BufferedReader reader = null;
         try {
             File f = new File(path);
@@ -1594,6 +1978,7 @@ public class MediaScanner
                 reader = new BufferedReader(
                         new InputStreamReader(new FileInputStream(f)), 8192);
                 String line = reader.readLine();
+<<<<<<< HEAD
                 mPlaylistEntries.clear();
                 while (line != null) {
                     // ignore comment lines, which begin with '#'
@@ -1604,6 +1989,18 @@ public class MediaScanner
                 }
 
                 processCachedPlaylist(fileList, values, uri);
+=======
+                int index = 0;
+                while (line != null) {
+                    // ignore comment lines, which begin with '#'
+                    if (line.length() > 0 && line.charAt(0) != '#') {
+                        values.clear();
+                        if (addPlayListEntry(line, playListDirectory, uri, values, index))
+                            index++;
+                    }
+                    line = reader.readLine();
+                }
+>>>>>>> upstream/master
             }
         } catch (IOException e) {
             Log.e(TAG, "IOException in MediaScanner.processM3uPlayList()", e);
@@ -1617,8 +2014,12 @@ public class MediaScanner
         }
     }
 
+<<<<<<< HEAD
     private void processPlsPlayList(String path, String playListDirectory, Uri uri,
             ContentValues values, Cursor fileList) {
+=======
+    private void processPlsPlayList(String path, String playListDirectory, Uri uri, ContentValues values) {
+>>>>>>> upstream/master
         BufferedReader reader = null;
         try {
             File f = new File(path);
@@ -1626,19 +2027,32 @@ public class MediaScanner
                 reader = new BufferedReader(
                         new InputStreamReader(new FileInputStream(f)), 8192);
                 String line = reader.readLine();
+<<<<<<< HEAD
                 mPlaylistEntries.clear();
+=======
+                int index = 0;
+>>>>>>> upstream/master
                 while (line != null) {
                     // ignore comment lines, which begin with '#'
                     if (line.startsWith("File")) {
                         int equals = line.indexOf('=');
                         if (equals > 0) {
+<<<<<<< HEAD
                             cachePlaylistEntry(line.substring(equals + 1), playListDirectory);
+=======
+                            values.clear();
+                            if (addPlayListEntry(line.substring(equals + 1), playListDirectory, uri, values, index))
+                                index++;
+>>>>>>> upstream/master
                         }
                     }
                     line = reader.readLine();
                 }
+<<<<<<< HEAD
 
                 processCachedPlaylist(fileList, values, uri);
+=======
+>>>>>>> upstream/master
             }
         } catch (IOException e) {
             Log.e(TAG, "IOException in MediaScanner.processPlsPlayList()", e);
@@ -1656,9 +2070,19 @@ public class MediaScanner
 
         final ContentHandler handler;
         String playListDirectory;
+<<<<<<< HEAD
 
         public WplHandler(String playListDirectory, Uri uri, Cursor fileList) {
             this.playListDirectory = playListDirectory;
+=======
+        Uri uri;
+        ContentValues values = new ContentValues();
+        int index = 0;
+
+        public WplHandler(String playListDirectory, Uri uri) {
+            this.playListDirectory = playListDirectory;
+            this.uri = uri;
+>>>>>>> upstream/master
 
             RootElement root = new RootElement("smil");
             Element body = root.getChild("body");
@@ -1669,6 +2093,7 @@ public class MediaScanner
             this.handler = root.getContentHandler();
         }
 
+<<<<<<< HEAD
         @Override
         public void start(Attributes attributes) {
             String path = attributes.getValue("", "src");
@@ -1678,6 +2103,18 @@ public class MediaScanner
         }
 
        @Override
+=======
+        public void start(Attributes attributes) {
+            String path = attributes.getValue("", "src");
+            if (path != null) {
+                values.clear();
+                if (addPlayListEntry(path, playListDirectory, uri, values, index)) {
+                    index++;
+                }
+            }
+        }
+
+>>>>>>> upstream/master
        public void end() {
        }
 
@@ -1686,19 +2123,27 @@ public class MediaScanner
         }
     }
 
+<<<<<<< HEAD
     private void processWplPlayList(String path, String playListDirectory, Uri uri,
             ContentValues values, Cursor fileList) {
+=======
+    private void processWplPlayList(String path, String playListDirectory, Uri uri) {
+>>>>>>> upstream/master
         FileInputStream fis = null;
         try {
             File f = new File(path);
             if (f.exists()) {
                 fis = new FileInputStream(f);
 
+<<<<<<< HEAD
                 mPlaylistEntries.clear();
                 Xml.parse(fis, Xml.findEncodingByName("UTF-8"),
                         new WplHandler(playListDirectory, uri, fileList).getContentHandler());
 
                 processCachedPlaylist(fileList, values, uri);
+=======
+                Xml.parse(fis, Xml.findEncodingByName("UTF-8"), new WplHandler(playListDirectory, uri).getContentHandler());
+>>>>>>> upstream/master
             }
         } catch (SAXException e) {
             e.printStackTrace();
@@ -1714,7 +2159,11 @@ public class MediaScanner
         }
     }
 
+<<<<<<< HEAD
     private void processPlayList(FileEntry entry, Cursor fileList) throws RemoteException {
+=======
+    private void processPlayList(FileCacheEntry entry) throws RemoteException {
+>>>>>>> upstream/master
         String path = entry.mPath;
         ContentValues values = new ContentValues();
         int lastSlash = path.lastIndexOf('/');
@@ -1756,15 +2205,24 @@ public class MediaScanner
         int fileType = (mediaFileType == null ? 0 : mediaFileType.fileType);
 
         if (fileType == MediaFile.FILE_TYPE_M3U) {
+<<<<<<< HEAD
             processM3uPlayList(path, playListDirectory, membersUri, values, fileList);
         } else if (fileType == MediaFile.FILE_TYPE_PLS) {
             processPlsPlayList(path, playListDirectory, membersUri, values, fileList);
         } else if (fileType == MediaFile.FILE_TYPE_WPL) {
             processWplPlayList(path, playListDirectory, membersUri, values, fileList);
+=======
+            processM3uPlayList(path, playListDirectory, membersUri, values);
+        } else if (fileType == MediaFile.FILE_TYPE_PLS) {
+            processPlsPlayList(path, playListDirectory, membersUri, values);
+        } else if (fileType == MediaFile.FILE_TYPE_WPL) {
+            processWplPlayList(path, playListDirectory, membersUri);
+>>>>>>> upstream/master
         }
     }
 
     private void processPlayLists() throws RemoteException {
+<<<<<<< HEAD
         Iterator<FileEntry> iterator = mPlayLists.iterator();
         Cursor fileList = null;
         try {
@@ -1783,6 +2241,14 @@ public class MediaScanner
         } finally {
             if (fileList != null) {
                 fileList.close();
+=======
+        Iterator<FileCacheEntry> iterator = mPlayLists.iterator();
+        while (iterator.hasNext()) {
+            FileCacheEntry entry = iterator.next();
+            // only process playlist files if they are new or have been modified since the last scan
+            if (entry.mLastModifiedChanged) {
+                processPlayList(entry);
+>>>>>>> upstream/master
             }
         }
     }
@@ -1798,7 +2264,11 @@ public class MediaScanner
     private native final void native_finalize();
 
     /**
+<<<<<<< HEAD
      * Releases resources associated with this MediaScanner object.
+=======
+     * Releases resouces associated with this MediaScanner object.
+>>>>>>> upstream/master
      * It is considered good practice to call this method when
      * one is done using the MediaScanner object. After this method
      * is called, the MediaScanner object can no longer be used.

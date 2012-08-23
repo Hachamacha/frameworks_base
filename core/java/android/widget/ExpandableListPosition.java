@@ -125,10 +125,13 @@ class ExpandableListPosition {
         return elp;
     }
     
+<<<<<<< HEAD
     /**
      * Do not call this unless you obtained this via ExpandableListPosition.obtain().
      * PositionMetadata will handle recycling its own children.
      */
+=======
+>>>>>>> upstream/master
     public void recycle() {
         synchronized (sPool) {
             if (sPool.size() < MAX_POOL_SIZE) {

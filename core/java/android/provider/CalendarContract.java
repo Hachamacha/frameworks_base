@@ -19,7 +19,10 @@ package android.provider;
 
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+<<<<<<< HEAD
 import android.app.Activity;
+=======
+>>>>>>> upstream/master
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentProviderClient;
@@ -99,6 +102,7 @@ public final class CalendarContract {
     public static final String ACTION_EVENT_REMINDER = "android.intent.action.EVENT_REMINDER";
 
     /**
+<<<<<<< HEAD
      * Activity Action: Display the event to the user in the custom app as
      * specified in {@link EventsColumns#CUSTOM_APP_PACKAGE}. The custom app
      * will be started via {@link Activity#startActivityForResult(Intent, int)}
@@ -136,6 +140,8 @@ public final class CalendarContract {
     public static final String EXTRA_CUSTOM_APP_URI = "customAppUri";
 
     /**
+=======
+>>>>>>> upstream/master
      * Intent Extras key: The start time of an event or an instance of a
      * recurring event. (milliseconds since epoch)
      */
@@ -440,8 +446,13 @@ public final class CalendarContract {
          * A comma separated list of reminder methods supported for this
          * calendar in the format "#,#,#". Valid types are
          * {@link Reminders#METHOD_DEFAULT}, {@link Reminders#METHOD_ALERT},
+<<<<<<< HEAD
          * {@link Reminders#METHOD_EMAIL}, {@link Reminders#METHOD_SMS},
          * {@link Reminders#METHOD_ALARM}. Column name.
+=======
+         * {@link Reminders#METHOD_EMAIL}, {@link Reminders#METHOD_SMS}. Column
+         * name.
+>>>>>>> upstream/master
          * <P>Type: TEXT</P>
          */
         public static final String ALLOWED_REMINDERS = "allowedReminders";
@@ -794,6 +805,7 @@ public final class CalendarContract {
         public static final int ATTENDEE_STATUS_DECLINED = 2;
         public static final int ATTENDEE_STATUS_INVITED = 3;
         public static final int ATTENDEE_STATUS_TENTATIVE = 4;
+<<<<<<< HEAD
 
         /**
          * The identity of the attendee as referenced in
@@ -810,6 +822,8 @@ public final class CalendarContract {
          * <P>Type: STRING</P>
          */
         public static final String ATTENDEE_ID_NAMESPACE = "attendeeIdNamespace";
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -827,8 +841,11 @@ public final class CalendarContract {
      * <li>{@link #ATTENDEE_RELATIONSHIP}</li>
      * <li>{@link #ATTENDEE_TYPE}</li>
      * <li>{@link #ATTENDEE_STATUS}</li>
+<<<<<<< HEAD
      * <li>{@link #ATTENDEE_IDENTITY}</li>
      * <li>{@link #ATTENDEE_ID_NAMESPACE}</li>
+=======
+>>>>>>> upstream/master
      * </ul>
      */
     public static final class Attendees implements BaseColumns, AttendeesColumns, EventsColumns {
@@ -912,6 +929,7 @@ public final class CalendarContract {
         public static final String EVENT_COLOR_KEY = "eventColor_index";
 
         /**
+<<<<<<< HEAD
          * This will be {@link #EVENT_COLOR} if it is not null; otherwise, this will be
          * {@link Calendars#CALENDAR_COLOR}.
          * Read-only value. To modify, write to {@link #EVENT_COLOR} or
@@ -923,6 +941,8 @@ public final class CalendarContract {
         public static final String DISPLAY_COLOR = "displayColor";
 
         /**
+=======
+>>>>>>> upstream/master
          * The event status. Column name.
          * <P>Type: INTEGER (one of {@link #STATUS_TENTATIVE}...)</P>
          */
@@ -1214,6 +1234,7 @@ public final class CalendarContract {
          * <P>Type: INTEGER (boolean, readonly)</P>
          */
         public static final String CAN_INVITE_OTHERS = "canInviteOthers";
+<<<<<<< HEAD
 
         /**
          * The package name of the custom app that can provide a richer
@@ -1230,6 +1251,8 @@ public final class CalendarContract {
          */
         public static final String CUSTOM_APP_URI = "customAppUri";
 
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -1293,17 +1316,23 @@ public final class CalendarContract {
                     Attendees.ATTENDEE_RELATIONSHIP,
                     Attendees.ATTENDEE_TYPE,
                     Attendees.ATTENDEE_STATUS,
+<<<<<<< HEAD
                     Attendees.ATTENDEE_IDENTITY,
                     Attendees.ATTENDEE_ID_NAMESPACE
+=======
+>>>>>>> upstream/master
             };
             private static final int COLUMN_ATTENDEE_NAME = 0;
             private static final int COLUMN_ATTENDEE_EMAIL = 1;
             private static final int COLUMN_ATTENDEE_RELATIONSHIP = 2;
             private static final int COLUMN_ATTENDEE_TYPE = 3;
             private static final int COLUMN_ATTENDEE_STATUS = 4;
+<<<<<<< HEAD
             private static final int COLUMN_ATTENDEE_IDENTITY = 5;
             private static final int COLUMN_ATTENDEE_ID_NAMESPACE = 6;
 
+=======
+>>>>>>> upstream/master
             private static final String[] EXTENDED_PROJECTION = new String[] {
                     ExtendedProperties._ID,
                     ExtendedProperties.NAME,
@@ -1365,8 +1394,11 @@ public final class CalendarContract {
                         GUESTS_CAN_INVITE_OTHERS);
                 DatabaseUtils.cursorIntToContentValuesIfPresent(cursor, cv, GUESTS_CAN_MODIFY);
                 DatabaseUtils.cursorIntToContentValuesIfPresent(cursor, cv, GUESTS_CAN_SEE_GUESTS);
+<<<<<<< HEAD
                 DatabaseUtils.cursorStringToContentValuesIfPresent(cursor, cv, CUSTOM_APP_PACKAGE);
                 DatabaseUtils.cursorStringToContentValuesIfPresent(cursor, cv, CUSTOM_APP_URI);
+=======
+>>>>>>> upstream/master
                 DatabaseUtils.cursorStringToContentValuesIfPresent(cursor, cv, ORGANIZER);
                 DatabaseUtils.cursorStringToContentValuesIfPresent(cursor, cv, _SYNC_ID);
                 DatabaseUtils.cursorLongToContentValuesIfPresent(cursor, cv, DIRTY);
@@ -1441,10 +1473,13 @@ public final class CalendarContract {
                                 subCursor.getInt(COLUMN_ATTENDEE_TYPE));
                         attendeeValues.put(Attendees.ATTENDEE_STATUS,
                                 subCursor.getInt(COLUMN_ATTENDEE_STATUS));
+<<<<<<< HEAD
                         attendeeValues.put(Attendees.ATTENDEE_IDENTITY,
                                 subCursor.getInt(COLUMN_ATTENDEE_IDENTITY));
                         attendeeValues.put(Attendees.ATTENDEE_ID_NAMESPACE,
                                 subCursor.getInt(COLUMN_ATTENDEE_ID_NAMESPACE));
+=======
+>>>>>>> upstream/master
                         entity.addSubValue(Attendees.CONTENT_URI, attendeeValues);
                     }
                 } finally {
@@ -1569,8 +1604,11 @@ public final class CalendarContract {
      * <li>{@link #GUESTS_CAN_MODIFY}</li>
      * <li>{@link #GUESTS_CAN_INVITE_OTHERS}</li>
      * <li>{@link #GUESTS_CAN_SEE_GUESTS}</li>
+<<<<<<< HEAD
      * <li>{@link #CUSTOM_APP_PACKAGE}</li>
      * <li>{@link #CUSTOM_APP_URI}</li>
+=======
+>>>>>>> upstream/master
      * </ul>
      * The following Events columns are writable only by a sync adapter
      * <ul>
@@ -2026,11 +2064,19 @@ public final class CalendarContract {
 
         /**
          * The alarm method, as set on the server. {@link #METHOD_DEFAULT},
+<<<<<<< HEAD
          * {@link #METHOD_ALERT}, {@link #METHOD_EMAIL}, {@link #METHOD_SMS} and
          * {@link #METHOD_ALARM} are possible values; the device will only
          * process {@link #METHOD_DEFAULT} and {@link #METHOD_ALERT} reminders
          * (the other types are simply stored so we can send the same reminder
          * info back to the server when we make changes).
+=======
+         * {@link #METHOD_ALERT}, {@link #METHOD_EMAIL}, and {@link #METHOD_SMS}
+         * are possible values; the device will only process
+         * {@link #METHOD_DEFAULT} and {@link #METHOD_ALERT} reminders (the
+         * other types are simply stored so we can send the same reminder info
+         * back to the server when we make changes).
+>>>>>>> upstream/master
          */
         public static final String METHOD = "method";
 
@@ -2038,7 +2084,10 @@ public final class CalendarContract {
         public static final int METHOD_ALERT = 1;
         public static final int METHOD_EMAIL = 2;
         public static final int METHOD_SMS = 3;
+<<<<<<< HEAD
         public static final int METHOD_ALARM = 4;
+=======
+>>>>>>> upstream/master
     }
 
     /**

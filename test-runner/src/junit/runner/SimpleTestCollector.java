@@ -8,6 +8,7 @@ package junit.runner;
  * {@hide} - Not needed for 1.0 SDK
  */
 public class SimpleTestCollector extends ClassPathTestCollector {
+<<<<<<< HEAD
 
     public SimpleTestCollector() {
     }
@@ -18,4 +19,16 @@ public class SimpleTestCollector extends ClassPathTestCollector {
                 classFileName.indexOf('$') < 0 &&
                 classFileName.indexOf("Test") > 0;
     }
+=======
+	
+	public SimpleTestCollector() {
+	}
+	
+	protected boolean isTestClass(String classFileName) {
+		return 
+			classFileName.endsWith(".class") && 
+			classFileName.indexOf('$') < 0 &&
+			classFileName.indexOf("Test") > 0;
+	}
+>>>>>>> upstream/master
 }

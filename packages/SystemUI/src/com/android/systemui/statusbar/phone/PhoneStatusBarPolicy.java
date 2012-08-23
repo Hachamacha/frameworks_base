@@ -122,7 +122,12 @@ public class PhoneStatusBarPolicy {
                     action.equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)) {
                 updateBluetooth(intent);
             }
+<<<<<<< HEAD
             else if (action.equals(AudioManager.RINGER_MODE_CHANGED_ACTION)) {
+=======
+            else if (action.equals(AudioManager.RINGER_MODE_CHANGED_ACTION) ||
+                    action.equals(AudioManager.VIBRATE_SETTING_CHANGED_ACTION)) {
+>>>>>>> upstream/master
                 updateVolume();
             }
             else if (action.equals(TelephonyIntents.ACTION_SIM_STATE_CHANGED)) {
@@ -143,6 +148,10 @@ public class PhoneStatusBarPolicy {
         filter.addAction(Intent.ACTION_ALARM_CHANGED);
         filter.addAction(Intent.ACTION_SYNC_STATE_CHANGED);
         filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
+<<<<<<< HEAD
+=======
+        filter.addAction(AudioManager.VIBRATE_SETTING_CHANGED_ACTION);
+>>>>>>> upstream/master
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         filter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
         filter.addAction(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
@@ -236,7 +245,11 @@ public class PhoneStatusBarPolicy {
 
         final int iconId;
         String contentDescription = null;
+<<<<<<< HEAD
         if (ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+=======
+        if (audioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_RINGER)) {
+>>>>>>> upstream/master
             iconId = R.drawable.stat_sys_ringer_vibrate;
             contentDescription = mContext.getString(R.string.accessibility_ringer_vibrate);
         } else {

@@ -261,6 +261,10 @@ public class SettingsProvider extends ContentProvider {
         // Watch for external modifications to the database file,
         // keeping our cache in sync.
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+<<<<<<< HEAD
+=======
+        db.enableWriteAheadLogging();
+>>>>>>> upstream/master
         sObserverInstance = new SettingsFileObserver(db.getPath());
         sObserverInstance.startWatching();
         startAsyncCachePopulation();

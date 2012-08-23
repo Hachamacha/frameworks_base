@@ -38,7 +38,10 @@ public final class ViewTreeObserver {
     private CopyOnWriteArrayList<OnComputeInternalInsetsListener> mOnComputeInternalInsetsListeners;
     private CopyOnWriteArrayList<OnScrollChangedListener> mOnScrollChangedListeners;
     private ArrayList<OnPreDrawListener> mOnPreDrawListeners;
+<<<<<<< HEAD
     private ArrayList<OnDrawListener> mOnDrawListeners;
+=======
+>>>>>>> upstream/master
 
     private boolean mAlive = true;
 
@@ -91,6 +94,7 @@ public final class ViewTreeObserver {
     }
 
     /**
+<<<<<<< HEAD
      * Interface definition for a callback to be invoked when the view tree is about to be drawn.
      */
     public interface OnDrawListener {
@@ -112,6 +116,8 @@ public final class ViewTreeObserver {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Interface definition for a callback to be invoked when the touch mode changes.
      */
     public interface OnTouchModeChangeListener {
@@ -193,7 +199,15 @@ public final class ViewTreeObserver {
         public void setTouchableInsets(int val) {
             mTouchableInsets = val;
         }
+<<<<<<< HEAD
 
+=======
+        
+        public int getTouchableInsets() {
+            return mTouchableInsets;
+        }
+        
+>>>>>>> upstream/master
         int mTouchableInsets;
         
         void reset() {
@@ -202,6 +216,7 @@ public final class ViewTreeObserver {
             touchableRegion.setEmpty();
             mTouchableInsets = TOUCHABLE_INSETS_FRAME;
         }
+<<<<<<< HEAD
 
         @Override
         public int hashCode() {
@@ -224,6 +239,30 @@ public final class ViewTreeObserver {
                     touchableRegion.equals(other.touchableRegion);
         }
 
+=======
+        
+        @Override public boolean equals(Object o) {
+            try {
+                if (o == null) {
+                    return false;
+                }
+                InternalInsetsInfo other = (InternalInsetsInfo)o;
+                if (mTouchableInsets != other.mTouchableInsets) {
+                    return false;
+                }
+                if (!contentInsets.equals(other.contentInsets)) {
+                    return false;
+                }
+                if (!visibleInsets.equals(other.visibleInsets)) {
+                    return false;
+                }
+                return touchableRegion.equals(other.touchableRegion);
+            } catch (ClassCastException e) {
+                return false;
+            }
+        }
+        
+>>>>>>> upstream/master
         void set(InternalInsetsInfo other) {
             contentInsets.set(other.contentInsets);
             visibleInsets.set(other.visibleInsets);
@@ -306,6 +345,7 @@ public final class ViewTreeObserver {
             }
         }
 
+<<<<<<< HEAD
         if (observer.mOnScrollChangedListeners != null) {
             if (mOnScrollChangedListeners != null) {
                 mOnScrollChangedListeners.addAll(observer.mOnScrollChangedListeners);
@@ -314,6 +354,8 @@ public final class ViewTreeObserver {
             }
         }
 
+=======
+>>>>>>> upstream/master
         observer.kill();
     }
 
@@ -375,6 +417,7 @@ public final class ViewTreeObserver {
      * @param victim The callback to remove
      *
      * @throws IllegalStateException If {@link #isAlive()} returns false
+<<<<<<< HEAD
      * 
      * @deprecated Use #removeOnGlobalLayoutListener instead
      *
@@ -395,6 +438,12 @@ public final class ViewTreeObserver {
      * @see #addOnGlobalLayoutListener(OnGlobalLayoutListener)
      */
     public void removeOnGlobalLayoutListener(OnGlobalLayoutListener victim) {
+=======
+     *
+     * @see #addOnGlobalLayoutListener(OnGlobalLayoutListener)
+     */
+    public void removeGlobalOnLayoutListener(OnGlobalLayoutListener victim) {
+>>>>>>> upstream/master
         checkIsAlive();
         if (mOnGlobalLayoutListeners == null) {
             return;
@@ -437,6 +486,7 @@ public final class ViewTreeObserver {
     }
 
     /**
+<<<<<<< HEAD
      * <p>Register a callback to be invoked when the view tree is about to be drawn.</p>
      * <p><strong>Note:</strong> this method <strong>cannot</strong> be invoked from
      * {@link android.view.ViewTreeObserver.OnDrawListener#onDraw()}.</p>
@@ -475,6 +525,8 @@ public final class ViewTreeObserver {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Register a callback to be invoked when a view has been scrolled.
      *
      * @param listener The callback to add
@@ -656,7 +708,10 @@ public final class ViewTreeObserver {
      *
      * @return True if the current draw should be canceled and resceduled, false otherwise.
      */
+<<<<<<< HEAD
     @SuppressWarnings("unchecked")
+=======
+>>>>>>> upstream/master
     public final boolean dispatchOnPreDraw() {
         // NOTE: we *must* clone the listener list to perform the dispatching.
         // The clone is a safe guard against listeners that
@@ -675,6 +730,7 @@ public final class ViewTreeObserver {
     }
 
     /**
+<<<<<<< HEAD
      * Notifies registered listeners that the drawing pass is about to start.
      */
     public final void dispatchOnDraw() {
@@ -688,6 +744,8 @@ public final class ViewTreeObserver {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Notifies registered listeners that the touch mode has changed.
      *
      * @param inTouchMode True if the touch mode is now enabled, false otherwise.

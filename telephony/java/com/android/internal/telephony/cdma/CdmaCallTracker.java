@@ -34,8 +34,11 @@ import com.android.internal.telephony.DriverCall;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.TelephonyProperties;
 
+<<<<<<< HEAD
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+=======
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,8 +215,12 @@ public final class CdmaCallTracker extends CallTracker {
             return dialThreeWay(dialString);
         }
 
+<<<<<<< HEAD
         pendingMO = new CdmaConnection(phone.getContext(), checkForTestEmergencyNumber(dialString),
                 this, foregroundCall);
+=======
+        pendingMO = new CdmaConnection(phone.getContext(), dialString, this, foregroundCall);
+>>>>>>> upstream/master
         hangupPendingMO = false;
 
         if (pendingMO.address == null || pendingMO.address.length() == 0
@@ -262,7 +269,11 @@ public final class CdmaCallTracker extends CallTracker {
 
             // Attach the new connection to foregroundCall
             pendingMO = new CdmaConnection(phone.getContext(),
+<<<<<<< HEAD
                                 checkForTestEmergencyNumber(dialString), this, foregroundCall);
+=======
+                                dialString, this, foregroundCall);
+>>>>>>> upstream/master
             cm.sendCDMAFeatureCode(pendingMO.address,
                 obtainMessage(EVENT_THREE_WAY_DIAL_L2_RESULT_CDMA));
             return pendingMO;
@@ -1131,6 +1142,7 @@ public final class CdmaCallTracker extends CallTracker {
         Log.d(LOG_TAG, "[CdmaCallTracker] " + msg);
     }
 
+<<<<<<< HEAD
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("GsmCallTracker extends:");
@@ -1159,4 +1171,6 @@ public final class CdmaCallTracker extends CallTracker {
         pw.println(" state=" + state);
         pw.println(" mIsEcmTimerCanceled=" + mIsEcmTimerCanceled);
     }
+=======
+>>>>>>> upstream/master
 }

@@ -21,6 +21,7 @@
 #include <dlfcn.h>
 #include <fcntl.h>
 
+<<<<<<< HEAD
 #include <android_runtime/android_app_NativeActivity.h>
 #include <android_runtime/android_util_AssetManager.h>
 #include <android_runtime/android_view_Surface.h>
@@ -31,6 +32,15 @@
 
 #include <system/window.h>
 
+=======
+#include <android_runtime/AndroidRuntime.h>
+#include <android_runtime/android_view_Surface.h>
+#include <android_runtime/android_app_NativeActivity.h>
+#include <android_runtime/android_util_AssetManager.h>
+#include <surfaceflinger/Surface.h>
+#include <ui/egl/android_natives.h>
+#include <ui/InputTransport.h>
+>>>>>>> upstream/master
 #include <utils/Looper.h>
 
 #include "JNIHelp.h"
@@ -39,7 +49,11 @@
 #include "android_view_KeyEvent.h"
 
 #define LOG_TRACE(...)
+<<<<<<< HEAD
 //#define LOG_TRACE(...) ALOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+=======
+//#define LOG_TRACE(...) LOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+>>>>>>> upstream/master
 
 namespace android
 {
@@ -87,8 +101,13 @@ restart:
     
     if (res == sizeof(work)) return;
     
+<<<<<<< HEAD
     if (res < 0) ALOGW("Failed writing to work fd: %s", strerror(errno));
     else ALOGW("Truncated writing to work fd: %d", res);
+=======
+    if (res < 0) LOGW("Failed writing to work fd: %s", strerror(errno));
+    else LOGW("Truncated writing to work fd: %d", res);
+>>>>>>> upstream/master
 }
 
 static bool read_work(int fd, ActivityWork* outWork) {
@@ -96,8 +115,13 @@ static bool read_work(int fd, ActivityWork* outWork) {
     // no need to worry about EINTR, poll loop will just come back again.
     if (res == sizeof(ActivityWork)) return true;
     
+<<<<<<< HEAD
     if (res < 0) ALOGW("Failed reading work fd: %s", strerror(errno));
     else ALOGW("Truncated reading work fd: %d", res);
+=======
+    if (res < 0) LOGW("Failed reading work fd: %s", strerror(errno));
+    else LOGW("Truncated reading work fd: %d", res);
+>>>>>>> upstream/master
     return false;
 }
 
@@ -111,7 +135,11 @@ AInputQueue::AInputQueue(const sp<InputChannel>& channel, int workWrite) :
         mWorkWrite(workWrite), mConsumer(channel), mSeq(0) {
     int msgpipe[2];
     if (pipe(msgpipe)) {
+<<<<<<< HEAD
         ALOGW("could not create pipe: %s", strerror(errno));
+=======
+        LOGW("could not create pipe: %s", strerror(errno));
+>>>>>>> upstream/master
         mDispatchKeyRead = mDispatchKeyWrite = -1;
     } else {
         mDispatchKeyRead = msgpipe[0];
@@ -133,21 +161,33 @@ AInputQueue::~AInputQueue() {
 void AInputQueue::attachLooper(ALooper* looper, int ident,
         ALooper_callbackFunc callback, void* data) {
     mLooper = static_cast<android::Looper*>(looper);
+<<<<<<< HEAD
     mLooper->addFd(mConsumer.getChannel()->getFd(),
+=======
+    mLooper->addFd(mConsumer.getChannel()->getReceivePipeFd(),
+>>>>>>> upstream/master
             ident, ALOOPER_EVENT_INPUT, callback, data);
     mLooper->addFd(mDispatchKeyRead,
             ident, ALOOPER_EVENT_INPUT, callback, data);
 }
 
 void AInputQueue::detachLooper() {
+<<<<<<< HEAD
     mLooper->removeFd(mConsumer.getChannel()->getFd());
+=======
+    mLooper->removeFd(mConsumer.getChannel()->getReceivePipeFd());
+>>>>>>> upstream/master
     mLooper->removeFd(mDispatchKeyRead);
 }
 
 int32_t AInputQueue::hasEvents() {
     struct pollfd pfd[2];
 
+<<<<<<< HEAD
     pfd[0].fd = mConsumer.getChannel()->getFd();
+=======
+    pfd[0].fd = mConsumer.getChannel()->getReceivePipeFd();
+>>>>>>> upstream/master
     pfd[0].events = POLLIN;
     pfd[0].revents = 0;
     pfd[1].fd = mDispatchKeyRead;
@@ -162,12 +202,21 @@ int32_t AInputQueue::hasEvents() {
 int32_t AInputQueue::getEvent(AInputEvent** outEvent) {
     *outEvent = NULL;
 
+<<<<<<< HEAD
     char byteread;
     ssize_t nRead = read(mDispatchKeyRead, &byteread, 1);
 
     Mutex::Autolock _l(mLock);
 
     if (nRead == 1) {
+=======
+    bool finishNow = false;
+
+    char byteread;
+    ssize_t nRead = read(mDispatchKeyRead, &byteread, 1);
+    if (nRead == 1) {
+        mLock.lock();
+>>>>>>> upstream/master
         if (mDispatchingKeys.size() > 0) {
             KeyEvent* kevent = mDispatchingKeys[0];
             *outEvent = kevent;
@@ -175,11 +224,17 @@ int32_t AInputQueue::getEvent(AInputEvent** outEvent) {
             in_flight_event inflight;
             inflight.event = kevent;
             inflight.seq = -1;
+<<<<<<< HEAD
             inflight.finishSeq = 0;
             mInFlightEvents.push(inflight);
         }
 
         bool finishNow = false;
+=======
+            inflight.doFinish = false;
+            mInFlightEvents.push(inflight);
+        }
+>>>>>>> upstream/master
         if (mFinishPreDispatches.size() > 0) {
             finish_pre_dispatch finish(mFinishPreDispatches[0]);
             mFinishPreDispatches.removeAt(0);
@@ -192,9 +247,16 @@ int32_t AInputQueue::getEvent(AInputEvent** outEvent) {
                 }
             }
             if (*outEvent == NULL) {
+<<<<<<< HEAD
                 ALOGW("getEvent couldn't find inflight for seq %d", finish.seq);
             }
         }
+=======
+                LOGW("getEvent couldn't find inflight for seq %d", finish.seq);
+            }
+        }
+        mLock.unlock();
+>>>>>>> upstream/master
 
         if (finishNow) {
             finishEvent(*outEvent, true, false);
@@ -204,6 +266,7 @@ int32_t AInputQueue::getEvent(AInputEvent** outEvent) {
             return 0;
         }
     }
+<<<<<<< HEAD
 
     uint32_t consumerSeq;
     InputEvent* myEvent = NULL;
@@ -219,12 +282,33 @@ int32_t AInputQueue::getEvent(AInputEvent** outEvent) {
 
     if (mConsumer.hasDeferredEvent()) {
         wakeupDispatchLocked();
+=======
+    
+    int32_t res = mConsumer.receiveDispatchSignal();
+    if (res != android::OK) {
+        LOGE("channel '%s' ~ Failed to receive dispatch signal.  status=%d",
+                mConsumer.getChannel()->getName().string(), res);
+        return -1;
+    }
+
+    InputEvent* myEvent = NULL;
+    res = mConsumer.consume(this, &myEvent);
+    if (res != android::OK) {
+        LOGW("channel '%s' ~ Failed to consume input event.  status=%d",
+                mConsumer.getChannel()->getName().string(), res);
+        mConsumer.sendFinishedSignal(false);
+        return -1;
+>>>>>>> upstream/master
     }
 
     in_flight_event inflight;
     inflight.event = myEvent;
     inflight.seq = -1;
+<<<<<<< HEAD
     inflight.finishSeq = consumerSeq;
+=======
+    inflight.doFinish = true;
+>>>>>>> upstream/master
     mInFlightEvents.push(inflight);
 
     *outEvent = myEvent;
@@ -261,12 +345,17 @@ void AInputQueue::finishEvent(AInputEvent* event, bool handled, bool didDefaultH
         return;
     }
 
+<<<<<<< HEAD
     Mutex::Autolock _l(mLock);
 
+=======
+    mLock.lock();
+>>>>>>> upstream/master
     const size_t N = mInFlightEvents.size();
     for (size_t i=0; i<N; i++) {
         const in_flight_event& inflight(mInFlightEvents[i]);
         if (inflight.event == event) {
+<<<<<<< HEAD
             if (inflight.finishSeq) {
                 status_t res = mConsumer.sendFinishedSignal(inflight.finishSeq, handled);
                 if (res != android::OK) {
@@ -295,11 +384,47 @@ void AInputQueue::dispatchEvent(android::KeyEvent* event) {
 void AInputQueue::finishPreDispatch(int seq, bool handled) {
     Mutex::Autolock _l(mLock);
 
+=======
+            if (inflight.doFinish) {
+                int32_t res = mConsumer.sendFinishedSignal(handled);
+                if (res != android::OK) {
+                    LOGW("Failed to send finished signal on channel '%s'.  status=%d",
+                            mConsumer.getChannel()->getName().string(), res);
+                }
+            }
+            if (static_cast<InputEvent*>(event)->getType() == AINPUT_EVENT_TYPE_KEY) {
+                mAvailKeyEvents.push(static_cast<KeyEvent*>(event));
+            } else {
+                mAvailMotionEvents.push(static_cast<MotionEvent*>(event));
+            }
+            mInFlightEvents.removeAt(i);
+            mLock.unlock();
+            return;
+        }
+    }
+    mLock.unlock();
+    
+    LOGW("finishEvent called for unknown event: %p", event);
+}
+
+void AInputQueue::dispatchEvent(android::KeyEvent* event) {
+    mLock.lock();
+    LOG_TRACE("dispatchEvent: dispatching=%d write=%d\n", mDispatchingKeys.size(),
+            mDispatchKeyWrite);
+    mDispatchingKeys.add(event);
+    wakeupDispatch();
+    mLock.unlock();
+}
+
+void AInputQueue::finishPreDispatch(int seq, bool handled) {
+    mLock.lock();
+>>>>>>> upstream/master
     LOG_TRACE("finishPreDispatch: seq=%d handled=%d\n", seq, handled ? 1 : 0);
     finish_pre_dispatch finish;
     finish.seq = seq;
     finish.handled = handled;
     mFinishPreDispatches.add(finish);
+<<<<<<< HEAD
     wakeupDispatchLocked();
 }
 
@@ -307,31 +432,62 @@ KeyEvent* AInputQueue::consumeUnhandledEvent() {
     Mutex::Autolock _l(mLock);
 
     KeyEvent* event = NULL;
+=======
+    wakeupDispatch();
+    mLock.unlock();
+}
+
+KeyEvent* AInputQueue::consumeUnhandledEvent() {
+    KeyEvent* event = NULL;
+
+    mLock.lock();
+>>>>>>> upstream/master
     if (mUnhandledKeys.size() > 0) {
         event = mUnhandledKeys[0];
         mUnhandledKeys.removeAt(0);
     }
+<<<<<<< HEAD
 
     LOG_TRACE("consumeUnhandledEvent: KeyEvent=%p", event);
+=======
+    mLock.unlock();
+
+    LOG_TRACE("consumeUnhandledEvent: KeyEvent=%p", event);
+
+>>>>>>> upstream/master
     return event;
 }
 
 KeyEvent* AInputQueue::consumePreDispatchingEvent(int* outSeq) {
+<<<<<<< HEAD
     Mutex::Autolock _l(mLock);
 
     KeyEvent* event = NULL;
+=======
+    KeyEvent* event = NULL;
+
+    mLock.lock();
+>>>>>>> upstream/master
     if (mPreDispatchingKeys.size() > 0) {
         const in_flight_event& inflight(mPreDispatchingKeys[0]);
         event = static_cast<KeyEvent*>(inflight.event);
         *outSeq = inflight.seq;
         mPreDispatchingKeys.removeAt(0);
     }
+<<<<<<< HEAD
 
     LOG_TRACE("consumePreDispatchingEvent: KeyEvent=%p", event);
+=======
+    mLock.unlock();
+
+    LOG_TRACE("consumePreDispatchingEvent: KeyEvent=%p", event);
+
+>>>>>>> upstream/master
     return event;
 }
 
 KeyEvent* AInputQueue::createKeyEvent() {
+<<<<<<< HEAD
     Mutex::Autolock _l(mLock);
 
     return mPooledInputEventFactory.createKeyEvent();
@@ -340,16 +496,53 @@ KeyEvent* AInputQueue::createKeyEvent() {
 void AInputQueue::doUnhandledKey(KeyEvent* keyEvent) {
     Mutex::Autolock _l(mLock);
 
+=======
+    mLock.lock();
+    KeyEvent* event;
+    if (mAvailKeyEvents.size() <= 0) {
+        event = new KeyEvent();
+    } else {
+        event = mAvailKeyEvents.top();
+        mAvailKeyEvents.pop();
+    }
+    mLock.unlock();
+    return event;
+}
+
+MotionEvent* AInputQueue::createMotionEvent() {
+    mLock.lock();
+    MotionEvent* event;
+    if (mAvailMotionEvents.size() <= 0) {
+        event = new MotionEvent();
+    } else {
+        event = mAvailMotionEvents.top();
+        mAvailMotionEvents.pop();
+    }
+    mLock.unlock();
+    return event;
+}
+
+void AInputQueue::doUnhandledKey(KeyEvent* keyEvent) {
+    mLock.lock();
+>>>>>>> upstream/master
     LOG_TRACE("Unhandled key: pending=%d write=%d\n", mUnhandledKeys.size(), mWorkWrite);
     if (mUnhandledKeys.size() <= 0 && mWorkWrite >= 0) {
         write_work(mWorkWrite, CMD_DEF_KEY);
     }
     mUnhandledKeys.add(keyEvent);
+<<<<<<< HEAD
 }
 
 bool AInputQueue::preDispatchKey(KeyEvent* keyEvent) {
     Mutex::Autolock _l(mLock);
 
+=======
+    mLock.unlock();
+}
+
+bool AInputQueue::preDispatchKey(KeyEvent* keyEvent) {
+    mLock.lock();
+>>>>>>> upstream/master
     LOG_TRACE("preDispatch key: pending=%d write=%d\n", mPreDispatchingKeys.size(), mWorkWrite);
     const size_t N = mInFlightEvents.size();
     for (size_t i=0; i<N; i++) {
@@ -358,6 +551,10 @@ bool AInputQueue::preDispatchKey(KeyEvent* keyEvent) {
             if (inflight.seq >= 0) {
                 // This event has already been pre-dispatched!
                 LOG_TRACE("Event already pre-dispatched!");
+<<<<<<< HEAD
+=======
+                mLock.unlock();
+>>>>>>> upstream/master
                 return false;
             }
             mSeq++;
@@ -368,15 +565,27 @@ bool AInputQueue::preDispatchKey(KeyEvent* keyEvent) {
                 write_work(mWorkWrite, CMD_DEF_KEY);
             }
             mPreDispatchingKeys.add(inflight);
+<<<<<<< HEAD
+=======
+            mLock.unlock();
+>>>>>>> upstream/master
             return true;
         }
     }
 
+<<<<<<< HEAD
     ALOGW("preDispatchKey called for unknown event: %p", keyEvent);
     return false;
 }
 
 void AInputQueue::wakeupDispatchLocked() {
+=======
+    LOGW("preDispatchKey called for unknown event: %p", keyEvent);
+    return false;
+}
+
+void AInputQueue::wakeupDispatch() {
+>>>>>>> upstream/master
 restart:
     char dummy = 0;
     int res = write(mDispatchKeyWrite, &dummy, sizeof(dummy));
@@ -386,8 +595,13 @@ restart:
 
     if (res == sizeof(dummy)) return;
 
+<<<<<<< HEAD
     if (res < 0) ALOGW("Failed writing to dispatch fd: %s", strerror(errno));
     else ALOGW("Truncated writing to dispatch fd: %d", res);
+=======
+    if (res < 0) LOGW("Failed writing to dispatch fd: %s", strerror(errno));
+    else LOGW("Truncated writing to dispatch fd: %d", res);
+>>>>>>> upstream/master
 }
 
 namespace android {
@@ -416,8 +630,13 @@ struct NativeCode : public ANativeActivity {
         if (env != NULL && clazz != NULL) {
             env->DeleteGlobalRef(clazz);
         }
+<<<<<<< HEAD
         if (messageQueue != NULL && mainWorkRead >= 0) {
             messageQueue->getLooper()->removeFd(mainWorkRead);
+=======
+        if (looper != NULL && mainWorkRead >= 0) {
+            looper->removeFd(mainWorkRead);
+>>>>>>> upstream/master
         }
         if (nativeInputQueue != NULL) {
             nativeInputQueue->mWorkWrite = -1;
@@ -455,6 +674,14 @@ struct NativeCode : public ANativeActivity {
                     android_view_InputChannel_getInputChannel(env, _channel);
             if (ic != NULL) {
                 nativeInputQueue = new AInputQueue(ic, mainWorkWrite);
+<<<<<<< HEAD
+=======
+                if (nativeInputQueue->getConsumer().initialize() != android::OK) {
+                    delete nativeInputQueue;
+                    nativeInputQueue = NULL;
+                    return UNKNOWN_ERROR;
+                }
+>>>>>>> upstream/master
             } else {
                 return UNKNOWN_ERROR;
             }
@@ -481,7 +708,11 @@ struct NativeCode : public ANativeActivity {
     // These are used to wake up the main thread to process work.
     int mainWorkRead;
     int mainWorkWrite;
+<<<<<<< HEAD
     sp<MessageQueue> messageQueue;
+=======
+    sp<Looper> looper;
+>>>>>>> upstream/master
 };
 
 void android_NativeActivity_finish(ANativeActivity* activity) {
@@ -515,6 +746,19 @@ void android_NativeActivity_hideSoftInput(
 
 // ------------------------------------------------------------------------
 
+<<<<<<< HEAD
+=======
+static bool checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
+   if (env->ExceptionCheck()) {
+       LOGE("An exception was thrown by callback '%s'.", methodName);
+       LOGE_EX(env);
+       env->ExceptionClear();
+       return true;
+   }
+   return false;
+}
+
+>>>>>>> upstream/master
 /*
  * Callback for handling native events on the application's main thread.
  */
@@ -541,11 +785,18 @@ static int mainWorkCallback(int fd, int events, void* data) {
                 if (inputEventObj) {
                     handled = code->env->CallBooleanMethod(code->clazz,
                             gNativeActivityClassInfo.dispatchUnhandledKeyEvent, inputEventObj);
+<<<<<<< HEAD
                     code->messageQueue->raiseAndClearException(
                             code->env, "dispatchUnhandledKeyEvent");
                     code->env->DeleteLocalRef(inputEventObj);
                 } else {
                     ALOGE("Failed to obtain key event for dispatchUnhandledKeyEvent.");
+=======
+                    checkAndClearExceptionFromCallback(code->env, "dispatchUnhandledKeyEvent");
+                    code->env->DeleteLocalRef(inputEventObj);
+                } else {
+                    LOGE("Failed to obtain key event for dispatchUnhandledKeyEvent.");
+>>>>>>> upstream/master
                     handled = false;
                 }
                 code->nativeInputQueue->finishEvent(keyEvent, handled, true);
@@ -557,39 +808,69 @@ static int mainWorkCallback(int fd, int events, void* data) {
                 if (inputEventObj) {
                     code->env->CallVoidMethod(code->clazz,
                             gNativeActivityClassInfo.preDispatchKeyEvent, inputEventObj, seq);
+<<<<<<< HEAD
                     code->messageQueue->raiseAndClearException(code->env, "preDispatchKeyEvent");
                     code->env->DeleteLocalRef(inputEventObj);
                 } else {
                     ALOGE("Failed to obtain key event for preDispatchKeyEvent.");
+=======
+                    checkAndClearExceptionFromCallback(code->env, "preDispatchKeyEvent");
+                    code->env->DeleteLocalRef(inputEventObj);
+                } else {
+                    LOGE("Failed to obtain key event for preDispatchKeyEvent.");
+>>>>>>> upstream/master
                 }
             }
         } break;
         case CMD_FINISH: {
             code->env->CallVoidMethod(code->clazz, gNativeActivityClassInfo.finish);
+<<<<<<< HEAD
             code->messageQueue->raiseAndClearException(code->env, "finish");
+=======
+            checkAndClearExceptionFromCallback(code->env, "finish");
+>>>>>>> upstream/master
         } break;
         case CMD_SET_WINDOW_FORMAT: {
             code->env->CallVoidMethod(code->clazz,
                     gNativeActivityClassInfo.setWindowFormat, work.arg1);
+<<<<<<< HEAD
             code->messageQueue->raiseAndClearException(code->env, "setWindowFormat");
+=======
+            checkAndClearExceptionFromCallback(code->env, "setWindowFormat");
+>>>>>>> upstream/master
         } break;
         case CMD_SET_WINDOW_FLAGS: {
             code->env->CallVoidMethod(code->clazz,
                     gNativeActivityClassInfo.setWindowFlags, work.arg1, work.arg2);
+<<<<<<< HEAD
             code->messageQueue->raiseAndClearException(code->env, "setWindowFlags");
+=======
+            checkAndClearExceptionFromCallback(code->env, "setWindowFlags");
+>>>>>>> upstream/master
         } break;
         case CMD_SHOW_SOFT_INPUT: {
             code->env->CallVoidMethod(code->clazz,
                     gNativeActivityClassInfo.showIme, work.arg1);
+<<<<<<< HEAD
             code->messageQueue->raiseAndClearException(code->env, "showIme");
+=======
+            checkAndClearExceptionFromCallback(code->env, "showIme");
+>>>>>>> upstream/master
         } break;
         case CMD_HIDE_SOFT_INPUT: {
             code->env->CallVoidMethod(code->clazz,
                     gNativeActivityClassInfo.hideIme, work.arg1);
+<<<<<<< HEAD
             code->messageQueue->raiseAndClearException(code->env, "hideIme");
         } break;
         default:
             ALOGW("Unknown work command: %d", work.cmd);
+=======
+            checkAndClearExceptionFromCallback(code->env, "hideIme");
+        } break;
+        default:
+            LOGW("Unknown work command: %d", work.cmd);
+>>>>>>> upstream/master
             break;
     }
     
@@ -620,21 +901,35 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
         env->ReleaseStringUTFChars(funcName, funcStr);
         
         if (code->createActivityFunc == NULL) {
+<<<<<<< HEAD
             ALOGW("ANativeActivity_onCreate not found");
+=======
+            LOGW("ANativeActivity_onCreate not found");
+>>>>>>> upstream/master
             delete code;
             return 0;
         }
         
+<<<<<<< HEAD
         code->messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueue);
         if (code->messageQueue == NULL) {
             ALOGW("Unable to retrieve native MessageQueue");
+=======
+        code->looper = android_os_MessageQueue_getLooper(env, messageQueue);
+        if (code->looper == NULL) {
+            LOGW("Unable to retrieve MessageQueue's Looper");
+>>>>>>> upstream/master
             delete code;
             return 0;
         }
         
         int msgpipe[2];
         if (pipe(msgpipe)) {
+<<<<<<< HEAD
             ALOGW("could not create pipe: %s", strerror(errno));
+=======
+            LOGW("could not create pipe: %s", strerror(errno));
+>>>>>>> upstream/master
             delete code;
             return 0;
         }
@@ -646,12 +941,20 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
         result = fcntl(code->mainWorkWrite, F_SETFL, O_NONBLOCK);
         SLOGW_IF(result != 0, "Could not make main work write pipe "
                 "non-blocking: %s", strerror(errno));
+<<<<<<< HEAD
         code->messageQueue->getLooper()->addFd(
                 code->mainWorkRead, 0, ALOOPER_EVENT_INPUT, mainWorkCallback, code);
         
         code->ANativeActivity::callbacks = &code->callbacks;
         if (env->GetJavaVM(&code->vm) < 0) {
             ALOGW("NativeActivity GetJavaVM failed");
+=======
+        code->looper->addFd(code->mainWorkRead, 0, ALOOPER_EVENT_INPUT, mainWorkCallback, code);
+        
+        code->ANativeActivity::callbacks = &code->callbacks;
+        if (env->GetJavaVM(&code->vm) < 0) {
+            LOGW("NativeActivity GetJavaVM failed");
+>>>>>>> upstream/master
             delete code;
             return 0;
         }
@@ -1021,7 +1324,11 @@ static const char* const kNativeActivityPathName = "android/app/NativeActivity";
         
 int register_android_app_NativeActivity(JNIEnv* env)
 {
+<<<<<<< HEAD
     //ALOGD("register_android_app_NativeActivity");
+=======
+    //LOGD("register_android_app_NativeActivity");
+>>>>>>> upstream/master
     jclass clazz;
     FIND_CLASS(clazz, kNativeActivityPathName);
 

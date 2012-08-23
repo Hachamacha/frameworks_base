@@ -17,9 +17,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.android.accessorychat">
 
+<<<<<<< HEAD
     <uses-feature android:name="android.hardware.usb.accessory" />
 
     <application android:label="Accessory Chat">
+=======
+    <application android:label="Accessory Chat">
+        <uses-library android:name="com.android.future.usb.accessory" />
+>>>>>>> upstream/master
 
         <activity android:name="AccessoryChat" android:label="Accessory Chat">
             <intent-filter>
@@ -36,5 +41,9 @@
                 android:resource="@xml/accessory_filter" />
         </activity>
     </application>
+<<<<<<< HEAD
     <uses-sdk android:minSdkVersion="12" />
+=======
+    <uses-sdk android:minSdkVersion="10" />
+>>>>>>> upstream/master
 </manifest>

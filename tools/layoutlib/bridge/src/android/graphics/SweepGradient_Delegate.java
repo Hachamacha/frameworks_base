@@ -110,7 +110,10 @@ public class SweepGradient_Delegate extends Gradient_Delegate {
             mCy = cy;
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public java.awt.PaintContext createContext(
                 java.awt.image.ColorModel     colorModel,
                 java.awt.Rectangle            deviceBounds,
@@ -155,16 +158,25 @@ public class SweepGradient_Delegate extends Gradient_Delegate {
                 mColorModel = colorModel;
             }
 
+<<<<<<< HEAD
             @Override
             public void dispose() {
             }
 
             @Override
+=======
+            public void dispose() {
+            }
+
+>>>>>>> upstream/master
             public java.awt.image.ColorModel getColorModel() {
                 return mColorModel;
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public java.awt.image.Raster getRaster(int x, int y, int w, int h) {
                 java.awt.image.BufferedImage image = new java.awt.image.BufferedImage(w, h,
                         java.awt.image.BufferedImage.TYPE_INT_ARGB);

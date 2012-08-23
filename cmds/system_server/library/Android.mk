@@ -5,17 +5,33 @@ LOCAL_SRC_FILES:= \
 	system_init.cpp
 
 base = $(LOCAL_PATH)/../../..
+<<<<<<< HEAD
 native = $(LOCAL_PATH)/../../../../native
 
 LOCAL_C_INCLUDES := \
 	$(base)/services/sensorservice \
 	$(native)/services/surfaceflinger \
+=======
+
+LOCAL_C_INCLUDES := \
+	$(base)/services/camera/libcameraservice \
+	$(base)/services/audioflinger \
+	$(base)/services/surfaceflinger \
+	$(base)/services/sensorservice \
+	$(base)/media/libmediaplayerservice \
+>>>>>>> upstream/master
 	$(JNI_H_INCLUDE)
 
 LOCAL_SHARED_LIBRARIES := \
 	libandroid_runtime \
 	libsensorservice \
 	libsurfaceflinger \
+<<<<<<< HEAD
+=======
+	libaudioflinger \
+    libcameraservice \
+    libmediaplayerservice \
+>>>>>>> upstream/master
     libinput \
 	libutils \
 	libbinder \

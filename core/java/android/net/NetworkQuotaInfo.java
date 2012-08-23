@@ -57,12 +57,20 @@ public class NetworkQuotaInfo implements Parcelable {
         return mHardLimitBytes;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public void writeToParcel(Parcel out, int flags) {
         out.writeLong(mEstimatedBytes);
         out.writeLong(mSoftLimitBytes);
@@ -70,12 +78,18 @@ public class NetworkQuotaInfo implements Parcelable {
     }
 
     public static final Creator<NetworkQuotaInfo> CREATOR = new Creator<NetworkQuotaInfo>() {
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkQuotaInfo createFromParcel(Parcel in) {
             return new NetworkQuotaInfo(in);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkQuotaInfo[] newArray(int size) {
             return new NetworkQuotaInfo[size];
         }

@@ -16,10 +16,13 @@
 
 package com.android.server.wm;
 
+<<<<<<< HEAD
 import com.android.server.input.InputManagerService;
 import com.android.server.input.InputApplicationHandle;
 import com.android.server.input.InputWindowHandle;
 
+=======
+>>>>>>> upstream/master
 import android.graphics.Rect;
 import android.os.RemoteException;
 import android.util.Log;
@@ -31,7 +34,11 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+<<<<<<< HEAD
 final class InputMonitor implements InputManagerService.Callbacks {
+=======
+final class InputMonitor {
+>>>>>>> upstream/master
     private final WindowManagerService mService;
     
     // Current window with input focus for keys and other non-touch events.  May be null.
@@ -41,9 +48,13 @@ final class InputMonitor implements InputManagerService.Callbacks {
     private boolean mInputDispatchFrozen;
     
     // When true, input dispatch proceeds normally.  Otherwise all events are dropped.
+<<<<<<< HEAD
     // Initially false, so that input does not get dispatched until boot is finished at
     // which point the ActivityManager will enable dispatching.
     private boolean mInputDispatchEnabled;
+=======
+    private boolean mInputDispatchEnabled = true;
+>>>>>>> upstream/master
 
     // When true, need to call updateInputWindowsLw().
     private boolean mUpdateInputWindowsNeeded = true;
@@ -87,6 +98,7 @@ final class InputMonitor implements InputManagerService.Callbacks {
     public long notifyANR(InputApplicationHandle inputApplicationHandle,
             InputWindowHandle inputWindowHandle) {
         AppWindowToken appWindowToken = null;
+<<<<<<< HEAD
         synchronized (mService.mWindowMap) {
             WindowState windowState = null;
             if (inputWindowHandle != null) {
@@ -110,6 +122,26 @@ final class InputMonitor implements InputManagerService.Callbacks {
             }
 
             mService.saveANRStateLocked(appWindowToken, windowState);
+=======
+        if (inputWindowHandle != null) {
+            synchronized (mService.mWindowMap) {
+                WindowState windowState = (WindowState) inputWindowHandle.windowState;
+                if (windowState != null) {
+                    Slog.i(WindowManagerService.TAG, "Input event dispatching timed out sending to "
+                            + windowState.mAttrs.getTitle());
+                    appWindowToken = windowState.mAppToken;
+                }
+            }
+        }
+        
+        if (appWindowToken == null && inputApplicationHandle != null) {
+            appWindowToken = inputApplicationHandle.appWindowToken;
+            if (appWindowToken != null) {
+                Slog.i(WindowManagerService.TAG,
+                        "Input event dispatching timed out sending to application "
+                                + appWindowToken.stringName);
+            }
+>>>>>>> upstream/master
         }
 
         if (appWindowToken != null && appWindowToken.appToken != null) {
@@ -312,6 +344,7 @@ final class InputMonitor implements InputManagerService.Callbacks {
         WindowState windowState = focus != null ? (WindowState) focus.windowState : null;
         return mService.mPolicy.dispatchUnhandledKey(windowState, event, policyFlags);
     }
+<<<<<<< HEAD
 
     /* Callback to get pointer layer. */
     public int getPointerLayer() {
@@ -320,6 +353,9 @@ final class InputMonitor implements InputManagerService.Callbacks {
                 + WindowManagerService.TYPE_LAYER_OFFSET;
     }
 
+=======
+    
+>>>>>>> upstream/master
     /* Called when the current input focus changes.
      * Layer assignment is assumed to be complete by the time this is called.
      */

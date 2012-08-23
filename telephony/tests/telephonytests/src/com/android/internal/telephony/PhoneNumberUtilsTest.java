@@ -511,12 +511,17 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
     @SmallTest
     public void testFormatNumber() {
         assertEquals("(650) 291-0000", PhoneNumberUtils.formatNumber("650 2910000", "US"));
+<<<<<<< HEAD
         assertEquals("223-4567", PhoneNumberUtils.formatNumber("2234567", "US"));
         assertEquals("011 86 10 8888 0000",
                      PhoneNumberUtils.formatNumber("011861088880000", "US"));
         assertEquals("010 8888 0000", PhoneNumberUtils.formatNumber("01088880000", "CN"));
         // formatNumber doesn't format alpha numbers, but keep them as they are.
         assertEquals("800-GOOG-114", PhoneNumberUtils.formatNumber("800-GOOG-114", "US"));
+=======
+        assertEquals("123-4567", PhoneNumberUtils.formatNumber("1234567", "US"));
+        assertEquals("(800) 466-4114", PhoneNumberUtils.formatNumber("800-GOOG-114", "US"));
+>>>>>>> upstream/master
     }
 
     @SmallTest
@@ -545,6 +550,7 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
         // Using the phoneNumberE164's country code
         assertEquals("(650) 291-0000",
                 PhoneNumberUtils.formatNumber("6502910000", "+16502910000", "CN"));
+<<<<<<< HEAD
         // Using the default country code for a phone number containing the IDD
         assertEquals("011 86 10 8888 0000",
                 PhoneNumberUtils.formatNumber("011861088880000", "+861088880000", "US"));
@@ -555,12 +561,15 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
         // Wrong default country, so no formatting is done
         assertEquals("011861088880000",
                 PhoneNumberUtils.formatNumber("011861088880000", "+861088880000", "GB"));
+=======
+>>>>>>> upstream/master
         // The phoneNumberE164 is null
         assertEquals("(650) 291-0000", PhoneNumberUtils.formatNumber("6502910000", null, "US"));
         // The given number has a country code.
         assertEquals("+1 650-291-0000", PhoneNumberUtils.formatNumber("+16502910000", null, "CN"));
         // The given number was formatted.
         assertEquals("650-291-0000", PhoneNumberUtils.formatNumber("650-291-0000", null, "US"));
+<<<<<<< HEAD
         // A valid Polish number should be formatted.
         assertEquals("506 128 687", PhoneNumberUtils.formatNumber("506128687", null, "PL"));
         // An invalid Polish number should be left as it is. Note Poland doesn't use '0' as a
@@ -571,6 +580,9 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
                 PhoneNumberUtils.formatNumber("011861088880000", "", "GB"));
     }
 
+=======
+    }
+>>>>>>> upstream/master
     @SmallTest
     public void testIsEmergencyNumber() {
         // There are two parallel sets of tests here: one for the
@@ -610,12 +622,18 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
         // addressing that, they are also classified as "potential" emergency numbers in the US.
         assertTrue(PhoneNumberUtils.isPotentialEmergencyNumber("91112345", "US"));
         assertTrue(PhoneNumberUtils.isPotentialEmergencyNumber("11212345", "US"));
+<<<<<<< HEAD
 
         // A valid mobile phone number from Singapore shouldn't be classified as an emergency number
         // in Singapore, as 911 is not an emergency number there.
         // This test fails on devices that have ecclist property preloaded with 911.
         // assertFalse(PhoneNumberUtils.isPotentialEmergencyNumber("91121234", "SG"));
 
+=======
+        // A valid mobile phone number from Singapore shouldn't be classified as an emergency number
+        // in Singapore, as 911 is not an emergency number there.
+        assertFalse(PhoneNumberUtils.isPotentialEmergencyNumber("91121234", "SG"));
+>>>>>>> upstream/master
         // A valid fixed-line phone number from Brazil shouldn't be classified as an emergency number
         // in Brazil, as 112 is not an emergency number there.
         assertFalse(PhoneNumberUtils.isPotentialEmergencyNumber("1121234567", "BR"));
@@ -623,6 +641,7 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
         // Brazil.
         assertFalse(PhoneNumberUtils.isPotentialEmergencyNumber("91112345", "BR"));
     }
+<<<<<<< HEAD
 
     @SmallTest
     public void testStripSeparators() {
@@ -654,4 +673,6 @@ public class PhoneNumberUtilsTest extends AndroidTestCase {
         assertEquals("18004664411", PhoneNumberUtils.convertAndStrip("1-800-GOOG-411"));
         assertEquals("8002223334", PhoneNumberUtils.convertAndStrip("(800) ABC-DEFG"));
     }
+=======
+>>>>>>> upstream/master
 }

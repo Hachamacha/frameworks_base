@@ -28,7 +28,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -38,7 +41,10 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -208,6 +214,7 @@ public class AppWidgetHostView extends FrameLayout {
         super.dispatchRestoreInstanceState(jail);
     }
 
+<<<<<<< HEAD
     /**
      * Provide guidance about the size of this widget to the AppWidgetManager. The widths and
      * heights should correspond to the full area the AppWidgetHostView is given. Padding added by
@@ -256,6 +263,8 @@ public class AppWidgetHostView extends FrameLayout {
         AppWidgetManager.getInstance(mContext).updateAppWidgetOptions(mAppWidgetId, options);
     }
 
+=======
+>>>>>>> upstream/master
     /** {@inheritDoc} */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
@@ -524,12 +533,15 @@ public class AppWidgetHostView extends FrameLayout {
         return tv;
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(AppWidgetHostView.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     private static class ParcelableSparseArray extends SparseArray<Parcelable> implements Parcelable {
         public int describeContents() {
             return 0;

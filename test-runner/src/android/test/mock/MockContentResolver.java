@@ -106,6 +106,7 @@ public class MockContentResolver extends ContentResolver {
         return true;
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     protected IContentProvider acquireUnstableProvider(Context c, String name) {
@@ -123,6 +124,8 @@ public class MockContentResolver extends ContentResolver {
     public void unstableProviderDied(IContentProvider icp) {
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Overrides {@link android.content.ContentResolver#notifyChange(Uri, ContentObserver, boolean)
      * ContentResolver.notifChange(Uri, ContentObserver, boolean)}. All parameters are ignored.

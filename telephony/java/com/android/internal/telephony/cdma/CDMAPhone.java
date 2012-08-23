@@ -46,7 +46,10 @@ import com.android.internal.telephony.CallTracker;
 import com.android.internal.telephony.CommandException;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.Connection;
+<<<<<<< HEAD
 import com.android.internal.telephony.IccCard;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccException;
 import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
@@ -64,10 +67,14 @@ import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.UUSInfo;
 import com.android.internal.telephony.cat.CatService;
+<<<<<<< HEAD
 import com.android.internal.telephony.uicc.UiccController;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+=======
+
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -83,7 +90,10 @@ import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OP
 public class CDMAPhone extends PhoneBase {
     static final String LOG_TAG = "CDMA";
     private static final boolean DBG = true;
+<<<<<<< HEAD
     private static final boolean VDBG = false; /* STOP SHIP if true */
+=======
+>>>>>>> upstream/master
 
     // Default Emergency Callback Mode exit timer
     private static final int DEFAULT_ECM_EXIT_TIMER_VALUE = 300000;
@@ -98,6 +108,7 @@ public class CDMAPhone extends PhoneBase {
     // Instance Variables
     CdmaCallTracker mCT;
     CdmaServiceStateTracker mSST;
+<<<<<<< HEAD
     CdmaSubscriptionSourceManager mCdmaSSM;
     ArrayList <CdmaMmiCode> mPendingMmis = new ArrayList<CdmaMmiCode>();
     RuimPhoneBookInterfaceManager mRuimPhoneBookInterfaceManager;
@@ -106,6 +117,18 @@ public class CDMAPhone extends PhoneBase {
     PhoneSubInfo mSubInfo;
     EriManager mEriManager;
     WakeLock mWakeLock;
+=======
+    ArrayList <CdmaMmiCode> mPendingMmis = new ArrayList<CdmaMmiCode>();
+    RuimPhoneBookInterfaceManager mRuimPhoneBookInterfaceManager;
+    RuimSmsInterfaceManager mRuimSmsInterfaceManager;
+    PhoneSubInfo mSubInfo;
+    EriManager mEriManager;
+    WakeLock mWakeLock;
+    CatService mCcatService;
+
+    // mNvLoadedRegistrants are informed after the EVENT_NV_READY
+    private final RegistrantList mNvLoadedRegistrants = new RegistrantList();
+>>>>>>> upstream/master
 
     // mEriFileLoadedRegistrants are informed after the ERI text has been loaded
     private final RegistrantList mEriFileLoadedRegistrants = new RegistrantList();
@@ -152,31 +175,53 @@ public class CDMAPhone extends PhoneBase {
     }
 
     protected void initSstIcc() {
+<<<<<<< HEAD
         mIccCard.set(UiccController.getInstance(this).getIccCard());
         mIccRecords = mIccCard.get().getIccRecords();
         // CdmaServiceStateTracker registers with IccCard to know
         // when the Ruim card is ready. So create mIccCard before the ServiceStateTracker
         mSST = new CdmaServiceStateTracker(this);
+=======
+        mSST = new CdmaServiceStateTracker(this);
+        mIccRecords = new RuimRecords(this);
+        mIccCard = new RuimCard(this, LOG_TAG, DBG);
+        mIccFileHandler = new RuimFileHandler(this);
+>>>>>>> upstream/master
     }
 
     protected void init(Context context, PhoneNotifier notifier) {
         mCM.setPhoneType(Phone.PHONE_TYPE_CDMA);
         mCT = new CdmaCallTracker(this);
+<<<<<<< HEAD
         mCdmaSSM = CdmaSubscriptionSourceManager.getInstance(context, mCM, this,
                 EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED, null);
+=======
+>>>>>>> upstream/master
         mSMS = new CdmaSMSDispatcher(this, mSmsStorageMonitor, mSmsUsageMonitor);
         mDataConnectionTracker = new CdmaDataConnectionTracker (this);
         mRuimPhoneBookInterfaceManager = new RuimPhoneBookInterfaceManager(this);
         mRuimSmsInterfaceManager = new RuimSmsInterfaceManager(this, mSMS);
         mSubInfo = new PhoneSubInfo(this);
         mEriManager = new EriManager(this, context, EriManager.ERI_FROM_XML);
+<<<<<<< HEAD
 
         mCM.registerForAvailable(this, EVENT_RADIO_AVAILABLE, null);
         registerForRuimRecordEvents();
+=======
+        mCcatService = CatService.getInstance(mCM, mIccRecords, mContext,
+                mIccFileHandler, mIccCard);
+
+        mCM.registerForAvailable(this, EVENT_RADIO_AVAILABLE, null);
+        mIccRecords.registerForRecordsLoaded(this, EVENT_RUIM_RECORDS_LOADED, null);
+>>>>>>> upstream/master
         mCM.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
         mCM.registerForOn(this, EVENT_RADIO_ON, null);
         mCM.setOnSuppServiceNotification(this, EVENT_SSN, null);
         mSST.registerForNetworkAttached(this, EVENT_REGISTERED_TO_NETWORK, null);
+<<<<<<< HEAD
+=======
+        mCM.registerForNVReady(this, EVENT_NV_READY, null);
+>>>>>>> upstream/master
         mCM.setEmergencyCallbackMode(this, EVENT_EMERGENCY_CALLBACK_MODE_ENTER, null);
 
         PowerManager pm
@@ -205,8 +250,11 @@ public class CDMAPhone extends PhoneBase {
 
         // Sets operator numeric property by retrieving from build-time system property
         String operatorNumeric = SystemProperties.get(PROPERTY_CDMA_HOME_OPERATOR_NUMERIC);
+<<<<<<< HEAD
         log("CDMAPhone: init set 'gsm.sim.operator.numeric' to operator='" +
                 operatorNumeric + "'");
+=======
+>>>>>>> upstream/master
         setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC, operatorNumeric);
 
         // Sets iso country property by retrieving from build-time system property
@@ -226,10 +274,18 @@ public class CDMAPhone extends PhoneBase {
             log("dispose");
 
             //Unregister from all former registered events
+<<<<<<< HEAD
             unregisterForRuimRecordEvents();
             mCM.unregisterForAvailable(this); //EVENT_RADIO_AVAILABLE
             mCM.unregisterForOffOrNotAvailable(this); //EVENT_RADIO_OFF_OR_NOT_AVAILABLE
             mCM.unregisterForOn(this); //EVENT_RADIO_ON
+=======
+            mIccRecords.unregisterForRecordsLoaded(this); //EVENT_RUIM_RECORDS_LOADED
+            mCM.unregisterForAvailable(this); //EVENT_RADIO_AVAILABLE
+            mCM.unregisterForOffOrNotAvailable(this); //EVENT_RADIO_OFF_OR_NOT_AVAILABLE
+            mCM.unregisterForOn(this); //EVENT_RADIO_ON
+            mCM.unregisterForNVReady(this); //EVENT_NV_READY
+>>>>>>> upstream/master
             mSST.unregisterForNetworkAttached(this); //EVENT_REGISTERED_TO_NETWORK
             mCM.unSetOnSuppServiceNotification(this);
             removeCallbacks(mExitEcmRunnable);
@@ -240,18 +296,30 @@ public class CDMAPhone extends PhoneBase {
             mCT.dispose();
             mDataConnectionTracker.dispose();
             mSST.dispose();
+<<<<<<< HEAD
             mCdmaSSM.dispose(this);
             mSMS.dispose();
+=======
+            mSMS.dispose();
+            mIccFileHandler.dispose(); // instance of RuimFileHandler
+            mIccRecords.dispose();
+            mIccCard.dispose();
+>>>>>>> upstream/master
             mRuimPhoneBookInterfaceManager.dispose();
             mRuimSmsInterfaceManager.dispose();
             mSubInfo.dispose();
             mEriManager.dispose();
+<<<<<<< HEAD
+=======
+            mCcatService.dispose();
+>>>>>>> upstream/master
         }
     }
 
     @Override
     public void removeReferences() {
         log("removeReferences");
+<<<<<<< HEAD
         mRuimPhoneBookInterfaceManager = null;
         mRuimSmsInterfaceManager = null;
         mSubInfo = null;
@@ -260,6 +328,22 @@ public class CDMAPhone extends PhoneBase {
         mEriManager = null;
         mExitEcmRunnable = null;
         super.removeReferences();
+=======
+        super.removeReferences();
+        mRuimPhoneBookInterfaceManager = null;
+        mRuimSmsInterfaceManager = null;
+        mSMS = null;
+        mSubInfo = null;
+        mIccRecords = null;
+        mIccFileHandler = null;
+        mIccCard = null;
+        mDataConnectionTracker = null;
+        mCT = null;
+        mSST = null;
+        mEriManager = null;
+        mCcatService = null;
+        mExitEcmRunnable = null;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -995,11 +1079,14 @@ public class CDMAPhone extends PhoneBase {
             }
             break;
 
+<<<<<<< HEAD
             case EVENT_ICC_RECORD_EVENTS:
                 ar = (AsyncResult)msg.obj;
                 processIccRecordEvents((Integer)ar.result);
                 break;
 
+=======
+>>>>>>> upstream/master
             case  EVENT_EXIT_EMERGENCY_CALLBACK_RESPONSE:{
                 handleExitEmergencyCallbackMode(msg);
             }
@@ -1018,6 +1105,7 @@ public class CDMAPhone extends PhoneBase {
 
             case EVENT_RADIO_ON:{
                 Log.d(LOG_TAG, "Event EVENT_RADIO_ON Received");
+<<<<<<< HEAD
                 handleCdmaSubscriptionSource(mCdmaSSM.getCdmaSubscriptionSource());
             }
             break;
@@ -1025,6 +1113,8 @@ public class CDMAPhone extends PhoneBase {
             case EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED:{
                 Log.d(LOG_TAG, "EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED");
                 handleCdmaSubscriptionSource(mCdmaSSM.getCdmaSubscriptionSource());
+=======
+>>>>>>> upstream/master
             }
             break;
 
@@ -1040,6 +1130,11 @@ public class CDMAPhone extends PhoneBase {
 
             case EVENT_NV_READY:{
                 Log.d(LOG_TAG, "Event EVENT_NV_READY Received");
+<<<<<<< HEAD
+=======
+                //Inform the Service State Tracker
+                mNvLoadedRegistrants.notifyRegistrants();
+>>>>>>> upstream/master
                 prepareEri();
             }
             break;
@@ -1064,6 +1159,7 @@ public class CDMAPhone extends PhoneBase {
         }
     }
 
+<<<<<<< HEAD
     private void processIccRecordEvents(int eventCode) {
         switch (eventCode) {
             case RuimRecords.EVENT_MWI:
@@ -1091,6 +1187,8 @@ public class CDMAPhone extends PhoneBase {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Retrieves the PhoneSubInfo of the CDMAPhone
      */
@@ -1112,6 +1210,18 @@ public class CDMAPhone extends PhoneBase {
         return mRuimPhoneBookInterfaceManager;
     }
 
+<<<<<<< HEAD
+=======
+    public void registerForNvLoaded(Handler h, int what, Object obj) {
+        Registrant r = new Registrant (h, what, obj);
+        mNvLoadedRegistrants.add(r);
+    }
+
+    public void unregisterForNvLoaded(Handler h) {
+        mNvLoadedRegistrants.remove(h);
+    }
+
+>>>>>>> upstream/master
     public void registerForEriFileLoaded(Handler h, int what, Object obj) {
         Registrant r = new Registrant (h, what, obj);
         mEriFileLoadedRegistrants.add(r);
@@ -1130,6 +1240,16 @@ public class CDMAPhone extends PhoneBase {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * {@inheritDoc}
+     */
+    public IccFileHandler getIccFileHandler() {
+        return this.mIccFileHandler;
+    }
+
+    /**
+>>>>>>> upstream/master
      * Activate or deactivate cell broadcast SMS.
      *
      * @param activate 0 = activate, 1 = deactivate
@@ -1429,7 +1549,11 @@ public class CDMAPhone extends PhoneBase {
                 getContext().getContentResolver().insert(uri, map);
 
                 // Updates MCC MNC device configuration information
+<<<<<<< HEAD
                 MccTable.updateMccMncConfiguration(mContext, operatorNumeric);
+=======
+                MccTable.updateMccMncConfiguration(this, operatorNumeric);
+>>>>>>> upstream/master
 
                 return true;
             } catch (SQLException e) {
@@ -1462,6 +1586,7 @@ public class CDMAPhone extends PhoneBase {
         return mEriManager.isEriFileLoaded();
     }
 
+<<<<<<< HEAD
     private void registerForRuimRecordEvents() {
         mIccRecords.registerForRecordsEvents(this, EVENT_ICC_RECORD_EVENTS, null);
         mIccRecords.registerForRecordsLoaded(this, EVENT_RUIM_RECORDS_LOADED, null);
@@ -1472,10 +1597,13 @@ public class CDMAPhone extends PhoneBase {
         mIccRecords.unregisterForRecordsLoaded(this);
     }
 
+=======
+>>>>>>> upstream/master
     protected void log(String s) {
         if (DBG)
             Log.d(LOG_TAG, "[CDMAPhone] " + s);
     }
+<<<<<<< HEAD
 
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -1504,4 +1632,6 @@ public class CDMAPhone extends PhoneBase {
         pw.println(" isMinInfoReady()=" + isMinInfoReady());
         pw.println(" isCspPlmnEnabled()=" + isCspPlmnEnabled());
     }
+=======
+>>>>>>> upstream/master
 }

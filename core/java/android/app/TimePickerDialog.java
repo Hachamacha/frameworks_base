@@ -96,7 +96,13 @@ public class TimePickerDialog extends AlertDialog
         setTitle(R.string.time_picker_dialog_title);
 
         Context themeContext = getContext();
+<<<<<<< HEAD
         setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_done), this);
+=======
+        setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_set), this);
+        setButton(BUTTON_NEGATIVE, themeContext.getText(R.string.cancel),
+                (OnClickListener) null);
+>>>>>>> upstream/master
 
         LayoutInflater inflater =
                 (LayoutInflater) themeContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -112,7 +118,15 @@ public class TimePickerDialog extends AlertDialog
     }
 
     public void onClick(DialogInterface dialog, int which) {
+<<<<<<< HEAD
         tryNotifyTimeSet();
+=======
+        if (mCallback != null) {
+            mTimePicker.clearFocus();
+            mCallback.onTimeSet(mTimePicker, mTimePicker.getCurrentHour(),
+                    mTimePicker.getCurrentMinute());
+        }
+>>>>>>> upstream/master
     }
 
     public void updateTime(int hourOfDay, int minutOfHour) {
@@ -124,6 +138,7 @@ public class TimePickerDialog extends AlertDialog
         /* do nothing */
     }
 
+<<<<<<< HEAD
     private void tryNotifyTimeSet() {
         if (mCallback != null) {
             mTimePicker.clearFocus();
@@ -138,6 +153,8 @@ public class TimePickerDialog extends AlertDialog
         super.onStop();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public Bundle onSaveInstanceState() {
         Bundle state = super.onSaveInstanceState();

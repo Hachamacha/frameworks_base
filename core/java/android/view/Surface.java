@@ -20,7 +20,10 @@ import android.content.res.CompatibilityInfo.Translator;
 import android.graphics.*;
 import android.os.Parcelable;
 import android.os.Parcel;
+<<<<<<< HEAD
 import android.os.SystemProperties;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 
 /**
@@ -36,6 +39,7 @@ public class Surface implements Parcelable {
     public static final int ROTATION_180     = 2;
     public static final int ROTATION_270     = 3;
 
+<<<<<<< HEAD
     private static final boolean headless = "1".equals(
         SystemProperties.get("ro.config.headless", "0"));
 
@@ -45,6 +49,8 @@ public class Surface implements Parcelable {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Create Surface from a {@link SurfaceTexture}.
      *
@@ -56,8 +62,11 @@ public class Surface implements Parcelable {
      * Surface.
      */
     public Surface(SurfaceTexture surfaceTexture) {
+<<<<<<< HEAD
         checkHeadless();
 
+=======
+>>>>>>> upstream/master
         if (DEBUG_RELEASE) {
             mCreationStack = new Exception();
         }
@@ -256,8 +265,11 @@ public class Surface implements Parcelable {
     public Surface(SurfaceSession s,
             int pid, int display, int w, int h, int format, int flags)
         throws OutOfResourcesException {
+<<<<<<< HEAD
         checkHeadless();
 
+=======
+>>>>>>> upstream/master
         if (DEBUG_RELEASE) {
             mCreationStack = new Exception();
         }
@@ -269,8 +281,11 @@ public class Surface implements Parcelable {
     public Surface(SurfaceSession s,
             int pid, String name, int display, int w, int h, int format, int flags)
         throws OutOfResourcesException {
+<<<<<<< HEAD
         checkHeadless();
 
+=======
+>>>>>>> upstream/master
         if (DEBUG_RELEASE) {
             mCreationStack = new Exception();
         }
@@ -285,8 +300,11 @@ public class Surface implements Parcelable {
      * @hide
      */
     public Surface() {
+<<<<<<< HEAD
         checkHeadless();
 
+=======
+>>>>>>> upstream/master
         if (DEBUG_RELEASE) {
             mCreationStack = new Exception();
         }
@@ -323,6 +341,7 @@ public class Surface implements Parcelable {
         return mSurfaceGenerationId;
     }
 
+<<<<<<< HEAD
 
     /**
      * Whether the consumer of this Surface is running behind the producer;
@@ -332,6 +351,8 @@ public class Surface implements Parcelable {
      */
     public native boolean isConsumerRunningBehind();
 
+=======
+>>>>>>> upstream/master
     /**
      * A Canvas class that can handle the compatibility mode. This does two
      * things differently.
@@ -510,8 +531,11 @@ public class Surface implements Parcelable {
     public native   void setFreezeTint(int tint);
     /** @hide */
     public native   void setFlags(int flags, int mask);
+<<<<<<< HEAD
     /** @hide */
     public native   void setWindowCrop(Rect crop);
+=======
+>>>>>>> upstream/master
 
 
    

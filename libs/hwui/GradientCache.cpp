@@ -154,7 +154,11 @@ Texture* GradientCache::addLinearGradient(GradientCacheEntry& gradient,
 void GradientCache::generateTexture(SkBitmap* bitmap, Texture* texture) {
     SkAutoLockPixels autoLock(*bitmap);
     if (!bitmap->readyToDraw()) {
+<<<<<<< HEAD
         ALOGE("Cannot generate texture from shader");
+=======
+        LOGE("Cannot generate texture from shader");
+>>>>>>> upstream/master
         return;
     }
 
@@ -171,8 +175,13 @@ void GradientCache::generateTexture(SkBitmap* bitmap, Texture* texture) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bitmap->rowBytesAsPixels(), texture->height, 0,
             GL_RGBA, GL_UNSIGNED_BYTE, bitmap->getPixels());
 
+<<<<<<< HEAD
     texture->setFilter(GL_LINEAR);
     texture->setWrap(GL_CLAMP_TO_EDGE);
+=======
+    texture->setFilter(GL_LINEAR, GL_LINEAR);
+    texture->setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+>>>>>>> upstream/master
 }
 
 }; // namespace uirenderer

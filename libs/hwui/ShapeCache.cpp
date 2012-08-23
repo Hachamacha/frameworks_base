@@ -105,6 +105,7 @@ PathTexture* RectShapeCache::getRect(float width, float height, SkPaint* paint) 
     PathTexture* texture = get(entry);
 
     if (!texture) {
+<<<<<<< HEAD
         SkRect bounds;
         bounds.set(0.0f, 0.0f, width, height);
 
@@ -128,6 +129,12 @@ PathTexture* RectShapeCache::getRect(float width, float height, SkPaint* paint) 
 
         texture = createTexture(0, 0, offset, rectWidth, rectHeight, 0);
         addTexture(entry, &bitmap, texture);
+=======
+        SkPath path;
+        path.addRect(0.0f, 0.0f, width, height, SkPath::kCW_Direction);
+
+        texture = addTexture(entry, &path, paint);
+>>>>>>> upstream/master
     }
 
     return texture;

@@ -19,44 +19,71 @@ package android.net.wifi.p2p;
 import android.os.Parcelable;
 import android.os.Parcel;
 import android.net.wifi.p2p.WifiP2pDevice;
+<<<<<<< HEAD
 import android.text.TextUtils;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+<<<<<<< HEAD
 import java.util.HashMap;
 
 /**
  * A class representing a Wi-Fi P2p device list.
  *
  * Note that the operations are not thread safe.
+=======
+
+/**
+ * A class representing a Wi-Fi P2p device list
+ *
+>>>>>>> upstream/master
  * {@see WifiP2pManager}
  */
 public class WifiP2pDeviceList implements Parcelable {
 
+<<<<<<< HEAD
     private HashMap<String, WifiP2pDevice> mDevices;
 
     public WifiP2pDeviceList() {
         mDevices = new HashMap<String, WifiP2pDevice>();
+=======
+    private Collection<WifiP2pDevice> mDevices;
+
+    public WifiP2pDeviceList() {
+        mDevices = new ArrayList<WifiP2pDevice>();
+>>>>>>> upstream/master
     }
 
     /** copy constructor */
     public WifiP2pDeviceList(WifiP2pDeviceList source) {
         if (source != null) {
+<<<<<<< HEAD
             for (WifiP2pDevice d : source.getDeviceList()) {
                 mDevices.put(d.deviceAddress, d);
             }
+=======
+            mDevices = source.getDeviceList();
+>>>>>>> upstream/master
         }
     }
 
     /** @hide */
     public WifiP2pDeviceList(ArrayList<WifiP2pDevice> devices) {
+<<<<<<< HEAD
         mDevices = new HashMap<String, WifiP2pDevice>();
         for (WifiP2pDevice device : devices) {
             if (device.deviceAddress != null) {
                 mDevices.put(device.deviceAddress, device);
             }
+=======
+        mDevices = new ArrayList<WifiP2pDevice>();
+        for (WifiP2pDevice device : devices) {
+            mDevices.add(device);
+>>>>>>> upstream/master
         }
     }
 
@@ -69,6 +96,7 @@ public class WifiP2pDeviceList implements Parcelable {
 
     /** @hide */
     public void update(WifiP2pDevice device) {
+<<<<<<< HEAD
         if (device == null || device.deviceAddress == null) return;
         WifiP2pDevice d = mDevices.get(device.deviceAddress);
         if (d != null) {
@@ -107,16 +135,39 @@ public class WifiP2pDeviceList implements Parcelable {
         if (deviceAddress == null) return null;
 
         return mDevices.get(deviceAddress);
+=======
+        if (device == null) return;
+        for (WifiP2pDevice d : mDevices) {
+            //Found, update fields that can change
+            if (d.equals(device)) {
+                d.deviceName = device.deviceName;
+                d.primaryDeviceType = device.primaryDeviceType;
+                d.secondaryDeviceType = device.secondaryDeviceType;
+                d.wpsConfigMethodsSupported = device.wpsConfigMethodsSupported;
+                d.deviceCapability = device.deviceCapability;
+                d.groupCapability = device.groupCapability;
+                return;
+            }
+        }
+        //Not found, add a new one
+        mDevices.add(device);
+>>>>>>> upstream/master
     }
 
     /** @hide */
     public boolean remove(WifiP2pDevice device) {
+<<<<<<< HEAD
         if (device == null || device.deviceAddress == null) return false;
         return mDevices.remove(device.deviceAddress) != null;
+=======
+        if (device == null) return false;
+        return mDevices.remove(device);
+>>>>>>> upstream/master
     }
 
     /** Get the list of devices */
     public Collection<WifiP2pDevice> getDeviceList() {
+<<<<<<< HEAD
         return Collections.unmodifiableCollection(mDevices.values());
     }
 
@@ -127,11 +178,18 @@ public class WifiP2pDeviceList implements Parcelable {
             if (device != null) return device.isGroupOwner();
         }
         return false;
+=======
+        return Collections.unmodifiableCollection(mDevices);
+>>>>>>> upstream/master
     }
 
     public String toString() {
         StringBuffer sbuf = new StringBuffer();
+<<<<<<< HEAD
         for (WifiP2pDevice device : mDevices.values()) {
+=======
+        for (WifiP2pDevice device : mDevices) {
+>>>>>>> upstream/master
             sbuf.append("\n").append(device);
         }
         return sbuf.toString();
@@ -145,7 +203,11 @@ public class WifiP2pDeviceList implements Parcelable {
     /** Implement the Parcelable interface */
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mDevices.size());
+<<<<<<< HEAD
         for(WifiP2pDevice device : mDevices.values()) {
+=======
+        for(WifiP2pDevice device : mDevices) {
+>>>>>>> upstream/master
             dest.writeParcelable(device, flags);
         }
     }

@@ -30,11 +30,16 @@ import android.util.Slog;
 import android.media.AudioManager;
 import android.util.Log;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+>>>>>>> upstream/master
 
 /**
  * <p>WiredAccessoryObserver monitors for a wired headset on the main board or dock.
@@ -42,6 +47,20 @@ import java.util.List;
 class WiredAccessoryObserver extends UEventObserver {
     private static final String TAG = WiredAccessoryObserver.class.getSimpleName();
     private static final boolean LOG = true;
+<<<<<<< HEAD
+=======
+    private static final int MAX_AUDIO_PORTS = 3; /* h2w, USB Audio & hdmi */
+    private static final String uEventInfo[][] = { {"DEVPATH=/devices/virtual/switch/h2w",
+                                                    "/sys/class/switch/h2w/state",
+                                                    "/sys/class/switch/h2w/name"},
+                                                   {"DEVPATH=/devices/virtual/switch/usb_audio",
+                                                    "/sys/class/switch/usb_audio/state",
+                                                    "/sys/class/switch/usb_audio/name"},
+                                                   {"DEVPATH=/devices/virtual/switch/hdmi",
+                                                    "/sys/class/switch/hdmi/state",
+                                                    "/sys/class/switch/hdmi/name"} };
+
+>>>>>>> upstream/master
     private static final int BIT_HEADSET = (1 << 0);
     private static final int BIT_HEADSET_NO_MIC = (1 << 1);
     private static final int BIT_USB_HEADSET_ANLG = (1 << 2);
@@ -52,6 +71,7 @@ class WiredAccessoryObserver extends UEventObserver {
                                                    BIT_HDMI_AUDIO);
     private static final int HEADSETS_WITH_MIC = BIT_HEADSET;
 
+<<<<<<< HEAD
     private static class UEventInfo {
         private final String mDevName;
         private final int mState1Bits;
@@ -135,18 +155,30 @@ class WiredAccessoryObserver extends UEventObserver {
     private int mHeadsetState;
     private int mPrevHeadsetState;
     private String mHeadsetName;
+=======
+    private int mHeadsetState;
+    private int mPrevHeadsetState;
+    private String mHeadsetName;
+    private int switchState;
+>>>>>>> upstream/master
 
     private final Context mContext;
     private final WakeLock mWakeLock;  // held while there is a pending route change
 
+<<<<<<< HEAD
     private final AudioManager mAudioManager;
 
+=======
+>>>>>>> upstream/master
     public WiredAccessoryObserver(Context context) {
         mContext = context;
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WiredAccessoryObserver");
         mWakeLock.setReferenceCounted(false);
+<<<<<<< HEAD
         mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+=======
+>>>>>>> upstream/master
 
         context.registerReceiver(new BootCompletedReceiver(),
             new IntentFilter(Intent.ACTION_BOOT_COMPLETED), null, null);
@@ -159,27 +191,42 @@ class WiredAccessoryObserver extends UEventObserver {
         // one on the board, one on the dock and one on HDMI:
         // observe three UEVENTs
         init();  // set initial status
+<<<<<<< HEAD
         for (int i = 0; i < uEventInfo.size(); ++i) {
             UEventInfo uei = uEventInfo.get(i);
             startObserving("DEVPATH="+uei.getDevPath());
         }
       }
     }
+=======
+        for (int i = 0; i < MAX_AUDIO_PORTS; i++) {
+            startObserving(uEventInfo[i][0]);
+        }
+      }
+  }
+>>>>>>> upstream/master
 
     @Override
     public void onUEvent(UEventObserver.UEvent event) {
         if (LOG) Slog.v(TAG, "Headset UEVENT: " + event.toString());
 
         try {
+<<<<<<< HEAD
             String devPath = event.get("DEVPATH");
             String name = event.get("SWITCH_NAME");
             int state = Integer.parseInt(event.get("SWITCH_STATE"));
             updateState(devPath, name, state);
+=======
+            String name = event.get("SWITCH_NAME");
+            int state = Integer.parseInt(event.get("SWITCH_STATE"));
+            updateState(name, state);
+>>>>>>> upstream/master
         } catch (NumberFormatException e) {
             Slog.e(TAG, "Could not parse switch state from event " + event);
         }
     }
 
+<<<<<<< HEAD
     private synchronized final void updateState(String devPath, String name, int state)
     {
         for (int i = 0; i < uEventInfo.size(); ++i) {
@@ -189,14 +236,40 @@ class WiredAccessoryObserver extends UEventObserver {
                 return;
             }
         }
+=======
+    private synchronized final void updateState(String name, int state)
+    {
+        if (name.equals("usb_audio")) {
+            switchState = ((mHeadsetState & (BIT_HEADSET|BIT_HEADSET_NO_MIC|BIT_HDMI_AUDIO)) |
+                           ((state == 1) ? BIT_USB_HEADSET_ANLG :
+                                         ((state == 2) ? BIT_USB_HEADSET_DGTL : 0)));
+        } else if (name.equals("hdmi")) {
+            switchState = ((mHeadsetState & (BIT_HEADSET|BIT_HEADSET_NO_MIC|
+                                             BIT_USB_HEADSET_DGTL|BIT_USB_HEADSET_ANLG)) |
+                           ((state == 1) ? BIT_HDMI_AUDIO : 0));
+        } else {
+            switchState = ((mHeadsetState & (BIT_HDMI_AUDIO|BIT_USB_HEADSET_ANLG|
+                                             BIT_USB_HEADSET_DGTL)) |
+                            ((state == 1) ? BIT_HEADSET :
+                                          ((state == 2) ? BIT_HEADSET_NO_MIC : 0)));
+        }
+        update(name, switchState);
+>>>>>>> upstream/master
     }
 
     private synchronized final void init() {
         char[] buffer = new char[1024];
+<<<<<<< HEAD
+=======
+
+        String newName = mHeadsetName;
+        int newState = mHeadsetState;
+>>>>>>> upstream/master
         mPrevHeadsetState = mHeadsetState;
 
         if (LOG) Slog.v(TAG, "init()");
 
+<<<<<<< HEAD
         for (int i = 0; i < uEventInfo.size(); ++i) {
             UEventInfo uei = uEventInfo.get(i);
             try {
@@ -213,6 +286,26 @@ class WiredAccessoryObserver extends UEventObserver {
             } catch (FileNotFoundException e) {
                 Slog.w(TAG, uei.getSwitchStatePath() +
                         " not found while attempting to determine initial switch state");
+=======
+        for (int i = 0; i < MAX_AUDIO_PORTS; i++) {
+            try {
+                FileReader file = new FileReader(uEventInfo[i][1]);
+                int len = file.read(buffer, 0, 1024);
+                file.close();
+                newState = Integer.valueOf((new String(buffer, 0, len)).trim());
+
+                file = new FileReader(uEventInfo[i][2]);
+                len = file.read(buffer, 0, 1024);
+                file.close();
+                newName = new String(buffer, 0, len).trim();
+
+                if (newState > 0) {
+                    updateState(newName, newState);
+                }
+
+            } catch (FileNotFoundException e) {
+                Slog.w(TAG, "This kernel does not have wired headset support");
+>>>>>>> upstream/master
             } catch (Exception e) {
                 Slog.e(TAG, "" , e);
             }
@@ -253,6 +346,7 @@ class WiredAccessoryObserver extends UEventObserver {
         mPrevHeadsetState = mHeadsetState;
         mHeadsetState = headsetState;
 
+<<<<<<< HEAD
         mWakeLock.acquire();
         mHandler.sendMessage(mHandler.obtainMessage(0,
                                                     mHeadsetState,
@@ -267,11 +361,43 @@ class WiredAccessoryObserver extends UEventObserver {
         for (int curHeadset = 1; allHeadsets != 0; curHeadset <<= 1) {
             if ((curHeadset & allHeadsets) != 0) {
                 setDeviceState(curHeadset, headsetState, prevHeadsetState, headsetName);
+=======
+        if (headsetState == 0) {
+            Intent intent = new Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+            mContext.sendBroadcast(intent);
+            // It can take hundreds of ms flush the audio pipeline after
+            // apps pause audio playback, but audio route changes are
+            // immediate, so delay the route change by 1000ms.
+            // This could be improved once the audio sub-system provides an
+            // interface to clear the audio pipeline.
+            delay = 1000;
+        } else {
+            // Insert the same delay for headset connection so that the connection event is not
+            // broadcast before the disconnection event in case of fast removal/insertion
+            if (mHandler.hasMessages(0)) {
+                delay = 1000;
+            }
+        }
+        mWakeLock.acquire();
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(0,
+                                                           mHeadsetState,
+                                                           mPrevHeadsetState,
+                                                           mHeadsetName),
+                                    delay);
+    }
+
+    private synchronized final void sendIntents(int headsetState, int prevHeadsetState, String headsetName) {
+        int allHeadsets = SUPPORTED_HEADSETS;
+        for (int curHeadset = 1; allHeadsets != 0; curHeadset <<= 1) {
+            if ((curHeadset & allHeadsets) != 0) {
+                sendIntent(curHeadset, headsetState, prevHeadsetState, headsetName);
+>>>>>>> upstream/master
                 allHeadsets &= ~curHeadset;
             }
         }
     }
 
+<<<<<<< HEAD
     private final void setDeviceState(int headset,
                                       int headsetState,
                                       int prevHeadsetState,
@@ -305,13 +431,74 @@ class WiredAccessoryObserver extends UEventObserver {
                 Slog.v(TAG, "device "+headsetName+((state == 1) ? " connected" : " disconnected"));
 
             mAudioManager.setWiredDeviceConnectionState(device, state, headsetName);
+=======
+    private final void sendIntent(int headset, int headsetState, int prevHeadsetState, String headsetName) {
+        if ((headsetState & headset) != (prevHeadsetState & headset)) {
+
+            int state = 0;
+            if ((headsetState & headset) != 0) {
+                state = 1;
+            }
+            if((headset == BIT_USB_HEADSET_ANLG) || (headset == BIT_USB_HEADSET_DGTL) ||
+               (headset == BIT_HDMI_AUDIO)) {
+                Intent intent;
+
+                //  Pack up the values and broadcast them to everyone
+                if (headset == BIT_USB_HEADSET_ANLG) {
+                    intent = new Intent(Intent.ACTION_USB_ANLG_HEADSET_PLUG);
+                    intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+                    intent.putExtra("state", state);
+                    intent.putExtra("name", headsetName);
+                    ActivityManagerNative.broadcastStickyIntent(intent, null);
+                } else if (headset == BIT_USB_HEADSET_DGTL) {
+                    intent = new Intent(Intent.ACTION_USB_DGTL_HEADSET_PLUG);
+                    intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+                    intent.putExtra("state", state);
+                    intent.putExtra("name", headsetName);
+                    ActivityManagerNative.broadcastStickyIntent(intent, null);
+                } else if (headset == BIT_HDMI_AUDIO) {
+                    intent = new Intent(Intent.ACTION_HDMI_AUDIO_PLUG);
+                    intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+                    intent.putExtra("state", state);
+                    intent.putExtra("name", headsetName);
+                    ActivityManagerNative.broadcastStickyIntent(intent, null);
+                }
+
+                if (LOG) Slog.v(TAG, "Intent.ACTION_USB_HEADSET_PLUG: state: "+state+" name: "+headsetName);
+                // TODO: Should we require a permission?
+            }
+            if((headset == BIT_HEADSET) || (headset == BIT_HEADSET_NO_MIC)) {
+
+                //  Pack up the values and broadcast them to everyone
+                Intent intent = new Intent(Intent.ACTION_HEADSET_PLUG);
+                intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+                //int state = 0;
+                int microphone = 0;
+
+                if ((headset & HEADSETS_WITH_MIC) != 0) {
+                    microphone = 1;
+                }
+
+                intent.putExtra("state", state);
+                intent.putExtra("name", headsetName);
+                intent.putExtra("microphone", microphone);
+
+                if (LOG) Slog.v(TAG, "Intent.ACTION_HEADSET_PLUG: state: "+state+" name: "+headsetName+" mic: "+microphone);
+                // TODO: Should we require a permission?
+                ActivityManagerNative.broadcastStickyIntent(intent, null);
+            }
+>>>>>>> upstream/master
         }
     }
 
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+<<<<<<< HEAD
             setDevicesState(msg.arg1, msg.arg2, (String)msg.obj);
+=======
+            sendIntents(msg.arg1, msg.arg2, (String)msg.obj);
+>>>>>>> upstream/master
             mWakeLock.release();
         }
     };

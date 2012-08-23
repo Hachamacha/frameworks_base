@@ -29,8 +29,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -414,10 +417,13 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
             // get the fresh child from the adapter
             final View updatedChild = mAdapter.getView(modulo(i, adapterCount), null, this);
 
+<<<<<<< HEAD
             if (updatedChild.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
                 updatedChild.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
             }
 
+=======
+>>>>>>> upstream/master
             if (mViewsMap.containsKey(index)) {
                 final FrameLayout fl = (FrameLayout) mViewsMap.get(index).view;
                 // add the new child to the frame, if it exists
@@ -561,11 +567,14 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
             mCurrentWindowStart = newWindowStart;
             mCurrentWindowEnd = newWindowEnd;
             mCurrentWindowStartUnbounded = newWindowStartUnbounded;
+<<<<<<< HEAD
             if (mRemoteViewsAdapter != null) {
                 int adapterStart = modulo(mCurrentWindowStart, adapterCount);
                 int adapterEnd = modulo(mCurrentWindowEnd, adapterCount);
                 mRemoteViewsAdapter.setVisibleRangeHint(adapterStart, adapterEnd);
             }
+=======
+>>>>>>> upstream/master
         }
         requestLayout();
         invalidate();
@@ -1056,6 +1065,7 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      */
     public void fyiWillBeAdvancedByHostKThx() {
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -1068,4 +1078,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(AdapterViewAnimator.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

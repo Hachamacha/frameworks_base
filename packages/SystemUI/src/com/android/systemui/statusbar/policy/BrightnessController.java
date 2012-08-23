@@ -31,8 +31,15 @@ import android.widget.CompoundButton;
 public class BrightnessController implements ToggleSlider.Listener {
     private static final String TAG = "StatusBar.BrightnessController";
 
+<<<<<<< HEAD
     private static final int MINIMUM_BACKLIGHT = android.os.PowerManager.BRIGHTNESS_DIM;
     private static final int MAXIMUM_BACKLIGHT = android.os.PowerManager.BRIGHTNESS_ON;
+=======
+    // Backlight range is from 0 - 255. Need to make sure that user
+    // doesn't set the backlight to 0 and get stuck
+    private static final int MINIMUM_BACKLIGHT = android.os.Power.BRIGHTNESS_DIM + 10;
+    private static final int MAXIMUM_BACKLIGHT = android.os.Power.BRIGHTNESS_ON;
+>>>>>>> upstream/master
 
     private Context mContext;
     private ToggleSlider mControl;

@@ -20,5 +20,12 @@ typedef struct TestData_s {
     int renderSurfaceW;
     int renderSurfaceH;
     float dt;
+<<<<<<< HEAD
+=======
+    int user;
+    int user1;
+    int user2;
+    int user3;
+>>>>>>> upstream/master
 } TestData;
 

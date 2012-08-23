@@ -20,7 +20,11 @@
 #include "JNIHelp.h"
 #include <android_runtime/AndroidRuntime.h>
 
+<<<<<<< HEAD
 #include <androidfw/BackupHelpers.h>
+=======
+#include <utils/BackupHelpers.h>
+>>>>>>> upstream/master
 
 namespace android
 {
@@ -80,7 +84,11 @@ readNextHeader_native(JNIEnv* env, jobject clazz, int r, jobject entity)
         return 0;
     }
     default:
+<<<<<<< HEAD
         ALOGD("Unknown header type: 0x%08x\n", type);
+=======
+        LOGD("Unknown header type: 0x%08x\n", type);
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -133,7 +141,11 @@ static const JNINativeMethod g_methods[] = {
 
 int register_android_backup_BackupDataInput(JNIEnv* env)
 {
+<<<<<<< HEAD
     //ALOGD("register_android_backup_BackupDataInput");
+=======
+    //LOGD("register_android_backup_BackupDataInput");
+>>>>>>> upstream/master
 
     jclass clazz = env->FindClass("android/app/backup/BackupDataInput$EntityHeader");
     LOG_FATAL_IF(clazz == NULL, "Unable to find class android.app.backup.BackupDataInput.EntityHeader");

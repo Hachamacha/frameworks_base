@@ -16,6 +16,10 @@
 
 package android.database;
 
+<<<<<<< HEAD
+=======
+import dalvik.annotation.BrokenTest;
+>>>>>>> upstream/master
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,11 +30,19 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
+<<<<<<< HEAD
+=======
+import android.database.sqlite.SQLiteStatement;
+>>>>>>> upstream/master
 import android.os.Looper;
 import android.test.AndroidTestCase;
 import android.test.PerformanceTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
+<<<<<<< HEAD
+=======
+import android.test.suitebuilder.annotation.Suppress;
+>>>>>>> upstream/master
 import android.util.Log;
 
 import java.io.File;

@@ -41,7 +41,10 @@ interface IAccountManager {
     void setPassword(in Account account, String password);
     void clearPassword(in Account account);
     void setUserData(in Account account, String key, String value);
+<<<<<<< HEAD
     void updateAppPermission(in Account account, String authTokenType, int uid, boolean value);
+=======
+>>>>>>> upstream/master
 
     void getAuthToken(in IAccountManagerResponse response, in Account account,
         String authTokenType, boolean notifyOnAuthFailure, boolean expectActivityLaunch,
@@ -55,6 +58,9 @@ interface IAccountManager {
         boolean expectActivityLaunch);
     void confirmCredentials(in IAccountManagerResponse response, in Account account,
         in Bundle options, boolean expectActivityLaunch);
+<<<<<<< HEAD
     void getAuthTokenLabel(in IAccountManagerResponse response, String accountType,
         String authTokenType);
+=======
+>>>>>>> upstream/master
 }

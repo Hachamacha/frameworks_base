@@ -65,29 +65,44 @@ public class AsmGeneratorTest {
     public void testClassRenaming() throws IOException, LogAbortException {
 
         ICreateInfo ci = new ICreateInfo() {
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public Class<?>[] getInjectedClasses() {
                 // classes to inject in the final JAR
                 return new Class<?>[0];
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public String[] getDelegateMethods() {
                 return new String[0];
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public String[] getDelegateClassNatives() {
                 return new String[0];
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public String[] getOverriddenMethods() {
                 // methods to force override
                 return new String[0];
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public String[] getRenamedClasses() {
                 // classes to rename (so that we can replace them)
                 return new String[] {
@@ -96,7 +111,10 @@ public class AsmGeneratorTest {
                 };
             }
 
+<<<<<<< HEAD
             @Override
+=======
+>>>>>>> upstream/master
             public String[] getDeleteReturns() {
                  // methods deleted from their return type.
                 return new String[0];

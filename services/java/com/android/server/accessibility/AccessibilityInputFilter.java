@@ -16,16 +16,25 @@
 
 package com.android.server.accessibility;
 
+<<<<<<< HEAD
 import com.android.server.input.InputFilter;
 
 import android.content.Context;
 import android.os.PowerManager;
+=======
+import com.android.server.wm.InputFilter;
+
+import android.content.Context;
+>>>>>>> upstream/master
 import android.util.Slog;
 import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.MotionEvent;
 import android.view.WindowManagerPolicy;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
+=======
+>>>>>>> upstream/master
 
 /**
  * Input filter for accessibility.
@@ -38,10 +47,13 @@ public class AccessibilityInputFilter extends InputFilter {
 
     private final Context mContext;
 
+<<<<<<< HEAD
     private final PowerManager mPm;
 
     private final AccessibilityManagerService mAms;
 
+=======
+>>>>>>> upstream/master
     /**
      * This is an interface for explorers that take a {@link MotionEvent}
      * stream and perform touch exploration of the screen content.
@@ -70,6 +82,7 @@ public class AccessibilityInputFilter extends InputFilter {
     }
 
     private TouchExplorer mTouchExplorer;
+<<<<<<< HEAD
 
     private int mTouchscreenSourceDeviceId;
 
@@ -78,6 +91,13 @@ public class AccessibilityInputFilter extends InputFilter {
         mContext = context;
         mAms = service;
         mPm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+=======
+    private int mTouchscreenSourceDeviceId;
+
+    public AccessibilityInputFilter(Context context) {
+        super(context.getMainLooper());
+        mContext = context;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -85,7 +105,11 @@ public class AccessibilityInputFilter extends InputFilter {
         if (DEBUG) {
             Slog.d(TAG, "Accessibility input filter installed.");
         }
+<<<<<<< HEAD
         mTouchExplorer = new TouchExplorer(this, mContext, mAms);
+=======
+        mTouchExplorer = new TouchExplorer(this, mContext);
+>>>>>>> upstream/master
         super.onInstalled();
     }
 
@@ -112,7 +136,10 @@ public class AccessibilityInputFilter extends InputFilter {
                 mTouchExplorer.clear(motionEvent, policyFlags);
             }
             if ((policyFlags & WindowManagerPolicy.FLAG_PASS_TO_USER) != 0) {
+<<<<<<< HEAD
                 mPm.userActivity(event.getEventTime(), false);
+=======
+>>>>>>> upstream/master
                 mTouchExplorer.onMotionEvent(motionEvent, policyFlags);
             } else {
                 mTouchExplorer.clear(motionEvent, policyFlags);
@@ -121,10 +148,13 @@ public class AccessibilityInputFilter extends InputFilter {
             super.onInputEvent(event, policyFlags);
         }
     }
+<<<<<<< HEAD
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (mTouchExplorer != null) {
             mTouchExplorer.onAccessibilityEvent(event);
         }
     }
+=======
+>>>>>>> upstream/master
 }

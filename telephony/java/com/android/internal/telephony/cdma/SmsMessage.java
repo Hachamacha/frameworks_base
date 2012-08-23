@@ -19,11 +19,15 @@ package com.android.internal.telephony.cdma;
 import android.os.Parcel;
 import android.os.SystemProperties;
 import android.telephony.PhoneNumberUtils;
+<<<<<<< HEAD
 import android.telephony.SmsCbLocation;
 import android.telephony.SmsCbMessage;
 import android.telephony.cdma.CdmaSmsCbProgramData;
 import android.util.Log;
 
+=======
+import android.util.Log;
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
@@ -42,9 +46,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.List;
 
 import static android.telephony.SmsMessage.MessageClass;
+=======
+>>>>>>> upstream/master
 
 /**
  * TODO(cleanup): these constants are disturbing... are they not just
@@ -54,6 +61,15 @@ import static android.telephony.SmsMessage.MessageClass;
  * named CdmaSmsMessage, could it not?
  */
 
+<<<<<<< HEAD
+=======
+import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES;
+import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES_WITH_HEADER;
+import static android.telephony.SmsMessage.MAX_USER_DATA_SEPTETS;
+import static android.telephony.SmsMessage.MAX_USER_DATA_SEPTETS_WITH_HEADER;
+import static android.telephony.SmsMessage.MessageClass;
+
+>>>>>>> upstream/master
 /**
  * TODO(cleanup): internally returning null in many places makes
  * debugging very hard (among many other reasons) and should be made
@@ -193,6 +209,7 @@ public class SmsMessage extends SmsMessageBase {
 
         // bearer data
         countInt = p.readInt(); //p_cur->uBearerDataLen
+<<<<<<< HEAD
         if (countInt < 0) {
             countInt = 0;
         }
@@ -203,6 +220,17 @@ public class SmsMessage extends SmsMessageBase {
         }
         // BD gets further decoded when accessed in SMSDispatcher
         env.bearerData = data;
+=======
+        if (countInt >0) {
+            data = new byte[countInt];
+             //p_cur->aBearerData[digitCount] :
+            for (int index=0; index < countInt; index++) {
+                data[index] = p.readByte();
+            }
+            env.bearerData = data;
+            // BD gets further decoded when accessed in SMSDispatcher
+        }
+>>>>>>> upstream/master
 
         // link the the filled objects to the SMS
         env.origAddress = addr;
@@ -734,6 +762,7 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
+<<<<<<< HEAD
      * Parses a broadcast SMS, possibly containing a CMAS alert.
      */
     SmsCbMessage parseBroadcastSms() {
@@ -757,6 +786,8 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * {@inheritDoc}
      */
     public MessageClass getMessageClass() {
@@ -986,6 +1017,7 @@ public class SmsMessage extends SmsMessageBase {
 
         return output.toByteArray();
     }
+<<<<<<< HEAD
 
     /**
      * Returns the list of service category program data, if present.
@@ -994,4 +1026,6 @@ public class SmsMessage extends SmsMessageBase {
     List<CdmaSmsCbProgramData> getSmsCbProgramData() {
         return mBearerData.serviceCategoryProgramData;
     }
+=======
+>>>>>>> upstream/master
 }

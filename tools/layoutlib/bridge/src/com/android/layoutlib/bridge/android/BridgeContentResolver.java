@@ -62,6 +62,7 @@ public class BridgeContentResolver extends ContentResolver {
         return false;
     }
 
+<<<<<<< HEAD
     @Override
     protected IContentProvider acquireUnstableProvider(Context c, String name) {
         return acquireProvider(c, name);
@@ -77,6 +78,8 @@ public class BridgeContentResolver extends ContentResolver {
     public void unstableProviderDied(IContentProvider icp) {
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Stub for the layoutlib bridge content resolver.
      */

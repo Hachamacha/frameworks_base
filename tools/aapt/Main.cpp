@@ -180,11 +180,15 @@ void usage(void)
         "   --non-constant-id\n"
         "       Make the resources ID non constant. This is required to make an R java class\n"
         "       that does not contain the final value but is used to make reusable compiled\n"
+<<<<<<< HEAD
         "       libraries that need to access resources.\n"
         "   --ignore-assets\n"
         "       Assets to be ignored. Default pattern is:\n"
         "       %s\n",
         gDefaultIgnoreAssets);
+=======
+        "       libraries that need to access resources.\n");
+>>>>>>> upstream/master
 }
 
 /*
@@ -311,6 +315,7 @@ int main(int argc, char* const argv[])
                 break;
             case 'x':
                 bundle.setExtending(true);
+<<<<<<< HEAD
                 argc--;
                 argv++;
                 if (!argc || !isdigit(argv[0][0])) {
@@ -319,6 +324,16 @@ int main(int argc, char* const argv[])
                 } else {
                     bundle.setExtendedPackageId(atoi(argv[0]));
                 }
+=======
+		argc--;
+		argv++;
+		if (!argc || !isdigit(argv[0][0])) {
+		    argc++;
+		    argv--;
+		} else {
+		    bundle.setExtendedPackageId(atoi(argv[0]));
+		}   
+>>>>>>> upstream/master
                 break;
             case 'z':
                 bundle.setRequireLocalization(true);
@@ -570,6 +585,7 @@ int main(int argc, char* const argv[])
                     bundle.setNonConstantId(true);
                 } else if (strcmp(cp, "-no-crunch") == 0) {
                     bundle.setUseCrunchCache(true);
+<<<<<<< HEAD
                 } else if (strcmp(cp, "-ignore-assets") == 0) {
                     argc--;
                     argv++;
@@ -580,6 +596,9 @@ int main(int argc, char* const argv[])
                     }
                     gUserIgnoreAssets = argv[0];
                 } else {
+=======
+                }else {
+>>>>>>> upstream/master
                     fprintf(stderr, "ERROR: Unknown option '-%s'\n", cp);
                     wantUsage = true;
                     goto bail;

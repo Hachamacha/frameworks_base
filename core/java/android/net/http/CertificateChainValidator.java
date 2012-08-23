@@ -17,6 +17,7 @@
 package android.net.http;
 
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
@@ -38,6 +39,37 @@ import org.apache.harmony.xnet.provider.jsse.TrustManagerImpl;
  * {@hide}
  */
 public class CertificateChainValidator {
+=======
+import com.android.internal.net.DomainNameValidator;
+
+import org.apache.harmony.security.provider.cert.X509CertImpl;
+import org.apache.harmony.xnet.provider.jsse.SSLParametersImpl;
+
+import java.io.IOException;
+
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateExpiredException;
+import java.security.cert.CertificateNotYetValidException;
+import java.security.cert.X509Certificate;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.util.Date;
+
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+/**
+ * Class responsible for all server certificate validation functionality
+ * 
+ * {@hide}
+ */
+class CertificateChainValidator {
+>>>>>>> upstream/master
 
     /**
      * The singleton instance of the certificate chain validator
@@ -45,9 +77,12 @@ public class CertificateChainValidator {
     private static final CertificateChainValidator sInstance
             = new CertificateChainValidator();
 
+<<<<<<< HEAD
     private static final DefaultHostnameVerifier sVerifier
             = new DefaultHostnameVerifier();
 
+=======
+>>>>>>> upstream/master
     /**
      * @return The singleton instance of the certificates chain validator
      */
@@ -126,6 +161,7 @@ public class CertificateChainValidator {
     }
 
     /**
+<<<<<<< HEAD
      * Handles updates to credential storage.
      */
     public static void handleTrustStorageUpdate() {
@@ -141,6 +177,8 @@ public class CertificateChainValidator {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Common code of doHandshakeAndValidateServerCertificates and verifyServerCertificates.
      * Calls DomainNamevalidator to verify the domain, and TrustManager to verify the certs.
      * @param chain the cert chain in X509 cert format.
@@ -157,10 +195,14 @@ public class CertificateChainValidator {
             throw new IllegalArgumentException("certificate for this site is null");
         }
 
+<<<<<<< HEAD
         boolean valid = domain != null
                 && !domain.isEmpty()
                 && sVerifier.verify(domain, currCertificate);
         if (!valid) {
+=======
+        if (!DomainNameValidator.match(currCertificate, domain)) {
+>>>>>>> upstream/master
             if (HttpLog.LOGV) {
                 HttpLog.v("certificate not for this host: " + domain);
             }
@@ -170,7 +212,11 @@ public class CertificateChainValidator {
         try {
             SSLParametersImpl.getDefaultTrustManager().checkServerTrusted(chain, authType);
             return null;  // No errors.
+<<<<<<< HEAD
         } catch (GeneralSecurityException e) {
+=======
+        } catch (CertificateException e) {
+>>>>>>> upstream/master
             if (HttpLog.LOGV) {
                 HttpLog.v("failed to validate the certificate chain, error: " +
                     e.getMessage());

@@ -21,6 +21,7 @@
 #include <android_runtime/android_graphics_SurfaceTexture.h>
 #include <utils/misc.h>
 
+<<<<<<< HEAD
 
 #include <EGL/egl_display.h>
 #include <EGL/egl.h>
@@ -34,6 +35,19 @@
 #include <SkPixelRef.h>
 
 #include <ui/ANativeObjectBase.h>
+=======
+#include <EGL/egl.h>
+#include <GLES/gl.h>
+
+#include <EGL/egl_display.h>
+
+#include <surfaceflinger/Surface.h>
+#include <SkBitmap.h>
+#include <SkPixelRef.h>
+
+#include <gui/SurfaceTexture.h>
+#include <gui/SurfaceTextureClient.h>
+>>>>>>> upstream/master
 
 namespace android {
 
@@ -46,6 +60,10 @@ static jfieldID gContext_EGLContextFieldID;
 static jfieldID gSurface_EGLSurfaceFieldID;
 static jfieldID gSurface_NativePixelRefFieldID;
 static jfieldID gConfig_EGLConfigFieldID;
+<<<<<<< HEAD
+=======
+static jfieldID gSurface_SurfaceFieldID;
+>>>>>>> upstream/master
 static jfieldID gBitmap_NativeBitmapFieldID;
 
 static inline EGLDisplay getDisplay(JNIEnv* env, jobject o) {
@@ -178,7 +196,11 @@ static jboolean jni_eglQuerySurface(JNIEnv *_env, jobject _this, jobject display
 
 static jint jni_getInitCount(JNIEnv *_env, jobject _clazz, jobject display) {
     EGLDisplay dpy = getDisplay(_env, display);
+<<<<<<< HEAD
     egl_display_t* eglDisplay = get_display_nowake(dpy);
+=======
+    egl_display_t* eglDisplay = get_display(dpy); 
+>>>>>>> upstream/master
     return eglDisplay ? eglDisplay->getRefsCount() : 0;
 }
 

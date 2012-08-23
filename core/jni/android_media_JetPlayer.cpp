@@ -22,12 +22,21 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+<<<<<<< HEAD
 #include <jni.h>
 #include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
 
 #include <utils/Log.h>
 #include <media/JetPlayer.h>
+=======
+#include "jni.h"
+#include "JNIHelp.h"
+#include "android_runtime/AndroidRuntime.h"
+
+#include "utils/Log.h"
+#include "media/JetPlayer.h"
+>>>>>>> upstream/master
 
 
 using namespace android;
@@ -56,7 +65,11 @@ static void
 jetPlayerEventCallback(int what, int arg1=0, int arg2=0, void* javaTarget = NULL)
 {
     JNIEnv *env = AndroidRuntime::getJNIEnv();
+<<<<<<< HEAD
     if (env) {
+=======
+    if(env) {
+>>>>>>> upstream/master
         env->CallStaticVoidMethod(
             javaJetPlayerFields.jetClass, javaJetPlayerFields.postNativeEventInJava,
             javaTarget,
@@ -66,7 +79,11 @@ jetPlayerEventCallback(int what, int arg1=0, int arg2=0, void* javaTarget = NULL
             env->ExceptionClear();
         }
     } else {
+<<<<<<< HEAD
         ALOGE("JET jetPlayerEventCallback(): No JNI env for JET event callback, can't post event.");
+=======
+        LOGE("JET jetPlayerEventCallback(): No JNI env for JET event callback, can't post event.");
+>>>>>>> upstream/master
         return;
     }
 }
@@ -79,18 +96,30 @@ static jboolean
 android_media_JetPlayer_setup(JNIEnv *env, jobject thiz, jobject weak_this,
     jint maxTracks, jint trackBufferSize)
 {
+<<<<<<< HEAD
     //ALOGV("android_media_JetPlayer_setup(): entering.");
+=======
+    //LOGV("android_media_JetPlayer_setup(): entering.");
+>>>>>>> upstream/master
     JetPlayer* lpJet = new JetPlayer(env->NewGlobalRef(weak_this), maxTracks, trackBufferSize);
 
     EAS_RESULT result = lpJet->init();
 
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
+=======
+    if(result==EAS_SUCCESS) {
+>>>>>>> upstream/master
         // save our newly created C++ JetPlayer in the "nativePlayerInJavaObj" field
         // of the Java object (in mNativePlayerInJavaObj)
         env->SetIntField(thiz, javaJetPlayerFields.nativePlayerInJavaObj, (int)lpJet);
         return JNI_TRUE;
     } else {
+<<<<<<< HEAD
         ALOGE("android_media_JetPlayer_setup(): initialization failed with EAS error code %d", (int)result);
+=======
+        LOGE("android_media_JetPlayer_setup(): initialization failed with EAS error code %d", (int)result);
+>>>>>>> upstream/master
         delete lpJet;
         env->SetIntField(weak_this, javaJetPlayerFields.nativePlayerInJavaObj, 0);
         return JNI_FALSE;
@@ -102,15 +131,26 @@ android_media_JetPlayer_setup(JNIEnv *env, jobject thiz, jobject weak_this,
 static void
 android_media_JetPlayer_finalize(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("android_media_JetPlayer_finalize(): entering.");
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
     if (lpJet != NULL) {
+=======
+    LOGV("android_media_JetPlayer_finalize(): entering.");
+    JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
+        thiz, javaJetPlayerFields.nativePlayerInJavaObj);
+    if(lpJet != NULL) {
+>>>>>>> upstream/master
         lpJet->release();
         delete lpJet;
     }
 
+<<<<<<< HEAD
     ALOGV("android_media_JetPlayer_finalize(): exiting.");
+=======
+    LOGV("android_media_JetPlayer_finalize(): exiting.");
+>>>>>>> upstream/master
 }
 
 
@@ -120,7 +160,11 @@ android_media_JetPlayer_release(JNIEnv *env, jobject thiz)
 {
     android_media_JetPlayer_finalize(env, thiz);
     env->SetIntField(thiz, javaJetPlayerFields.nativePlayerInJavaObj, 0);
+<<<<<<< HEAD
     ALOGV("android_media_JetPlayer_release() done");
+=======
+    LOGV("android_media_JetPlayer_release() done");
+>>>>>>> upstream/master
 }
 
 
@@ -140,6 +184,7 @@ android_media_JetPlayer_loadFromFile(JNIEnv *env, jobject thiz, jstring path)
 
     const char *pathStr = env->GetStringUTFChars(path, NULL);
     if (pathStr == NULL) {  // Out of memory
+<<<<<<< HEAD
         ALOGE("android_media_JetPlayer_openFile(): aborting, out of memory");
         return JNI_FALSE;
     }
@@ -153,6 +198,21 @@ android_media_JetPlayer_loadFromFile(JNIEnv *env, jobject thiz, jstring path)
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_openFile(): failed to open file with EAS error %d",
+=======
+        LOGE("android_media_JetPlayer_openFile(): aborting, out of memory");
+        return JNI_FALSE;
+    }
+
+    LOGV("android_media_JetPlayer_openFile(): trying to open %s", pathStr );
+    EAS_RESULT result = lpJet->loadFromFile(pathStr);
+    env->ReleaseStringUTFChars(path, pathStr);
+
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_openFile(): file successfully opened");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_openFile(): failed to open file with EAS error %d",
+>>>>>>> upstream/master
             (int)result);
         return JNI_FALSE;
     }
@@ -174,6 +234,7 @@ android_media_JetPlayer_loadFromFileD(JNIEnv *env, jobject thiz,
     // set up event callback function
     lpJet->setEventCallback(jetPlayerEventCallback);
 
+<<<<<<< HEAD
     ALOGV("android_media_JetPlayer_openFileDescr(): trying to load JET file through its fd" );
     EAS_RESULT result = lpJet->loadFromFD(jniGetFDFromFileDescriptor(env, fileDescriptor),
         (long long)offset, (long long)length); // cast params to types used by EAS_FILE
@@ -183,6 +244,17 @@ android_media_JetPlayer_loadFromFileD(JNIEnv *env, jobject thiz,
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_openFileDescr(): failed to open file with EAS error %d",
+=======
+    LOGV("android_media_JetPlayer_openFileDescr(): trying to load JET file through its fd" );
+    EAS_RESULT result = lpJet->loadFromFD(jniGetFDFromFileDescriptor(env, fileDescriptor),
+        (long long)offset, (long long)length); // cast params to types used by EAS_FILE
+
+    if(result==EAS_SUCCESS) {
+        LOGV("android_media_JetPlayer_openFileDescr(): file successfully opened");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_openFileDescr(): failed to open file with EAS error %d",
+>>>>>>> upstream/master
             (int)result);
         return JNI_FALSE;
     }
@@ -200,11 +272,19 @@ android_media_JetPlayer_closeFile(JNIEnv *env, jobject thiz)
             "Unable to retrieve JetPlayer pointer for closeFile()");
     }
 
+<<<<<<< HEAD
     if (lpJet->closeFile()==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_closeFile(): file successfully closed");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_closeFile(): failed to close file");
+=======
+    if( lpJet->closeFile()==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_closeFile(): file successfully closed");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_closeFile(): failed to close file");
+>>>>>>> upstream/master
         return JNI_FALSE;
     }
 }
@@ -222,11 +302,19 @@ android_media_JetPlayer_play(JNIEnv *env, jobject thiz)
     }
 
     EAS_RESULT result = lpJet->play();
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_play(): play successful");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_play(): failed to play with EAS error code %ld",
+=======
+    if( result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_play(): play successful");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_play(): failed to play with EAS error code %ld",
+>>>>>>> upstream/master
             result);
         return JNI_FALSE;
     }
@@ -245,6 +333,7 @@ android_media_JetPlayer_pause(JNIEnv *env, jobject thiz)
     }
 
     EAS_RESULT result = lpJet->pause();
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_pause(): pause successful");
         return JNI_TRUE;
@@ -254,6 +343,17 @@ android_media_JetPlayer_pause(JNIEnv *env, jobject thiz)
             return JNI_TRUE;
         } else
             ALOGE("android_media_JetPlayer_pause(): failed to pause with EAS error code %ld",
+=======
+    if( result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_pause(): pause successful");
+        return JNI_TRUE;
+    } else {
+        if(result==EAS_ERROR_QUEUE_IS_EMPTY) {
+            LOGV("android_media_JetPlayer_pause(): paused with an empty queue");
+            return JNI_TRUE;
+        } else
+            LOGE("android_media_JetPlayer_pause(): failed to pause with EAS error code %ld",
+>>>>>>> upstream/master
                 result);
         return JNI_FALSE;
     }
@@ -275,11 +375,19 @@ android_media_JetPlayer_queueSegment(JNIEnv *env, jobject thiz,
 
     EAS_RESULT result
         = lpJet->queueSegment(segmentNum, libNum, repeatCount, transpose, muteFlags, userID);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_queueSegment(): segment successfully queued");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_queueSegment(): failed with EAS error code %ld",
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_queueSegment(): segment successfully queued");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_queueSegment(): failed with EAS error code %ld",
+>>>>>>> upstream/master
             result);
         return JNI_FALSE;
     }
@@ -304,28 +412,48 @@ android_media_JetPlayer_queueSegmentMuteArray(JNIEnv *env, jobject thiz,
     jboolean *muteTracks = NULL;
     muteTracks = env->GetBooleanArrayElements(muteArray, NULL);
     if (muteTracks == NULL) {
+<<<<<<< HEAD
         ALOGE("android_media_JetPlayer_queueSegment(): failed to read track mute mask.");
+=======
+        LOGE("android_media_JetPlayer_queueSegment(): failed to read track mute mask.");
+>>>>>>> upstream/master
         return JNI_FALSE;
     }
 
     EAS_U32 muteMask=0;
     int maxTracks = lpJet->getMaxTracks();
     for (jint trackIndex=0; trackIndex<maxTracks; trackIndex++) {
+<<<<<<< HEAD
         if (muteTracks[maxTracks-1-trackIndex]==JNI_TRUE)
+=======
+        if(muteTracks[maxTracks-1-trackIndex]==JNI_TRUE)
+>>>>>>> upstream/master
             muteMask = (muteMask << 1) | 0x00000001;
         else
             muteMask = muteMask << 1;
     }
+<<<<<<< HEAD
     //ALOGV("android_media_JetPlayer_queueSegmentMuteArray(): FINAL mute mask =0x%08lX", mask);
+=======
+    //LOGV("android_media_JetPlayer_queueSegmentMuteArray(): FINAL mute mask =0x%08lX", mask);
+>>>>>>> upstream/master
 
     result = lpJet->queueSegment(segmentNum, libNum, repeatCount, transpose, muteMask, userID);
 
     env->ReleaseBooleanArrayElements(muteArray, muteTracks, 0);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_queueSegmentMuteArray(): segment successfully queued");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_queueSegmentMuteArray(): failed with EAS error code %ld",
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_queueSegmentMuteArray(): segment successfully queued");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_queueSegmentMuteArray(): failed with EAS error code %ld",
+>>>>>>> upstream/master
             result);
         return JNI_FALSE;
     }
@@ -346,11 +474,19 @@ android_media_JetPlayer_setMuteFlags(JNIEnv *env, jobject thiz,
 
     EAS_RESULT result;
     result = lpJet->setMuteFlags(muteFlags, bSync==JNI_TRUE ? true : false);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_setMuteFlags(): mute flags successfully updated");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_setMuteFlags(): failed with EAS error code %ld", result);
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_setMuteFlags(): mute flags successfully updated");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_setMuteFlags(): failed with EAS error code %ld", result);
+>>>>>>> upstream/master
         return JNI_FALSE;
     }
 }
@@ -373,28 +509,48 @@ android_media_JetPlayer_setMuteArray(JNIEnv *env, jobject thiz,
     jboolean *muteTracks = NULL;
     muteTracks = env->GetBooleanArrayElements(muteArray, NULL);
     if (muteTracks == NULL) {
+<<<<<<< HEAD
         ALOGE("android_media_JetPlayer_setMuteArray(): failed to read track mute mask.");
+=======
+        LOGE("android_media_JetPlayer_setMuteArray(): failed to read track mute mask.");
+>>>>>>> upstream/master
         return JNI_FALSE;
     }
 
     EAS_U32 muteMask=0;
     int maxTracks = lpJet->getMaxTracks();
     for (jint trackIndex=0; trackIndex<maxTracks; trackIndex++) {
+<<<<<<< HEAD
         if (muteTracks[maxTracks-1-trackIndex]==JNI_TRUE)
+=======
+        if(muteTracks[maxTracks-1-trackIndex]==JNI_TRUE)
+>>>>>>> upstream/master
             muteMask = (muteMask << 1) | 0x00000001;
         else
             muteMask = muteMask << 1;
     }
+<<<<<<< HEAD
     //ALOGV("android_media_JetPlayer_setMuteArray(): FINAL mute mask =0x%08lX", muteMask);
+=======
+    //LOGV("android_media_JetPlayer_setMuteArray(): FINAL mute mask =0x%08lX", muteMask);
+>>>>>>> upstream/master
 
     result = lpJet->setMuteFlags(muteMask, bSync==JNI_TRUE ? true : false);
 
     env->ReleaseBooleanArrayElements(muteArray, muteTracks, 0);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_setMuteArray(): mute flags successfully updated");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_setMuteArray(): \
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_setMuteArray(): mute flags successfully updated");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_setMuteArray(): \
+>>>>>>> upstream/master
             failed to update mute flags with EAS error code %ld", result);
         return JNI_FALSE;
     }
@@ -416,11 +572,19 @@ android_media_JetPlayer_setMuteFlag(JNIEnv *env, jobject thiz,
     EAS_RESULT result;
     result = lpJet->setMuteFlag(trackId,
         muteFlag==JNI_TRUE ? true : false, bSync==JNI_TRUE ? true : false);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_setMuteFlag(): mute flag successfully updated for track %d", trackId);
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_setMuteFlag(): failed to update mute flag for track %d with EAS error code %ld",
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_setMuteFlag(): mute flag successfully updated for track %d", trackId);
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_setMuteFlag(): failed to update mute flag for track %d with EAS error code %ld",
+>>>>>>> upstream/master
                 trackId, result);
         return JNI_FALSE;
     }
@@ -440,11 +604,19 @@ android_media_JetPlayer_triggerClip(JNIEnv *env, jobject thiz, jint clipId)
 
     EAS_RESULT result;
     result = lpJet->triggerClip(clipId);
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_triggerClip(): triggerClip successful for clip %d", clipId);
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_triggerClip(): triggerClip for clip %d failed with EAS error code %ld",
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_triggerClip(): triggerClip successful for clip %d", clipId);
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_triggerClip(): triggerClip for clip %d failed with EAS error code %ld",
+>>>>>>> upstream/master
                 clipId, result);
         return JNI_FALSE;
     }
@@ -463,11 +635,19 @@ android_media_JetPlayer_clearQueue(JNIEnv *env, jobject thiz)
     }
 
     EAS_RESULT result = lpJet->clearQueue();
+<<<<<<< HEAD
     if (result==EAS_SUCCESS) {
         //ALOGV("android_media_JetPlayer_clearQueue(): clearQueue successful");
         return JNI_TRUE;
     } else {
         ALOGE("android_media_JetPlayer_clearQueue(): clearQueue failed with EAS error code %ld",
+=======
+    if(result==EAS_SUCCESS) {
+        //LOGV("android_media_JetPlayer_clearQueue(): clearQueue successful");
+        return JNI_TRUE;
+    } else {
+        LOGE("android_media_JetPlayer_clearQueue(): clearQueue failed with EAS error code %ld",
+>>>>>>> upstream/master
                 result);
         return JNI_FALSE;
     }
@@ -513,7 +693,11 @@ int register_android_media_JetPlayer(JNIEnv *env)
     // Get the JetPlayer java class
     jetPlayerClass = env->FindClass(kClassPathName);
     if (jetPlayerClass == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find %s", kClassPathName);
+=======
+        LOGE("Can't find %s", kClassPathName);
+>>>>>>> upstream/master
         return -1;
     }
     javaJetPlayerFields.jetClass = (jclass)env->NewGlobalRef(jetPlayerClass);
@@ -523,7 +707,11 @@ int register_android_media_JetPlayer(JNIEnv *env)
             jetPlayerClass,
             JAVA_NATIVEJETPLAYERINJAVAOBJ_FIELD_NAME, "I");
     if (javaJetPlayerFields.nativePlayerInJavaObj == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find JetPlayer.%s", JAVA_NATIVEJETPLAYERINJAVAOBJ_FIELD_NAME);
+=======
+        LOGE("Can't find AudioTrack.%s", JAVA_NATIVEJETPLAYERINJAVAOBJ_FIELD_NAME);
+>>>>>>> upstream/master
         return -1;
     }
 
@@ -531,7 +719,11 @@ int register_android_media_JetPlayer(JNIEnv *env)
     javaJetPlayerFields.postNativeEventInJava = env->GetStaticMethodID(javaJetPlayerFields.jetClass,
             JAVA_NATIVEJETPOSTEVENT_CALLBACK_NAME, "(Ljava/lang/Object;III)V");
     if (javaJetPlayerFields.postNativeEventInJava == NULL) {
+<<<<<<< HEAD
         ALOGE("Can't find Jet.%s", JAVA_NATIVEJETPOSTEVENT_CALLBACK_NAME);
+=======
+        LOGE("Can't find Jet.%s", JAVA_NATIVEJETPOSTEVENT_CALLBACK_NAME);
+>>>>>>> upstream/master
         return -1;
     }
 

@@ -27,8 +27,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 
@@ -235,6 +238,7 @@ public class LinearLayout extends ViewGroup {
     }
 
     /**
+<<<<<<< HEAD
      * @return the divider Drawable that will divide each item.
      *
      * @see #setDividerDrawable(Drawable)
@@ -253,6 +257,11 @@ public class LinearLayout extends ViewGroup {
      * @see #setShowDividers(int)
      *
      * @attr ref android.R.styleable#LinearLayout_divider
+=======
+     * Set a drawable to be used as a divider between items.
+     * @param divider Drawable that will divide each item.
+     * @see #setShowDividers(int)
+>>>>>>> upstream/master
      */
     public void setDividerDrawable(Drawable divider) {
         if (divider == mDivider) {
@@ -324,7 +333,11 @@ public class LinearLayout extends ViewGroup {
             if (child != null && child.getVisibility() != GONE) {
                 if (hasDividerBeforeChildAt(i)) {
                     final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+<<<<<<< HEAD
                     final int top = child.getTop() - lp.topMargin - mDividerHeight;
+=======
+                    final int top = child.getTop() - lp.topMargin;
+>>>>>>> upstream/master
                     drawHorizontalDivider(canvas, top);
                 }
             }
@@ -351,7 +364,11 @@ public class LinearLayout extends ViewGroup {
             if (child != null && child.getVisibility() != GONE) {
                 if (hasDividerBeforeChildAt(i)) {
                     final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+<<<<<<< HEAD
                     final int left = child.getLeft() - lp.leftMargin - mDividerWidth;
+=======
+                    final int left = child.getLeft() - lp.leftMargin;
+>>>>>>> upstream/master
                     drawVerticalDivider(canvas, left);
                 }
             }
@@ -413,8 +430,11 @@ public class LinearLayout extends ViewGroup {
      * 
      * @return True to measure children with a weight using the minimum
      *         size of the largest child, false otherwise.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#LinearLayout_measureWithLargestChild
+=======
+>>>>>>> upstream/master
      */
     public boolean isMeasureWithLargestChildEnabled() {
         return mUseLargestChild;
@@ -429,8 +449,11 @@ public class LinearLayout extends ViewGroup {
      * 
      * @param enabled True to measure children with a weight using the
      *        minimum size of the largest child, false otherwise.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#LinearLayout_measureWithLargestChild
+=======
+>>>>>>> upstream/master
      */
     @android.view.RemotableViewMethod
     public void setMeasureWithLargestChildEnabled(boolean enabled) {
@@ -867,7 +890,11 @@ public class LinearLayout extends ViewGroup {
 
             // We have no limit, so make all weighted views as tall as the largest child.
             // Children will have already been measured once.
+<<<<<<< HEAD
             if (useLargestChild && heightMode != MeasureSpec.EXACTLY) {
+=======
+            if (useLargestChild && widthMode == MeasureSpec.UNSPECIFIED) {
+>>>>>>> upstream/master
                 for (int i = 0; i < count; i++) {
                     final View child = getVirtualChildAt(i);
 
@@ -1283,7 +1310,11 @@ public class LinearLayout extends ViewGroup {
 
             // We have no limit, so make all weighted views as wide as the largest child.
             // Children will have already been measured once.
+<<<<<<< HEAD
             if (useLargestChild && widthMode != MeasureSpec.EXACTLY) {
+=======
+            if (useLargestChild && widthMode == MeasureSpec.UNSPECIFIED) {
+>>>>>>> upstream/master
                 for (int i = 0; i < count; i++) {
                     final View child = getVirtualChildAt(i);
 
@@ -1750,6 +1781,7 @@ public class LinearLayout extends ViewGroup {
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
         return p instanceof LinearLayout.LayoutParams;
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -1763,6 +1795,9 @@ public class LinearLayout extends ViewGroup {
         info.setClassName(LinearLayout.class.getName());
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Per-child layout information associated with ViewLinearLayout.
      * 

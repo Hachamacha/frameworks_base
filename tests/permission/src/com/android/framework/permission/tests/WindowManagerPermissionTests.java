@@ -255,6 +255,44 @@ public class WindowManagerPermissionTests extends TestCase {
 	}    
 
     @SmallTest
+<<<<<<< HEAD
+=======
+    public void testINJECT_EVENTS() {
+        try {
+            mWm.injectKeyEvent(new KeyEvent(0, 0), false);
+            fail("IWindowManager.injectKeyEvent did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.injectPointerEvent(MotionEvent.obtain(0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0), false);
+            fail("IWindowManager.injectPointerEvent did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.injectTrackballEvent(MotionEvent.obtain(0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0), false);
+            fail("IWindowManager.injectTrackballEvent did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+    }
+    
+    @SmallTest
+>>>>>>> upstream/master
     public void testDISABLE_KEYGUARD() {
         Binder token = new Binder();
         try {
@@ -312,9 +350,79 @@ public class WindowManagerPermissionTests extends TestCase {
     }
     
     @SmallTest
+<<<<<<< HEAD
     public void testSET_ORIENTATION() {
         try {
             mWm.updateRotation(true, false);
+=======
+    public void testREAD_INPUT_STATE() {
+        try {
+            mWm.getSwitchState(0);
+            fail("IWindowManager.getSwitchState did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.getSwitchStateForDevice(0, 0);
+            fail("IWindowManager.getSwitchStateForDevice did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.getScancodeState(0);
+            fail("IWindowManager.getScancodeState did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.getScancodeStateForDevice(0, 0);
+            fail("IWindowManager.getScancodeStateForDevice did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.getKeycodeState(0);
+            fail("IWindowManager.getKeycodeState did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+        
+        try {
+            mWm.getKeycodeStateForDevice(0, 0);
+            fail("IWindowManager.getKeycodeStateForDevice did not throw SecurityException as"
+                    + " expected");
+        } catch (SecurityException e) {
+            // expected
+        } catch (RemoteException e) {
+            fail("Unexpected remote exception");
+        }
+    }
+    
+    @SmallTest
+    public void testSET_ORIENTATION() {
+        try {
+            mWm.updateRotation(true);
+            mWm.getSwitchState(0);
+>>>>>>> upstream/master
             fail("IWindowManager.updateRotation did not throw SecurityException as"
                     + " expected");
         } catch (SecurityException e) {
@@ -325,6 +433,10 @@ public class WindowManagerPermissionTests extends TestCase {
 
         try {
             mWm.freezeRotation(-1);
+<<<<<<< HEAD
+=======
+            mWm.getSwitchState(0);
+>>>>>>> upstream/master
             fail("IWindowManager.freezeRotation did not throw SecurityException as"
                     + " expected");
         } catch (SecurityException e) {
@@ -335,6 +447,10 @@ public class WindowManagerPermissionTests extends TestCase {
 
         try {
             mWm.thawRotation();
+<<<<<<< HEAD
+=======
+            mWm.getSwitchState(0);
+>>>>>>> upstream/master
             fail("IWindowManager.thawRotation did not throw SecurityException as"
                     + " expected");
         } catch (SecurityException e) {

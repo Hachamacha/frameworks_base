@@ -82,7 +82,10 @@ class Plotter:
     self.raw_acceleration_x = self._make_timeseries()
     self.raw_acceleration_y = self._make_timeseries()
     self.raw_acceleration_z = self._make_timeseries()
+<<<<<<< HEAD
     self.raw_acceleration_magnitude = self._make_timeseries()
+=======
+>>>>>>> upstream/master
     self.raw_acceleration_axes = self._add_timeseries_axes(
         1, 'Raw Acceleration', 'm/s^2', [-20, 20],
         yticks=range(-15, 16, 5))
@@ -92,8 +95,11 @@ class Plotter:
         self.raw_acceleration_axes, 'y', 'green')
     self.raw_acceleration_line_z = self._add_timeseries_line(
         self.raw_acceleration_axes, 'z', 'blue')
+<<<<<<< HEAD
     self.raw_acceleration_line_magnitude = self._add_timeseries_line(
         self.raw_acceleration_axes, 'magnitude', 'orange', linewidth=2)
+=======
+>>>>>>> upstream/master
     self._add_timeseries_legend(self.raw_acceleration_axes)
 
     shared_axis = self.raw_acceleration_axes
@@ -101,7 +107,11 @@ class Plotter:
     self.filtered_acceleration_x = self._make_timeseries()
     self.filtered_acceleration_y = self._make_timeseries()
     self.filtered_acceleration_z = self._make_timeseries()
+<<<<<<< HEAD
     self.filtered_acceleration_magnitude = self._make_timeseries()
+=======
+    self.magnitude = self._make_timeseries()
+>>>>>>> upstream/master
     self.filtered_acceleration_axes = self._add_timeseries_axes(
         2, 'Filtered Acceleration', 'm/s^2', [-20, 20],
         sharex=shared_axis,
@@ -112,7 +122,11 @@ class Plotter:
         self.filtered_acceleration_axes, 'y', 'green')
     self.filtered_acceleration_line_z = self._add_timeseries_line(
         self.filtered_acceleration_axes, 'z', 'blue')
+<<<<<<< HEAD
     self.filtered_acceleration_line_magnitude = self._add_timeseries_line(
+=======
+    self.magnitude_line = self._add_timeseries_line(
+>>>>>>> upstream/master
         self.filtered_acceleration_axes, 'magnitude', 'orange', linewidth=2)
     self._add_timeseries_legend(self.filtered_acceleration_axes)
 
@@ -136,19 +150,31 @@ class Plotter:
 
     self.current_rotation = self._make_timeseries()
     self.proposed_rotation = self._make_timeseries()
+<<<<<<< HEAD
     self.predicted_rotation = self._make_timeseries()
     self.orientation_axes = self._add_timeseries_axes(
         5, 'Current / Proposed Orientation', 'rotation', [-1, 4],
+=======
+    self.proposal_rotation = self._make_timeseries()
+    self.orientation_axes = self._add_timeseries_axes(
+        5, 'Current / Proposed Orientation and Confidence', 'rotation', [-1, 4],
+>>>>>>> upstream/master
         sharex=shared_axis,
         yticks=range(0, 4))
     self.current_rotation_line = self._add_timeseries_line(
         self.orientation_axes, 'current', 'black', linewidth=2)
+<<<<<<< HEAD
     self.predicted_rotation_line = self._add_timeseries_line(
         self.orientation_axes, 'predicted', 'purple', linewidth=3)
+=======
+    self.proposal_rotation_line = self._add_timeseries_line(
+        self.orientation_axes, 'proposal', 'purple', linewidth=3)
+>>>>>>> upstream/master
     self.proposed_rotation_line = self._add_timeseries_line(
         self.orientation_axes, 'proposed', 'green', linewidth=3)
     self._add_timeseries_legend(self.orientation_axes)
 
+<<<<<<< HEAD
     self.time_until_settled = self._make_timeseries()
     self.time_until_flat_delay_expired = self._make_timeseries()
     self.time_until_swing_delay_expired = self._make_timeseries()
@@ -170,15 +196,27 @@ class Plotter:
     self.sample_latency = self._make_timeseries()
     self.sample_latency_axes = self._add_timeseries_axes(
         7, 'Accelerometer Sampling Latency', 'ms', [-10, 500],
+=======
+    self.proposal_confidence = [[self._make_timeseries(), self._make_timeseries()]
+      for i in range(0, 4)]
+    self.proposal_confidence_polys = []
+
+    self.sample_latency = self._make_timeseries()
+    self.sample_latency_axes = self._add_timeseries_axes(
+        6, 'Accelerometer Sampling Latency', 'ms', [-10, 500],
+>>>>>>> upstream/master
         sharex=shared_axis,
         yticks=range(0, 500, 100))
     self.sample_latency_line = self._add_timeseries_line(
         self.sample_latency_axes, 'latency', 'black')
     self._add_timeseries_legend(self.sample_latency_axes)
 
+<<<<<<< HEAD
     self.fig.canvas.mpl_connect('button_press_event', self._on_click)
     self.paused = False
 
+=======
+>>>>>>> upstream/master
     self.timer = self.fig.canvas.new_timer(interval=100)
     self.timer.add_callback(lambda: self.update())
     self.timer.start()
@@ -186,6 +224,7 @@ class Plotter:
     self.timebase = None
     self._reset_parse_state()
 
+<<<<<<< HEAD
   # Handle a click event to pause or restart the timer.
   def _on_click(self, ev):
     if not self.paused:
@@ -195,13 +234,19 @@ class Plotter:
       self.paused = False
       self.timer.start()
 
+=======
+>>>>>>> upstream/master
   # Initialize a time series.
   def _make_timeseries(self):
     return [[], []]
 
   # Add a subplot to the figure for a time series.
   def _add_timeseries_axes(self, index, title, ylabel, ylim, yticks, sharex=None):
+<<<<<<< HEAD
     num_graphs = 7
+=======
+    num_graphs = 6
+>>>>>>> upstream/master
     height = 0.9 / num_graphs
     top = 0.95 - height * index
     axes = self.fig.add_axes([0.1, top, 0.8, height],
@@ -243,20 +288,32 @@ class Plotter:
     self.parse_raw_acceleration_x = None
     self.parse_raw_acceleration_y = None
     self.parse_raw_acceleration_z = None
+<<<<<<< HEAD
     self.parse_raw_acceleration_magnitude = None
     self.parse_filtered_acceleration_x = None
     self.parse_filtered_acceleration_y = None
     self.parse_filtered_acceleration_z = None
     self.parse_filtered_acceleration_magnitude = None
+=======
+    self.parse_filtered_acceleration_x = None
+    self.parse_filtered_acceleration_y = None
+    self.parse_filtered_acceleration_z = None
+    self.parse_magnitude = None
+>>>>>>> upstream/master
     self.parse_tilt_angle = None
     self.parse_orientation_angle = None
     self.parse_current_rotation = None
     self.parse_proposed_rotation = None
+<<<<<<< HEAD
     self.parse_predicted_rotation = None
     self.parse_time_until_settled = None
     self.parse_time_until_flat_delay_expired = None
     self.parse_time_until_swing_delay_expired = None
     self.parse_time_until_acceleration_delay_expired = None
+=======
+    self.parse_proposal_rotation = None
+    self.parse_proposal_confidence = None
+>>>>>>> upstream/master
     self.parse_sample_latency = None
 
   # Update samples.
@@ -285,13 +342,22 @@ class Plotter:
         self.parse_raw_acceleration_x = self._get_following_number(line, 'x=')
         self.parse_raw_acceleration_y = self._get_following_number(line, 'y=')
         self.parse_raw_acceleration_z = self._get_following_number(line, 'z=')
+<<<<<<< HEAD
         self.parse_raw_acceleration_magnitude = self._get_following_number(line, 'magnitude=')
+=======
+>>>>>>> upstream/master
 
       if line.find('Filtered acceleration vector:') != -1:
         self.parse_filtered_acceleration_x = self._get_following_number(line, 'x=')
         self.parse_filtered_acceleration_y = self._get_following_number(line, 'y=')
         self.parse_filtered_acceleration_z = self._get_following_number(line, 'z=')
+<<<<<<< HEAD
         self.parse_filtered_acceleration_magnitude = self._get_following_number(line, 'magnitude=')
+=======
+
+      if line.find('magnitude=') != -1:
+        self.parse_magnitude = self._get_following_number(line, 'magnitude=')
+>>>>>>> upstream/master
 
       if line.find('tiltAngle=') != -1:
         self.parse_tilt_angle = self._get_following_number(line, 'tiltAngle=')
@@ -302,21 +368,34 @@ class Plotter:
       if line.find('Result:') != -1:
         self.parse_current_rotation = self._get_following_number(line, 'currentRotation=')
         self.parse_proposed_rotation = self._get_following_number(line, 'proposedRotation=')
+<<<<<<< HEAD
         self.parse_predicted_rotation = self._get_following_number(line, 'predictedRotation=')
         self.parse_sample_latency = self._get_following_number(line, 'timeDeltaMS=')
         self.parse_time_until_settled = self._get_following_number(line, 'timeUntilSettledMS=')
         self.parse_time_until_flat_delay_expired = self._get_following_number(line, 'timeUntilFlatDelayExpiredMS=')
         self.parse_time_until_swing_delay_expired = self._get_following_number(line, 'timeUntilSwingDelayExpiredMS=')
         self.parse_time_until_acceleration_delay_expired = self._get_following_number(line, 'timeUntilAccelerationDelayExpiredMS=')
+=======
+        self.parse_proposal_rotation = self._get_following_number(line, 'proposalRotation=')
+        self.parse_proposal_confidence = self._get_following_number(line, 'proposalConfidence=')
+        self.parse_sample_latency = self._get_following_number(line, 'timeDeltaMS=')
+>>>>>>> upstream/master
 
         self._append(self.raw_acceleration_x, timeindex, self.parse_raw_acceleration_x)
         self._append(self.raw_acceleration_y, timeindex, self.parse_raw_acceleration_y)
         self._append(self.raw_acceleration_z, timeindex, self.parse_raw_acceleration_z)
+<<<<<<< HEAD
         self._append(self.raw_acceleration_magnitude, timeindex, self.parse_raw_acceleration_magnitude)
         self._append(self.filtered_acceleration_x, timeindex, self.parse_filtered_acceleration_x)
         self._append(self.filtered_acceleration_y, timeindex, self.parse_filtered_acceleration_y)
         self._append(self.filtered_acceleration_z, timeindex, self.parse_filtered_acceleration_z)
         self._append(self.filtered_acceleration_magnitude, timeindex, self.parse_filtered_acceleration_magnitude)
+=======
+        self._append(self.filtered_acceleration_x, timeindex, self.parse_filtered_acceleration_x)
+        self._append(self.filtered_acceleration_y, timeindex, self.parse_filtered_acceleration_y)
+        self._append(self.filtered_acceleration_z, timeindex, self.parse_filtered_acceleration_z)
+        self._append(self.magnitude, timeindex, self.parse_magnitude)
+>>>>>>> upstream/master
         self._append(self.tilt_angle, timeindex, self.parse_tilt_angle)
         self._append(self.orientation_angle, timeindex, self.parse_orientation_angle)
         self._append(self.current_rotation, timeindex, self.parse_current_rotation)
@@ -324,6 +403,7 @@ class Plotter:
           self._append(self.proposed_rotation, timeindex, self.parse_proposed_rotation)
         else:
           self._append(self.proposed_rotation, timeindex, None)
+<<<<<<< HEAD
         if self.parse_predicted_rotation >= 0:
           self._append(self.predicted_rotation, timeindex, self.parse_predicted_rotation)
         else:
@@ -332,6 +412,19 @@ class Plotter:
         self._append(self.time_until_flat_delay_expired, timeindex, self.parse_time_until_flat_delay_expired)
         self._append(self.time_until_swing_delay_expired, timeindex, self.parse_time_until_swing_delay_expired)
         self._append(self.time_until_acceleration_delay_expired, timeindex, self.parse_time_until_acceleration_delay_expired)
+=======
+        if self.parse_proposal_rotation >= 0:
+          self._append(self.proposal_rotation, timeindex, self.parse_proposal_rotation)
+        else:
+          self._append(self.proposal_rotation, timeindex, None)
+        for i in range(0, 4):
+          self._append(self.proposal_confidence[i][0], timeindex, i)
+          if i == self.parse_proposal_rotation:
+            self._append(self.proposal_confidence[i][1], timeindex,
+              i + self.parse_proposal_confidence)
+          else:
+            self._append(self.proposal_confidence[i][1], timeindex, i)
+>>>>>>> upstream/master
         self._append(self.sample_latency, timeindex, self.parse_sample_latency)
         self._reset_parse_state()
 
@@ -342,35 +435,57 @@ class Plotter:
       self._scroll(self.raw_acceleration_x, bottom)
       self._scroll(self.raw_acceleration_y, bottom)
       self._scroll(self.raw_acceleration_z, bottom)
+<<<<<<< HEAD
       self._scroll(self.raw_acceleration_magnitude, bottom)
       self._scroll(self.filtered_acceleration_x, bottom)
       self._scroll(self.filtered_acceleration_y, bottom)
       self._scroll(self.filtered_acceleration_z, bottom)
       self._scroll(self.filtered_acceleration_magnitude, bottom)
+=======
+      self._scroll(self.filtered_acceleration_x, bottom)
+      self._scroll(self.filtered_acceleration_y, bottom)
+      self._scroll(self.filtered_acceleration_z, bottom)
+      self._scroll(self.magnitude, bottom)
+>>>>>>> upstream/master
       self._scroll(self.tilt_angle, bottom)
       self._scroll(self.orientation_angle, bottom)
       self._scroll(self.current_rotation, bottom)
       self._scroll(self.proposed_rotation, bottom)
+<<<<<<< HEAD
       self._scroll(self.predicted_rotation, bottom)
       self._scroll(self.time_until_settled, bottom)
       self._scroll(self.time_until_flat_delay_expired, bottom)
       self._scroll(self.time_until_swing_delay_expired, bottom)
       self._scroll(self.time_until_acceleration_delay_expired, bottom)
+=======
+      self._scroll(self.proposal_rotation, bottom)
+      for i in range(0, 4):
+        self._scroll(self.proposal_confidence[i][0], bottom)
+        self._scroll(self.proposal_confidence[i][1], bottom)
+>>>>>>> upstream/master
       self._scroll(self.sample_latency, bottom)
 
     # Redraw the plots.
     self.raw_acceleration_line_x.set_data(self.raw_acceleration_x)
     self.raw_acceleration_line_y.set_data(self.raw_acceleration_y)
     self.raw_acceleration_line_z.set_data(self.raw_acceleration_z)
+<<<<<<< HEAD
     self.raw_acceleration_line_magnitude.set_data(self.raw_acceleration_magnitude)
     self.filtered_acceleration_line_x.set_data(self.filtered_acceleration_x)
     self.filtered_acceleration_line_y.set_data(self.filtered_acceleration_y)
     self.filtered_acceleration_line_z.set_data(self.filtered_acceleration_z)
     self.filtered_acceleration_line_magnitude.set_data(self.filtered_acceleration_magnitude)
+=======
+    self.filtered_acceleration_line_x.set_data(self.filtered_acceleration_x)
+    self.filtered_acceleration_line_y.set_data(self.filtered_acceleration_y)
+    self.filtered_acceleration_line_z.set_data(self.filtered_acceleration_z)
+    self.magnitude_line.set_data(self.magnitude)
+>>>>>>> upstream/master
     self.tilt_angle_line.set_data(self.tilt_angle)
     self.orientation_angle_line.set_data(self.orientation_angle)
     self.current_rotation_line.set_data(self.current_rotation)
     self.proposed_rotation_line.set_data(self.proposed_rotation)
+<<<<<<< HEAD
     self.predicted_rotation_line.set_data(self.predicted_rotation)
     self.time_until_settled_line.set_data(self.time_until_settled)
     self.time_until_flat_delay_expired_line.set_data(self.time_until_flat_delay_expired)
@@ -378,6 +493,21 @@ class Plotter:
     self.time_until_acceleration_delay_expired_line.set_data(self.time_until_acceleration_delay_expired)
     self.sample_latency_line.set_data(self.sample_latency)
 
+=======
+    self.proposal_rotation_line.set_data(self.proposal_rotation)
+    self.sample_latency_line.set_data(self.sample_latency)
+
+    for poly in self.proposal_confidence_polys:
+      poly.remove()
+    self.proposal_confidence_polys = []
+    for i in range(0, 4):
+      self.proposal_confidence_polys.append(self.orientation_axes.fill_between(
+        self.proposal_confidence[i][0][0],
+        self.proposal_confidence[i][0][1],
+        self.proposal_confidence[i][1][1],
+        facecolor='goldenrod', edgecolor='goldenrod'))
+
+>>>>>>> upstream/master
     self.fig.canvas.draw_idle()
 
   # Scroll a time series.

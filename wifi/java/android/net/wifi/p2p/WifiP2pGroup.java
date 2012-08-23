@@ -23,8 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
 import java.util.Collections;
+<<<<<<< HEAD
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+=======
+>>>>>>> upstream/master
 
 /**
  * A class representing a Wi-Fi P2p group
@@ -50,6 +53,7 @@ public class WifiP2pGroup implements Parcelable {
 
     private String mInterface;
 
+<<<<<<< HEAD
     /** P2P group started string pattern */
     private static final Pattern groupStartedPattern = Pattern.compile(
         "ssid=\"(.+)\" " +
@@ -59,6 +63,8 @@ public class WifiP2pGroup implements Parcelable {
         "go_dev_addr=((?:[0-9a-f]{2}:){5}[0-9a-f]{2})"
     );
 
+=======
+>>>>>>> upstream/master
     public WifiP2pGroup() {
     }
 
@@ -89,6 +95,7 @@ public class WifiP2pGroup implements Parcelable {
             mInterface = tokens[1];
             mIsGroupOwner = tokens[2].equals("GO");
 
+<<<<<<< HEAD
             Matcher match = groupStartedPattern.matcher(supplicantEvent);
             if (!match.find()) {
                 return;
@@ -101,6 +108,26 @@ public class WifiP2pGroup implements Parcelable {
             mPassphrase = match.group(4);
             mOwner = new WifiP2pDevice(match.group(5));
 
+=======
+            for (String token : tokens) {
+                String[] nameValue = token.split("=");
+                if (nameValue.length != 2) continue;
+
+                if (nameValue[0].equals("ssid")) {
+                    mNetworkName = nameValue[1];
+                    continue;
+                }
+
+                if (nameValue[0].equals("passphrase")) {
+                    mPassphrase = nameValue[1];
+                    continue;
+                }
+
+                if (nameValue[0].equals("go_dev_addr")) {
+                    mOwner = new WifiP2pDevice(nameValue[1]);
+                }
+            }
+>>>>>>> upstream/master
         } else if (tokens[0].equals("P2P-INVITATION-RECEIVED")) {
             for (String token : tokens) {
                 String[] nameValue = token.split("=");
@@ -177,12 +204,15 @@ public class WifiP2pGroup implements Parcelable {
         return mClients.size() == 0;
     }
 
+<<<<<<< HEAD
     /** @hide Returns {@code true} if the device is part of the group */
     public boolean contains(WifiP2pDevice device) {
         if (mOwner.equals(device) || mClients.contains(device)) return true;
         return false;
     }
 
+=======
+>>>>>>> upstream/master
     /** Get the list of clients currently part of the p2p group */
     public Collection<WifiP2pDevice> getClientList() {
         return Collections.unmodifiableCollection(mClients);

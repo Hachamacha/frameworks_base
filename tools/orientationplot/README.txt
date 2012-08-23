@@ -16,6 +16,7 @@ USAGE
 The tool works by scaping the debug log output from WindowOrientationListener
 for interesting data and then plotting it.
 
+<<<<<<< HEAD
 1. Plug in the device.  Ensure that it is the only device plugged in
    since this script is of very little brain and will get confused otherwise.
 
@@ -26,6 +27,18 @@ for interesting data and then plotting it.
 
 3. Run "orientationplot.py".
 
+=======
+1. Enable the Window Orientation Listener debugging data log using the
+   Development Settings in the Dev Tools application (Development.apk).
+
+2. Plug in the device.  Ensure that it is the only device plugged in
+   since this script is of very little brain and will get confused otherwise.
+
+3. Run "orientationplot.py".
+
+4. When finished, remember to disable the debug log output since it is quite verbose!
+
+>>>>>>> upstream/master
 
 WHAT IT ALL MEANS
 -----------------

@@ -25,17 +25,29 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+<<<<<<< HEAD
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PatternMatcher;
 import android.os.UserId;
+=======
+import android.os.Build;
+import android.os.Bundle;
+import android.os.PatternMatcher;
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TypedValue;
+<<<<<<< HEAD
+=======
+import com.android.internal.util.XmlUtils;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+>>>>>>> upstream/master
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -52,7 +64,10 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Enumeration;
+<<<<<<< HEAD
 import java.util.HashSet;
+=======
+>>>>>>> upstream/master
 import java.util.Iterator;
 import java.util.List;
 import java.util.jar.Attributes;
@@ -60,11 +75,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+<<<<<<< HEAD
 import com.android.internal.util.XmlUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+=======
+>>>>>>> upstream/master
 /**
  * Package archive parsing
  *
@@ -90,6 +108,7 @@ public class PackageParser {
             this.fileVersion = fileVersion;
         }
     }
+<<<<<<< HEAD
 
     /** @hide */
     public static class SplitPermissionInfo {
@@ -104,13 +123,19 @@ public class PackageParser {
         }
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * List of new permissions that have been added since 1.0.
      * NOTE: These must be declared in SDK version order, with permissions
      * added to older SDKs appearing before those added to newer SDKs.
+<<<<<<< HEAD
      * If sdkVersion is 0, then this is not a permission that we want to
      * automatically add to older apps, but we do want to allow it to be
      * granted during a platform update.
+=======
+>>>>>>> upstream/master
      * @hide
      */
     public static final PackageParser.NewPermissionInfo NEW_PERMISSIONS[] =
@@ -121,6 +146,7 @@ public class PackageParser {
                     android.os.Build.VERSION_CODES.DONUT, 0)
     };
 
+<<<<<<< HEAD
     /**
      * List of permissions that have been split into more granular or dependent
      * permissions.
@@ -143,6 +169,8 @@ public class PackageParser {
                     android.os.Build.VERSION_CODES.JELLY_BEAN)
     };
 
+=======
+>>>>>>> upstream/master
     private String mArchiveSourcePath;
     private String[] mSeparateProcesses;
     private boolean mOnlyCoreApps;
@@ -244,6 +272,7 @@ public class PackageParser {
         return name.endsWith(".apk");
     }
 
+<<<<<<< HEAD
     public static PackageInfo generatePackageInfo(PackageParser.Package p,
             int gids[], int flags, long firstInstallTime, long lastUpdateTime,
             HashSet<String> grantedPermissions) {
@@ -253,6 +282,8 @@ public class PackageParser {
                 UserId.getCallingUserId());
     }
 
+=======
+>>>>>>> upstream/master
     public static String getLockedZipFilePath(String path) {
         if (path == null) {
             return null;
@@ -271,6 +302,7 @@ public class PackageParser {
      * @param flags indicating which optional information is included.
      */
     public static PackageInfo generatePackageInfo(PackageParser.Package p,
+<<<<<<< HEAD
             int gids[], int flags, long firstInstallTime, long lastUpdateTime,
             HashSet<String> grantedPermissions, boolean stopped, int enabledState) {
 
@@ -281,6 +313,9 @@ public class PackageParser {
     public static PackageInfo generatePackageInfo(PackageParser.Package p,
             int gids[], int flags, long firstInstallTime, long lastUpdateTime,
             HashSet<String> grantedPermissions, boolean stopped, int enabledState, int userId) {
+=======
+            int gids[], int flags, long firstInstallTime, long lastUpdateTime) {
+>>>>>>> upstream/master
 
         PackageInfo pi = new PackageInfo();
         pi.packageName = p.packageName;
@@ -303,7 +338,11 @@ public class PackageParser {
                 }
             }
         }
+<<<<<<< HEAD
         pi.applicationInfo = generateApplicationInfo(p, flags, stopped, enabledState, userId);
+=======
+        pi.applicationInfo = generateApplicationInfo(p, flags);
+>>>>>>> upstream/master
         pi.installLocation = p.installLocation;
         pi.firstInstallTime = firstInstallTime;
         pi.lastUpdateTime = lastUpdateTime;
@@ -338,8 +377,12 @@ public class PackageParser {
                     final Activity activity = p.activities.get(i);
                     if (activity.info.enabled
                         || (flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
+<<<<<<< HEAD
                         pi.activities[j++] = generateActivityInfo(p.activities.get(i), flags,
                                 stopped, enabledState, userId);
+=======
+                        pi.activities[j++] = generateActivityInfo(p.activities.get(i), flags);
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -360,8 +403,12 @@ public class PackageParser {
                     final Activity activity = p.receivers.get(i);
                     if (activity.info.enabled
                         || (flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
+<<<<<<< HEAD
                         pi.receivers[j++] = generateActivityInfo(p.receivers.get(i), flags,
                                 stopped, enabledState, userId);
+=======
+                        pi.receivers[j++] = generateActivityInfo(p.receivers.get(i), flags);
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -382,8 +429,12 @@ public class PackageParser {
                     final Service service = p.services.get(i);
                     if (service.info.enabled
                         || (flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
+<<<<<<< HEAD
                         pi.services[j++] = generateServiceInfo(p.services.get(i), flags, stopped,
                                 enabledState, userId);
+=======
+                        pi.services[j++] = generateServiceInfo(p.services.get(i), flags);
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -404,8 +455,12 @@ public class PackageParser {
                     final Provider provider = p.providers.get(i);
                     if (provider.info.enabled
                         || (flags&PackageManager.GET_DISABLED_COMPONENTS) != 0) {
+<<<<<<< HEAD
                         pi.providers[j++] = generateProviderInfo(p.providers.get(i), flags, stopped,
                                 enabledState, userId);
+=======
+                        pi.providers[j++] = generateProviderInfo(p.providers.get(i), flags);
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -431,6 +486,7 @@ public class PackageParser {
             N = p.requestedPermissions.size();
             if (N > 0) {
                 pi.requestedPermissions = new String[N];
+<<<<<<< HEAD
                 pi.requestedPermissionsFlags = new int[N];
                 for (int i=0; i<N; i++) {
                     final String perm = p.requestedPermissions.get(i);
@@ -441,6 +497,10 @@ public class PackageParser {
                     if (grantedPermissions != null && grantedPermissions.contains(perm)) {
                         pi.requestedPermissionsFlags[i] |= PackageInfo.REQUESTED_PERMISSION_GRANTED;
                     }
+=======
+                for (int i=0; i<N; i++) {
+                    pi.requestedPermissions[i] = p.requestedPermissions.get(i);
+>>>>>>> upstream/master
                 }
             }
         }
@@ -966,6 +1026,7 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifest_installLocation,
                 PARSE_DEFAULT_INSTALL_LOCATION);
         pkg.applicationInfo.installLocation = pkg.installLocation;
+<<<<<<< HEAD
 
         /* Set the global "forward lock" flag */
         if ((flags & PARSE_FORWARD_LOCK) != 0) {
@@ -977,6 +1038,9 @@ public class PackageParser {
             pkg.applicationInfo.flags |= ApplicationInfo.FLAG_EXTERNAL_STORAGE;
         }
 
+=======
+        
+>>>>>>> upstream/master
         // Resource boolean are -1, so 1 means we don't know the value.
         int supportsSmallScreens = 1;
         int supportsNormalScreens = 1;
@@ -1011,7 +1075,11 @@ public class PackageParser {
                     return null;
                 }
             } else if (tagName.equals("permission-group")) {
+<<<<<<< HEAD
                 if (parsePermissionGroup(pkg, flags, res, parser, attrs, outError) == null) {
+=======
+                if (parsePermissionGroup(pkg, res, parser, attrs, outError) == null) {
+>>>>>>> upstream/master
                     return null;
                 }
             } else if (tagName.equals("permission")) {
@@ -1030,16 +1098,22 @@ public class PackageParser {
                 // that may change.
                 String name = sa.getNonResourceString(
                         com.android.internal.R.styleable.AndroidManifestUsesPermission_name);
+<<<<<<< HEAD
                 /* Not supporting optional permissions yet.
                 boolean required = sa.getBoolean(
                         com.android.internal.R.styleable.AndroidManifestUsesPermission_required, true);
                 */
+=======
+>>>>>>> upstream/master
 
                 sa.recycle();
 
                 if (name != null && !pkg.requestedPermissions.contains(name)) {
                     pkg.requestedPermissions.add(name.intern());
+<<<<<<< HEAD
                     pkg.requestedPermissionsRequired.add(Boolean.TRUE);
+=======
+>>>>>>> upstream/master
                 }
 
                 XmlUtils.skipCurrentTag(parser);
@@ -1337,12 +1411,16 @@ public class PackageParser {
                 }
                 implicitPerms.append(npi.name);
                 pkg.requestedPermissions.add(npi.name);
+<<<<<<< HEAD
                 pkg.requestedPermissionsRequired.add(Boolean.TRUE);
+=======
+>>>>>>> upstream/master
             }
         }
         if (implicitPerms != null) {
             Slog.i(TAG, implicitPerms.toString());
         }
+<<<<<<< HEAD
 
         final int NS = PackageParser.SPLIT_PERMISSIONS.length;
         for (int is=0; is<NS; is++) {
@@ -1361,6 +1439,9 @@ public class PackageParser {
             }
         }
 
+=======
+        
+>>>>>>> upstream/master
         if (supportsSmallScreens < 0 || (supportsSmallScreens > 0
                 && pkg.applicationInfo.targetSdkVersion
                         >= android.os.Build.VERSION_CODES.DONUT)) {
@@ -1479,7 +1560,11 @@ public class PackageParser {
         return buildCompoundName(pkg, procSeq, "taskAffinity", outError);
     }
     
+<<<<<<< HEAD
     private PermissionGroup parsePermissionGroup(Package owner, int flags, Resources res,
+=======
+    private PermissionGroup parsePermissionGroup(Package owner, Resources res,
+>>>>>>> upstream/master
             XmlPullParser parser, AttributeSet attrs, String[] outError)
         throws XmlPullParserException, IOException {
         PermissionGroup perm = new PermissionGroup(owner);
@@ -1501,12 +1586,15 @@ public class PackageParser {
         perm.info.descriptionRes = sa.getResourceId(
                 com.android.internal.R.styleable.AndroidManifestPermissionGroup_description,
                 0);
+<<<<<<< HEAD
         perm.info.flags = 0;
         perm.info.priority = sa.getInt(
                 com.android.internal.R.styleable.AndroidManifestPermissionGroup_priority, 0);
         if (perm.info.priority > 0 && (flags&PARSE_IS_SYSTEM) == 0) {
             perm.info.priority = 0;
         }
+=======
+>>>>>>> upstream/master
 
         sa.recycle();
         
@@ -1557,12 +1645,17 @@ public class PackageParser {
                 PermissionInfo.PROTECTION_NORMAL);
 
         sa.recycle();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         if (perm.info.protectionLevel == -1) {
             outError[0] = "<permission> does not specify protectionLevel";
             mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
             return null;
         }
+<<<<<<< HEAD
 
         perm.info.protectionLevel = PermissionInfo.fixProtectionLevel(perm.info.protectionLevel);
 
@@ -1575,6 +1668,8 @@ public class PackageParser {
                 return null;
             }
         }
+=======
+>>>>>>> upstream/master
         
         if (!parseAllMetaData(res, parser, attrs, "<permission>", perm,
                 outError)) {
@@ -1803,6 +1898,17 @@ public class PackageParser {
             }
         }
 
+<<<<<<< HEAD
+=======
+        if ((flags & PARSE_FORWARD_LOCK) != 0) {
+            ai.flags |= ApplicationInfo.FLAG_FORWARD_LOCK;
+        }
+
+        if ((flags & PARSE_ON_SDCARD) != 0) {
+            ai.flags |= ApplicationInfo.FLAG_EXTERNAL_STORAGE;
+        }
+
+>>>>>>> upstream/master
         if (sa.getBoolean(
                 com.android.internal.R.styleable.AndroidManifestApplication_debuggable,
                 false)) {
@@ -1849,12 +1955,15 @@ public class PackageParser {
             ai.flags |= ApplicationInfo.FLAG_LARGE_HEAP;
         }
 
+<<<<<<< HEAD
         if (sa.getBoolean(
                 com.android.internal.R.styleable.AndroidManifestApplication_supportsRtl,
                 false /* default is no RTL support*/)) {
             ai.flags |= ApplicationInfo.FLAG_SUPPORTS_RTL;
         }
 
+=======
+>>>>>>> upstream/master
         String str;
         str = sa.getNonConfigurationString(
                 com.android.internal.R.styleable.AndroidManifestApplication_permission, 0);
@@ -2118,6 +2227,7 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifestActivity_uiOptions,
                 a.info.applicationInfo.uiOptions);
 
+<<<<<<< HEAD
         String parentName = sa.getNonConfigurationString(
                 com.android.internal.R.styleable.AndroidManifestActivity_parentActivityName, 0);
         if (parentName != null) {
@@ -2131,6 +2241,8 @@ public class PackageParser {
             }
         }
 
+=======
+>>>>>>> upstream/master
         String str;
         str = sa.getNonConfigurationString(
                 com.android.internal.R.styleable.AndroidManifestActivity_permission, 0);
@@ -2377,7 +2489,10 @@ public class PackageParser {
         info.theme = target.info.theme;
         info.softInputMode = target.info.softInputMode;
         info.uiOptions = target.info.uiOptions;
+<<<<<<< HEAD
         info.parentActivityName = target.info.parentActivityName;
+=======
+>>>>>>> upstream/master
         
         Activity a = new Activity(mParseActivityAliasArgs, info);
         if (outError[0] != null) {
@@ -2399,6 +2514,7 @@ public class PackageParser {
             a.info.permission = str.length() > 0 ? str.toString().intern() : null;
         }
 
+<<<<<<< HEAD
         String parentName = sa.getNonConfigurationString(
                 com.android.internal.R.styleable.AndroidManifestActivityAlias_parentActivityName,
                 0);
@@ -2413,6 +2529,8 @@ public class PackageParser {
             }
         }
 
+=======
+>>>>>>> upstream/master
         sa.recycle();
 
         if (outError[0] != null) {
@@ -2790,11 +2908,14 @@ public class PackageParser {
                 false)) {
             s.info.flags |= ServiceInfo.FLAG_STOP_WITH_TASK;
         }
+<<<<<<< HEAD
         if (sa.getBoolean(
                 com.android.internal.R.styleable.AndroidManifestService_isolatedProcess,
                 false)) {
             s.info.flags |= ServiceInfo.FLAG_ISOLATED_PROCESS;
         }
+=======
+>>>>>>> upstream/master
 
         sa.recycle();
 
@@ -3160,7 +3281,10 @@ public class PackageParser {
         public final ArrayList<Instrumentation> instrumentation = new ArrayList<Instrumentation>(0);
 
         public final ArrayList<String> requestedPermissions = new ArrayList<String>();
+<<<<<<< HEAD
         public final ArrayList<Boolean> requestedPermissionsRequired = new ArrayList<Boolean>();
+=======
+>>>>>>> upstream/master
 
         public ArrayList<String> protectedBroadcasts;
         
@@ -3203,18 +3327,31 @@ public class PackageParser {
         
         // For use by package manager to keep track of where it has done dexopt.
         public boolean mDidDexOpt;
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         // Is Theme Apk
         public boolean mIsThemeApk = false;
 
         // Theme info
         public final ArrayList<ThemeInfo> mThemeInfos = new ArrayList<ThemeInfo>(0);
+<<<<<<< HEAD
         
         // // User set enabled state.
         // public int mSetEnabled = PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
         //
         // // Whether the package has been stopped.
         // public boolean mSetStopped = false;
+=======
+
+        // User set enabled state.
+        public int mSetEnabled = PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
+
+        // Whether the package has been stopped.
+        public boolean mSetStopped = false;
+>>>>>>> upstream/master
 
         // Additional data supplied by callers.
         public Object mExtras;
@@ -3272,6 +3409,7 @@ public class PackageParser {
                 instrumentation.get(i).setPackageName(newName);
             }
         }
+<<<<<<< HEAD
 
         public boolean hasComponentClassName(String name) {
             for (int i=activities.size()-1; i>=0; i--) {
@@ -3302,6 +3440,9 @@ public class PackageParser {
             return false;
         }
 
+=======
+        
+>>>>>>> upstream/master
         public String toString() {
             return "Package{"
                 + Integer.toHexString(System.identityHashCode(this))
@@ -3479,9 +3620,15 @@ public class PackageParser {
         }
     }
 
+<<<<<<< HEAD
     private static boolean copyNeeded(int flags, Package p, int enabledState, Bundle metaData) {
         if (enabledState != PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
             boolean enabled = enabledState == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+=======
+    private static boolean copyNeeded(int flags, Package p, Bundle metaData) {
+        if (p.mSetEnabled != PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+            boolean enabled = p.mSetEnabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+>>>>>>> upstream/master
             if (p.applicationInfo.enabled != enabled) {
                 return true;
             }
@@ -3497,6 +3644,7 @@ public class PackageParser {
         return false;
     }
 
+<<<<<<< HEAD
     public static ApplicationInfo generateApplicationInfo(Package p, int flags, boolean stopped,
             int enabledState) {
         return generateApplicationInfo(p, flags, stopped, enabledState, UserId.getCallingUserId());
@@ -3506,16 +3654,26 @@ public class PackageParser {
             boolean stopped, int enabledState, int userId) {
         if (p == null) return null;
         if (!copyNeeded(flags, p, enabledState, null) && userId == 0) {
+=======
+    public static ApplicationInfo generateApplicationInfo(Package p, int flags) {
+        if (p == null) return null;
+        if (!copyNeeded(flags, p, null)) {
+>>>>>>> upstream/master
             // CompatibilityMode is global state. It's safe to modify the instance
             // of the package.
             if (!sCompatibilityModeEnabled) {
                 p.applicationInfo.disableCompatibilityMode();
             }
+<<<<<<< HEAD
             if (stopped) {
+=======
+            if (p.mSetStopped) {
+>>>>>>> upstream/master
                 p.applicationInfo.flags |= ApplicationInfo.FLAG_STOPPED;
             } else {
                 p.applicationInfo.flags &= ~ApplicationInfo.FLAG_STOPPED;
             }
+<<<<<<< HEAD
             if (enabledState == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
                 p.applicationInfo.enabled = true;
             } else if (enabledState == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
@@ -3523,15 +3681,20 @@ public class PackageParser {
                 p.applicationInfo.enabled = false;
             }
             p.applicationInfo.enabledSetting = enabledState;
+=======
+>>>>>>> upstream/master
             return p.applicationInfo;
         }
 
         // Make shallow copy so we can store the metadata/libraries safely
         ApplicationInfo ai = new ApplicationInfo(p.applicationInfo);
+<<<<<<< HEAD
         if (userId != 0) {
             ai.uid = UserId.getUid(userId, ai.uid);
             ai.dataDir = PackageManager.getDataDirForUser(userId, ai.packageName);
         }
+=======
+>>>>>>> upstream/master
         if ((flags & PackageManager.GET_META_DATA) != 0) {
             ai.metaData = p.mAppMetaData;
         }
@@ -3541,6 +3704,7 @@ public class PackageParser {
         if (!sCompatibilityModeEnabled) {
             ai.disableCompatibilityMode();
         }
+<<<<<<< HEAD
         if (stopped) {
             ai.flags |= ApplicationInfo.FLAG_STOPPED;
         } else {
@@ -3553,6 +3717,20 @@ public class PackageParser {
             ai.enabled = false;
         }
         ai.enabledSetting = enabledState;
+=======
+        if (p.mSetStopped) {
+            p.applicationInfo.flags |= ApplicationInfo.FLAG_STOPPED;
+        } else {
+            p.applicationInfo.flags &= ~ApplicationInfo.FLAG_STOPPED;
+        }
+        if (p.mSetEnabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+            ai.enabled = true;
+        } else if (p.mSetEnabled == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                || p.mSetEnabled == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+            ai.enabled = false;
+        }
+        ai.enabledSetting = p.mSetEnabled;
+>>>>>>> upstream/master
         return ai;
     }
 
@@ -3599,16 +3777,27 @@ public class PackageParser {
         }
     }
 
+<<<<<<< HEAD
     public static final ActivityInfo generateActivityInfo(Activity a, int flags, boolean stopped,
             int enabledState, int userId) {
         if (a == null) return null;
         if (!copyNeeded(flags, a.owner, enabledState, a.metaData) && userId == 0) {
+=======
+    public static final ActivityInfo generateActivityInfo(Activity a,
+            int flags) {
+        if (a == null) return null;
+        if (!copyNeeded(flags, a.owner, a.metaData)) {
+>>>>>>> upstream/master
             return a.info;
         }
         // Make shallow copies so we can store the metadata safely
         ActivityInfo ai = new ActivityInfo(a.info);
         ai.metaData = a.metaData;
+<<<<<<< HEAD
         ai.applicationInfo = generateApplicationInfo(a.owner, flags, stopped, enabledState, userId);
+=======
+        ai.applicationInfo = generateApplicationInfo(a.owner, flags);
+>>>>>>> upstream/master
         return ai;
     }
 
@@ -3633,17 +3822,27 @@ public class PackageParser {
         }
     }
 
+<<<<<<< HEAD
     public static final ServiceInfo generateServiceInfo(Service s, int flags, boolean stopped,
             int enabledState, int userId) {
         if (s == null) return null;
         if (!copyNeeded(flags, s.owner, enabledState, s.metaData)
                 && userId == UserId.getUserId(s.info.applicationInfo.uid)) {
+=======
+    public static final ServiceInfo generateServiceInfo(Service s, int flags) {
+        if (s == null) return null;
+        if (!copyNeeded(flags, s.owner, s.metaData)) {
+>>>>>>> upstream/master
             return s.info;
         }
         // Make shallow copies so we can store the metadata safely
         ServiceInfo si = new ServiceInfo(s.info);
         si.metaData = s.metaData;
+<<<<<<< HEAD
         si.applicationInfo = generateApplicationInfo(s.owner, flags, stopped, enabledState, userId);
+=======
+        si.applicationInfo = generateApplicationInfo(s.owner, flags);
+>>>>>>> upstream/master
         return si;
     }
 
@@ -3676,6 +3875,7 @@ public class PackageParser {
         }
     }
 
+<<<<<<< HEAD
     public static final ProviderInfo generateProviderInfo(Provider p, int flags, boolean stopped,
             int enabledState, int userId) {
         if (p == null) return null;
@@ -3683,6 +3883,14 @@ public class PackageParser {
                 && ((flags & PackageManager.GET_URI_PERMISSION_PATTERNS) != 0
                         || p.info.uriPermissionPatterns == null)
                 && userId == 0) {
+=======
+    public static final ProviderInfo generateProviderInfo(Provider p,
+            int flags) {
+        if (p == null) return null;
+        if (!copyNeeded(flags, p.owner, p.metaData)
+                && ((flags & PackageManager.GET_URI_PERMISSION_PATTERNS) != 0
+                        || p.info.uriPermissionPatterns == null)) {
+>>>>>>> upstream/master
             return p.info;
         }
         // Make shallow copies so we can store the metadata safely
@@ -3691,7 +3899,11 @@ public class PackageParser {
         if ((flags & PackageManager.GET_URI_PERMISSION_PATTERNS) == 0) {
             pi.uriPermissionPatterns = null;
         }
+<<<<<<< HEAD
         pi.applicationInfo = generateApplicationInfo(p.owner, flags, stopped, enabledState, userId);
+=======
+        pi.applicationInfo = generateApplicationInfo(p.owner, flags);
+>>>>>>> upstream/master
         return pi;
     }
 

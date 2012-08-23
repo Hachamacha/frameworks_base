@@ -57,13 +57,20 @@
             android:background="@android:drawable/edit_text">
 
             <!-- displays dots as user enters pin -->
+<<<<<<< HEAD
             <EditText android:id="@+id/pinDisplay"
+=======
+            <TextView android:id="@+id/pinDisplay"
+>>>>>>> upstream/master
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:textAppearance="?android:attr/textAppearanceLargeInverse"
+<<<<<<< HEAD
                 android:textColor="@android:color/primary_text_holo_light"
+=======
+>>>>>>> upstream/master
                 android:textStyle="bold"
                 android:inputType="textPassword"
             />

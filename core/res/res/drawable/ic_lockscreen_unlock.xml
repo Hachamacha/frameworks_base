@@ -27,10 +27,13 @@
         android:state_focused="false"
         android:drawable="@drawable/ic_lockscreen_unlock_activated" />
 
+<<<<<<< HEAD
     <item
         android:state_enabled="true"
         android:state_active="false"
         android:state_focused="true"
         android:drawable="@drawable/ic_lockscreen_unlock_activated" />
 
+=======
+>>>>>>> upstream/master
 </selector>

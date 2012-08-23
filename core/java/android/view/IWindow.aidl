@@ -45,11 +45,18 @@ oneway interface IWindow {
      */
     void executeCommand(String command, String parameters, in ParcelFileDescriptor descriptor);
 
+<<<<<<< HEAD
     void resized(int w, int h, in Rect contentInsets,
             in Rect visibleInsets, boolean reportDraw, in Configuration newConfig);
     void dispatchAppVisibility(boolean visible);
     void dispatchGetNewSurface();
     void dispatchScreenState(boolean on);
+=======
+    void resized(int w, int h, in Rect coveredInsets, in Rect visibleInsets,
+            boolean reportDraw, in Configuration newConfig);
+    void dispatchAppVisibility(boolean visible);
+    void dispatchGetNewSurface();
+>>>>>>> upstream/master
 
     /**
      * Tell the window that it is either gaining or losing focus.  Keep it up
@@ -70,11 +77,16 @@ oneway interface IWindow {
     /**
      * Drag/drop events
      */
+<<<<<<< HEAD
     void dispatchDragEvent(in DragEvent event);
+=======
+     void dispatchDragEvent(in DragEvent event);
+>>>>>>> upstream/master
 
     /**
      * System chrome visibility changes
      */
+<<<<<<< HEAD
     void dispatchSystemUiVisibilityChanged(int seq, int globalVisibility,
             int localValue, int localChanges);
 
@@ -84,4 +96,8 @@ oneway interface IWindow {
      * is done.
      */
     void doneAnimating();
+=======
+     void dispatchSystemUiVisibilityChanged(int seq, int globalVisibility,
+            int localValue, int localChanges);
+>>>>>>> upstream/master
 }

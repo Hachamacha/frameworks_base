@@ -25,9 +25,12 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+=======
+>>>>>>> upstream/master
 import java.util.TimeZone;
 import java.util.Date;
 
@@ -38,6 +41,7 @@ import com.android.internal.util.XmlUtils;
  */
 public class TimeUtils {
     /** @hide */ public TimeUtils() {}
+<<<<<<< HEAD
     private static final boolean DBG = false;
     private static final String TAG = "TimeUtils";
 
@@ -52,12 +56,23 @@ public class TimeUtils {
     private static String sLastUniqueCountry = null;
 
 
+=======
+    private static final String TAG = "TimeUtils";
+
+>>>>>>> upstream/master
     /**
      * Tries to return a time zone that would have had the specified offset
      * and DST value at the specified moment in the specified country.
      * Returns null if no suitable zone could be found.
      */
     public static TimeZone getTimeZone(int offset, boolean dst, long when, String country) {
+<<<<<<< HEAD
+=======
+        if (country == null) {
+            return null;
+        }
+
+>>>>>>> upstream/master
         TimeZone best = null;
 
         Resources r = Resources.getSystem();
@@ -69,6 +84,7 @@ public class TimeUtils {
         int currentOffset = current.getOffset(when);
         boolean currentDst = current.inDaylightTime(d);
 
+<<<<<<< HEAD
         for (TimeZone tz : getTimeZones(country)) {
             // If the current time zone is from the right country
             // and meets the other known properties, keep it
@@ -170,6 +186,8 @@ public class TimeUtils {
         Resources r = Resources.getSystem();
         XmlResourceParser parser = r.getXml(com.android.internal.R.xml.time_zones_by_country);
 
+=======
+>>>>>>> upstream/master
         try {
             XmlUtils.beginDocument(parser, "timezones");
 
@@ -185,6 +203,7 @@ public class TimeUtils {
 
                 if (country.equals(code)) {
                     if (parser.next() == XmlPullParser.TEXT) {
+<<<<<<< HEAD
                         String zoneIdString = parser.getText();
                         TimeZone tz = TimeZone.getTimeZone(zoneIdString);
                         if (tz.getID().startsWith("GMT") == false) {
@@ -193,25 +212,60 @@ public class TimeUtils {
                             if (DBG) {
                                 Log.d(TAG, "getTimeZone('" + country + "'): found tz.getID=="
                                     + ((tz != null) ? tz.getID() : "<no tz>"));
+=======
+                        String maybe = parser.getText();
+
+                        // If the current time zone is from the right country
+                        // and meets the other known properties, keep it
+                        // instead of changing to another one.
+
+                        if (maybe.equals(currentName)) {
+                            if (currentOffset == offset && currentDst == dst) {
+                                return current;
+                            }
+                        }
+
+                        // Otherwise, take the first zone from the right
+                        // country that has the correct current offset and DST.
+                        // (Keep iterating instead of returning in case we
+                        // haven't encountered the current time zone yet.)
+
+                        if (best == null) {
+                            TimeZone tz = TimeZone.getTimeZone(maybe);
+
+                            if (tz.getOffset(when) == offset &&
+                                tz.inDaylightTime(d) == dst) {
+                                best = tz;
+>>>>>>> upstream/master
                             }
                         }
                     }
                 }
             }
         } catch (XmlPullParserException e) {
+<<<<<<< HEAD
             Log.e(TAG, "Got xml parser exception getTimeZone('" + country + "'): e=", e);
         } catch (IOException e) {
             Log.e(TAG, "Got IO exception getTimeZone('" + country + "'): e=", e);
+=======
+            Log.e(TAG, "Got exception while getting preferred time zone.", e);
+        } catch (IOException e) {
+            Log.e(TAG, "Got exception while getting preferred time zone.", e);
+>>>>>>> upstream/master
         } finally {
             parser.close();
         }
 
+<<<<<<< HEAD
         synchronized(sLastLockObj) {
             // Cache the last result;
             sLastZones = tzs;
             sLastCountry = country;
             return sLastZones;
         }
+=======
+        return best;
+>>>>>>> upstream/master
     }
 
     /**
@@ -382,6 +436,7 @@ public class TimeUtils {
         }
         formatDuration(time-now, pw, 0);
     }
+<<<<<<< HEAD
 
     /**
      * Convert a System.currentTimeMillis() value to a time of day value like
@@ -400,4 +455,6 @@ public class TimeUtils {
             return Long.toString(millis);
         }
     }
+=======
+>>>>>>> upstream/master
 }

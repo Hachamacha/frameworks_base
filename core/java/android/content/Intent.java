@@ -28,7 +28,10 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+<<<<<<< HEAD
 import android.media.RemoteControlClient;
+=======
+>>>>>>> upstream/master
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -45,7 +48,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+<<<<<<< HEAD
 import java.util.Locale;
+=======
+>>>>>>> upstream/master
 import java.util.Set;
 
 /**
@@ -810,6 +816,7 @@ public class Intent implements Parcelable, Cloneable {
      * always present to the user a list of the things they can do, with a
      * nice title given by the caller such as "Send this photo with:".
      * <p>
+<<<<<<< HEAD
      * If you need to grant URI permissions through a chooser, you must specify
      * the permissions to be granted on the ACTION_CHOOSER Intent
      * <em>in addition</em> to the EXTRA_INTENT inside.  This means using
@@ -826,6 +833,15 @@ public class Intent implements Parcelable, Cloneable {
      * title text to display in the chooser.
      * <p>
      * Output: Depends on the protocol of {@link #EXTRA_INTENT}.
+=======
+     * As a convenience, an Intent of this form can be created with the
+     * {@link #createChooser} function.
+     * <p>Input: No data should be specified.  get*Extra must have
+     * a {@link #EXTRA_INTENT} field containing the Intent being executed,
+     * and can optionally have a {@link #EXTRA_TITLE} field containing the
+     * title text to display in the chooser.
+     * <p>Output: Depends on the protocol of {@link #EXTRA_INTENT}.
+>>>>>>> upstream/master
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_CHOOSER = "android.intent.action.CHOOSER";
@@ -833,6 +849,7 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Convenience function for creating a {@link #ACTION_CHOOSER} Intent.
      *
+<<<<<<< HEAD
      * <p>Builds a new {@link #ACTION_CHOOSER} Intent that wraps the given
      * target intent, also optionally supplying a title.  If the target
      * intent has specified {@link #FLAG_GRANT_READ_URI_PERMISSION} or
@@ -841,6 +858,8 @@ public class Intent implements Parcelable, Cloneable {
      * either a direct reflection of {@link #getClipData()} if that is non-null,
      * or a new ClipData build from {@link #getData()}.
      *
+=======
+>>>>>>> upstream/master
      * @param target The Intent that the user will be selecting an activity
      * to perform.
      * @param title Optional title that will be displayed in the chooser.
@@ -854,6 +873,7 @@ public class Intent implements Parcelable, Cloneable {
         if (title != null) {
             intent.putExtra(EXTRA_TITLE, title);
         }
+<<<<<<< HEAD
 
         // Migrate any clip data and flags from target.
         int permFlags = target.getFlags()
@@ -879,16 +899,27 @@ public class Intent implements Parcelable, Cloneable {
         return intent;
     }
 
+=======
+        return intent;
+    }
+>>>>>>> upstream/master
     /**
      * Activity Action: Allow the user to select a particular kind of data and
      * return it.  This is different than {@link #ACTION_PICK} in that here we
      * just say what kind of data is desired, not a URI of existing data from
      * which the user can pick.  A ACTION_GET_CONTENT could allow the user to
      * create the data as it runs (for example taking a picture or recording a
+<<<<<<< HEAD
      * sound), let them browse over the web and download the desired data,
      * etc.
      * <p>
      * There are two main ways to use this action: if you want a specific kind
+=======
+     * sound), let them browser over the web and download the desired data,
+     * etc.
+     * <p>
+     * There are two main ways to use this action: if you want an specific kind
+>>>>>>> upstream/master
      * of data, such as a person contact, you set the MIME type to the kind of
      * data you want and launch it with {@link Context#startActivity(Intent)}.
      * The system will then launch the best application to select that kind
@@ -906,12 +937,20 @@ public class Intent implements Parcelable, Cloneable {
      * broad MIME type (such as image/* or {@literal *}/*), resulting in a
      * broad range of content types the user can select from.
      * <p>
+<<<<<<< HEAD
      * When using such a broad GET_CONTENT action, it is often desirable to
+=======
+     * When using such a broad GET_CONTENT action, it is often desireable to
+>>>>>>> upstream/master
      * only pick from data that can be represented as a stream.  This is
      * accomplished by requiring the {@link #CATEGORY_OPENABLE} in the Intent.
      * <p>
      * Callers can optionally specify {@link #EXTRA_LOCAL_ONLY} to request that
+<<<<<<< HEAD
      * the launched content chooser only returns results representing data that
+=======
+     * the launched content chooser only return results representing data that
+>>>>>>> upstream/master
      * is locally available on the device.  For example, if this extra is set
      * to true then an image picker should not show any pictures that are available
      * from a remote server but not already on the local device (thus requiring
@@ -996,6 +1035,7 @@ public class Intent implements Parcelable, Cloneable {
      * using EXTRA_TEXT, the MIME type should be "text/plain"; otherwise it
      * should be the MIME type of the data in EXTRA_STREAM.  Use {@literal *}/*
      * if the MIME type is unknown (this will only allow senders that can
+<<<<<<< HEAD
      * handle generic data streams).  If using {@link #EXTRA_TEXT}, you can
      * also optionally supply {@link #EXTRA_HTML_TEXT} for clients to retrieve
      * your text with HTML formatting.
@@ -1008,6 +1048,9 @@ public class Intent implements Parcelable, Cloneable {
      * {@link #EXTRA_TEXT} or {@link #EXTRA_STREAM} fields described below
      * for compatibility with old applications.  If you don't set a ClipData,
      * it will be copied there for you when calling {@link Context#startActivity(Intent)}.
+=======
+     * handle generic data streams).
+>>>>>>> upstream/master
      * <p>
      * Optional standard extras, which may be interpreted by some recipients as
      * appropriate, are: {@link #EXTRA_EMAIL}, {@link #EXTRA_CC},
@@ -1020,6 +1063,7 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Activity Action: Deliver multiple data to someone else.
      * <p>
+<<<<<<< HEAD
      * Like {@link #ACTION_SEND}, except the data is multiple.
      * <p>
      * Input: {@link #getType} is the MIME type of the data being sent.
@@ -1027,6 +1071,13 @@ public class Intent implements Parcelable, Cloneable {
      * #EXTRA_STREAM} field, containing the data to be sent.  If using
      * {@link #EXTRA_TEXT}, you can also optionally supply {@link #EXTRA_HTML_TEXT}
      * for clients to retrieve your text with HTML formatting.
+=======
+     * Like ACTION_SEND, except the data is multiple.
+     * <p>
+     * Input: {@link #getType} is the MIME type of the data being sent.
+     * get*ArrayListExtra can have either a {@link #EXTRA_TEXT} or {@link
+     * #EXTRA_STREAM} field, containing the data to be sent.
+>>>>>>> upstream/master
      * <p>
      * Multiple types are supported, and receivers should handle mixed types
      * whenever possible. The right way for the receiver to check them is to
@@ -1038,6 +1089,7 @@ public class Intent implements Parcelable, Cloneable {
      * be image/jpg, but if you are sending image/jpg and image/png, then the
      * intent's type should be image/*.
      * <p>
+<<<<<<< HEAD
      * As of {@link android.os.Build.VERSION_CODES#JELLY_BEAN}, the data
      * being sent can be supplied through {@link #setClipData(ClipData)}.  This
      * allows you to use {@link #FLAG_GRANT_READ_URI_PERMISSION} when sharing
@@ -1047,6 +1099,8 @@ public class Intent implements Parcelable, Cloneable {
      * for compatibility with old applications.  If you don't set a ClipData,
      * it will be copied there for you when calling {@link Context#startActivity(Intent)}.
      * <p>
+=======
+>>>>>>> upstream/master
      * Optional standard extras, which may be interpreted by some recipients as
      * appropriate, are: {@link #EXTRA_EMAIL}, {@link #EXTRA_CC},
      * {@link #EXTRA_BCC}, {@link #EXTRA_SUBJECT}.
@@ -1141,6 +1195,7 @@ public class Intent implements Parcelable, Cloneable {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_WEB_SEARCH = "android.intent.action.WEB_SEARCH";
     /**
+<<<<<<< HEAD
      * Activity Action: Perform assist action.
      * <p>
      * Input: nothing
@@ -1149,6 +1204,8 @@ public class Intent implements Parcelable, Cloneable {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ASSIST = "android.intent.action.ASSIST";
     /**
+=======
+>>>>>>> upstream/master
      * Activity Action: List all available applications
      * <p>Input: Nothing.
      * <p>Output: nothing.
@@ -1290,11 +1347,15 @@ public class Intent implements Parcelable, Cloneable {
      * Used as a boolean extra field with {@link #ACTION_INSTALL_PACKAGE} to install a
      * package.  Tells the installer UI to skip the confirmation with the user
      * if the .apk is replacing an existing one.
+<<<<<<< HEAD
      * @deprecated As of {@link android.os.Build.VERSION_CODES#JELLY_BEAN}, Android
      * will no longer show an interstitial message about updating existing
      * applications so this is no longer needed.
      */
     @Deprecated
+=======
+     */
+>>>>>>> upstream/master
     public static final String EXTRA_ALLOW_REPLACE
             = "android.intent.extra.ALLOW_REPLACE";
 
@@ -1678,6 +1739,7 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Broadcast Action:  The current system wallpaper has changed.  See
      * {@link android.app.WallpaperManager} for retrieving the new wallpaper.
+<<<<<<< HEAD
      * This should <em>only</em> be used to determine when the wallpaper
      * has changed to show the new wallpaper to the user.  You should certainly
      * never, in response to this, change the wallpaper or other attributes of
@@ -1692,6 +1754,10 @@ public class Intent implements Parcelable, Cloneable {
      * rendering the wallpaper on their own.
      */
     @Deprecated @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+=======
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+>>>>>>> upstream/master
     public static final String ACTION_WALLPAPER_CHANGED = "android.intent.action.WALLPAPER_CHANGED";
     /**
      * Broadcast Action: The current device {@link android.content.res.Configuration}
@@ -1996,14 +2062,22 @@ public class Intent implements Parcelable, Cloneable {
     // location; they are not general-purpose actions.
 
     /**
+<<<<<<< HEAD
      * Broadcast Action: A GTalk connection has been established.
+=======
+     * Broadcast Action: An GTalk connection has been established.
+>>>>>>> upstream/master
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_GTALK_SERVICE_CONNECTED =
             "android.intent.action.GTALK_CONNECTED";
 
     /**
+<<<<<<< HEAD
      * Broadcast Action: A GTalk connection has been disconnected.
+=======
+     * Broadcast Action: An GTalk connection has been disconnected.
+>>>>>>> upstream/master
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_GTALK_SERVICE_DISCONNECTED =
@@ -2088,8 +2162,13 @@ public class Intent implements Parcelable, Cloneable {
      * @hide
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+<<<<<<< HEAD
     public static final String ACTION_ANALOG_AUDIO_DOCK_PLUG =
             "android.intent.action.ANALOG_AUDIO_DOCK_PLUG";
+=======
+    public static final String ACTION_USB_ANLG_HEADSET_PLUG =
+            "android.intent.action.USB_ANLG_HEADSET_PLUG";
+>>>>>>> upstream/master
 
     /**
      * Broadcast Action: A digital audio speaker/headset plugged in or unplugged.
@@ -2103,8 +2182,13 @@ public class Intent implements Parcelable, Cloneable {
      * @hide
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+<<<<<<< HEAD
     public static final String ACTION_DIGITAL_AUDIO_DOCK_PLUG =
             "android.intent.action.DIGITAL_AUDIO_DOCK_PLUG";
+=======
+    public static final String ACTION_USB_DGTL_HEADSET_PLUG =
+            "android.intent.action.USB_DGTL_HEADSET_PLUG";
+>>>>>>> upstream/master
 
     /**
      * Broadcast Action: A HMDI cable was plugged or unplugged
@@ -2122,6 +2206,7 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.HDMI_AUDIO_PLUG";
 
     /**
+<<<<<<< HEAD
      * Broadcast Action: A USB audio accessory was plugged in or unplugged.
      *
      * <p>The intent will have the following extra values:
@@ -2154,6 +2239,8 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.USB_AUDIO_DEVICE_PLUG";
 
     /**
+=======
+>>>>>>> upstream/master
      * <p>Broadcast Action: The user has switched on advanced settings in the settings app:</p>
      * <ul>
      *   <li><em>state</em> - A boolean value indicating whether the settings is on or off.</li>
@@ -2262,6 +2349,7 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.PRE_BOOT_COMPLETED";
 
     /**
+<<<<<<< HEAD
      * Broadcast sent to the system when a user is added. Carries an extra EXTRA_USERID that has the
      * userid of the new user.
      * @hide
@@ -2286,6 +2374,8 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.USER_SWITCHED";
 
     /**
+=======
+>>>>>>> upstream/master
      * Broadcast Action: Indicate that unrecoverable error happened during app launch.
      * Could indicate that curently applied theme is malicious.
      * @hide
@@ -2357,7 +2447,11 @@ public class Intent implements Parcelable, Cloneable {
     @SdkConstant(SdkConstantType.INTENT_CATEGORY)
     public static final String CATEGORY_SELECTED_ALTERNATIVE = "android.intent.category.SELECTED_ALTERNATIVE";
     /**
+<<<<<<< HEAD
      * Intended to be used as a tab inside of a containing TabActivity.
+=======
+     * Intended to be used as a tab inside of an containing TabActivity.
+>>>>>>> upstream/master
      */
     @SdkConstant(SdkConstantType.INTENT_CATEGORY)
     public static final String CATEGORY_TAB = "android.intent.category.TAB";
@@ -2413,7 +2507,11 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final String CATEGORY_UNIT_TEST = "android.intent.category.UNIT_TEST";
     /**
+<<<<<<< HEAD
      * To be used as a sample code example (not part of the normal user
+=======
+     * To be used as an sample code example (not part of the normal user
+>>>>>>> upstream/master
      * experience).
      */
     public static final String CATEGORY_SAMPLE_CODE = "android.intent.category.SAMPLE_CODE";
@@ -2430,7 +2528,10 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final String CATEGORY_FRAMEWORK_INSTRUMENTATION_TEST =
             "android.intent.category.FRAMEWORK_INSTRUMENTATION_TEST";
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     /**
      * An activity to run when device is inserted into a car dock.
      * Used with {@link #ACTION_MAIN} to launch an activity.  For more
@@ -2611,6 +2712,7 @@ public class Intent implements Parcelable, Cloneable {
     public static final String EXTRA_TEXT = "android.intent.extra.TEXT";
 
     /**
+<<<<<<< HEAD
      * A constant String that is associated with the Intent, used with
      * {@link #ACTION_SEND} to supply an alternative to {@link #EXTRA_TEXT}
      * as HTML formatted text.  Note that you <em>must</em> also supply
@@ -2619,6 +2721,8 @@ public class Intent implements Parcelable, Cloneable {
     public static final String EXTRA_HTML_TEXT = "android.intent.extra.HTML_TEXT";
 
     /**
+=======
+>>>>>>> upstream/master
      * A content: URI holding a stream of data associated with the Intent,
      * used with {@link #ACTION_SEND} to supply the data being sent.
      */
@@ -2680,7 +2784,11 @@ public class Intent implements Parcelable, Cloneable {
     public static final String EXTRA_KEY_CONFIRM = "android.intent.extra.KEY_CONFIRM";
 
     /**
+<<<<<<< HEAD
      * Used as a boolean extra field in {@link android.content.Intent#ACTION_PACKAGE_REMOVED} or
+=======
+     * Used as an boolean extra field in {@link android.content.Intent#ACTION_PACKAGE_REMOVED} or
+>>>>>>> upstream/master
      * {@link android.content.Intent#ACTION_PACKAGE_CHANGED} intents to override the default action
      * of restarting the application.
      */
@@ -2856,6 +2964,7 @@ public class Intent implements Parcelable, Cloneable {
     public static final String EXTRA_LOCAL_ONLY =
         "android.intent.extra.LOCAL_ONLY";
 
+<<<<<<< HEAD
     /**
      * The userid carried with broadcast intents related to addition, removal and switching of users
      * - {@link #ACTION_USER_ADDED}, {@link #ACTION_USER_REMOVED} and {@link #ACTION_USER_SWITCHED}.
@@ -2864,26 +2973,36 @@ public class Intent implements Parcelable, Cloneable {
     public static final String EXTRA_USERID =
             "android.intent.extra.user_id";
 
+=======
+>>>>>>> upstream/master
     // ---------------------------------------------------------------------
     // ---------------------------------------------------------------------
     // Intent flags (see mFlags variable).
 
     /**
      * If set, the recipient of this Intent will be granted permission to
+<<<<<<< HEAD
      * perform read operations on the Uri in the Intent's data and any URIs
      * specified in its ClipData.  When applying to an Intent's ClipData,
      * all URIs as well as recursive traversals through data or other ClipData
      * in Intent items will be granted; only the grant flags of the top-level
      * Intent are used.
+=======
+     * perform read operations on the Uri in the Intent's data.
+>>>>>>> upstream/master
      */
     public static final int FLAG_GRANT_READ_URI_PERMISSION = 0x00000001;
     /**
      * If set, the recipient of this Intent will be granted permission to
+<<<<<<< HEAD
      * perform write operations on the Uri in the Intent's data and any URIs
      * specified in its ClipData.  When applying to an Intent's ClipData,
      * all URIs as well as recursive traversals through data or other ClipData
      * in Intent items will be granted; only the grant flags of the top-level
      * Intent are used.
+=======
+     * perform write operations on the Uri in the Intent's data.
+>>>>>>> upstream/master
      */
     public static final int FLAG_GRANT_WRITE_URI_PERMISSION = 0x00000002;
     /**
@@ -3147,6 +3266,7 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final int FLAG_RECEIVER_REPLACE_PENDING = 0x20000000;
     /**
+<<<<<<< HEAD
      * If set, when sending a broadcast the recipient is allowed to run at
      * foreground priority, with a shorter timeout interval.  During normal
      * broadcasts the receivers are not automatically hoisted out of the
@@ -3154,6 +3274,8 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final int FLAG_RECEIVER_FOREGROUND = 0x10000000;
     /**
+=======
+>>>>>>> upstream/master
      * If set, when sending a broadcast <i>before boot has completed</i> only
      * registered receivers will be called -- no BroadcastReceiver components
      * will be launched.  Sticky intent state will be recorded properly even
@@ -3166,14 +3288,22 @@ public class Intent implements Parcelable, Cloneable {
      *
      * @hide
      */
+<<<<<<< HEAD
     public static final int FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT = 0x08000000;
+=======
+    public static final int FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT = 0x10000000;
+>>>>>>> upstream/master
     /**
      * Set when this broadcast is for a boot upgrade, a special mode that
      * allows the broadcast to be sent before the system is ready and launches
      * the app process with no providers running in it.
      * @hide
      */
+<<<<<<< HEAD
     public static final int FLAG_RECEIVER_BOOT_UPGRADE = 0x04000000;
+=======
+    public static final int FLAG_RECEIVER_BOOT_UPGRADE = 0x08000000;
+>>>>>>> upstream/master
 
     /**
      * @hide Flags that can't be changed with PendingIntent.
@@ -3208,7 +3338,10 @@ public class Intent implements Parcelable, Cloneable {
     private Bundle mExtras;
     private Rect mSourceBounds;
     private Intent mSelector;
+<<<<<<< HEAD
     private ClipData mClipData;
+=======
+>>>>>>> upstream/master
 
     // ---------------------------------------------------------------------
 
@@ -3240,9 +3373,12 @@ public class Intent implements Parcelable, Cloneable {
         if (o.mSelector != null) {
             this.mSelector = new Intent(o.mSelector);
         }
+<<<<<<< HEAD
         if (o.mClipData != null) {
             this.mClipData = new ClipData(o.mClipData);
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -3886,7 +4022,11 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Check if a category exists in the intent.
+=======
+     * Check if an category exists in the intent.
+>>>>>>> upstream/master
      *
      * @param category The category to check.
      *
@@ -3923,6 +4063,7 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Return the {@link ClipData} associated with this Intent.  If there is
      * none, returns null.  See {@link #setClipData} for more information.
      *
@@ -3933,6 +4074,8 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the ClassLoader that will be used when unmarshalling
      * any Parcelable values from the extras of this Intent.
      *
@@ -4632,6 +4775,7 @@ public class Intent implements Parcelable, Cloneable {
 
     /**
      * Set the data this intent is operating on.  This method automatically
+<<<<<<< HEAD
      * clears any type that was previously set by {@link #setType} or
      * {@link #setTypeAndNormalize}.
      *
@@ -4643,13 +4787,29 @@ public class Intent implements Parcelable, Cloneable {
      * to ensure that the scheme is converted to lower case.</em>
      *
      * @param data The Uri of the data this intent is now targeting.
+=======
+     * clears any type that was previously set by {@link #setType}.
+     *
+     * <p><em>Note: scheme and host name matching in the Android framework is
+     * case-sensitive, unlike the formal RFC.  As a result,
+     * you should always ensure that you write your Uri with these elements
+     * using lower case letters, and normalize any Uris you receive from
+     * outside of Android to ensure the scheme and host is lower case.</em></p>
+     *
+     * @param data The URI of the data this intent is now targeting.
+>>>>>>> upstream/master
      *
      * @return Returns the same Intent object, for chaining multiple calls
      * into a single statement.
      *
      * @see #getData
+<<<<<<< HEAD
      * @see #setDataAndNormalize
      * @see android.net.Intent#normalize
+=======
+     * @see #setType
+     * @see #setDataAndType
+>>>>>>> upstream/master
      */
     public Intent setData(Uri data) {
         mData = data;
@@ -4658,6 +4818,7 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Normalize and set the data this intent is operating on.
      *
      * <p>This method automatically clears any type that was
@@ -4691,12 +4852,23 @@ public class Intent implements Parcelable, Cloneable {
      *
      * <p>This method automatically clears any data that was
      * previously set (for example by {@link #setData}).
+=======
+     * Set an explicit MIME data type.  This is used to create intents that
+     * only specify a type and not data, for example to indicate the type of
+     * data to return.  This method automatically clears any data that was
+     * previously set by {@link #setData}.
+>>>>>>> upstream/master
      *
      * <p><em>Note: MIME type matching in the Android framework is
      * case-sensitive, unlike formal RFC MIME types.  As a result,
      * you should always write your MIME types with lower case letters,
+<<<<<<< HEAD
      * or use {@link #normalizeMimeType} or {@link #setTypeAndNormalize}
      * to ensure that it is converted to lower case.</em>
+=======
+     * and any MIME types you receive from outside of Android should be
+     * converted to lower case before supplying them here.</em></p>
+>>>>>>> upstream/master
      *
      * @param type The MIME type of the data being handled by this intent.
      *
@@ -4704,9 +4876,14 @@ public class Intent implements Parcelable, Cloneable {
      * into a single statement.
      *
      * @see #getType
+<<<<<<< HEAD
      * @see #setTypeAndNormalize
      * @see #setDataAndType
      * @see #normalizeMimeType
+=======
+     * @see #setData
+     * @see #setDataAndType
+>>>>>>> upstream/master
      */
     public Intent setType(String type) {
         mData = null;
@@ -4715,6 +4892,7 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Normalize and set an explicit MIME data type.
      *
      * <p>This is used to create intents that only specify a type and not data,
@@ -4744,11 +4922,14 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * (Usually optional) Set the data for the intent along with an explicit
      * MIME data type.  This method should very rarely be used -- it allows you
      * to override the MIME type that would ordinarily be inferred from the
      * data with your own type given here.
      *
+<<<<<<< HEAD
      * <p><em>Note: MIME type and Uri scheme matching in the
      * Android framework is case-sensitive, unlike the formal RFC definitions.
      * As a result, you should always write these elements with lower case letters,
@@ -4757,16 +4938,31 @@ public class Intent implements Parcelable, Cloneable {
      * to ensure that they are converted to lower case.</em>
      *
      * @param data The Uri of the data this intent is now targeting.
+=======
+     * <p><em>Note: MIME type, Uri scheme, and host name matching in the
+     * Android framework is case-sensitive, unlike the formal RFC definitions.
+     * As a result, you should always write these elements with lower case letters,
+     * and normalize any MIME types or Uris you receive from
+     * outside of Android to ensure these elements are lower case before
+     * supplying them here.</em></p>
+     *
+     * @param data The URI of the data this intent is now targeting.
+>>>>>>> upstream/master
      * @param type The MIME type of the data being handled by this intent.
      *
      * @return Returns the same Intent object, for chaining multiple calls
      * into a single statement.
      *
+<<<<<<< HEAD
      * @see #setType
      * @see #setData
      * @see #normalizeMimeType
      * @see android.net.Uri#normalizeScheme
      * @see #setDataAndTypeAndNormalize
+=======
+     * @see #setData
+     * @see #setType
+>>>>>>> upstream/master
      */
     public Intent setDataAndType(Uri data, String type) {
         mData = data;
@@ -4775,6 +4971,7 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * (Usually optional) Normalize and set both the data Uri and an explicit
      * MIME data type.  This method should very rarely be used -- it allows you
      * to override the MIME type that would ordinarily be inferred from the
@@ -4806,6 +5003,10 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Add a new category to the intent.  Categories provide additional detail
      * about the action the intent performs.  When resolving an intent, only
+=======
+     * Add a new category to the intent.  Categories provide additional detail
+     * about the action the intent is perform.  When resolving an intent, only
+>>>>>>> upstream/master
      * activities that provide <em>all</em> of the requested categories will be
      * used.
      *
@@ -4828,7 +5029,11 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Remove a category from an intent.
+=======
+     * Remove an category from an intent.
+>>>>>>> upstream/master
      *
      * @param category The category to remove.
      *
@@ -4887,6 +5092,7 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Set a {@link ClipData} associated with this Intent.  This replaces any
      * previously set ClipData.
      *
@@ -4918,6 +5124,8 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Add extended data to the intent.  The name must include a package
      * prefix, for example the app com.android.contacts would use names
      * like "com.android.contacts.ShowAll".
@@ -5895,12 +6103,15 @@ public class Intent implements Parcelable, Cloneable {
     public static final int FILL_IN_SELECTOR = 1<<6;
 
     /**
+<<<<<<< HEAD
      * Use with {@link #fillIn} to allow the current ClipData to be
      * overwritten, even if it is already set.
      */
     public static final int FILL_IN_CLIP_DATA = 1<<7;
 
     /**
+=======
+>>>>>>> upstream/master
      * Copy the contents of <var>other</var> in to this object, but only
      * where fields are not defined by this object.  For purposes of a field
      * being defined, the following pieces of data in the Intent are
@@ -5908,20 +6119,29 @@ public class Intent implements Parcelable, Cloneable {
      *
      * <ul>
      * <li> action, as set by {@link #setAction}.
+<<<<<<< HEAD
      * <li> data Uri and MIME type, as set by {@link #setData(Uri)},
+=======
+     * <li> data URI and MIME type, as set by {@link #setData(Uri)},
+>>>>>>> upstream/master
      * {@link #setType(String)}, or {@link #setDataAndType(Uri, String)}.
      * <li> categories, as set by {@link #addCategory}.
      * <li> package, as set by {@link #setPackage}.
      * <li> component, as set by {@link #setComponent(ComponentName)} or
      * related methods.
+<<<<<<< HEAD
      * <li> source bounds, as set by {@link #setSourceBounds}.
      * <li> selector, as set by {@link #setSelector(Intent)}.
      * <li> clip data, as set by {@link #setClipData(ClipData)}.
+=======
+     * <li> source bounds, as set by {@link #setSourceBounds}
+>>>>>>> upstream/master
      * <li> each top-level name in the associated extras.
      * </ul>
      *
      * <p>In addition, you can use the {@link #FILL_IN_ACTION},
      * {@link #FILL_IN_DATA}, {@link #FILL_IN_CATEGORIES}, {@link #FILL_IN_PACKAGE},
+<<<<<<< HEAD
      * {@link #FILL_IN_COMPONENT}, {@link #FILL_IN_SOURCE_BOUNDS},
      * {@link #FILL_IN_SELECTOR}, and {@link #FILL_IN_CLIP_DATA} to override
      * the restriction where the corresponding field will not be replaced if
@@ -5930,6 +6150,15 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Note: The component field will only be copied if {@link #FILL_IN_COMPONENT}
      * is explicitly specified.  The selector will only be copied if
      * {@link #FILL_IN_SELECTOR} is explicitly specified.
+=======
+     * {@link #FILL_IN_COMPONENT}, {@link #FILL_IN_SOURCE_BOUNDS}, and
+     * {@link #FILL_IN_SELECTOR} to override the restriction where the
+     * corresponding field will not be replaced if it is already set.
+     *
+     * <p>Note: The component field will only be copied if {@link #FILL_IN_COMPONENT} is explicitly
+     * specified.  The selector will only be copied if {@link #FILL_IN_SELECTOR} is
+     * explicitly specified.
+>>>>>>> upstream/master
      *
      * <p>For example, consider Intent A with {data="foo", categories="bar"}
      * and Intent B with {action="gotit", data-type="some/thing",
@@ -5986,11 +6215,14 @@ public class Intent implements Parcelable, Cloneable {
                 changes |= FILL_IN_SELECTOR;
             }
         }
+<<<<<<< HEAD
         if (other.mClipData != null
                 && (mClipData == null || (flags&FILL_IN_CLIP_DATA) != 0)) {
             mClipData = other.mClipData;
             changes |= FILL_IN_CLIP_DATA;
         }
+=======
+>>>>>>> upstream/master
         // Component is special: it can -only- be set if explicitly allowed,
         // since otherwise the sender could force the intent somewhere the
         // originator didn't intend.
@@ -6187,7 +6419,11 @@ public class Intent implements Parcelable, Cloneable {
         StringBuilder b = new StringBuilder(128);
 
         b.append("Intent { ");
+<<<<<<< HEAD
         toShortString(b, true, true, true, false);
+=======
+        toShortString(b, true, true, true);
+>>>>>>> upstream/master
         b.append(" }");
 
         return b.toString();
@@ -6198,6 +6434,7 @@ public class Intent implements Parcelable, Cloneable {
         StringBuilder b = new StringBuilder(128);
 
         b.append("Intent { ");
+<<<<<<< HEAD
         toShortString(b, false, true, true, false);
         b.append(" }");
 
@@ -6210,21 +6447,34 @@ public class Intent implements Parcelable, Cloneable {
 
         b.append("Intent { ");
         toShortString(b, false, true, true, true);
+=======
+        toShortString(b, false, true, true);
+>>>>>>> upstream/master
         b.append(" }");
 
         return b.toString();
     }
 
     /** @hide */
+<<<<<<< HEAD
     public String toShortString(boolean secure, boolean comp, boolean extras, boolean clip) {
         StringBuilder b = new StringBuilder(128);
         toShortString(b, secure, comp, extras, clip);
+=======
+    public String toShortString(boolean secure, boolean comp, boolean extras) {
+        StringBuilder b = new StringBuilder(128);
+        toShortString(b, secure, comp, extras);
+>>>>>>> upstream/master
         return b.toString();
     }
 
     /** @hide */
+<<<<<<< HEAD
     public void toShortString(StringBuilder b, boolean secure, boolean comp, boolean extras,
             boolean clip) {
+=======
+    public void toShortString(StringBuilder b, boolean secure, boolean comp, boolean extras) {
+>>>>>>> upstream/master
         boolean first = true;
         if (mAction != null) {
             b.append("act=").append(mAction);
@@ -6292,6 +6542,7 @@ public class Intent implements Parcelable, Cloneable {
             first = false;
             b.append("bnds=").append(mSourceBounds.toShortString());
         }
+<<<<<<< HEAD
         if (mClipData != null) {
             if (!first) {
                 b.append(' ');
@@ -6305,6 +6556,8 @@ public class Intent implements Parcelable, Cloneable {
                 b.append("(has clip)");
             }
         }
+=======
+>>>>>>> upstream/master
         if (extras && mExtras != null) {
             if (!first) {
                 b.append(' ');
@@ -6314,7 +6567,11 @@ public class Intent implements Parcelable, Cloneable {
         }
         if (mSelector != null) {
             b.append(" sel={");
+<<<<<<< HEAD
             mSelector.toShortString(b, secure, comp, extras, clip);
+=======
+            mSelector.toShortString(b, secure, comp, extras);
+>>>>>>> upstream/master
             b.append("}");
         }
     }
@@ -6483,6 +6740,7 @@ public class Intent implements Parcelable, Cloneable {
             out.writeInt(0);
         }
 
+<<<<<<< HEAD
         if (mClipData != null) {
             out.writeInt(1);
             mClipData.writeToParcel(out, flags);
@@ -6490,6 +6748,8 @@ public class Intent implements Parcelable, Cloneable {
             out.writeInt(0);
         }
 
+=======
+>>>>>>> upstream/master
         out.writeBundle(mExtras);
     }
 
@@ -6535,10 +6795,13 @@ public class Intent implements Parcelable, Cloneable {
             mSelector = new Intent(in);
         }
 
+<<<<<<< HEAD
         if (in.readInt() != 0) {
             mClipData = new ClipData(in);
         }
 
+=======
+>>>>>>> upstream/master
         mExtras = in.readBundle();
     }
 
@@ -6615,6 +6878,7 @@ public class Intent implements Parcelable, Cloneable {
 
         return intent;
     }
+<<<<<<< HEAD
 
     /**
      * Normalize a MIME data type.
@@ -6749,4 +7013,6 @@ public class Intent implements Parcelable, Cloneable {
         String htmlText = htmlTexts != null ? htmlTexts.get(which) : null;
         return new ClipData.Item(text, htmlText, null, uri);
     }
+=======
+>>>>>>> upstream/master
 }

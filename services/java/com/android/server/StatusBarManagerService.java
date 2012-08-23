@@ -292,27 +292,43 @@ public class StatusBarManagerService extends IStatusBarService.Stub
         }
     }
 
+<<<<<<< HEAD
     public void setSystemUiVisibility(int vis, int mask) {
+=======
+    public void setSystemUiVisibility(int vis) {
+>>>>>>> upstream/master
         // also allows calls from window manager which is in this process.
         enforceStatusBarService();
 
         if (SPEW) Slog.d(TAG, "setSystemUiVisibility(0x" + Integer.toHexString(vis) + ")");
 
         synchronized (mLock) {
+<<<<<<< HEAD
             updateUiVisibilityLocked(vis, mask);
+=======
+            updateUiVisibilityLocked(vis);
+>>>>>>> upstream/master
             disableLocked(vis & StatusBarManager.DISABLE_MASK, mSysUiVisToken,
                     "WindowManager.LayoutParams");
         }
     }
 
+<<<<<<< HEAD
     private void updateUiVisibilityLocked(final int vis, final int mask) {
+=======
+    private void updateUiVisibilityLocked(final int vis) {
+>>>>>>> upstream/master
         if (mSystemUiVisibility != vis) {
             mSystemUiVisibility = vis;
             mHandler.post(new Runnable() {
                     public void run() {
                         if (mBar != null) {
                             try {
+<<<<<<< HEAD
                                 mBar.setSystemUiVisibility(vis, mask);
+=======
+                                mBar.setSystemUiVisibility(vis);
+>>>>>>> upstream/master
                             } catch (RemoteException ex) {
                             }
                         }
@@ -352,6 +368,7 @@ public class StatusBarManagerService extends IStatusBarService.Stub
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void preloadRecentApps() {
         if (mBar != null) {
@@ -370,6 +387,8 @@ public class StatusBarManagerService extends IStatusBarService.Stub
         }
     }
 
+=======
+>>>>>>> upstream/master
     private void enforceStatusBar() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.STATUS_BAR,
                 "StatusBarManagerService");
@@ -489,8 +508,12 @@ public class StatusBarManagerService extends IStatusBarService.Stub
         synchronized (mNotifications) {
             final StatusBarNotification n = mNotifications.remove(key);
             if (n == null) {
+<<<<<<< HEAD
                 Slog.e(TAG, "removeNotification key not found: " + key);
                 return;
+=======
+                throw new IllegalArgumentException("removeNotification key not found: " + key);
+>>>>>>> upstream/master
             }
             if (mBar != null) {
                 try {

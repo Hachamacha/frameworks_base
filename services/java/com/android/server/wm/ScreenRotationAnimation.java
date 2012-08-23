@@ -16,6 +16,7 @@
 
 package com.android.server.wm;
 
+<<<<<<< HEAD
 import java.io.PrintWriter;
 
 import static com.android.server.wm.WindowStateAnimator.SurfaceTrace;
@@ -23,6 +24,16 @@ import static com.android.server.wm.WindowStateAnimator.SurfaceTrace;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+=======
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+>>>>>>> upstream/master
 import android.graphics.Rect;
 import android.util.Slog;
 import android.view.Surface;
@@ -33,24 +44,37 @@ import android.view.animation.Transformation;
 
 class ScreenRotationAnimation {
     static final String TAG = "ScreenRotationAnimation";
+<<<<<<< HEAD
     static final boolean DEBUG_STATE = false;
     static final boolean DEBUG_TRANSFORMS = false;
     static final boolean TWO_PHASE_ANIMATION = false;
     static final boolean USE_CUSTOM_BLACK_FRAME = false;
+=======
+    static final boolean DEBUG = false;
+>>>>>>> upstream/master
 
     static final int FREEZE_LAYER = WindowManagerService.TYPE_LAYER_MULTIPLIER * 200;
 
     final Context mContext;
     Surface mSurface;
+<<<<<<< HEAD
     BlackFrame mCustomBlackFrame;
     BlackFrame mExitingBlackFrame;
     BlackFrame mEnteringBlackFrame;
     int mWidth, mHeight;
 
+=======
+    BlackFrame mBlackFrame;
+    int mWidth, mHeight;
+
+    int mSnapshotRotation;
+    int mSnapshotDeltaRotation;
+>>>>>>> upstream/master
     int mOriginalRotation;
     int mOriginalWidth, mOriginalHeight;
     int mCurRotation;
 
+<<<<<<< HEAD
     // For all animations, "exit" is for the UI elements that are going
     // away (that is the snapshot of the old screen), and "enter" is for
     // the new UI elements that are appearing (that is the active windows
@@ -184,12 +208,28 @@ class ScreenRotationAnimation {
                 mExitFrameFinalMatrix.printShortString(pw);
                 pw.println();
     }
+=======
+    Animation mExitAnimation;
+    final Transformation mExitTransformation = new Transformation();
+    Animation mEnterAnimation;
+    final Transformation mEnterTransformation = new Transformation();
+    boolean mStarted;
+
+    final Matrix mSnapshotInitialMatrix = new Matrix();
+    final Matrix mSnapshotFinalMatrix = new Matrix();
+    final Matrix mTmpMatrix = new Matrix();
+    final float[] mTmpFloats = new float[9];
+>>>>>>> upstream/master
 
     public ScreenRotationAnimation(Context context, SurfaceSession session,
             boolean inTransaction, int originalWidth, int originalHeight, int originalRotation) {
         mContext = context;
 
         // Screenshot does NOT include rotation!
+<<<<<<< HEAD
+=======
+        mSnapshotRotation = 0;
+>>>>>>> upstream/master
         if (originalRotation == Surface.ROTATION_90
                 || originalRotation == Surface.ROTATION_270) {
             mWidth = originalHeight;
@@ -208,6 +248,7 @@ class ScreenRotationAnimation {
                     ">>> OPEN TRANSACTION ScreenRotationAnimation");
             Surface.openTransaction();
         }
+<<<<<<< HEAD
 
         try {
             try {
@@ -219,12 +260,23 @@ class ScreenRotationAnimation {
                         PixelFormat.OPAQUE, Surface.FX_SURFACE_SCREENSHOT | Surface.HIDDEN);
                 }
                 if (!mSurface.isValid()) {
+=======
+        
+        try {
+            try {
+                mSurface = new Surface(session, 0, "FreezeSurface",
+                        -1, mWidth, mHeight, PixelFormat.OPAQUE, Surface.FX_SURFACE_SCREENSHOT | Surface.HIDDEN);
+                if (mSurface == null || !mSurface.isValid()) {
+>>>>>>> upstream/master
                     // Screenshot failed, punt.
                     mSurface = null;
                     return;
                 }
                 mSurface.setLayer(FREEZE_LAYER + 1);
+<<<<<<< HEAD
                 mSurface.setAlpha(0);
+=======
+>>>>>>> upstream/master
                 mSurface.show();
             } catch (Surface.OutOfResourcesException e) {
                 Slog.w(TAG, "Unable to allocate freeze surface", e);
@@ -263,7 +315,11 @@ class ScreenRotationAnimation {
                     mTmpFloats[Matrix.MSCALE_X], mTmpFloats[Matrix.MSKEW_Y],
                     mTmpFloats[Matrix.MSKEW_X], mTmpFloats[Matrix.MSCALE_Y]);
             mSurface.setAlpha(alpha);
+<<<<<<< HEAD
             if (DEBUG_TRANSFORMS) {
+=======
+            if (DEBUG) {
+>>>>>>> upstream/master
                 float[] srcPnts = new float[] { 0, 0, mWidth, mHeight };
                 float[] dstPnts = new float[4];
                 matrix.mapPoints(dstPnts, srcPnts);
@@ -297,12 +353,17 @@ class ScreenRotationAnimation {
     }
 
     // Must be called while in a transaction.
+<<<<<<< HEAD
     private void setRotation(int rotation) {
+=======
+    public void setRotation(int rotation) {
+>>>>>>> upstream/master
         mCurRotation = rotation;
 
         // Compute the transformation matrix that must be applied
         // to the snapshot to make it stay in the same original position
         // with the current screen rotation.
+<<<<<<< HEAD
         int delta = deltaRotation(rotation, Surface.ROTATION_0);
         createRotationMatrix(delta, mWidth, mHeight, mSnapshotInitialMatrix);
 
@@ -328,10 +389,25 @@ class ScreenRotationAnimation {
      */
     private boolean startAnimation(SurfaceSession session, long maxAnimationDuration,
             float animationScale, int finalWidth, int finalHeight, boolean dismissing) {
+=======
+        int delta = deltaRotation(rotation, mSnapshotRotation);
+        createRotationMatrix(delta, mWidth, mHeight, mSnapshotInitialMatrix);
+
+        if (DEBUG) Slog.v(TAG, "**** ROTATION: " + delta);
+        setSnapshotTransform(mSnapshotInitialMatrix, 1.0f);
+    }
+
+    /**
+     * Returns true if animating.
+     */
+    public boolean dismiss(SurfaceSession session, long maxAnimationDuration,
+            float animationScale, int finalWidth, int finalHeight) {
+>>>>>>> upstream/master
         if (mSurface == null) {
             // Can't do animation.
             return false;
         }
+<<<<<<< HEAD
         if (mStarted) {
             return true;
         }
@@ -339,10 +415,13 @@ class ScreenRotationAnimation {
         mStarted = true;
 
         boolean firstStart = false;
+=======
+>>>>>>> upstream/master
 
         // Figure out how the screen has moved from the original rotation.
         int delta = deltaRotation(mCurRotation, mOriginalRotation);
 
+<<<<<<< HEAD
         if (TWO_PHASE_ANIMATION && mFinishExitAnimation == null
                 && (!dismissing || delta != Surface.ROTATION_0)) {
             if (DEBUG_STATE) Slog.v(TAG, "Creating start and finish animations");
@@ -416,10 +495,40 @@ class ScreenRotationAnimation {
         final int halfWidth = (finalWidth + mOriginalWidth) / 2;
         final int halfHeight = (finalHeight + mOriginalHeight) / 2;
 
+=======
+        switch (delta) {
+            case Surface.ROTATION_0:
+                mExitAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_0_exit);
+                mEnterAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_0_enter);
+                break;
+            case Surface.ROTATION_90:
+                mExitAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_plus_90_exit);
+                mEnterAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_plus_90_enter);
+                break;
+            case Surface.ROTATION_180:
+                mExitAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_180_exit);
+                mEnterAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_180_enter);
+                break;
+            case Surface.ROTATION_270:
+                mExitAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_minus_90_exit);
+                mEnterAnimation = AnimationUtils.loadAnimation(mContext,
+                        com.android.internal.R.anim.screen_rotate_minus_90_enter);
+                break;
+        }
+
+>>>>>>> upstream/master
         // Initialize the animations.  This is a hack, redefining what "parent"
         // means to allow supplying the last and next size.  In this definition
         // "%p" is the original (let's call it "previous") size, and "%" is the
         // screen's current/new size.
+<<<<<<< HEAD
         if (TWO_PHASE_ANIMATION && firstStart) {
             if (DEBUG_STATE) Slog.v(TAG, "Initializing start and finish animations");
             mStartEnterAnimation.initialize(finalWidth, finalHeight,
@@ -551,11 +660,37 @@ class ScreenRotationAnimation {
                         WindowManagerService.TAG,
                         "<<< CLOSE TRANSACTION ScreenRotationAnimation.startAnimation");
             }
+=======
+        mEnterAnimation.initialize(finalWidth, finalHeight, mOriginalWidth, mOriginalHeight);
+        mExitAnimation.initialize(finalWidth, finalHeight, mOriginalWidth, mOriginalHeight);
+        mStarted = false;
+
+        mExitAnimation.restrictDuration(maxAnimationDuration);
+        mExitAnimation.scaleCurrentDuration(animationScale);
+        mEnterAnimation.restrictDuration(maxAnimationDuration);
+        mEnterAnimation.scaleCurrentDuration(animationScale);
+
+        if (WindowManagerService.SHOW_LIGHT_TRANSACTIONS) Slog.i(WindowManagerService.TAG,
+                ">>> OPEN TRANSACTION ScreenRotationAnimation.dismiss");
+        Surface.openTransaction();
+
+        try {
+            Rect outer = new Rect(-finalWidth, -finalHeight, finalWidth * 2, finalHeight * 2);
+            Rect inner = new Rect(0, 0, finalWidth, finalHeight);
+            mBlackFrame = new BlackFrame(session, outer, inner, FREEZE_LAYER);
+        } catch (Surface.OutOfResourcesException e) {
+            Slog.w(TAG, "Unable to allocate black surface", e);
+        } finally {
+            Surface.closeTransaction();
+            if (WindowManagerService.SHOW_LIGHT_TRANSACTIONS) Slog.i(WindowManagerService.TAG,
+                    "<<< CLOSE TRANSACTION ScreenRotationAnimation.dismiss");
+>>>>>>> upstream/master
         }
 
         return true;
     }
 
+<<<<<<< HEAD
     /**
      * Returns true if animating.
      */
@@ -580,6 +715,9 @@ class ScreenRotationAnimation {
 
     public void kill() {
         if (DEBUG_STATE) Slog.v(TAG, "Kill!");
+=======
+    public void kill() {
+>>>>>>> upstream/master
         if (mSurface != null) {
             if (WindowManagerService.SHOW_TRANSACTIONS ||
                     WindowManagerService.SHOW_SURFACE_ALLOC) Slog.i(WindowManagerService.TAG,
@@ -587,6 +725,7 @@ class ScreenRotationAnimation {
             mSurface.destroy();
             mSurface = null;
         }
+<<<<<<< HEAD
         if (mCustomBlackFrame != null) {
             mCustomBlackFrame.kill();
             mCustomBlackFrame = null;
@@ -638,10 +777,23 @@ class ScreenRotationAnimation {
         if (mRotateEnterAnimation != null) {
             mRotateEnterAnimation.cancel();
             mRotateEnterAnimation = null;
+=======
+        if (mBlackFrame != null) {
+            mBlackFrame.kill();
+        }
+        if (mExitAnimation != null) {
+            mExitAnimation.cancel();
+            mExitAnimation = null;
+        }
+        if (mEnterAnimation != null) {
+            mEnterAnimation.cancel();
+            mEnterAnimation = null;
+>>>>>>> upstream/master
         }
     }
 
     public boolean isAnimating() {
+<<<<<<< HEAD
         return hasAnimations() || (TWO_PHASE_ANIMATION && mFinishAnimReady);
     }
 
@@ -922,6 +1074,64 @@ class ScreenRotationAnimation {
         }
 
         return stepAnimation(now);
+=======
+        return mEnterAnimation != null || mExitAnimation != null;
+    }
+
+    public boolean stepAnimation(long now) {
+        if (mEnterAnimation == null && mExitAnimation == null) {
+            return false;
+        }
+
+        if (!mStarted) {
+            if (mEnterAnimation != null) {
+                mEnterAnimation.setStartTime(now);
+            }
+            if (mExitAnimation != null) {
+                mExitAnimation.setStartTime(now);
+            }
+            mStarted = true;
+        }
+
+        mExitTransformation.clear();
+        boolean moreExit = false;
+        if (mExitAnimation != null) {
+            moreExit = mExitAnimation.getTransformation(now, mExitTransformation);
+            if (DEBUG) Slog.v(TAG, "Stepped exit: " + mExitTransformation);
+            if (!moreExit) {
+                if (DEBUG) Slog.v(TAG, "Exit animation done!");
+                mExitAnimation.cancel();
+                mExitAnimation = null;
+                mExitTransformation.clear();
+                if (mSurface != null) {
+                    mSurface.hide();
+                }
+            }
+        }
+
+        mEnterTransformation.clear();
+        boolean moreEnter = false;
+        if (mEnterAnimation != null) {
+            moreEnter = mEnterAnimation.getTransformation(now, mEnterTransformation);
+            if (!moreEnter) {
+                mEnterAnimation.cancel();
+                mEnterAnimation = null;
+                mEnterTransformation.clear();
+                if (mBlackFrame != null) {
+                    mBlackFrame.hide();
+                }
+            } else {
+                if (mBlackFrame != null) {
+                    mBlackFrame.setMatrix(mEnterTransformation.getMatrix());
+                }
+            }
+        }
+
+        mSnapshotFinalMatrix.setConcat(mExitTransformation.getMatrix(), mSnapshotInitialMatrix);
+        setSnapshotTransform(mSnapshotFinalMatrix, mExitTransformation.getAlpha());
+
+        return moreEnter || moreExit;
+>>>>>>> upstream/master
     }
 
     public Transformation getEnterTransformation() {

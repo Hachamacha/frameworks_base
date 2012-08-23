@@ -261,8 +261,11 @@ public abstract class DialogPreference extends Preference implements
     
     @Override
     protected void onClick() {
+<<<<<<< HEAD
         if (mDialog != null && mDialog.isShowing()) return;
 
+=======
+>>>>>>> upstream/master
         showDialog(null);
     }
 

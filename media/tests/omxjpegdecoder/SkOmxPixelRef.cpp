@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 #include <media/stagefright/foundation/ADebug.h>
+=======
+#include <media/stagefright/MediaDebug.h>
+>>>>>>> upstream/master
 #include <SkBitmap.h>
 
 #include "SkOmxPixelRef.h"
@@ -32,7 +36,11 @@ SkOmxPixelRef::SkOmxPixelRef(SkColorTable* ctable, MediaBuffer* buffer,
 
 SkOmxPixelRef::~SkOmxPixelRef() {
     mBuffer->release();
+<<<<<<< HEAD
     CHECK_EQ(mDecoder->stop(), (status_t)OK);
+=======
+    CHECK_EQ(mDecoder->stop(), OK);
+>>>>>>> upstream/master
     SkSafeUnref(mCTable);
 }
 

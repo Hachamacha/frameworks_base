@@ -29,10 +29,14 @@ import org.objectweb.asm.Opcodes;
 /**
  * Indicates if a class contains any native methods.
  */
+<<<<<<< HEAD
 public class ClassHasNativeVisitor extends ClassVisitor {
     public ClassHasNativeVisitor() {
         super(Opcodes.ASM4);
     }
+=======
+public class ClassHasNativeVisitor implements ClassVisitor {
+>>>>>>> upstream/master
 
     private boolean mHasNativeMethods = false;
 
@@ -45,42 +49,63 @@ public class ClassHasNativeVisitor extends ClassVisitor {
         mHasNativeMethods = hasNativeMethods;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visit(int version, int access, String name, String signature,
             String superName, String[] interfaces) {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         // pass
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitAttribute(Attribute attr) {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitEnd() {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public FieldVisitor visitField(int access, String name, String desc,
             String signature, Object value) {
         // pass
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitInnerClass(String name, String outerName,
             String innerName, int access) {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public MethodVisitor visitMethod(int access, String name, String desc,
             String signature, String[] exceptions) {
         if ((access & Opcodes.ACC_NATIVE) != 0) {
@@ -89,12 +114,18 @@ public class ClassHasNativeVisitor extends ClassVisitor {
         return null;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitOuterClass(String owner, String name, String desc) {
         // pass
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void visitSource(String source, String debug) {
         // pass
     }

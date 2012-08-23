@@ -40,7 +40,11 @@ namespace uirenderer {
 
 // Debug
 #if DEBUG_SHAPES
+<<<<<<< HEAD
     #define SHAPE_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define SHAPE_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define SHAPE_LOGD(...)
 #endif
@@ -336,6 +340,7 @@ public:
 
 protected:
     PathTexture* addTexture(const Entry& entry, const SkPath *path, const SkPaint* paint);
+<<<<<<< HEAD
     PathTexture* addTexture(const Entry& entry, SkBitmap* bitmap);
     void addTexture(const Entry& entry, SkBitmap* bitmap, PathTexture* texture);
 
@@ -349,6 +354,8 @@ protected:
     void initPaint(SkPaint& paint);
 
     bool checkTextureSize(uint32_t width, uint32_t height);
+=======
+>>>>>>> upstream/master
 
     PathTexture* get(Entry entry) {
         return mCache.get(entry);
@@ -494,7 +501,11 @@ void ShapeCache<Entry>::removeTexture(PathTexture* texture) {
         SHAPE_LOGD("ShapeCache::callback: delete %s: name, size, mSize = %d, %d, %d",
                 mName, texture->id, size, mSize);
         if (mDebugEnabled) {
+<<<<<<< HEAD
             ALOGD("Shape %s deleted, size = %d", mName, size);
+=======
+            LOGD("Shape %s deleted, size = %d", mName, size);
+>>>>>>> upstream/master
         }
 
         glDeleteTextures(1, &texture->id);
@@ -502,6 +513,7 @@ void ShapeCache<Entry>::removeTexture(PathTexture* texture) {
     }
 }
 
+<<<<<<< HEAD
 void computePathBounds(const SkPath* path, const SkPaint* paint,
         float& left, float& top, float& offset, uint32_t& width, uint32_t& height);
 void computeBounds(const SkRect& bounds, const SkPaint* paint,
@@ -521,6 +533,26 @@ static PathTexture* createTexture(float left, float top, float offset,
 
 template<class Entry>
 void ShapeCache<Entry>::purgeCache(uint32_t width, uint32_t height) {
+=======
+template<class Entry>
+PathTexture* ShapeCache<Entry>::addTexture(const Entry& entry, const SkPath *path,
+        const SkPaint* paint) {
+    const SkRect& bounds = path->getBounds();
+
+    const float pathWidth = fmax(bounds.width(), 1.0f);
+    const float pathHeight = fmax(bounds.height(), 1.0f);
+
+    const float offset = (int) floorf(fmax(paint->getStrokeWidth(), 1.0f) * 1.5f + 0.5f);
+
+    const uint32_t width = uint32_t(pathWidth + offset * 2.0 + 0.5);
+    const uint32_t height = uint32_t(pathHeight + offset * 2.0 + 0.5);
+
+    if (width > mMaxTextureSize || height > mMaxTextureSize) {
+        LOGW("Shape %s too large to be rendered into a texture", mName);
+        return NULL;
+    }
+
+>>>>>>> upstream/master
     const uint32_t size = width * height;
     // Don't even try to cache a bitmap that's bigger than the cache
     if (size < mMaxSize) {
@@ -528,6 +560,7 @@ void ShapeCache<Entry>::purgeCache(uint32_t width, uint32_t height) {
             mCache.removeOldest();
         }
     }
+<<<<<<< HEAD
 }
 
 template<class Entry>
@@ -593,17 +626,60 @@ void ShapeCache<Entry>::addTexture(const Entry& entry, SkBitmap* bitmap, PathTex
     generateTexture(*bitmap, texture);
 
     uint32_t size = texture->width * texture->height;
+=======
+
+    PathTexture* texture = new PathTexture;
+    texture->left = bounds.fLeft;
+    texture->top = bounds.fTop;
+    texture->offset = offset;
+    texture->width = width;
+    texture->height = height;
+    texture->generation = path->getGenerationID();
+
+    SkBitmap bitmap;
+    bitmap.setConfig(SkBitmap::kA8_Config, width, height);
+    bitmap.allocPixels();
+    bitmap.eraseColor(0);
+
+    SkPaint pathPaint(*paint);
+
+    // Make sure the paint is opaque, color, alpha, filter, etc.
+    // will be applied later when compositing the alpha8 texture
+    pathPaint.setColor(0xff000000);
+    pathPaint.setAlpha(255);
+    pathPaint.setColorFilter(NULL);
+    pathPaint.setMaskFilter(NULL);
+    pathPaint.setShader(NULL);
+    SkXfermode* mode = SkXfermode::Create(SkXfermode::kSrc_Mode);
+    SkSafeUnref(pathPaint.setXfermode(mode));
+
+    SkCanvas canvas(bitmap);
+    canvas.translate(-bounds.fLeft + offset, -bounds.fTop + offset);
+    canvas.drawPath(*path, pathPaint);
+
+    generateTexture(bitmap, texture);
+
+>>>>>>> upstream/master
     if (size < mMaxSize) {
         mSize += size;
         SHAPE_LOGD("ShapeCache::get: create %s: name, size, mSize = %d, %d, %d",
                 mName, texture->id, size, mSize);
         if (mDebugEnabled) {
+<<<<<<< HEAD
             ALOGD("Shape %s created, size = %d", mName, size);
+=======
+            LOGD("Shape %s created, size = %d", mName, size);
+>>>>>>> upstream/master
         }
         mCache.put(entry, texture);
     } else {
         texture->cleanup = true;
     }
+<<<<<<< HEAD
+=======
+
+    return texture;
+>>>>>>> upstream/master
 }
 
 template<class Entry>
@@ -615,7 +691,11 @@ template<class Entry>
 void ShapeCache<Entry>::generateTexture(SkBitmap& bitmap, Texture* texture) {
     SkAutoLockPixels alp(bitmap);
     if (!bitmap.readyToDraw()) {
+<<<<<<< HEAD
         ALOGE("Cannot generate texture from bitmap");
+=======
+        LOGE("Cannot generate texture from bitmap");
+>>>>>>> upstream/master
         return;
     }
 
@@ -629,8 +709,13 @@ void ShapeCache<Entry>::generateTexture(SkBitmap& bitmap, Texture* texture) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, texture->width, texture->height, 0,
             GL_ALPHA, GL_UNSIGNED_BYTE, bitmap.getPixels());
 
+<<<<<<< HEAD
     texture->setFilter(GL_LINEAR);
     texture->setWrap(GL_CLAMP_TO_EDGE);
+=======
+    texture->setFilter(GL_LINEAR, GL_LINEAR);
+    texture->setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+>>>>>>> upstream/master
 }
 
 }; // namespace uirenderer

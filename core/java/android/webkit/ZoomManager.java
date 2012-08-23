@@ -50,7 +50,11 @@ class ZoomManager {
 
     static final String LOGTAG = "webviewZoom";
 
+<<<<<<< HEAD
     private final WebViewClassic mWebView;
+=======
+    private final WebView mWebView;
+>>>>>>> upstream/master
     private final CallbackProxy mCallbackProxy;
 
     // Widgets responsible for the on-screen zoom functions of the WebView.
@@ -211,7 +215,11 @@ class ZoomManager {
     private boolean mHardwareAccelerated = false;
     private boolean mInHWAcceleratedZoom = false;
 
+<<<<<<< HEAD
     public ZoomManager(WebViewClassic webView, CallbackProxy callbackProxy) {
+=======
+    public ZoomManager(WebView webView, CallbackProxy callbackProxy) {
+>>>>>>> upstream/master
         mWebView = webView;
         mCallbackProxy = callbackProxy;
 
@@ -220,7 +228,11 @@ class ZoomManager {
          * ESPN and Engadget always have wider mContentWidth no matter what the
          * viewport size is.
          */
+<<<<<<< HEAD
         setZoomOverviewWidth(WebViewClassic.DEFAULT_VIEWPORT_WIDTH);
+=======
+        setZoomOverviewWidth(WebView.DEFAULT_VIEWPORT_WIDTH);
+>>>>>>> upstream/master
 
         mFocusMovementQueue = new FocusMovementQueue();
     }
@@ -258,7 +270,10 @@ class ZoomManager {
             // Remember the current zoom density before it gets changed.
             final float originalDefault = mDefaultScale;
             // set the new default density
+<<<<<<< HEAD
             mDisplayDensity = density;
+=======
+>>>>>>> upstream/master
             setDefaultZoomScale(density);
             float scaleChange = (originalDefault > 0.0) ? density / originalDefault: 1.0f;
             // adjust the scale if it falls outside the new zoom bounds
@@ -317,12 +332,16 @@ class ZoomManager {
      * Returns the zoom scale used for reading text on a double-tap.
      */
     public final float getReadingLevelScale() {
+<<<<<<< HEAD
         return computeScaleWithLimits(computeReadingLevelScale(getZoomOverviewScale()));
     }
 
     /* package */ final float computeReadingLevelScale(float scale) {
         return Math.max(mDisplayDensity * mDoubleTapZoomFactor,
                 scale + MIN_DOUBLE_TAP_SCALE_INCREMENT);
+=======
+        return mDisplayDensity * mDoubleTapZoomFactor;
+>>>>>>> upstream/master
     }
 
     public final float getInvDefaultScale() {
@@ -429,12 +448,22 @@ class ZoomManager {
             scale = getReadingLevelScale();
         }
 
+<<<<<<< HEAD
         setZoomScale(scale, reflowText);
 
         if (oldScale != mActualScale) {
             if (mHardwareAccelerated) {
                 mInHWAcceleratedZoom = true;
             }
+=======
+        if (mHardwareAccelerated) {
+            mInHWAcceleratedZoom = true;
+        }
+
+        setZoomScale(scale, reflowText);
+
+        if (oldScale != mActualScale) {
+>>>>>>> upstream/master
             // use mZoomPickerScale to see zoom preview first
             mZoomStart = SystemClock.uptimeMillis();
             mInvInitialZoomScale = 1.0f / oldScale;
@@ -466,8 +495,11 @@ class ZoomManager {
         if (mZoomScale == 0) {
             Log.w(LOGTAG, "A WebView is attempting to perform a fixed length "
                     + "zoom animation when no zoom is in progress");
+<<<<<<< HEAD
             // Now that we've logged about it, go ahead and just recover
             mInHWAcceleratedZoom = false;
+=======
+>>>>>>> upstream/master
             return;
         }
 
@@ -488,13 +520,21 @@ class ZoomManager {
         // zoomScale, we can't use the WebView's pinLocX/Y functions directly.
         float scale = zoomScale * mInvInitialZoomScale;
         int tx = Math.round(scale * (mInitialScrollX + mZoomCenterX) - mZoomCenterX);
+<<<<<<< HEAD
         tx = -WebViewClassic.pinLoc(tx, mWebView.getViewWidth(), Math.round(mWebView.getContentWidth()
+=======
+        tx = -WebView.pinLoc(tx, mWebView.getViewWidth(), Math.round(mWebView.getContentWidth()
+>>>>>>> upstream/master
                 * zoomScale)) + mWebView.getScrollX();
         int titleHeight = mWebView.getTitleHeight();
         int ty = Math.round(scale
                 * (mInitialScrollY + mZoomCenterY - titleHeight)
                 - (mZoomCenterY - titleHeight));
+<<<<<<< HEAD
         ty = -(ty <= titleHeight ? Math.max(ty, 0) : WebViewClassic.pinLoc(ty
+=======
+        ty = -(ty <= titleHeight ? Math.max(ty, 0) : WebView.pinLoc(ty
+>>>>>>> upstream/master
                 - titleHeight, mWebView.getViewHeight(), Math.round(mWebView.getContentHeight()
                 * zoomScale)) + titleHeight) + mWebView.getScrollY();
 
@@ -631,7 +671,11 @@ class ZoomManager {
     public void handleDoubleTap(float lastTouchX, float lastTouchY) {
         // User takes action, set initial zoom overview to false.
         mInitialZoomOverview = false;
+<<<<<<< HEAD
         WebSettingsClassic settings = mWebView.getSettings();
+=======
+        WebSettings settings = mWebView.getSettings();
+>>>>>>> upstream/master
         if (!isDoubleTapEnabled()) {
             return;
         }
@@ -644,6 +688,23 @@ class ZoomManager {
         // remove the zoom control after double tap
         dismissZoomPicker();
 
+<<<<<<< HEAD
+=======
+        /*
+         * If the double tap was on a plugin then either zoom to maximize the
+         * plugin on the screen or scale to overview mode.
+         */
+        Rect pluginBounds = mWebView.getPluginBounds(mAnchorX, mAnchorY);
+        if (pluginBounds != null) {
+            if (mWebView.isRectFitOnScreen(pluginBounds)) {
+                zoomToOverview();
+            } else {
+                mWebView.centerFitRect(pluginBounds);
+            }
+            return;
+        }
+
+>>>>>>> upstream/master
         final float newTextWrapScale;
         if (settings.getUseFixedViewport()) {
             newTextWrapScale = Math.max(mActualScale, getReadingLevelScale());
@@ -671,13 +732,21 @@ class ZoomManager {
             }
             zoomToOverview();
         } else {
+<<<<<<< HEAD
             zoomToReadingLevel();
+=======
+            zoomToReadingLevelOrMore();
+>>>>>>> upstream/master
         }
     }
 
     private void setZoomOverviewWidth(int width) {
         if (width == 0) {
+<<<<<<< HEAD
             mZoomOverviewWidth = WebViewClassic.DEFAULT_VIEWPORT_WIDTH;
+=======
+            mZoomOverviewWidth = WebView.DEFAULT_VIEWPORT_WIDTH;
+>>>>>>> upstream/master
         } else {
             mZoomOverviewWidth = width;
         }
@@ -702,17 +771,27 @@ class ZoomManager {
             !mWebView.getSettings().getUseFixedViewport());
     }
 
+<<<<<<< HEAD
     private void zoomToReadingLevel() {
         final float readingScale = getReadingLevelScale();
 
         int left = mWebView.getBlockLeftEdge(mAnchorX, mAnchorY, readingScale);
         if (left != WebViewClassic.NO_LEFTEDGE) {
+=======
+    private void zoomToReadingLevelOrMore() {
+        final float zoomScale = Math.max(getReadingLevelScale(),
+                mActualScale + MIN_DOUBLE_TAP_SCALE_INCREMENT);
+
+        int left = mWebView.nativeGetBlockLeftEdge(mAnchorX, mAnchorY, mActualScale);
+        if (left != WebView.NO_LEFTEDGE) {
+>>>>>>> upstream/master
             // add a 5pt padding to the left edge.
             int viewLeft = mWebView.contentToViewX(left < 5 ? 0 : (left - 5))
                     - mWebView.getScrollX();
             // Re-calculate the zoom center so that the new scroll x will be
             // on the left edge.
             if (viewLeft > 0) {
+<<<<<<< HEAD
                 mZoomCenterX = viewLeft * readingScale / (readingScale - mActualScale);
             } else {
                 mWebView.getWebView().scrollBy(viewLeft, 0);
@@ -720,6 +799,15 @@ class ZoomManager {
             }
         }
         startZoomAnimation(readingScale,
+=======
+                mZoomCenterX = viewLeft * zoomScale / (zoomScale - mActualScale);
+            } else {
+                mWebView.scrollBy(viewLeft, 0);
+                mZoomCenterX = 0;
+            }
+        }
+        startZoomAnimation(zoomScale,
+>>>>>>> upstream/master
             !mWebView.getSettings().getUseFixedViewport());
     }
 
@@ -942,7 +1030,11 @@ class ZoomManager {
         // cause its child View to reposition itself through ViewManager's
         // scaleAll(), we need to post a Runnable to ensure requestLayout().
         // Additionally, only update the text wrap scale if the width changed.
+<<<<<<< HEAD
         mWebView.getWebView().post(new PostScale(w != ow &&
+=======
+        mWebView.post(new PostScale(w != ow &&
+>>>>>>> upstream/master
             !mWebView.getSettings().getUseFixedViewport(), mInZoomOverview, w < ow));
     }
 
@@ -1009,6 +1101,7 @@ class ZoomManager {
     /**
      * Updates zoom values when Webkit produces a new picture. This method
      * should only be called from the UI thread's message handler.
+<<<<<<< HEAD
      *
      * @return True if zoom value has changed
      */
@@ -1017,6 +1110,14 @@ class ZoomManager {
         final boolean zoomOverviewWidthChanged = setupZoomOverviewWidth(drawData, viewWidth);
         final float newZoomOverviewScale = getZoomOverviewScale();
         WebSettingsClassic settings = mWebView.getSettings();
+=======
+     */
+    public void onNewPicture(WebViewCore.DrawData drawData) {
+        final int viewWidth = mWebView.getViewWidth();
+        final boolean zoomOverviewWidthChanged = setupZoomOverviewWidth(drawData, viewWidth);
+        final float newZoomOverviewScale = getZoomOverviewScale();
+        WebSettings settings = mWebView.getSettings();
+>>>>>>> upstream/master
         if (zoomOverviewWidthChanged && settings.isNarrowColumnLayout() &&
             settings.getUseFixedViewport() &&
             (mInitialZoomOverview || mInZoomOverview)) {
@@ -1059,8 +1160,11 @@ class ZoomManager {
             // so next new picture could be forced into overview mode if it's true.
             mInitialZoomOverview = mInZoomOverview;
         }
+<<<<<<< HEAD
 
         return scaleHasDiff;
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -1076,7 +1180,11 @@ class ZoomManager {
             if (drawData.mContentSize.x > 0) {
                 // The webkitDraw for layers will not populate contentSize, and it'll be
                 // ignored for zoom overview width update.
+<<<<<<< HEAD
                 newZoomOverviewWidth = Math.min(WebViewClassic.sMaxViewportWidth,
+=======
+                newZoomOverviewWidth = Math.min(WebView.sMaxViewportWidth,
+>>>>>>> upstream/master
                     drawData.mContentSize.x);
             }
         } else {
@@ -1108,7 +1216,11 @@ class ZoomManager {
         updateZoomRange(viewState, viewSize.x, drawData.mMinPrefWidth);
         setupZoomOverviewWidth(drawData, mWebView.getViewWidth());
         final float overviewScale = getZoomOverviewScale();
+<<<<<<< HEAD
         WebSettingsClassic settings = mWebView.getSettings();
+=======
+        WebSettings settings = mWebView.getSettings();
+>>>>>>> upstream/master
         if (!mMinZoomScaleFixed || settings.getUseWideViewPort()) {
             mMinZoomScale = (mInitialScale > 0) ?
                     Math.min(mInitialScale, overviewScale) : overviewScale;

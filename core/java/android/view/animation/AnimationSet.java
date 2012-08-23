@@ -224,9 +224,13 @@ public class AnimationSet extends Animation {
         }
 
         boolean changeBounds = (mFlags & PROPERTY_CHANGE_BOUNDS_MASK) == 0;
+<<<<<<< HEAD
 
 
         if (changeBounds && a.willChangeBounds()) {
+=======
+        if (changeBounds && a.willChangeTransformationMatrix()) {
+>>>>>>> upstream/master
             mFlags |= PROPERTY_CHANGE_BOUNDS_MASK;
         }
 
@@ -348,6 +352,7 @@ public class AnimationSet extends Animation {
 
             for (int i = count - 1; i >= 0; --i) {
                 final Animation a = animations.get(i);
+<<<<<<< HEAD
                 if (!a.isFillEnabled() || a.getFillBefore() || a.getStartOffset() == 0) {
                     temp.clear();
                     final Interpolator interpolator = a.mInterpolator;
@@ -355,6 +360,14 @@ public class AnimationSet extends Animation {
                             : 0.0f, temp);
                     previousTransformation.compose(temp);
                 }
+=======
+
+                temp.clear();
+                final Interpolator interpolator = a.mInterpolator;
+                a.applyTransformation(interpolator != null ? interpolator.getInterpolation(0.0f)
+                        : 0.0f, temp);
+                previousTransformation.compose(temp);
+>>>>>>> upstream/master
             }
         }
     }

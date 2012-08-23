@@ -619,11 +619,16 @@ public class ProcessStats {
     }
     
     final public float getTotalCpuPercent() {
+<<<<<<< HEAD
         int denom = mRelUserTime+mRelSystemTime+mRelIrqTime+mRelIdleTime;
         if (denom <= 0) {
             return 0;
         }
         return ((float)(mRelUserTime+mRelSystemTime+mRelIrqTime)*100) / denom;
+=======
+        return ((float)(mRelUserTime+mRelSystemTime+mRelIrqTime)*100)
+                / (mRelUserTime+mRelSystemTime+mRelIrqTime+mRelIdleTime);
+>>>>>>> upstream/master
     }
     
     final void buildWorkingProcs() {
@@ -702,7 +707,11 @@ public class ProcessStats {
 
         long sampleTime = mCurrentSampleTime - mLastSampleTime;
         long sampleRealTime = mCurrentSampleRealTime - mLastSampleRealTime;
+<<<<<<< HEAD
         long percAwake = sampleRealTime > 0 ? ((sampleTime*100) / sampleRealTime) : 0;
+=======
+        long percAwake = (sampleTime*100) / sampleRealTime;
+>>>>>>> upstream/master
         if (percAwake != 100) {
             pw.print(" with ");
             pw.print(percAwake);

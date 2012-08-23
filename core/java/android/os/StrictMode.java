@@ -20,10 +20,14 @@ import android.app.ActivityManagerNative;
 import android.app.ActivityThread;
 import android.app.ApplicationErrorReport;
 import android.app.IActivityManager;
+<<<<<<< HEAD
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+=======
+import android.content.Intent;
+>>>>>>> upstream/master
 import android.util.Log;
 import android.util.Printer;
 import android.util.Singleton;
@@ -198,6 +202,7 @@ public final class StrictMode {
      */
     private static final int DETECT_VM_INSTANCE_LEAKS = 0x1000;  // for VmPolicy
 
+<<<<<<< HEAD
     /**
      * @hide
      */
@@ -207,6 +212,11 @@ public final class StrictMode {
             DETECT_VM_CURSOR_LEAKS | DETECT_VM_CLOSABLE_LEAKS |
             DETECT_VM_ACTIVITY_LEAKS | DETECT_VM_INSTANCE_LEAKS |
             DETECT_VM_REGISTRATION_LEAKS;
+=======
+    private static final int ALL_VM_DETECT_BITS =
+            DETECT_VM_CURSOR_LEAKS | DETECT_VM_CLOSABLE_LEAKS |
+            DETECT_VM_ACTIVITY_LEAKS | DETECT_VM_INSTANCE_LEAKS;
+>>>>>>> upstream/master
 
     /**
      * @hide
@@ -627,8 +637,13 @@ public final class StrictMode {
              * but will likely expand in future releases.
              */
             public Builder detectAll() {
+<<<<<<< HEAD
                 return enable(DETECT_VM_ACTIVITY_LEAKS | DETECT_VM_CURSOR_LEAKS
                         | DETECT_VM_CLOSABLE_LEAKS | DETECT_VM_REGISTRATION_LEAKS);
+=======
+                return enable(DETECT_VM_ACTIVITY_LEAKS |
+                        DETECT_VM_CURSOR_LEAKS | DETECT_VM_CLOSABLE_LEAKS);
+>>>>>>> upstream/master
             }
 
             /**
@@ -657,6 +672,7 @@ public final class StrictMode {
             }
 
             /**
+<<<<<<< HEAD
              * Detect when a {@link BroadcastReceiver} or
              * {@link ServiceConnection} is leaked during {@link Context}
              * teardown.
@@ -666,6 +682,8 @@ public final class StrictMode {
             }
 
             /**
+=======
+>>>>>>> upstream/master
              * Crashes the whole process on violation.  This penalty runs at
              * the end of all enabled penalties so yo you'll still get
              * your logging or other violations before the process dies.
@@ -1201,7 +1219,11 @@ public final class StrictMode {
             // throttled back to 60fps via SurfaceFlinger/View
             // invalidates, _not_ by posting frame updates every 16
             // milliseconds.
+<<<<<<< HEAD
             threadHandler.get().postAtFrontOfQueue(new Runnable() {
+=======
+            threadHandler.get().post(new Runnable() {
+>>>>>>> upstream/master
                     public void run() {
                         long loopFinishTime = SystemClock.uptimeMillis();
 
@@ -1517,6 +1539,7 @@ public final class StrictMode {
     /**
      * @hide
      */
+<<<<<<< HEAD
     public static boolean vmRegistrationLeaksEnabled() {
         return (sVmPolicyMask & DETECT_VM_REGISTRATION_LEAKS) != 0;
     }
@@ -1524,6 +1547,8 @@ public final class StrictMode {
     /**
      * @hide
      */
+=======
+>>>>>>> upstream/master
     public static void onSqliteObjectLeaked(String message, Throwable originStack) {
         onVmPolicyViolation(message, originStack);
     }
@@ -1535,6 +1560,7 @@ public final class StrictMode {
         onVmPolicyViolation(null, originStack);
     }
 
+<<<<<<< HEAD
     /**
      * @hide
      */
@@ -1549,6 +1575,8 @@ public final class StrictMode {
         onVmPolicyViolation(null, originStack);
     }
 
+=======
+>>>>>>> upstream/master
     // Map from VM violation fingerprint to uptime millis.
     private static final HashMap<Integer, Long> sLastVmViolationTime = new HashMap<Integer, Long>();
 

@@ -17,6 +17,7 @@
 #ifndef ANDROID_HWUI_PROGRAM_H
 #define ANDROID_HWUI_PROGRAM_H
 
+<<<<<<< HEAD
 #include <utils/KeyedVector.h>
 
 #include <GLES2/gl2.h>
@@ -26,10 +27,19 @@
 
 #include "Matrix.h"
 #include "Properties.h"
+=======
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+
+#include <utils/KeyedVector.h>
+
+#include "Matrix.h"
+>>>>>>> upstream/master
 
 namespace android {
 namespace uirenderer {
 
+<<<<<<< HEAD
 ///////////////////////////////////////////////////////////////////////////////
 // Defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -275,22 +285,31 @@ private:
 
 }; // struct ProgramDescription
 
+=======
+>>>>>>> upstream/master
 /**
  * A program holds a vertex and a fragment shader. It offers several utility
  * methods to query attributes and uniforms.
  */
 class Program {
 public:
+<<<<<<< HEAD
     enum ShaderBindings {
         kBindingPosition,
         kBindingTexCoords
     };
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a new program with the specified vertex and fragment
      * shaders sources.
      */
+<<<<<<< HEAD
     Program(const ProgramDescription& description, const char* vertex, const char* fragment);
+=======
+    Program(const char* vertex, const char* fragment);
+>>>>>>> upstream/master
     virtual ~Program();
 
     /**
@@ -347,11 +366,14 @@ public:
     int position;
 
     /**
+<<<<<<< HEAD
      * Name of the texCoords attribute if it exists, -1 otherwise.
      */
     int texCoords;
 
     /**
+=======
+>>>>>>> upstream/master
      * Name of the transform uniform.
      */
     int transform;
@@ -365,11 +387,14 @@ protected:
     int addAttrib(const char* name);
 
     /**
+<<<<<<< HEAD
      * Binds the specified attribute name to the specified slot.
      */
     int bindAttrib(const char* name, ShaderBindings bindingSlot);
 
     /**
+=======
+>>>>>>> upstream/master
      * Adds a uniform with the specified name.
      *
      * @return The OpenGL name of the uniform.
@@ -384,6 +409,7 @@ private:
      */
     GLuint buildShader(const char* source, GLenum type);
 
+<<<<<<< HEAD
     // Name of the OpenGL program and shaders
     GLuint mProgramId;
     GLuint mVertexShader;
@@ -400,6 +426,21 @@ private:
     int mColorUniform;
 
     bool mHasSampler;
+=======
+    // Name of the OpenGL program
+    GLuint id;
+
+    // Name of the shaders
+    GLuint vertexShader;
+    GLuint fragmentShader;
+
+    // Keeps track of attributes and uniforms slots
+    KeyedVector<const char*, int> attributes;
+    KeyedVector<const char*, int> uniforms;
+
+    bool mUse;
+    bool mInitialized;
+>>>>>>> upstream/master
 }; // class Program
 
 }; // namespace uirenderer

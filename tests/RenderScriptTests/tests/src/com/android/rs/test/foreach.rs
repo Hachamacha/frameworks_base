@@ -3,12 +3,16 @@
 int *a;
 int dimX;
 int dimY;
+<<<<<<< HEAD
 static bool failed = false;
+=======
+>>>>>>> upstream/master
 
 void root(int *out, uint32_t x, uint32_t y) {
     *out = x + y * dimX;
 }
 
+<<<<<<< HEAD
 void foo(const int *in, int *out, uint32_t x, uint32_t y) {
     _RS_ASSERT(*in == (x + y * dimX));
     *out = 99 + x + y * dimX;
@@ -16,6 +20,9 @@ void foo(const int *in, int *out, uint32_t x, uint32_t y) {
 }
 
 static bool test_root_output() {
+=======
+static bool test_foreach_output() {
+>>>>>>> upstream/master
     bool failed = false;
     int i, j;
 
@@ -26,15 +33,23 @@ static bool test_root_output() {
     }
 
     if (failed) {
+<<<<<<< HEAD
         rsDebug("test_root_output FAILED", 0);
     }
     else {
         rsDebug("test_root_output PASSED", 0);
+=======
+        rsDebug("test_foreach_output FAILED", 0);
+    }
+    else {
+        rsDebug("test_foreach_output PASSED", 0);
+>>>>>>> upstream/master
     }
 
     return failed;
 }
 
+<<<<<<< HEAD
 static bool test_foo_output() {
     bool failed = false;
     int i, j;
@@ -64,6 +79,12 @@ void verify_foo() {
 }
 
 void foreach_test() {
+=======
+void foreach_test() {
+    bool failed = false;
+    failed |= test_foreach_output();
+
+>>>>>>> upstream/master
     if (failed) {
         rsSendToClientBlocking(RS_MSG_TEST_FAILED);
     }

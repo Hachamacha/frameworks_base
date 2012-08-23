@@ -16,6 +16,7 @@
 
 package android.widget.focus;
 
+<<<<<<< HEAD
 import static com.google.testing.littlemock.LittleMock.inOrder;
 import static com.google.testing.littlemock.LittleMock.mock;
 
@@ -32,12 +33,27 @@ import android.widget.Button;
 
 import com.android.frameworks.coretests.R;
 import com.google.testing.littlemock.LittleMock.InOrder;
+=======
+import android.widget.focus.RequestFocus;
+import com.android.frameworks.coretests.R;
+
+import android.os.Handler;
+import android.test.ActivityInstrumentationTestCase;
+import android.test.suitebuilder.annotation.LargeTest;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.widget.Button;
+import android.util.AndroidRuntimeException;
+>>>>>>> upstream/master
 
 /**
  * {@link RequestFocusTest} is set up to exercise cases where the views that
  * have focus become invisible or GONE.
  */
+<<<<<<< HEAD
 public class RequestFocusTest extends ActivityInstrumentationTestCase2<RequestFocus> {
+=======
+public class RequestFocusTest extends ActivityInstrumentationTestCase<RequestFocus> {
+>>>>>>> upstream/master
 
     private Button mTopLeftButton;
     private Button mBottomLeftButton;
@@ -46,7 +62,11 @@ public class RequestFocusTest extends ActivityInstrumentationTestCase2<RequestFo
     private Handler mHandler;
 
     public RequestFocusTest() {
+<<<<<<< HEAD
         super(RequestFocus.class);
+=======
+        super("com.android.frameworks.coretests", RequestFocus.class);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -97,6 +117,7 @@ public class RequestFocusTest extends ActivityInstrumentationTestCase2<RequestFo
             fail("requestFocus from wrong thread should raise exception.");
         } catch (AndroidRuntimeException e) {
             // Expected.  The actual exception is not public, so we can't catch it.
+<<<<<<< HEAD
             assertEquals("android.view.ViewRootImpl$CalledFromWrongThreadException",
                          e.getClass().getName());
         }
@@ -187,4 +208,10 @@ public class RequestFocusTest extends ActivityInstrumentationTestCase2<RequestFo
         inOrder.verify(mock).onGlobalFocusChanged(clearingFocusButton, gainingFocusButton);
         inOrder.verify(mock).onFocusChange(gainingFocusButton, true);
     }
+=======
+            assertEquals("android.view.ViewAncestor$CalledFromWrongThreadException",
+                         e.getClass().getName());
+        }
+    }
+>>>>>>> upstream/master
 }

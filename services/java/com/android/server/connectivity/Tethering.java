@@ -562,6 +562,7 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                     ifcg = mNMService.getInterfaceConfig(iface);
                     if (ifcg != null) {
                         InetAddress addr = NetworkUtils.numericToInetAddress(USB_NEAR_IFACE_ADDR);
+<<<<<<< HEAD
                         ifcg.setLinkAddress(new LinkAddress(addr, USB_PREFIX_LENGTH));
                         if (enabled) {
                             ifcg.setInterfaceUp();
@@ -569,6 +570,16 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                             ifcg.setInterfaceDown();
                         }
                         ifcg.clearFlag("running");
+=======
+                        ifcg.addr = new LinkAddress(addr, USB_PREFIX_LENGTH);
+                        if (enabled) {
+                            ifcg.interfaceFlags = ifcg.interfaceFlags.replace("down", "up");
+                        } else {
+                            ifcg.interfaceFlags = ifcg.interfaceFlags.replace("up", "down");
+                        }
+                        ifcg.interfaceFlags = ifcg.interfaceFlags.replace("running", "");
+                        ifcg.interfaceFlags = ifcg.interfaceFlags.replace("  "," ");
+>>>>>>> upstream/master
                         mNMService.setInterfaceConfig(iface, ifcg);
                     }
                 } catch (Exception e) {
@@ -1231,8 +1242,11 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                 return retValue;
             }
             protected boolean turnOffUpstreamMobileConnection() {
+<<<<<<< HEAD
                 // ignore pending renewal requests
                 ++mCurrentConnectionSequence;
+=======
+>>>>>>> upstream/master
                 if (mMobileApnReserved != ConnectivityManager.TYPE_NONE) {
                     try {
                         mConnService.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE,
@@ -1322,6 +1336,7 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                 if (upType == ConnectivityManager.TYPE_MOBILE_DUN ||
                         upType == ConnectivityManager.TYPE_MOBILE_HIPRI) {
                     turnOnUpstreamMobileConnection(upType);
+<<<<<<< HEAD
                 } else if (upType != ConnectivityManager.TYPE_NONE) {
                     /* If we've found an active upstream connection that's not DUN/HIPRI
                      * we should stop any outstanding DUN/HIPRI start requests.
@@ -1330,6 +1345,8 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                      * requests to keep trying to bring up something we can use.
                      */
                     turnOffUpstreamMobileConnection();
+=======
+>>>>>>> upstream/master
                 }
 
                 if (upType == ConnectivityManager.TYPE_NONE) {

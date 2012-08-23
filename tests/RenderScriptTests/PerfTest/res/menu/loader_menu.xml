@@ -18,6 +18,7 @@
 -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
     <item android:id="@+id/benchmark_all"
           android:title="@string/benchmark_all" />
     <item android:id="@+id/benchmark_one"
@@ -26,3 +27,10 @@
           android:title="@string/debug_mode" />
 </menu>
 
+=======
+    <item android:id="@+id/benchmark_mode"
+          android:title="@string/benchmark_mode" />
+    <item android:id="@+id/debug_mode"
+          android:title="@string/debug_mode" />
+</menu>
+>>>>>>> upstream/master

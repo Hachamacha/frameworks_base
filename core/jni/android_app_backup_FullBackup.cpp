@@ -21,7 +21,11 @@
 #include "JNIHelp.h"
 #include <android_runtime/AndroidRuntime.h>
 
+<<<<<<< HEAD
 #include <androidfw/BackupHelpers.h>
+=======
+#include <utils/BackupHelpers.h>
+>>>>>>> upstream/master
 
 #include <string.h>
 
@@ -97,12 +101,20 @@ static int backupToTar(JNIEnv* env, jobject clazz, jstring packageNameObj,
 
     // Validate
     if (!writer) {
+<<<<<<< HEAD
         ALOGE("No output stream provided [%s]", path.string());
+=======
+        LOGE("No output stream provided [%s]", path.string());
+>>>>>>> upstream/master
         return -1;
     }
 
     if (path.length() < rootpath.length()) {
+<<<<<<< HEAD
         ALOGE("file path [%s] shorter than root path [%s]",
+=======
+        LOGE("file path [%s] shorter than root path [%s]",
+>>>>>>> upstream/master
                 path.string(), rootpath.string());
         return -1;
     }

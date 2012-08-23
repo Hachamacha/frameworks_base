@@ -32,8 +32,17 @@ public class WebHistoryItem implements Cloneable {
     private static int sNextId = 0;
     // Unique identifier.
     private final int mId;
+<<<<<<< HEAD
     // A point to a native WebHistoryItem instance which contains the actual data
     private int mNativeBridge;
+=======
+    // The title of this item's document.
+    private String mTitle;
+    // The base url of this item.
+    private String mUrl;
+    // The original requested url of this item.
+    private String mOriginalUrl;
+>>>>>>> upstream/master
     // The favicon for this item.
     private Bitmap mFavicon;
     // The pre-flattened data used for saving the state.
@@ -51,6 +60,7 @@ public class WebHistoryItem implements Cloneable {
      * Basic constructor that assigns a unique id to the item. Called by JNI
      * only.
      */
+<<<<<<< HEAD
     private WebHistoryItem(int nativeBridge) {
         synchronized (WebHistoryItem.class) {
             mId = sNextId++;
@@ -64,6 +74,12 @@ public class WebHistoryItem implements Cloneable {
             nativeUnref(mNativeBridge);
             mNativeBridge = 0;
         }
+=======
+    private WebHistoryItem() {
+        synchronized (WebHistoryItem.class) {
+            mId = sNextId++;
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -71,6 +87,10 @@ public class WebHistoryItem implements Cloneable {
      * @param data The pre-flattened data coming from restoreState.
      */
     /*package*/ WebHistoryItem(byte[] data) {
+<<<<<<< HEAD
+=======
+        mUrl = null; // This will be updated natively
+>>>>>>> upstream/master
         mFlattenedData = data;
         synchronized (WebHistoryItem.class) {
             mId = sNextId++;
@@ -82,6 +102,7 @@ public class WebHistoryItem implements Cloneable {
      * @param item The history item to clone.
      */
     private WebHistoryItem(WebHistoryItem item) {
+<<<<<<< HEAD
         mFlattenedData = item.mFlattenedData;
         mId = item.mId;
         mFavicon = item.mFavicon;
@@ -90,6 +111,14 @@ public class WebHistoryItem implements Cloneable {
             nativeRef(mNativeBridge);
         }
     }
+=======
+        mUrl = item.mUrl;
+        mTitle = item.mTitle;
+        mFlattenedData = item.mFlattenedData;
+        mFavicon = item.mFavicon;
+        mId = item.mId;
+}
+>>>>>>> upstream/master
 
     /**
      * Return an identifier for this history item. If an item is a copy of
@@ -112,8 +141,12 @@ public class WebHistoryItem implements Cloneable {
      * to synchronize this method.
      */
     public String getUrl() {
+<<<<<<< HEAD
         if (mNativeBridge == 0) return null;
         return nativeGetUrl(mNativeBridge);
+=======
+        return mUrl;
+>>>>>>> upstream/master
     }
 
     /**
@@ -123,8 +156,12 @@ public class WebHistoryItem implements Cloneable {
      * @return The original url of this history item.
      */
     public String getOriginalUrl() {
+<<<<<<< HEAD
         if (mNativeBridge == 0) return null;
         return nativeGetOriginalUrl(mNativeBridge);
+=======
+        return mOriginalUrl;
+>>>>>>> upstream/master
     }
     
     /**
@@ -134,8 +171,12 @@ public class WebHistoryItem implements Cloneable {
      * to synchronize this method.
      */
     public String getTitle() {
+<<<<<<< HEAD
         if (mNativeBridge == 0) return null;
         return nativeGetTitle(mNativeBridge);
+=======
+        return mTitle;
+>>>>>>> upstream/master
     }
 
     /**
@@ -145,9 +186,12 @@ public class WebHistoryItem implements Cloneable {
      * to synchronize this method.
      */
     public Bitmap getFavicon() {
+<<<<<<< HEAD
         if (mFavicon == null && mNativeBridge != 0) {
             mFavicon = nativeGetFavicon(mNativeBridge);
         }
+=======
+>>>>>>> upstream/master
         return mFavicon;
     }
 
@@ -168,7 +212,11 @@ public class WebHistoryItem implements Cloneable {
         }
 
         try {
+<<<<<<< HEAD
             URL url = new URL(getOriginalUrl());
+=======
+            URL url = new URL(mOriginalUrl);
+>>>>>>> upstream/master
             mTouchIconUrlServerDefault = new URL(url.getProtocol(), url.getHost(), url.getPort(),
                     "/apple-touch-icon.png").toString();
         } catch (MalformedURLException e) {
@@ -226,9 +274,12 @@ public class WebHistoryItem implements Cloneable {
      * to synchronize this method.
      */
     /*package*/ byte[] getFlattenedData() {
+<<<<<<< HEAD
         if (mNativeBridge != 0) {
             return nativeGetFlattenedData(mNativeBridge);
         }
+=======
+>>>>>>> upstream/master
         return mFlattenedData;
     }
 
@@ -238,8 +289,12 @@ public class WebHistoryItem implements Cloneable {
      * to synchronize this method.
      */
     /*package*/ void inflate(int nativeFrame) {
+<<<<<<< HEAD
         mNativeBridge = inflate(nativeFrame, mFlattenedData);
         mFlattenedData = null;
+=======
+        inflate(nativeFrame, mFlattenedData);
+>>>>>>> upstream/master
     }
 
     /**
@@ -251,6 +306,7 @@ public class WebHistoryItem implements Cloneable {
 
     /* Natively inflate this item, this method is called in the WebCore thread.
      */
+<<<<<<< HEAD
     private native int inflate(int nativeFrame, byte[] data);
     private native void nativeRef(int nptr);
     private native void nativeUnref(int nptr);
@@ -260,4 +316,17 @@ public class WebHistoryItem implements Cloneable {
     private native byte[] nativeGetFlattenedData(int nptr);
     private native Bitmap nativeGetFavicon(int nptr);
 
+=======
+    private native void inflate(int nativeFrame, byte[] data);
+
+    /* Called by jni when the item is updated */
+    private void update(String url, String originalUrl, String title, 
+            Bitmap favicon, byte[] data) {
+        mUrl = url;
+        mOriginalUrl = originalUrl;
+        mTitle = title;
+        mFavicon = favicon;
+        mFlattenedData = data;
+    }
+>>>>>>> upstream/master
 }

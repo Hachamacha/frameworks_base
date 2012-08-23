@@ -29,7 +29,11 @@ import java.util.List;
  * SearchBox.query() and receive suggestions by registering a listener on the
  * SearchBox object.
  *
+<<<<<<< HEAD
  * @hide
+=======
+ * @hide pending API council approval.
+>>>>>>> upstream/master
  */
 public interface SearchBox {
     /**

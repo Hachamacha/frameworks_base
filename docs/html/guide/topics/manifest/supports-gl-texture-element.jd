@@ -141,7 +141,11 @@ and others.</td>
 <dt>see also:</dt>
 <dd>
   <ul>
+<<<<<<< HEAD
     <li><a href="{@docRoot}guide/google/play/filters.html">Filters on Google Play</a></li>
+=======
+    <li><a href="{@docRoot}guide/appendix/market-filters.html">Filters on Google Play</a></li>
+>>>>>>> upstream/master
   </ul>
 </dd>
 

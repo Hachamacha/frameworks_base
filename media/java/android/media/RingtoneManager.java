@@ -55,29 +55,49 @@ public class RingtoneManager {
 
     // Make sure these are in sync with attrs.xml:
     // <attr name="ringtoneType">
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Type that refers to sounds that are used for the phone ringer.
      */
     public static final int TYPE_RINGTONE = 1;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Type that refers to sounds that are used for notifications.
      */
     public static final int TYPE_NOTIFICATION = 2;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Type that refers to sounds that are used for the alarm.
      */
     public static final int TYPE_ALARM = 4;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * All types of sounds.
      */
     public static final int TYPE_ALL = TYPE_RINGTONE | TYPE_NOTIFICATION | TYPE_ALARM;
     
     // </attr>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Activity Action: Shows a ringtone picker.
      * <p>
@@ -131,7 +151,11 @@ public class RingtoneManager {
      */
     public static final String EXTRA_RINGTONE_EXISTING_URI =
             "android.intent.extra.ringtone.EXISTING_URI";
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Given to the ringtone picker as a {@link Uri}. The {@link Uri} of the
      * ringtone to play when the user attempts to preview the "Default"
@@ -144,7 +168,11 @@ public class RingtoneManager {
      */
     public static final String EXTRA_RINGTONE_DEFAULT_URI =
             "android.intent.extra.ringtone.DEFAULT_URI";
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Given to the ringtone picker as an int. Specifies which ringtone type(s) should be
      * shown in the picker. One or more of {@link #TYPE_RINGTONE},
@@ -199,7 +227,11 @@ public class RingtoneManager {
         "\"" + MediaStore.Audio.Media.EXTERNAL_CONTENT_URI + "/\" || " + MediaStore.Audio.Media._ID,
         MediaStore.Audio.Media.TITLE_KEY
     };
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * The column index (in the cursor returned by {@link #getCursor()} for the
      * row ID.
@@ -220,22 +252,38 @@ public class RingtoneManager {
 
     private Activity mActivity;
     private Context mContext;
+<<<<<<< HEAD
     
     private Cursor mCursor;
 
     private int mType = TYPE_RINGTONE;
     
+=======
+
+    private Cursor mCursor;
+
+    private int mType = TYPE_RINGTONE;
+
+>>>>>>> upstream/master
     /**
      * If a column (item from this list) exists in the Cursor, its value must
      * be true (value of 1) for the row to be returned.
      */
+<<<<<<< HEAD
     private final List<String> mFilterColumns = new ArrayList<String>();
+=======
+    private List<String> mFilterColumns = new ArrayList<String>();
+>>>>>>> upstream/master
     
     private boolean mStopPreviousRingtone = true;
     private Ringtone mPreviousRingtone;
 
     private boolean mIncludeDrm;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Constructs a RingtoneManager. This constructor is recommended as its
      * constructed instance manages cursor(s).
@@ -327,7 +375,11 @@ public class RingtoneManager {
             mPreviousRingtone.stop();
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Returns whether DRM ringtones will be included.
      * 
@@ -370,7 +422,10 @@ public class RingtoneManager {
         final Cursor internalCursor = getInternalRingtones();
         final Cursor drmCursor = mIncludeDrm ? getDrmRingtones() : null;
         final Cursor mediaCursor = getMediaRingtones();
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         final Cursor themeRegularCursor = getThemeRegularRingtones();
         final Cursor themeNotifCursor = getThemeNotificationRingtones();
 
@@ -402,6 +457,7 @@ public class RingtoneManager {
      * @return A {@link Uri} pointing to the ringtone.
      */
     public Uri getRingtoneUri(int position) {
+<<<<<<< HEAD
         // use cursor directly instead of requerying it, which could easily
         // cause position to shuffle.
         if (mCursor == null || !mCursor.moveToPosition(position)) {
@@ -409,6 +465,15 @@ public class RingtoneManager {
         }
         
         return getUriFromCursor(mCursor);
+=======
+        final Cursor cursor = getCursor();
+        
+        if (!cursor.moveToPosition(position)) {
+            return null;
+        }
+        
+        return getUriFromCursor(cursor);
+>>>>>>> upstream/master
     }
 
     private static Uri getUriFromCursor(Cursor cursor) {
@@ -515,7 +580,11 @@ public class RingtoneManager {
                     MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
                 : null;
     }
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> upstream/master
     private String getThemeWhereClause(String uriColumn) {
         /* Filter out themes with no ringtone and the default theme (which has no package). */
         String clause = uriColumn + " IS NOT NULL AND LENGTH(theme_package) > 0";
@@ -547,7 +616,11 @@ public class RingtoneManager {
             return null;
         }
     }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> upstream/master
     private void setFilterColumnsList(int type) {
         List<String> columns = mFilterColumns;
         columns.clear();
@@ -564,7 +637,11 @@ public class RingtoneManager {
             columns.add(MediaStore.Audio.AudioColumns.IS_ALARM);
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Constructs a where clause that consists of at least one column being 1
      * (true). This is used to find all matching sounds for the given sound
@@ -576,7 +653,11 @@ public class RingtoneManager {
     private static String constructBooleanTrueWhereClause(List<String> columns, boolean includeDrm) {
         
         if (columns == null) return null;
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> upstream/master
         StringBuilder sb = new StringBuilder();
         sb.append("(");
 
@@ -599,10 +680,16 @@ public class RingtoneManager {
             sb.append("=0");
         }
 
+<<<<<<< HEAD
 
         return sb.toString();
     }
     
+=======
+        return sb.toString();
+    }
+
+>>>>>>> upstream/master
     private Cursor query(Uri uri,
             String[] projection,
             String selection,
@@ -615,7 +702,11 @@ public class RingtoneManager {
                     sortOrder);
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Returns a {@link Ringtone} for a given sound URI.
      * <p>
@@ -643,6 +734,7 @@ public class RingtoneManager {
      * @see #getRingtone(Context, Uri)
      */
     private static Ringtone getRingtone(final Context context, Uri ringtoneUri, int streamType) {
+<<<<<<< HEAD
         try {
             final Ringtone r = new Ringtone(context, true);
             if (streamType >= 0) {
@@ -652,11 +744,29 @@ public class RingtoneManager {
             return r;
         } catch (Exception ex) {
             Log.e(TAG, "Failed to open ringtone " + ringtoneUri + ": " + ex);
+=======
+ 
+        try {
+            Ringtone r = new Ringtone(context);
+            if (streamType >= 0) {
+                r.setStreamType(streamType);
+            }
+           
+            r.open(ringtoneUri);
+            return r;
+
+        } catch (Exception ex) {
+            Log.e(TAG, "Failed to open ringtone " + ringtoneUri);
+>>>>>>> upstream/master
         }
 
         return null;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Gets the current default sound's {@link Uri}. This will give the actual
      * sound {@link Uri}, instead of using this, most clients can use
@@ -675,7 +785,11 @@ public class RingtoneManager {
         final String uriString = Settings.System.getString(context.getContentResolver(), setting);
         return uriString != null ? Uri.parse(uriString) : null;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Sets the {@link Uri} of the default sound for a given sound type.
      * 
@@ -692,7 +806,11 @@ public class RingtoneManager {
         Settings.System.putString(context.getContentResolver(), setting,
                 ringtoneUri != null ? ringtoneUri.toString() : null);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     private static String getSettingForType(int type) {
         if ((type & TYPE_RINGTONE) != 0) {
             return Settings.System.RINGTONE;
@@ -704,7 +822,11 @@ public class RingtoneManager {
             return null;
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Returns whether the given {@link Uri} is one of the default ringtones.
      * 
@@ -714,7 +836,11 @@ public class RingtoneManager {
     public static boolean isDefault(Uri ringtoneUri) {
         return getDefaultType(ringtoneUri) != -1;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     /**
      * Returns the type of a default {@link Uri}.
      * 
@@ -737,7 +863,11 @@ public class RingtoneManager {
             return -1;
         }
     }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> upstream/master
     /**
      * Returns the {@link Uri} for the default ringtone of a particular type.
      * Rather than returning the actual ringtone's sound {@link Uri}, this will
@@ -758,5 +888,8 @@ public class RingtoneManager {
             return null;
         }
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
 }

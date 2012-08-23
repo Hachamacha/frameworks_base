@@ -24,7 +24,10 @@ import android.view.textservice.TextInfo;
 oneway interface ISpellCheckerSession {
     void onGetSuggestionsMultiple(
             in TextInfo[] textInfos, int suggestionsLimit, boolean multipleWords);
+<<<<<<< HEAD
     void onGetSentenceSuggestionsMultiple(in TextInfo[] textInfos, int suggestionsLimit);
+=======
+>>>>>>> upstream/master
     void onCancel();
     void onClose();
 }

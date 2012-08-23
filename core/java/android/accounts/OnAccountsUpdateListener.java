@@ -17,11 +17,19 @@
 package android.accounts;
 
 /**
+<<<<<<< HEAD
  * An interface that contains the callback used by the AccountManager
  */
 public interface OnAccountsUpdateListener {
     /**
      * This invoked when the AccountManager starts up and whenever the account
+=======
+ * An interface that contains the callback used by the AccountMonitor
+ */
+public interface OnAccountsUpdateListener {
+    /**
+     * This invoked when the AccountMonitor starts up and whenever the account
+>>>>>>> upstream/master
      * set changes.
      * @param accounts the current accounts
      */

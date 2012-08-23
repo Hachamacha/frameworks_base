@@ -1,5 +1,8 @@
 #pragma version(1)
+<<<<<<< HEAD
 #pragma rs_fp_relaxed
+=======
+>>>>>>> upstream/master
 
 #include "ip.rsh"
 

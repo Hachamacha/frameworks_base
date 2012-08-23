@@ -21,7 +21,11 @@ public class HTML5VideoInline extends HTML5VideoView{
     // associated with the surface texture can be used for showing the screen
     // shot when paused, so they are not singleton.
     private static SurfaceTexture mSurfaceTexture = null;
+<<<<<<< HEAD
     private static int[] mTextureNames = null;
+=======
+    private int[] mTextureNames;
+>>>>>>> upstream/master
     // Every time when the VideoLayer Id change, we need to recreate the
     // SurfaceTexture in order to delete the old video's decoder memory.
     private static int mVideoLayerUsingSurfaceTexture = -1;
@@ -34,8 +38,15 @@ public class HTML5VideoInline extends HTML5VideoView{
         }
     }
 
+<<<<<<< HEAD
     HTML5VideoInline(int videoLayerId, int position) {
         init(videoLayerId, position, false);
+=======
+    HTML5VideoInline(int videoLayerId, int position,
+            boolean autoStart) {
+        init(videoLayerId, position, autoStart);
+        mTextureNames = null;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -68,14 +79,25 @@ public class HTML5VideoInline extends HTML5VideoView{
 
     // Inline Video specific FUNCTIONS:
 
+<<<<<<< HEAD
     public static SurfaceTexture getSurfaceTexture(int videoLayerId) {
+=======
+    @Override
+    public SurfaceTexture getSurfaceTexture(int videoLayerId) {
+>>>>>>> upstream/master
         // Create the surface texture.
         if (videoLayerId != mVideoLayerUsingSurfaceTexture
             || mSurfaceTexture == null
             || mTextureNames == null) {
+<<<<<<< HEAD
             // The GL texture will store in the VideoLayerManager at native side.
             // They will be clean up when requested.
             // The reason we recreated GL texture name is for screen shot support.
+=======
+            if (mTextureNames != null) {
+                GLES20.glDeleteTextures(1, mTextureNames, 0);
+            }
+>>>>>>> upstream/master
             mTextureNames = new int[1];
             GLES20.glGenTextures(1, mTextureNames, 0);
             mSurfaceTexture = new SurfaceTexture(mTextureNames[0]);
@@ -90,11 +112,14 @@ public class HTML5VideoInline extends HTML5VideoView{
 
     @Override
     public void deleteSurfaceTexture() {
+<<<<<<< HEAD
         cleanupSurfaceTexture();
         return;
     }
 
     public static void cleanupSurfaceTexture() {
+=======
+>>>>>>> upstream/master
         mSurfaceTexture = null;
         mVideoLayerUsingSurfaceTexture = -1;
         return;

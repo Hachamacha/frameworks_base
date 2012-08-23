@@ -22,5 +22,9 @@ package android.text;
  * @hide
  */
 public interface TextDirectionHeuristic {
+<<<<<<< HEAD
     boolean isRtl(char[] text, int start, int count);
+=======
+    /** @hide */ boolean isRtl(char[] text, int start, int count);
+>>>>>>> upstream/master
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*
+=======
+/* //device/java/android/android/content/Intent.aidl
+>>>>>>> upstream/master
 **
 ** Copyright 2007, The Android Open Source Project
 **

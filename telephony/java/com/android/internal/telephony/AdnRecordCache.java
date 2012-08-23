@@ -33,7 +33,11 @@ import java.util.Iterator;
 public final class AdnRecordCache extends Handler implements IccConstants {
     //***** Instance Variables
 
+<<<<<<< HEAD
     private IccFileHandler mFh;
+=======
+    PhoneBase phone;
+>>>>>>> upstream/master
     private UsimPhoneBookManager mUsimPhoneBookManager;
 
     // Indexed by EF ID
@@ -56,9 +60,15 @@ public final class AdnRecordCache extends Handler implements IccConstants {
 
 
 
+<<<<<<< HEAD
     public AdnRecordCache(IccFileHandler fh) {
         mFh = fh;
         mUsimPhoneBookManager = new UsimPhoneBookManager(mFh, this);
+=======
+    public AdnRecordCache(PhoneBase phone) {
+        this.phone = phone;
+        mUsimPhoneBookManager = new UsimPhoneBookManager(phone, this);
+>>>>>>> upstream/master
     }
 
     //***** Called from SIMRecords
@@ -155,7 +165,11 @@ public final class AdnRecordCache extends Handler implements IccConstants {
 
         userWriteResponse.put(efid, response);
 
+<<<<<<< HEAD
         new AdnRecordLoader(mFh).updateEF(adn, efid, extensionEF,
+=======
+        new AdnRecordLoader(phone).updateEF(adn, efid, extensionEF,
+>>>>>>> upstream/master
                 recordIndex, pin2,
                 obtainMessage(EVENT_UPDATE_ADN_DONE, efid, recordIndex, adn));
     }
@@ -233,7 +247,11 @@ public final class AdnRecordCache extends Handler implements IccConstants {
 
         userWriteResponse.put(efid, response);
 
+<<<<<<< HEAD
         new AdnRecordLoader(mFh).updateEF(newAdn, efid, extensionEF,
+=======
+        new AdnRecordLoader(phone).updateEF(newAdn, efid, extensionEF,
+>>>>>>> upstream/master
                 index, pin2,
                 obtainMessage(EVENT_UPDATE_ADN_DONE, efid, index, newAdn));
     }
@@ -296,7 +314,11 @@ public final class AdnRecordCache extends Handler implements IccConstants {
             return;
         }
 
+<<<<<<< HEAD
         new AdnRecordLoader(mFh).loadAllFromEF(efid, extensionEf,
+=======
+        new AdnRecordLoader(phone).loadAllFromEF(efid, extensionEf,
+>>>>>>> upstream/master
             obtainMessage(EVENT_LOAD_ALL_ADN_LIKE_DONE, efid, 0));
     }
 

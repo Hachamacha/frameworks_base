@@ -38,6 +38,7 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
     private static final boolean DEBUG = false;
 
     // This path must match what the WallpaperManagerService uses
+<<<<<<< HEAD
     // TODO: Will need to change if backing up non-primary user's wallpaper
     public static final String WALLPAPER_IMAGE = "/data/system/users/0/wallpaper";
     public static final String WALLPAPER_INFO = "/data/system/users/0/wallpaper_info.xml";
@@ -45,16 +46,26 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
     public static final String WALLPAPER_IMAGE_KEY =
             "/data/data/com.android.settings/files/wallpaper";
     public static final String WALLPAPER_INFO_KEY = "/data/system/wallpaper_info.xml";
+=======
+    private static final String WALLPAPER_IMAGE = "/data/data/com.android.settings/files/wallpaper";
+>>>>>>> upstream/master
 
     // Stage file - should be adjacent to the WALLPAPER_IMAGE location.  The wallpapers
     // will be saved to this file from the restore stream, then renamed to the proper
     // location if it's deemed suitable.
+<<<<<<< HEAD
     // TODO: Will need to change if backing up non-primary user's wallpaper
     private static final String STAGE_FILE = "/data/system/users/0/wallpaper-tmp";
 
     Context mContext;
     String[] mFiles;
     String[] mKeys;
+=======
+    private static final String STAGE_FILE = "/data/data/com.android.settings/files/wallpaper-tmp";
+
+    Context mContext;
+    String[] mFiles;
+>>>>>>> upstream/master
     double mDesiredMinWidth;
     double mDesiredMinHeight;
 
@@ -65,12 +76,19 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
      * @param context
      * @param files
      */
+<<<<<<< HEAD
     public WallpaperBackupHelper(Context context, String[] files, String[] keys) {
+=======
+    public WallpaperBackupHelper(Context context, String... files) {
+>>>>>>> upstream/master
         super(context);
 
         mContext = context;
         mFiles = files;
+<<<<<<< HEAD
         mKeys = keys;
+=======
+>>>>>>> upstream/master
 
         WallpaperManager wpm;
         wpm = (WallpaperManager) context.getSystemService(Context.WALLPAPER_SERVICE);
@@ -98,7 +116,11 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
      */
     public void performBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
             ParcelFileDescriptor newState) {
+<<<<<<< HEAD
         performBackup_checked(oldState, data, newState, mFiles, mKeys);
+=======
+        performBackup_checked(oldState, data, newState, mFiles, mFiles);
+>>>>>>> upstream/master
     }
 
     /**
@@ -108,8 +130,13 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
      */
     public void restoreEntity(BackupDataInputStream data) {
         final String key = data.getKey();
+<<<<<<< HEAD
         if (isKeyInList(key, mKeys)) {
             if (key.equals(WALLPAPER_IMAGE_KEY)) {
+=======
+        if (isKeyInList(key, mFiles)) {
+            if (key.equals(WALLPAPER_IMAGE)) {
+>>>>>>> upstream/master
                 // restore the file to the stage for inspection
                 File f = new File(STAGE_FILE);
                 if (writeFile(f, data)) {
@@ -144,9 +171,15 @@ public class WallpaperBackupHelper extends FileBackupHelperBase implements Backu
                         f.delete();
                     }
                 }
+<<<<<<< HEAD
             } else if (key.equals(WALLPAPER_INFO_KEY)) {
                 // XML file containing wallpaper info
                 File f = new File(WALLPAPER_INFO);
+=======
+            } else {
+                // Some other normal file; just decode it to its destination
+                File f = new File(key);
+>>>>>>> upstream/master
                 writeFile(f, data);
             }
         }

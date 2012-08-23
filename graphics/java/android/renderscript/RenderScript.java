@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (C) 2008-2012 The Android Open Source Project
+=======
+ * Copyright (C) 2008 The Android Open Source Project
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +20,10 @@
 
 package android.renderscript;
 
+<<<<<<< HEAD
 import java.io.File;
+=======
+>>>>>>> upstream/master
 import java.lang.reflect.Field;
 
 import android.content.Context;
@@ -83,6 +90,7 @@ public class RenderScript {
     native void nContextInitToClient(int con);
     native void nContextDeinitToClient(int con);
 
+<<<<<<< HEAD
     /**
      * Name of the file that holds the object cache.
      */
@@ -102,6 +110,8 @@ public class RenderScript {
         f.mkdirs();
     }
 
+=======
+>>>>>>> upstream/master
 
     // Methods below are wrapped to protect the non-threadsafe
     // lockless fifo.
@@ -251,10 +261,17 @@ public class RenderScript {
         rsnTypeGetNativeData(mContext, id, typeData);
     }
 
+<<<<<<< HEAD
     native int  rsnAllocationCreateTyped(int con, int type, int mip, int usage, int pointer);
     synchronized int nAllocationCreateTyped(int type, int mip, int usage, int pointer) {
         validate();
         return rsnAllocationCreateTyped(mContext, type, mip, usage, pointer);
+=======
+    native int  rsnAllocationCreateTyped(int con, int type, int mip, int usage);
+    synchronized int nAllocationCreateTyped(int type, int mip, int usage) {
+        validate();
+        return rsnAllocationCreateTyped(mContext, type, mip, usage);
+>>>>>>> upstream/master
     }
     native int  rsnAllocationCreateFromBitmap(int con, int type, int mip, Bitmap bmp, int usage);
     synchronized int nAllocationCreateFromBitmap(int type, int mip, Bitmap bmp, int usage) {
@@ -289,6 +306,7 @@ public class RenderScript {
         validate();
         rsnAllocationSyncAll(mContext, alloc, src);
     }
+<<<<<<< HEAD
     native int rsnAllocationGetSurfaceTextureID(int con, int alloc);
     synchronized int nAllocationGetSurfaceTextureID(int alloc) {
         validate();
@@ -316,6 +334,8 @@ public class RenderScript {
     }
 
 
+=======
+>>>>>>> upstream/master
     native void rsnAllocationGenerateMipmaps(int con, int alloc);
     synchronized void nAllocationGenerateMipmaps(int alloc) {
         validate();
@@ -541,6 +561,7 @@ public class RenderScript {
         validate();
         rsnScriptSetVarV(mContext, id, slot, val);
     }
+<<<<<<< HEAD
     native void rsnScriptSetVarVE(int con, int id, int slot, byte[] val,
                                   int e, int[] dims);
     synchronized void nScriptSetVarVE(int id, int slot, byte[] val,
@@ -548,6 +569,8 @@ public class RenderScript {
         validate();
         rsnScriptSetVarVE(mContext, id, slot, val, e, dims);
     }
+=======
+>>>>>>> upstream/master
     native void rsnScriptSetVarObj(int con, int id, int slot, int val);
     synchronized void nScriptSetVarObj(int id, int slot, int val) {
         validate();
@@ -601,6 +624,7 @@ public class RenderScript {
         validate();
         rsnProgramBindSampler(mContext, vpf, slot, s);
     }
+<<<<<<< HEAD
     native int  rsnProgramFragmentCreate(int con, String shader, String[] texNames, int[] params);
     synchronized int nProgramFragmentCreate(String shader, String[] texNames, int[] params) {
         validate();
@@ -610,6 +634,17 @@ public class RenderScript {
     synchronized int nProgramVertexCreate(String shader, String[] texNames, int[] params) {
         validate();
         return rsnProgramVertexCreate(mContext, shader, texNames, params);
+=======
+    native int  rsnProgramFragmentCreate(int con, String shader, int[] params);
+    synchronized int nProgramFragmentCreate(String shader, int[] params) {
+        validate();
+        return rsnProgramFragmentCreate(mContext, shader, params);
+    }
+    native int  rsnProgramVertexCreate(int con, String shader, int[] params);
+    synchronized int nProgramVertexCreate(String shader, int[] params) {
+        validate();
+        return rsnProgramVertexCreate(mContext, shader, params);
+>>>>>>> upstream/master
     }
 
     native int  rsnMeshCreate(int con, int[] vtx, int[] idx, int[] prim);
@@ -638,11 +673,14 @@ public class RenderScript {
         rsnMeshGetIndices(mContext, id, idxIds, primitives, vtxIdCount);
     }
 
+<<<<<<< HEAD
     native int  rsnPathCreate(int con, int prim, boolean isStatic, int vtx, int loop, float q);
     synchronized int nPathCreate(int prim, boolean isStatic, int vtx, int loop, float q) {
         validate();
         return rsnPathCreate(mContext, prim, isStatic, vtx, loop, q);
     }
+=======
+>>>>>>> upstream/master
 
     int     mDev;
     int     mContext;
@@ -671,7 +709,10 @@ public class RenderScript {
     Element mElement_PROGRAM_VERTEX;
     Element mElement_PROGRAM_RASTER;
     Element mElement_PROGRAM_STORE;
+<<<<<<< HEAD
     Element mElement_FONT;
+=======
+>>>>>>> upstream/master
 
     Element mElement_A_8;
     Element mElement_RGB_565;
@@ -897,8 +938,12 @@ public class RenderScript {
                         mRS.mErrorCallback.mErrorNum = subID;
                         mRS.mErrorCallback.run();
                     } else {
+<<<<<<< HEAD
                         // Do not throw here. In these cases, we do not have
                         // a fatal error.
+=======
+                        //throw new RSRuntimeException("Received error num " + subID + ", details: " + e);
+>>>>>>> upstream/master
                     }
                     continue;
                 }
@@ -917,9 +962,13 @@ public class RenderScript {
     }
 
     RenderScript(Context ctx) {
+<<<<<<< HEAD
         if (ctx != null) {
             mApplicationContext = ctx.getApplicationContext();
         }
+=======
+        mApplicationContext = ctx.getApplicationContext();
+>>>>>>> upstream/master
     }
 
     /**
@@ -931,6 +980,7 @@ public class RenderScript {
         return mApplicationContext;
     }
 
+<<<<<<< HEAD
     /**
      * Create a basic RenderScript context.
      *
@@ -941,6 +991,23 @@ public class RenderScript {
     public static RenderScript create(Context ctx, int sdkVersion) {
         RenderScript rs = new RenderScript(ctx);
 
+=======
+    static int getTargetSdkVersion(Context ctx) {
+        return ctx.getApplicationInfo().targetSdkVersion;
+    }
+
+    /**
+     * Create a basic RenderScript context.
+     *
+     * @param ctx The context.
+     * @return RenderScript
+     */
+    public static RenderScript create(Context ctx) {
+        RenderScript rs = new RenderScript(ctx);
+
+        int sdkVersion = getTargetSdkVersion(ctx);
+
+>>>>>>> upstream/master
         rs.mDev = rs.nDeviceCreate();
         rs.mContext = rs.nContextCreate(rs.mDev, 0, sdkVersion);
         if (rs.mContext == 0) {
@@ -952,6 +1019,7 @@ public class RenderScript {
     }
 
     /**
+<<<<<<< HEAD
      * Create a basic RenderScript context.
      *
      * @param ctx The context.
@@ -963,6 +1031,8 @@ public class RenderScript {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Print the currently available debugging information about the state of
      * the RS context to the log.
      *
@@ -1008,7 +1078,11 @@ public class RenderScript {
 
     int safeID(BaseObj o) {
         if(o != null) {
+<<<<<<< HEAD
             return o.getID(this);
+=======
+            return o.getID();
+>>>>>>> upstream/master
         }
         return 0;
     }

@@ -18,6 +18,10 @@ package android.service.wallpaper;
 
 import com.android.internal.os.HandlerCaller;
 import com.android.internal.view.BaseIWindow;
+<<<<<<< HEAD
+=======
+import com.android.internal.view.BaseInputHandler;
+>>>>>>> upstream/master
 import com.android.internal.view.BaseSurfaceHolder;
 
 import android.annotation.SdkConstant;
@@ -44,8 +48,13 @@ import android.view.Gravity;
 import android.view.IWindowSession;
 import android.view.InputChannel;
 import android.view.InputDevice;
+<<<<<<< HEAD
 import android.view.InputEvent;
 import android.view.InputEventReceiver;
+=======
+import android.view.InputHandler;
+import android.view.InputQueue;
+>>>>>>> upstream/master
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -140,7 +149,10 @@ public abstract class WallpaperService extends Service {
         boolean mIsCreating;
         boolean mDrawingAllowed;
         boolean mOffsetsChanged;
+<<<<<<< HEAD
         boolean mFixedSizeAllowed;
+=======
+>>>>>>> upstream/master
         int mWidth;
         int mHeight;
         int mFormat;
@@ -212,7 +224,11 @@ public abstract class WallpaperService extends Service {
 
             @Override
             public void setFixedSize(int width, int height) {
+<<<<<<< HEAD
                 if (!mFixedSizeAllowed) {
+=======
+                if (Process.myUid() != Process.SYSTEM_UID) {
+>>>>>>> upstream/master
                     // Regular apps can't do this.  It can only work for
                     // certain designs of window animations, so you can't
                     // rely on it.
@@ -228,6 +244,7 @@ public abstract class WallpaperService extends Service {
             }
             
         };
+<<<<<<< HEAD
 
         final class WallpaperInputEventReceiver extends InputEventReceiver {
             public WallpaperInputEventReceiver(InputChannel inputChannel, Looper looper) {
@@ -254,6 +271,29 @@ public abstract class WallpaperService extends Service {
         final BaseIWindow mWindow = new BaseIWindow() {
             @Override
             public void resized(int w, int h, Rect contentInsets,
+=======
+        
+        final InputHandler mInputHandler = new BaseInputHandler() {
+            @Override
+            public void handleMotion(MotionEvent event,
+                    InputQueue.FinishedCallback finishedCallback) {
+                boolean handled = false;
+                try {
+                    int source = event.getSource();
+                    if ((source & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+                        dispatchPointer(event);
+                        handled = true;
+                    }
+                } finally {
+                    finishedCallback.finished(handled);
+                }
+            }
+        };
+        
+        final BaseIWindow mWindow = new BaseIWindow() {
+            @Override
+            public void resized(int w, int h, Rect coveredInsets,
+>>>>>>> upstream/master
                     Rect visibleInsets, boolean reportDraw, Configuration newConfig) {
                 Message msg = mCaller.obtainMessageI(MSG_WINDOW_RESIZED,
                         reportDraw ? 1 : 0);
@@ -386,12 +426,16 @@ public abstract class WallpaperService extends Service {
                 updateSurface(false, false, false);
             }
         }
+<<<<<<< HEAD
 
         /** {@hide} */
         public void setFixedSizeAllowed(boolean allowed) {
             mFixedSizeAllowed = allowed;
         }
 
+=======
+        
+>>>>>>> upstream/master
         /**
          * Called once to initialize the engine.  After returning, the
          * engine's surface will be created by the framework.
@@ -544,8 +588,11 @@ public abstract class WallpaperService extends Service {
                 }
                 Message msg = mCaller.obtainMessageO(MSG_TOUCH_EVENT, event);
                 mCaller.sendMessage(msg);
+<<<<<<< HEAD
             } else {
                 event.recycle();
+=======
+>>>>>>> upstream/master
             }
         }
 
@@ -611,8 +658,13 @@ public abstract class WallpaperService extends Service {
                         }
                         mCreated = true;
 
+<<<<<<< HEAD
                         mInputEventReceiver = new WallpaperInputEventReceiver(
                                 mInputChannel, Looper.myLooper());
+=======
+                        InputQueue.registerInputChannel(mInputChannel, mInputHandler,
+                                Looper.myQueue());
+>>>>>>> upstream/master
                     }
                     
                     mSurfaceHolder.mSurfaceLock.lock();
@@ -914,9 +966,14 @@ public abstract class WallpaperService extends Service {
                     if (DEBUG) Log.v(TAG, "Removing window and destroying surface "
                             + mSurfaceHolder.getSurface() + " of: " + this);
                     
+<<<<<<< HEAD
                     if (mInputEventReceiver != null) {
                         mInputEventReceiver.dispose();
                         mInputEventReceiver = null;
+=======
+                    if (mInputChannel != null) {
+                        InputQueue.unregisterInputChannel(mInputChannel);
+>>>>>>> upstream/master
                     }
                     
                     mSession.remove(mWindow);
@@ -983,8 +1040,11 @@ public abstract class WallpaperService extends Service {
         public void dispatchPointer(MotionEvent event) {
             if (mEngine != null) {
                 mEngine.dispatchPointer(event);
+<<<<<<< HEAD
             } else {
                 event.recycle();
+=======
+>>>>>>> upstream/master
             }
         }
 

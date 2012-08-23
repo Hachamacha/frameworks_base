@@ -16,7 +16,10 @@
 
 package com.android.internal.policy.impl;
 
+<<<<<<< HEAD
 import android.app.admin.DevicePolicyManager;
+=======
+>>>>>>> upstream/master
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -72,6 +75,11 @@ public class KeyguardUpdateMonitor {
 
     private IccCard.State mSimState = IccCard.State.READY;
 
+<<<<<<< HEAD
+=======
+    private boolean mKeyguardBypassEnabled;
+
+>>>>>>> upstream/master
     private boolean mDeviceProvisioned;
 
     private BatteryStatus mBatteryStatus;
@@ -80,8 +88,11 @@ public class KeyguardUpdateMonitor {
     private CharSequence mTelephonySpn;
 
     private int mFailedAttempts = 0;
+<<<<<<< HEAD
     private int mFailedBiometricUnlockAttempts = 0;
     private static final int FAILED_BIOMETRIC_UNLOCK_ATTEMPTS_BEFORE_BACKUP = 3;
+=======
+>>>>>>> upstream/master
 
     private boolean mClockVisible;
 
@@ -102,10 +113,13 @@ public class KeyguardUpdateMonitor {
     private static final int MSG_PHONE_STATE_CHANGED = 306;
     private static final int MSG_CLOCK_VISIBILITY_CHANGED = 307;
     private static final int MSG_DEVICE_PROVISIONED = 308;
+<<<<<<< HEAD
     protected static final int MSG_DPM_STATE_CHANGED = 309;
     protected static final int MSG_USER_CHANGED = 310;
 
     protected static final boolean DEBUG_SIM_STATES = DEBUG || false;
+=======
+>>>>>>> upstream/master
 
     /**
      * When we receive a
@@ -207,16 +221,25 @@ public class KeyguardUpdateMonitor {
                     case MSG_DEVICE_PROVISIONED:
                         handleDeviceProvisioned();
                         break;
+<<<<<<< HEAD
                     case MSG_DPM_STATE_CHANGED:
                         handleDevicePolicyManagerStateChanged();
                         break;
                     case MSG_USER_CHANGED:
                         handleUserChanged(msg.arg1);
                         break;
+=======
+>>>>>>> upstream/master
                 }
             }
         };
 
+<<<<<<< HEAD
+=======
+        mKeyguardBypassEnabled = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_bypass_keyguard_if_slider_open);
+
+>>>>>>> upstream/master
         mDeviceProvisioned = Settings.Secure.getInt(
                 mContext.getContentResolver(), Settings.Secure.DEVICE_PROVISIONED, 0) != 0;
 
@@ -268,9 +291,12 @@ public class KeyguardUpdateMonitor {
         filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         filter.addAction(SPN_STRINGS_UPDATED_ACTION);
         filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
+<<<<<<< HEAD
         filter.addAction(DevicePolicyManager.ACTION_DEVICE_POLICY_MANAGER_STATE_CHANGED);
         filter.addAction(Intent.ACTION_USER_SWITCHED);
         filter.addAction(Intent.ACTION_USER_REMOVED);
+=======
+>>>>>>> upstream/master
         context.registerReceiver(new BroadcastReceiver() {
 
             public void onReceive(Context context, Intent intent) {
@@ -294,10 +320,13 @@ public class KeyguardUpdateMonitor {
                             MSG_BATTERY_UPDATE, new BatteryStatus(status, level, plugged, health));
                     mHandler.sendMessage(msg);
                 } else if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action)) {
+<<<<<<< HEAD
                     if (DEBUG_SIM_STATES) {
                         Log.v(TAG, "action " + action + " state" +
                             intent.getStringExtra(IccCard.INTENT_KEY_ICC_STATE));
                     }
+=======
+>>>>>>> upstream/master
                     mHandler.sendMessage(mHandler.obtainMessage(
                             MSG_SIM_STATE_CHANGE, SimArgs.fromIntent(intent)));
                 } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
@@ -306,17 +335,21 @@ public class KeyguardUpdateMonitor {
                 } else if (TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action)) {
                     String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_PHONE_STATE_CHANGED, state));
+<<<<<<< HEAD
                 } else if (DevicePolicyManager.ACTION_DEVICE_POLICY_MANAGER_STATE_CHANGED
                         .equals(action)) {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_DPM_STATE_CHANGED));
                 } else if (Intent.ACTION_USER_SWITCHED.equals(action)) {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_USER_CHANGED,
                             intent.getIntExtra(Intent.EXTRA_USERID, 0), 0));
+=======
+>>>>>>> upstream/master
                 }
             }
         }, filter);
     }
 
+<<<<<<< HEAD
     protected void handleDevicePolicyManagerStateChanged() {
         for (int i = 0; i < mInfoCallbacks.size(); i++) {
             mInfoCallbacks.get(i).onDevicePolicyManagerStateChanged();
@@ -329,6 +362,8 @@ public class KeyguardUpdateMonitor {
         }
     }
 
+=======
+>>>>>>> upstream/master
     protected void handleDeviceProvisioned() {
         for (int i = 0; i < mInfoCallbacks.size(); i++) {
             mInfoCallbacks.get(i).onDeviceProvisioned();
@@ -413,7 +448,10 @@ public class KeyguardUpdateMonitor {
         }
 
         if (state != IccCard.State.UNKNOWN && state != mSimState) {
+<<<<<<< HEAD
             if (DEBUG_SIM_STATES) Log.v(TAG, "dispatching state: " + state);
+=======
+>>>>>>> upstream/master
             mSimState = state;
             for (int i = 0; i < mSimStateCallbacks.size(); i++) {
                 mSimStateCallbacks.get(i).onSimStateChanged(state);
@@ -553,6 +591,7 @@ public class KeyguardUpdateMonitor {
          * Called when the device becomes provisioned
          */
         void onDeviceProvisioned();
+<<<<<<< HEAD
 
         /**
          * Called when the device policy changes.
@@ -595,6 +634,8 @@ public class KeyguardUpdateMonitor {
 
         public void onUserChanged(int userId) {
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -662,6 +703,13 @@ public class KeyguardUpdateMonitor {
         handleSimStateChange(new SimArgs(IccCard.State.READY));
     }
 
+<<<<<<< HEAD
+=======
+    public boolean isKeyguardBypassEnabled() {
+        return mKeyguardBypassEnabled;
+    }
+
+>>>>>>> upstream/master
     public boolean isDevicePluggedIn() {
         return isPluggedIn(mBatteryStatus);
     }
@@ -701,7 +749,10 @@ public class KeyguardUpdateMonitor {
 
     public void clearFailedAttempts() {
         mFailedAttempts = 0;
+<<<<<<< HEAD
         mFailedBiometricUnlockAttempts = 0;
+=======
+>>>>>>> upstream/master
     }
 
     public void reportFailedAttempt() {
@@ -715,6 +766,7 @@ public class KeyguardUpdateMonitor {
     public int getPhoneState() {
         return mPhoneState;
     }
+<<<<<<< HEAD
 
     public void reportFailedBiometricUnlockAttempt() {
         mFailedBiometricUnlockAttempts++;
@@ -729,4 +781,6 @@ public class KeyguardUpdateMonitor {
             || mSimState == IccCard.State.PUK_REQUIRED
             || mSimState == IccCard.State.PERM_DISABLED;
     }
+=======
+>>>>>>> upstream/master
 }

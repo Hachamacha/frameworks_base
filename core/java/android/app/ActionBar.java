@@ -611,10 +611,13 @@ public abstract class ActionBar {
      * If the window hosting the ActionBar does not have the feature
      * {@link Window#FEATURE_ACTION_BAR_OVERLAY} it will resize application
      * content to fit the new space available.
+<<<<<<< HEAD
      *
      * <p>If you are hiding the ActionBar through
      * {@link View#SYSTEM_UI_FLAG_FULLSCREEN View.SYSTEM_UI_FLAG_FULLSCREEN},
      * you should not call this function directly.
+=======
+>>>>>>> upstream/master
      */
     public abstract void show();
 
@@ -623,12 +626,15 @@ public abstract class ActionBar {
      * If the window hosting the ActionBar does not have the feature
      * {@link Window#FEATURE_ACTION_BAR_OVERLAY} it will resize application
      * content to fit the new space available.
+<<<<<<< HEAD
      *
      * <p>Instead of calling this function directly, you can also cause an
      * ActionBar using the overlay feature to hide through
      * {@link View#SYSTEM_UI_FLAG_FULLSCREEN View.SYSTEM_UI_FLAG_FULLSCREEN}.
      * Hiding the ActionBar through this system UI flag allows you to more
      * seamlessly hide it in conjunction with other screen decorations.
+=======
+>>>>>>> upstream/master
      */
     public abstract void hide();
 

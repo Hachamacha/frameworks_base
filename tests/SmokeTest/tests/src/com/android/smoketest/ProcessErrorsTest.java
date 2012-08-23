@@ -16,6 +16,7 @@
 
 package com.android.smoketest;
 
+<<<<<<< HEAD
 import android.app.ActivityManager;
 import android.app.ActivityManager.ProcessErrorStateInfo;
 import android.content.Context;
@@ -72,10 +73,38 @@ public class ProcessErrorsTest extends AndroidTestCase {
         mActivityManager = (ActivityManager)
                 getContext().getSystemService(Context.ACTIVITY_SERVICE);
         mPackageManager = getContext().getPackageManager();
+=======
+import com.android.internal.os.RuntimeInit;
+
+import android.app.ActivityManager;
+import android.content.Context;
+import android.test.AndroidTestCase;
+import android.util.Log;
+
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * This smoke test is designed to quickly sniff for any error conditions
+ * encountered after initial startup.
+ */
+public class ProcessErrorsTest extends AndroidTestCase {
+    
+    private final String TAG = "ProcessErrorsTest";
+    
+    protected ActivityManager mActivityManager;
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        mActivityManager = (ActivityManager) 
+                getContext().getSystemService(Context.ACTIVITY_SERVICE);
+>>>>>>> upstream/master
     }
 
     public void testSetUpConditions() throws Exception {
         assertNotNull(mActivityManager);
+<<<<<<< HEAD
         assertNotNull(mPackageManager);
     }
 
@@ -262,24 +291,57 @@ public class ProcessErrorsTest extends AndroidTestCase {
         return reportListContents(newList);
     }
 
+=======
+    }
+
+    public void testNoProcessErrors() throws Exception {
+        List<ActivityManager.ProcessErrorStateInfo> errList;        
+        errList = mActivityManager.getProcessesInErrorState();
+        
+        // note: this contains information about each process that is currently in an error
+        // condition.  if the list is empty (null) then "we're good".  
+        
+        // if the list is non-empty, then it's useful to report the contents of the list
+        // we'll put a copy in the log, and we'll report it back to the framework via the assert.
+        final String reportMsg = reportListContents(errList);
+        if (reportMsg != null) {
+            Log.w(TAG, reportMsg);
+        }
+        
+        // report a non-empty list back to the test framework
+        assertNull(reportMsg, errList);
+    }
+    
+>>>>>>> upstream/master
     /**
      * This helper function will dump the actual error reports.
      * 
      * @param errList The error report containing one or more error records.
      * @return Returns a string containing all of the errors.
      */
+<<<<<<< HEAD
     private static String reportListContents(Collection<ProcessErrorStateInfo> errList) {
+=======
+    private String reportListContents(List<ActivityManager.ProcessErrorStateInfo> errList) {
+>>>>>>> upstream/master
         if (errList == null) return null;
 
         StringBuilder builder = new StringBuilder();
 
+<<<<<<< HEAD
         Iterator<ProcessErrorStateInfo> iter = errList.iterator();
         while (iter.hasNext()) {
             ProcessErrorStateInfo entry = iter.next();
+=======
+        Iterator<ActivityManager.ProcessErrorStateInfo> iter = errList.iterator();
+        while (iter.hasNext()) {
+            ActivityManager.ProcessErrorStateInfo entry = iter.next();
+>>>>>>> upstream/master
 
             String condition;
             switch (entry.condition) {
             case ActivityManager.ProcessErrorStateInfo.CRASHED:
+<<<<<<< HEAD
                 condition = "a CRASH";
                 break;
             case ActivityManager.ProcessErrorStateInfo.NOT_RESPONDING:
@@ -372,4 +434,23 @@ public class ProcessErrorsTest extends AndroidTestCase {
             return code;
         }
     }
+=======
+                condition = "CRASHED";
+                break;
+            case ActivityManager.ProcessErrorStateInfo.NOT_RESPONDING:
+                condition = "ANR";
+                break;
+            default:
+                condition = "<unknown>";
+                break;
+            }
+
+            builder.append("Process error ").append(condition).append(" ");
+            builder.append(" ").append(entry.shortMsg);
+            builder.append(" detected in ").append(entry.processName).append(" ").append(entry.tag);
+        }
+        return builder.toString();
+    }
+    
+>>>>>>> upstream/master
 }

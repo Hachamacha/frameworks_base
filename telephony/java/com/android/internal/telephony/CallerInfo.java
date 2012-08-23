@@ -18,7 +18,10 @@ package com.android.internal.telephony;
 
 import android.content.Context;
 import android.database.Cursor;
+<<<<<<< HEAD
 import android.graphics.Bitmap;
+=======
+>>>>>>> upstream/master
 import android.graphics.drawable.Drawable;
 import android.location.CountryDetector;
 import android.net.Uri;
@@ -108,6 +111,7 @@ public class CallerInfo {
     /**
      * Drawable representing the caller image.  This is essentially
      * a cache for the image data tied into the connection /
+<<<<<<< HEAD
      * callerinfo object.
      *
      * This might be a high resolution picture which is more suitable
@@ -135,6 +139,12 @@ public class CallerInfo {
      * {@link #cachedPhotoIcon} is fresh enough. If it is false,
      * those images aren't pointing to valid objects.
      */
+=======
+     * callerinfo object.  The isCachedPhotoCurrent flag indicates
+     * if the image data needs to be reloaded.
+     */
+    public Drawable cachedPhoto;
+>>>>>>> upstream/master
     public boolean isCachedPhotoCurrent;
 
     private boolean mIsEmergency;

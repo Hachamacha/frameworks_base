@@ -16,13 +16,25 @@
 
 package android.database;
 
+<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
+=======
+import android.app.Activity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.test.suitebuilder.annotation.LargeTest;
+>>>>>>> upstream/master
 import android.test.suitebuilder.annotation.Suppress;
 import android.util.Log;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 import android.test.AndroidTestCase;
 
+<<<<<<< HEAD
+=======
+import junit.framework.TestCase;
+
+>>>>>>> upstream/master
 /* 
  * This is a series of unit tests for database locks.
  *
@@ -99,9 +111,15 @@ public class DatabaseLockTest extends AndroidTestCase {
         public void run() {
             for (int i = 0; i < NUM_ITERATIONS; i++) {
                 mDatabase.beginTransaction();
+<<<<<<< HEAD
                 mCounter.incrementAndGet();
                 try {
                     Thread.sleep(SLEEP_TIME);
+=======
+                int val = mCounter.incrementAndGet();
+                try {
+                    Thread.currentThread().sleep(SLEEP_TIME);
+>>>>>>> upstream/master
                 } catch (InterruptedException e) {
                     // ignore
                 }
@@ -119,6 +137,10 @@ public class DatabaseLockTest extends AndroidTestCase {
     @Suppress
     public void testLockLatency() {
         startDatabaseLatencyThread();
+<<<<<<< HEAD
+=======
+        int previous = 0;
+>>>>>>> upstream/master
         long sumTime = 0;
         long maxTime = 0;
         for (int i = 0; i < NUM_ITERATIONS; i++) { 
@@ -131,7 +153,11 @@ public class DatabaseLockTest extends AndroidTestCase {
             }
             sumTime += elapsedTime;
             try {
+<<<<<<< HEAD
                 Thread.sleep(SLEEP_TIME); 
+=======
+                Thread.currentThread().sleep(SLEEP_TIME); 
+>>>>>>> upstream/master
             } catch (InterruptedException e) {
                 // ignore
             }   
@@ -158,7 +184,11 @@ public class DatabaseLockTest extends AndroidTestCase {
             {
                 mDatabase.beginTransaction();
                 try {
+<<<<<<< HEAD
                     Thread.sleep(SLEEP_TIME);
+=======
+                    Thread.currentThread().sleep(SLEEP_TIME);
+>>>>>>> upstream/master
                 } catch (InterruptedException e) {
                     // ignore
                 } 

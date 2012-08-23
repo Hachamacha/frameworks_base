@@ -27,8 +27,11 @@ import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageManager;
 import android.os.Binder;
+<<<<<<< HEAD
 import android.os.Environment;
 import android.os.FileObserver;
+=======
+>>>>>>> upstream/master
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
@@ -95,7 +98,10 @@ public class DeviceStorageMonitorService extends Binder {
     private Intent mStorageFullIntent;
     private Intent mStorageNotFullIntent;
     private CachePackageDataObserver mClearCacheObserver;
+<<<<<<< HEAD
     private final CacheFileDeletedObserver mCacheFileDeletedObserver;
+=======
+>>>>>>> upstream/master
     private static final int _TRUE = 1;
     private static final int _FALSE = 0;
     private long mMemLowThreshold;
@@ -337,9 +343,12 @@ public class DeviceStorageMonitorService extends Binder {
         mMemLowThreshold = getMemThreshold();
         mMemFullThreshold = getMemFullThreshold();
         checkMemory(true);
+<<<<<<< HEAD
 
         mCacheFileDeletedObserver = new CacheFileDeletedObserver();
         mCacheFileDeletedObserver.startWatching();
+=======
+>>>>>>> upstream/master
     }
 
 
@@ -353,9 +362,13 @@ public class DeviceStorageMonitorService extends Binder {
         //log the event to event log with the amount of free storage(in bytes) left on the device
         EventLog.writeEvent(EventLogTags.LOW_STORAGE, mFreeMem);
         //  Pack up the values and broadcast them to everyone
+<<<<<<< HEAD
         Intent lowMemIntent = new Intent(Environment.isExternalStorageEmulated()
                 ? Settings.ACTION_INTERNAL_STORAGE_SETTINGS
                 : Intent.ACTION_MANAGE_PACKAGE_STORAGE);
+=======
+        Intent lowMemIntent = new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
+>>>>>>> upstream/master
         lowMemIntent.putExtra("memory", mFreeMem);
         lowMemIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         NotificationManager mNotificationMgr =
@@ -436,6 +449,7 @@ public class DeviceStorageMonitorService extends Binder {
         return mLowMemFlag;
     }
 
+<<<<<<< HEAD
     public static class CacheFileDeletedObserver extends FileObserver {
         public CacheFileDeletedObserver() {
             super(Environment.getDownloadCacheDirectory().getAbsolutePath(), FileObserver.DELETE);
@@ -447,6 +461,8 @@ public class DeviceStorageMonitorService extends Binder {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private Context getUiContext() {
         if (mUiContext == null) {
             mUiContext = ThemeUtils.createUiContext(mContext);

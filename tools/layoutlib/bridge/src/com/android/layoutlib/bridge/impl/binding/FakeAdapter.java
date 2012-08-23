@@ -74,46 +74,70 @@ public class FakeAdapter extends BaseAdapter implements ListAdapter, SpinnerAdap
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean isEnabled(int position) {
         return true;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getCount() {
         return mItems.size();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public Object getItem(int position) {
         return mItems.get(position);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public long getItemId(int position) {
         return position;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getItemViewType(int position) {
         return mItems.get(position).getType();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public View getView(int position, View convertView, ViewGroup parent) {
         // we don't care about recycling here because we never scroll.
         AdapterItem item = mItems.get(position);
         return getView(item, null /*parentGroup*/, convertView, parent);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getViewTypeCount() {
         return mTypes.size();
     }
 
     // ---- SpinnerAdapter
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         // pass
         return null;

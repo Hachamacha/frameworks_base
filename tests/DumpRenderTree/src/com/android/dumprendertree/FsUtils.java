@@ -141,7 +141,11 @@ public class FsUtils {
             } else if (!path.startsWith(HTTP_LOCAL_TESTS_PREFIX)
                     && !path.startsWith(HTTP_MEDIA_TESTS_PREFIX)
                     && !path.startsWith(HTTP_WML_TESTS_PREFIX)) {
+<<<<<<< HEAD
                 url = "http://127.0.0.1:8000/" + path.substring(HTTP_TESTS_PREFIX.length());
+=======
+                url = "http://127.0.0.1:18000/" + path.substring(HTTP_TESTS_PREFIX.length());
+>>>>>>> upstream/master
             } else {
                 url = "file://" + path;
             }

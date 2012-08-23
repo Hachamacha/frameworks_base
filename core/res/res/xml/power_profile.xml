@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 **
+<<<<<<< HEAD
 ** Copyright 2011, The Android Open Source Project
+=======
+** Copyright 2009, The Android Open Source Project
+>>>>>>> upstream/master
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -18,6 +22,7 @@
 -->
 
 <device name="Android">
+<<<<<<< HEAD
   <!-- All values are in mA except as noted -->
   <item name="none">0</item>
   <item name="screen.on">200</item> <!-- min brite -->
@@ -56,4 +61,39 @@
       <value>299</value>
       <value>397</value>
   </array>
+=======
+  <!-- All values are in mAh except as noted -->
+  <item name="none">0</item>
+  <item name="screen.on">0.1</item>
+  <item name="bluetooth.active">0.1</item>
+  <item name="bluetooth.on">0.1</item>
+  <item name="screen.full">0.1</item>
+  <item name="wifi.on">0.1</item>
+  <item name="wifi.active">0.1</item>
+  <item name="wifi.scan">0.1</item>
+  <item name="dsp.audio">0.1</item>
+  <item name="dsp.video">0.1</item>
+  <item name="radio.active">1</item>
+  <!-- The current consumed by the radio when it is scanning for a signal -->
+  <item name="radio.scanning">0.5</item>
+  <item name="gps.on">1</item>
+  <!-- Current consumed by the radio at different signal strengths, when paging -->
+  <array name="radio.on"> <!-- Strength 0 to BINS-1 -->
+      <value>0.2</value>
+      <value>0.1</value>
+  </array>
+  <!-- Different CPU speeds as reported in
+       /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
+  <array name="cpu.speeds">
+      <value>400000</value> <!-- 400 MHz CPU speed -->
+  </array>
+  <!-- Power consumption when CPU is idle -->
+  <item name="cpu.idle">0.1</item>
+  <!-- Power consumption at different speeds -->
+  <array name="cpu.active">
+      <value>0.2</value>
+  </array>
+  <!-- This is the battery capacity in mAh -->
+  <item name="battery.capacity">1000</item>
+>>>>>>> upstream/master
 </device>

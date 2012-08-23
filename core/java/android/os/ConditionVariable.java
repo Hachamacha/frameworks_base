@@ -26,7 +26,11 @@ package android.os;
  * block() will not block, and instead return immediately.
  *
  * <p>
+<<<<<<< HEAD
  * This class uses itself as the object to wait on, so if you wait()
+=======
+ * This class uses itself is at the object to wait on, so if you wait()
+>>>>>>> upstream/master
  * or notify() on a ConditionVariable, the results are undefined.
  */
 public class ConditionVariable

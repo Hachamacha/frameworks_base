@@ -26,11 +26,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+<<<<<<< HEAD
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+=======
+import android.content.pm.PackageManager;
+>>>>>>> upstream/master
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.Address;
@@ -109,12 +113,15 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
     private static final String INSTALL_LOCATION_PROVIDER =
         android.Manifest.permission.INSTALL_LOCATION_PROVIDER;
 
+<<<<<<< HEAD
     // Location Providers may sometimes deliver location updates
     // slightly faster that requested - provide grace period so
     // we don't unnecessarily filter events that are otherwise on
     // time
     private static final int MAX_PROVIDER_SCHEDULING_JITTER = 100;
 
+=======
+>>>>>>> upstream/master
     // Set of providers that are explicitly enabled
     private final Set<String> mEnabledProviders = new HashSet<String>();
 
@@ -127,9 +134,14 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
     private static boolean sProvidersLoaded = false;
 
     private final Context mContext;
+<<<<<<< HEAD
     private PackageManager mPackageManager;  // final after initialize()
     private String mNetworkLocationProviderPackageName;  // only used on handler thread
     private String mGeocodeProviderPackageName;  // only used on handler thread
+=======
+    private final String mNetworkLocationProviderPackageName;
+    private final String mGeocodeProviderPackageName;
+>>>>>>> upstream/master
     private GeocoderProxy mGeocodeProvider;
     private IGpsStatusProvider mGpsStatusProvider;
     private INetInitiatedListener mNetInitiatedListener;
@@ -205,9 +217,14 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         final PendingIntent mPendingIntent;
         final Object mKey;
         final HashMap<String,UpdateRecord> mUpdateRecords = new HashMap<String,UpdateRecord>();
+<<<<<<< HEAD
 
         int mPendingBroadcasts;
         String mRequiredPermissions;
+=======
+        int mPendingBroadcasts;
+        String requiredPermissions;
+>>>>>>> upstream/master
 
         Receiver(ILocationListener listener) {
             mListener = listener;
@@ -298,7 +315,11 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                         // synchronize to ensure incrementPendingBroadcastsLocked()
                         // is called before decrementPendingBroadcasts()
                         mPendingIntent.send(mContext, 0, statusChanged, this, mLocationHandler,
+<<<<<<< HEAD
                                 mRequiredPermissions);
+=======
+                                requiredPermissions);
+>>>>>>> upstream/master
                         // call this after broadcasting so we do not increment
                         // if we throw an exeption.
                         incrementPendingBroadcastsLocked();
@@ -334,7 +355,11 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                         // synchronize to ensure incrementPendingBroadcastsLocked()
                         // is called before decrementPendingBroadcasts()
                         mPendingIntent.send(mContext, 0, locationChanged, this, mLocationHandler,
+<<<<<<< HEAD
                                 mRequiredPermissions);
+=======
+                                requiredPermissions);
+>>>>>>> upstream/master
                         // call this after broadcasting so we do not increment
                         // if we throw an exeption.
                         incrementPendingBroadcastsLocked();
@@ -374,7 +399,11 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                         // synchronize to ensure incrementPendingBroadcastsLocked()
                         // is called before decrementPendingBroadcasts()
                         mPendingIntent.send(mContext, 0, providerIntent, this, mLocationHandler,
+<<<<<<< HEAD
                                 mRequiredPermissions);
+=======
+                                requiredPermissions);
+>>>>>>> upstream/master
                         // call this after broadcasting so we do not increment
                         // if we throw an exeption.
                         incrementPendingBroadcastsLocked();
@@ -386,7 +415,10 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
             return true;
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public void binderDied() {
             if (LOCAL_LOGV) {
                 Slog.v(TAG, "Location listener died");
@@ -495,6 +527,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         addProvider(passiveProvider);
         mEnabledProviders.add(passiveProvider.getName());
 
+<<<<<<< HEAD
         // initialize external network location and geocoder services.
         // The initial value of mNetworkLocationProviderPackageName and
         // mGeocodeProviderPackageName is just used to determine what
@@ -565,6 +598,24 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         }
 
         return bestPackage;
+=======
+        // initialize external network location and geocoder services
+        PackageManager pm = mContext.getPackageManager();
+        if (mNetworkLocationProviderPackageName != null &&
+                pm.resolveService(new Intent(mNetworkLocationProviderPackageName), 0) != null) {
+            mNetworkLocationProvider =
+                new LocationProviderProxy(mContext, LocationManager.NETWORK_PROVIDER,
+                        mNetworkLocationProviderPackageName, mLocationHandler);
+            addProvider(mNetworkLocationProvider);
+        }
+
+        if (mGeocodeProviderPackageName != null &&
+                pm.resolveService(new Intent(mGeocodeProviderPackageName), 0) != null) {
+            mGeocodeProvider = new GeocoderProxy(mContext, mGeocodeProviderPackageName);
+        }
+
+        updateProvidersLocked();
+>>>>>>> upstream/master
     }
 
     /**
@@ -574,6 +625,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         super();
         mContext = context;
         Resources resources = context.getResources();
+<<<<<<< HEAD
 
         mNetworkLocationProviderPackageName = resources.getString(
                 com.android.internal.R.string.config_networkLocationProviderPackageName);
@@ -581,6 +633,13 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                 com.android.internal.R.string.config_geocodeProviderPackageName);
 
         mPackageMonitor.register(context, null, true);
+=======
+        mNetworkLocationProviderPackageName = resources.getString(
+                com.android.internal.R.string.config_networkLocationProvider);
+        mGeocodeProviderPackageName = resources.getString(
+                com.android.internal.R.string.config_geocodeProvider);
+        mPackageMonitor.register(context, true);
+>>>>>>> upstream/master
 
         if (LOCAL_LOGV) {
             Slog.v(TAG, "Constructed LocationManager Service");
@@ -597,7 +656,10 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         // Create a wake lock, needs to be done before calling loadProviders() below
         PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKELOCK_KEY);
+<<<<<<< HEAD
         mPackageManager = mContext.getPackageManager();
+=======
+>>>>>>> upstream/master
 
         // Load providers
         loadProviders();
@@ -1095,7 +1157,11 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                     + Integer.toHexString(System.identityHashCode(this))
                     + " mProvider: " + mProvider + " mUid: " + mUid + "}";
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         void dump(PrintWriter pw, String prefix) {
             pw.println(prefix + this);
             pw.println(prefix + "mProvider=" + mProvider + " mReceiver=" + mReceiver);
@@ -1224,6 +1290,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
 
         LocationProviderInterface p = mProvidersByName.get(provider);
         if (p == null) {
+<<<<<<< HEAD
             throw new IllegalArgumentException("requested provider " + provider +
                     " doesn't exisit");
         }
@@ -1232,6 +1299,15 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
 
         // so wakelock calls will succeed
         final int callingPid = Binder.getCallingPid();
+=======
+            throw new IllegalArgumentException("provider=" + provider);
+        }
+
+        receiver.requiredPermissions = checkPermissionsSafe(provider,
+                receiver.requiredPermissions);
+
+        // so wakelock calls will succeed
+>>>>>>> upstream/master
         final int callingUid = Binder.getCallingUid();
         boolean newUid = !providerHasListener(provider, callingUid, null);
         long identity = Binder.clearCallingIdentity();
@@ -1250,8 +1326,11 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
             boolean isProviderEnabled = isAllowedBySettingsLocked(provider);
             if (isProviderEnabled) {
                 long minTimeForProvider = getMinTimeLocked(provider);
+<<<<<<< HEAD
                 Slog.i(TAG, "request " + provider + " (pid " + callingPid + ") " + minTime +
                         " " + minTimeForProvider + (singleShot ? " (singleshot)" : ""));
+=======
+>>>>>>> upstream/master
                 p.setMinTime(minTimeForProvider, mTmpWorkSource);
                 // try requesting single shot if singleShot is true, and fall back to
                 // regular location tracking if requestSingleShotFix() is not supported
@@ -1304,7 +1383,10 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
         }
 
         // so wakelock calls will succeed
+<<<<<<< HEAD
         final int callingPid = Binder.getCallingPid();
+=======
+>>>>>>> upstream/master
         final int callingUid = Binder.getCallingUid();
         long identity = Binder.clearCallingIdentity();
         try {
@@ -1354,6 +1436,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                 LocationProviderInterface p = mProvidersByName.get(provider);
                 if (p != null) {
                     if (hasOtherListener) {
+<<<<<<< HEAD
                         long minTime = getMinTimeLocked(provider);
                         Slog.i(TAG, "remove " + provider + " (pid " + callingPid +
                                 "), next minTime = " + minTime);
@@ -1361,6 +1444,10 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                     } else {
                         Slog.i(TAG, "remove " + provider + " (pid " + callingPid +
                                 "), disabled");
+=======
+                        p.setMinTime(getMinTimeLocked(provider), mTmpWorkSource);
+                    } else {
+>>>>>>> upstream/master
                         p.enableLocationTracking(false);
                     }
                 }
@@ -1702,9 +1789,13 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
 
         mProximityAlerts.remove(intent);
         if (mProximityAlerts.size() == 0) {
+<<<<<<< HEAD
             if (mProximityReceiver != null) {
                 removeUpdatesLocked(mProximityReceiver);
             }
+=======
+            removeUpdatesLocked(mProximityReceiver);
+>>>>>>> upstream/master
             mProximityReceiver = null;
             mProximityListener = null;
         }
@@ -1824,9 +1915,15 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
             return true;
         }
 
+<<<<<<< HEAD
         // Check whether sufficient time has passed
         long minTime = record.mMinTime;
         if (loc.getTime() - lastLoc.getTime() < minTime - MAX_PROVIDER_SCHEDULING_JITTER) {
+=======
+        // Don't broadcast same location again regardless of condition
+        // TODO - we should probably still rebroadcast if user explicitly sets a minTime > 0
+        if (loc.getTime() == lastLoc.getTime()) {
+>>>>>>> upstream/master
             return false;
         }
 
@@ -1949,6 +2046,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                     }
                 } else if (msg.what == MESSAGE_PACKAGE_UPDATED) {
                     String packageName = (String) msg.obj;
+<<<<<<< HEAD
 
                     // reconnect to external providers if there is a better package
                     if (mNetworkLocationProviderPackageName != null &&
@@ -1976,6 +2074,18 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                             mGeocodeProvider.reconnect(bestPackage);
                             mGeocodeProviderPackageName = packageName;
                         }
+=======
+                    String packageDot = packageName + ".";
+
+                    // reconnect to external providers after their packages have been updated
+                    if (mNetworkLocationProvider != null &&
+                        mNetworkLocationProviderPackageName.startsWith(packageDot)) {
+                        mNetworkLocationProvider.reconnect();
+                    }
+                    if (mGeocodeProvider != null &&
+                        mGeocodeProviderPackageName.startsWith(packageDot)) {
+                        mGeocodeProvider.reconnect();
+>>>>>>> upstream/master
                     }
                 }
             } catch (Exception e) {
@@ -2060,10 +2170,15 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
                 } else {
                     mNetworkState = LocationProvider.TEMPORARILY_UNAVAILABLE;
                 }
+<<<<<<< HEAD
 
                 final ConnectivityManager connManager = (ConnectivityManager) context
                         .getSystemService(Context.CONNECTIVITY_SERVICE);
                 final NetworkInfo info = connManager.getActiveNetworkInfo();
+=======
+                NetworkInfo info =
+                    (NetworkInfo)intent.getExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+>>>>>>> upstream/master
 
                 // Notify location providers of current network state
                 synchronized (mLock) {
@@ -2084,11 +2199,14 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
             // Called by main thread; divert work to LocationWorker.
             Message.obtain(mLocationHandler, MESSAGE_PACKAGE_UPDATED, packageName).sendToTarget();
         }
+<<<<<<< HEAD
         @Override
         public void onPackageAdded(String packageName, int uid) {
             // Called by main thread; divert work to LocationWorker.
             Message.obtain(mLocationHandler, MESSAGE_PACKAGE_UPDATED, packageName).sendToTarget();
         }
+=======
+>>>>>>> upstream/master
     };
 
     // Wake locks

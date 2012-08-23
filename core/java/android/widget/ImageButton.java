@@ -21,8 +21,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 import java.util.Map;
@@ -92,6 +95,7 @@ public class ImageButton extends ImageView {
     protected boolean onSetAlpha(int alpha) {
         return false;
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -104,4 +108,6 @@ public class ImageButton extends ImageView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ImageButton.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

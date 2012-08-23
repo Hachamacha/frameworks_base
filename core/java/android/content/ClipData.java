@@ -21,12 +21,16 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+<<<<<<< HEAD
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.URLSpan;
+=======
+import android.text.TextUtils;
+>>>>>>> upstream/master
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -149,8 +153,11 @@ import java.util.ArrayList;
 public class ClipData implements Parcelable {
     static final String[] MIMETYPES_TEXT_PLAIN = new String[] {
         ClipDescription.MIMETYPE_TEXT_PLAIN };
+<<<<<<< HEAD
     static final String[] MIMETYPES_TEXT_HTML = new String[] {
         ClipDescription.MIMETYPE_TEXT_HTML };
+=======
+>>>>>>> upstream/master
     static final String[] MIMETYPES_TEXT_URILIST = new String[] {
         ClipDescription.MIMETYPE_TEXT_URILIST };
     static final String[] MIMETYPES_TEXT_INTENT = new String[] {
@@ -160,7 +167,11 @@ public class ClipData implements Parcelable {
     
     final Bitmap mIcon;
 
+<<<<<<< HEAD
     final ArrayList<Item> mItems;
+=======
+    final ArrayList<Item> mItems = new ArrayList<Item>();
+>>>>>>> upstream/master
 
     /**
      * Description of a single item in a ClippedData.
@@ -183,7 +194,10 @@ public class ClipData implements Parcelable {
      */
     public static class Item {
         final CharSequence mText;
+<<<<<<< HEAD
         final String mHtmlText;
+=======
+>>>>>>> upstream/master
         final Intent mIntent;
         final Uri mUri;
 
@@ -192,6 +206,7 @@ public class ClipData implements Parcelable {
          */
         public Item(CharSequence text) {
             mText = text;
+<<<<<<< HEAD
             mHtmlText = null;
             mIntent = null;
             mUri = null;
@@ -206,6 +221,8 @@ public class ClipData implements Parcelable {
         public Item(CharSequence text, String htmlText) {
             mText = text;
             mHtmlText = htmlText;
+=======
+>>>>>>> upstream/master
             mIntent = null;
             mUri = null;
         }
@@ -215,7 +232,10 @@ public class ClipData implements Parcelable {
          */
         public Item(Intent intent) {
             mText = null;
+<<<<<<< HEAD
             mHtmlText = null;
+=======
+>>>>>>> upstream/master
             mIntent = intent;
             mUri = null;
         }
@@ -225,13 +245,17 @@ public class ClipData implements Parcelable {
          */
         public Item(Uri uri) {
             mText = null;
+<<<<<<< HEAD
             mHtmlText = null;
+=======
+>>>>>>> upstream/master
             mIntent = null;
             mUri = uri;
         }
 
         /**
          * Create a complex Item, containing multiple representations of
+<<<<<<< HEAD
          * text, Intent, and/or URI.
          */
         public Item(CharSequence text, Intent intent, Uri uri) {
@@ -254,6 +278,12 @@ public class ClipData implements Parcelable {
             }
             mText = text;
             mHtmlText = htmlText;
+=======
+         * text, intent, and/or URI.
+         */
+        public Item(CharSequence text, Intent intent, Uri uri) {
+            mText = text;
+>>>>>>> upstream/master
             mIntent = intent;
             mUri = uri;
         }
@@ -266,6 +296,7 @@ public class ClipData implements Parcelable {
         }
 
         /**
+<<<<<<< HEAD
          * Retrieve the raw HTML text contained in this Item.
          */
         public String getHtmlText() {
@@ -273,6 +304,8 @@ public class ClipData implements Parcelable {
         }
 
         /**
+=======
+>>>>>>> upstream/master
          * Retrieve the raw Intent contained in this Item.
          */
         public Intent getIntent() {
@@ -299,7 +332,11 @@ public class ClipData implements Parcelable {
          * the content provider does not supply a text representation, return
          * the raw URI as a string.
          * <li> If {@link #getIntent} is non-null, convert that to an intent:
+<<<<<<< HEAD
          * URI and return it.
+=======
+         * URI and returnit.
+>>>>>>> upstream/master
          * <li> Otherwise, return an empty string.
          * </ul>
          *
@@ -310,6 +347,7 @@ public class ClipData implements Parcelable {
 //BEGIN_INCLUDE(coerceToText)
         public CharSequence coerceToText(Context context) {
             // If this Item has an explicit textual value, simply return that.
+<<<<<<< HEAD
             CharSequence text = getText();
             if (text != null) {
                 return text;
@@ -318,6 +356,14 @@ public class ClipData implements Parcelable {
             // If this Item has a URI value, try using that.
             Uri uri = getUri();
             if (uri != null) {
+=======
+            if (mText != null) {
+                return mText;
+            }
+
+            // If this Item has a URI value, try using that.
+            if (mUri != null) {
+>>>>>>> upstream/master
 
                 // First see if the URI can be opened as a plain text stream
                 // (of any sub-type).  If so, this is the best textual
@@ -326,7 +372,11 @@ public class ClipData implements Parcelable {
                 try {
                     // Ask for a stream of the desired type.
                     AssetFileDescriptor descr = context.getContentResolver()
+<<<<<<< HEAD
                             .openTypedAssetFileDescriptor(uri, "text/*", null);
+=======
+                            .openTypedAssetFileDescriptor(mUri, "text/*", null);
+>>>>>>> upstream/master
                     stream = descr.createInputStream();
                     InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 
@@ -359,6 +409,7 @@ public class ClipData implements Parcelable {
 
                 // If we couldn't open the URI as a stream, then the URI itself
                 // probably serves fairly well as a textual representation.
+<<<<<<< HEAD
                 return uri.toString();
             }
 
@@ -544,21 +595,29 @@ public class ClipData implements Parcelable {
                 } else {
                     return uriToHtml(mUri.toString());
                 }
+=======
+                return mUri.toString();
+>>>>>>> upstream/master
             }
 
             // Finally, if all we have is an Intent, then we can just turn that
             // into text.  Not the most user-friendly thing, but it's something.
             if (mIntent != null) {
+<<<<<<< HEAD
                 if (styled) {
                     return uriToStyledText(mIntent.toUri(Intent.URI_INTENT_SCHEME));
                 } else {
                     return uriToHtml(mIntent.toUri(Intent.URI_INTENT_SCHEME));
                 }
+=======
+                return mIntent.toUri(Intent.URI_INTENT_SCHEME);
+>>>>>>> upstream/master
             }
 
             // Shouldn't get here, but just in case...
             return "";
         }
+<<<<<<< HEAD
 
         private String uriToHtml(String uri) {
             StringBuilder builder = new StringBuilder(256);
@@ -607,6 +666,9 @@ public class ClipData implements Parcelable {
                 b.append("NULL");
             }
         }
+=======
+//END_INCLUDE(coerceToText)
+>>>>>>> upstream/master
     }
 
     /**
@@ -622,7 +684,10 @@ public class ClipData implements Parcelable {
             throw new NullPointerException("item is null");
         }
         mIcon = null;
+<<<<<<< HEAD
         mItems = new ArrayList<Item>();
+=======
+>>>>>>> upstream/master
         mItems.add(item);
     }
 
@@ -638,11 +703,15 @@ public class ClipData implements Parcelable {
             throw new NullPointerException("item is null");
         }
         mIcon = null;
+<<<<<<< HEAD
         mItems = new ArrayList<Item>();
+=======
+>>>>>>> upstream/master
         mItems.add(item);
     }
 
     /**
+<<<<<<< HEAD
      * Create a new clip that is a copy of another clip.  This does a deep-copy
      * of all items in the clip.
      *
@@ -655,6 +724,8 @@ public class ClipData implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Create a new ClipData holding data of the type
      * {@link ClipDescription#MIMETYPE_TEXT_PLAIN}.
      *
@@ -668,6 +739,7 @@ public class ClipData implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Create a new ClipData holding data of the type
      * {@link ClipDescription#MIMETYPE_TEXT_HTML}.
      *
@@ -684,6 +756,8 @@ public class ClipData implements Parcelable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Create a new ClipData holding an Intent with MIME type
      * {@link ClipDescription#MIMETYPE_TEXT_INTENT}.
      *
@@ -791,6 +865,7 @@ public class ClipData implements Parcelable {
     }
 
     @Override
+<<<<<<< HEAD
     public String toString() {
         StringBuilder b = new StringBuilder(128);
 
@@ -831,6 +906,8 @@ public class ClipData implements Parcelable {
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
@@ -849,7 +926,10 @@ public class ClipData implements Parcelable {
         for (int i=0; i<N; i++) {
             Item item = mItems.get(i);
             TextUtils.writeToParcel(item.mText, dest, flags);
+<<<<<<< HEAD
             dest.writeString(item.mHtmlText);
+=======
+>>>>>>> upstream/master
             if (item.mIntent != null) {
                 dest.writeInt(1);
                 item.mIntent.writeToParcel(dest, flags);
@@ -872,6 +952,7 @@ public class ClipData implements Parcelable {
         } else {
             mIcon = null;
         }
+<<<<<<< HEAD
         mItems = new ArrayList<Item>();
         final int N = in.readInt();
         for (int i=0; i<N; i++) {
@@ -880,6 +961,14 @@ public class ClipData implements Parcelable {
             Intent intent = in.readInt() != 0 ? Intent.CREATOR.createFromParcel(in) : null;
             Uri uri = in.readInt() != 0 ? Uri.CREATOR.createFromParcel(in) : null;
             mItems.add(new Item(text, htmlText, intent, uri));
+=======
+        final int N = in.readInt();
+        for (int i=0; i<N; i++) {
+            CharSequence text = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+            Intent intent = in.readInt() != 0 ? Intent.CREATOR.createFromParcel(in) : null;
+            Uri uri = in.readInt() != 0 ? Uri.CREATOR.createFromParcel(in) : null;
+            mItems.add(new Item(text, intent, uri));
+>>>>>>> upstream/master
         }
     }
 

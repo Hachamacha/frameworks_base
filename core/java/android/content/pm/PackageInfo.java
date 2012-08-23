@@ -142,6 +142,7 @@ public class PackageInfo implements Parcelable {
     public String[] requestedPermissions;
     
     /**
+<<<<<<< HEAD
      * Array of flags of all {@link android.R.styleable#AndroidManifestUsesPermission
      * &lt;uses-permission&gt;} tags included under &lt;manifest&gt;,
      * or null if there were none.  This is only filled in if the flag
@@ -166,6 +167,8 @@ public class PackageInfo implements Parcelable {
     public static final int REQUESTED_PERMISSION_GRANTED = 1<<1;
 
     /**
+=======
+>>>>>>> upstream/master
      * Array of all signatures read from the package file.  This is only filled
      * in if the flag {@link PackageManager#GET_SIGNATURES} was set.
      */
@@ -314,7 +317,10 @@ public class PackageInfo implements Parcelable {
         dest.writeTypedArray(instrumentation, parcelableFlags);
         dest.writeTypedArray(permissions, parcelableFlags);
         dest.writeStringArray(requestedPermissions);
+<<<<<<< HEAD
         dest.writeIntArray(requestedPermissionsFlags);
+=======
+>>>>>>> upstream/master
         dest.writeTypedArray(signatures, parcelableFlags);
         dest.writeTypedArray(configPreferences, parcelableFlags);
         dest.writeTypedArray(reqFeatures, parcelableFlags);
@@ -358,7 +364,10 @@ public class PackageInfo implements Parcelable {
         instrumentation = source.createTypedArray(InstrumentationInfo.CREATOR);
         permissions = source.createTypedArray(PermissionInfo.CREATOR);
         requestedPermissions = source.createStringArray();
+<<<<<<< HEAD
         requestedPermissionsFlags = source.createIntArray();
+=======
+>>>>>>> upstream/master
         signatures = source.createTypedArray(Signature.CREATOR);
         configPreferences = source.createTypedArray(ConfigurationInfo.CREATOR);
         reqFeatures = source.createTypedArray(FeatureInfo.CREATOR);

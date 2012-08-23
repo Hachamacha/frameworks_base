@@ -24,7 +24,11 @@ public class WimaxManagerConstants
      * The lookup key for an int that indicates whether Wimax is enabled,
      * disabled, enabling, disabling, or unknown.
      */
+<<<<<<< HEAD
     public static final String EXTRA_WIMAX_STATUS = "wimax_status";
+=======
+    public static final String EXTRA_4G_STATE = "4g_state";
+>>>>>>> upstream/master
 
     /**
      * Broadcast intent action indicating that Wimax state has been changed
@@ -48,7 +52,10 @@ public class WimaxManagerConstants
      * initializing, initialized, unknown and ready.
      */
     public static final String EXTRA_WIMAX_STATE = "WimaxState";
+<<<<<<< HEAD
     public static final String EXTRA_4G_STATE = "4g_state";
+=======
+>>>>>>> upstream/master
     public static final String EXTRA_WIMAX_STATE_INT = "WimaxStateInt";
     /**
      * The lookup key for an int that indicates whether state of Wimax
@@ -116,4 +123,8 @@ public class WimaxManagerConstants
      */
     public static final String WIMAX_ENABLED_CHANGED_ACTION = "com.htc.net.wimax.WIMAX_ENABLED_CHANGED";
     public static final String CURRENT_WIMAX_ENABLED_STATE  = "curWimaxEnabledState";
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 }

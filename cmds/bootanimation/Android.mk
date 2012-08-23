@@ -9,7 +9,10 @@ LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
+<<<<<<< HEAD
 	libandroidfw \
+=======
+>>>>>>> upstream/master
 	libutils \
 	libbinder \
     libui \

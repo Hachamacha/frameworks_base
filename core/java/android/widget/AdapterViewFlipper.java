@@ -16,6 +16,10 @@
 
 package android.widget;
 
+<<<<<<< HEAD
+=======
+import android.animation.ObjectAnimator;
+>>>>>>> upstream/master
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,8 +30,12 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.RemotableViewMethod;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+import android.view.animation.AlphaAnimation;
+>>>>>>> upstream/master
 import android.widget.RemoteViews.RemoteView;
 
 /**
@@ -127,6 +135,7 @@ public class AdapterViewFlipper extends AdapterViewAnimator {
     }
 
     /**
+<<<<<<< HEAD
      * Returns the flip interval, in milliseconds.
      *
      * @return the flip interval in milliseconds
@@ -150,6 +159,15 @@ public class AdapterViewFlipper extends AdapterViewAnimator {
      */
     public void setFlipInterval(int flipInterval) {
         mFlipInterval = flipInterval;
+=======
+     * How long to wait before flipping to the next view
+     *
+     * @param milliseconds
+     *            time in milliseconds
+     */
+    public void setFlipInterval(int milliseconds) {
+        mFlipInterval = milliseconds;
+>>>>>>> upstream/master
     }
 
     /**
@@ -284,6 +302,7 @@ public class AdapterViewFlipper extends AdapterViewAnimator {
         mAdvancedByHost = true;
         updateRunning(false);
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -296,4 +315,6 @@ public class AdapterViewFlipper extends AdapterViewAnimator {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(AdapterViewFlipper.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

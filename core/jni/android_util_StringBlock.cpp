@@ -23,7 +23,11 @@
 #include <android_runtime/AndroidRuntime.h>
 #include <utils/Log.h>
 
+<<<<<<< HEAD
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 
 #include <stdio.h>
 

@@ -37,7 +37,11 @@ LayerRenderer::LayerRenderer(Layer* layer): mLayer(layer) {
 LayerRenderer::~LayerRenderer() {
 }
 
+<<<<<<< HEAD
 int LayerRenderer::prepareDirty(float left, float top, float right, float bottom, bool opaque) {
+=======
+void LayerRenderer::prepareDirty(float left, float top, float right, float bottom, bool opaque) {
+>>>>>>> upstream/master
     LAYER_RENDERER_LOGD("Rendering into layer, fbo = %d", mLayer->getFbo());
 
     glBindFramebuffer(GL_FRAMEBUFFER, mLayer->getFbo());
@@ -57,9 +61,15 @@ int LayerRenderer::prepareDirty(float left, float top, float right, float bottom
         mLayer->region.subtractSelf(r);
     }
 
+<<<<<<< HEAD
     return OpenGLRenderer::prepareDirty(dirty.left, dirty.top, dirty.right, dirty.bottom, opaque);
 #else
     return OpenGLRenderer::prepareDirty(0.0f, 0.0f, width, height, opaque);
+=======
+    OpenGLRenderer::prepareDirty(dirty.left, dirty.top, dirty.right, dirty.bottom, opaque);
+#else
+    OpenGLRenderer::prepareDirty(0.0f, 0.0f, width, height, opaque);
+>>>>>>> upstream/master
 #endif
 }
 
@@ -182,6 +192,7 @@ void LayerRenderer::generateMesh() {
 Layer* LayerRenderer::createLayer(uint32_t width, uint32_t height, bool isOpaque) {
     LAYER_RENDERER_LOGD("Requesting new render layer %dx%d", width, height);
 
+<<<<<<< HEAD
     Caches& caches = Caches::getInstance();
     GLuint fbo = caches.fboCache.get();
     if (!fbo) {
@@ -193,6 +204,18 @@ Layer* LayerRenderer::createLayer(uint32_t width, uint32_t height, bool isOpaque
     Layer* layer = caches.layerCache.get(width, height);
     if (!layer) {
         ALOGW("Could not obtain a layer");
+=======
+    GLuint fbo = Caches::getInstance().fboCache.get();
+    if (!fbo) {
+        LOGW("Could not obtain an FBO");
+        return NULL;
+    }
+
+    glActiveTexture(GL_TEXTURE0);
+    Layer* layer = Caches::getInstance().layerCache.get(width, height);
+    if (!layer) {
+        LOGW("Could not obtain a layer");
+>>>>>>> upstream/master
         return NULL;
     }
 
@@ -217,11 +240,19 @@ Layer* LayerRenderer::createLayer(uint32_t width, uint32_t height, bool isOpaque
         layer->allocateTexture(GL_RGBA, GL_UNSIGNED_BYTE);
 
         if (glGetError() != GL_NO_ERROR) {
+<<<<<<< HEAD
             ALOGD("Could not allocate texture for layer (fbo=%d %dx%d)",
                     fbo, width, height);
 
             glBindFramebuffer(GL_FRAMEBUFFER, previousFbo);
             caches.fboCache.put(fbo);
+=======
+            LOGD("Could not allocate texture for layer (fbo=%d %dx%d)",
+                    fbo, width, height);
+
+            glBindFramebuffer(GL_FRAMEBUFFER, previousFbo);
+            Caches::getInstance().fboCache.put(fbo);
+>>>>>>> upstream/master
 
             layer->deleteTexture();
             delete layer;
@@ -234,6 +265,10 @@ Layer* LayerRenderer::createLayer(uint32_t width, uint32_t height, bool isOpaque
             layer->getTexture(), 0);
 
     glDisable(GL_SCISSOR_TEST);
+<<<<<<< HEAD
+=======
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+>>>>>>> upstream/master
     glClear(GL_COLOR_BUFFER_BIT);
     glEnable(GL_SCISSOR_TEST);
 
@@ -275,7 +310,11 @@ Layer* LayerRenderer::createTextureLayer(bool isOpaque) {
     layer->region.clear();
     layer->setRenderTarget(GL_NONE); // see ::updateTextureLayer()
 
+<<<<<<< HEAD
     Caches::getInstance().activeTexture(0);
+=======
+    glActiveTexture(GL_TEXTURE0);
+>>>>>>> upstream/master
     layer->generateTexture();
 
     return layer;
@@ -294,8 +333,13 @@ void LayerRenderer::updateTextureLayer(Layer* layer, uint32_t width, uint32_t he
         if (renderTarget != layer->getRenderTarget()) {
             layer->setRenderTarget(renderTarget);
             layer->bindTexture();
+<<<<<<< HEAD
             layer->setFilter(GL_NEAREST, false, true);
             layer->setWrap(GL_CLAMP_TO_EDGE, false, true);
+=======
+            layer->setFilter(GL_NEAREST, GL_NEAREST, false, true);
+            layer->setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, false, true);
+>>>>>>> upstream/master
         }
     }
 }
@@ -305,11 +349,16 @@ void LayerRenderer::destroyLayer(Layer* layer) {
         LAYER_RENDERER_LOGD("Recycling layer, %dx%d fbo = %d",
                 layer->getWidth(), layer->getHeight(), layer->getFbo());
 
+<<<<<<< HEAD
         GLuint fbo = layer->getFbo();
         if (fbo) {
             flushLayer(layer);
             Caches::getInstance().fboCache.put(fbo);
             layer->setFbo(0);
+=======
+        if (layer->getFbo()) {
+            Caches::getInstance().fboCache.put(layer->getFbo());
+>>>>>>> upstream/master
         }
 
         if (!Caches::getInstance().layerCache.put(layer)) {
@@ -334,6 +383,7 @@ void LayerRenderer::destroyLayerDeferred(Layer* layer) {
     }
 }
 
+<<<<<<< HEAD
 void LayerRenderer::flushLayer(Layer* layer) {
 #ifdef GL_EXT_discard_framebuffer
     GLuint fbo = layer->getFbo();
@@ -354,6 +404,8 @@ void LayerRenderer::flushLayer(Layer* layer) {
 #endif
 }
 
+=======
+>>>>>>> upstream/master
 bool LayerRenderer::copyLayer(Layer* layer, SkBitmap* bitmap) {
     Caches& caches = Caches::getInstance();
     if (layer && layer->isTextureLayer() && bitmap->width() <= caches.maxTextureSize &&
@@ -361,7 +413,11 @@ bool LayerRenderer::copyLayer(Layer* layer, SkBitmap* bitmap) {
 
         GLuint fbo = caches.fboCache.get();
         if (!fbo) {
+<<<<<<< HEAD
             ALOGW("Could not obtain an FBO");
+=======
+            LOGW("Could not obtain an FBO");
+>>>>>>> upstream/master
             return false;
         }
 
@@ -408,7 +464,11 @@ bool LayerRenderer::copyLayer(Layer* layer, SkBitmap* bitmap) {
         glGenTextures(1, &texture);
         if ((error = glGetError()) != GL_NO_ERROR) goto error;
 
+<<<<<<< HEAD
         caches.activeTexture(0);
+=======
+        glActiveTexture(GL_TEXTURE0);
+>>>>>>> upstream/master
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -460,11 +520,17 @@ bool LayerRenderer::copyLayer(Layer* layer, SkBitmap* bitmap) {
         }
 
 error:
+<<<<<<< HEAD
         glEnable(GL_SCISSOR_TEST);
 
 #if DEBUG_OPENGL
         if (error != GL_NO_ERROR) {
             ALOGD("GL error while copying layer into bitmap = 0x%x", error);
+=======
+#if DEBUG_OPENGL
+        if (error != GL_NO_ERROR) {
+            LOGD("GL error while copying layer into bitmap = 0x%x", error);
+>>>>>>> upstream/master
         }
 #endif
 

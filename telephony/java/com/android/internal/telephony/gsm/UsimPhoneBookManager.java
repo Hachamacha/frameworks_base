@@ -24,7 +24,10 @@ import android.util.Log;
 import com.android.internal.telephony.AdnRecord;
 import com.android.internal.telephony.AdnRecordCache;
 import com.android.internal.telephony.IccConstants;
+<<<<<<< HEAD
 import com.android.internal.telephony.IccFileHandler;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.PhoneBase;
 
@@ -43,7 +46,11 @@ public class UsimPhoneBookManager extends Handler implements IccConstants {
     private static final boolean DBG = true;
     private PbrFile mPbrFile;
     private Boolean mIsPbrPresent;
+<<<<<<< HEAD
     private IccFileHandler mFh;
+=======
+    private PhoneBase mPhone;
+>>>>>>> upstream/master
     private AdnRecordCache mAdnCache;
     private Object mLock = new Object();
     private ArrayList<AdnRecord> mPhoneBookRecords;
@@ -75,8 +82,13 @@ public class UsimPhoneBookManager extends Handler implements IccConstants {
     private static final int USIM_EFEMAIL_TAG = 0xCA;
     private static final int USIM_EFCCP1_TAG  = 0xCB;
 
+<<<<<<< HEAD
     public UsimPhoneBookManager(IccFileHandler fh, AdnRecordCache cache) {
         mFh = fh;
+=======
+    public UsimPhoneBookManager(PhoneBase phone, AdnRecordCache cache) {
+        mPhone = phone;
+>>>>>>> upstream/master
         mPhoneBookRecords = new ArrayList<AdnRecord>();
         mPbrFile = null;
         // We assume its present, after the first read this is updated.
@@ -139,7 +151,11 @@ public class UsimPhoneBookManager extends Handler implements IccConstants {
     }
 
     private void readPbrFileAndWait() {
+<<<<<<< HEAD
         mFh.loadEFLinearFixedAll(EF_PBR, obtainMessage(EVENT_PBR_LOAD_DONE));
+=======
+        mPhone.getIccFileHandler().loadEFLinearFixedAll(EF_PBR, obtainMessage(EVENT_PBR_LOAD_DONE));
+>>>>>>> upstream/master
         try {
             mLock.wait();
         } catch (InterruptedException e) {
@@ -166,7 +182,11 @@ public class UsimPhoneBookManager extends Handler implements IccConstants {
                 }
             }
             // Read the EFEmail file.
+<<<<<<< HEAD
             mFh.loadEFLinearFixedAll(fileIds.get(USIM_EFEMAIL_TAG),
+=======
+            mPhone.getIccFileHandler().loadEFLinearFixedAll(fileIds.get(USIM_EFEMAIL_TAG),
+>>>>>>> upstream/master
                     obtainMessage(EVENT_EMAIL_LOAD_DONE));
             try {
                 mLock.wait();
@@ -184,7 +204,11 @@ public class UsimPhoneBookManager extends Handler implements IccConstants {
     }
 
     private void readIapFileAndWait(int efid) {
+<<<<<<< HEAD
         mFh.loadEFLinearFixedAll(efid, obtainMessage(EVENT_IAP_LOAD_DONE));
+=======
+        mPhone.getIccFileHandler().loadEFLinearFixedAll(efid, obtainMessage(EVENT_IAP_LOAD_DONE));
+>>>>>>> upstream/master
         try {
             mLock.wait();
         } catch (InterruptedException e) {

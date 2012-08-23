@@ -6,12 +6,20 @@ up/down arrow buttons, it's possible to set the desired value from the keyboard 
 gesture.</p>
 
 <div class="layout-content-row">
+<<<<<<< HEAD
+=======
+  <div class="layout-content-col span-2">&nbsp;</div>
+>>>>>>> upstream/master
   <div class="layout-content-col span-6">
 
     <img src="{@docRoot}design/media/picker_space.png">
 
   </div>
+<<<<<<< HEAD
   <div class="layout-content-col span-6">
+=======
+  <div class="layout-content-col span-5">
+>>>>>>> upstream/master
 
 <h4>Space considerations</h4>
 <p>Pickers can be used inline on a form, but their relatively large footprint is best suited for

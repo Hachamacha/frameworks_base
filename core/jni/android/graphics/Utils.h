@@ -22,7 +22,11 @@
 #include "android_util_Binder.h"
 
 #include <jni.h>
+<<<<<<< HEAD
 #include <androidfw/Asset.h>
+=======
+#include <utils/Asset.h>
+>>>>>>> upstream/master
 
 namespace android {
 

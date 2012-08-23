@@ -35,7 +35,10 @@ import java.util.Random;
  * 
  */
 
+<<<<<<< HEAD
 @SuppressWarnings("deprecation")
+=======
+>>>>>>> upstream/master
 public class DatabasePerformanceTests {
 
     public static String[] children() {

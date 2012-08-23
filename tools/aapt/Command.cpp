@@ -345,7 +345,10 @@ enum {
     LABEL_ATTR = 0x01010001,
     ICON_ATTR = 0x01010002,
     NAME_ATTR = 0x01010003,
+<<<<<<< HEAD
     DEBUGGABLE_ATTR = 0x0101000f,
+=======
+>>>>>>> upstream/master
     VERSION_CODE_ATTR = 0x0101021b,
     VERSION_NAME_ATTR = 0x0101021c,
     SCREEN_ORIENTATION_ATTR = 0x0101001e,
@@ -426,7 +429,10 @@ static void printCompatibleScreens(ResXMLTree& tree) {
 /*
  * Handle the "dump" command, to extract select data from an archive.
  */
+<<<<<<< HEAD
 extern char CONSOLE_DATA[2925]; // see EOF
+=======
+>>>>>>> upstream/master
 int doDump(Bundle* bundle)
 {
     status_t result = UNKNOWN_ERROR;
@@ -480,11 +486,14 @@ int doDump(Bundle* bundle)
 #ifndef HAVE_ANDROID_OS
         res.print(bundle->getValues());
 #endif
+<<<<<<< HEAD
 
     } else if (strcmp("strings", option) == 0) {
         const ResStringPool* pool = res.getTableStringBlock(0);
         printStringPool(pool);
 
+=======
+>>>>>>> upstream/master
     } else if (strcmp("xmltree", option) == 0) {
         if (bundle->getFileSpecCount() < 3) {
             fprintf(stderr, "ERROR: no dump xmltree resource file specified\n");
@@ -632,6 +641,7 @@ int doDump(Bundle* bundle)
             bool actImeService = false;
             bool actWallpaperService = false;
 
+<<<<<<< HEAD
             // These two implement the implicit permissions that are granted
             // to pre-1.6 applications.
             bool hasWriteExternalStoragePermission = false;
@@ -646,6 +656,8 @@ int doDump(Bundle* bundle)
             bool hasReadCallLogPermission = false;
             bool hasWriteCallLogPermission = false;
 
+=======
+>>>>>>> upstream/master
             // This next group of variables is used to implement a group of
             // backward-compatibility heuristics necessitated by the addition of
             // some new uses-feature constants in 2.1 and 2.2. In most cases, the
@@ -831,6 +843,7 @@ int doDump(Bundle* bundle)
                         if (testOnly != 0) {
                             printf("testOnly='%d'\n", testOnly);
                         }
+<<<<<<< HEAD
 
                         int32_t debuggable = getResolvedIntegerAttribute(&res, tree, DEBUGGABLE_ATTR, &error, 0);
                         if (error != "") {
@@ -840,6 +853,8 @@ int doDump(Bundle* bundle)
                         if (debuggable != 0) {
                             printf("application-debuggable\n");
                         }
+=======
+>>>>>>> upstream/master
                     } else if (tag == "uses-sdk") {
                         int32_t code = getIntegerAttribute(tree, MIN_SDK_VERSION_ATTR, &error);
                         if (error != "") {
@@ -1016,6 +1031,7 @@ int doDump(Bundle* bundle)
                                        name == "android.permission.WRITE_APN_SETTINGS" ||
                                        name == "android.permission.WRITE_SMS") {
                                 hasTelephonyPermission = true;
+<<<<<<< HEAD
                             } else if (name == "android.permission.WRITE_EXTERNAL_STORAGE") {
                                 hasWriteExternalStoragePermission = true;
                             } else if (name == "android.permission.READ_EXTERNAL_STORAGE") {
@@ -1030,6 +1046,8 @@ int doDump(Bundle* bundle)
                                 hasReadCallLogPermission = true;
                             } else if (name == "android.permission.WRITE_CALL_LOG") {
                                 hasWriteCallLogPermission = true;
+=======
+>>>>>>> upstream/master
                             }
                             printf("uses-permission:'%s'\n", name.string());
                         } else {
@@ -1188,6 +1206,7 @@ int doDump(Bundle* bundle)
                 }
             }
 
+<<<<<<< HEAD
             // Pre-1.6 implicitly granted permission compatibility logic
             if (targetSdk < 4) {
                 if (!hasWriteExternalStoragePermission) {
@@ -1227,6 +1246,8 @@ int doDump(Bundle* bundle)
                 }
             }
 
+=======
+>>>>>>> upstream/master
             /* The following blocks handle printing "inferred" uses-features, based
              * on whether related features or permissions are used by the app.
              * Note that the various spec*Feature variables denote whether the
@@ -1235,6 +1256,7 @@ int doDump(Bundle* bundle)
              */
             // Camera-related back-compatibility logic
             if (!specCameraFeature) {
+<<<<<<< HEAD
                 if (reqCameraFlashFeature) {
                     // if app requested a sub-feature (autofocus or flash) and didn't
                     // request the base camera feature, we infer that it meant to
@@ -1247,6 +1269,12 @@ int doDump(Bundle* bundle)
                     printf("uses-feature:'android.hardware.camera'\n");
                     printf("uses-implied-feature:'android.hardware.camera'," \
                             "'requested android.hardware.camera.autofocus feature'\n");
+=======
+                if (reqCameraFlashFeature || reqCameraAutofocusFeature) {
+                    // if app requested a sub-feature (autofocus or flash) and didn't
+                    // request the base camera feature, we infer that it meant to
+                    printf("uses-feature:'android.hardware.camera'\n");
+>>>>>>> upstream/master
                 } else if (hasCameraPermission) {
                     // if app wants to use camera but didn't request the feature, we infer 
                     // that it meant to, and further that it wants autofocus
@@ -1254,8 +1282,11 @@ int doDump(Bundle* bundle)
                     printf("uses-feature:'android.hardware.camera'\n");
                     if (!specCameraAutofocusFeature) {
                         printf("uses-feature:'android.hardware.camera.autofocus'\n");
+<<<<<<< HEAD
                         printf("uses-implied-feature:'android.hardware.camera.autofocus'," \
                                 "'requested android.permission.CAMERA permission'\n");
+=======
+>>>>>>> upstream/master
                     }
                 }
             }
@@ -1267,22 +1298,31 @@ int doDump(Bundle* bundle)
                 // if app either takes a location-related permission or requests one of the
                 // sub-features, we infer that it also meant to request the base location feature
                 printf("uses-feature:'android.hardware.location'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.location'," \
                         "'requested a location access permission'\n");
+=======
+>>>>>>> upstream/master
             }
             if (!specGpsFeature && hasGpsPermission) {
                 // if app takes GPS (FINE location) perm but does not request the GPS
                 // feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.location.gps'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.location.gps'," \
                         "'requested android.permission.ACCESS_FINE_LOCATION permission'\n");
+=======
+>>>>>>> upstream/master
             }
             if (!specNetworkLocFeature && hasCoarseLocPermission) {
                 // if app takes Network location (COARSE location) perm but does not request the
                 // network location feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.location.network'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.location.network'," \
                         "'requested android.permission.ACCESS_COURSE_LOCATION permission'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // Bluetooth-related compatibility logic
@@ -1290,9 +1330,12 @@ int doDump(Bundle* bundle)
                 // if app takes a Bluetooth permission but does not request the Bluetooth
                 // feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.bluetooth'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.bluetooth'," \
                         "'requested android.permission.BLUETOOTH or android.permission.BLUETOOTH_ADMIN " \
                         "permission and targetSdkVersion > 4'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // Microphone-related compatibility logic
@@ -1300,8 +1343,11 @@ int doDump(Bundle* bundle)
                 // if app takes the record-audio permission but does not request the microphone
                 // feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.microphone'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.microphone'," \
                         "'requested android.permission.RECORD_AUDIO permission'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // WiFi-related compatibility logic
@@ -1309,10 +1355,13 @@ int doDump(Bundle* bundle)
                 // if app takes one of the WiFi permissions but does not request the WiFi
                 // feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.wifi'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.wifi'," \
                         "'requested android.permission.ACCESS_WIFI_STATE, " \
                         "android.permission.CHANGE_WIFI_STATE, or " \
                         "android.permission.CHANGE_WIFI_MULTICAST_STATE permission'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // Telephony-related compatibility logic
@@ -1320,8 +1369,11 @@ int doDump(Bundle* bundle)
                 // if app takes one of the telephony permissions or requests a sub-feature but
                 // does not request the base telephony feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.telephony'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.telephony'," \
                         "'requested a telephony-related permission or feature'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // Touchscreen-related back-compatibility logic
@@ -1331,15 +1383,21 @@ int doDump(Bundle* bundle)
                 // Note that specTouchscreenFeature is true if the tag is present, regardless
                 // of whether its value is true or false, so this is safe
                 printf("uses-feature:'android.hardware.touchscreen'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.touchscreen'," \
                         "'assumed you require a touch screen unless explicitly made optional'\n");
+=======
+>>>>>>> upstream/master
             }
             if (!specMultitouchFeature && reqDistinctMultitouchFeature) {
                 // if app takes one of the telephony permissions or requests a sub-feature but
                 // does not request the base telephony feature, we infer that it meant to
                 printf("uses-feature:'android.hardware.touchscreen.multitouch'\n");
+<<<<<<< HEAD
                 printf("uses-implied-feature:'android.hardware.touchscreen.multitouch'," \
                         "'requested android.hardware.touchscreen.multitouch.distinct feature'\n");
+=======
+>>>>>>> upstream/master
             }
 
             // Landscape/portrait-related compatibility logic
@@ -1349,6 +1407,7 @@ int doDump(Bundle* bundle)
                 // orientation is required.
                 if (reqScreenLandscapeFeature) {
                     printf("uses-feature:'android.hardware.screen.landscape'\n");
+<<<<<<< HEAD
                     printf("uses-implied-feature:'android.hardware.screen.landscape'," \
                             "'one or more activities have specified a landscape orientation'\n");
                 }
@@ -1356,6 +1415,11 @@ int doDump(Bundle* bundle)
                     printf("uses-feature:'android.hardware.screen.portrait'\n");
                     printf("uses-implied-feature:'android.hardware.screen.portrait'," \
                             "'one or more activities have specified a portrait orientation'\n");
+=======
+                }
+                if (reqScreenPortraitFeature) {
+                    printf("uses-feature:'android.hardware.screen.portrait'\n");
+>>>>>>> upstream/master
                 }
             }
 
@@ -1479,8 +1543,11 @@ int doDump(Bundle* bundle)
                 }
                 delete dir;
             }
+<<<<<<< HEAD
         } else if (strcmp("badger", option) == 0) {
             printf("%s", CONSOLE_DATA);
+=======
+>>>>>>> upstream/master
         } else if (strcmp("configurations", option) == 0) {
             Vector<ResTable_config> configs;
             res.getConfigurations(&configs);
@@ -1710,12 +1777,15 @@ int doPackage(Bundle* bundle)
         goto bail;
     }
 
+<<<<<<< HEAD
     // Update symbols with information about which ones are needed as Java symbols.
     assets->applyJavaSymbols();
     if (SourcePos::hasErrors()) {
         goto bail;
     }
 
+=======
+>>>>>>> upstream/master
     // If we've been asked to generate a dependency file, do that here
     if (bundle->getGenDependencies()) {
         // If this is the packaging step, generate the dependency file next to
@@ -1737,11 +1807,32 @@ int doPackage(Bundle* bundle)
     }
 
     // Write out R.java constants
+<<<<<<< HEAD
     if (!assets->havePrivateSymbols()) {
+=======
+    if (assets->getPackage() == assets->getSymbolsPrivatePackage()) {
+>>>>>>> upstream/master
         if (bundle->getCustomPackage() == NULL) {
             // Write the R.java file into the appropriate class directory
             // e.g. gen/com/foo/app/R.java
             err = writeResourceSymbols(bundle, assets, assets->getPackage(), true);
+<<<<<<< HEAD
+=======
+            // If we have library files, we're going to write our R.java file into
+            // the appropriate class directory for those libraries as well.
+            // e.g. gen/com/foo/app/lib/R.java
+            if (bundle->getExtraPackages() != NULL) {
+                // Split on colon
+                String8 libs(bundle->getExtraPackages());
+                char* packageString = strtok(libs.lockBuffer(libs.length()), ":");
+                while (packageString != NULL) {
+                    // Write the R.java file out with the correct package name
+                    err = writeResourceSymbols(bundle, assets, String8(packageString), true);
+                    packageString = strtok(NULL, ":");
+                }
+                libs.unlockBuffer();
+            }
+>>>>>>> upstream/master
         } else {
             const String8 customPkg(bundle->getCustomPackage());
             err = writeResourceSymbols(bundle, assets, customPkg, true);
@@ -1749,6 +1840,7 @@ int doPackage(Bundle* bundle)
         if (err < 0) {
             goto bail;
         }
+<<<<<<< HEAD
         // If we have library files, we're going to write our R.java file into
         // the appropriate class directory for those libraries as well.
         // e.g. gen/com/foo/app/lib/R.java
@@ -1766,6 +1858,8 @@ int doPackage(Bundle* bundle)
             }
             libs.unlockBuffer();
         }
+=======
+>>>>>>> upstream/master
     } else {
         err = writeResourceSymbols(bundle, assets, assets->getPackage(), false);
         if (err < 0) {
@@ -1838,6 +1932,7 @@ int doCrunch(Bundle* bundle)
 
     return NO_ERROR;
 }
+<<<<<<< HEAD
 
 char CONSOLE_DATA[2925] = {
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
@@ -2004,3 +2099,5 @@ char CONSOLE_DATA[2925] = {
     32, 32, 46, 32, 32, 46, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
     32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 10
   };
+=======
+>>>>>>> upstream/master

@@ -41,7 +41,11 @@ public class SyncOperationTest extends AndroidTestCase {
         Bundle b2 = new Bundle();
         b2.putBoolean("b2", true);
 
+<<<<<<< HEAD
         SyncOperation op1 = new SyncOperation(account1, 0,
+=======
+        SyncOperation op1 = new SyncOperation(account1,
+>>>>>>> upstream/master
                 1,
                 "authority1",
                 b1,
@@ -51,7 +55,11 @@ public class SyncOperationTest extends AndroidTestCase {
                 false);
 
         // Same as op1 but different time infos
+<<<<<<< HEAD
         SyncOperation op2 = new SyncOperation(account1, 0,
+=======
+        SyncOperation op2 = new SyncOperation(account1,
+>>>>>>> upstream/master
                 1,
                 "authority1",
                 b1,
@@ -61,7 +69,11 @@ public class SyncOperationTest extends AndroidTestCase {
                 false);
 
         // Same as op1 but different authority
+<<<<<<< HEAD
         SyncOperation op3 = new SyncOperation(account1, 0,
+=======
+        SyncOperation op3 = new SyncOperation(account1,
+>>>>>>> upstream/master
                 1,
                 "authority2",
                 b1,
@@ -71,7 +83,11 @@ public class SyncOperationTest extends AndroidTestCase {
                 false);
 
         // Same as op1 but different account
+<<<<<<< HEAD
         SyncOperation op4 = new SyncOperation(account2, 0,
+=======
+        SyncOperation op4 = new SyncOperation(account2,
+>>>>>>> upstream/master
                 1,
                 "authority1",
                 b1,
@@ -81,7 +97,11 @@ public class SyncOperationTest extends AndroidTestCase {
                 false);
 
         // Same as op1 but different bundle
+<<<<<<< HEAD
         SyncOperation op5 = new SyncOperation(account1, 0,
+=======
+        SyncOperation op5 = new SyncOperation(account1,
+>>>>>>> upstream/master
                 1,
                 "authority1",
                 b2,

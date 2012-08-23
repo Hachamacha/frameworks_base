@@ -40,9 +40,12 @@ public class UserDictionary {
     public static final Uri CONTENT_URI =
         Uri.parse("content://" + AUTHORITY);
 
+<<<<<<< HEAD
     private static final int FREQUENCY_MIN = 0;
     private static final int FREQUENCY_MAX = 255;
 
+=======
+>>>>>>> upstream/master
     /**
      * Contains the user defined words.
      */
@@ -90,6 +93,7 @@ public class UserDictionary {
          */
         public static final String APP_ID = "appid";
 
+<<<<<<< HEAD
         /**
          * An optional shortcut for this word. When the shortcut is typed, supporting IMEs should
          * suggest the word in this row as an alternate spelling too.
@@ -108,6 +112,14 @@ public class UserDictionary {
         @Deprecated
         public static final int LOCALE_TYPE_CURRENT = 1;
 
+=======
+        /** The locale type to specify that the word is common to all locales. */
+        public static final int LOCALE_TYPE_ALL = 0;
+        
+        /** The locale type to specify that the word is for the current locale. */
+        public static final int LOCALE_TYPE_CURRENT = 1;
+        
+>>>>>>> upstream/master
         /**
          * Sort by descending order of frequency.
          */
@@ -115,16 +127,20 @@ public class UserDictionary {
 
         /** Adds a word to the dictionary, with the given frequency and the specified
          *  specified locale type.
+<<<<<<< HEAD
          *
          *  @deprecated Please use
          *  {@link #addWord(Context, String, int, String, Locale)} instead.
          *
+=======
+>>>>>>> upstream/master
          *  @param context the current application context
          *  @param word the word to add to the dictionary. This should not be null or
          *  empty.
          *  @param localeType the locale type for this word. It should be one of
          *  {@link #LOCALE_TYPE_ALL} or {@link #LOCALE_TYPE_CURRENT}.
          */
+<<<<<<< HEAD
         @Deprecated
         public static void addWord(Context context, String word,
                 int frequency, int localeType) {
@@ -174,6 +190,31 @@ public class UserDictionary {
             values.put(LOCALE, null == locale ? null : locale.toString());
             values.put(APP_ID, 0); // TODO: Get App UID
             values.put(SHORTCUT, shortcut);
+=======
+        public static void addWord(Context context, String word, 
+                int frequency, int localeType) {
+            final ContentResolver resolver = context.getContentResolver();
+
+            if (TextUtils.isEmpty(word) || localeType < 0 || localeType > 1) {
+                return;
+            }
+            
+            if (frequency < 0) frequency = 0;
+            if (frequency > 255) frequency = 255;
+
+            String locale = null;
+
+            // TODO: Verify if this is the best way to get the current locale
+            if (localeType == LOCALE_TYPE_CURRENT) {
+                locale = Locale.getDefault().toString();
+            }
+            ContentValues values = new ContentValues(4);
+
+            values.put(WORD, word);
+            values.put(FREQUENCY, frequency);
+            values.put(LOCALE, locale);
+            values.put(APP_ID, 0); // TODO: Get App UID
+>>>>>>> upstream/master
 
             Uri result = resolver.insert(CONTENT_URI, values);
             // It's ok if the insert doesn't succeed because the word

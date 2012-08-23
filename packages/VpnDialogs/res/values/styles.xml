@@ -15,6 +15,16 @@
 -->
 
 <resources>
+<<<<<<< HEAD
+=======
+
+    <style name="transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+>>>>>>> upstream/master
     <style name="label">
         <item name="android:gravity">center_vertical|right</item>
         <item name="android:paddingRight">2mm</item>
@@ -25,5 +35,9 @@
         <item name="android:gravity">center_vertical|left</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+<<<<<<< HEAD
+=======
+        <item name="android:text">@string/blank_value</item>
+>>>>>>> upstream/master
     </style>
 </resources>

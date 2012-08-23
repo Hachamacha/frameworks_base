@@ -34,16 +34,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
+<<<<<<< HEAD
         View.OnClickListener {
     private View mCustomView;
     private EditText mEditText;
     private TextView mMatches;
     private WebViewClassic mWebView;
+=======
+        View.OnLongClickListener, View.OnClickListener {
+    private View mCustomView;
+    private EditText mEditText;
+    private TextView mMatches;
+    private WebView mWebView;
+>>>>>>> upstream/master
     private InputMethodManager mInput;
     private Resources mResources;
     private boolean mMatchesFound;
     private int mNumberOfMatches;
+<<<<<<< HEAD
     private int mActiveMatchIndex;
+=======
+>>>>>>> upstream/master
     private ActionMode mActionMode;
 
     FindActionModeCallback(Context context) {
@@ -51,7 +62,13 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
                 com.android.internal.R.layout.webview_find, null);
         mEditText = (EditText) mCustomView.findViewById(
                 com.android.internal.R.id.edit);
+<<<<<<< HEAD
         mEditText.setCustomSelectionActionModeCallback(new NoAction());
+=======
+        // Override long click so that select ActionMode is not opened, which
+        // would exit find ActionMode.
+        mEditText.setOnLongClickListener(this);
+>>>>>>> upstream/master
         mEditText.setOnClickListener(this);
         setText("");
         mMatches = (TextView) mCustomView.findViewById(
@@ -87,7 +104,11 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
      * Set the WebView to search.  Must be non null, and set before calling
      * startActionMode.
      */
+<<<<<<< HEAD
     void setWebView(WebViewClassic webView) {
+=======
+    void setWebView(WebView webView) {
+>>>>>>> upstream/master
         if (null == webView) {
             throw new AssertionError("WebView supplied to "
                     + "FindActionModeCallback cannot be null");
@@ -131,12 +152,25 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
             mWebView.clearMatches();
             mMatches.setVisibility(View.GONE);
             mMatchesFound = false;
+<<<<<<< HEAD
             mWebView.findAll(null);
         } else {
             mMatchesFound = true;
             mMatches.setVisibility(View.INVISIBLE);
             mNumberOfMatches = 0;
             mWebView.findAllAsync(find.toString());
+=======
+        } else {
+            mMatchesFound = true;
+            mMatches.setVisibility(View.VISIBLE);
+            mNumberOfMatches = mWebView.findAll(find.toString());
+            if (0 == mNumberOfMatches) {
+                mMatches.setText(mResources.getString(
+                        com.android.internal.R.string.no_matches));
+            } else {
+                updateMatchesString();
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -146,6 +180,7 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
         mInput.showSoftInput(mEditText, 0);
     }
 
+<<<<<<< HEAD
     public void updateMatchCount(int matchIndex, int matchCount, boolean isEmptyFind) {
         if (!isEmptyFind) {
             mNumberOfMatches = matchCount;
@@ -172,6 +207,26 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
         mMatches.setVisibility(View.VISIBLE);
     }
 
+=======
+    /*
+     * Update the string which tells the user how many matches were found, and
+     * which match is currently highlighted.
+     * Not to be called when mNumberOfMatches is 0.
+     */
+    private void updateMatchesString() {
+        String template = mResources.getQuantityString(
+                com.android.internal.R.plurals.matches_found, mNumberOfMatches,
+                mWebView.findIndex() + 1, mNumberOfMatches);
+
+        mMatches.setText(template);
+    }
+
+    // OnLongClickListener implementation
+
+    @Override
+    public boolean onLongClick(View v) { return true; }
+
+>>>>>>> upstream/master
     // OnClickListener implementation
 
     @Override
@@ -208,7 +263,11 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
     public void onDestroyActionMode(ActionMode mode) {
         mActionMode = null;
         mWebView.notifyFindDialogDismissed();
+<<<<<<< HEAD
         mInput.hideSoftInputFromWindow(mWebView.getWebView().getWindowToken(), 0);
+=======
+        mInput.hideSoftInputFromWindow(mWebView.getWindowToken(), 0);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -222,7 +281,11 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
             throw new AssertionError(
                     "No WebView for FindActionModeCallback::onActionItemClicked");
         }
+<<<<<<< HEAD
         mInput.hideSoftInputFromWindow(mWebView.getWebView().getWindowToken(), 0);
+=======
+        mInput.hideSoftInputFromWindow(mWebView.getWindowToken(), 0);
+>>>>>>> upstream/master
         switch(item.getItemId()) {
             case com.android.internal.R.id.find_prev:
                 findNext(false);
@@ -273,6 +336,7 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
         return mGlobalVisibleRect.bottom;
     }
 
+<<<<<<< HEAD
     public static class NoAction implements ActionMode.Callback {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -293,4 +357,6 @@ class FindActionModeCallback implements ActionMode.Callback, TextWatcher,
         public void onDestroyActionMode(ActionMode mode) {
         }
     }
+=======
+>>>>>>> upstream/master
 }

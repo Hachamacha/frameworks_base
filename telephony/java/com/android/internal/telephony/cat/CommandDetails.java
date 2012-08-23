@@ -74,6 +74,7 @@ class CommandDetails extends ValueObject implements Parcelable {
     public int describeContents() {
         return 0;
     }
+<<<<<<< HEAD
 
     @Override
     public String toString() {
@@ -82,6 +83,8 @@ class CommandDetails extends ValueObject implements Parcelable {
                 " typeOfCommand=" + typeOfCommand +
                 " commandQualifier=" + commandQualifier;
     }
+=======
+>>>>>>> upstream/master
 }
 
 class DeviceIdentities extends ValueObject {

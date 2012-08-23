@@ -308,6 +308,13 @@ public class SimUnlockScreen extends LinearLayout implements KeyguardScreen, Vie
             mCallback.recreateMe(newConfig);
         } else if (newConfig.hardKeyboardHidden != mKeyboardHidden) {
             mKeyboardHidden = newConfig.hardKeyboardHidden;
+<<<<<<< HEAD
+=======
+            final boolean isKeyboardOpen = mKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
+            if (mUpdateMonitor.isKeyguardBypassEnabled() && isKeyboardOpen) {
+                mCallback.goToUnlockScreen();
+            }
+>>>>>>> upstream/master
         }
     }
 

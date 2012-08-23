@@ -29,7 +29,10 @@ import android.util.Log;
 import android.view.TextureView;
 
 /**
+<<<<<<< HEAD
  * @deprecated in API 16
+=======
+>>>>>>> upstream/master
  * The Texture View for a graphics renderscript (RenderScriptGL)
  * to draw on.
  *
@@ -39,7 +42,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     private SurfaceTexture mSurfaceTexture;
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Standard View constructor. In order to render something, you
      * must call {@link android.opengl.GLSurfaceView#setRenderer} to
      * register a renderer.
@@ -51,7 +57,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Standard View constructor. In order to render something, you
      * must call {@link android.opengl.GLSurfaceView#setRenderer} to
      * register a renderer.
@@ -67,9 +76,12 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
         //android.util.Log.e("rs", "getSurfaceTextureListerner " + getSurfaceTextureListener());
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         //Log.e(RenderScript.LOG_TAG, "onSurfaceTextureAvailable");
@@ -80,9 +92,12 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
         }
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         //Log.e(RenderScript.LOG_TAG, "onSurfaceTextureSizeChanged");
@@ -93,9 +108,12 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
         }
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         //Log.e(RenderScript.LOG_TAG, "onSurfaceTextureDestroyed");
@@ -108,9 +126,12 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
         return true;
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         //Log.e(RenderScript.LOG_TAG, "onSurfaceTextureUpdated");
@@ -118,7 +139,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
    /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Inform the view that the activity is paused. The owner of this view must
      * call this method when the activity is paused. Calling this method will
      * pause the rendering thread.
@@ -131,7 +155,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Inform the view that the activity is resumed. The owner of this view must
      * call this method when the activity is resumed. Calling this method will
      * recreate the OpenGL display and resume the rendering
@@ -145,7 +172,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Create a new RenderScriptGL object and attach it to the
      * TextureView if present.
      *
@@ -164,7 +194,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Destroy the RenderScriptGL object associated with this
      * TextureView.
      */
@@ -174,7 +207,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Set a new RenderScriptGL object.  This also will attach the
      * new object to the TextureView if present.
      *
@@ -188,7 +224,10 @@ public class RSTextureView extends TextureView implements TextureView.SurfaceTex
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
+=======
+>>>>>>> upstream/master
      * Returns the previously set RenderScriptGL object.
      *
      * @return RenderScriptGL

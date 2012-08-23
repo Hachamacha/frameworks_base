@@ -112,8 +112,11 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     int mPasswordOwner = -1;
     Handler mHandler = new Handler();
 
+<<<<<<< HEAD
     long mLastMaximumTimeToLock = -1;
 
+=======
+>>>>>>> upstream/master
     final HashMap<ComponentName, ActiveAdmin> mAdminMap
             = new HashMap<ComponentName, ActiveAdmin>();
     final ArrayList<ActiveAdmin> mAdminList
@@ -453,7 +456,11 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     public DevicePolicyManagerService(Context context) {
         mContext = context;
         mMonitor = new MyPackageMonitor();
+<<<<<<< HEAD
         mMonitor.register(context, null, true);
+=======
+        mMonitor.register(context, true);
+>>>>>>> upstream/master
         mWakeLock = ((PowerManager)context.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DPM");
         IntentFilter filter = new IntentFilter();
@@ -597,7 +604,11 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
+<<<<<<< HEAD
                             synchronized (DevicePolicyManagerService.this) {
+=======
+                            synchronized (this) {
+>>>>>>> upstream/master
                                 boolean doProxyCleanup = admin.info.usesPolicy(
                                         DeviceAdminInfo.USES_POLICY_SETS_GLOBAL_PROXY);
                                 mAdminList.remove(admin);
@@ -605,10 +616,16 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                                 validatePasswordOwnerLocked();
                                 syncDeviceCapabilitiesLocked();
                                 if (doProxyCleanup) {
+<<<<<<< HEAD
                                     resetGlobalProxyLocked();
                                 }
                                 saveSettingsLocked();
                                 updateMaximumTimeToLockLocked();
+=======
+                                    resetGlobalProxy();
+                                }
+                                saveSettingsLocked();
+>>>>>>> upstream/master
                             }
                         }
             });
@@ -829,7 +846,20 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
         validatePasswordOwnerLocked();
         syncDeviceCapabilitiesLocked();
+<<<<<<< HEAD
         updateMaximumTimeToLockLocked();
+=======
+
+        long timeMs = getMaximumTimeToLock(null);
+        if (timeMs <= 0) {
+            timeMs = Integer.MAX_VALUE;
+        }
+        try {
+            getIPowerManager().setMaximumScreenOffTimeount((int)timeMs);
+        } catch (RemoteException e) {
+            Slog.w(TAG, "Failure talking with power manager", e);
+        }
+>>>>>>> upstream/master
     }
 
     static void validateQualityConstant(int quality) {
@@ -1600,6 +1630,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     DeviceAdminInfo.USES_POLICY_FORCE_LOCK);
             if (ap.maximumTimeToUnlock != timeMs) {
                 ap.maximumTimeToUnlock = timeMs;
+<<<<<<< HEAD
                 saveSettingsLocked();
                 updateMaximumTimeToLockLocked();
             }
@@ -1632,6 +1663,27 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             }
         } finally {
             Binder.restoreCallingIdentity(ident);
+=======
+
+                long ident = Binder.clearCallingIdentity();
+                try {
+                    saveSettingsLocked();
+
+                    timeMs = getMaximumTimeToLock(null);
+                    if (timeMs <= 0) {
+                        timeMs = Integer.MAX_VALUE;
+                    }
+
+                    try {
+                        getIPowerManager().setMaximumScreenOffTimeount((int)timeMs);
+                    } catch (RemoteException e) {
+                        Slog.w(TAG, "Failure talking with power manager", e);
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(ident);
+                }
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -1875,7 +1927,11 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             // Reset the global proxy accordingly
             // Do this using system permissions, as apps cannot write to secure settings
             long origId = Binder.clearCallingIdentity();
+<<<<<<< HEAD
             resetGlobalProxyLocked();
+=======
+            resetGlobalProxy();
+>>>>>>> upstream/master
             Binder.restoreCallingIdentity(origId);
             return null;
         }
@@ -1899,20 +1955,35 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return null;
     }
 
+<<<<<<< HEAD
     private void resetGlobalProxyLocked() {
+=======
+    private void resetGlobalProxy() {
+>>>>>>> upstream/master
         final int N = mAdminList.size();
         for (int i = 0; i < N; i++) {
             ActiveAdmin ap = mAdminList.get(i);
             if (ap.specifiesGlobalProxy) {
+<<<<<<< HEAD
                 saveGlobalProxyLocked(ap.globalProxySpec, ap.globalProxyExclusionList);
+=======
+                saveGlobalProxy(ap.globalProxySpec, ap.globalProxyExclusionList);
+>>>>>>> upstream/master
                 return;
             }
         }
         // No device admins defining global proxies - reset global proxy settings to none
+<<<<<<< HEAD
         saveGlobalProxyLocked(null, null);
     }
 
     private void saveGlobalProxyLocked(String proxySpec, String exclusionList) {
+=======
+        saveGlobalProxy(null, null);
+    }
+
+    private void saveGlobalProxy(String proxySpec, String exclusionList) {
+>>>>>>> upstream/master
         if (exclusionList == null) {
             exclusionList = "";
         }
@@ -2118,6 +2189,19 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             }
 
             pw.println(" ");
+<<<<<<< HEAD
+=======
+            pw.print("  mActivePasswordQuality=0x");
+                    pw.println(Integer.toHexString(mActivePasswordQuality));
+            pw.print("  mActivePasswordLength="); pw.println(mActivePasswordLength);
+            pw.print("  mActivePasswordUpperCase="); pw.println(mActivePasswordUpperCase);
+            pw.print("  mActivePasswordLowerCase="); pw.println(mActivePasswordLowerCase);
+            pw.print("  mActivePasswordLetters="); pw.println(mActivePasswordLetters);
+            pw.print("  mActivePasswordNumeric="); pw.println(mActivePasswordNumeric);
+            pw.print("  mActivePasswordSymbols="); pw.println(mActivePasswordSymbols);
+            pw.print("  mActivePasswordNonLetter="); pw.println(mActivePasswordNonLetter);
+            pw.print("  mFailedPasswordAttempts="); pw.println(mFailedPasswordAttempts);
+>>>>>>> upstream/master
             pw.print("  mPasswordOwner="); pw.println(mPasswordOwner);
         }
     }

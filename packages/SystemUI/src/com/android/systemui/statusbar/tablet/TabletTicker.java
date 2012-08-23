@@ -223,7 +223,11 @@ public class TabletTicker
             windowFlags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         }
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(width, mLargeIconHeight,
+<<<<<<< HEAD
                 WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL, windowFlags,
+=======
+                WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL, windowFlags,
+>>>>>>> upstream/master
                 PixelFormat.TRANSLUCENT);
         lp.gravity = Gravity.BOTTOM | Gravity.RIGHT;
 //        lp.windowAnimations = com.android.internal.R.style.Animation_Toast;
@@ -264,7 +268,11 @@ public class TabletTicker
             iconId = R.id.left_icon;
         }
         if (n.tickerView != null) {
+<<<<<<< HEAD
             group = (ViewGroup)inflater.inflate(R.layout.system_bar_ticker_panel, null, false);
+=======
+            group = (ViewGroup)inflater.inflate(R.layout.status_bar_ticker_panel, null, false);
+>>>>>>> upstream/master
             ViewGroup content = (FrameLayout) group.findViewById(R.id.ticker_expanded);
             View expanded = null;
             Exception exception = null;
@@ -285,7 +293,11 @@ public class TabletTicker
                     ViewGroup.LayoutParams.MATCH_PARENT);
             content.addView(expanded, lp);
         } else if (n.tickerText != null) {
+<<<<<<< HEAD
             group = (ViewGroup)inflater.inflate(R.layout.system_bar_ticker_compat, mWindow, false);
+=======
+            group = (ViewGroup)inflater.inflate(R.layout.status_bar_ticker_compat, mWindow, false);
+>>>>>>> upstream/master
             final Drawable icon = StatusBarIconView.getIcon(mContext,
                     new StatusBarIcon(notification.pkg, n.icon, n.iconLevel, 0, n.tickerText));
             ImageView iv = (ImageView)group.findViewById(iconId);

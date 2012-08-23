@@ -209,15 +209,21 @@ public interface Phone {
     int NT_MODE_GSM_ONLY     = RILConstants.NETWORK_MODE_GSM_ONLY;
     int NT_MODE_WCDMA_ONLY   = RILConstants.NETWORK_MODE_WCDMA_ONLY;
     int NT_MODE_GSM_UMTS     = RILConstants.NETWORK_MODE_GSM_UMTS;
+<<<<<<< HEAD
     int NT_MODE_LTE_GSM_WCDMA= RILConstants.NETWORK_MODE_LTE_GSM_WCDMA;
+=======
+>>>>>>> upstream/master
 
     int NT_MODE_CDMA         = RILConstants.NETWORK_MODE_CDMA;
 
     int NT_MODE_CDMA_NO_EVDO = RILConstants.NETWORK_MODE_CDMA_NO_EVDO;
     int NT_MODE_EVDO_NO_CDMA = RILConstants.NETWORK_MODE_EVDO_NO_CDMA;
     int NT_MODE_GLOBAL       = RILConstants.NETWORK_MODE_GLOBAL;
+<<<<<<< HEAD
     int NT_MODE_LTE_CDMA_EVDO = RILConstants.NETWORK_MODE_LTE_CDMA_EVDO;
     int NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA = RILConstants.NETWORK_MODE_LTE_CMDA_EVDO_GSM_WCDMA;
+=======
+>>>>>>> upstream/master
 
     int NT_MODE_LTE_ONLY     = RILConstants.NETWORK_MODE_LTE_ONLY;
     int PREFERRED_NT_MODE    = RILConstants.PREFERRED_NETWORK_MODE;
@@ -1734,12 +1740,15 @@ public interface Phone {
     public int getLteOnCdmaMode();
 
     /**
+<<<<<<< HEAD
      * Return if the current radio is LTE on GSM
      * @hide
      */
     public int getLteOnGsmMode();
 
     /**
+=======
+>>>>>>> upstream/master
      * TODO: Adding a function for each property is not good.
      * A fucntion of type getPhoneProp(propType) where propType is an
      * enum of GSM+CDMA+LTE props would be a better approach.
@@ -1781,6 +1790,7 @@ public interface Phone {
      * @return an interface to the UsimServiceTable record, or null if not available
      */
     UsimServiceTable getUsimServiceTable();
+<<<<<<< HEAD
 
     /**
      * Unregister from all events it registered for and dispose objects
@@ -1792,4 +1802,6 @@ public interface Phone {
      * Remove references to external object stored in this object.
      */
     void removeReferences();
+=======
+>>>>>>> upstream/master
 }

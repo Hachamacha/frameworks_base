@@ -17,11 +17,16 @@
 #define LOG_TAG "android.os.Debug"
 #include "JNIHelp.h"
 #include "jni.h"
+<<<<<<< HEAD
 #include <utils/String8.h>
 #include "utils/misc.h"
 #include "cutils/debugger.h"
 
 #include <fcntl.h>
+=======
+#include "utils/misc.h"
+
+>>>>>>> upstream/master
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -187,7 +192,11 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
             }
         }
 
+<<<<<<< HEAD
         //ALOGI("native=%d dalvik=%d sqlite=%d: %s\n", isNativeHeap, isDalvikHeap,
+=======
+        //LOGI("native=%d dalvik=%d sqlite=%d: %s\n", isNativeHeap, isDalvikHeap,
+>>>>>>> upstream/master
         //    isSqliteHeap, line);
             
         while (true) {
@@ -520,27 +529,42 @@ static void android_os_Debug_dumpNativeHeap(JNIEnv* env, jobject clazz,
     /* dup() the descriptor so we don't close the original with fclose() */
     int fd = dup(origFd);
     if (fd < 0) {
+<<<<<<< HEAD
         ALOGW("dup(%d) failed: %s\n", origFd, strerror(errno));
+=======
+        LOGW("dup(%d) failed: %s\n", origFd, strerror(errno));
+>>>>>>> upstream/master
         jniThrowRuntimeException(env, "dup() failed");
         return;
     }
 
     FILE* fp = fdopen(fd, "w");
     if (fp == NULL) {
+<<<<<<< HEAD
         ALOGW("fdopen(%d) failed: %s\n", fd, strerror(errno));
+=======
+        LOGW("fdopen(%d) failed: %s\n", fd, strerror(errno));
+>>>>>>> upstream/master
         close(fd);
         jniThrowRuntimeException(env, "fdopen() failed");
         return;
     }
 
+<<<<<<< HEAD
     ALOGD("Native heap dump starting...\n");
     dumpNativeHeap(fp);
     ALOGD("Native heap dump complete.\n");
+=======
+    LOGD("Native heap dump starting...\n");
+    dumpNativeHeap(fp);
+    LOGD("Native heap dump complete.\n");
+>>>>>>> upstream/master
 
     fclose(fp);
 }
 
 
+<<<<<<< HEAD
 static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject clazz,
     jint pid, jstring fileName)
 {
@@ -570,6 +594,8 @@ static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject claz
     close(fd);
 }
 
+=======
+>>>>>>> upstream/master
 /*
  * JNI registration.
  */
@@ -601,8 +627,11 @@ static JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getProxyObjectCount },
     { "getBinderDeathObjectCount", "()I",
             (void*)android_os_Debug_getDeathObjectCount },
+<<<<<<< HEAD
     { "dumpNativeBacktraceToFile", "(ILjava/lang/String;)V",
             (void*)android_os_Debug_dumpNativeBacktraceToFile },
+=======
+>>>>>>> upstream/master
 };
 
 int register_android_os_Debug(JNIEnv *env)

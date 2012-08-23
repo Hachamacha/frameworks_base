@@ -16,11 +16,20 @@
 package android.accounts;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.content.Intent;
+=======
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +37,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+=======
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+>>>>>>> upstream/master
 import com.android.internal.R;
 
 import java.io.IOException;
@@ -100,6 +120,7 @@ public class ChooseTypeAndAccountActivity extends Activity
 
     private static final String KEY_INSTANCE_STATE_PENDING_REQUEST = "pendingRequest";
     private static final String KEY_INSTANCE_STATE_EXISTING_ACCOUNTS = "existingAccounts";
+<<<<<<< HEAD
     private static final String KEY_INSTANCE_STATE_SELECTED_ACCOUNT_NAME = "selectedAccountName";
     private static final String KEY_INSTANCE_STATE_SELECTED_ADD_ACCOUNT = "selectedAddAccount";
 
@@ -110,6 +131,12 @@ public class ChooseTypeAndAccountActivity extends Activity
     private Parcelable[] mExistingAccounts = null;
     private int mSelectedItemIndex;
     private Button mOkButton;
+=======
+
+    private ArrayList<AccountInfo> mAccountInfos;
+    private int mPendingRequest = REQUEST_NULL;
+    private Parcelable[] mExistingAccounts = null;
+>>>>>>> upstream/master
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,17 +146,22 @@ public class ChooseTypeAndAccountActivity extends Activity
                     + savedInstanceState + ")");
         }
 
+<<<<<<< HEAD
         // save some items we use frequently
         final AccountManager accountManager = AccountManager.get(this);
         final Intent intent = getIntent();
 
         String selectedAccountName = null;
         boolean selectedAddNewAccount = false;
+=======
+        setContentView(R.layout.choose_type_and_account);
+>>>>>>> upstream/master
 
         if (savedInstanceState != null) {
             mPendingRequest = savedInstanceState.getInt(KEY_INSTANCE_STATE_PENDING_REQUEST);
             mExistingAccounts =
                     savedInstanceState.getParcelableArray(KEY_INSTANCE_STATE_EXISTING_ACCOUNTS);
+<<<<<<< HEAD
 
             // Makes sure that any user selection is preserved across orientation changes.
             selectedAccountName = savedInstanceState.getString(
@@ -152,6 +184,29 @@ public class ChooseTypeAndAccountActivity extends Activity
             Log.v(TAG, "selected account name is " + selectedAccountName);
         }
 
+=======
+        } else {
+            mPendingRequest = REQUEST_NULL;
+            mExistingAccounts = null;
+        }
+
+        // save some items we use frequently
+        final AccountManager accountManager = AccountManager.get(this);
+        final Intent intent = getIntent();
+
+        // override the description text if supplied
+        final String descriptionOverride =
+                intent.getStringExtra(EXTRA_DESCRIPTION_TEXT_OVERRIDE);
+        if (!TextUtils.isEmpty(descriptionOverride)) {
+            ((TextView)findViewById(R.id.description)).setText(descriptionOverride);
+        }
+
+        // If the selected account matches one in the list we will place a
+        // checkmark next to it.
+        final Account selectedAccount =
+                (Account)intent.getParcelableExtra(EXTRA_SELECTED_ACCOUNT);
+
+>>>>>>> upstream/master
         // build an efficiently queryable map of account types to authenticator descriptions
         final HashMap<String, AuthenticatorDescription> typeToAuthDescription =
                 new HashMap<String, AuthenticatorDescription>();
@@ -170,6 +225,7 @@ public class ChooseTypeAndAccountActivity extends Activity
             }
         }
 
+<<<<<<< HEAD
         // An account type is relevant iff it is allowed by the caller and supported by the account
         // manager.
         Set<String> setOfRelevantAccountTypes = null;
@@ -193,6 +249,16 @@ public class ChooseTypeAndAccountActivity extends Activity
                 if (supportedAccountTypes.contains(acctType)) {
                     setOfRelevantAccountTypes.add(acctType);
                 }
+=======
+        // Read the validAccountTypes, if present, and add them to the setOfAllowableAccountTypes
+        Set<String> setOfAllowableAccountTypes = null;
+        final String[] validAccountTypes =
+                intent.getStringArrayExtra(EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY);
+        if (validAccountTypes != null) {
+            setOfAllowableAccountTypes = new HashSet<String>(validAccountTypes.length);
+            for (String type : validAccountTypes) {
+                setOfAllowableAccountTypes.add(type);
+>>>>>>> upstream/master
             }
         }
 
@@ -200,13 +266,18 @@ public class ChooseTypeAndAccountActivity extends Activity
         // accounts that don't match the allowable types, if provided, or that don't match the
         // allowable accounts, if provided.
         final Account[] accounts = accountManager.getAccounts();
+<<<<<<< HEAD
         mAccounts = new ArrayList<Account>(accounts.length);
         mSelectedItemIndex = SELECTED_ITEM_NONE;
+=======
+        mAccountInfos = new ArrayList<AccountInfo>(accounts.length);
+>>>>>>> upstream/master
         for (Account account : accounts) {
             if (setOfAllowableAccounts != null
                     && !setOfAllowableAccounts.contains(account)) {
                 continue;
             }
+<<<<<<< HEAD
             if (setOfRelevantAccountTypes != null
                     && !setOfRelevantAccountTypes.contains(account.type)) {
                 continue;
@@ -226,17 +297,58 @@ public class ChooseTypeAndAccountActivity extends Activity
                 } else {
                     startChooseAccountTypeActivity();
                 }
+=======
+            if (setOfAllowableAccountTypes != null
+                    && !setOfAllowableAccountTypes.contains(account.type)) {
+                continue;
+            }
+            mAccountInfos.add(new AccountInfo(account,
+                    getDrawableForType(typeToAuthDescription, account.type),
+                    account.equals(selectedAccount)));
+        }
+
+        // there is more than one allowable account. initialize the list adapter to allow
+        // the user to select an account.
+        ListView list = (ListView) findViewById(android.R.id.list);
+        list.setAdapter(new AccountArrayAdapter(this,
+                android.R.layout.simple_list_item_1, mAccountInfos));
+        list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                onListItemClick((ListView)parent, v, position, id);
+            }
+        });
+
+        // set the listener for the addAccount button
+        Button addAccountButton = (Button) findViewById(R.id.addAccount);
+        addAccountButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                startChooseAccountTypeActivity();
+            }
+        });
+
+        if (mPendingRequest == REQUEST_NULL) {
+            // If there are no allowable accounts go directly to add account
+            if (mAccountInfos.isEmpty()) {
+                startChooseAccountTypeActivity();
+>>>>>>> upstream/master
                 return;
             }
 
             // if there is only one allowable account return it
             if (!intent.getBooleanExtra(EXTRA_ALWAYS_PROMPT_FOR_ACCOUNT, false)
+<<<<<<< HEAD
                     && mAccounts.size() == 1) {
                 Account account = mAccounts.get(0);
+=======
+                    && mAccountInfos.size() == 1) {
+                Account account = mAccountInfos.get(0).account;
+>>>>>>> upstream/master
                 setResultAndFinish(account.name, account.type);
                 return;
             }
         }
+<<<<<<< HEAD
 
         // Cannot set content view until we know that mPendingRequest is not null, otherwise
         // would cause screen flicker.
@@ -289,6 +401,8 @@ public class ChooseTypeAndAccountActivity extends Activity
         // Only enable "OK" button if something has been selected.
         mOkButton = (Button) findViewById(android.R.id.button2);
         mOkButton.setEnabled(mSelectedItemIndex != SELECTED_ITEM_NONE);
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -306,6 +420,7 @@ public class ChooseTypeAndAccountActivity extends Activity
         if (mPendingRequest == REQUEST_ADD_ACCOUNT) {
             outState.putParcelableArray(KEY_INSTANCE_STATE_EXISTING_ACCOUNTS, mExistingAccounts);
         }
+<<<<<<< HEAD
         if (mSelectedItemIndex != SELECTED_ITEM_NONE) {
             if (mSelectedItemIndex == mAccounts.size()) {
                 outState.putBoolean(KEY_INSTANCE_STATE_SELECTED_ADD_ACCOUNT, true);
@@ -328,6 +443,8 @@ public class ChooseTypeAndAccountActivity extends Activity
         } else if (mSelectedItemIndex != SELECTED_ITEM_NONE) {
             onAccountSelected(mAccounts.get(mSelectedItemIndex));
         }
+=======
+>>>>>>> upstream/master
     }
 
     // Called when the choose account type activity (for adding an account) returns.
@@ -347,12 +464,15 @@ public class ChooseTypeAndAccountActivity extends Activity
         mPendingRequest = REQUEST_NULL;
 
         if (resultCode == RESULT_CANCELED) {
+<<<<<<< HEAD
             // if canceling out of addAccount and the original state caused us to skip this,
             // finish this activity
             if (mAccounts.isEmpty()) {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
             }
+=======
+>>>>>>> upstream/master
             return;
         }
 
@@ -420,7 +540,10 @@ public class ChooseTypeAndAccountActivity extends Activity
                 options, null /* activity */, this /* callback */, null /* Handler */);
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void run(final AccountManagerFuture<Bundle> accountManagerFuture) {
         try {
             final Bundle accountManagerResult = accountManagerFuture.getResult();
@@ -446,9 +569,40 @@ public class ChooseTypeAndAccountActivity extends Activity
         finish();
     }
 
+<<<<<<< HEAD
     private void onAccountSelected(Account account) {
       Log.d(TAG, "selected account " + account);
       setResultAndFinish(account.name, account.type);
+=======
+    private Drawable getDrawableForType(
+            final HashMap<String, AuthenticatorDescription> typeToAuthDescription,
+            String accountType) {
+        Drawable icon = null;
+        if (typeToAuthDescription.containsKey(accountType)) {
+            try {
+                AuthenticatorDescription desc = typeToAuthDescription.get(accountType);
+                Context authContext = createPackageContext(desc.packageName, 0);
+                icon = authContext.getResources().getDrawable(desc.iconId);
+            } catch (PackageManager.NameNotFoundException e) {
+                // Nothing we can do much here, just log
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "No icon name for account type " + accountType);
+                }
+            } catch (Resources.NotFoundException e) {
+                // Nothing we can do much here, just log
+                if (Log.isLoggable(TAG, Log.WARN)) {
+                    Log.w(TAG, "No icon resource for account type " + accountType);
+                }
+            }
+        }
+        return icon;
+    }
+
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        AccountInfo accountInfo = mAccountInfos.get(position);
+        Log.d(TAG, "selected account " + accountInfo.account);
+        setResultAndFinish(accountInfo.account.name, accountInfo.account.type);
+>>>>>>> upstream/master
     }
 
     private void setResultAndFinish(final String accountName, final String accountType) {
@@ -480,4 +634,61 @@ public class ChooseTypeAndAccountActivity extends Activity
         startActivityForResult(intent, REQUEST_CHOOSE_TYPE);
         mPendingRequest = REQUEST_CHOOSE_TYPE;
     }
+<<<<<<< HEAD
+=======
+
+    private static class AccountInfo {
+        final Account account;
+        final Drawable drawable;
+        private final boolean checked;
+
+        AccountInfo(Account account, Drawable drawable, boolean checked) {
+            this.account = account;
+            this.drawable = drawable;
+            this.checked = checked;
+        }
+    }
+
+    private static class ViewHolder {
+        ImageView icon;
+        TextView text;
+        ImageView checkmark;
+    }
+
+    private static class AccountArrayAdapter extends ArrayAdapter<AccountInfo> {
+        private LayoutInflater mLayoutInflater;
+        private ArrayList<AccountInfo> mInfos;
+
+        public AccountArrayAdapter(Context context, int textViewResourceId,
+                ArrayList<AccountInfo> infos) {
+            super(context, textViewResourceId, infos);
+            mInfos = infos;
+            mLayoutInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            if (convertView == null) {
+                convertView = mLayoutInflater.inflate(R.layout.choose_selected_account_row, null);
+                holder = new ViewHolder();
+                holder.text = (TextView) convertView.findViewById(R.id.account_row_text);
+                holder.icon = (ImageView) convertView.findViewById(R.id.account_row_icon);
+                holder.checkmark = (ImageView) convertView.findViewById(R.id.account_row_checkmark);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.text.setText(mInfos.get(position).account.name);
+            holder.icon.setImageDrawable(mInfos.get(position).drawable);
+            final int displayCheckmark =
+                    mInfos.get(position).checked ? View.VISIBLE : View.INVISIBLE;
+            holder.checkmark.setVisibility(displayCheckmark);
+            return convertView;
+        }
+    }
+>>>>>>> upstream/master
 }

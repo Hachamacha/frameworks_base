@@ -16,7 +16,10 @@
 
 package com.android.internal.textservice;
 
+<<<<<<< HEAD
 import android.view.textservice.SentenceSuggestionsInfo;
+=======
+>>>>>>> upstream/master
 import android.view.textservice.SuggestionsInfo;
 
 /**
@@ -24,5 +27,8 @@ import android.view.textservice.SuggestionsInfo;
  */
 oneway interface ISpellCheckerSessionListener {
     void onGetSuggestions(in SuggestionsInfo[] results);
+<<<<<<< HEAD
     void onGetSentenceSuggestions(in SentenceSuggestionsInfo[] result);
+=======
+>>>>>>> upstream/master
 }

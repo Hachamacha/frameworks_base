@@ -486,11 +486,14 @@ public class TextToSpeech {
     private final Object mStartLock = new Object();
 
     private String mRequestedEngine;
+<<<<<<< HEAD
     // Whether to initialize this TTS object with the default engine,
     // if the requested engine is not available. Valid only if mRequestedEngine
     // is not null. Used only for testing, though potentially useful API wise
     // too.
     private final boolean mUseFallback;
+=======
+>>>>>>> upstream/master
     private final Map<String, Uri> mEarcons;
     private final Map<String, Uri> mUtterances;
     private final Bundle mParams = new Bundle();
@@ -524,7 +527,11 @@ public class TextToSpeech {
      * @param engine Package name of the TTS engine to use.
      */
     public TextToSpeech(Context context, OnInitListener listener, String engine) {
+<<<<<<< HEAD
         this(context, listener, engine, null, true);
+=======
+        this(context, listener, engine, null);
+>>>>>>> upstream/master
     }
 
     /**
@@ -534,11 +541,18 @@ public class TextToSpeech {
      * @hide
      */
     public TextToSpeech(Context context, OnInitListener listener, String engine,
+<<<<<<< HEAD
             String packageName, boolean useFallback) {
         mContext = context;
         mInitListener = listener;
         mRequestedEngine = engine;
         mUseFallback = useFallback;
+=======
+            String packageName) {
+        mContext = context;
+        mInitListener = listener;
+        mRequestedEngine = engine;
+>>>>>>> upstream/master
 
         mEarcons = new HashMap<String, Uri>();
         mUtterances = new HashMap<String, Uri>();
@@ -553,6 +567,13 @@ public class TextToSpeech {
         initTts();
     }
 
+<<<<<<< HEAD
+=======
+    private String getPackageName() {
+        return mPackageName;
+    }
+
+>>>>>>> upstream/master
     private <R> R runActionNoReconnect(Action<R> action, R errorResult, String method) {
         return runAction(action, errorResult, method, false);
     }
@@ -573,6 +594,7 @@ public class TextToSpeech {
 
     private int initTts() {
         // Step 1: Try connecting to the engine that was requested.
+<<<<<<< HEAD
         if (mRequestedEngine != null) {
             if (mEnginesHelper.isEngineInstalled(mRequestedEngine)) {
                 if (connectToEngine(mRequestedEngine)) {
@@ -588,6 +610,12 @@ public class TextToSpeech {
                 mCurrentEngine = null;
                 dispatchOnInit(ERROR);
                 return ERROR;
+=======
+        if (mRequestedEngine != null && mEnginesHelper.isEngineInstalled(mRequestedEngine)) {
+            if (connectToEngine(mRequestedEngine)) {
+                mCurrentEngine = mRequestedEngine;
+                return SUCCESS;
+>>>>>>> upstream/master
             }
         }
 
@@ -643,10 +671,13 @@ public class TextToSpeech {
         }
     }
 
+<<<<<<< HEAD
     private IBinder getCallerIdentity() {
         return mServiceConnection.getCallerIdentity();
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Releases the resources used by the TextToSpeech engine.
      * It is good practice for instance to call this method in the onDestroy() method of an Activity
@@ -656,8 +687,13 @@ public class TextToSpeech {
         runActionNoReconnect(new Action<Void>() {
             @Override
             public Void run(ITextToSpeechService service) throws RemoteException {
+<<<<<<< HEAD
                 service.setCallback(getCallerIdentity(), null);
                 service.stop(getCallerIdentity());
+=======
+                service.setCallback(getPackageName(), null);
+                service.stop(getPackageName());
+>>>>>>> upstream/master
                 mServiceConnection.disconnect();
                 // Context#unbindService does not result in a call to
                 // ServiceConnection#onServiceDisconnected. As a result, the
@@ -817,10 +853,17 @@ public class TextToSpeech {
             public Integer run(ITextToSpeechService service) throws RemoteException {
                 Uri utteranceUri = mUtterances.get(text);
                 if (utteranceUri != null) {
+<<<<<<< HEAD
                     return service.playAudio(getCallerIdentity(), utteranceUri, queueMode,
                             getParams(params));
                 } else {
                     return service.speak(getCallerIdentity(), text, queueMode, getParams(params));
+=======
+                    return service.playAudio(getPackageName(), utteranceUri, queueMode,
+                            getParams(params));
+                } else {
+                    return service.speak(getPackageName(), text, queueMode, getParams(params));
+>>>>>>> upstream/master
                 }
             }
         }, ERROR, "speak");
@@ -853,7 +896,11 @@ public class TextToSpeech {
                 if (earconUri == null) {
                     return ERROR;
                 }
+<<<<<<< HEAD
                 return service.playAudio(getCallerIdentity(), earconUri, queueMode,
+=======
+                return service.playAudio(getPackageName(), earconUri, queueMode,
+>>>>>>> upstream/master
                         getParams(params));
             }
         }, ERROR, "playEarcon");
@@ -880,7 +927,11 @@ public class TextToSpeech {
         return runAction(new Action<Integer>() {
             @Override
             public Integer run(ITextToSpeechService service) throws RemoteException {
+<<<<<<< HEAD
                 return service.playSilence(getCallerIdentity(), durationInMs, queueMode,
+=======
+                return service.playSilence(getPackageName(), durationInMs, queueMode,
+>>>>>>> upstream/master
                         getParams(params));
             }
         }, ERROR, "playSilence");
@@ -943,7 +994,11 @@ public class TextToSpeech {
         return runAction(new Action<Integer>() {
             @Override
             public Integer run(ITextToSpeechService service) throws RemoteException {
+<<<<<<< HEAD
                 return service.stop(getCallerIdentity());
+=======
+                return service.stop(getPackageName());
+>>>>>>> upstream/master
             }
         }, ERROR, "stop");
     }
@@ -1108,7 +1163,11 @@ public class TextToSpeech {
         return runAction(new Action<Integer>() {
             @Override
             public Integer run(ITextToSpeechService service) throws RemoteException {
+<<<<<<< HEAD
                 return service.synthesizeToFile(getCallerIdentity(), text, filename,
+=======
+                return service.synthesizeToFile(getPackageName(), text, filename,
+>>>>>>> upstream/master
                         getParams(params));
             }
         }, ERROR, "synthesizeToFile");
@@ -1292,7 +1351,11 @@ public class TextToSpeech {
                 mServiceConnection = this;
                 mService = ITextToSpeechService.Stub.asInterface(service);
                 try {
+<<<<<<< HEAD
                     mService.setCallback(getCallerIdentity(), mCallback);
+=======
+                    mService.setCallback(getPackageName(), mCallback);
+>>>>>>> upstream/master
                     dispatchOnInit(SUCCESS);
                 } catch (RemoteException re) {
                     Log.e(TAG, "Error connecting to service, setCallback() failed");
@@ -1301,10 +1364,13 @@ public class TextToSpeech {
             }
         }
 
+<<<<<<< HEAD
         public IBinder getCallerIdentity() {
             return mCallback;
         }
 
+=======
+>>>>>>> upstream/master
         public void onServiceDisconnected(ComponentName name) {
             synchronized(mStartLock) {
                 mService = null;

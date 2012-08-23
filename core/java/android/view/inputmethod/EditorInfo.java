@@ -168,6 +168,7 @@ public class EditorInfo implements InputType, Parcelable {
     public static final int IME_FLAG_NO_ENTER_ACTION = 0x40000000;
 
     /**
+<<<<<<< HEAD
      * Flag of {@link #imeOptions}: used to request that the IME is capable of
      * inputting ASCII characters.  The intention of this flag is to ensure that
      * the user can type Roman alphabet characters in a {@link android.widget.TextView}
@@ -184,6 +185,8 @@ public class EditorInfo implements InputType, Parcelable {
     public static final int IME_FLAG_FORCE_ASCII = 0x80000000;
 
     /**
+=======
+>>>>>>> upstream/master
      * Generic unspecified type for {@link #imeOptions}.
      */
     public static final int IME_NULL = 0x00000000;

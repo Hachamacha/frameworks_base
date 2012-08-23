@@ -25,8 +25,13 @@
 #include "InputReader.h"
 #include "InputDispatcher.h"
 
+<<<<<<< HEAD
 #include <androidfw/Input.h>
 #include <androidfw/InputTransport.h>
+=======
+#include <ui/Input.h>
+#include <ui/InputTransport.h>
+>>>>>>> upstream/master
 #include <utils/Errors.h>
 #include <utils/Vector.h>
 #include <utils/Timers.h>

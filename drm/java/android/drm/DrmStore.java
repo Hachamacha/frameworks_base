@@ -23,6 +23,7 @@ package android.drm;
 public class DrmStore {
     /**
      * Interface definition for the columns that represent DRM constraints.
+<<<<<<< HEAD
      * {@link android.drm.DrmManagerClient#getConstraints DrmManagerClient.getConstraints()}
      * can be called by an application to find out the contraints on the
      * {@link android.drm.DrmStore.Action actions} that can be performed
@@ -39,49 +40,75 @@ public class DrmStore {
          * This is a count-based constraint. It represents the maximum
          * repeat count that can be performed on an
          * {@link android.drm.DrmStore.Action action}.
+=======
+     */
+    public interface ConstraintsColumns {
+        /**
+         * The maximum repeat count.
+>>>>>>> upstream/master
          * <p>
          * Type: INTEGER
          */
         public static final String MAX_REPEAT_COUNT = "max_repeat_count";
 
         /**
+<<<<<<< HEAD
          * This is a count-based constraint. It represents the remaining
          * repeat count that can be performed on an
          * {@link android.drm.DrmStore.Action action}.
+=======
+         * The remaining repeat count.
+>>>>>>> upstream/master
          * <p>
          * Type: INTEGER
          */
         public static final String REMAINING_REPEAT_COUNT = "remaining_repeat_count";
 
         /**
+<<<<<<< HEAD
          * This is a date-based constraint. It represents the time before which
          * an {@link android.drm.DrmStore.Action action} can be performed on
          * the rights-protected content.
+=======
+         * The time before which the rights-protected file cannot be played/viewed.
+>>>>>>> upstream/master
          * <p>
          * Type: TEXT
          */
         public static final String LICENSE_START_TIME = "license_start_time";
 
         /**
+<<<<<<< HEAD
          * This is a date-based constaint. It represents the time after which
          * an {@link android.drm.DrmStore.Action action} can not be performed on
          * the rights-protected content.
+=======
+         * The time after which the rights-protected file cannot be played/viewed.
+>>>>>>> upstream/master
          * <p>
          * Type: TEXT
          */
         public static final String LICENSE_EXPIRY_TIME = "license_expiry_time";
 
         /**
+<<<<<<< HEAD
          * This is a duration-based constaint. It represents the available time left
          * before the license expires.
+=======
+         * The available time left before the license expires.
+>>>>>>> upstream/master
          * <p>
          * Type: TEXT
          */
         public static final String LICENSE_AVAILABLE_TIME = "license_available_time";
 
         /**
+<<<<<<< HEAD
          * This is a user-defined constraint. It represents the additional constraint
          * using extended metadata.
+=======
+         * The data stream for extended metadata.
+>>>>>>> upstream/master
          * <p>
          * Type: TEXT
          */
@@ -108,12 +135,15 @@ public class DrmStore {
          * A trigger information object type.
          */
         public static final int TRIGGER_OBJECT = 0x03;
+<<<<<<< HEAD
 
         /**
          * @deprecated This class should have been an interface instead.
          * The default constuctor should have not been exposed.
          */
         public DrmObjectType() {}
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -149,12 +179,15 @@ public class DrmStore {
             }
             return isValid;
         }
+<<<<<<< HEAD
 
         /**
          * @deprecated This class should have been an interface instead.
          * The default constuctor should have not been exposed.
          */
         public Playback() {}
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -210,12 +243,15 @@ public class DrmStore {
             }
             return isValid;
         }
+<<<<<<< HEAD
 
         /**
          * @deprecated This class should have been an interface instead.
          * The default constuctor should have not been exposed.
          */
         public Action() {}
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -238,6 +274,7 @@ public class DrmStore {
          * The digital rights have not been acquired for the rights-protected content.
          */
         public static final int RIGHTS_NOT_ACQUIRED = 0x03;
+<<<<<<< HEAD
 
         /**
          * @deprecated This class should have been an interface instead.
@@ -251,5 +288,8 @@ public class DrmStore {
      * The default constuctor should have not been exposed.
      */
     public DrmStore() {}
+=======
+    }
+>>>>>>> upstream/master
 }
 

@@ -23,7 +23,10 @@
 #include <utils/threads.h>
 #include <utils/String16.h>
 #include <utils/GenerationCache.h>
+<<<<<<< HEAD
 #include <utils/KeyedVector.h>
+=======
+>>>>>>> upstream/master
 #include <utils/Compare.h>
 #include <utils/RefBase.h>
 #include <utils/Singleton.h>
@@ -31,12 +34,19 @@
 #include <SkPaint.h>
 #include <SkTemplates.h>
 #include <SkUtils.h>
+<<<<<<< HEAD
+=======
+#include <SkScalerContext.h>
+>>>>>>> upstream/master
 #include <SkAutoKern.h>
 
 #include <unicode/ubidi.h>
 #include <unicode/ushape.h>
+<<<<<<< HEAD
 #include <unicode/unistr.h>
 
+=======
+>>>>>>> upstream/master
 #include "HarfbuzzSkia.h"
 #include "harfbuzz-shaper.h"
 
@@ -84,7 +94,11 @@ public:
     /**
      * Get the size of the Cache key.
      */
+<<<<<<< HEAD
     size_t getSize() const;
+=======
+    size_t getSize();
+>>>>>>> upstream/master
 
     static int compare(const TextLayoutCacheKey& lhs, const TextLayoutCacheKey& rhs);
 
@@ -115,15 +129,29 @@ inline int compare_type(const TextLayoutCacheKey& lhs, const TextLayoutCacheKey&
 }
 
 /*
+<<<<<<< HEAD
  * TextLayoutValue is the Cache value
  */
 class TextLayoutValue : public RefBase {
 public:
     TextLayoutValue(size_t contextCount);
+=======
+ * TextLayoutCacheValue is the Cache value
+ */
+class TextLayoutCacheValue : public RefBase {
+public:
+    TextLayoutCacheValue();
+>>>>>>> upstream/master
 
     void setElapsedTime(uint32_t time);
     uint32_t getElapsedTime();
 
+<<<<<<< HEAD
+=======
+    void computeValues(SkPaint* paint, const UChar* chars, size_t start, size_t count,
+            size_t contextCount, int dirFlags);
+
+>>>>>>> upstream/master
     inline const jfloat* getAdvances() const { return mAdvances.array(); }
     inline size_t getAdvancesCount() const { return mAdvances.size(); }
     inline jfloat getTotalAdvance() const { return mTotalAdvance; }
@@ -131,6 +159,15 @@ public:
     inline size_t getGlyphsCount() const { return mGlyphs.size(); }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the size of the Cache entry
+     */
+    size_t getSize();
+
+private:
+    /**
+>>>>>>> upstream/master
      * Advances vector
      */
     Vector<jfloat> mAdvances;
@@ -146,16 +183,20 @@ public:
     Vector<jchar> mGlyphs;
 
     /**
+<<<<<<< HEAD
      * Get the size of the Cache entry
      */
     size_t getSize() const;
 
 private:
     /**
+=======
+>>>>>>> upstream/master
      * Time for computing the values (in milliseconds)
      */
     uint32_t mElapsedTime;
 
+<<<<<<< HEAD
 }; // TextLayoutCacheValue
 
 /**
@@ -229,10 +270,14 @@ private:
     size_t shapeFontRun(const SkPaint* paint, bool isRTL);
 
     void computeValues(const SkPaint* paint, const UChar* chars,
+=======
+    static void computeValuesWithHarfbuzz(SkPaint* paint, const UChar* chars,
+>>>>>>> upstream/master
             size_t start, size_t count, size_t contextCount, int dirFlags,
             Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance,
             Vector<jchar>* const outGlyphs);
 
+<<<<<<< HEAD
     void computeRunValues(const SkPaint* paint, const UChar* chars,
             size_t count, bool isRTL,
             Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance,
@@ -246,16 +291,45 @@ private:
     void deleteShaperItemGlyphArrays();
 
 }; // TextLayoutShaper
+=======
+    static void computeRunValuesWithHarfbuzz(HB_ShaperItem& shaperItem, SkPaint* paint,
+            size_t start, size_t count, bool isRTL,
+            Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance,
+            Vector<jchar>* const outGlyphs);
+
+    static void initShaperItem(HB_ShaperItem& shaperItem, HB_FontRec* font, FontData* fontData,
+            SkPaint* paint, const UChar* chars, size_t contextCount);
+
+    static void freeShaperItem(HB_ShaperItem& shaperItem);
+
+    static void shapeRun(HB_ShaperItem& shaperItem, size_t start, size_t count, bool isRTL);
+
+    static void deleteGlyphArrays(HB_ShaperItem& shaperItem);
+
+    static void createGlyphArrays(HB_ShaperItem& shaperItem, int size);
+
+}; // TextLayoutCacheValue
+>>>>>>> upstream/master
 
 /**
  * Cache of text layout information.
  */
+<<<<<<< HEAD
 class TextLayoutCache : private OnEntryRemoved<TextLayoutCacheKey, sp<TextLayoutValue> >
 {
 public:
     TextLayoutCache(TextLayoutShaper* shaper);
 
     ~TextLayoutCache();
+=======
+class TextLayoutCache : public OnEntryRemoved<TextLayoutCacheKey, sp<TextLayoutCacheValue> >,
+        public Singleton<TextLayoutCache>
+{
+public:
+    TextLayoutCache();
+
+    virtual ~TextLayoutCache();
+>>>>>>> upstream/master
 
     bool isInitialized() {
         return mInitialized;
@@ -265,22 +339,52 @@ public:
      * Used as a callback when an entry is removed from the cache
      * Do not invoke directly
      */
+<<<<<<< HEAD
     void operator()(TextLayoutCacheKey& text, sp<TextLayoutValue>& desc);
 
     sp<TextLayoutValue> getValue(const SkPaint* paint, const jchar* text, jint start,
             jint count, jint contextCount, jint dirFlags);
+=======
+    void operator()(TextLayoutCacheKey& text, sp<TextLayoutCacheValue>& desc);
+
+    sp<TextLayoutCacheValue> getValue(SkPaint* paint, const jchar* text, jint start, jint count,
+            jint contextCount, jint dirFlags);
+>>>>>>> upstream/master
 
     /**
      * Clear the cache
      */
     void clear();
 
+<<<<<<< HEAD
 private:
     TextLayoutShaper* mShaper;
     Mutex mLock;
     bool mInitialized;
 
     GenerationCache<TextLayoutCacheKey, sp<TextLayoutValue> > mCache;
+=======
+    /**
+     * Sets the maximum size of the cache in bytes
+     */
+    void setMaxSize(uint32_t maxSize);
+
+    /**
+     * Returns the maximum size of the cache in bytes
+     */
+    uint32_t getMaxSize();
+
+    /**
+     * Returns the current size of the cache in bytes
+     */
+    uint32_t getSize();
+
+private:
+    Mutex mLock;
+    bool mInitialized;
+
+    GenerationCache<TextLayoutCacheKey, sp<TextLayoutCacheValue> > mCache;
+>>>>>>> upstream/master
 
     uint32_t mSize;
     uint32_t mMaxSize;
@@ -299,12 +403,21 @@ private:
     void init();
 
     /**
+<<<<<<< HEAD
+=======
+     * Remove oldest entries until we are having enough space
+     */
+    void removeOldests();
+
+    /**
+>>>>>>> upstream/master
      * Dump Cache statistics
      */
     void dumpCacheStats();
 
 }; // TextLayoutCache
 
+<<<<<<< HEAD
 /**
  * The TextLayoutEngine is reponsible for computing TextLayoutValues
  */
@@ -323,6 +436,8 @@ private:
     TextLayoutShaper* mShaper;
 }; // TextLayoutEngine
 
+=======
+>>>>>>> upstream/master
 } // namespace android
 #endif /* ANDROID_TEXT_LAYOUT_CACHE_H */
 

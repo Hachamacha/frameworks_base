@@ -40,7 +40,10 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramSocket;
+<<<<<<< HEAD
 import java.net.InetAddress;
+=======
+>>>>>>> upstream/master
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.Collection;
@@ -48,11 +51,19 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+<<<<<<< HEAD
+=======
+import java.util.TooManyListenersException;
+>>>>>>> upstream/master
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
+<<<<<<< HEAD
+=======
+import javax.sip.InvalidArgumentException;
+>>>>>>> upstream/master
 import javax.sip.ListeningPoint;
 import javax.sip.ObjectInUseException;
 import javax.sip.RequestEvent;
@@ -131,6 +142,7 @@ class SipSessionGroup implements SipListener {
     private int mExternalPort;
 
     /**
+<<<<<<< HEAD
      * @param profile the local profile with password crossed out
      * @param password the password of the profile
      * @throws IOException if cannot assign requested address
@@ -142,6 +154,20 @@ class SipSessionGroup implements SipListener {
         mWakeupTimer = timer;
         mWakeLock = wakeLock;
         reset();
+=======
+     * @param myself the local profile with password crossed out
+     * @param password the password of the profile
+     * @throws IOException if cannot assign requested address
+     */
+    public SipSessionGroup(String localIp, SipProfile myself, String password,
+            SipWakeupTimer timer, SipWakeLock wakeLock) throws SipException,
+            IOException {
+        mLocalProfile = myself;
+        mPassword = password;
+        mWakeupTimer = timer;
+        mWakeLock = wakeLock;
+        reset(localIp);
+>>>>>>> upstream/master
     }
 
     // TODO: remove this method once SipWakeupTimer can better handle variety
@@ -150,6 +176,7 @@ class SipSessionGroup implements SipListener {
         mWakeupTimer = timer;
     }
 
+<<<<<<< HEAD
     synchronized void reset() throws SipException {
         Properties properties = new Properties();
 
@@ -208,6 +235,45 @@ class SipSessionGroup implements SipListener {
 
         Log.d(TAG, " start stack for " + mLocalProfile.getUriString());
         mSipStack.start();
+=======
+    synchronized void reset(String localIp) throws SipException, IOException {
+        mLocalIp = localIp;
+        if (localIp == null) return;
+
+        SipProfile myself = mLocalProfile;
+        SipFactory sipFactory = SipFactory.getInstance();
+        Properties properties = new Properties();
+        properties.setProperty("javax.sip.STACK_NAME", getStackName());
+        properties.setProperty(
+                "gov.nist.javax.sip.THREAD_POOL_SIZE", THREAD_POOL_SIZE);
+        String outboundProxy = myself.getProxyAddress();
+        if (!TextUtils.isEmpty(outboundProxy)) {
+            Log.v(TAG, "outboundProxy is " + outboundProxy);
+            properties.setProperty("javax.sip.OUTBOUND_PROXY", outboundProxy
+                    + ":" + myself.getPort() + "/" + myself.getProtocol());
+        }
+        SipStack stack = mSipStack = sipFactory.createSipStack(properties);
+
+        try {
+            SipProvider provider = stack.createSipProvider(
+                    stack.createListeningPoint(localIp, allocateLocalPort(),
+                            myself.getProtocol()));
+            provider.addSipListener(this);
+            mSipHelper = new SipHelper(stack, provider);
+        } catch (InvalidArgumentException e) {
+            throw new IOException(e.getMessage());
+        } catch (TooManyListenersException e) {
+            // must never happen
+            throw new SipException("SipSessionGroup constructor", e);
+        }
+        Log.d(TAG, " start stack for " + myself.getUriString());
+        stack.start();
+
+        mCallReceiverSession = null;
+        mSessionMap.clear();
+
+        resetExternalAddress();
+>>>>>>> upstream/master
     }
 
     synchronized void onConnectivityChanged() {
@@ -253,7 +319,10 @@ class SipSessionGroup implements SipListener {
             mSipStack = null;
             mSipHelper = null;
         }
+<<<<<<< HEAD
         resetExternalAddress();
+=======
+>>>>>>> upstream/master
     }
 
     public synchronized boolean isClosed() {
@@ -277,6 +346,20 @@ class SipSessionGroup implements SipListener {
         return (isClosed() ? null : new SipSessionImpl(listener));
     }
 
+<<<<<<< HEAD
+=======
+    private static int allocateLocalPort() throws SipException {
+        try {
+            DatagramSocket s = new DatagramSocket();
+            int localPort = s.getLocalPort();
+            s.close();
+            return localPort;
+        } catch (IOException e) {
+            throw new SipException("allocateLocalPort()", e);
+        }
+    }
+
+>>>>>>> upstream/master
     synchronized boolean containsSession(String callId) {
         return mSessionMap.containsKey(callId);
     }

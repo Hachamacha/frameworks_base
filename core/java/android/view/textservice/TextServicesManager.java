@@ -157,8 +157,12 @@ public final class TextServicesManager {
         if (subtypeInUse == null) {
             return null;
         }
+<<<<<<< HEAD
         final SpellCheckerSession session = new SpellCheckerSession(
                 sci, sService, listener, subtypeInUse);
+=======
+        final SpellCheckerSession session = new SpellCheckerSession(sci, sService, listener);
+>>>>>>> upstream/master
         try {
             sService.getSpellCheckerService(sci.getId(), subtypeInUse.getLocale(),
                     session.getTextServicesSessionListener(),
@@ -217,7 +221,11 @@ public final class TextServicesManager {
     public SpellCheckerSubtype getCurrentSpellCheckerSubtype(
             boolean allowImplicitlySelectedSubtype) {
         try {
+<<<<<<< HEAD
             // Passing null as a locale until we support multiple enabled spell checker subtypes.
+=======
+            // Passing null as a locale for ICS
+>>>>>>> upstream/master
             return sService.getCurrentSpellCheckerSubtype(null, allowImplicitlySelectedSubtype);
         } catch (RemoteException e) {
             Log.e(TAG, "Error in getCurrentSpellCheckerSubtype: " + e);

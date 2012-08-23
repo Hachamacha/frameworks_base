@@ -35,7 +35,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+<<<<<<< HEAD
 import android.graphics.Rect;
+=======
+>>>>>>> upstream/master
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -48,7 +51,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+<<<<<<< HEAD
 import android.view.TouchDelegate;
+=======
+>>>>>>> upstream/master
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -136,10 +142,13 @@ public class ActionBarView extends AbsActionBarView {
 
     Window.Callback mWindowCallback;
 
+<<<<<<< HEAD
     private final Rect mTempRect = new Rect();
     private int mMaxHomeSlop;
     private static final int MAX_HOME_SLOP = 32; // dp
 
+=======
+>>>>>>> upstream/master
     private final AdapterView.OnItemSelectedListener mNavItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
         public void onItemSelected(AdapterView parent, View view, int position, long id) {
@@ -252,6 +261,7 @@ public class ActionBarView extends AbsActionBarView {
         mHomeLayout.setOnClickListener(mUpClickListener);
         mHomeLayout.setClickable(true);
         mHomeLayout.setFocusable(true);
+<<<<<<< HEAD
 
         if (getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
@@ -259,6 +269,8 @@ public class ActionBarView extends AbsActionBarView {
 
         mMaxHomeSlop =
                 (int) (MAX_HOME_SLOP * context.getResources().getDisplayMetrics().density + 0.5f);
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -313,7 +325,10 @@ public class ActionBarView extends AbsActionBarView {
         mProgressView = new ProgressBar(mContext, null, 0, mProgressStyle);
         mProgressView.setId(R.id.progress_horizontal);
         mProgressView.setMax(10000);
+<<<<<<< HEAD
         mProgressView.setVisibility(GONE);
+=======
+>>>>>>> upstream/master
         addView(mProgressView);
     }
 
@@ -321,7 +336,10 @@ public class ActionBarView extends AbsActionBarView {
         mIndeterminateProgressView = new ProgressBar(mContext, null, 0,
                 mIndeterminateProgressStyle);
         mIndeterminateProgressView.setId(R.id.progress_circular);
+<<<<<<< HEAD
         mIndeterminateProgressView.setVisibility(GONE);
+=======
+>>>>>>> upstream/master
         addView(mIndeterminateProgressView);
     }
 
@@ -337,16 +355,23 @@ public class ActionBarView extends AbsActionBarView {
                     if (mSplitView != null) {
                         mSplitView.addView(mMenuView);
                     }
+<<<<<<< HEAD
                     mMenuView.getLayoutParams().width = LayoutParams.MATCH_PARENT;
                 } else {
                     addView(mMenuView);
                     mMenuView.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
                 }
                 mMenuView.requestLayout();
+=======
+                } else {
+                    addView(mMenuView);
+                }
+>>>>>>> upstream/master
             }
             if (mSplitView != null) {
                 mSplitView.setVisibility(splitActionBar ? VISIBLE : GONE);
             }
+<<<<<<< HEAD
 
             if (mActionMenuPresenter != null) {
                 if (!splitActionBar) {
@@ -362,6 +387,8 @@ public class ActionBarView extends AbsActionBarView {
                     mActionMenuPresenter.setItemLimit(Integer.MAX_VALUE);
                 }
             }
+=======
+>>>>>>> upstream/master
             super.setSplitActionBar(splitActionBar);
         }
     }
@@ -604,7 +631,10 @@ public class ActionBarView extends AbsActionBarView {
                 final boolean homeAsUp = (mDisplayOptions & ActionBar.DISPLAY_HOME_AS_UP) != 0;
                 mTitleUpView.setVisibility(!showHome ? (homeAsUp ? VISIBLE : INVISIBLE) : GONE);
                 mTitleLayout.setEnabled(!showHome && homeAsUp);
+<<<<<<< HEAD
                 mTitleLayout.setClickable(!showHome && homeAsUp);
+=======
+>>>>>>> upstream/master
             }
 
             if ((flagsChanged & ActionBar.DISPLAY_SHOW_CUSTOM) != 0 && mCustomNavView != null) {
@@ -638,9 +668,12 @@ public class ActionBarView extends AbsActionBarView {
                 ((mDisplayOptions & ActionBar.DISPLAY_USE_LOGO) == 0 || mLogo == null)) {
             mHomeLayout.setIcon(icon);
         }
+<<<<<<< HEAD
         if (mExpandedActionView != null) {
             mExpandedHomeLayout.setIcon(mIcon.getConstantState().newDrawable(getResources()));
         }
+=======
+>>>>>>> upstream/master
     }
 
     public void setIcon(int resId) {
@@ -785,10 +818,15 @@ public class ActionBarView extends AbsActionBarView {
 
             final boolean homeAsUp = (mDisplayOptions & ActionBar.DISPLAY_HOME_AS_UP) != 0;
             final boolean showHome = (mDisplayOptions & ActionBar.DISPLAY_SHOW_HOME) != 0;
+<<<<<<< HEAD
             final boolean showTitleUp = !showHome;
             mTitleUpView.setVisibility(showTitleUp ? (homeAsUp ? VISIBLE : INVISIBLE) : GONE);
             mTitleLayout.setEnabled(homeAsUp && showTitleUp);
             mTitleLayout.setClickable(homeAsUp && showTitleUp);
+=======
+            mTitleUpView.setVisibility(!showHome ? (homeAsUp ? VISIBLE : INVISIBLE) : GONE);
+            mTitleLayout.setEnabled(homeAsUp && !showHome);
+>>>>>>> upstream/master
         }
 
         addView(mTitleLayout);
@@ -1020,6 +1058,7 @@ public class ActionBarView extends AbsActionBarView {
         }
 
         HomeView homeLayout = mExpandedActionView != null ? mExpandedHomeLayout : mHomeLayout;
+<<<<<<< HEAD
         boolean needsTouchDelegate = false;
         int homeSlop = mMaxHomeSlop;
         int homeRight = 0;
@@ -1028,6 +1067,11 @@ public class ActionBarView extends AbsActionBarView {
             x += positionChild(homeLayout, x + leftOffset, y, contentHeight) + leftOffset;
             needsTouchDelegate = homeLayout == mHomeLayout;
             homeRight = x;
+=======
+        if (homeLayout.getVisibility() != GONE) {
+            final int leftOffset = homeLayout.getLeftOffset();
+            x += positionChild(homeLayout, x + leftOffset, y, contentHeight) + leftOffset;
+>>>>>>> upstream/master
         }
 
         if (mExpandedActionView == null) {
@@ -1043,14 +1087,20 @@ public class ActionBarView extends AbsActionBarView {
                 case ActionBar.NAVIGATION_MODE_LIST:
                     if (mListNavLayout != null) {
                         if (showTitle) x += mItemPadding;
+<<<<<<< HEAD
                         homeSlop = Math.min(homeSlop, Math.max(x - homeRight, 0));
+=======
+>>>>>>> upstream/master
                         x += positionChild(mListNavLayout, x, y, contentHeight) + mItemPadding;
                     }
                     break;
                 case ActionBar.NAVIGATION_MODE_TABS:
                     if (mTabScrollView != null) {
                         if (showTitle) x += mItemPadding;
+<<<<<<< HEAD
                         homeSlop = Math.min(homeSlop, Math.max(x - homeRight, 0));
+=======
+>>>>>>> upstream/master
                         x += positionChild(mTabScrollView, x, y, contentHeight) + mItemPadding;
                     }
                     break;
@@ -1143,7 +1193,10 @@ public class ActionBarView extends AbsActionBarView {
             final int customWidth = customView.getMeasuredWidth();
             customView.layout(xpos, ypos, xpos + customWidth,
                     ypos + customView.getMeasuredHeight());
+<<<<<<< HEAD
             homeSlop = Math.min(homeSlop, Math.max(xpos - homeRight, 0));
+=======
+>>>>>>> upstream/master
             x += customWidth;
         }
 
@@ -1153,6 +1206,7 @@ public class ActionBarView extends AbsActionBarView {
             mProgressView.layout(mProgressBarPadding, -halfProgressHeight,
                     mProgressBarPadding + mProgressView.getMeasuredWidth(), halfProgressHeight);
         }
+<<<<<<< HEAD
 
         if (needsTouchDelegate) {
             mTempRect.set(homeLayout.getLeft(), homeLayout.getTop(),
@@ -1161,6 +1215,8 @@ public class ActionBarView extends AbsActionBarView {
         } else {
             setTouchDelegate(null);
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override

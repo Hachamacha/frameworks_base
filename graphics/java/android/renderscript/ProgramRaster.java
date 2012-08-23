@@ -21,12 +21,16 @@ import android.util.Log;
 
 
 /**
+<<<<<<< HEAD
  * @deprecated in API 16
+=======
+>>>>>>> upstream/master
  * Program raster is primarily used to specify whether point sprites are enabled and to control
  * the culling mode. By default, back faces are culled.
  **/
 public class ProgramRaster extends BaseObj {
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      **/
@@ -42,6 +46,11 @@ public class ProgramRaster extends BaseObj {
         /**
          * @deprecated in API 16
          **/
+=======
+    public enum CullMode {
+        BACK (0),
+        FRONT (1),
+>>>>>>> upstream/master
         NONE (2);
 
         int mID;
@@ -61,27 +70,41 @@ public class ProgramRaster extends BaseObj {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
      * Specifies whether vertices are rendered as screen aligned
      * elements of a specified size
      * @return whether point sprites are enabled
      */
     public boolean isPointSpriteEnabled() {
+=======
+     * @hide
+     * @return whether point sprites are enabled
+     */
+    public boolean getPointSpriteEnabled() {
+>>>>>>> upstream/master
         return mPointSprite;
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
      * Specifies how triangles are culled based on their orientation
+=======
+     * @hide
+>>>>>>> upstream/master
      * @return cull mode
      */
     public CullMode getCullMode() {
         return mCullMode;
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     public static ProgramRaster CULL_BACK(RenderScript rs) {
         if(rs.mProgramRaster_CULL_BACK == null) {
             ProgramRaster.Builder builder = new ProgramRaster.Builder(rs);
@@ -91,9 +114,12 @@ public class ProgramRaster extends BaseObj {
         return rs.mProgramRaster_CULL_BACK;
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     public static ProgramRaster CULL_FRONT(RenderScript rs) {
         if(rs.mProgramRaster_CULL_FRONT == null) {
             ProgramRaster.Builder builder = new ProgramRaster.Builder(rs);
@@ -103,9 +129,12 @@ public class ProgramRaster extends BaseObj {
         return rs.mProgramRaster_CULL_FRONT;
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     public static ProgramRaster CULL_NONE(RenderScript rs) {
         if(rs.mProgramRaster_CULL_NONE == null) {
             ProgramRaster.Builder builder = new ProgramRaster.Builder(rs);
@@ -115,42 +144,57 @@ public class ProgramRaster extends BaseObj {
         return rs.mProgramRaster_CULL_NONE;
     }
 
+<<<<<<< HEAD
     /**
      * @deprecated in API 16
      */
+=======
+>>>>>>> upstream/master
     public static class Builder {
         RenderScript mRS;
         boolean mPointSprite;
         CullMode mCullMode;
 
+<<<<<<< HEAD
         /**
          * @deprecated in API 16
          */
+=======
+>>>>>>> upstream/master
         public Builder(RenderScript rs) {
             mRS = rs;
             mPointSprite = false;
             mCullMode = CullMode.BACK;
         }
 
+<<<<<<< HEAD
         /**
          * @deprecated in API 16
          */
+=======
+>>>>>>> upstream/master
         public Builder setPointSpriteEnabled(boolean enable) {
             mPointSprite = enable;
             return this;
         }
 
+<<<<<<< HEAD
         /**
          * @deprecated in API 16
          */
+=======
+>>>>>>> upstream/master
         public Builder setCullMode(CullMode m) {
             mCullMode = m;
             return this;
         }
 
+<<<<<<< HEAD
         /**
          * @deprecated in API 16
          */
+=======
+>>>>>>> upstream/master
         public ProgramRaster create() {
             mRS.validate();
             int id = mRS.nProgramRasterCreate(mPointSprite, mCullMode.mID);

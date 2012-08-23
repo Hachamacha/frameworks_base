@@ -228,7 +228,11 @@ public class DigitalClock extends RelativeLayout {
         updateTime();
     }
 
+<<<<<<< HEAD
     public void updateTime() {
+=======
+    private void updateTime() {
+>>>>>>> upstream/master
         mCalendar.setTimeInMillis(System.currentTimeMillis());
 
         CharSequence newTime = DateFormat.format(mFormat, mCalendar);

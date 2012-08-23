@@ -62,6 +62,16 @@ enum {
 class TextLayout {
 public:
 
+<<<<<<< HEAD
+=======
+    /*
+     * Draws a unidirectional run of text.
+     */
+    static void drawTextRun(SkPaint* paint, const jchar* chars,
+                            jint start, jint count, jint contextCount,
+                            int dirFlags, jfloat x, jfloat y, SkCanvas* canvas);
+
+>>>>>>> upstream/master
     static void getTextRunAdvances(SkPaint* paint, const jchar* chars, jint start,
                                    jint count, jint contextCount, jint dirFlags,
                                    jfloat* resultAdvances, jfloat* resultTotalAdvance);
@@ -70,18 +80,43 @@ public:
                                    jint count, jint contextCount, jint dirFlags,
                                    jfloat* resultAdvances, jfloat& resultTotalAdvance);
 
+<<<<<<< HEAD
+=======
+    static void drawText(SkPaint* paint, const jchar* text, jsize len,
+                         jint bidiFlags, jfloat x, jfloat y, SkCanvas* canvas);
+
+>>>>>>> upstream/master
     static void getTextPath(SkPaint* paint, const jchar* text, jsize len,
                             jint bidiFlags, jfloat x, jfloat y, SkPath* path);
 
     static void drawTextOnPath(SkPaint* paint, const jchar* text, jsize len,
                                int bidiFlags, jfloat hOffset, jfloat vOffset,
                                SkPath* path, SkCanvas* canvas);
+<<<<<<< HEAD
 
 private:
     static bool needsLayout(const jchar* text, jint len, jint bidiFlags);
 
     static void handleText(SkPaint* paint, const jchar* text, jsize len,
                            int bidiFlags, jfloat x, jfloat y, SkPath* path);
+=======
+                               
+    static bool prepareText(SkPaint* paint, const jchar* text, jsize len, jint bidiFlags,
+        const jchar** outText, int32_t* outBytes, jchar** outBuffer);
+
+    static bool prepareRtlTextRun(const jchar* context, jsize start, jsize& count,
+        jsize contextCount, jchar* shaped);
+        
+
+private:
+    static bool needsLayout(const jchar* text, jint len, jint bidiFlags);
+    static int shapeRtlText(const jchar* context, jsize start, jsize count, jsize contextCount,
+                            jchar* shaped, UErrorCode& status);
+    static jint layoutLine(const jchar* text, jint len, jint flags, int &dir, jchar* buffer,
+                           UErrorCode &status);
+    static void handleText(SkPaint* paint, const jchar* text, jsize len,
+                           int bidiFlags, jfloat x, jfloat y, SkCanvas* canvas, SkPath* path);
+>>>>>>> upstream/master
 
     static void computeAdvancesWithICU(SkPaint* paint, const UChar* chars,
             size_t start, size_t count, size_t contextCount, int dirFlags,

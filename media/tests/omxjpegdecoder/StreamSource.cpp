@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 #include <media/stagefright/foundation/ADebug.h>
+=======
+#include <media/stagefright/MediaDebug.h>
+>>>>>>> upstream/master
 
 #include "StreamSource.h"
 

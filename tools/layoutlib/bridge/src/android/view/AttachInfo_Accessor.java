@@ -29,7 +29,11 @@ public class AttachInfo_Accessor {
 
     public static void setAttachInfo(View view) {
         AttachInfo info = new AttachInfo(new BridgeWindowSession(), new BridgeWindow(),
+<<<<<<< HEAD
                 new ViewRootImpl(view.getContext()), new Handler(), null);
+=======
+                new Handler(), null);
+>>>>>>> upstream/master
         info.mHasWindowFocus = true;
         info.mWindowVisibility = View.VISIBLE;
         info.mInTouchMode = false; // this is so that we can display selections.

@@ -23,7 +23,11 @@
     xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:background="@drawable/nav_bar_bg"
+=======
+    android:background="#FF000000"
+>>>>>>> upstream/master
     >
 
     <FrameLayout android:id="@+id/rot0"
@@ -37,6 +41,7 @@
             android:orientation="horizontal"
             android:clipChildren="false"
             android:clipToPadding="false"
+<<<<<<< HEAD
             android:id="@+id/nav_buttons"
             android:animateLayoutChanges="true"
             >
@@ -114,17 +119,31 @@
                 />
         </LinearLayout>
 
+=======
+            android:id="@+id/container"
+            >
+            <include layout="@layout/mid_navigation_bar_port"/>
+        </LinearLayout>
+>>>>>>> upstream/master
         <!-- lights out layout to match exactly -->
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="horizontal"
+<<<<<<< HEAD
+=======
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_gravity="center_horizontal"
+>>>>>>> upstream/master
             android:id="@+id/lights_out"
             android:visibility="gone"
             >
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:layout_marginLeft="40dp"
                 android:src="@drawable/ic_sysbar_lights_out_dot_small"
                 android:scaleType="center"
@@ -135,12 +154,23 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:visibility="invisible"
+=======
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="1"
+>>>>>>> upstream/master
                 />
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sysbar_lights_out_dot_large"
                 android:scaleType="center"
+<<<<<<< HEAD
                 android:layout_weight="0"
                 />
             <View 
@@ -164,6 +194,40 @@
             android:layout_height="@dimen/navigation_bar_deadzone_size"
             android:layout_width="match_parent"
             android:layout_gravity="top"
+=======
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+
+        </LinearLayout>
+        <View android:id="@+id/deadzone"
+            android:layout_height="@dimen/navigation_bar_deadzone_size"
+            android:layout_width="match_parent"
+            android:layout_gravity="top"
+            android:clickable="true"
+>>>>>>> upstream/master
             />
     </FrameLayout>
 
@@ -178,6 +242,7 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:clipChildren="false"
             android:clipToPadding="false"
             android:id="@+id/nav_buttons"
@@ -241,6 +306,15 @@
                 android:layout_weight="0"
                 android:visibility="invisible"
                 />
+=======
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:id="@+id/container"
+            >
+            <include layout="@layout/mid_navigation_bar_land"/>
+>>>>>>> upstream/master
         </LinearLayout>
 
         <!-- lights out layout to match exactly -->
@@ -248,11 +322,19 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical"
+<<<<<<< HEAD
+=======
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+>>>>>>> upstream/master
             android:id="@+id/lights_out"
             android:visibility="gone"
             >
             <ImageView
                 android:layout_height="80dp"
+<<<<<<< HEAD
                 android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
                 android:src="@drawable/ic_sysbar_lights_out_dot_small"
@@ -264,12 +346,24 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:visibility="invisible"
+=======
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="1"
+>>>>>>> upstream/master
                 />
             <ImageView
                 android:layout_height="80dp"
                 android:layout_width="match_parent"
                 android:src="@drawable/ic_sysbar_lights_out_dot_large"
                 android:scaleType="center"
+<<<<<<< HEAD
                 android:layout_weight="0"
                 />
             <View 
@@ -293,6 +387,40 @@
             android:layout_width="@dimen/navigation_bar_deadzone_size"
             android:layout_height="match_parent"
             android:layout_gravity="left"
+=======
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_sysbar_lights_out_dot_large"
+                android:scaleType="center"
+                />
+        </LinearLayout>
+
+        <View android:id="@+id/deadzone"
+            android:layout_width="@dimen/navigation_bar_deadzone_size"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:clickable="true"
+>>>>>>> upstream/master
             />
     </FrameLayout>
 

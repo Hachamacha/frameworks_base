@@ -16,7 +16,10 @@ extern jfieldID gOptions_widthFieldID;
 extern jfieldID gOptions_heightFieldID;
 extern jfieldID gOptions_mimeFieldID;
 extern jfieldID gOptions_mCancelID;
+<<<<<<< HEAD
 extern jfieldID gOptions_bitmapFieldID;
+=======
+>>>>>>> upstream/master
 
 jstring getMimeTypeString(JNIEnv* env, SkImageDecoder::Format format);
 

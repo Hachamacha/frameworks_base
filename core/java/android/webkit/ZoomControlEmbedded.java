@@ -25,12 +25,20 @@ import android.widget.ZoomButtonsController;
 class ZoomControlEmbedded implements ZoomControlBase {
 
     private final ZoomManager mZoomManager;
+<<<<<<< HEAD
     private final WebViewClassic mWebView;
+=======
+    private final WebView mWebView;
+>>>>>>> upstream/master
 
     // The controller is lazily initialized in getControls() for performance.
     private ZoomButtonsController mZoomButtonsController;
 
+<<<<<<< HEAD
     public ZoomControlEmbedded(ZoomManager zoomManager, WebViewClassic webView) {
+=======
+    public ZoomControlEmbedded(ZoomManager zoomManager, WebView webView) {
+>>>>>>> upstream/master
         mZoomManager = zoomManager;
         mWebView = webView;
     }
@@ -41,7 +49,11 @@ class ZoomControlEmbedded implements ZoomControlBase {
             mZoomButtonsController.setVisible(true);
 
             if (mZoomManager.isDoubleTapEnabled()) {
+<<<<<<< HEAD
                 WebSettingsClassic settings = mWebView.getSettings();
+=======
+                WebSettings settings = mWebView.getSettings();
+>>>>>>> upstream/master
                 int count = settings.getDoubleTapToastCount();
                 if (mZoomManager.isInZoomOverview() && count > 0) {
                     settings.setDoubleTapToastCount(--count);
@@ -82,7 +94,11 @@ class ZoomControlEmbedded implements ZoomControlBase {
 
     private ZoomButtonsController getControls() {
         if (mZoomButtonsController == null) {
+<<<<<<< HEAD
             mZoomButtonsController = new ZoomButtonsController(mWebView.getWebView());
+=======
+            mZoomButtonsController = new ZoomButtonsController(mWebView);
+>>>>>>> upstream/master
             mZoomButtonsController.setOnZoomListener(new ZoomListener());
             // ZoomButtonsController positions the buttons at the bottom, but in
             // the middle. Change their layout parameters so they appear on the

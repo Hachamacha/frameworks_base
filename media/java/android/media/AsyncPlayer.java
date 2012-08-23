@@ -49,7 +49,11 @@ public class AsyncPlayer {
         }
     }
 
+<<<<<<< HEAD
     private final LinkedList<Command> mCmdQueue = new LinkedList();
+=======
+    private LinkedList<Command> mCmdQueue = new LinkedList();
+>>>>>>> upstream/master
 
     private void startSound(Command cmd) {
         // Preparing can be slow, so if there is something else

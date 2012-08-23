@@ -43,6 +43,7 @@ public class BaseObj {
      * Lookup the native object ID for this object.  Primarily used by the
      * generated reflected code.
      *
+<<<<<<< HEAD
      * @param rs Context to verify against internal context for
      *           match.
      *
@@ -50,15 +51,24 @@ public class BaseObj {
      */
     int getID(RenderScript rs) {
         mRS.validate();
+=======
+     *
+     * @return int
+     */
+    int getID() {
+>>>>>>> upstream/master
         if (mDestroyed) {
             throw new RSInvalidStateException("using a destroyed object.");
         }
         if (mID == 0) {
             throw new RSRuntimeException("Internal error: Object id 0.");
         }
+<<<<<<< HEAD
         if ((rs != null) && (rs != mRS)) {
             throw new RSInvalidStateException("using object with mismatched context.");
         }
+=======
+>>>>>>> upstream/master
         return mID;
     }
 
@@ -144,7 +154,11 @@ public class BaseObj {
      */
     void updateFromNative() {
         mRS.validate();
+<<<<<<< HEAD
         mName = mRS.nGetName(getID(mRS));
+=======
+        mName = mRS.nGetName(getID());
+>>>>>>> upstream/master
     }
 
     /**

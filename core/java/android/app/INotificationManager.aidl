@@ -33,9 +33,14 @@ interface INotificationManager
     void enqueueToast(String pkg, ITransientNotification callback, int duration);
     void cancelToast(String pkg, ITransientNotification callback);
     void enqueueNotificationWithTag(String pkg, String tag, int id, in Notification notification, inout int[] idReceived);
+<<<<<<< HEAD
     void cancelNotificationWithTag(String pkg, String tag, int id);
 
     void setNotificationsEnabledForPackage(String pkg, boolean enabled);
     boolean areNotificationsEnabledForPackage(String pkg);
+=======
+    void enqueueNotificationWithTagPriority(String pkg, String tag, int id, int priority, in Notification notification, inout int[] idReceived);
+    void cancelNotificationWithTag(String pkg, String tag, int id);
+>>>>>>> upstream/master
 }
 

@@ -18,7 +18,11 @@
 #include <utils/Log.h>
 
 #include <android/native_window_jni.h>
+<<<<<<< HEAD
 #include <gui/Surface.h>
+=======
+#include <surfaceflinger/Surface.h>
+>>>>>>> upstream/master
 #include <android_runtime/android_view_Surface.h>
 #include <android_runtime/android_graphics_SurfaceTexture.h>
 
@@ -32,6 +36,17 @@ ANativeWindow* ANativeWindow_fromSurface(JNIEnv* env, jobject surface) {
     return win.get();
 }
 
+<<<<<<< HEAD
+=======
+ANativeWindow* ANativeWindow_fromSurfaceTexture(JNIEnv* env, jobject surfaceTexture) {
+    sp<ANativeWindow> win = android_SurfaceTexture_getNativeWindow(env, surfaceTexture);
+    if (win != NULL) {
+        win->incStrong((void*)ANativeWindow_acquire);
+    }
+    return win.get();
+}
+
+>>>>>>> upstream/master
 void ANativeWindow_acquire(ANativeWindow* window) {
     window->incStrong((void*)ANativeWindow_acquire);
 }
@@ -60,6 +75,7 @@ int32_t ANativeWindow_getFormat(ANativeWindow* window) {
 
 int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width,
         int32_t height, int32_t format) {
+<<<<<<< HEAD
     int32_t err = native_window_set_buffers_format(window, format);
     if (!err) {
         err = native_window_set_buffers_user_dimensions(window, width, height);
@@ -70,6 +86,15 @@ int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width,
             }
             err = native_window_set_scaling_mode(window, mode);
          }
+=======
+    int32_t err = native_window_set_buffers_geometry(window, width, height, format);
+    if (!err) {
+        int mode = NATIVE_WINDOW_SCALING_MODE_FREEZE;
+        if (width && height) {
+            mode = NATIVE_WINDOW_SCALING_MODE_SCALE_TO_WINDOW;
+        }
+        err = native_window_set_scaling_mode(window, mode);
+>>>>>>> upstream/master
     }
     return err;
 }

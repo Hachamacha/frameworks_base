@@ -69,7 +69,10 @@ public class Program extends BaseObj {
     Element mOutputs[];
     Type mConstants[];
     TextureType mTextures[];
+<<<<<<< HEAD
     String mTextureNames[];
+=======
+>>>>>>> upstream/master
     int mTextureCount;
     String mShader;
 
@@ -78,6 +81,7 @@ public class Program extends BaseObj {
     }
 
     /**
+<<<<<<< HEAD
      * Program object can have zero or more constant allocations
      * associated with it. This method returns the total count.
      * @return number of constant input types
@@ -134,6 +138,8 @@ public class Program extends BaseObj {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Binds a constant buffer to be used as uniform inputs to the
      * program
      *
@@ -146,11 +152,19 @@ public class Program extends BaseObj {
             throw new IllegalArgumentException("Slot ID out of range.");
         }
         if (a != null &&
+<<<<<<< HEAD
             a.getType().getID(mRS) != mConstants[slot].getID(mRS)) {
             throw new IllegalArgumentException("Allocation type does not match slot type.");
         }
         int id = a != null ? a.getID(mRS) : 0;
         mRS.nProgramBindConstants(getID(mRS), slot, id);
+=======
+            a.getType().getID() != mConstants[slot].getID()) {
+            throw new IllegalArgumentException("Allocation type does not match slot type.");
+        }
+        int id = a != null ? a.getID() : 0;
+        mRS.nProgramBindConstants(getID(), slot, id);
+>>>>>>> upstream/master
     }
 
     /**
@@ -171,8 +185,13 @@ public class Program extends BaseObj {
             throw new IllegalArgumentException("Cannot bind cubemap to 2d texture slot");
         }
 
+<<<<<<< HEAD
         int id = va != null ? va.getID(mRS) : 0;
         mRS.nProgramBindTexture(getID(mRS), slot, id);
+=======
+        int id = va != null ? va.getID() : 0;
+        mRS.nProgramBindTexture(getID(), slot, id);
+>>>>>>> upstream/master
     }
 
     /**
@@ -191,8 +210,13 @@ public class Program extends BaseObj {
             throw new IllegalArgumentException("Slot ID out of range.");
         }
 
+<<<<<<< HEAD
         int id = vs != null ? vs.getID(mRS) : 0;
         mRS.nProgramBindSampler(getID(mRS), slot, id);
+=======
+        int id = vs != null ? vs.getID() : 0;
+        mRS.nProgramBindSampler(getID(), slot, id);
+>>>>>>> upstream/master
     }
 
 
@@ -203,7 +227,10 @@ public class Program extends BaseObj {
         Type mConstants[];
         Type mTextures[];
         TextureType mTextureTypes[];
+<<<<<<< HEAD
         String mTextureNames[];
+=======
+>>>>>>> upstream/master
         int mInputCount;
         int mOutputCount;
         int mConstantCount;
@@ -221,7 +248,10 @@ public class Program extends BaseObj {
             mConstantCount = 0;
             mTextureCount = 0;
             mTextureTypes = new TextureType[MAX_TEXTURE];
+<<<<<<< HEAD
             mTextureNames = new String[MAX_TEXTURE];
+=======
+>>>>>>> upstream/master
         }
 
         /**
@@ -325,6 +355,7 @@ public class Program extends BaseObj {
          * @return  self
          */
         public BaseProgramBuilder addTexture(TextureType texType) throws IllegalArgumentException {
+<<<<<<< HEAD
             addTexture(texType, "Tex" + mTextureCount);
             return this;
         }
@@ -346,6 +377,12 @@ public class Program extends BaseObj {
             mTextureTypes[mTextureCount] = texType;
             mTextureNames[mTextureCount] = texName;
             mTextureCount ++;
+=======
+            if(mTextureCount >= MAX_TEXTURE) {
+                throw new IllegalArgumentException("Max texture count exceeded.");
+            }
+            mTextureTypes[mTextureCount ++] = texType;
+>>>>>>> upstream/master
             return this;
         }
 
@@ -359,8 +396,11 @@ public class Program extends BaseObj {
             p.mTextureCount = mTextureCount;
             p.mTextures = new TextureType[mTextureCount];
             System.arraycopy(mTextureTypes, 0, p.mTextures, 0, mTextureCount);
+<<<<<<< HEAD
             p.mTextureNames = new String[mTextureCount];
             System.arraycopy(mTextureNames, 0, p.mTextureNames, 0, mTextureCount);
+=======
+>>>>>>> upstream/master
         }
     }
 

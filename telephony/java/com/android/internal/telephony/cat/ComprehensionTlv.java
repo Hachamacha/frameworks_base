@@ -16,8 +16,11 @@
 
 package com.android.internal.telephony.cat;
 
+<<<<<<< HEAD
 import android.util.Log;
 
+=======
+>>>>>>> upstream/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +99,10 @@ class ComprehensionTlv {
                 startIndex = ctlv.mValueIndex + ctlv.mLength;
             } else {
                 CatLog.d(LOG_TAG, "decodeMany: ctlv is null, stop decoding");
+<<<<<<< HEAD
+=======
+                items.clear();
+>>>>>>> upstream/master
                 break;
             }
         }
@@ -113,10 +120,17 @@ class ComprehensionTlv {
      */
     public static ComprehensionTlv decode(byte[] data, int startIndex)
             throws ResultException {
+<<<<<<< HEAD
         int curIndex = startIndex;
         int endIndex = data.length;
 
         try {
+=======
+        try {
+            int curIndex = startIndex;
+            int endIndex = data.length;
+
+>>>>>>> upstream/master
             /* tag */
             int tag;
             boolean cr; // Comprehension required flag
@@ -125,11 +139,17 @@ class ComprehensionTlv {
             case 0:
             case 0xff:
             case 0x80:
+<<<<<<< HEAD
                 Log.d("CAT     ", "decode: unexpected first tag byte=" + Integer.toHexString(temp) +
                         ", startIndex=" + startIndex + " curIndex=" + curIndex +
                         " endIndex=" + endIndex);
                 // Return null which will stop decoding, this has occurred
                 // with Ghana MTN simcard and JDI simcard.
+=======
+                // for error handling
+                // these one make exception while decoding the abnormal command.
+                // (in case of Ghana MTN simcard , JDI simcard)
+>>>>>>> upstream/master
                 return null;
 
             case 0x7f: // tag is in three-byte format
@@ -156,10 +176,14 @@ class ComprehensionTlv {
                 length = data[curIndex++] & 0xff;
                 if (length < 0x80) {
                     throw new ResultException(
+<<<<<<< HEAD
                             ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                             "length < 0x80 length=" + Integer.toHexString(length) +
                             " startIndex=" + startIndex + " curIndex=" + curIndex +
                             " endIndex=" + endIndex);
+=======
+                            ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
                 }
             } else if (temp == 0x82) {
                 length = ((data[curIndex] & 0xff) << 8)
@@ -167,10 +191,14 @@ class ComprehensionTlv {
                 curIndex += 2;
                 if (length < 0x100) {
                     throw new ResultException(
+<<<<<<< HEAD
                             ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                             "two byte length < 0x100 length=" + Integer.toHexString(length) +
                             " startIndex=" + startIndex + " curIndex=" + curIndex +
                             " endIndex=" + endIndex);
+=======
+                            ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
                 }
             } else if (temp == 0x83) {
                 length = ((data[curIndex] & 0xff) << 16)
@@ -179,6 +207,7 @@ class ComprehensionTlv {
                 curIndex += 3;
                 if (length < 0x10000) {
                     throw new ResultException(
+<<<<<<< HEAD
                             ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                             "three byte length < 0x10000 length=0x" + Integer.toHexString(length) +
                             " startIndex=" + startIndex + " curIndex=" + curIndex +
@@ -190,14 +219,24 @@ class ComprehensionTlv {
                         " startIndex=" + startIndex + " curIndex=" + curIndex +
                         " endIndex=" + endIndex);
 
+=======
+                            ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+                }
+            } else {
+                throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
             }
 
             return new ComprehensionTlv(tag, cr, length, data, curIndex);
 
         } catch (IndexOutOfBoundsException e) {
+<<<<<<< HEAD
             throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                     "IndexOutOfBoundsException" + " startIndex=" + startIndex +
                     " curIndex=" + curIndex + " endIndex=" + endIndex);
+=======
+            throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
         }
     }
 }

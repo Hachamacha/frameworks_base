@@ -20,7 +20,10 @@ import com.android.i18n.phonenumbers.NumberParseException;
 import com.android.i18n.phonenumbers.PhoneNumberUtil;
 import com.android.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.android.i18n.phonenumbers.Phonenumber.PhoneNumber;
+<<<<<<< HEAD
 import com.android.i18n.phonenumbers.ShortNumberUtil;
+=======
+>>>>>>> upstream/master
 
 import android.content.Context;
 import android.content.Intent;
@@ -64,8 +67,13 @@ public class PhoneNumberUtils
     /*
      * Calling Line Identification Restriction (CLIR)
      */
+<<<<<<< HEAD
     private static final String CLIR_ON = "*31#";
     private static final String CLIR_OFF = "#31#";
+=======
+    private static final String CLIR_ON = "*31#+";
+    private static final String CLIR_OFF = "#31#+";
+>>>>>>> upstream/master
 
     /*
      * TOA = TON + NPI
@@ -213,6 +221,7 @@ public class PhoneNumberUtils
 
         int len = phoneNumber.length();
         StringBuilder ret = new StringBuilder(len);
+<<<<<<< HEAD
 
         for (int i = 0; i < len; i++) {
             char c = phoneNumber.charAt(i);
@@ -227,12 +236,28 @@ public class PhoneNumberUtils
                     ret.append(c);
                 }
             } else if (isDialable(c)) {
+=======
+        boolean firstCharAdded = false;
+
+        for (int i = 0; i < len; i++) {
+            char c = phoneNumber.charAt(i);
+            if (isDialable(c) && (c != '+' || !firstCharAdded)) {
+                firstCharAdded = true;
+>>>>>>> upstream/master
                 ret.append(c);
             } else if (isStartsPostDial (c)) {
                 break;
             }
         }
 
+<<<<<<< HEAD
+=======
+        int pos = addPlusChar(phoneNumber);
+        if (pos >= 0 && ret.length() > pos) {
+            ret.insert(pos, '+');
+        }
+
+>>>>>>> upstream/master
         return ret.toString();
     }
 
@@ -286,11 +311,15 @@ public class PhoneNumberUtils
 
         for (int i = 0; i < len; i++) {
             char c = phoneNumber.charAt(i);
+<<<<<<< HEAD
             // Character.digit() supports ASCII and Unicode digits (fullwidth, Arabic-Indic, etc.)
             int digit = Character.digit(c, 10);
             if (digit != -1) {
                 ret.append(digit);
             } else if (isNonSeparator(c)) {
+=======
+            if (isNonSeparator(c)) {
+>>>>>>> upstream/master
                 ret.append(c);
             }
         }
@@ -299,6 +328,7 @@ public class PhoneNumberUtils
     }
 
     /**
+<<<<<<< HEAD
      * Translates keypad letters to actual digits (e.g. 1-800-GOOG-411 will
      * become 1-800-4664-411), and then strips all separators (e.g. 1-800-4664-411 will become
      * 18004664411).
@@ -313,6 +343,8 @@ public class PhoneNumberUtils
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Converts pause and tonewait pause characters
      * to Android representation.
      * RFC 3601 says pause is 'p' and tonewait is 'w'.
@@ -378,6 +410,31 @@ public class PhoneNumberUtils
         }
     }
 
+<<<<<<< HEAD
+=======
+    /** GSM codes
+     *  Finds if a GSM code includes the international prefix (+).
+     *
+     * @param number the number to dial.
+     *
+     * @return the position where the + char will be inserted, -1 if the GSM code was not found.
+     */
+    private static int
+    addPlusChar(String number) {
+        int pos = -1;
+
+        if (number.startsWith(CLIR_OFF)) {
+            pos = CLIR_OFF.length() - 1;
+        }
+
+        if (number.startsWith(CLIR_ON)) {
+            pos = CLIR_ON.length() - 1;
+        }
+
+        return pos;
+    }
+
+>>>>>>> upstream/master
     /**
      * Extracts the post-dial sequence of DTMF control digits, pauses, and
      * waits. Strips separators. This string may be empty, but will not be null
@@ -1437,8 +1494,12 @@ public class PhoneNumberUtils
      *            phoneNumber doesn't have the country code.
      * @param defaultCountryIso
      *            the ISO 3166-1 two letters country code whose convention will
+<<<<<<< HEAD
      *            be used if the phoneNumberE164 is null or invalid, or if phoneNumber
      *            contains IDD.
+=======
+     *            be used if the phoneNumberE164 is null or invalid.
+>>>>>>> upstream/master
      * @return the formatted number if the given number has been formatted,
      *            otherwise, return the given number.
      *
@@ -1457,6 +1518,7 @@ public class PhoneNumberUtils
         if (phoneNumberE164 != null && phoneNumberE164.length() >= 2
                 && phoneNumberE164.charAt(0) == '+') {
             try {
+<<<<<<< HEAD
                 // The number to be parsed is in E164 format, so the default region used doesn't
                 // matter.
                 PhoneNumber pn = util.parse(phoneNumberE164, "ZZ");
@@ -1464,6 +1526,11 @@ public class PhoneNumberUtils
                 if (!TextUtils.isEmpty(regionCode) &&
                     // This makes sure phoneNumber doesn't contain an IDD
                     normalizeNumber(phoneNumber).indexOf(phoneNumberE164.substring(1)) <= 0) {
+=======
+                PhoneNumber pn = util.parse(phoneNumberE164, defaultCountryIso);
+                String regionCode = util.getRegionCodeForNumber(pn);
+                if (!TextUtils.isEmpty(regionCode)) {
+>>>>>>> upstream/master
                     defaultCountryIso = regionCode;
                 }
             } catch (NumberParseException e) {
@@ -1489,11 +1556,15 @@ public class PhoneNumberUtils
         int len = phoneNumber.length();
         for (int i = 0; i < len; i++) {
             char c = phoneNumber.charAt(i);
+<<<<<<< HEAD
             // Character.digit() supports ASCII and Unicode digits (fullwidth, Arabic-Indic, etc.)
             int digit = Character.digit(c, 10);
             if (digit != -1) {
                 sb.append(digit);
             } else if (i == 0 && c == '+') {
+=======
+            if ((i == 0 && c == '+') || PhoneNumberUtils.isISODigit(c)) {
+>>>>>>> upstream/master
                 sb.append(c);
             } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 return normalizeNumber(PhoneNumberUtils.convertKeypadLettersToDigits(phoneNumber));
@@ -1502,6 +1573,7 @@ public class PhoneNumberUtils
         return sb.toString();
     }
 
+<<<<<<< HEAD
     /**
      * Replace arabic/unicode digits with decimal digits.
      * @param number
@@ -1523,6 +1595,8 @@ public class PhoneNumberUtils
         return normalizedDigits.toString();
     }
 
+=======
+>>>>>>> upstream/master
     // Three and four digit phone numbers for either special services,
     // or 3-6 digit addresses from the network (eg carrier-originated SMS messages) should
     // not match.
@@ -1602,7 +1676,60 @@ public class PhoneNumberUtils
      *         listed in the RIL / sim, otherwise return false.
      */
     private static boolean isEmergencyNumberInternal(String number, boolean useExactMatch) {
+<<<<<<< HEAD
         return isEmergencyNumberInternal(number, null, useExactMatch);
+=======
+        // If the number passed in is null, just return false:
+        if (number == null) return false;
+
+        // If the number passed in is a SIP address, return false, since the
+        // concept of "emergency numbers" is only meaningful for calls placed
+        // over the cell network.
+        // (Be sure to do this check *before* calling extractNetworkPortionAlt(),
+        // since the whole point of extractNetworkPortionAlt() is to filter out
+        // any non-dialable characters (which would turn 'abc911def@example.com'
+        // into '911', for example.))
+        if (isUriNumber(number)) {
+            return false;
+        }
+
+        // Strip the separators from the number before comparing it
+        // to the list.
+        number = extractNetworkPortionAlt(number);
+
+        // retrieve the list of emergency numbers
+        // check read-write ecclist property first
+        String numbers = SystemProperties.get("ril.ecclist");
+        if (TextUtils.isEmpty(numbers)) {
+            // then read-only ecclist property since old RIL only uses this
+            numbers = SystemProperties.get("ro.ril.ecclist");
+        }
+
+        if (!TextUtils.isEmpty(numbers)) {
+            // searches through the comma-separated list for a match,
+            // return true if one is found.
+            for (String emergencyNum : numbers.split(",")) {
+                if (useExactMatch) {
+                    if (number.equals(emergencyNum)) {
+                        return true;
+                    }
+                } else {
+                    if (number.startsWith(emergencyNum)) {
+                        return true;
+                    }
+                }
+            }
+            // no matches found against the list!
+            return false;
+        }
+
+        // No ecclist system property, so use our own list.
+        if (useExactMatch) {
+            return (number.equals("112") || number.equals("911"));
+        } else {
+            return (number.startsWith("112") || number.startsWith("911"));
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -1665,6 +1792,7 @@ public class PhoneNumberUtils
     private static boolean isEmergencyNumberInternal(String number,
                                                      String defaultCountryIso,
                                                      boolean useExactMatch) {
+<<<<<<< HEAD
         // If the number passed in is null, just return false:
         if (number == null) return false;
 
@@ -1729,6 +1857,30 @@ public class PhoneNumberUtils
                 return (number.startsWith("112") || number.startsWith("911"));
             }
         }
+=======
+        PhoneNumberUtil util = PhoneNumberUtil.getInstance();
+        try {
+            PhoneNumber pn = util.parse(number, defaultCountryIso);
+            // libphonenumber guarantees short numbers such as emergency numbers are classified as
+            // invalid. Therefore, if the number passes the validation test, we believe it is not an
+            // emergency number.
+            // TODO: Compare against a list of country-specific known emergency numbers instead, once
+            // that has been collected.
+            if (util.isValidNumber(pn)) {
+                return false;
+            } else if ("BR".equalsIgnoreCase(defaultCountryIso) && number.length() >= 8) {
+                // This is to prevent Brazilian local numbers which start with 911 being incorrectly
+                // classified as emergency numbers. 911 is not an emergency number in Brazil; it is also
+                // not possible to append additional digits to an emergency number to dial the number in
+                // Brazil - it won't connect.
+                // TODO: Clean this up once a list of country-specific known emergency numbers is
+                // collected.
+                return false;
+            }
+        } catch (NumberParseException e) {
+        }
+        return isEmergencyNumberInternal(number, useExactMatch);
+>>>>>>> upstream/master
     }
 
     /**

@@ -19,15 +19,21 @@ package com.android.internal.telephony;
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
+<<<<<<< HEAD
 import android.os.SystemProperties;
 import android.text.TextUtils;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 
 import com.android.internal.telephony.CommandException;
 
+<<<<<<< HEAD
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
+=======
+>>>>>>> upstream/master
 
 /**
  * {@hide}
@@ -121,6 +127,7 @@ public abstract class CallTracker extends Handler {
         return pendingOperations == 0;
     }
 
+<<<<<<< HEAD
     /**
      * Routine called from dial to check if the number is a test Emergency number
      * and if so remap the number. This allows a short emergency number to be remapped
@@ -163,6 +170,8 @@ public abstract class CallTracker extends Handler {
         }
         return dialString;
     }
+=======
+>>>>>>> upstream/master
 
     //***** Overridden from Handler
     public abstract void handleMessage (Message msg);
@@ -173,10 +182,13 @@ public abstract class CallTracker extends Handler {
 
     protected abstract void log(String msg);
 
+<<<<<<< HEAD
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("CallTracker:");
         pw.println(" pendingOperations=" + pendingOperations);
         pw.println(" needsPoll=" + needsPoll);
         pw.println(" lastRelevantPoll=" + lastRelevantPoll);
     }
+=======
+>>>>>>> upstream/master
 }

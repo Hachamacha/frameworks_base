@@ -39,7 +39,10 @@ class SupplicantStateTracker extends StateMachine {
     private static final boolean DBG = false;
 
     private WifiStateMachine mWifiStateMachine;
+<<<<<<< HEAD
     private WifiConfigStore mWifiConfigStore;
+=======
+>>>>>>> upstream/master
     private int mAuthenticationFailuresCount = 0;
     /* Indicates authentication failure in supplicant broadcast.
      * TODO: enhance auth failure reporting to include notification
@@ -63,12 +66,20 @@ class SupplicantStateTracker extends StateMachine {
     private State mCompletedState = new CompletedState();
     private State mDormantState = new DormantState();
 
+<<<<<<< HEAD
     public SupplicantStateTracker(Context c, WifiStateMachine wsm, WifiConfigStore wcs, Handler t) {
         super(TAG, t.getLooper());
 
         mContext = c;
         mWifiStateMachine = wsm;
         mWifiConfigStore = wcs;
+=======
+    public SupplicantStateTracker(Context context, WifiStateMachine wsm, Handler target) {
+        super(TAG, target.getLooper());
+
+        mContext = context;
+        mWifiStateMachine = wsm;
+>>>>>>> upstream/master
         addState(mDefaultState);
             addState(mUninitializedState, mDefaultState);
             addState(mInactiveState, mDefaultState);
@@ -87,11 +98,19 @@ class SupplicantStateTracker extends StateMachine {
     private void handleNetworkConnectionFailure(int netId) {
         /* If other networks disabled during connection, enable them */
         if (mNetworksDisabledDuringConnect) {
+<<<<<<< HEAD
             mWifiConfigStore.enableAllNetworks();
             mNetworksDisabledDuringConnect = false;
         }
         /* Disable failed network */
         mWifiConfigStore.disableNetwork(netId, WifiConfiguration.DISABLED_AUTH_FAILURE);
+=======
+            WifiConfigStore.enableAllNetworks();
+            mNetworksDisabledDuringConnect = false;
+        }
+        /* Disable failed network */
+        WifiConfigStore.disableNetwork(netId, WifiConfiguration.DISABLED_AUTH_FAILURE);
+>>>>>>> upstream/master
     }
 
     private void transitionOnSupplicantStateChange(StateChangeResult stateChangeResult) {
@@ -175,7 +194,11 @@ class SupplicantStateTracker extends StateMachine {
                 case WifiStateMachine.CMD_RESET_SUPPLICANT_STATE:
                     transitionTo(mUninitializedState);
                     break;
+<<<<<<< HEAD
                 case WifiManager.CONNECT_NETWORK:
+=======
+                case WifiStateMachine.CMD_CONNECT_NETWORK:
+>>>>>>> upstream/master
                     mNetworksDisabledDuringConnect = true;
                     break;
                 default:
@@ -287,7 +310,11 @@ class SupplicantStateTracker extends StateMachine {
              /* Reset authentication failure count */
              mAuthenticationFailuresCount = 0;
              if (mNetworksDisabledDuringConnect) {
+<<<<<<< HEAD
                  mWifiConfigStore.enableAllNetworks();
+=======
+                 WifiConfigStore.enableAllNetworks();
+>>>>>>> upstream/master
                  mNetworksDisabledDuringConnect = false;
              }
         }

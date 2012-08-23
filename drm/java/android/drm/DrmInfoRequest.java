@@ -67,11 +67,14 @@ public class DrmInfoRequest {
     public DrmInfoRequest(int infoType, String mimeType) {
         mInfoType = infoType;
         mMimeType = mimeType;
+<<<<<<< HEAD
         if (!isValid()) {
             final String msg = "infoType: " + infoType + "," +
                                "mimeType: " + mimeType;
             throw new IllegalArgumentException(msg);
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**

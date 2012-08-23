@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Handler;
 
 /**
+<<<<<<< HEAD
  * Receives call backs for changes to content.
  * Must be implemented by objects which are added to a {@link ContentObservable}.
  */
@@ -33,6 +34,82 @@ public abstract class ContentObserver {
      * Creates a content observer.
      *
      * @param handler The handler to run {@link #onChange} on, or null if none.
+=======
+ * Receives call backs for changes to content. Must be implemented by objects which are added
+ * to a {@link ContentObservable}.
+ */
+public abstract class ContentObserver {
+
+    private Transport mTransport;
+
+    // Protects mTransport
+    private Object lock = new Object();
+
+    /* package */ Handler mHandler;
+
+    private final class NotificationRunnable implements Runnable {
+
+        private boolean mSelf;
+	private Uri mUri = null;
+
+        public NotificationRunnable(boolean self) {
+            mSelf = self;
+        }
+
+
+        public NotificationRunnable(Uri uri, boolean self) {
+            mSelf = self;
+            mUri = uri;
+        }
+
+        public void run() { 
+            if (mUri != null) {
+                ContentObserver.this.onChangeUri(mUri, mSelf);
+            } else {
+                ContentObserver.this.onChange(mSelf);
+            }
+        }
+    }
+
+    private static final class Transport extends IContentObserver.Stub {
+        ContentObserver mContentObserver;
+
+        public Transport(ContentObserver contentObserver) {
+            mContentObserver = contentObserver;
+        }
+
+        public boolean deliverSelfNotifications() {
+            ContentObserver contentObserver = mContentObserver;
+            if (contentObserver != null) {
+                return contentObserver.deliverSelfNotifications();
+            }
+            return false;
+        }
+
+        public void onChangeUri(Uri uri, boolean selfChange) {
+            ContentObserver contentObserver = mContentObserver;
+            if (contentObserver != null) {
+                contentObserver.dispatchChange(uri, selfChange);
+            }
+        }
+
+        public void onChange(boolean selfChange) {
+            ContentObserver contentObserver = mContentObserver;
+            if (contentObserver != null) {
+                contentObserver.dispatchChange(selfChange);
+            }
+        }
+
+        public void releaseContentObserver() {
+            mContentObserver = null;
+        }
+    }
+
+    /**
+     * onChange() will happen on the provider Handler.
+     *
+     * @param handler The handler to run {@link #onChange} on.
+>>>>>>> upstream/master
      */
     public ContentObserver(Handler handler) {
         mHandler = handler;
@@ -44,7 +121,11 @@ public abstract class ContentObserver {
      * {@hide}
      */
     public IContentObserver getContentObserver() {
+<<<<<<< HEAD
         synchronized (mLock) {
+=======
+        synchronized(lock) {
+>>>>>>> upstream/master
             if (mTransport == null) {
                 mTransport = new Transport(this);
             }
@@ -59,8 +140,13 @@ public abstract class ContentObserver {
      * {@hide}
      */
     public IContentObserver releaseContentObserver() {
+<<<<<<< HEAD
         synchronized (mLock) {
             final Transport oldTransport = mTransport;
+=======
+        synchronized(lock) {
+            Transport oldTransport = mTransport;
+>>>>>>> upstream/master
             if (oldTransport != null) {
                 oldTransport.releaseContentObserver();
                 mTransport = null;
@@ -70,6 +156,7 @@ public abstract class ContentObserver {
     }
 
     /**
+<<<<<<< HEAD
      * Returns true if this observer is interested receiving self-change notifications.
      *
      * Subclasses should override this method to indicate whether the observer
@@ -77,12 +164,17 @@ public abstract class ContentObserver {
      * content itself.
      *
      * @return True if self-change notifications should be delivered to the observer.
+=======
+     * Returns true if this observer is interested in notifications for changes
+     * made through the cursor the observer is registered with.
+>>>>>>> upstream/master
      */
     public boolean deliverSelfNotifications() {
         return false;
     }
 
     /**
+<<<<<<< HEAD
      * This method is called when a content change occurs.
      * <p>
      * Subclasses should override this method to handle content changes.
@@ -200,4 +292,35 @@ public abstract class ContentObserver {
             mContentObserver = null;
         }
     }
+=======
+     * This method is called when a change occurs to the cursor that
+     * is being observed.
+     *  
+     * @param selfChange true if the update was caused by a call to <code>commit</code> on the
+     *  cursor that is being observed.
+     */
+    public void onChange(boolean selfChange) {}
+
+    /** @hide */
+    public void onChangeUri(Uri uri, boolean selfChange) {}
+
+    public final void dispatchChange(boolean selfChange) {
+        if (mHandler == null) {
+            onChange(selfChange);
+        } else {
+            mHandler.post(new NotificationRunnable(selfChange));
+        }
+    }
+
+
+    /** @hide */
+    public final void dispatchChange(Uri uri, boolean selfChange) {
+        if (mHandler == null) {
+            onChangeUri(uri, selfChange);
+        } else {
+            mHandler.post(new NotificationRunnable(uri, selfChange));
+        }
+    }
+
+>>>>>>> upstream/master
 }

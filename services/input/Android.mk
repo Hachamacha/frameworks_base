@@ -29,7 +29,10 @@ LOCAL_SRC_FILES:= \
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
+<<<<<<< HEAD
     libandroidfw \
+=======
+>>>>>>> upstream/master
     libutils \
     libhardware \
     libhardware_legacy \

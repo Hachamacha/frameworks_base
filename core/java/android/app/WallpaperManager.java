@@ -30,7 +30,10 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+<<<<<<< HEAD
 import android.os.Binder;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -67,6 +70,7 @@ public class WallpaperManager {
             = "android.service.wallpaper.LIVE_WALLPAPER_CHOOSER";
 
     /**
+<<<<<<< HEAD
      * Directly launch live wallpaper preview, allowing the user to immediately
      * confirm to switch to a specific live wallpaper.  You must specify
      * {@link #EXTRA_LIVE_WALLPAPER_COMPONENT} with the ComponentName of
@@ -84,6 +88,8 @@ public class WallpaperManager {
             = "android.service.wallpaper.extra.LIVE_WALLPAPER_COMPONENT";
 
     /**
+=======
+>>>>>>> upstream/master
      * Manifest entry for activities that respond to {@link Intent#ACTION_SET_WALLPAPER}
      * which allows them to provide a custom large icon associated with this action.
      */
@@ -231,6 +237,13 @@ public class WallpaperManager {
             mHandler.sendEmptyMessage(MSG_CLEAR_WALLPAPER);
         }
 
+<<<<<<< HEAD
+=======
+        public Handler getHandler() {
+            return mHandler;
+        }
+
+>>>>>>> upstream/master
         public Bitmap peekWallpaperBitmap(Context context, boolean returnDefault) {
             synchronized (this) {
                 if (mWallpaper != null) {
@@ -451,12 +464,16 @@ public class WallpaperManager {
      */
     public WallpaperInfo getWallpaperInfo() {
         try {
+<<<<<<< HEAD
             if (sGlobals.mService == null) {
                 Log.w(TAG, "WallpaperService not running");
                 return null;
             } else {
                 return sGlobals.mService.getWallpaperInfo();
             }
+=======
+            return sGlobals.mService.getWallpaperInfo();
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             return null;
         }
@@ -468,19 +485,25 @@ public class WallpaperManager {
      * wallpaper; it must be a valid PNG or JPEG image.  On success, the intent
      * {@link Intent#ACTION_WALLPAPER_CHANGED} is broadcast.
      *
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
      *
+=======
+>>>>>>> upstream/master
      * @param resid The bitmap to save.
      *
      * @throws IOException If an error occurs reverting to the default
      * wallpaper.
      */
     public void setResource(int resid) throws IOException {
+<<<<<<< HEAD
         if (sGlobals.mService == null) {
             Log.w(TAG, "WallpaperService not running");
             return;
         }
+=======
+>>>>>>> upstream/master
         try {
             Resources resources = mContext.getResources();
             /* Set the wallpaper to the default values */
@@ -507,19 +530,25 @@ public class WallpaperManager {
      * converted to a PNG and stored as the wallpaper.  On success, the intent
      * {@link Intent#ACTION_WALLPAPER_CHANGED} is broadcast.
      *
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
      *
+=======
+>>>>>>> upstream/master
      * @param bitmap The bitmap to save.
      *
      * @throws IOException If an error occurs reverting to the default
      * wallpaper.
      */
     public void setBitmap(Bitmap bitmap) throws IOException {
+<<<<<<< HEAD
         if (sGlobals.mService == null) {
             Log.w(TAG, "WallpaperService not running");
             return;
         }
+=======
+>>>>>>> upstream/master
         try {
             ParcelFileDescriptor fd = sGlobals.mService.setWallpaper(null);
             if (fd == null) {
@@ -546,19 +575,25 @@ public class WallpaperManager {
      * image.  On success, the intent {@link Intent#ACTION_WALLPAPER_CHANGED}
      * is broadcast.
      *
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
      *
+=======
+>>>>>>> upstream/master
      * @param data A stream containing the raw data to install as a wallpaper.
      *
      * @throws IOException If an error occurs reverting to the default
      * wallpaper.
      */
     public void setStream(InputStream data) throws IOException {
+<<<<<<< HEAD
         if (sGlobals.mService == null) {
             Log.w(TAG, "WallpaperService not running");
             return;
         }
+=======
+>>>>>>> upstream/master
         try {
             ParcelFileDescriptor fd = sGlobals.mService.setWallpaper(null);
             if (fd == null) {
@@ -602,10 +637,13 @@ public class WallpaperManager {
      * mandatory.
      */
     public int getDesiredMinimumWidth() {
+<<<<<<< HEAD
         if (sGlobals.mService == null) {
             Log.w(TAG, "WallpaperService not running");
             return 0;
         }
+=======
+>>>>>>> upstream/master
         try {
             return sGlobals.mService.getWidthHint();
         } catch (RemoteException e) {
@@ -629,10 +667,13 @@ public class WallpaperManager {
      * mandatory.
      */
     public int getDesiredMinimumHeight() {
+<<<<<<< HEAD
         if (sGlobals.mService == null) {
             Log.w(TAG, "WallpaperService not running");
             return 0;
         }
+=======
+>>>>>>> upstream/master
         try {
             return sGlobals.mService.getHeightHint();
         } catch (RemoteException e) {
@@ -646,6 +687,7 @@ public class WallpaperManager {
      * wallpaper it would like to use.  This allows such applications to have
      * a virtual wallpaper that is larger than the physical screen, matching
      * the size of their workspace.
+<<<<<<< HEAD
      *
      * <p>Note developers, who don't seem to be reading this.  This is
      * for <em>home screens</em> to tell what size wallpaper they would like.
@@ -657,16 +699,22 @@ public class WallpaperManager {
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER_HINTS}.
      *
+=======
+>>>>>>> upstream/master
      * @param minimumWidth Desired minimum width
      * @param minimumHeight Desired minimum height
      */
     public void suggestDesiredDimensions(int minimumWidth, int minimumHeight) {
         try {
+<<<<<<< HEAD
             if (sGlobals.mService == null) {
                 Log.w(TAG, "WallpaperService not running");
             } else {
                 sGlobals.mService.setDimensionHints(minimumWidth, minimumHeight);
             }
+=======
+            sGlobals.mService.setDimensionHints(minimumWidth, minimumHeight);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             // Ignore
         }
@@ -686,6 +734,7 @@ public class WallpaperManager {
      * @param yOffset The offset along the Y dimension, from 0 to 1.
      */
     public void setWallpaperOffsets(IBinder windowToken, float xOffset, float yOffset) {
+<<<<<<< HEAD
         try {
             //Log.v(TAG, "Sending new wallpaper offsets from app...");
             ViewRootImpl.getWindowSession(mContext.getMainLooper()).setWallpaperPosition(
@@ -694,6 +743,26 @@ public class WallpaperManager {
         } catch (RemoteException e) {
             // Ignore.
         }
+=======
+        final IBinder fWindowToken = windowToken;
+        final float fXOffset = xOffset;
+        final float fYOffset = yOffset;
+        sGlobals.getHandler().post(new Runnable() {
+            public void run() {
+                try {
+                    //Log.v(TAG, "Sending new wallpaper offsets from app...");
+                    ViewRootImpl.getWindowSession(mContext.getMainLooper()).setWallpaperPosition(
+                            fWindowToken, fXOffset, fYOffset, mWallpaperXStep, mWallpaperYStep);
+                    //Log.v(TAG, "...app returning after sending offsets!");
+                } catch (RemoteException e) {
+                    // Ignore.
+                } catch (IllegalArgumentException e) {
+                    // Since this is being posted, it's possible that this windowToken is no longer
+                    // valid, for example, if setWallpaperOffsets is called just before rotation.
+                }
+            }
+        });
+>>>>>>> upstream/master
     }
 
     /**
@@ -758,9 +827,12 @@ public class WallpaperManager {
      * wallpaper. On success, the intent {@link Intent#ACTION_WALLPAPER_CHANGED}
      * is broadcast.
      *
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#SET_WALLPAPER}.
      *
+=======
+>>>>>>> upstream/master
      * @throws IOException If an error occurs reverting to the default
      * wallpaper.
      */

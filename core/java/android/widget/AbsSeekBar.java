@@ -21,13 +21,19 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 public abstract class AbsSeekBar extends ProgressBar {
     private Drawable mThumb;
@@ -124,7 +130,11 @@ public abstract class AbsSeekBar extends ProgressBar {
         invalidate();
         if (needUpdate) {
             updateThumbPos(getWidth(), getHeight());
+<<<<<<< HEAD
             if (thumb != null && thumb.isStateful()) {
+=======
+            if (thumb.isStateful()) {
+>>>>>>> upstream/master
                 // Note that if the states are different this won't work.
                 // For now, let's consider that an app bug.
                 int[] state = getDrawableState();
@@ -134,6 +144,7 @@ public abstract class AbsSeekBar extends ProgressBar {
     }
 
     /**
+<<<<<<< HEAD
      * Return the drawable used to represent the scroll thumb - the component that
      * the user can drag back and forth indicating the current value by its position.
      *
@@ -144,6 +155,8 @@ public abstract class AbsSeekBar extends ProgressBar {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @see #setThumbOffset(int)
      */
     public int getThumbOffset() {
@@ -477,6 +490,7 @@ public abstract class AbsSeekBar extends ProgressBar {
         return super.onKeyDown(keyCode, event);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -529,4 +543,6 @@ public abstract class AbsSeekBar extends ProgressBar {
         }
         return false;
     }
+=======
+>>>>>>> upstream/master
 }

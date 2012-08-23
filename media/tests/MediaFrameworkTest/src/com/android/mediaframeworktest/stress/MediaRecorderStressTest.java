@@ -60,8 +60,11 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
     private static final String OUTPUT_FILE_EXT = ".3gp";
     private static final String MEDIA_STRESS_OUTPUT =
         "/sdcard/mediaStressOutput.txt";
+<<<<<<< HEAD
     private static final int CAMERA_ID = 0;
 
+=======
+>>>>>>> upstream/master
     private final CameraErrorCallback mCameraErrorCallback = new CameraErrorCallback();
     private final RecorderErrorCallback mRecorderErrorCallback = new RecorderErrorCallback();
 
@@ -90,9 +93,13 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
         if (! sem.tryAcquire(WAIT_TIMEOUT, TimeUnit.MILLISECONDS)) {
             fail("Failed to start the looper.");
         }
+<<<<<<< HEAD
         //Insert a 2 second before launching the test activity. This is
         //the workaround for the race condition of requesting the updated surface.
         Thread.sleep(2000);
+=======
+
+>>>>>>> upstream/master
         getActivity();
         super.setUp();
     }
@@ -164,7 +171,11 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
                 runOnLooper(new Runnable() {
                     @Override
                     public void run() {
+<<<<<<< HEAD
                         mCamera = Camera.open(CAMERA_ID);
+=======
+                        mCamera = Camera.open();
+>>>>>>> upstream/master
                     }
                 });
                 mCamera.setErrorCallback(mCameraErrorCallback);
@@ -252,7 +263,11 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
                 runOnLooper(new Runnable() {
                     @Override
                     public void run() {
+<<<<<<< HEAD
                         mCamera = Camera.open(CAMERA_ID);
+=======
+                        mCamera = Camera.open();
+>>>>>>> upstream/master
                     }
                 });
                 mCamera.setErrorCallback(mCameraErrorCallback);
@@ -415,6 +430,7 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
         output.write("Total number of loops: " + NUMBER_OF_TIME_LAPSE_LOOPS + "\n");
 
         try {
+<<<<<<< HEAD
             for (int j = 0, n = Camera.getNumberOfCameras(); j < n; j++) {
                 output.write("No of loop: camera " + j);
                 for (int i = 0; i < NUMBER_OF_TIME_LAPSE_LOOPS; i++) {
@@ -470,6 +486,61 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
                     }
                     output.write(", " + i);
                 }
+=======
+            output.write("No of loop: ");
+            for (int i = 0; i < NUMBER_OF_TIME_LAPSE_LOOPS; i++) {
+                filename = OUTPUT_FILE + i + OUTPUT_FILE_EXT;
+                Log.v(TAG, filename);
+                runOnLooper(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecorder = new MediaRecorder();
+                    }
+                });
+
+                // Set callback
+                mRecorder.setOnErrorListener(mRecorderErrorCallback);
+
+                // Set video source
+                mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+                // Set camcorder profile for time lapse
+                CamcorderProfile profile =
+                        CamcorderProfile.get(CamcorderProfile.QUALITY_TIME_LAPSE_HIGH);
+                mRecorder.setProfile(profile);
+
+                // Set the timelapse setting; 0.1 = 10 sec timelapse, 0.5 = 2 sec timelapse, etc.
+                // http://developer.android.com/guide/topics/media/camera.html#time-lapse-video
+                mRecorder.setCaptureRate(captureRate);
+
+                // Set output file
+                mRecorder.setOutputFile(filename);
+
+                // Set the preview display
+                Log.v(TAG, "mediaRecorder setPreviewDisplay");
+                mRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
+
+                mRecorder.prepare();
+                mRecorder.start();
+                Thread.sleep(record_duration);
+                Log.v(TAG, "Before stop");
+                mRecorder.stop();
+                mRecorder.release();
+
+                // Start the playback
+                MediaPlayer mp = new MediaPlayer();
+                mp.setDataSource(filename);
+                mp.setDisplay(mSurfaceHolder);
+                mp.prepare();
+                mp.start();
+                Thread.sleep(TIME_LAPSE_PLAYBACK_WAIT_TIME);
+                mp.release();
+                validateRecordedVideo(filename);
+                if(remove_video) {
+                  removeRecordedVideo(filename);
+                }
+                output.write(", " + i);
+>>>>>>> upstream/master
             }
         }
         catch (IllegalStateException e) {

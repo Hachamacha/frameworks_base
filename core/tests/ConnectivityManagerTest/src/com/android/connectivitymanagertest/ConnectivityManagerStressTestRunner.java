@@ -42,13 +42,26 @@ public class ConnectivityManagerStressTestRunner extends InstrumentationTestRunn
     public int mSleepTime = 2 * 60 * 1000;
     public String mReconnectSsid = "securenetdhcp";
     public String mReconnectPassword = "androidwifi";
+<<<<<<< HEAD
     public boolean mWifiOnlyFlag = false;
+=======
+>>>>>>> upstream/master
 
     @Override
     public TestSuite getAllTests() {
         TestSuite suite = new InstrumentationTestSuite(this);
+<<<<<<< HEAD
         suite.addTestSuite(WifiApStress.class);
         suite.addTestSuite(WifiStressTest.class);
+=======
+        if (!UtilHelper.isWifiOnly()) {
+            suite.addTestSuite(WifiApStress.class);
+            suite.addTestSuite(WifiStressTest.class);
+        } else {
+            // only the wifi stress tests
+            suite.addTestSuite(WifiStressTest.class);
+        }
+>>>>>>> upstream/master
         return suite;
     }
 
@@ -60,11 +73,21 @@ public class ConnectivityManagerStressTestRunner extends InstrumentationTestRunn
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+<<<<<<< HEAD
         String valueStr = (String) icicle.get("softap_iterations");
         if (valueStr != null) {
             int iteration = Integer.parseInt(valueStr);
             if (iteration > 0) {
                 mSoftapIterations = iteration;
+=======
+        if (!UtilHelper.isWifiOnly()) {
+            String valueStr = (String) icicle.get("softap_iterations");
+            if (valueStr != null) {
+                int iteration = Integer.parseInt(valueStr);
+                if (iteration > 0) {
+                    mSoftapIterations = iteration;
+                }
+>>>>>>> upstream/master
             }
         }
 
@@ -101,10 +124,13 @@ public class ConnectivityManagerStressTestRunner extends InstrumentationTestRunn
                 mSleepTime = 1000 * sleepTime;
             }
         }
+<<<<<<< HEAD
 
         String wifiOnlyFlag = (String) icicle.get("wifi-only");
         if (wifiOnlyFlag != null) {
             mWifiOnlyFlag = true;
         }
+=======
+>>>>>>> upstream/master
     }
 }

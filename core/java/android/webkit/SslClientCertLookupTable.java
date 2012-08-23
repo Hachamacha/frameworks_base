@@ -16,7 +16,10 @@
 
 package android.webkit;
 
+<<<<<<< HEAD
 import java.security.PrivateKey;
+=======
+>>>>>>> upstream/master
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,7 +30,11 @@ import java.util.Set;
  */
 final class SslClientCertLookupTable {
     private static SslClientCertLookupTable sTable;
+<<<<<<< HEAD
     private final Map<String, PrivateKey> privateKeys;
+=======
+    private final Map<String, byte[]> privateKeys;
+>>>>>>> upstream/master
     private final Map<String, byte[][]> certificateChains;
     private final Set<String> denied;
 
@@ -39,12 +46,20 @@ final class SslClientCertLookupTable {
     }
 
     private SslClientCertLookupTable() {
+<<<<<<< HEAD
         privateKeys = new HashMap<String, PrivateKey>();
+=======
+        privateKeys = new HashMap<String, byte[]>();
+>>>>>>> upstream/master
         certificateChains = new HashMap<String, byte[][]>();
         denied = new HashSet<String>();
     }
 
+<<<<<<< HEAD
     public void Allow(String host_and_port, PrivateKey privateKey, byte[][] chain) {
+=======
+    public void Allow(String host_and_port, byte[] privateKey, byte[][] chain) {
+>>>>>>> upstream/master
         privateKeys.put(host_and_port, privateKey);
         certificateChains.put(host_and_port, chain);
         denied.remove(host_and_port);
@@ -64,7 +79,11 @@ final class SslClientCertLookupTable {
         return denied.contains(host_and_port);
     }
 
+<<<<<<< HEAD
     public PrivateKey PrivateKey(String host_and_port) {
+=======
+    public byte[] PrivateKey(String host_and_port) {
+>>>>>>> upstream/master
         return privateKeys.get(host_and_port);
     }
 

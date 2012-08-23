@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.AnimatorSet.Builder;
 import android.animation.ObjectAnimator;
+<<<<<<< HEAD
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -28,18 +29,32 @@ import android.view.View;
 import android.view.ViewRootImpl;
 
 import com.android.systemui.R;
+=======
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.util.Slog;
+import android.view.View;
+>>>>>>> upstream/master
 
 /* package */ class Choreographer implements Animator.AnimatorListener {
     // should group this into a multi-property animation
     private static final int OPEN_DURATION = 136;
+<<<<<<< HEAD
     private static final int CLOSE_DURATION = 230;
+=======
+    private static final int CLOSE_DURATION = 250;
+>>>>>>> upstream/master
     private static final int SCRIM_DURATION = 400;
     private static final String TAG = RecentsPanelView.TAG;
     private static final boolean DEBUG = RecentsPanelView.DEBUG;
 
     boolean mVisible;
     int mPanelHeight;
+<<<<<<< HEAD
     RecentsPanelView mRootView;
+=======
+    View mRootView;
+>>>>>>> upstream/master
     View mScrimView;
     View mContentView;
     View mNoRecentAppsView;
@@ -49,7 +64,11 @@ import com.android.systemui.R;
     // the panel will start to appear this many px from the end
     final int HYPERSPACE_OFFRAMP = 200;
 
+<<<<<<< HEAD
     public Choreographer(RecentsPanelView root, View scrim, View content,
+=======
+    public Choreographer(View root, View scrim, View content,
+>>>>>>> upstream/master
             View noRecentApps, Animator.AnimatorListener listener) {
         mRootView = root;
         mScrimView = scrim;
@@ -71,7 +90,11 @@ import com.android.systemui.R;
             end = 0;
         } else {
             start = y;
+<<<<<<< HEAD
             end = y;
+=======
+            end = y + HYPERSPACE_OFFRAMP;
+>>>>>>> upstream/master
         }
 
         Animator posAnim = ObjectAnimator.ofFloat(mContentView, "translationY",
@@ -81,12 +104,21 @@ import com.android.systemui.R;
                 : new android.view.animation.AccelerateInterpolator(2.5f));
         posAnim.setDuration(appearing ? OPEN_DURATION : CLOSE_DURATION);
 
+<<<<<<< HEAD
         Animator fadeAnim = ObjectAnimator.ofFloat(mContentView, "alpha",
                 mContentView.getAlpha(), appearing ? 1.0f : 0.0f);
         fadeAnim.setInterpolator(appearing
                 ? new android.view.animation.AccelerateInterpolator(1.0f)
                 : new android.view.animation.AccelerateInterpolator(2.5f));
         fadeAnim.setDuration(appearing ? OPEN_DURATION : CLOSE_DURATION);
+=======
+        Animator glowAnim = ObjectAnimator.ofFloat(mContentView, "alpha",
+                mContentView.getAlpha(), appearing ? 1.0f : 0.0f);
+        glowAnim.setInterpolator(appearing
+                ? new android.view.animation.AccelerateInterpolator(1.0f)
+                : new android.view.animation.DecelerateInterpolator(1.0f));
+        glowAnim.setDuration(appearing ? OPEN_DURATION : CLOSE_DURATION);
+>>>>>>> upstream/master
 
         Animator noRecentAppsFadeAnim = null;
         if (mNoRecentAppsView != null &&  // doesn't exist on large devices
@@ -100,12 +132,17 @@ import com.android.systemui.R;
         }
 
         mContentAnim = new AnimatorSet();
+<<<<<<< HEAD
         final Builder builder = mContentAnim.play(fadeAnim).with(posAnim);
+=======
+        final Builder builder = mContentAnim.play(glowAnim).with(posAnim);
+>>>>>>> upstream/master
 
         if (noRecentAppsFadeAnim != null) {
             builder.with(noRecentAppsFadeAnim);
         }
 
+<<<<<<< HEAD
         if (appearing) {
             Drawable background = mScrimView.getBackground();
             if (background != null) {
@@ -128,6 +165,14 @@ import com.android.systemui.R;
                 bgAnim.setInterpolator(new android.view.animation.AccelerateInterpolator(1f));
                 builder.with(bgAnim);
             }
+=======
+        Drawable background = mScrimView.getBackground();
+        if (background != null) {
+            Animator bgAnim = ObjectAnimator.ofInt(background,
+                "alpha", appearing ? 0 : 255, appearing ? 255 : 0);
+            bgAnim.setDuration(appearing ? SCRIM_DURATION : CLOSE_DURATION);
+            builder.with(bgAnim);
+>>>>>>> upstream/master
         }
         mContentAnim.addListener(this);
         if (mListener != null) {
@@ -154,6 +199,7 @@ import com.android.systemui.R;
 
     void jumpTo(boolean appearing) {
         mContentView.setTranslationY(appearing ? 0 : mPanelHeight);
+<<<<<<< HEAD
         if (mScrimView.getBackground() != null) {
             mScrimView.getBackground().setAlpha(appearing ? 255 : 0);
         }
@@ -161,6 +207,8 @@ import com.android.systemui.R;
                 mRootView.findViewById(R.id.recents_transition_background);
         recentsTransitionBackground.setVisibility(View.INVISIBLE);
         mRootView.requestLayout();
+=======
+>>>>>>> upstream/master
     }
 
     public void setPanelHeight(int h) {
@@ -177,10 +225,16 @@ import com.android.systemui.R;
     public void onAnimationEnd(Animator animation) {
         if (DEBUG) Slog.d(TAG, "onAnimationEnd");
         if (!mVisible) {
+<<<<<<< HEAD
             mRootView.hideWindow();
         }
         mContentView.setLayerType(View.LAYER_TYPE_NONE, null);
         mContentView.setAlpha(1f);
+=======
+            mRootView.setVisibility(View.GONE);
+        }
+        mContentView.setLayerType(View.LAYER_TYPE_NONE, null);
+>>>>>>> upstream/master
         mContentAnim = null;
     }
 

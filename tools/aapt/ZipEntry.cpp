@@ -42,12 +42,20 @@ status_t ZipEntry::initFromCDE(FILE* fp)
     long posn;
     bool hasDD;
 
+<<<<<<< HEAD
     //ALOGV("initFromCDE ---\n");
+=======
+    //LOGV("initFromCDE ---\n");
+>>>>>>> upstream/master
 
     /* read the CDE */
     result = mCDE.read(fp);
     if (result != NO_ERROR) {
+<<<<<<< HEAD
         ALOGD("mCDE.read failed\n");
+=======
+        LOGD("mCDE.read failed\n");
+>>>>>>> upstream/master
         return result;
     }
 
@@ -56,14 +64,22 @@ status_t ZipEntry::initFromCDE(FILE* fp)
     /* using the info in the CDE, go load up the LFH */
     posn = ftell(fp);
     if (fseek(fp, mCDE.mLocalHeaderRelOffset, SEEK_SET) != 0) {
+<<<<<<< HEAD
         ALOGD("local header seek failed (%ld)\n",
+=======
+        LOGD("local header seek failed (%ld)\n",
+>>>>>>> upstream/master
             mCDE.mLocalHeaderRelOffset);
         return UNKNOWN_ERROR;
     }
 
     result = mLFH.read(fp);
     if (result != NO_ERROR) {
+<<<<<<< HEAD
         ALOGD("mLFH.read failed\n");
+=======
+        LOGD("mLFH.read failed\n");
+>>>>>>> upstream/master
         return result;
     }
 
@@ -81,7 +97,11 @@ status_t ZipEntry::initFromCDE(FILE* fp)
     hasDD = (mLFH.mGPBitFlag & kUsesDataDescr) != 0;
     if (hasDD) {
         // do something clever
+<<<<<<< HEAD
         //ALOGD("+++ has data descriptor\n");
+=======
+        //LOGD("+++ has data descriptor\n");
+>>>>>>> upstream/master
     }
 
     /*
@@ -90,7 +110,11 @@ status_t ZipEntry::initFromCDE(FILE* fp)
      * prefer the CDE values.)
      */
     if (!hasDD && !compareHeaders()) {
+<<<<<<< HEAD
         ALOGW("warning: header mismatch\n");
+=======
+        LOGW("warning: header mismatch\n");
+>>>>>>> upstream/master
         // keep going?
     }
 
@@ -200,7 +224,11 @@ status_t ZipEntry::addPadding(int padding)
     if (padding <= 0)
         return INVALID_OPERATION;
 
+<<<<<<< HEAD
     //ALOGI("HEY: adding %d pad bytes to existing %d in %s\n",
+=======
+    //LOGI("HEY: adding %d pad bytes to existing %d in %s\n",
+>>>>>>> upstream/master
     //    padding, mLFH.mExtraFieldLength, mCDE.mFileName);
 
     if (mLFH.mExtraFieldLength > 0) {
@@ -280,6 +308,7 @@ void ZipEntry::setDataInfo(long uncompLen, long compLen, unsigned long crc32,
 bool ZipEntry::compareHeaders(void) const
 {
     if (mCDE.mVersionToExtract != mLFH.mVersionToExtract) {
+<<<<<<< HEAD
         ALOGV("cmp: VersionToExtract\n");
         return false;
     }
@@ -313,17 +342,60 @@ bool ZipEntry::compareHeaders(void) const
     }
     if (mCDE.mFileNameLength != mLFH.mFileNameLength) {
         ALOGV("cmp: FileNameLength\n");
+=======
+        LOGV("cmp: VersionToExtract\n");
+        return false;
+    }
+    if (mCDE.mGPBitFlag != mLFH.mGPBitFlag) {
+        LOGV("cmp: GPBitFlag\n");
+        return false;
+    }
+    if (mCDE.mCompressionMethod != mLFH.mCompressionMethod) {
+        LOGV("cmp: CompressionMethod\n");
+        return false;
+    }
+    if (mCDE.mLastModFileTime != mLFH.mLastModFileTime) {
+        LOGV("cmp: LastModFileTime\n");
+        return false;
+    }
+    if (mCDE.mLastModFileDate != mLFH.mLastModFileDate) {
+        LOGV("cmp: LastModFileDate\n");
+        return false;
+    }
+    if (mCDE.mCRC32 != mLFH.mCRC32) {
+        LOGV("cmp: CRC32\n");
+        return false;
+    }
+    if (mCDE.mCompressedSize != mLFH.mCompressedSize) {
+        LOGV("cmp: CompressedSize\n");
+        return false;
+    }
+    if (mCDE.mUncompressedSize != mLFH.mUncompressedSize) {
+        LOGV("cmp: UncompressedSize\n");
+        return false;
+    }
+    if (mCDE.mFileNameLength != mLFH.mFileNameLength) {
+        LOGV("cmp: FileNameLength\n");
+>>>>>>> upstream/master
         return false;
     }
 #if 0       // this seems to be used for padding, not real data
     if (mCDE.mExtraFieldLength != mLFH.mExtraFieldLength) {
+<<<<<<< HEAD
         ALOGV("cmp: ExtraFieldLength\n");
+=======
+        LOGV("cmp: ExtraFieldLength\n");
+>>>>>>> upstream/master
         return false;
     }
 #endif
     if (mCDE.mFileName != NULL) {
         if (strcmp((char*) mCDE.mFileName, (char*) mLFH.mFileName) != 0) {
+<<<<<<< HEAD
             ALOGV("cmp: FileName\n");
+=======
+            LOGV("cmp: FileName\n");
+>>>>>>> upstream/master
             return false;
         }
     }
@@ -413,7 +485,11 @@ status_t ZipEntry::LocalFileHeader::read(FILE* fp)
     }
 
     if (ZipEntry::getLongLE(&buf[0x00]) != kSignature) {
+<<<<<<< HEAD
         ALOGD("whoops: didn't find expected signature\n");
+=======
+        LOGD("whoops: didn't find expected signature\n");
+>>>>>>> upstream/master
         result = UNKNOWN_ERROR;
         goto bail;
     }
@@ -506,6 +582,7 @@ status_t ZipEntry::LocalFileHeader::write(FILE* fp)
  */
 void ZipEntry::LocalFileHeader::dump(void) const
 {
+<<<<<<< HEAD
     ALOGD(" LocalFileHeader contents:\n");
     ALOGD("  versToExt=%u gpBits=0x%04x compression=%u\n",
         mVersionToExtract, mGPBitFlag, mCompressionMethod);
@@ -517,6 +594,19 @@ void ZipEntry::LocalFileHeader::dump(void) const
         mFileNameLength, mExtraFieldLength);
     if (mFileName != NULL)
         ALOGD("  filename: '%s'\n", mFileName);
+=======
+    LOGD(" LocalFileHeader contents:\n");
+    LOGD("  versToExt=%u gpBits=0x%04x compression=%u\n",
+        mVersionToExtract, mGPBitFlag, mCompressionMethod);
+    LOGD("  modTime=0x%04x modDate=0x%04x crc32=0x%08lx\n",
+        mLastModFileTime, mLastModFileDate, mCRC32);
+    LOGD("  compressedSize=%lu uncompressedSize=%lu\n",
+        mCompressedSize, mUncompressedSize);
+    LOGD("  filenameLen=%u extraLen=%u\n",
+        mFileNameLength, mExtraFieldLength);
+    if (mFileName != NULL)
+        LOGD("  filename: '%s'\n", mFileName);
+>>>>>>> upstream/master
 }
 
 
@@ -549,7 +639,11 @@ status_t ZipEntry::CentralDirEntry::read(FILE* fp)
     }
 
     if (ZipEntry::getLongLE(&buf[0x00]) != kSignature) {
+<<<<<<< HEAD
         ALOGD("Whoops: didn't find expected signature\n");
+=======
+        LOGD("Whoops: didn't find expected signature\n");
+>>>>>>> upstream/master
         result = UNKNOWN_ERROR;
         goto bail;
     }
@@ -675,6 +769,7 @@ status_t ZipEntry::CentralDirEntry::write(FILE* fp)
  */
 void ZipEntry::CentralDirEntry::dump(void) const
 {
+<<<<<<< HEAD
     ALOGD(" CentralDirEntry contents:\n");
     ALOGD("  versMadeBy=%u versToExt=%u gpBits=0x%04x compression=%u\n",
         mVersionMadeBy, mVersionToExtract, mGPBitFlag, mCompressionMethod);
@@ -685,12 +780,30 @@ void ZipEntry::CentralDirEntry::dump(void) const
     ALOGD("  filenameLen=%u extraLen=%u commentLen=%u\n",
         mFileNameLength, mExtraFieldLength, mFileCommentLength);
     ALOGD("  diskNumStart=%u intAttr=0x%04x extAttr=0x%08lx relOffset=%lu\n",
+=======
+    LOGD(" CentralDirEntry contents:\n");
+    LOGD("  versMadeBy=%u versToExt=%u gpBits=0x%04x compression=%u\n",
+        mVersionMadeBy, mVersionToExtract, mGPBitFlag, mCompressionMethod);
+    LOGD("  modTime=0x%04x modDate=0x%04x crc32=0x%08lx\n",
+        mLastModFileTime, mLastModFileDate, mCRC32);
+    LOGD("  compressedSize=%lu uncompressedSize=%lu\n",
+        mCompressedSize, mUncompressedSize);
+    LOGD("  filenameLen=%u extraLen=%u commentLen=%u\n",
+        mFileNameLength, mExtraFieldLength, mFileCommentLength);
+    LOGD("  diskNumStart=%u intAttr=0x%04x extAttr=0x%08lx relOffset=%lu\n",
+>>>>>>> upstream/master
         mDiskNumberStart, mInternalAttrs, mExternalAttrs,
         mLocalHeaderRelOffset);
 
     if (mFileName != NULL)
+<<<<<<< HEAD
         ALOGD("  filename: '%s'\n", mFileName);
     if (mFileComment != NULL)
         ALOGD("  comment: '%s'\n", mFileComment);
+=======
+        LOGD("  filename: '%s'\n", mFileName);
+    if (mFileComment != NULL)
+        LOGD("  comment: '%s'\n", mFileComment);
+>>>>>>> upstream/master
 }
 

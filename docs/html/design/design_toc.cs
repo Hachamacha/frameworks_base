@@ -35,7 +35,10 @@
       <li><a href="<?cs var:toroot ?>design/patterns/swipe-views.html">Swipe Views</a></li>
       <li><a href="<?cs var:toroot ?>design/patterns/selection.html">Selection</a></li>
       <li><a href="<?cs var:toroot ?>design/patterns/notifications.html">Notifications</a></li>
+<<<<<<< HEAD
       <li><a href="<?cs var:toroot ?>design/patterns/settings.html">Settings</a></li>
+=======
+>>>>>>> upstream/master
       <li><a href="<?cs var:toroot ?>design/patterns/compatibility.html">Compatibility</a></li>
       <li><a href="<?cs var:toroot ?>design/patterns/pure-android.html">Pure Android</a></li>
     </ul>
@@ -63,4 +66,11 @@
     <div class="nav-section-header empty"><a href="<?cs var:toroot ?>design/downloads/index.html">Downloads</a></div>
   </li>
 
+<<<<<<< HEAD
+=======
+  <li>
+    <div id="back-dac-section"><a href="<?cs var:toroot ?>index.html">Developers</a></div>
+  </li>
+
+>>>>>>> upstream/master
 </ul>

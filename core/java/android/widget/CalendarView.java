@@ -39,8 +39,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.AbsListView.OnScrollListener;
 
 import com.android.internal.R;
@@ -154,6 +157,7 @@ public class CalendarView extends FrameLayout {
 
     private final int mWeekSeperatorLineWidth;
 
+<<<<<<< HEAD
     private int mDateTextSize;
 
     private Drawable mSelectedDateVerticalBar;
@@ -173,6 +177,23 @@ public class CalendarView extends FrameLayout {
     private int mWeekDayTextAppearanceResId;
 
     private int mDateTextAppearanceResId;
+=======
+    private final int mDateTextSize;
+
+    private final Drawable mSelectedDateVerticalBar;
+
+    private final int mSelectedDateVerticalBarWidth;
+
+    private final int mSelectedWeekBackgroundColor;
+
+    private final int mFocusedMonthDateColor;
+
+    private final int mUnfocusedMonthDateColor;
+
+    private final int mWeekSeparatorLineColor;
+
+    private final int mWeekNumberColor;
+>>>>>>> upstream/master
 
     /**
      * The top offset of the weeks list.
@@ -370,11 +391,23 @@ public class CalendarView extends FrameLayout {
         mSelectedDateVerticalBar = attributesArray.getDrawable(
                 R.styleable.CalendarView_selectedDateVerticalBar);
 
+<<<<<<< HEAD
         mDateTextAppearanceResId = attributesArray.getResourceId(
                 R.styleable.CalendarView_dateTextAppearance, R.style.TextAppearance_Small);
         updateDateTextSize();
 
         mWeekDayTextAppearanceResId = attributesArray.getResourceId(
+=======
+        int dateTextAppearanceResId= attributesArray.getResourceId(
+                R.styleable.CalendarView_dateTextAppearance, R.style.TextAppearance_Small);
+        TypedArray dateTextAppearance = context.obtainStyledAttributes(dateTextAppearanceResId,
+                com.android.internal.R.styleable.TextAppearance);
+        mDateTextSize = dateTextAppearance.getDimensionPixelSize(
+                R.styleable.TextAppearance_textSize, DEFAULT_DATE_TEXT_SIZE);
+        dateTextAppearance.recycle();
+
+        int weekDayTextAppearanceResId = attributesArray.getResourceId(
+>>>>>>> upstream/master
                 R.styleable.CalendarView_weekDayTextAppearance,
                 DEFAULT_WEEK_DAY_TEXT_APPEARANCE_RES_ID);
         attributesArray.recycle();
@@ -400,7 +433,11 @@ public class CalendarView extends FrameLayout {
         mDayNamesHeader = (ViewGroup) content.findViewById(com.android.internal.R.id.day_names);
         mMonthName = (TextView) content.findViewById(com.android.internal.R.id.month_name);
 
+<<<<<<< HEAD
         setUpHeader();
+=======
+        setUpHeader(weekDayTextAppearanceResId);
+>>>>>>> upstream/master
         setUpListView();
         setUpAdapter();
 
@@ -417,6 +454,7 @@ public class CalendarView extends FrameLayout {
         invalidate();
     }
 
+<<<<<<< HEAD
     /**
      * Sets the number of weeks to be shown.
      *
@@ -682,6 +720,8 @@ public class CalendarView extends FrameLayout {
         return mDateTextAppearanceResId;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void setEnabled(boolean enabled) {
         mListView.setEnabled(enabled);
@@ -698,6 +738,7 @@ public class CalendarView extends FrameLayout {
         setCurrentLocale(newConfig.locale);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -710,6 +751,8 @@ public class CalendarView extends FrameLayout {
         info.setClassName(CalendarView.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Gets the minimal date supported by this {@link CalendarView} in milliseconds
      * since January 1, 1970 00:00:00 in {@link TimeZone#getDefault()} time
@@ -719,8 +762,11 @@ public class CalendarView extends FrameLayout {
      * <p>
      *
      * @return The minimal supported date.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_minDate
+=======
+>>>>>>> upstream/master
      */
     public long getMinDate() {
         return mMinDate.getTimeInMillis();
@@ -732,8 +778,11 @@ public class CalendarView extends FrameLayout {
      * zone.
      *
      * @param minDate The minimal supported date.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_minDate
+=======
+>>>>>>> upstream/master
      */
     public void setMinDate(long minDate) {
         mTempDate.setTimeInMillis(minDate);
@@ -771,8 +820,11 @@ public class CalendarView extends FrameLayout {
      * <p>
      *
      * @return The maximal supported date.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_maxDate
+=======
+>>>>>>> upstream/master
      */
     public long getMaxDate() {
         return mMaxDate.getTimeInMillis();
@@ -784,8 +836,11 @@ public class CalendarView extends FrameLayout {
      * zone.
      *
      * @param maxDate The maximal supported date.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_maxDate
+=======
+>>>>>>> upstream/master
      */
     public void setMaxDate(long maxDate) {
         mTempDate.setTimeInMillis(maxDate);
@@ -811,8 +866,11 @@ public class CalendarView extends FrameLayout {
      * Sets whether to show the week number.
      *
      * @param showWeekNumber True to show the week number.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_showWeekNumber
+=======
+>>>>>>> upstream/master
      */
     public void setShowWeekNumber(boolean showWeekNumber) {
         if (mShowWeekNumber == showWeekNumber) {
@@ -820,15 +878,22 @@ public class CalendarView extends FrameLayout {
         }
         mShowWeekNumber = showWeekNumber;
         mAdapter.notifyDataSetChanged();
+<<<<<<< HEAD
         setUpHeader();
+=======
+        setUpHeader(DEFAULT_WEEK_DAY_TEXT_APPEARANCE_RES_ID);
+>>>>>>> upstream/master
     }
 
     /**
      * Gets whether to show the week number.
      *
      * @return True if showing the week number.
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_showWeekNumber
+=======
+>>>>>>> upstream/master
      */
     public boolean getShowWeekNumber() {
         return mShowWeekNumber;
@@ -846,8 +911,11 @@ public class CalendarView extends FrameLayout {
      * @see Calendar#FRIDAY
      * @see Calendar#SATURDAY
      * @see Calendar#SUNDAY
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_firstDayOfWeek
+=======
+>>>>>>> upstream/master
      */
     public int getFirstDayOfWeek() {
         return mFirstDayOfWeek;
@@ -865,8 +933,11 @@ public class CalendarView extends FrameLayout {
      * @see Calendar#FRIDAY
      * @see Calendar#SATURDAY
      * @see Calendar#SUNDAY
+<<<<<<< HEAD
      *
      * @attr ref android.R.styleable#CalendarView_firstDayOfWeek
+=======
+>>>>>>> upstream/master
      */
     public void setFirstDayOfWeek(int firstDayOfWeek) {
         if (mFirstDayOfWeek == firstDayOfWeek) {
@@ -875,7 +946,11 @@ public class CalendarView extends FrameLayout {
         mFirstDayOfWeek = firstDayOfWeek;
         mAdapter.init();
         mAdapter.notifyDataSetChanged();
+<<<<<<< HEAD
         setUpHeader();
+=======
+        setUpHeader(DEFAULT_WEEK_DAY_TEXT_APPEARANCE_RES_ID);
+>>>>>>> upstream/master
     }
 
     /**
@@ -936,6 +1011,7 @@ public class CalendarView extends FrameLayout {
         goTo(mTempDate, animate, true, center);
     }
 
+<<<<<<< HEAD
     private void updateDateTextSize() {
         TypedArray dateTextAppearance = getContext().obtainStyledAttributes(
                 mDateTextAppearanceResId, R.styleable.TextAppearance);
@@ -955,6 +1031,8 @@ public class CalendarView extends FrameLayout {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Sets the current locale.
      *
@@ -1027,7 +1105,11 @@ public class CalendarView extends FrameLayout {
     /**
      * Sets up the strings to be used by the header.
      */
+<<<<<<< HEAD
     private void setUpHeader() {
+=======
+    private void setUpHeader(int weekDayTextAppearanceResId) {
+>>>>>>> upstream/master
         mDayLabels = new String[mDaysPerWeek];
         for (int i = mFirstDayOfWeek, count = mFirstDayOfWeek + mDaysPerWeek; i < count; i++) {
             int calendarDay = (i > Calendar.SATURDAY) ? i - Calendar.SATURDAY : i;
@@ -1043,8 +1125,13 @@ public class CalendarView extends FrameLayout {
         }
         for (int i = 1, count = mDayNamesHeader.getChildCount(); i < count; i++) {
             label = (TextView) mDayNamesHeader.getChildAt(i);
+<<<<<<< HEAD
             if (mWeekDayTextAppearanceResId > -1) {
                 label.setTextAppearance(mContext, mWeekDayTextAppearanceResId);
+=======
+            if (weekDayTextAppearanceResId > -1) {
+                label.setTextAppearance(mContext, weekDayTextAppearanceResId);
+>>>>>>> upstream/master
             }
             if (i < mDaysPerWeek + 1) {
                 label.setText(mDayLabels[i - 1]);
@@ -1498,12 +1585,15 @@ public class CalendarView extends FrameLayout {
         // Quick lookup for checking which days are in the focus month
         private boolean[] mFocusDay;
 
+<<<<<<< HEAD
         // Whether this view has a focused day.
         private boolean mHasFocusedDay;
 
         // Whether this view has only focused days.
         private boolean mHasUnfocusedDay;
 
+=======
+>>>>>>> upstream/master
         // The first day displayed by this item
         private Calendar mFirstDay;
 
@@ -1541,8 +1631,16 @@ public class CalendarView extends FrameLayout {
         public WeekView(Context context) {
             super(context);
 
+<<<<<<< HEAD
             // Sets up any standard paints that will be used
             initilaizePaints();
+=======
+            mHeight = (mListView.getHeight() - mListView.getPaddingTop() - mListView
+                    .getPaddingBottom()) / mShownWeekCount;
+
+            // Sets up any standard paints that will be used
+            setPaintProperties();
+>>>>>>> upstream/master
         }
 
         /**
@@ -1584,12 +1682,17 @@ public class CalendarView extends FrameLayout {
             mFirstDay = (Calendar) mTempDate.clone();
             mMonthOfFirstWeekDay = mTempDate.get(Calendar.MONTH);
 
+<<<<<<< HEAD
             mHasUnfocusedDay = true;
             for (; i < mNumCells; i++) {
                 final boolean isFocusedDay = (mTempDate.get(Calendar.MONTH) == focusedMonth);
                 mFocusDay[i] = isFocusedDay;
                 mHasFocusedDay |= isFocusedDay;
                 mHasUnfocusedDay &= !isFocusedDay;
+=======
+            for (; i < mNumCells; i++) {
+                mFocusDay[i] = (mTempDate.get(Calendar.MONTH) == focusedMonth);
+>>>>>>> upstream/master
                 // do not draw dates outside the valid range to avoid user confusion
                 if (mTempDate.before(mMinDate) || mTempDate.after(mMaxDate)) {
                     mDayNumbers[i] = "";
@@ -1609,15 +1712,29 @@ public class CalendarView extends FrameLayout {
         }
 
         /**
+<<<<<<< HEAD
          * Initialize the paint isntances.
          */
         private void initilaizePaints() {
             mDrawPaint.setFakeBoldText(false);
             mDrawPaint.setAntiAlias(true);
+=======
+         * Sets up the text and style properties for painting.
+         */
+        private void setPaintProperties() {
+            mDrawPaint.setFakeBoldText(false);
+            mDrawPaint.setAntiAlias(true);
+            mDrawPaint.setTextSize(mDateTextSize);
+>>>>>>> upstream/master
             mDrawPaint.setStyle(Style.FILL);
 
             mMonthNumDrawPaint.setFakeBoldText(true);
             mMonthNumDrawPaint.setAntiAlias(true);
+<<<<<<< HEAD
+=======
+            mMonthNumDrawPaint.setTextSize(mDateTextSize);
+            mMonthNumDrawPaint.setColor(mFocusedMonthDateColor);
+>>>>>>> upstream/master
             mMonthNumDrawPaint.setStyle(Style.FILL);
             mMonthNumDrawPaint.setTextAlign(Align.CENTER);
         }
@@ -1673,7 +1790,11 @@ public class CalendarView extends FrameLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             drawBackground(canvas);
+<<<<<<< HEAD
             drawWeekNumbersAndDates(canvas);
+=======
+            drawWeekNumbers(canvas);
+>>>>>>> upstream/master
             drawWeekSeparators(canvas);
             drawSelectedDateVerticalBars(canvas);
         }
@@ -1705,13 +1826,20 @@ public class CalendarView extends FrameLayout {
          *
          * @param canvas The canvas to draw on
          */
+<<<<<<< HEAD
         private void drawWeekNumbersAndDates(Canvas canvas) {
+=======
+        private void drawWeekNumbers(Canvas canvas) {
+>>>>>>> upstream/master
             float textHeight = mDrawPaint.getTextSize();
             int y = (int) ((mHeight + textHeight) / 2) - mWeekSeperatorLineWidth;
             int nDays = mNumCells;
 
             mDrawPaint.setTextAlign(Align.CENTER);
+<<<<<<< HEAD
             mDrawPaint.setTextSize(mDateTextSize);
+=======
+>>>>>>> upstream/master
             int i = 0;
             int divisor = 2 * nDays;
             if (mShowWeekNumber) {
@@ -1792,8 +1920,11 @@ public class CalendarView extends FrameLayout {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+<<<<<<< HEAD
             mHeight = (mListView.getHeight() - mListView.getPaddingTop() - mListView
                     .getPaddingBottom()) / mShownWeekCount;
+=======
+>>>>>>> upstream/master
             setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mHeight);
         }
     }

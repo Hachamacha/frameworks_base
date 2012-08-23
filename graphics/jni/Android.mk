@@ -6,7 +6,10 @@ LOCAL_SRC_FILES:= \
 
 LOCAL_SHARED_LIBRARIES := \
         libandroid_runtime \
+<<<<<<< HEAD
         libandroidfw \
+=======
+>>>>>>> upstream/master
         libnativehelper \
         libRS \
         libcutils \
@@ -21,7 +24,11 @@ rs_generated_include_dir := $(call intermediates-dir-for,SHARED_LIBRARIES,libRS,
 
 LOCAL_C_INCLUDES += \
 	$(JNI_H_INCLUDE) \
+<<<<<<< HEAD
 	frameworks/rs \
+=======
+	$(LOCAL_PATH)/../../libs/rs \
+>>>>>>> upstream/master
 	$(rs_generated_include_dir) \
 	$(call include-path-for, corecg graphics)
 

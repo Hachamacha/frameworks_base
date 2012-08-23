@@ -20,9 +20,16 @@ import android.graphics.Rect;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
+<<<<<<< HEAD
 import android.util.InternalSelectionView;
 import android.view.KeyEvent;
 import android.widget.ListView;
+=======
+import android.view.KeyEvent;
+import android.widget.ListView;
+import android.widget.focus.ListOfInternalSelectionViews;
+import android.util.InternalSelectionView;
+>>>>>>> upstream/master
 
 
 /**
@@ -50,10 +57,13 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
                     mNumRowsPerItem,      // 5 internally selectable rows per item
                     mScreenHeightFactor)); // each item is 5 / 4 screen height tall
         mListView = mActivity.getListView();
+<<<<<<< HEAD
         // Make sure we have some fading edge regardless of ListView style.
         mListView.setVerticalFadingEdgeEnabled(true);
         mListView.setFadingEdgeLength(10);
         ensureNotInTouchMode();
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -70,12 +80,20 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
         assertEquals(mNumRowsPerItem, mActivity.getNumRowsPerItem());
     }
 
+<<<<<<< HEAD
     @MediumTest
+=======
+    // TODO: needs to be adjusted to pass on non-HVGA displays
+    // @MediumTest
+>>>>>>> upstream/master
     public void testScrollingDownInFirstItem() throws Exception {
 
         for (int i = 0; i < mNumRowsPerItem; i++) {
             assertEquals(0, mListView.getSelectedItemPosition());
+<<<<<<< HEAD
             
+=======
+>>>>>>> upstream/master
             InternalSelectionView view = mActivity.getSelectedView();
 
             assertInternallySelectedRowOnScreen(view, i);
@@ -93,12 +111,22 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
                     mListView.getSelectedView();
 
             // 1 pixel tolerance in case height / 4 is not an even number
+<<<<<<< HEAD
             final int bottomFadingEdgeTop =
                 mListView.getBottom() - mListView.getVerticalFadingEdgeLength();
             assertTrue("bottom of view should be just above fading edge",
                     view.getBottom() == bottomFadingEdgeTop);
         }
 
+=======
+            final int fadingEdge = mListView.getBottom() - mListView.getVerticalFadingEdgeLength();
+            assertTrue("bottom of view should be just above fading edge",
+                    view.getBottom() >= fadingEdge - 1 &&
+                    view.getBottom() <= fadingEdge);
+        }
+
+
+>>>>>>> upstream/master
         // make sure fading edge is the expected view
         {
             assertEquals("should be a second view visible due to the fading edge",
@@ -111,6 +139,10 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
         }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     @MediumTest
     public void testScrollingToSecondItem() throws Exception {
 
@@ -224,6 +256,7 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
         assertTrue("bottom of row " + row + " should be on sreen",
                 mTempRect.bottom < mActivity.getScreenHeight());
     }
+<<<<<<< HEAD
 
     private void ensureNotInTouchMode() {
         // If in touch mode inject a DPAD down event to exit that mode.
@@ -232,4 +265,6 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
             getInstrumentation().waitForIdleSync();
         }
     }
+=======
+>>>>>>> upstream/master
 }

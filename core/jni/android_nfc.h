@@ -28,7 +28,11 @@
 extern "C" {
 
 #if 0
+<<<<<<< HEAD
   #define TRACE(...) ALOG(LOG_DEBUG, "NdefMessage", __VA_ARGS__)
+=======
+  #define TRACE(...) LOG(LOG_DEBUG, "NdefMessage", __VA_ARGS__)
+>>>>>>> upstream/master
 #else
   #define TRACE(...)
 #endif

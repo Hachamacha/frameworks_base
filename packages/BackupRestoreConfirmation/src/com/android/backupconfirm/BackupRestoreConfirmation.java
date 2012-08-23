@@ -265,7 +265,10 @@ public class BackupRestoreConfirmation extends Activity {
         } catch (Exception e) {
             // If we can't talk to the mount service we have a serious problem; fail
             // "secure" i.e. assuming that the device is encrypted.
+<<<<<<< HEAD
             Slog.e(TAG, "Unable to communicate with mount service: " + e.getMessage());
+=======
+>>>>>>> upstream/master
             return true;
         }
     }

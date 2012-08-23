@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+<<<<<<< HEAD
 import android.os.Parcel;
 
 /**
@@ -42,11 +43,38 @@ public class NativeDaemonConnectorException extends Exception {
 
     public int getCode() {
         return mEvent.getCode();
+=======
+/**
+ * An exception that indicates there was an error with a NativeDaemonConnector operation
+ */
+public class NativeDaemonConnectorException extends RuntimeException
+{
+    private int mCode = -1;
+    private String mCmd;
+
+    public NativeDaemonConnectorException() {}
+
+    public NativeDaemonConnectorException(String error)
+    {
+        super(error);
+    }
+
+    public NativeDaemonConnectorException(int code, String cmd, String error)
+    {
+        super(String.format("Cmd {%s} failed with code %d : {%s}", cmd, code, error));
+        mCode = code;
+        mCmd = cmd;
+    }
+
+    public int getCode() {
+        return mCode;
+>>>>>>> upstream/master
     }
 
     public String getCmd() {
         return mCmd;
     }
+<<<<<<< HEAD
 
     /**
      * Rethrow as a {@link RuntimeException} subclass that is handled by
@@ -55,4 +83,6 @@ public class NativeDaemonConnectorException extends Exception {
     public IllegalArgumentException rethrowAsParcelableException() {
         throw new IllegalStateException(getMessage(), this);
     }
+=======
+>>>>>>> upstream/master
 }

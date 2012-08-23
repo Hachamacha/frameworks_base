@@ -24,6 +24,10 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
+<<<<<<< HEAD
+=======
+import android.webkit.WebView;
+>>>>>>> upstream/master
 import android.webkit.WebViewCore;
 
 

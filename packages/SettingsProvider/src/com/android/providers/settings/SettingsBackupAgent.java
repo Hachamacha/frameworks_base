@@ -34,7 +34,10 @@ import android.util.Log;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+<<<<<<< HEAD
 import java.io.CharArrayReader;
+=======
+>>>>>>> upstream/master
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -46,11 +49,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+<<<<<<< HEAD
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+=======
+import java.util.HashMap;
+>>>>>>> upstream/master
 import java.util.Map;
 import java.util.zip.CRC32;
 
@@ -60,7 +67,11 @@ import java.util.zip.CRC32;
  */
 public class SettingsBackupAgent extends BackupAgentHelper {
     private static final boolean DEBUG = false;
+<<<<<<< HEAD
     private static final boolean DEBUG_BACKUP = DEBUG || false;
+=======
+    private static final boolean DEBUG_BACKUP = DEBUG || true;
+>>>>>>> upstream/master
 
     private static final String KEY_SYSTEM = "system";
     private static final String KEY_SECURE = "secure";
@@ -116,6 +127,7 @@ public class SettingsBackupAgent extends BackupAgentHelper {
     private WifiManager mWfm;
     private static String mWifiConfigFile;
 
+<<<<<<< HEAD
     // Class for capturing a network definition from the wifi supplicant config file
     static class Network {
         String ssid = "";  // equals() and hashCode() need these to be non-null
@@ -240,6 +252,8 @@ public class SettingsBackupAgent extends BackupAgentHelper {
         }
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void onCreate() {
         if (DEBUG_BACKUP) Log.d(TAG, "onCreate() invoked");
@@ -751,6 +765,7 @@ public class SettingsBackupAgent extends BackupAgentHelper {
 
     private void restoreWifiSupplicant(String filename, byte[] bytes, int size) {
         try {
+<<<<<<< HEAD
             WifiNetworkSettings supplicantImage = new WifiNetworkSettings();
 
             File supplicantFile = new File(FILE_WIFI_SUPPLICANT);
@@ -783,19 +798,40 @@ public class SettingsBackupAgent extends BackupAgentHelper {
             // Write the restored supplicant config and we're done
             supplicantImage.write(bw);
             bw.close();
+=======
+            File supplicantFile = new File(FILE_WIFI_SUPPLICANT);
+            if (supplicantFile.exists()) supplicantFile.delete();
+            copyWifiSupplicantTemplate();
+
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(filename, true));
+            os.write("\n".getBytes());
+            os.write(bytes, 0, size);
+            os.close();
+>>>>>>> upstream/master
         } catch (IOException ioe) {
             Log.w(TAG, "Couldn't restore " + filename);
         }
     }
 
+<<<<<<< HEAD
     private void copyWifiSupplicantTemplate(BufferedWriter bw) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(FILE_WIFI_SUPPLICANT_TEMPLATE));
+=======
+    private void copyWifiSupplicantTemplate() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(FILE_WIFI_SUPPLICANT_TEMPLATE));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_WIFI_SUPPLICANT));
+>>>>>>> upstream/master
             char[] temp = new char[1024];
             int size;
             while ((size = br.read(temp)) > 0) {
                 bw.write(temp, 0, size);
             }
+<<<<<<< HEAD
+=======
+            bw.close();
+>>>>>>> upstream/master
             br.close();
         } catch (IOException ioe) {
             Log.w(TAG, "Couldn't copy wpa_supplicant file");
@@ -832,15 +868,21 @@ public class SettingsBackupAgent extends BackupAgentHelper {
     }
 
     private int enableWifi(boolean enable) {
+<<<<<<< HEAD
         if (mWfm == null) {
             mWfm = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         }
+=======
+>>>>>>> upstream/master
         if (mWfm != null) {
             int state = mWfm.getWifiState();
             mWfm.setWifiEnabled(enable);
             return state;
+<<<<<<< HEAD
         } else {
             Log.e(TAG, "Failed to fetch WifiManager instance");
+=======
+>>>>>>> upstream/master
         }
         return WifiManager.WIFI_STATE_UNKNOWN;
     }

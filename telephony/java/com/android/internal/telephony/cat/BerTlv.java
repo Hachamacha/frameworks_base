@@ -81,18 +81,26 @@ class BerTlv {
                     temp = data[curIndex++] & 0xff;
                     if (temp < 0x80) {
                         throw new ResultException(
+<<<<<<< HEAD
                                 ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                                 "length < 0x80 length=" + Integer.toHexString(length) +
                                 " curIndex=" + curIndex + " endIndex=" + endIndex);
 
+=======
+                                ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
                     }
                     length = temp;
                 } else {
                     throw new ResultException(
+<<<<<<< HEAD
                             ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                             "Expected first byte to be length or a length tag and < 0x81" +
                             " byte= " + Integer.toHexString(temp) + " curIndex=" + curIndex +
                             " endIndex=" + endIndex);
+=======
+                            ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
                 }
             } else {
                 if (ComprehensionTlvTag.COMMAND_DETAILS.value() == (tag & ~0x80)) {
@@ -101,18 +109,28 @@ class BerTlv {
                 }
             }
         } catch (IndexOutOfBoundsException e) {
+<<<<<<< HEAD
             throw new ResultException(ResultCode.REQUIRED_VALUES_MISSING,
                     "IndexOutOfBoundsException " +
                     " curIndex=" + curIndex + " endIndex=" + endIndex);
         } catch (ResultException e) {
             throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD, e.explanation());
+=======
+            throw new ResultException(ResultCode.REQUIRED_VALUES_MISSING);
+        } catch (ResultException e) {
+            throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
         }
 
         /* COMPREHENSION-TLVs */
         if (endIndex - curIndex < length) {
+<<<<<<< HEAD
             throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD,
                     "Command had extra data endIndex=" + endIndex + " curIndex=" + curIndex +
                     " length=" + length);
+=======
+            throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+>>>>>>> upstream/master
         }
 
         List<ComprehensionTlv> ctlvs = ComprehensionTlv.decodeMany(data,

@@ -22,7 +22,10 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Notification;
+<<<<<<< HEAD
 import android.app.Notification.BigPictureStyle;
+=======
+>>>>>>> upstream/master
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -32,6 +35,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+<<<<<<< HEAD
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
@@ -40,6 +44,12 @@ import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.media.MediaActionSound;
+=======
+import android.graphics.Matrix;
+import android.graphics.PixelFormat;
+import android.graphics.PointF;
+import android.hardware.CameraSound;
+>>>>>>> upstream/master
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -90,7 +100,10 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
     private String mImageFileName;
     private String mImageFilePath;
     private long mImageTime;
+<<<<<<< HEAD
     private BigPictureStyle mNotificationStyle;
+=======
+>>>>>>> upstream/master
 
     // WORKAROUND: We want the same notification across screenshots that we update so that we don't
     // spam a user's notification drawer.  However, we only show the ticker for the saving state
@@ -115,6 +128,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
         // Create the large notification icon
         int imageWidth = data.image.getWidth();
         int imageHeight = data.image.getHeight();
+<<<<<<< HEAD
         int iconSize = data.iconSize;
 
         final int shortSide = imageWidth < imageHeight ? imageWidth : imageHeight;
@@ -131,6 +145,18 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
         c.drawColor(0x40FFFFFF);
 
         Bitmap croppedIcon = Bitmap.createScaledBitmap(preview, iconSize, iconSize, true);
+=======
+        int iconWidth = data.iconSize;
+        int iconHeight = data.iconSize;
+        if (imageWidth > imageHeight) {
+            iconWidth = (int) (((float) iconHeight / imageHeight) * imageWidth);
+        } else {
+            iconHeight = (int) (((float) iconWidth / imageWidth) * imageHeight);
+        }
+        Bitmap rawIcon = Bitmap.createScaledBitmap(data.image, iconWidth, iconHeight, true);
+        Bitmap croppedIcon = Bitmap.createBitmap(rawIcon, (iconWidth - data.iconSize) / 2,
+                (iconHeight - data.iconSize) / 2, data.iconSize, data.iconSize);
+>>>>>>> upstream/master
 
         // Show the intermediate notification
         mTickerAddSpace = !mTickerAddSpace;
@@ -143,12 +169,16 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
             .setContentText(r.getString(R.string.screenshot_saving_text))
             .setSmallIcon(R.drawable.stat_notify_image)
             .setWhen(System.currentTimeMillis());
+<<<<<<< HEAD
 
         mNotificationStyle = new Notification.BigPictureStyle()
             .bigPicture(preview);
         mNotificationBuilder.setStyle(mNotificationStyle);
 
         Notification n = mNotificationBuilder.build();
+=======
+        Notification n = mNotificationBuilder.getNotification();
+>>>>>>> upstream/master
         n.flags |= Notification.FLAG_NO_CLEAR;
         mNotificationManager.notify(nId, n);
 
@@ -156,8 +186,11 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
         // on small devices, the large icon is not shown) so defer showing the large icon until
         // we compose the final post-save notification below.
         mNotificationBuilder.setLargeIcon(croppedIcon);
+<<<<<<< HEAD
         // But we still don't set it for the expanded view, allowing the smallIcon to show here.
         mNotificationStyle.bigLargeIcon(null);
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -170,7 +203,10 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
 
         Context context = params[0].context;
         Bitmap image = params[0].image;
+<<<<<<< HEAD
         Resources r = context.getResources();
+=======
+>>>>>>> upstream/master
 
         try {
             // Save the screenshot to the MediaStore
@@ -185,6 +221,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
             values.put(MediaStore.Images.ImageColumns.MIME_TYPE, "image/png");
             Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
+<<<<<<< HEAD
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("image/png");
             sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -198,6 +235,8 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                      PendingIntent.getActivity(context, 0, chooserIntent, 
                              PendingIntent.FLAG_CANCEL_CURRENT));
 
+=======
+>>>>>>> upstream/master
             OutputStream out = resolver.openOutputStream(uri);
             image.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
@@ -240,7 +279,11 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
 
+<<<<<<< HEAD
             Notification n = mNotificationBuilder.build();
+=======
+            Notification n = mNotificationBuilder.getNotification();
+>>>>>>> upstream/master
             n.flags &= ~Notification.FLAG_NO_CLEAR;
             mNotificationManager.notify(mNotificationId, n);
         }
@@ -289,7 +332,11 @@ class GlobalScreenshot {
     private float mBgPadding;
     private float mBgPaddingScale;
 
+<<<<<<< HEAD
     private MediaActionSound mCameraSound;
+=======
+    private CameraSound mCameraSound;
+>>>>>>> upstream/master
 
 
     /**
@@ -342,8 +389,12 @@ class GlobalScreenshot {
         mBgPaddingScale = mBgPadding /  mDisplayMetrics.widthPixels;
 
         // Setup the Camera shutter sound
+<<<<<<< HEAD
         mCameraSound = new MediaActionSound();
         mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
+=======
+        mCameraSound = new CameraSound();
+>>>>>>> upstream/master
     }
 
     /**
@@ -456,7 +507,11 @@ class GlobalScreenshot {
             @Override
             public void run() {
                 // Play the shutter sound to notify that we've taken a screenshot
+<<<<<<< HEAD
                 mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+=======
+                mCameraSound.playSound(CameraSound.SHUTTER_CLICK);
+>>>>>>> upstream/master
 
                 mScreenshotView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 mScreenshotView.buildLayer();

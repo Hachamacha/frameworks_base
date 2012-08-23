@@ -283,7 +283,11 @@ public abstract class SimpleCursorTreeAdapter extends ResourceCursorTreeAdapter 
     /**
      * Called by bindView() to set the text for a TextView but only if
      * there is no existing ViewBinder or if the existing ViewBinder cannot
+<<<<<<< HEAD
      * handle binding to a TextView.
+=======
+     * handle binding to an TextView.
+>>>>>>> upstream/master
      *
      * Intended to be overridden by Adapters that need to filter strings
      * retrieved from the database.

@@ -28,6 +28,7 @@ import java.io.IOException;
 /**
  * Helper class for performing atomic operations on a file, by creating a
  * backup file until a write has successfully completed.
+<<<<<<< HEAD
  * <p>
  * Atomic file guarantees file integrity by ensuring that a file has
  * been completely written and sync'd to disk before removing its backup.
@@ -39,6 +40,8 @@ import java.io.IOException;
  * by multiple threads or processes.  The caller is responsible for ensuring
  * appropriate mutual exclusion invariants whenever it accesses the file.
  * </p>
+=======
+>>>>>>> upstream/master
  */
 public class AtomicFile {
     private final File mBaseName;

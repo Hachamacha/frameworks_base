@@ -3,6 +3,7 @@
 /*
 ** Copyright 2009, The Android Open Source Project
 **
+<<<<<<< HEAD
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
 ** You may obtain a copy of the License at
@@ -13,6 +14,18 @@
 ** distributed under the License is distributed on an "AS IS" BASIS,
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ** See the License for the specific language governing permissions and
+=======
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+>>>>>>> upstream/master
 ** limitations under the License.
 */
 -->
@@ -41,6 +54,12 @@
      interface.  This name is in the ComponentName flattened format (package/class)  -->
     <string name="config_systemBarComponent" translatable="false">com.android.systemui.statusbar.tablet.TabletStatusBar</string>
 
+<<<<<<< HEAD
+=======
+    <!-- Whether or not we show the number in the bar. -->
+    <bool name="config_statusBarShowNumber">false</bool>
+
+>>>>>>> upstream/master
     <!-- How many icons may be shown at once in the system bar. Includes any
          slots that may be reused for things like IME control. -->
     <integer name="config_maxNotificationIcons">5</integer>
@@ -50,6 +69,7 @@
 
     <!-- When true, show 1/2G networks as 3G. -->
     <bool name="config_showMin3G">false</bool>
+<<<<<<< HEAD
 
     <!-- Show rotation lock button in phone-style notification panel. -->
     <bool name="config_showRotationLock">true</bool>
@@ -62,5 +82,7 @@
 
     <!-- Vibration duration for MultiWaveView used in SearchPanelView -->
     <integer translatable="false" name="config_search_panel_view_vibration_duration">20</integer>
+=======
+>>>>>>> upstream/master
 </resources>
 

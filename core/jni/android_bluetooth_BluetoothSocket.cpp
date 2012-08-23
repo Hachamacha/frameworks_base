@@ -70,12 +70,20 @@ static struct asocket *get_socketData(JNIEnv *env, jobject obj) {
 
 static void initSocketFromFdNative(JNIEnv *env, jobject obj, jint fd) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     struct asocket *s = asocket_init(fd);
 
     if (!s) {
+<<<<<<< HEAD
         ALOGV("asocket_init() failed, throwing");
+=======
+        LOGV("asocket_init() failed, throwing");
+>>>>>>> upstream/master
         jniThrowIOException(env, errno);
         return;
     }
@@ -89,7 +97,11 @@ static void initSocketFromFdNative(JNIEnv *env, jobject obj, jint fd) {
 
 static void initSocketNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int fd;
     int lm = 0;
@@ -116,7 +128,11 @@ static void initSocketNative(JNIEnv *env, jobject obj) {
     }
 
     if (fd < 0) {
+<<<<<<< HEAD
         ALOGV("socket() failed, throwing");
+=======
+        LOGV("socket() failed, throwing");
+>>>>>>> upstream/master
         jniThrowIOException(env, errno);
         return;
     }
@@ -140,7 +156,11 @@ static void initSocketNative(JNIEnv *env, jobject obj) {
 
     if (lm) {
         if (setsockopt(fd, SOL_RFCOMM, RFCOMM_LM, &lm, sizeof(lm))) {
+<<<<<<< HEAD
             ALOGV("setsockopt(RFCOMM_LM) failed, throwing");
+=======
+            LOGV("setsockopt(RFCOMM_LM) failed, throwing");
+>>>>>>> upstream/master
             jniThrowIOException(env, errno);
             return;
         }
@@ -149,13 +169,21 @@ static void initSocketNative(JNIEnv *env, jobject obj) {
     if (type == TYPE_RFCOMM) {
         sndbuf = RFCOMM_SO_SNDBUF;
         if (setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof(sndbuf))) {
+<<<<<<< HEAD
             ALOGV("setsockopt(SO_SNDBUF) failed, throwing");
+=======
+            LOGV("setsockopt(SO_SNDBUF) failed, throwing");
+>>>>>>> upstream/master
             jniThrowIOException(env, errno);
             return;
         }
     }
 
+<<<<<<< HEAD
     ALOGV("...fd %d created (%s, lm = %x)", fd, TYPE_AS_STR(type), lm);
+=======
+    LOGV("...fd %d created (%s, lm = %x)", fd, TYPE_AS_STR(type), lm);
+>>>>>>> upstream/master
 
     initSocketFromFdNative(env, obj, fd);
     return;
@@ -165,7 +193,11 @@ static void initSocketNative(JNIEnv *env, jobject obj) {
 
 static void connectNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int ret;
     jint type;
@@ -232,7 +264,11 @@ static void connectNative(JNIEnv *env, jobject obj) {
 
 connect:
     ret = asocket_connect(s, addr, addr_sz, -1);
+<<<<<<< HEAD
     ALOGV("...connect(%d, %s) = %d (errno %d)",
+=======
+    LOGV("...connect(%d, %s) = %d (errno %d)",
+>>>>>>> upstream/master
             s->fd, TYPE_AS_STR(type), ret, errno);
 
     if (ret && errno == EALREADY && retry < 2) {
@@ -240,7 +276,11 @@ connect:
          * retry the connect. Unfortunately we have to create a new fd.
          * It's not ideal to switch the fd underneath the object, but
          * is currently safe */
+<<<<<<< HEAD
         ALOGD("Hit bug 5082381 (EALREADY on ACL collision), trying workaround");
+=======
+        LOGD("Hit bug 5082381 (EALREADY on ACL collision), trying workaround");
+>>>>>>> upstream/master
         usleep(100000);
         retry++;
         abortNative(env, obj);
@@ -252,7 +292,11 @@ connect:
         goto connect;
     }
     if (!ret && retry > 0)
+<<<<<<< HEAD
         ALOGD("...workaround ok");
+=======
+        LOGD("...workaround ok");
+>>>>>>> upstream/master
 
     if (ret)
         jniThrowIOException(env, errno);
@@ -265,7 +309,11 @@ connect:
 /* Returns errno instead of throwing, so java can check errno */
 static int bindListenNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     jint type;
     socklen_t addr_sz;
@@ -313,16 +361,28 @@ static int bindListenNative(JNIEnv *env, jobject obj) {
     }
 
     if (bind(s->fd, addr, addr_sz)) {
+<<<<<<< HEAD
         ALOGV("...bind(%d) gave errno %d", s->fd, errno);
+=======
+        LOGV("...bind(%d) gave errno %d", s->fd, errno);
+>>>>>>> upstream/master
         return errno;
     }
 
     if (listen(s->fd, 1)) {
+<<<<<<< HEAD
         ALOGV("...listen(%d) gave errno %d", s->fd, errno);
         return errno;
     }
 
     ALOGV("...bindListenNative(%d) success", s->fd);
+=======
+        LOGV("...listen(%d) gave errno %d", s->fd, errno);
+        return errno;
+    }
+
+    LOGV("...bindListenNative(%d) success", s->fd);
+>>>>>>> upstream/master
 
     return 0;
 
@@ -332,7 +392,11 @@ static int bindListenNative(JNIEnv *env, jobject obj) {
 
 static jobject acceptNative(JNIEnv *env, jobject obj, int timeout) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int fd;
     jint type;
@@ -380,7 +444,11 @@ static jobject acceptNative(JNIEnv *env, jobject obj, int timeout) {
 
     fd = asocket_accept(s, addr, &addr_sz, timeout);
 
+<<<<<<< HEAD
     ALOGV("...accept(%d, %s) = %d (errno %d)",
+=======
+    LOGV("...accept(%d, %s) = %d (errno %d)",
+>>>>>>> upstream/master
             s->fd, TYPE_AS_STR(type), fd, errno);
 
     if (fd < 0) {
@@ -405,7 +473,11 @@ static jobject acceptNative(JNIEnv *env, jobject obj, int timeout) {
 
 static jint availableNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int available;
     struct asocket *s = get_socketData(env, obj);
@@ -428,7 +500,11 @@ static jint availableNative(JNIEnv *env, jobject obj) {
 static jint readNative(JNIEnv *env, jobject obj, jbyteArray jb, jint offset,
         jint length) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int ret;
     jbyte *b;
@@ -471,7 +547,11 @@ static jint readNative(JNIEnv *env, jobject obj, jbyteArray jb, jint offset,
 static jint writeNative(JNIEnv *env, jobject obj, jbyteArray jb, jint offset,
         jint length) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
 
     int ret, total;
     jbyte *b;
@@ -519,7 +599,11 @@ static jint writeNative(JNIEnv *env, jobject obj, jbyteArray jb, jint offset,
 
 static void abortNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
     struct asocket *s = get_socketData(env, obj);
 
     if (!s)
@@ -527,7 +611,11 @@ static void abortNative(JNIEnv *env, jobject obj) {
 
     asocket_abort(s);
 
+<<<<<<< HEAD
     ALOGV("...asocket_abort(%d) complete", s->fd);
+=======
+    LOGV("...asocket_abort(%d) complete", s->fd);
+>>>>>>> upstream/master
     return;
 #endif
     jniThrowIOException(env, ENOSYS);
@@ -535,7 +623,11 @@ static void abortNative(JNIEnv *env, jobject obj) {
 
 static void destroyNative(JNIEnv *env, jobject obj) {
 #ifdef HAVE_BLUETOOTH
+<<<<<<< HEAD
     ALOGV("%s", __FUNCTION__);
+=======
+    LOGV("%s", __FUNCTION__);
+>>>>>>> upstream/master
     struct asocket *s = get_socketData(env, obj);
     int fd = s->fd;
 
@@ -544,7 +636,11 @@ static void destroyNative(JNIEnv *env, jobject obj) {
 
     asocket_destroy(s);
 
+<<<<<<< HEAD
     ALOGV("...asocket_destroy(%d) complete", fd);
+=======
+    LOGV("...asocket_destroy(%d) complete", fd);
+>>>>>>> upstream/master
     return;
 #endif
     jniThrowIOException(env, ENOSYS);

@@ -28,7 +28,11 @@ Screens</a></li>
 </div>
 
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>New Guides for App Designers!</strong></p> 
 <p>Check out the new documents for designers at <strong><a
 href="{@docRoot}design/index.html">Android Design</a></strong>, including more guidelines

@@ -29,6 +29,20 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 class Rect {
+<<<<<<< HEAD
+=======
+    static inline float min(float a, float b) { return (a<b) ? a : b; }
+    static inline float max(float a, float b) { return (a>b) ? a : b; }
+    Rect intersectWith(float l, float t, float r, float b) const {
+        Rect tmp;
+        tmp.left    = max(left, l);
+        tmp.top     = max(top, t);
+        tmp.right   = min(right, r);
+        tmp.bottom  = min(bottom, b);
+        return tmp;
+    }
+
+>>>>>>> upstream/master
 public:
     float left;
     float top;
@@ -104,7 +118,11 @@ public:
     }
 
     bool intersects(float l, float t, float r, float b) const {
+<<<<<<< HEAD
         return !intersectWith(l, t, r, b).isEmpty();
+=======
+        return !intersectWith(l,t,r,b).isEmpty();
+>>>>>>> upstream/master
     }
 
     bool intersects(const Rect& r) const {
@@ -112,8 +130,12 @@ public:
     }
 
     bool intersect(float l, float t, float r, float b) {
+<<<<<<< HEAD
         Rect tmp(l, t, r, b);
         intersectWith(tmp);
+=======
+        Rect tmp(intersectWith(l,t,r,b));
+>>>>>>> upstream/master
         if (!tmp.isEmpty()) {
             set(tmp);
             return true;
@@ -125,6 +147,7 @@ public:
         return intersect(r.left, r.top, r.right, r.bottom);
     }
 
+<<<<<<< HEAD
     bool contains(float l, float t, float r, float b) {
         return l >= left && t >= top && r <= right && b <= bottom;
     }
@@ -133,6 +156,8 @@ public:
         return contains(r.left, r.top, r.right, r.bottom);
     }
 
+=======
+>>>>>>> upstream/master
     bool unionWith(const Rect& r) {
         if (r.left < r.right && r.top < r.bottom) {
             if (left < right && top < bottom) {
@@ -167,6 +192,7 @@ public:
     }
 
     void dump() const {
+<<<<<<< HEAD
         ALOGD("Rect[l=%f t=%f r=%f b=%f]", left, top, right, bottom);
     }
 
@@ -188,6 +214,9 @@ private:
         tmp.right = min(right, r);
         tmp.bottom = min(bottom, b);
         return tmp;
+=======
+        LOGD("Rect[l=%f t=%f r=%f b=%f]", left, top, right, bottom);
+>>>>>>> upstream/master
     }
 
 }; // class Rect

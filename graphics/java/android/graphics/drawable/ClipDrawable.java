@@ -24,6 +24,10 @@ import android.content.res.TypedArray;
 import android.graphics.*;
 import android.view.Gravity;
 import android.util.AttributeSet;
+<<<<<<< HEAD
+=======
+import android.view.View;
+>>>>>>> upstream/master
 
 import java.io.IOException;
 

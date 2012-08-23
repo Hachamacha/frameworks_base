@@ -24,8 +24,11 @@ import android.text.TextUtils;
 import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.MovementMethod;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 
 /*
@@ -116,6 +119,7 @@ public class EditText extends TextView {
         }
         super.setEllipsize(ellipsis);
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -128,4 +132,6 @@ public class EditText extends TextView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(EditText.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

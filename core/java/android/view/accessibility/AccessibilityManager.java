@@ -204,12 +204,15 @@ public final class AccessibilityManager {
      * @param event The event to send.
      *
      * @throws IllegalStateException if accessibility is not enabled.
+<<<<<<< HEAD
      *
      * <strong>Note:</strong> The preferred mechanism for sending custom accessibility
      * events is through calling
      * {@link android.view.ViewParent#requestSendAccessibilityEvent(View, AccessibilityEvent)}
      * instead of this method to allow predecessors to augment/filter events sent by
      * their descendants.
+=======
+>>>>>>> upstream/master
      */
     public void sendAccessibilityEvent(AccessibilityEvent event) {
         if (!mIsEnabled) {

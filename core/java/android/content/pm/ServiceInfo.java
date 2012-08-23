@@ -42,6 +42,7 @@ public class ServiceInfo extends ComponentInfo
     public static final int FLAG_STOP_WITH_TASK = 0x0001;
 
     /**
+<<<<<<< HEAD
      * Bit in {@link #flags}: If set, the service will run in its own
      * isolated process.  Set from the
      * {@link android.R.attr#isolatedProcess} attribute.
@@ -53,6 +54,12 @@ public class ServiceInfo extends ComponentInfo
      * manifest.
      * These include:
      * {@link #FLAG_STOP_WITH_TASK}, {@link #FLAG_ISOLATED_PROCESS}.
+=======
+     * Options that have been set in the service declaration in the
+     * manifest.
+     * These include:
+     * {@link #FLAG_STOP_WITH_TASK}
+>>>>>>> upstream/master
      */
     public int flags;
 

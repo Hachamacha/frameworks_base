@@ -20,7 +20,10 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+<<<<<<< HEAD
 import android.content.Context;
+=======
+>>>>>>> upstream/master
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.RemoteException;
@@ -143,6 +146,7 @@ public class ConnectivityManager {
      * If an application uses the network in the background, it should listen
      * for this broadcast and stop using the background data if the value is
      * {@code false}.
+<<<<<<< HEAD
      * <p>
      *
      * @deprecated As of {@link VERSION_CODES#ICE_CREAM_SANDWICH}, availability
@@ -156,6 +160,10 @@ public class ConnectivityManager {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     @Deprecated
+=======
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+>>>>>>> upstream/master
     public static final String ACTION_BACKGROUND_DATA_SETTING_CHANGED =
             "android.net.conn.BACKGROUND_DATA_SETTING_CHANGED";
 
@@ -372,6 +380,7 @@ public class ConnectivityManager {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Returns details about the currently active data network. When connected,
      * this network is the default route for outgoing connections. You should
@@ -380,6 +389,8 @@ public class ConnectivityManager {
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
      */
+=======
+>>>>>>> upstream/master
     public NetworkInfo getActiveNetworkInfo() {
         try {
             return mService.getActiveNetworkInfo();
@@ -453,8 +464,11 @@ public class ConnectivityManager {
      * Tells the underlying networking system that the caller wants to
      * begin using the named feature. The interpretation of {@code feature}
      * is completely up to each networking implementation.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+=======
+>>>>>>> upstream/master
      * @param networkType specifies which network the request pertains to
      * @param feature the name of the feature to be used
      * @return an integer value representing the outcome of the request.
@@ -475,8 +489,11 @@ public class ConnectivityManager {
      * Tells the underlying networking system that the caller is finished
      * using the named feature. The interpretation of {@code feature}
      * is completely up to each networking implementation.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+=======
+>>>>>>> upstream/master
      * @param networkType specifies which network the request pertains to
      * @param feature the name of the feature that is no longer needed
      * @return an integer value representing the outcome of the request.
@@ -496,8 +513,11 @@ public class ConnectivityManager {
      * Ensure that a network route exists to deliver traffic to the specified
      * host via the specified network interface. An attempt to add a route that
      * already exists is ignored, but treated as successful.
+<<<<<<< HEAD
      * <p>This method requires the caller to hold the permission
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+=======
+>>>>>>> upstream/master
      * @param networkType the type of the network over which traffic to the specified
      * host is to be routed
      * @param hostAddress the IP address of the host to which the route is desired
@@ -620,11 +640,14 @@ public class ConnectivityManager {
         mService = checkNotNull(service, "missing IConnectivityManager");
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public static ConnectivityManager from(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * {@hide}
      */
@@ -865,6 +888,7 @@ public class ConnectivityManager {
         } catch (RemoteException e) {}
         return false;
     }
+<<<<<<< HEAD
 
     /**
      * Returns if the currently active data network is metered. A network is
@@ -880,4 +904,6 @@ public class ConnectivityManager {
             return false;
         }
     }
+=======
+>>>>>>> upstream/master
 }

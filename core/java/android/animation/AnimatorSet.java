@@ -420,7 +420,15 @@ public final class AnimatorSet extends Animator {
         if (duration < 0) {
             throw new IllegalArgumentException("duration must be a value of zero or greater");
         }
+<<<<<<< HEAD
         // Just record the value for now - it will be used later when the AnimatorSet starts
+=======
+        for (Node node : mNodes) {
+            // TODO: don't set the duration of the timing-only nodes created by AnimatorSet to
+            // insert "play-after" delays
+            node.animation.setDuration(duration);
+        }
+>>>>>>> upstream/master
         mDuration = duration;
         return this;
     }
@@ -452,6 +460,7 @@ public final class AnimatorSet extends Animator {
         mTerminated = false;
         mStarted = true;
 
+<<<<<<< HEAD
         if (mDuration >= 0) {
             // If the duration was set on this AnimatorSet, pass it along to all child animations
             for (Node node : mNodes) {
@@ -460,6 +469,8 @@ public final class AnimatorSet extends Animator {
                 node.animation.setDuration(mDuration);
             }
         }
+=======
+>>>>>>> upstream/master
         // First, sort the nodes (if necessary). This will ensure that sortedNodes
         // contains the animation nodes in the correct order.
         sortNodes();

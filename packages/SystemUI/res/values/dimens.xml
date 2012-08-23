@@ -33,10 +33,15 @@
     <dimen name="status_bar_recents_app_label_text_size">14dip</dimen>
     <!-- Size of application description text -->
     <dimen name="status_bar_recents_app_description_text_size">14dip</dimen>
+<<<<<<< HEAD
     <!-- Size of fading edge for text -->
     <dimen name="status_bar_recents_text_fading_edge_length">20dip</dimen>
     <!-- Size of fading edge for scrolling -->
     <dimen name="status_bar_recents_scroll_fading_edge_length">10dip</dimen>
+=======
+    <!-- Size of fading edge for scroll effect -->
+    <dimen name="status_bar_recents_fading_edge_length">20dip</dimen>
+>>>>>>> upstream/master
     <!-- Margin between recents container and glow on the right -->
     <dimen name="status_bar_recents_right_glow_margin">100dip</dimen>
     <!-- Amount to offset bottom of notification peek window from top of status bar. -->
@@ -49,6 +54,7 @@
          reducing false presses on navbar buttons; approx 2mm -->
     <dimen name="navigation_bar_deadzone_size">12dp</dimen>
 
+<<<<<<< HEAD
     <!-- Height of notification icons in the status bar -->
     <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
 
@@ -64,17 +70,34 @@
     <!-- Height of a large notification in the status bar plus glow, padding, etc -->
     <dimen name="notification_row_max_height">260dp</dimen>
 
+=======
+    <!-- thickness (height) of each notification row, including any separators or padding -->
+    <dimen name="notification_height">65dp</dimen>
+
+    <!-- Height of notification icons in the status bar -->
+    <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
+
+>>>>>>> upstream/master
     <!-- size at which Notification icons will be drawn in the status bar -->
     <dimen name="status_bar_icon_drawing_size">18dip</dimen>
 
     <!-- opacity at which Notification icons will be drawn in the status bar -->
+<<<<<<< HEAD
     <item type="dimen" name="status_bar_icon_drawing_alpha">65%</item>
+=======
+    <item type="dimen" name="status_bar_icon_drawing_alpha">55%</item>
+>>>>>>> upstream/master
 
     <!-- gap on either side of status bar notification icons -->
     <dimen name="status_bar_icon_padding">0dp</dimen>
 
+<<<<<<< HEAD
     <!-- half the distance between notifications in the panel -->
     <dimen name="notification_divider_height">3dp</dimen>
+=======
+    <!-- thickness (height) of dividers between each notification row -->
+    <dimen name="notification_divider_height">1dp</dimen>
+>>>>>>> upstream/master
 
     <!-- Notification drawer tuning parameters (phone UI) -->
     <!-- Initial velocity of the shade when expanding on its own -->
@@ -87,8 +110,11 @@
     <dimen name="fling_collapse_min_velocity">200dp</dimen>
     <!-- Cap on contribution of x dimension of gesture to overall velocity -->
     <dimen name="fling_gesture_max_x_velocity">200dp</dimen>
+<<<<<<< HEAD
     <!-- Cap on overall resulting fling speed (s^-1) -->
     <dimen name="fling_gesture_max_output_velocity">3000dp</dimen>
+=======
+>>>>>>> upstream/master
 
     <!-- Minimum fraction of the display a gesture must travel, at any velocity, to qualify as a
          collapse request -->
@@ -104,6 +130,7 @@
     <!-- The padding on the global screenshot background image -->
     <dimen name="global_screenshot_bg_padding">20dp</dimen>
 
+<<<<<<< HEAD
     <!-- The width of the view containing non-menu status bar icons -->
     <dimen name="navigation_key_width">80dip</dimen>
 
@@ -156,4 +183,6 @@
 
     <!-- Height of the carrier/wifi name label -->
     <dimen name="carrier_label_height">24dp</dimen>
+=======
+>>>>>>> upstream/master
 </resources>

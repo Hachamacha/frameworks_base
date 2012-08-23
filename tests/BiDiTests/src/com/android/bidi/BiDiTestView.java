@@ -51,7 +51,10 @@ public class BiDiTestView extends View {
     private String MIXED_TEXT_1;
     private String HEBREW_TEXT;
     private String RTL_TEXT;
+<<<<<<< HEAD
     private String THAI_TEXT;
+=======
+>>>>>>> upstream/master
 
     private int currentTextSize;
 
@@ -83,7 +86,10 @@ public class BiDiTestView extends View {
         MIXED_TEXT_1 = context.getString(R.string.mixed_text_1);
         HEBREW_TEXT = context.getString(R.string.hebrew_text);
         RTL_TEXT = context.getString(R.string.rtl);
+<<<<<<< HEAD
         THAI_TEXT = context.getString(R.string.pointer_location);
+=======
+>>>>>>> upstream/master
     }
 
     public void setCurrentTextSize(int size) {
@@ -136,10 +142,13 @@ public class BiDiTestView extends View {
         // Test Hebrew
         deltaX = testString(canvas, RTL_TEXT, ORIGIN, ORIGIN + 14 * currentTextSize,
                 false, false,  Paint.DIRECTION_RTL, currentTextSize);
+<<<<<<< HEAD
 
         // Test Thai
         deltaX = testString(canvas, THAI_TEXT, ORIGIN, ORIGIN + 16 * currentTextSize,
                 false, false,  Paint.DIRECTION_LTR, currentTextSize);
+=======
+>>>>>>> upstream/master
     }
 
     private int testString(Canvas canvas, String text, int x, int y,

@@ -16,7 +16,10 @@
 
 package android.database;
 
+<<<<<<< HEAD
 import android.net.Uri;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -79,9 +82,15 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
         }
 
         @Override
+<<<<<<< HEAD
         public void onChange(boolean selfChange, Uri uri) {
             try {
                 mRemote.onChange(selfChange, uri);
+=======
+        public void onChange(boolean selfChange) {
+            try {
+                mRemote.onChange(selfChange);
+>>>>>>> upstream/master
             } catch (RemoteException ex) {
                 // Do nothing, the far side is dead
             }
@@ -132,6 +141,7 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
         }
     }
 
+<<<<<<< HEAD
     public BulkCursorDescriptor getBulkCursorDescriptor() {
         synchronized (mLock) {
             throwIfCursorIsClosed();
@@ -157,6 +167,14 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
             throwIfCursorIsClosed();
 
             if (!mCursor.moveToPosition(position)) {
+=======
+    @Override
+    public CursorWindow getWindow(int startPos) {
+        synchronized (mLock) {
+            throwIfCursorIsClosed();
+
+            if (!mCursor.moveToPosition(startPos)) {
+>>>>>>> upstream/master
                 closeFilledWindowLocked();
                 return null;
             }
@@ -169,6 +187,7 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
                 if (window == null) {
                     mFilledWindow = new CursorWindow(mProviderName);
                     window = mFilledWindow;
+<<<<<<< HEAD
                 } else if (position < window.getStartPosition()
                         || position >= window.getStartPosition() + window.getNumRows()) {
                     window.clear();
@@ -179,6 +198,20 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
             if (window != null) {
                 // Acquire a reference to the window because its reference count will be
                 // decremented when it is returned as part of the binder call reply parcel.
+=======
+                    mCursor.fillWindow(startPos, window);
+                } else if (startPos < window.getStartPosition()
+                        || startPos >= window.getStartPosition() + window.getNumRows()) {
+                    window.clear();
+                    mCursor.fillWindow(startPos, window);
+                }
+            }
+
+            // Acquire a reference before returning from this RPC.
+            // The Binder proxy will decrement the reference count again as part of writing
+            // the CursorWindow to the reply parcel as a return value.
+            if (window != null) {
+>>>>>>> upstream/master
                 window.acquireReference();
             }
             return window;
@@ -195,6 +228,27 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    public int count() {
+        synchronized (mLock) {
+            throwIfCursorIsClosed();
+
+            return mCursor.getCount();
+        }
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        synchronized (mLock) {
+            throwIfCursorIsClosed();
+
+            return mCursor.getColumnNames();
+        }
+    }
+
+    @Override
+>>>>>>> upstream/master
     public void deactivate() {
         synchronized (mLock) {
             if (mCursor != null) {
@@ -237,6 +291,18 @@ public final class CursorToBulkCursorAdaptor extends BulkCursorNative
         }
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public boolean getWantsAllOnMoveCalls() {
+        synchronized (mLock) {
+            throwIfCursorIsClosed();
+
+            return mCursor.getWantsAllOnMoveCalls();
+        }
+    }
+
+>>>>>>> upstream/master
     /**
      * Create a ContentObserver from the observer and register it as an observer on the
      * underlying cursor.

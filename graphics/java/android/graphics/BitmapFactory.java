@@ -32,8 +32,11 @@ import java.io.InputStream;
  * and byte-arrays.
  */
 public class BitmapFactory {
+<<<<<<< HEAD
     private static final int DECODE_BUFFER_SIZE = 16 * 1024;
 
+=======
+>>>>>>> upstream/master
     public static class Options {
         /**
          * Create a default Options object, which if left unchanged will give
@@ -424,7 +427,10 @@ public class BitmapFactory {
             throw new ArrayIndexOutOfBoundsException();
         }
         Bitmap bm = nativeDecodeByteArray(data, offset, length, opts);
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         if (bm == null && opts != null && opts.inBitmap != null) {
             throw new IllegalArgumentException("Problem decoding into existing bitmap");
         }
@@ -472,7 +478,11 @@ public class BitmapFactory {
         // we need mark/reset to work properly
 
         if (!is.markSupported()) {
+<<<<<<< HEAD
             is = new BufferedInputStream(is, DECODE_BUFFER_SIZE);
+=======
+            is = new BufferedInputStream(is, 16 * 1024);
+>>>>>>> upstream/master
         }
 
         // so we can call reset() if a given codec gives up after reading up to
@@ -480,6 +490,7 @@ public class BitmapFactory {
         // value should be.
         is.mark(1024);
 
+<<<<<<< HEAD
         Bitmap bm;
         boolean finish = true;
 
@@ -504,6 +515,13 @@ public class BitmapFactory {
             } else {
                 bm = nativeDecodeAsset(asset, outPadding, opts);
             }
+=======
+        Bitmap  bm;
+
+        if (is instanceof AssetManager.AssetInputStream) {
+            bm = nativeDecodeAsset(((AssetManager.AssetInputStream) is).getAssetInt(),
+                    outPadding, opts);
+>>>>>>> upstream/master
         } else {
             // pass some temp storage down to the native code. 1024 is made up,
             // but should be large enough to avoid too many small calls back
@@ -512,6 +530,7 @@ public class BitmapFactory {
             byte [] tempStorage = null;
             if (opts != null) tempStorage = opts.inTempStorage;
             if (tempStorage == null) tempStorage = new byte[16 * 1024];
+<<<<<<< HEAD
 
             if (opts == null || (opts.inScaled && opts.inBitmap == null)) {
                 float scale = 1.0f;
@@ -533,11 +552,19 @@ public class BitmapFactory {
             }
         }
 
+=======
+            bm = nativeDecodeStream(is, tempStorage, outPadding, opts);
+        }
+>>>>>>> upstream/master
         if (bm == null && opts != null && opts.inBitmap != null) {
             throw new IllegalArgumentException("Problem decoding into existing bitmap");
         }
 
+<<<<<<< HEAD
         return finish ? finishDecode(bm, outPadding, opts) : bm;
+=======
+        return finishDecode(bm, outPadding, opts);
+>>>>>>> upstream/master
     }
 
     private static Bitmap finishDecode(Bitmap bm, Rect outPadding, Options opts) {
@@ -555,6 +582,7 @@ public class BitmapFactory {
         if (targetDensity == 0 || density == targetDensity || density == opts.inScreenDensity) {
             return bm;
         }
+<<<<<<< HEAD
         byte[] np = bm.getNinePatchChunk();
         int[] lb = bm.getLayoutBounds();
         final boolean isNinePatch = np != null && NinePatch.isNinePatchChunk(np);
@@ -579,6 +607,23 @@ public class BitmapFactory {
                 }
             }
 
+=======
+        
+        byte[] np = bm.getNinePatchChunk();
+        final boolean isNinePatch = np != null && NinePatch.isNinePatchChunk(np);
+        if (opts.inScaled || isNinePatch) {
+            float scale = targetDensity / (float)density;
+            // TODO: This is very inefficient and should be done in native by Skia
+            final Bitmap oldBitmap = bm;
+            bm = Bitmap.createScaledBitmap(oldBitmap, (int) (bm.getWidth() * scale + 0.5f),
+                    (int) (bm.getHeight() * scale + 0.5f), true);
+            oldBitmap.recycle();
+
+            if (isNinePatch) {
+                np = nativeScaleNinePatch(np, scale, outPadding);
+                bm.setNinePatchChunk(np);
+            }
+>>>>>>> upstream/master
             bm.setDensity(targetDensity);
         }
 
@@ -644,6 +689,7 @@ public class BitmapFactory {
         return decodeFileDescriptor(fd, null, null);
     }
 
+<<<<<<< HEAD
     private static native Bitmap nativeDecodeStream(InputStream is, byte[] storage,
             Rect padding, Options opts);
     private static native Bitmap nativeDecodeStream(InputStream is, byte[] storage,
@@ -653,6 +699,37 @@ public class BitmapFactory {
     private static native Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts);
     private static native Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts,
             boolean applyScale, float scale);
+=======
+    /**
+     * Set the default config used for decoding bitmaps. This config is
+     * presented to the codec if the caller did not specify a preferred config
+     * in their call to decode...
+     *
+     * The default value is chosen by the system to best match the device's
+     * screen and memory constraints.
+     *
+     * @param config The preferred config for decoding bitmaps. If null, then
+     *               a suitable default is chosen by the system.
+     *
+     * @hide - only called by the browser at the moment, but should be stable
+     *   enough to expose if needed
+     */
+    public static void setDefaultConfig(Bitmap.Config config) {
+        if (config == null) {
+            // pick this for now, as historically it was our default.
+            // However, if we have a smarter algorithm, we can change this.
+            config = Bitmap.Config.RGB_565;
+        }
+        nativeSetDefaultConfig(config.nativeInt);
+    }
+
+    private static native void nativeSetDefaultConfig(int nativeConfig);
+    private static native Bitmap nativeDecodeStream(InputStream is, byte[] storage,
+            Rect padding, Options opts);
+    private static native Bitmap nativeDecodeFileDescriptor(FileDescriptor fd,
+            Rect padding, Options opts);
+    private static native Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts);
+>>>>>>> upstream/master
     private static native Bitmap nativeDecodeByteArray(byte[] data, int offset,
             int length, Options opts);
     private static native byte[] nativeScaleNinePatch(byte[] chunk, float scale, Rect pad);

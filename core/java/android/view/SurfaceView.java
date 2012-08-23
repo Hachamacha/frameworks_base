@@ -230,6 +230,7 @@ public class SurfaceView extends View {
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
         mViewVisibility = visibility == VISIBLE;
+<<<<<<< HEAD
         boolean newRequestedVisible = mWindowVisibility && mViewVisibility;
         if (newRequestedVisible != mRequestedVisible) {
             // our base class (View) invalidates the layout only when
@@ -241,6 +242,9 @@ public class SurfaceView extends View {
             requestLayout();
         }
         mRequestedVisible = newRequestedVisible;
+=======
+        mRequestedVisible = mWindowVisibility && mViewVisibility;
+>>>>>>> upstream/master
         updateWindow(false, false);
     }
 
@@ -394,7 +398,11 @@ public class SurfaceView extends View {
         if (!mHaveFrame) {
             return;
         }
+<<<<<<< HEAD
         ViewRootImpl viewRoot = getViewRootImpl();
+=======
+        ViewRootImpl viewRoot = (ViewRootImpl) getRootView().getParent();
+>>>>>>> upstream/master
         if (viewRoot != null) {
             mTranslator = viewRoot.mTranslator;
         }
@@ -615,7 +623,11 @@ public class SurfaceView extends View {
             mSurfaceView = new WeakReference<SurfaceView>(surfaceView);
         }
 
+<<<<<<< HEAD
         public void resized(int w, int h, Rect contentInsets,
+=======
+        public void resized(int w, int h, Rect coveredInsets,
+>>>>>>> upstream/master
                 Rect visibleInsets, boolean reportDraw, Configuration newConfig) {
             SurfaceView surfaceView = mSurfaceView.get();
             if (surfaceView != null) {

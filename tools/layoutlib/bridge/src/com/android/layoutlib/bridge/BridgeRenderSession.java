@@ -70,13 +70,21 @@ public class BridgeRenderSession extends RenderSession {
 
     @Override
     public Result getProperty(Object objectView, String propertyName) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return super.getProperty(objectView, propertyName);
     }
 
     @Override
     public Result setProperty(Object objectView, String propertyName, String propertyValue) {
+<<<<<<< HEAD
         // pass
+=======
+        // TODO Auto-generated method stub
+>>>>>>> upstream/master
         return super.setProperty(objectView, propertyName, propertyValue);
     }
 

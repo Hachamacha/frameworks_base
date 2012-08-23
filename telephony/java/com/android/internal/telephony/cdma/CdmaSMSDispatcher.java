@@ -30,10 +30,15 @@ import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.provider.Telephony.Sms.Intents;
+<<<<<<< HEAD
 import android.telephony.SmsCbMessage;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage.MessageClass;
 import android.telephony.cdma.CdmaSmsCbProgramData;
+=======
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage.MessageClass;
+>>>>>>> upstream/master
 import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
@@ -52,7 +57,10 @@ import com.android.internal.util.HexDump;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> upstream/master
 
 import android.content.res.Resources;
 
@@ -100,6 +108,7 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Dispatch service category program data to the CellBroadcastReceiver app, which filters
      * the broadcast alerts to display.
@@ -118,6 +127,8 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         dispatch(intent, RECEIVE_SMS_PERMISSION);
     }
 
+=======
+>>>>>>> upstream/master
     /** {@inheritDoc} */
     @Override
     public int dispatchMessage(SmsMessageBase smsb) {
@@ -140,6 +151,7 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
             return Intents.RESULT_SMS_HANDLED;
         }
 
+<<<<<<< HEAD
         SmsMessage sms = (SmsMessage) smsb;
 
         // Handle CMAS emergency broadcast messages.
@@ -153,6 +165,10 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         }
 
         // See if we have a network duplicate SMS.
+=======
+        // See if we have a network duplicate SMS.
+        SmsMessage sms = (SmsMessage) smsb;
+>>>>>>> upstream/master
         mLastDispatchedSmsFingerprint = sms.getIncomingSmsFingerprint();
         if (mLastAcknowledgedSmsFingerprint != null &&
                 Arrays.equals(mLastDispatchedSmsFingerprint, mLastAcknowledgedSmsFingerprint)) {
@@ -181,9 +197,12 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
                 sms.isStatusReportMessage()) {
             handleCdmaStatusReport(sms);
             handled = true;
+<<<<<<< HEAD
         } else if (SmsEnvelope.TELESERVICE_SCPT == teleService) {
             handleServiceCategoryProgramData(sms);
             handled = true;
+=======
+>>>>>>> upstream/master
         } else if ((sms.getUserData() == null)) {
             if (false) {
                 Log.d(TAG, "Received SMS without user data");
@@ -283,7 +302,11 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
             byte[] data, PendingIntent sentIntent, PendingIntent deliveryIntent) {
         SmsMessage.SubmitPdu pdu = SmsMessage.getSubmitPdu(
                 scAddr, destAddr, destPort, data, (deliveryIntent != null));
+<<<<<<< HEAD
         sendSubmitPdu(pdu, sentIntent, deliveryIntent, destAddr);
+=======
+        sendSubmitPdu(pdu, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
     }
 
     /** {@inheritDoc} */
@@ -292,7 +315,11 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
             PendingIntent sentIntent, PendingIntent deliveryIntent) {
         SmsMessage.SubmitPdu pdu = SmsMessage.getSubmitPdu(
                 scAddr, destAddr, text, (deliveryIntent != null), null);
+<<<<<<< HEAD
         sendSubmitPdu(pdu, sentIntent, deliveryIntent, destAddr);
+=======
+        sendSubmitPdu(pdu, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
     }
 
     /** {@inheritDoc} */
@@ -324,11 +351,19 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         SmsMessage.SubmitPdu submitPdu = SmsMessage.getSubmitPdu(destinationAddress,
                 uData, (deliveryIntent != null) && lastPart);
 
+<<<<<<< HEAD
         sendSubmitPdu(submitPdu, sentIntent, deliveryIntent, destinationAddress);
     }
 
     protected void sendSubmitPdu(SmsMessage.SubmitPdu pdu,
             PendingIntent sentIntent, PendingIntent deliveryIntent, String destAddr) {
+=======
+        sendSubmitPdu(submitPdu, sentIntent, deliveryIntent);
+    }
+
+    protected void sendSubmitPdu(SmsMessage.SubmitPdu pdu,
+            PendingIntent sentIntent, PendingIntent deliveryIntent) {
+>>>>>>> upstream/master
         if (SystemProperties.getBoolean(TelephonyProperties.PROPERTY_INECM_MODE, false)) {
             if (sentIntent != null) {
                 try {
@@ -340,7 +375,11 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
             }
             return;
         }
+<<<<<<< HEAD
         sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent, destAddr);
+=======
+        sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent);
+>>>>>>> upstream/master
     }
 
     /** {@inheritDoc} */

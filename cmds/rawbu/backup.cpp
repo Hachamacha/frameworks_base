@@ -38,7 +38,10 @@ static char nameBuffer[PATH_MAX];
 static struct stat statBuffer;
 
 static char copyBuffer[8192];
+<<<<<<< HEAD
 static char *backupFilePath = NULL;
+=======
+>>>>>>> upstream/master
 
 static uint32_t inputFileVersion;
 
@@ -153,10 +156,13 @@ static int wipe (const char *path)
             strcat(nameBuffer, "/");
 
         } else {
+<<<<<<< HEAD
             // Don't delete the backup file
             if (backupFilePath && strcmp(backupFilePath, nameBuffer) == 0) {
                 continue;
             }
+=======
+>>>>>>> upstream/master
             ret = unlink(nameBuffer);
 
             if (ret != 0) {
@@ -284,7 +290,11 @@ static int backup_dir(FILE* fh, const char* srcPath)
             continue;
         }
 
+<<<<<<< HEAD
         if (fullPath != NULL) {
+=======
+        if (fullPath == NULL) {
+>>>>>>> upstream/master
             free(fullPath);
         }
         fullPath = (char*)malloc(srcLen + strlen(de->d_name) + 2);
@@ -325,6 +335,7 @@ static int backup_dir(FILE* fh, const char* srcPath)
                 goto done;
             }
         } else if (S_ISREG(statBuffer.st_mode)) {
+<<<<<<< HEAD
             // Skip the backup file
             if (backupFilePath && strcmp(fullPath, backupFilePath) == 0) {
                 printf("Skipping backup file %s...\n", backupFilePath);
@@ -332,6 +343,10 @@ static int backup_dir(FILE* fh, const char* srcPath)
             } else {
                 printf("Saving file %s...\n", fullPath);
             }
+=======
+            printf("Saving file %s...\n", fullPath);
+            
+>>>>>>> upstream/master
             if (write_header(fh, TYPE_FILE, fullPath, &statBuffer) == 0) {
                 result = 0;
                 goto done;
@@ -383,9 +398,12 @@ static int backup_data(const char* destPath)
     
     printf("Backing up /data to %s...\n", destPath);
 
+<<<<<<< HEAD
     // The path that shouldn't be backed up
     backupFilePath = strdup(destPath);
 
+=======
+>>>>>>> upstream/master
     if (!write_int32(fh, FILE_VERSION)) goto done;
     if (!write_int32(fh, opt_backupAll)) goto done;
     if (!backup_dir(fh, "/data")) goto done;
@@ -522,9 +540,12 @@ static int restore_data(const char* srcPath)
     } else {
         opt_backupAll = 0;
     }
+<<<<<<< HEAD
 
     // The path that shouldn't be deleted
     backupFilePath = strdup(srcPath);
+=======
+>>>>>>> upstream/master
     
     printf("Wiping contents of /data...\n");
     if (!wipe("/data")) {

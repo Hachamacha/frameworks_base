@@ -33,7 +33,11 @@ public final class EmojiFactory {
     
     private int sCacheSize = 100;
     
+<<<<<<< HEAD
     // HashMap for caching Bitmap object. In order not to make a cache object
+=======
+    // HashMap for caching Bitmap object. In order not to make an cache object
+>>>>>>> upstream/master
     // blow up, we use LinkedHashMap with size limit.
     private class CustomLinkedHashMap<K, V> extends LinkedHashMap<K, V> {
         public CustomLinkedHashMap() {

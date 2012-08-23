@@ -16,6 +16,7 @@
 
 package android.net;
 
+<<<<<<< HEAD
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
@@ -23,6 +24,11 @@ import static android.net.ConnectivityManager.isNetworkTypeMobile;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+=======
+import static android.net.ConnectivityManager.isNetworkTypeMobile;
+
+import android.content.Context;
+>>>>>>> upstream/master
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
@@ -35,6 +41,7 @@ import com.android.internal.util.Objects;
  * @hide
  */
 public class NetworkIdentity {
+<<<<<<< HEAD
     /**
      * When enabled, combine all {@link #mSubType} together under
      * {@link #SUBTYPE_COMBINED}.
@@ -56,26 +63,49 @@ public class NetworkIdentity {
         mSubscriberId = subscriberId;
         mNetworkId = networkId;
         mRoaming = roaming;
+=======
+    final int mType;
+    final int mSubType;
+    final String mSubscriberId;
+    final boolean mRoaming;
+
+    public NetworkIdentity(int type, int subType, String subscriberId, boolean roaming) {
+        this.mType = type;
+        this.mSubType = subType;
+        this.mSubscriberId = subscriberId;
+        this.mRoaming = roaming;
+>>>>>>> upstream/master
     }
 
     @Override
     public int hashCode() {
+<<<<<<< HEAD
         return Objects.hashCode(mType, mSubType, mSubscriberId, mNetworkId, mRoaming);
+=======
+        return Objects.hashCode(mType, mSubType, mSubscriberId);
+>>>>>>> upstream/master
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof NetworkIdentity) {
             final NetworkIdentity ident = (NetworkIdentity) obj;
+<<<<<<< HEAD
             return mType == ident.mType && mSubType == ident.mSubType && mRoaming == ident.mRoaming
                     && Objects.equal(mSubscriberId, ident.mSubscriberId)
                     && Objects.equal(mNetworkId, ident.mNetworkId);
+=======
+            return mType == ident.mType && mSubType == ident.mSubType
+                    && Objects.equal(mSubscriberId, ident.mSubscriberId)
+                    && mRoaming == ident.mRoaming;
+>>>>>>> upstream/master
         }
         return false;
     }
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         final StringBuilder builder = new StringBuilder("[");
         builder.append("type=").append(getNetworkTypeName(mType));
         builder.append(", subType=");
@@ -96,6 +126,20 @@ public class NetworkIdentity {
             builder.append(", ROAMING");
         }
         return builder.append("]").toString();
+=======
+        final String typeName = ConnectivityManager.getNetworkTypeName(mType);
+        final String subTypeName;
+        if (ConnectivityManager.isNetworkTypeMobile(mType)) {
+            subTypeName = TelephonyManager.getNetworkTypeName(mSubType);
+        } else {
+            subTypeName = Integer.toString(mSubType);
+        }
+
+        final String scrubSubscriberId = scrubSubscriberId(mSubscriberId);
+        final String roaming = mRoaming ? ", ROAMING" : "";
+        return "[type=" + typeName + ", subType=" + subTypeName + ", subscriberId="
+                + scrubSubscriberId + roaming + "]";
+>>>>>>> upstream/master
     }
 
     public int getType() {
@@ -110,10 +154,13 @@ public class NetworkIdentity {
         return mSubscriberId;
     }
 
+<<<<<<< HEAD
     public String getNetworkId() {
         return mNetworkId;
     }
 
+=======
+>>>>>>> upstream/master
     public boolean getRoaming() {
         return mRoaming;
     }
@@ -124,11 +171,16 @@ public class NetworkIdentity {
     public static String scrubSubscriberId(String subscriberId) {
         if ("eng".equals(Build.TYPE)) {
             return subscriberId;
+<<<<<<< HEAD
         } else if (subscriberId != null) {
             // TODO: parse this as MCC+MNC instead of hard-coding
             return subscriberId.substring(0, Math.min(6, subscriberId.length())) + "...";
         } else {
             return "null";
+=======
+        } else {
+            return subscriberId != null ? "valid" : "null";
+>>>>>>> upstream/master
         }
     }
 
@@ -143,10 +195,15 @@ public class NetworkIdentity {
         // TODO: consider moving subscriberId over to LinkCapabilities, so it
         // comes from an authoritative source.
 
+<<<<<<< HEAD
         String subscriberId = null;
         String networkId = null;
         boolean roaming = false;
 
+=======
+        final String subscriberId;
+        final boolean roaming;
+>>>>>>> upstream/master
         if (isNetworkTypeMobile(type)) {
             final TelephonyManager telephony = (TelephonyManager) context.getSystemService(
                     Context.TELEPHONY_SERVICE);
@@ -156,6 +213,7 @@ public class NetworkIdentity {
             } else {
                 subscriberId = telephony.getSubscriberId();
             }
+<<<<<<< HEAD
 
         } else if (type == TYPE_WIFI) {
             if (state.networkId != null) {
@@ -170,4 +228,13 @@ public class NetworkIdentity {
 
         return new NetworkIdentity(type, subType, subscriberId, networkId, roaming);
     }
+=======
+        } else {
+            subscriberId = null;
+            roaming = false;
+        }
+        return new NetworkIdentity(type, subType, subscriberId, roaming);
+    }
+
+>>>>>>> upstream/master
 }

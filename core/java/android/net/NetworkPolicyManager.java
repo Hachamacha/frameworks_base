@@ -17,7 +17,10 @@
 package android.net;
 
 import static android.content.pm.PackageManager.GET_SIGNATURES;
+<<<<<<< HEAD
 import static android.net.NetworkPolicy.CYCLE_NONE;
+=======
+>>>>>>> upstream/master
 import static android.text.format.Time.MONTH_DAY;
 
 import android.content.Context;
@@ -67,6 +70,7 @@ public class NetworkPolicyManager {
         mService = service;
     }
 
+<<<<<<< HEAD
     public static NetworkPolicyManager from(Context context) {
         return (NetworkPolicyManager) context.getSystemService(Context.NETWORK_POLICY_SERVICE);
     }
@@ -103,10 +107,21 @@ public class NetworkPolicyManager {
     public void registerListener(INetworkPolicyListener listener) {
         try {
             mService.registerListener(listener);
+=======
+    public static NetworkPolicyManager getSystemService(Context context) {
+        return (NetworkPolicyManager) context.getSystemService(Context.NETWORK_POLICY_SERVICE);
+    }
+
+    /** {@hide} */
+    public void setNetworkPolicies(NetworkPolicy[] policies) {
+        try {
+            mService.setNetworkPolicies(policies);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
         }
     }
 
+<<<<<<< HEAD
     public void unregisterListener(INetworkPolicyListener listener) {
         try {
             mService.unregisterListener(listener);
@@ -117,10 +132,31 @@ public class NetworkPolicyManager {
     public void setNetworkPolicies(NetworkPolicy[] policies) {
         try {
             mService.setNetworkPolicies(policies);
+=======
+    /** {@hide} */
+    public NetworkPolicy[] getNetworkPolicies() {
+        try {
+            return mService.getNetworkPolicies();
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Set policy flags for specific UID.
+     *
+     * @param policy {@link #POLICY_NONE} or combination of flags like
+     *            {@link #POLICY_REJECT_METERED_BACKGROUND}.
+     */
+    public void setUidPolicy(int uid, int policy) {
+        try {
+            mService.setUidPolicy(uid, policy);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
         }
     }
 
+<<<<<<< HEAD
     public NetworkPolicy[] getNetworkPolicies() {
         try {
             return mService.getNetworkPolicies();
@@ -132,15 +168,35 @@ public class NetworkPolicyManager {
     public void setRestrictBackground(boolean restrictBackground) {
         try {
             mService.setRestrictBackground(restrictBackground);
+=======
+    public int getUidPolicy(int uid) {
+        try {
+            return mService.getUidPolicy(uid);
+        } catch (RemoteException e) {
+            return POLICY_NONE;
+        }
+    }
+
+    public void registerListener(INetworkPolicyListener listener) {
+        try {
+            mService.registerListener(listener);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
         }
     }
 
+<<<<<<< HEAD
     public boolean getRestrictBackground() {
         try {
             return mService.getRestrictBackground();
         } catch (RemoteException e) {
             return false;
+=======
+    public void unregisterListener(INetworkPolicyListener listener) {
+        try {
+            mService.unregisterListener(listener);
+        } catch (RemoteException e) {
+>>>>>>> upstream/master
         }
     }
 
@@ -153,11 +209,15 @@ public class NetworkPolicyManager {
      * @hide
      */
     public static long computeLastCycleBoundary(long currentTime, NetworkPolicy policy) {
+<<<<<<< HEAD
         if (policy.cycleDay == CYCLE_NONE) {
             throw new IllegalArgumentException("Unable to compute boundary without cycleDay");
         }
 
         final Time now = new Time(policy.cycleTimezone);
+=======
+        final Time now = new Time(Time.TIMEZONE_UTC);
+>>>>>>> upstream/master
         now.set(currentTime);
 
         // first, find cycle boundary for current month
@@ -183,11 +243,15 @@ public class NetworkPolicyManager {
 
     /** {@hide} */
     public static long computeNextCycleBoundary(long currentTime, NetworkPolicy policy) {
+<<<<<<< HEAD
         if (policy.cycleDay == CYCLE_NONE) {
             throw new IllegalArgumentException("Unable to compute boundary without cycleDay");
         }
 
         final Time now = new Time(policy.cycleTimezone);
+=======
+        final Time now = new Time(Time.TIMEZONE_UTC);
+>>>>>>> upstream/master
         now.set(currentTime);
 
         // first, find cycle boundary for current month
@@ -213,7 +277,11 @@ public class NetworkPolicyManager {
 
     /**
      * Snap to the cycle day for the current month given; when cycle day doesn't
+<<<<<<< HEAD
      * exist, it snaps to last second of current month.
+=======
+     * exist, it snaps to 1st of following month.
+>>>>>>> upstream/master
      *
      * @hide
      */
@@ -233,7 +301,10 @@ public class NetworkPolicyManager {
      * Check if given UID can have a {@link #setUidPolicy(int, int)} defined,
      * usually to protect critical system services.
      */
+<<<<<<< HEAD
     @Deprecated
+=======
+>>>>>>> upstream/master
     public static boolean isUidValidForPolicy(Context context, int uid) {
         // first, quick-reject non-applications
         if (uid < android.os.Process.FIRST_APPLICATION_UID

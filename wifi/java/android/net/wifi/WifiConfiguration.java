@@ -29,6 +29,7 @@ import java.util.BitSet;
  */
 public class WifiConfiguration implements Parcelable {
 
+<<<<<<< HEAD
     /**
      * In old configurations, the "private_key" field was used. However, newer
      * configurations use the key_id field with the engine_id set to "keystore".
@@ -62,6 +63,8 @@ public class WifiConfiguration implements Parcelable {
      */
     public static final String ENGINE_DISABLE = "0";
 
+=======
+>>>>>>> upstream/master
     /** {@hide} */
     public static final String ssidVarName = "ssid";
     /** {@hide} */
@@ -115,18 +118,26 @@ public class WifiConfiguration implements Parcelable {
     /** {@hide} */
     public EnterpriseField client_cert = new EnterpriseField("client_cert");
     /** {@hide} */
+<<<<<<< HEAD
     public EnterpriseField engine = new EnterpriseField("engine");
     /** {@hide} */
     public EnterpriseField engine_id = new EnterpriseField("engine_id");
     /** {@hide} */
     public EnterpriseField key_id = new EnterpriseField("key_id");
+=======
+    public EnterpriseField private_key = new EnterpriseField("private_key");
+>>>>>>> upstream/master
     /** {@hide} */
     public EnterpriseField ca_cert = new EnterpriseField("ca_cert");
 
     /** {@hide} */
     public EnterpriseField[] enterpriseFields = {
             eap, phase2, identity, anonymous_identity, password, client_cert,
+<<<<<<< HEAD
             engine, engine_id, key_id, ca_cert };
+=======
+            private_key, ca_cert };
+>>>>>>> upstream/master
 
     /**
      * Recognized key management schemes.

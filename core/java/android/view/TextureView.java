@@ -23,7 +23,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
+<<<<<<< HEAD
 import android.os.Looper;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -116,7 +119,10 @@ public class TextureView extends View {
 
     private final Object[] mLock = new Object[0];
     private boolean mUpdateLayer;
+<<<<<<< HEAD
     private boolean mUpdateSurface;
+=======
+>>>>>>> upstream/master
 
     private SurfaceTexture.OnFrameAvailableListener mUpdateListener;
 
@@ -188,9 +194,13 @@ public class TextureView extends View {
     public void setOpaque(boolean opaque) {
         if (opaque != mOpaque) {
             mOpaque = opaque;
+<<<<<<< HEAD
             if (mLayer != null) {
                 updateLayer();
             }
+=======
+            updateLayer();
+>>>>>>> upstream/master
         }
     }
 
@@ -207,6 +217,7 @@ public class TextureView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+<<<<<<< HEAD
         if (mLayer != null && mAttachInfo != null && mAttachInfo.mHardwareRenderer != null) {
             boolean success = mAttachInfo.mHardwareRenderer.safelyRun(new Runnable() {
                 @Override
@@ -219,12 +230,18 @@ public class TextureView extends View {
                 Log.w(LOG_TAG, "TextureView was not able to destroy its surface: " + this);
             }
         }
+=======
+        destroySurface();
+>>>>>>> upstream/master
     }
 
     private void destroySurface() {
         if (mLayer != null) {
+<<<<<<< HEAD
             mSurface.detachFromGLContext();
 
+=======
+>>>>>>> upstream/master
             boolean shouldRelease = true;
             if (mListener != null) {
                 shouldRelease = mListener.onSurfaceTextureDestroyed(mSurface);
@@ -316,7 +333,11 @@ public class TextureView extends View {
     }
 
     @Override
+<<<<<<< HEAD
     boolean destroyLayer(boolean valid) {
+=======
+    boolean destroyLayer() {
+>>>>>>> upstream/master
         return false;
     }
 
@@ -339,12 +360,18 @@ public class TextureView extends View {
             }
 
             mLayer = mAttachInfo.mHardwareRenderer.createHardwareLayer(mOpaque);
+<<<<<<< HEAD
             if (!mUpdateSurface) {
                 // Create a new SurfaceTexture for the layer.
                 mSurface = mAttachInfo.mHardwareRenderer.createSurfaceTexture(mLayer);
             }
             nSetDefaultBufferSize(mSurface, getWidth(), getHeight());
             nCreateNativeWindow(mSurface);
+=======
+            mSurface = mAttachInfo.mHardwareRenderer.createSurfaceTexture(mLayer);
+            nSetDefaultBufferSize(mSurface, getWidth(), getHeight());
+            nCreateNativeWindow(mSurface);            
+>>>>>>> upstream/master
 
             mUpdateListener = new SurfaceTexture.OnFrameAvailableListener() {
                 @Override
@@ -354,21 +381,30 @@ public class TextureView extends View {
                     synchronized (mLock) {
                         mUpdateLayer = true;
                     }
+<<<<<<< HEAD
 
                     if (Looper.myLooper() == Looper.getMainLooper()) {
                         invalidate();
                     } else {
                         postInvalidate();
                     }
+=======
+                    postInvalidateDelayed(0);
+>>>>>>> upstream/master
                 }
             };
             mSurface.setOnFrameAvailableListener(mUpdateListener);
 
+<<<<<<< HEAD
             if (mListener != null && !mUpdateSurface) {
+=======
+            if (mListener != null) {
+>>>>>>> upstream/master
                 mListener.onSurfaceTextureAvailable(mSurface, getWidth(), getHeight());
             }
         }
 
+<<<<<<< HEAD
         if (mUpdateSurface) {
             // Someone has requested that we use a specific SurfaceTexture, so
             // tell mLayer about it and set the SurfaceTexture to use the
@@ -386,6 +422,8 @@ public class TextureView extends View {
             nSetDefaultBufferSize(mSurface, getWidth(), getHeight());
         }
 
+=======
+>>>>>>> upstream/master
         applyUpdate();
         applyTransformMatrix();
 
@@ -413,7 +451,11 @@ public class TextureView extends View {
         mUpdateLayer = true;
         invalidate();
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     private void applyUpdate() {
         if (mLayer == null) {
             return;
@@ -479,7 +521,11 @@ public class TextureView extends View {
     }
 
     private void applyTransformMatrix() {
+<<<<<<< HEAD
         if (mMatrixChanged && mLayer != null) {
+=======
+        if (mMatrixChanged) {
+>>>>>>> upstream/master
             mLayer.setTransform(mMatrix);
             mMatrixChanged = false;
         }
@@ -575,6 +621,7 @@ public class TextureView extends View {
             applyUpdate();
             applyTransformMatrix();
 
+<<<<<<< HEAD
             // This case can happen if the app invokes setSurfaceTexture() before
             // we are able to create the hardware layer. We can safely initialize
             // the layer here thanks to the validate() call at the beginning of
@@ -586,6 +633,9 @@ public class TextureView extends View {
             if (mLayer != null) {
                 mLayer.copyInto(bitmap);
             }
+=======
+            mLayer.copyInto(bitmap);
+>>>>>>> upstream/master
         }
         return bitmap;
     }
@@ -688,6 +738,7 @@ public class TextureView extends View {
     }
 
     /**
+<<<<<<< HEAD
      * Set the {@link SurfaceTexture} for this view to use. If a {@link
      * SurfaceTexture} is already being used by this view, it is immediately
      * released and not be usable any more.  The {@link
@@ -715,6 +766,8 @@ public class TextureView extends View {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns the {@link SurfaceTextureListener} currently associated with this
      * texture view.
      * 

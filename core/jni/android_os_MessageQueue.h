@@ -18,6 +18,7 @@
 #define _ANDROID_OS_MESSAGEQUEUE_H
 
 #include "jni.h"
+<<<<<<< HEAD
 #include <utils/Looper.h>
 
 namespace android {
@@ -65,6 +66,14 @@ protected:
 /* Gets the native object associated with a MessageQueue. */
 extern sp<MessageQueue> android_os_MessageQueue_getMessageQueue(
         JNIEnv* env, jobject messageQueueObj);
+=======
+
+namespace android {
+
+class Looper;
+
+extern sp<Looper> android_os_MessageQueue_getLooper(JNIEnv* env, jobject messageQueueObj);
+>>>>>>> upstream/master
 
 } // namespace android
 

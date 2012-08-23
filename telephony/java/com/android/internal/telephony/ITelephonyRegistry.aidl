@@ -22,7 +22,10 @@ import android.net.LinkCapabilities;
 import android.os.Bundle;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+<<<<<<< HEAD
 import android.telephony.CellInfo;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IPhoneStateListener;
 
 interface ITelephonyRegistry {
@@ -40,5 +43,8 @@ interface ITelephonyRegistry {
     void notifyDataConnectionFailed(String reason, String apnType);
     void notifyCellLocation(in Bundle cellLocation);
     void notifyOtaspChanged(in int otaspMode);
+<<<<<<< HEAD
     void notifyCellInfo(in CellInfo cellInfo);
+=======
+>>>>>>> upstream/master
 }

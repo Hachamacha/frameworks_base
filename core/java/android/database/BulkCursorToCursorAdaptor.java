@@ -30,14 +30,21 @@ public final class BulkCursorToCursorAdaptor extends AbstractWindowedCursor {
 
     private SelfContentObserver mObserverBridge = new SelfContentObserver(this);
     private IBulkCursor mBulkCursor;
+<<<<<<< HEAD
     private String[] mColumns;
     private boolean mWantsAllOnMoveCalls;
     private int mCount;
+=======
+    private int mCount;
+    private String[] mColumns;
+    private boolean mWantsAllOnMoveCalls;
+>>>>>>> upstream/master
 
     /**
      * Initializes the adaptor.
      * Must be called before first use.
      */
+<<<<<<< HEAD
     public void initialize(BulkCursorDescriptor d) {
         mBulkCursor = d.cursor;
         mColumns = d.columnNames;
@@ -47,6 +54,28 @@ public final class BulkCursorToCursorAdaptor extends AbstractWindowedCursor {
         if (d.window != null) {
             setWindow(d.window);
         }
+=======
+    public void initialize(IBulkCursor bulkCursor, int count, int idIndex,
+            boolean wantsAllOnMoveCalls) {
+        mBulkCursor = bulkCursor;
+        mColumns = null;  // lazily retrieved
+        mCount = count;
+        mRowIdColumnIndex = idIndex;
+        mWantsAllOnMoveCalls = wantsAllOnMoveCalls;
+    }
+
+    /**
+     * Returns column index of "_id" column, or -1 if not found.
+     */
+    public static int findRowIdColumnIndex(String[] columnNames) {
+        int length = columnNames.length;
+        for (int i = 0; i < length; i++) {
+            if (columnNames[i].equals("_id")) {
+                return i;
+            }
+        }
+        return -1;
+>>>>>>> upstream/master
     }
 
     /**
@@ -158,6 +187,17 @@ public final class BulkCursorToCursorAdaptor extends AbstractWindowedCursor {
     public String[] getColumnNames() {
         throwIfCursorIsClosed();
 
+<<<<<<< HEAD
+=======
+        if (mColumns == null) {
+            try {
+                mColumns = mBulkCursor.getColumnNames();
+            } catch (RemoteException ex) {
+                Log.e(TAG, "Unable to fetch column names because the remote process is dead");
+                return null;
+            }
+        }
+>>>>>>> upstream/master
         return mColumns;
     }
 

@@ -16,15 +16,24 @@
 
 package com.android.internal.content;
 
+<<<<<<< HEAD
 import android.os.FileUtils;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.storage.IMountService;
+=======
+import android.os.storage.IMountService;
+
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+>>>>>>> upstream/master
 import android.os.storage.StorageResultCode;
 import android.util.Log;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +43,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import libcore.io.IoUtils;
+=======
+>>>>>>> upstream/master
 
 /**
  * Constants used internally between the PackageManager
@@ -57,12 +68,17 @@ public class PackageHelper {
     public static final int APP_INSTALL_INTERNAL = 1;
     public static final int APP_INSTALL_EXTERNAL = 2;
 
+<<<<<<< HEAD
     public static IMountService getMountService() throws RemoteException {
+=======
+    public static IMountService getMountService() {
+>>>>>>> upstream/master
         IBinder service = ServiceManager.getService("mount");
         if (service != null) {
             return IMountService.Stub.asInterface(service);
         } else {
             Log.e(TAG, "Can't get mount service");
+<<<<<<< HEAD
             throw new RemoteException("Could not contact mount service");
         }
     }
@@ -78,6 +94,23 @@ public class PackageHelper {
 
             int rc = mountService.createSecureContainer(cid, sizeMb, "ext4", sdEncKey, uid,
                     isExternal);
+=======
+        }
+        return null;
+    }
+
+    public static String createSdDir(int sizeMb, String cid,
+            String sdEncKey, int uid) {
+        // Create mount point via MountService
+        IMountService mountService = getMountService();
+
+        if (localLOGV)
+            Log.i(TAG, "Size of container " + sizeMb + " MB");
+
+        try {
+            int rc = mountService.createSecureContainer(
+                    cid, sizeMb, "fat", sdEncKey, uid);
+>>>>>>> upstream/master
             if (rc != StorageResultCode.OperationSucceeded) {
                 Log.e(TAG, "Failed to create secure container " + cid);
                 return null;
@@ -205,6 +238,7 @@ public class PackageHelper {
        }
        return false;
    }
+<<<<<<< HEAD
 
     public static int extractPublicFiles(String packagePath, File publicZipFile)
             throws IOException {
@@ -294,4 +328,6 @@ public class PackageHelper {
         }
         return false;
     }
+=======
+>>>>>>> upstream/master
 }

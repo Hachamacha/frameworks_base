@@ -24,6 +24,7 @@
 namespace android {
 namespace uirenderer {
 
+<<<<<<< HEAD
 // Defined in ShapeCache.h
 
 void computePathBounds(const SkPath* path, const SkPaint* paint,
@@ -46,6 +47,8 @@ void computeBounds(const SkRect& bounds, const SkPaint* paint,
     height = uint32_t(pathHeight + offset * 2.0 + 0.5);
 }
 
+=======
+>>>>>>> upstream/master
 ///////////////////////////////////////////////////////////////////////////////
 // Path cache
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,8 +59,13 @@ PathCache::PathCache(): ShapeCache<PathCacheEntry>("path",
 
 void PathCache::remove(SkPath* path) {
     // TODO: Linear search...
+<<<<<<< HEAD
     Vector<size_t> pathsToRemove;
     for (size_t i = 0; i < mCache.size(); i++) {
+=======
+    Vector<uint32_t> pathsToRemove;
+    for (uint32_t i = 0; i < mCache.size(); i++) {
+>>>>>>> upstream/master
         if (mCache.getKeyAt(i).path == path) {
             pathsToRemove.push(i);
             removeTexture(mCache.getValueAt(i));
@@ -88,6 +96,7 @@ void PathCache::clearGarbage() {
 }
 
 PathTexture* PathCache::get(SkPath* path, SkPaint* paint) {
+<<<<<<< HEAD
     const SkPath* sourcePath = path->getSourcePath();
     if (sourcePath && sourcePath->getGenerationID() == path->getGenerationID()) {
         path = const_cast<SkPath*>(sourcePath);
@@ -99,6 +108,11 @@ PathTexture* PathCache::get(SkPath* path, SkPaint* paint) {
     float left, top, offset;
     uint32_t width, height;
 
+=======
+    PathCacheEntry entry(path, paint);
+    PathTexture* texture = mCache.get(entry);
+
+>>>>>>> upstream/master
     if (!texture) {
         texture = addTexture(entry, path, paint);
     } else if (path->getGenerationID() != texture->generation) {

@@ -16,8 +16,11 @@
 
 package android.os;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
+=======
+>>>>>>> upstream/master
 
 /**
  * Native implementation of the service manager.  Most clients will only
@@ -73,8 +76,12 @@ public abstract class ServiceManagerNative extends Binder implements IServiceMan
                 data.enforceInterface(IServiceManager.descriptor);
                 String name = data.readString();
                 IBinder service = data.readStrongBinder();
+<<<<<<< HEAD
                 boolean allowIsolated = data.readInt() != 0;
                 addService(name, service, allowIsolated);
+=======
+                addService(name, service);
+>>>>>>> upstream/master
                 return true;
             }
     
@@ -139,20 +146,28 @@ class ServiceManagerProxy implements IServiceManager {
         return binder;
     }
 
+<<<<<<< HEAD
     public void addService(String name, IBinder service, boolean allowIsolated)
+=======
+    public void addService(String name, IBinder service)
+>>>>>>> upstream/master
             throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IServiceManager.descriptor);
         data.writeString(name);
         data.writeStrongBinder(service);
+<<<<<<< HEAD
         data.writeInt(allowIsolated ? 1 : 0);
+=======
+>>>>>>> upstream/master
         mRemote.transact(ADD_SERVICE_TRANSACTION, data, reply, 0);
         reply.recycle();
         data.recycle();
     }
     
     public String[] listServices() throws RemoteException {
+<<<<<<< HEAD
         ArrayList<String> services = new ArrayList<String>();
         int n = 0;
         while (true) {
@@ -179,6 +194,16 @@ class ServiceManagerProxy implements IServiceManager {
         String[] array = new String[services.size()];
         services.toArray(array);
         return array;
+=======
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IServiceManager.descriptor);
+        mRemote.transact(LIST_SERVICES_TRANSACTION, data, reply, 0);
+        String[] list = reply.readStringArray();
+        reply.recycle();
+        data.recycle();
+        return list;
+>>>>>>> upstream/master
     }
 
     public void setPermissionController(IPermissionController controller)

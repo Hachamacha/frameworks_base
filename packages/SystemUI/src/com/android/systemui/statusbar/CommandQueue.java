@@ -59,6 +59,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOP_APP_WINDOW_CHANGED = 8 << MSG_SHIFT;
     private static final int MSG_SHOW_IME_BUTTON        = 9 << MSG_SHIFT;
     private static final int MSG_SET_HARD_KEYBOARD_STATUS = 10 << MSG_SHIFT;
+<<<<<<< HEAD
 
     private static final int MSG_TOGGLE_RECENT_APPS       = 11 << MSG_SHIFT;
     private static final int MSG_PRELOAD_RECENT_APPS      = 12 << MSG_SHIFT;
@@ -72,6 +73,10 @@ public class CommandQueue extends IStatusBar.Stub {
     public static final int FLAG_EXCLUDE_NOTIFICATION_PANEL = 1 << 2;
     public static final int FLAG_EXCLUDE_INPUT_METHODS_PANEL = 1 << 3;
     public static final int FLAG_EXCLUDE_COMPAT_MODE_PANEL = 1 << 4;
+=======
+    
+    private static final int MSG_TOGGLE_RECENT_APPS       = 11 << MSG_SHIFT;
+>>>>>>> upstream/master
 
     private StatusBarIconList mList;
     private Callbacks mCallbacks;
@@ -95,17 +100,25 @@ public class CommandQueue extends IStatusBar.Stub {
         public void removeNotification(IBinder key);
         public void disable(int state);
         public void animateExpand();
+<<<<<<< HEAD
         public void animateCollapse(int flags);
         public void setSystemUiVisibility(int vis, int mask);
+=======
+        public void animateCollapse();
+        public void setSystemUiVisibility(int vis);
+>>>>>>> upstream/master
         public void topAppWindowChanged(boolean visible);
         public void setImeWindowStatus(IBinder token, int vis, int backDisposition);
         public void setHardKeyboardStatus(boolean available, boolean enabled);
         public void toggleRecentApps();
+<<<<<<< HEAD
         public void preloadRecentApps();
         public void showSearchPanel();
         public void hideSearchPanel();
         public void cancelPreloadRecentApps();
         public void setNavigationIconHints(int hints);
+=======
+>>>>>>> upstream/master
     }
 
     public CommandQueue(Callbacks callbacks, StatusBarIconList list) {
@@ -168,6 +181,7 @@ public class CommandQueue extends IStatusBar.Stub {
     }
 
     public void animateCollapse() {
+<<<<<<< HEAD
         animateCollapse(CommandQueue.FLAG_EXCLUDE_NONE);
     }
 
@@ -182,6 +196,18 @@ public class CommandQueue extends IStatusBar.Stub {
         synchronized (mList) {
             mHandler.removeMessages(MSG_SET_SYSTEMUI_VISIBILITY);
             mHandler.obtainMessage(MSG_SET_SYSTEMUI_VISIBILITY, vis, mask, null).sendToTarget();
+=======
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_VISIBILITY);
+            mHandler.obtainMessage(MSG_SET_VISIBILITY, OP_COLLAPSE, 0, null).sendToTarget();
+        }
+    }
+
+    public void setSystemUiVisibility(int vis) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_SYSTEMUI_VISIBILITY);
+            mHandler.obtainMessage(MSG_SET_SYSTEMUI_VISIBILITY, vis, 0, null).sendToTarget();
+>>>>>>> upstream/master
         }
     }
 
@@ -216,6 +242,7 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+<<<<<<< HEAD
     public void preloadRecentApps() {
         synchronized (mList) {
             mHandler.removeMessages(MSG_PRELOAD_RECENT_APPS);
@@ -237,6 +264,8 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+=======
+>>>>>>> upstream/master
     private final class H extends Handler {
         public void handleMessage(Message msg) {
             final int what = msg.what & MSG_MASK;
@@ -288,11 +317,19 @@ public class CommandQueue extends IStatusBar.Stub {
                     if (msg.arg1 == OP_EXPAND) {
                         mCallbacks.animateExpand();
                     } else {
+<<<<<<< HEAD
                         mCallbacks.animateCollapse(msg.arg2);
                     }
                     break;
                 case MSG_SET_SYSTEMUI_VISIBILITY:
                     mCallbacks.setSystemUiVisibility(msg.arg1, msg.arg2);
+=======
+                        mCallbacks.animateCollapse();
+                    }
+                    break;
+                case MSG_SET_SYSTEMUI_VISIBILITY:
+                    mCallbacks.setSystemUiVisibility(msg.arg1);
+>>>>>>> upstream/master
                     break;
                 case MSG_TOP_APP_WINDOW_CHANGED:
                     mCallbacks.topAppWindowChanged(msg.arg1 != 0);
@@ -306,6 +343,7 @@ public class CommandQueue extends IStatusBar.Stub {
                 case MSG_TOGGLE_RECENT_APPS:
                     mCallbacks.toggleRecentApps();
                     break;
+<<<<<<< HEAD
                 case MSG_PRELOAD_RECENT_APPS:
                     mCallbacks.preloadRecentApps();
                     break;
@@ -315,6 +353,8 @@ public class CommandQueue extends IStatusBar.Stub {
                 case MSG_SET_NAVIGATION_ICON_HINTS:
                     mCallbacks.setNavigationIconHints(msg.arg1);
                     break;
+=======
+>>>>>>> upstream/master
             }
         }
     }

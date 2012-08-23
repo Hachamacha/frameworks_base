@@ -28,8 +28,11 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 /**
  * An abstract base class for spinner widgets. SDK users will probably not
@@ -42,6 +45,10 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 
     int mHeightMeasureSpec;
     int mWidthMeasureSpec;
+<<<<<<< HEAD
+=======
+    boolean mBlockLayoutRequests;
+>>>>>>> upstream/master
 
     int mSelectionLeftPadding = 0;
     int mSelectionTopPadding = 0;
@@ -191,10 +198,13 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
             if (view == null) {
                 // Make a new one
                 view = mAdapter.getView(selectedPosition, null, this);
+<<<<<<< HEAD
 
                 if (view.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
                     view.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
                 }
+=======
+>>>>>>> upstream/master
             }
 
             if (view != null) {
@@ -468,6 +478,7 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
             scrapHeap.clear();
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -480,4 +491,6 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(AbsSpinner.class.getName());
     }
+=======
+>>>>>>> upstream/master
 }

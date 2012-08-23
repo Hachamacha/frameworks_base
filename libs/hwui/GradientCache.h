@@ -19,7 +19,10 @@
 
 #include <SkShader.h>
 
+<<<<<<< HEAD
 #include <utils/Mutex.h>
+=======
+>>>>>>> upstream/master
 #include <utils/Vector.h>
 
 #include "Texture.h"

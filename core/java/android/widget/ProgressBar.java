@@ -37,18 +37,26 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Parcel;
 import android.os.Parcelable;
+<<<<<<< HEAD
 import android.util.AttributeSet;
 import android.util.Pool;
 import android.util.Poolable;
 import android.util.PoolableManager;
 import android.util.Pools;
+=======
+import android.os.SystemClock;
+import android.util.AttributeSet;
+>>>>>>> upstream/master
 import android.view.Gravity;
 import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -57,8 +65,11 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 import android.widget.RemoteViews.RemoteView;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
+=======
+>>>>>>> upstream/master
 
 /**
  * <p>
@@ -194,6 +205,10 @@ import java.util.ArrayList;
 @RemoteView
 public class ProgressBar extends View {
     private static final int MAX_LEVEL = 10000;
+<<<<<<< HEAD
+=======
+    private static final int ANIMATION_RESOLUTION = 200;
+>>>>>>> upstream/master
     private static final int TIMEOUT_SEND_ACCESSIBILITY_EVENT = 200;
 
     int mMinWidth;
@@ -211,7 +226,10 @@ public class ProgressBar extends View {
     private boolean mOnlyIndeterminate;
     private Transformation mTransformation;
     private AlphaAnimation mAnimation;
+<<<<<<< HEAD
     private boolean mHasAnimation;
+=======
+>>>>>>> upstream/master
     private Drawable mIndeterminateDrawable;
     private Drawable mProgressDrawable;
     private Drawable mCurrentDrawable;
@@ -221,12 +239,20 @@ public class ProgressBar extends View {
     private RefreshProgressRunnable mRefreshProgressRunnable;
     private long mUiThreadId;
     private boolean mShouldStartAnimationDrawable;
+<<<<<<< HEAD
 
     private boolean mInDrawing;
     private boolean mAttached;
     private boolean mRefreshIsPosted;
 
     private final ArrayList<RefreshData> mRefreshData = new ArrayList<RefreshData>();
+=======
+    private long mLastDrawTime;
+
+    private boolean mInDrawing;
+
+    private int mAnimationResolution;
+>>>>>>> upstream/master
 
     private AccessibilityEventSender mAccessibilityEventSender;
 
@@ -305,6 +331,12 @@ public class ProgressBar extends View {
         setIndeterminate(mOnlyIndeterminate || a.getBoolean(
                 R.styleable.ProgressBar_indeterminate, mIndeterminate));
 
+<<<<<<< HEAD
+=======
+        mAnimationResolution = a.getInteger(R.styleable.ProgressBar_animationResolution,
+                ANIMATION_RESOLUTION);
+
+>>>>>>> upstream/master
         a.recycle();
     }
 
@@ -567,6 +599,7 @@ public class ProgressBar extends View {
     }
 
     private class RefreshProgressRunnable implements Runnable {
+<<<<<<< HEAD
         public void run() {
             synchronized (ProgressBar.this) {
                 final int count = mRefreshData.size();
@@ -637,6 +670,31 @@ public class ProgressBar extends View {
         public void setPooled(boolean isPooled) {
             mIsPooled = isPooled;
         }
+=======
+
+        private int mId;
+        private int mProgress;
+        private boolean mFromUser;
+        
+        RefreshProgressRunnable(int id, int progress, boolean fromUser) {
+            mId = id;
+            mProgress = progress;
+            mFromUser = fromUser;
+        }
+        
+        public void run() {
+            doRefreshProgress(mId, mProgress, mFromUser, true);
+            // Put ourselves back in the cache when we are done
+            mRefreshProgressRunnable = this;
+        }
+        
+        public void setup(int id, int progress, boolean fromUser) {
+            mId = id;
+            mProgress = progress;
+            mFromUser = fromUser;
+        }
+        
+>>>>>>> upstream/master
     }
     
     private synchronized void doRefreshProgress(int id, int progress, boolean fromUser,
@@ -671,6 +729,7 @@ public class ProgressBar extends View {
         if (mUiThreadId == Thread.currentThread().getId()) {
             doRefreshProgress(id, progress, fromUser, true);
         } else {
+<<<<<<< HEAD
             if (mRefreshProgressRunnable == null) {
                 mRefreshProgressRunnable = new RefreshProgressRunnable();
             }
@@ -681,6 +740,20 @@ public class ProgressBar extends View {
                 post(mRefreshProgressRunnable);
                 mRefreshIsPosted = true;
             }
+=======
+            RefreshProgressRunnable r;
+            if (mRefreshProgressRunnable != null) {
+                // Use cached RefreshProgressRunnable if available
+                r = mRefreshProgressRunnable;
+                // Uncache it
+                mRefreshProgressRunnable = null;
+                r.setup(id, progress, fromUser);
+            } else {
+                // Make a new one
+                r = new RefreshProgressRunnable(id, progress, fromUser);
+            }
+            post(r);
+>>>>>>> upstream/master
         }
     }
     
@@ -857,14 +930,20 @@ public class ProgressBar extends View {
 
         if (mIndeterminateDrawable instanceof Animatable) {
             mShouldStartAnimationDrawable = true;
+<<<<<<< HEAD
             mHasAnimation = false;
         } else {
             mHasAnimation = true;
 
+=======
+            mAnimation = null;
+        } else {
+>>>>>>> upstream/master
             if (mInterpolator == null) {
                 mInterpolator = new LinearInterpolator();
             }
     
+<<<<<<< HEAD
             if (mTransformation == null) {
                 mTransformation = new Transformation();
             } else {
@@ -877,6 +956,10 @@ public class ProgressBar extends View {
                 mAnimation.reset();
             }
 
+=======
+            mTransformation = new Transformation();
+            mAnimation = new AlphaAnimation(0.0f, 1.0f);
+>>>>>>> upstream/master
             mAnimation.setRepeatMode(mBehavior);
             mAnimation.setRepeatCount(Animation.INFINITE);
             mAnimation.setDuration(mDuration);
@@ -890,7 +973,12 @@ public class ProgressBar extends View {
      * <p>Stop the indeterminate progress animation.</p>
      */
     void stopAnimation() {
+<<<<<<< HEAD
         mHasAnimation = false;
+=======
+        mAnimation = null;
+        mTransformation = null;
+>>>>>>> upstream/master
         if (mIndeterminateDrawable instanceof Animatable) {
             ((Animatable) mIndeterminateDrawable).stop();
             mShouldStartAnimationDrawable = false;
@@ -1038,7 +1126,11 @@ public class ProgressBar extends View {
             canvas.save();
             canvas.translate(mPaddingLeft, mPaddingTop);
             long time = getDrawingTime();
+<<<<<<< HEAD
             if (mHasAnimation) {
+=======
+            if (mAnimation != null) {
+>>>>>>> upstream/master
                 mAnimation.getTransformation(time, mTransformation);
                 float scale = mTransformation.getAlpha();
                 try {
@@ -1047,7 +1139,14 @@ public class ProgressBar extends View {
                 } finally {
                     mInDrawing = false;
                 }
+<<<<<<< HEAD
                 postInvalidateOnAnimation();
+=======
+                if (SystemClock.uptimeMillis() - mLastDrawTime >= mAnimationResolution) {
+                    mLastDrawTime = SystemClock.uptimeMillis();
+                    postInvalidateDelayed(mAnimationResolution);
+                }
+>>>>>>> upstream/master
             }
             d.draw(canvas);
             canvas.restore();
@@ -1160,6 +1259,7 @@ public class ProgressBar extends View {
         if (mIndeterminate) {
             startAnimation();
         }
+<<<<<<< HEAD
         if (mRefreshData != null) {
             synchronized (this) {
                 final int count = mRefreshData.size();
@@ -1172,6 +1272,8 @@ public class ProgressBar extends View {
             }
         }
         mAttached = true;
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -1179,10 +1281,14 @@ public class ProgressBar extends View {
         if (mIndeterminate) {
             stopAnimation();
         }
+<<<<<<< HEAD
         if (mRefreshProgressRunnable != null) {
             removeCallbacks(mRefreshProgressRunnable);
         }
         if (mRefreshProgressRunnable != null && mRefreshIsPosted) {
+=======
+        if(mRefreshProgressRunnable != null) {
+>>>>>>> upstream/master
             removeCallbacks(mRefreshProgressRunnable);
         }
         if (mAccessibilityEventSender != null) {
@@ -1191,23 +1297,32 @@ public class ProgressBar extends View {
         // This should come after stopAnimation(), otherwise an invalidate message remains in the
         // queue, which can prevent the entire view hierarchy from being GC'ed during a rotation
         super.onDetachedFromWindow();
+<<<<<<< HEAD
         mAttached = false;
+=======
+>>>>>>> upstream/master
     }
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
+<<<<<<< HEAD
         event.setClassName(ProgressBar.class.getName());
+=======
+>>>>>>> upstream/master
         event.setItemCount(mMax);
         event.setCurrentItemIndex(mProgress);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(ProgressBar.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Schedule a command for sending an accessibility event.
      * </br>

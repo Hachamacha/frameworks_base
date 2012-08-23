@@ -162,7 +162,10 @@ class RilMessageDecoder extends StateMachine {
                 decodingStarted = true;
             } catch (ResultException e) {
                 // send to Service for proper RIL communication.
+<<<<<<< HEAD
                 CatLog.d(this, "decodeMessageParams: caught ResultException e=" + e);
+=======
+>>>>>>> upstream/master
                 mCurrentRilMessage.mResCode = e.result();
                 sendCmdForExecution(mCurrentRilMessage);
                 decodingStarted = false;

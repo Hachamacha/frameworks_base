@@ -80,12 +80,18 @@ public class ShareActionProvider extends ActionProvider {
 
         /**
          * Called when a share target has been selected. The client can
+<<<<<<< HEAD
          * decide whether to perform some action before the sharing is
          * actually performed.
+=======
+         * decide whether to handle the intent or rely on the default
+         * behavior which is launching it.
+>>>>>>> upstream/master
          * <p>
          * <strong>Note:</strong> Modifying the intent is not permitted and
          *     any changes to the latter will be ignored.
          * </p>
+<<<<<<< HEAD
          * <p>
          * <strong>Note:</strong> You should <strong>not</strong> handle the
          *     intent here. This callback aims to notify the client that a
@@ -96,6 +102,12 @@ public class ShareActionProvider extends ActionProvider {
          * @param source The source of the notification.
          * @param intent The intent for launching the chosen share target.
          * @return The return result is ignored. Always return false for consistency.
+=======
+         *
+         * @param source The source of the notification.
+         * @param intent The intent for launching the chosen share target.
+         * @return Whether the client has handled the intent.
+>>>>>>> upstream/master
          */
         public boolean onShareTargetSelected(ShareActionProvider source, Intent intent);
     }
@@ -239,6 +251,7 @@ public class ShareActionProvider extends ActionProvider {
      * <p>
      * <strong>Note:</strong> The history file name can be set any time, however
      * only the action views created by {@link #onCreateActionView()} after setting
+<<<<<<< HEAD
      * the file name will be backed by the provided file. Therefore, if you want to
      * use different history files for sharing specific types of content, every time
      * you change the history file {@link #setShareHistoryFileName(String)} you must
@@ -258,6 +271,10 @@ public class ShareActionProvider extends ActionProvider {
      *     invalidateOptionsMenu();
      * }
      * <code>
+=======
+     * the file name will be backed by the provided file.
+     * <p>
+>>>>>>> upstream/master
      *
      * @param shareHistoryFile The share history file name.
      */
@@ -302,7 +319,10 @@ public class ShareActionProvider extends ActionProvider {
             final int itemId = item.getItemId();
             Intent launchIntent = dataModel.chooseActivity(itemId);
             if (launchIntent != null) {
+<<<<<<< HEAD
                 launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+=======
+>>>>>>> upstream/master
                 mContext.startActivity(launchIntent);
             }
             return true;
@@ -331,7 +351,11 @@ public class ShareActionProvider extends ActionProvider {
         @Override
         public boolean onChooseActivity(ActivityChooserModel host, Intent intent) {
             if (mOnShareTargetSelectedListener != null) {
+<<<<<<< HEAD
                 mOnShareTargetSelectedListener.onShareTargetSelected(
+=======
+                return mOnShareTargetSelectedListener.onShareTargetSelected(
+>>>>>>> upstream/master
                         ShareActionProvider.this, intent);
             }
             return false;

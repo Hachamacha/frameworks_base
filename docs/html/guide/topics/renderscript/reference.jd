@@ -1,7 +1,10 @@
 page.title=Runtime API Reference
+<<<<<<< HEAD
 parent.title=Computation
 parent.link=index.html
 
+=======
+>>>>>>> upstream/master
 @jd:body
 
 <script language="JavaScript">

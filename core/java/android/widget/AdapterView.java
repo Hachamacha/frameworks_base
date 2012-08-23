@@ -29,9 +29,14 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeProvider;
+=======
+import android.view.accessibility.AccessibilityNodeInfo;
+
+>>>>>>> upstream/master
 
 /**
  * An AdapterView is a view whose children are determined by an {@link Adapter}.
@@ -233,11 +238,14 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 
     public AdapterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+<<<<<<< HEAD
 
         // If not explicitly specified this view is important for accessibility.
         if (getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -649,12 +657,15 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
     public void setEmptyView(View emptyView) {
         mEmptyView = emptyView;
 
+<<<<<<< HEAD
         // If not explicitly specified this view is important for accessibility.
         if (emptyView != null
                 && emptyView.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             emptyView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
 
+=======
+>>>>>>> upstream/master
         final T adapter = getAdapter();
         final boolean empty = ((adapter == null) || adapter.isEmpty());
         updateEmptyStatus(empty);
@@ -858,14 +869,21 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
                 }
             } else {
                 fireOnSelected();
+<<<<<<< HEAD
                 performAccessibilityActionsOnSelected();
+=======
+>>>>>>> upstream/master
             }
         }
     }
 
     void selectionChanged() {
+<<<<<<< HEAD
         if (mOnItemSelectedListener != null
                 || AccessibilityManager.getInstance(mContext).isEnabled()) {
+=======
+        if (mOnItemSelectedListener != null) {
+>>>>>>> upstream/master
             if (mInLayout || mBlockLayoutRequests) {
                 // If we are in a layout traversal, defer notification
                 // by posting. This ensures that the view tree is
@@ -877,6 +895,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
                 post(mSelectionNotifier);
             } else {
                 fireOnSelected();
+<<<<<<< HEAD
                 performAccessibilityActionsOnSelected();
             }
         }
@@ -887,6 +906,22 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
             return;
         }
         final int selection = getSelectedItemPosition();
+=======
+            }
+        }
+
+        // we fire selection events here not in View
+        if (mSelectedPosition != ListView.INVALID_POSITION && isShown() && !isInTouchMode()) {
+            sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
+        }
+    }
+
+    private void fireOnSelected() {
+        if (mOnItemSelectedListener == null)
+            return;
+
+        int selection = this.getSelectedItemPosition();
+>>>>>>> upstream/master
         if (selection >= 0) {
             View v = getSelectedView();
             mOnItemSelectedListener.onItemSelected(this, v, selection,
@@ -896,6 +931,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
         }
     }
 
+<<<<<<< HEAD
     private void performAccessibilityActionsOnSelected() {
         if (!AccessibilityManager.getInstance(mContext).isEnabled()) {
             return;
@@ -907,6 +943,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
         }
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
         View selectedView = getSelectedView();
@@ -934,7 +972,10 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
+<<<<<<< HEAD
         info.setClassName(AdapterView.class.getName());
+=======
+>>>>>>> upstream/master
         info.setScrollable(isScrollableForAccessibility());
         View selectedView = getSelectedView();
         if (selectedView != null) {
@@ -945,7 +986,10 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
+<<<<<<< HEAD
         event.setClassName(AdapterView.class.getName());
+=======
+>>>>>>> upstream/master
         event.setScrollable(isScrollableForAccessibility());
         View selectedView = getSelectedView();
         if (selectedView != null) {
@@ -1033,9 +1077,12 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
             mNeedSync = false;
             checkSelectionChanged();
         }
+<<<<<<< HEAD
 
         //TODO: Hmm, we do not know the old state so this is sub-optimal
         notifyAccessibilityStateChanged();
+=======
+>>>>>>> upstream/master
     }
 
     void checkSelectionChanged() {

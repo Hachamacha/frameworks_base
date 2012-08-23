@@ -7,6 +7,7 @@
 #define __AAPT_ASSETS_H
 
 #include <stdlib.h>
+<<<<<<< HEAD
 #include <androidfw/AssetManager.h>
 #include <androidfw/ResourceTypes.h>
 #include <utils/KeyedVector.h>
@@ -15,6 +16,16 @@
 #include <utils/String8.h>
 #include <utils/String8.h>
 #include <utils/Vector.h>
+=======
+#include <utils/AssetManager.h>
+#include <utils/KeyedVector.h>
+#include <utils/String8.h>
+#include <utils/ResourceTypes.h>
+#include <utils/SortedVector.h>
+#include <utils/String8.h>
+#include <utils/Vector.h>
+#include <utils/RefBase.h>
+>>>>>>> upstream/master
 #include "ZipFile.h"
 
 #include "Bundle.h"
@@ -22,10 +33,13 @@
 
 using namespace android;
 
+<<<<<<< HEAD
 
 extern const char * const gDefaultIgnoreAssets;
 extern const char * gUserIgnoreAssets;
 
+=======
+>>>>>>> upstream/master
 bool valid_symbol_name(const String8& str);
 
 class AaptAssets;
@@ -57,6 +71,20 @@ enum {
     AXIS_END = AXIS_VERSION,
 };
 
+<<<<<<< HEAD
+=======
+enum {
+    SDK_CUPCAKE = 3,
+    SDK_DONUT = 4,
+    SDK_ECLAIR = 5,
+    SDK_ECLAIR_0_1 = 6,
+    SDK_MR1 = 7,
+    SDK_FROYO = 8,
+    SDK_HONEYCOMB_MR2 = 13,
+    SDK_ICE_CREAM_SANDWICH = 14,
+};
+
+>>>>>>> upstream/master
 /**
  * This structure contains a specific variation of a single file out
  * of all the variations it can have that we can have.
@@ -319,16 +347,28 @@ class AaptSymbolEntry
 {
 public:
     AaptSymbolEntry()
+<<<<<<< HEAD
         : isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN)
     {
     }
     AaptSymbolEntry(const String8& _name)
         : name(_name), isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN)
+=======
+        : isPublic(false), typeCode(TYPE_UNKNOWN)
+    {
+    }
+    AaptSymbolEntry(const String8& _name)
+        : name(_name), isPublic(false), typeCode(TYPE_UNKNOWN)
+>>>>>>> upstream/master
     {
     }
     AaptSymbolEntry(const AaptSymbolEntry& o)
         : name(o.name), sourcePos(o.sourcePos), isPublic(o.isPublic)
+<<<<<<< HEAD
         , isJavaSymbol(o.isJavaSymbol), comment(o.comment), typeComment(o.typeComment)
+=======
+        , comment(o.comment), typeComment(o.typeComment)
+>>>>>>> upstream/master
         , typeCode(o.typeCode), int32Val(o.int32Val), stringVal(o.stringVal)
     {
     }
@@ -336,7 +376,10 @@ public:
     {
         sourcePos = o.sourcePos;
         isPublic = o.isPublic;
+<<<<<<< HEAD
         isJavaSymbol = o.isJavaSymbol;
+=======
+>>>>>>> upstream/master
         comment = o.comment;
         typeComment = o.typeComment;
         typeCode = o.typeCode;
@@ -349,7 +392,10 @@ public:
     
     SourcePos sourcePos;
     bool isPublic;
+<<<<<<< HEAD
     bool isJavaSymbol;
+=======
+>>>>>>> upstream/master
     
     String16 comment;
     String16 typeComment;
@@ -407,6 +453,7 @@ public:
         return NO_ERROR;
     }
 
+<<<<<<< HEAD
     status_t makeSymbolJavaSymbol(const String8& name, const SourcePos& pos) {
         if (!check_valid_symbol_name(name, pos, "symbol")) {
             return BAD_VALUE;
@@ -416,6 +463,8 @@ public:
         return NO_ERROR;
     }
 
+=======
+>>>>>>> upstream/master
     void appendComment(const String8& name, const String16& comment, const SourcePos& pos) {
         if (comment.size() <= 0) {
             return;
@@ -456,8 +505,11 @@ public:
         return sym;
     }
 
+<<<<<<< HEAD
     status_t applyJavaSymbols(const sp<AaptSymbols>& javaSymbols);
 
+=======
+>>>>>>> upstream/master
     const KeyedVector<String8, AaptSymbolEntry>& getSymbols() const
         { return mSymbols; }
     const DefaultKeyedVector<String8, sp<AaptSymbols> >& getNestedSymbols() const
@@ -526,11 +578,15 @@ public:
     virtual ~AaptAssets() { delete mRes; }
 
     const String8& getPackage() const { return mPackage; }
+<<<<<<< HEAD
     void setPackage(const String8& package) {
         mPackage = package;
         mSymbolsPrivatePackage = package;
         mHavePrivateSymbols = false;
     }
+=======
+    void setPackage(const String8& package) { mPackage = package; mSymbolsPrivatePackage = package; }
+>>>>>>> upstream/master
 
     const SortedVector<AaptGroupEntry>& getGroupEntries() const;
 
@@ -553,6 +609,7 @@ public:
 
     sp<AaptSymbols> getSymbolsFor(const String8& name);
 
+<<<<<<< HEAD
     sp<AaptSymbols> getJavaSymbolsFor(const String8& name);
 
     status_t applyJavaSymbols();
@@ -569,6 +626,13 @@ public:
 
     bool isJavaSymbol(const AaptSymbolEntry& sym, bool includePrivate) const;
 
+=======
+    const DefaultKeyedVector<String8, sp<AaptSymbols> >& getSymbols() const { return mSymbols; }
+
+    String8 getSymbolsPrivatePackage() const { return mSymbolsPrivatePackage; }
+    void setSymbolsPrivatePackage(const String8& pkg) { mSymbolsPrivatePackage = pkg; }
+    
+>>>>>>> upstream/master
     status_t buildIncludedResources(Bundle* bundle);
     status_t addIncludedResources(const sp<AaptFile>& file);
     const ResTable& getIncludedResources() const;
@@ -608,9 +672,13 @@ private:
     String8 mPackage;
     SortedVector<AaptGroupEntry> mGroupEntries;
     DefaultKeyedVector<String8, sp<AaptSymbols> > mSymbols;
+<<<<<<< HEAD
     DefaultKeyedVector<String8, sp<AaptSymbols> > mJavaSymbols;
     String8 mSymbolsPrivatePackage;
     bool mHavePrivateSymbols;
+=======
+    String8 mSymbolsPrivatePackage;
+>>>>>>> upstream/master
 
     Vector<sp<AaptDir> > mResDirs;
 

@@ -62,6 +62,7 @@ public final class MediaStore {
     public static final String ACTION_MTP_SESSION_END = "android.provider.action.MTP_SESSION_END";
 
     /**
+<<<<<<< HEAD
      * The method name used by the media scanner and mtp to tell the media provider to
      * rescan and reclassify that have become unhidden because of renaming folders or
      * removing nomedia files
@@ -82,6 +83,8 @@ public final class MediaStore {
     public static final String PARAM_DELETE_DATA = "deletedata";
 
     /**
+=======
+>>>>>>> upstream/master
      * Activity Action: Launch a music player.
      * The activity should be able to play, browse, or manipulate music files stored on the device.
      *
@@ -192,7 +195,11 @@ public final class MediaStore {
 
     /**
      * Standard Intent action that can be sent to have the camera application
+<<<<<<< HEAD
      * capture a video and return it.
+=======
+     * capture an video and return it.
+>>>>>>> upstream/master
      * <p>
      * The caller may pass in an extra EXTRA_VIDEO_QUALITY to control the video quality.
      * <p>
@@ -306,11 +313,19 @@ public final class MediaStore {
 
         /**
          * The width of the image/video in pixels.
+<<<<<<< HEAD
+=======
+         * @hide
+>>>>>>> upstream/master
          */
         public static final String WIDTH = "width";
 
         /**
          * The height of the image/video in pixels.
+<<<<<<< HEAD
+=======
+         * @hide
+>>>>>>> upstream/master
          */
         public static final String HEIGHT = "height";
      }
@@ -439,12 +454,20 @@ public final class MediaStore {
             public static final int MEDIA_TYPE_AUDIO = 2;
 
             /**
+<<<<<<< HEAD
              * Constant for the {@link #MEDIA_TYPE} column indicating that file is a video file.
+=======
+             * Constant for the {@link #MEDIA_TYPE} column indicating that file is an video file.
+>>>>>>> upstream/master
              */
             public static final int MEDIA_TYPE_VIDEO = 3;
 
             /**
+<<<<<<< HEAD
              * Constant for the {@link #MEDIA_TYPE} column indicating that file is a playlist file.
+=======
+             * Constant for the {@link #MEDIA_TYPE} column indicating that file is an playlist file.
+>>>>>>> upstream/master
              */
             public static final int MEDIA_TYPE_PLAYLIST = 4;
         }
@@ -1831,19 +1854,31 @@ public final class MediaStore {
             public static final String LANGUAGE = "language";
 
             /**
+<<<<<<< HEAD
              * The latitude where the video was captured.
+=======
+             * The latitude where the image was captured.
+>>>>>>> upstream/master
              * <P>Type: DOUBLE</P>
              */
             public static final String LATITUDE = "latitude";
 
             /**
+<<<<<<< HEAD
              * The longitude where the video was captured.
+=======
+             * The longitude where the image was captured.
+>>>>>>> upstream/master
              * <P>Type: DOUBLE</P>
              */
             public static final String LONGITUDE = "longitude";
 
             /**
+<<<<<<< HEAD
              * The date & time that the video was taken in units
+=======
+             * The date & time that the image was taken in units
+>>>>>>> upstream/master
              * of milliseconds since jan 1, 1970.
              * <P>Type: INTEGER</P>
              */

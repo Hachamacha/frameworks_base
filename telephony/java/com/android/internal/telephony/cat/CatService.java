@@ -124,7 +124,13 @@ public class CatService extends Handler implements AppInterface {
         mIccRecords = ir;
 
         // Register for SIM ready event.
+<<<<<<< HEAD
         ic.registerForReady(this, MSG_ID_SIM_READY, null);
+=======
+        mCmdIf.registerForSIMReady(this, MSG_ID_SIM_READY, null);
+        mCmdIf.registerForRUIMReady(this, MSG_ID_SIM_READY, null);
+        mCmdIf.registerForNVReady(this, MSG_ID_SIM_READY, null);
+>>>>>>> upstream/master
         mIccRecords.registerForRecordsLoaded(this, MSG_ID_ICC_RECORDS_LOADED, null);
 
         // Check if STK application is availalbe
@@ -427,11 +433,19 @@ public class CatService extends Handler implements AppInterface {
                     }
                     break;
                 default:
+<<<<<<< HEAD
                     CatLog.d(this, "encodeOptionalTags() Unsupported Cmd details=" + cmdDet);
                     break;
             }
         } else {
             CatLog.d(this, "encodeOptionalTags() bad Cmd details=" + cmdDet);
+=======
+                    CatLog.d(this, "encodeOptionalTags() Unsupported Cmd:" + cmdDet.typeOfCommand);
+                    break;
+            }
+        } else {
+            CatLog.d(this, "encodeOptionalTags() bad Cmd:" + cmdDet.typeOfCommand);
+>>>>>>> upstream/master
         }
     }
 

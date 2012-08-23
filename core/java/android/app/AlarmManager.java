@@ -16,8 +16,15 @@
 
 package android.app;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.RemoteException;
+=======
+import android.content.Context;
+import android.content.Intent;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+>>>>>>> upstream/master
 
 /**
  * This class provides access to the system alarm services.  These allow you
@@ -115,8 +122,13 @@ public class AlarmManager
      *  
      * @param type One of ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC or
      *             RTC_WAKEUP.
+<<<<<<< HEAD
      * @param triggerAtMillis time in milliseconds that the alarm should go
      * off, using the appropriate clock (depending on the alarm type).
+=======
+     * @param triggerAtTime Time the alarm should go off, using the
+     *                      appropriate clock (depending on the alarm type).
+>>>>>>> upstream/master
      * @param operation Action to perform when the alarm goes off;
      * typically comes from {@link PendingIntent#getBroadcast
      * IntentSender.getBroadcast()}.
@@ -132,9 +144,15 @@ public class AlarmManager
      * @see #RTC
      * @see #RTC_WAKEUP
      */
+<<<<<<< HEAD
     public void set(int type, long triggerAtMillis, PendingIntent operation) {
         try {
             mService.set(type, triggerAtMillis, operation);
+=======
+    public void set(int type, long triggerAtTime, PendingIntent operation) {
+        try {
+            mService.set(type, triggerAtTime, operation);
+>>>>>>> upstream/master
         } catch (RemoteException ex) {
         }
     }
@@ -167,10 +185,16 @@ public class AlarmManager
      *
      * @param type One of ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP}, RTC or
      *             RTC_WAKEUP.
+<<<<<<< HEAD
      * @param triggerAtMillis time in milliseconds that the alarm should first
      * go off, using the appropriate clock (depending on the alarm type).
      * @param intervalMillis interval in milliseconds between subsequent repeats
      * of the alarm.
+=======
+     * @param triggerAtTime Time the alarm should first go off, using the
+     *                      appropriate clock (depending on the alarm type).
+     * @param interval Interval between subsequent repeats of the alarm.
+>>>>>>> upstream/master
      * @param operation Action to perform when the alarm goes off;
      * typically comes from {@link PendingIntent#getBroadcast
      * IntentSender.getBroadcast()}.
@@ -186,10 +210,17 @@ public class AlarmManager
      * @see #RTC
      * @see #RTC_WAKEUP
      */
+<<<<<<< HEAD
     public void setRepeating(int type, long triggerAtMillis,
             long intervalMillis, PendingIntent operation) {
         try {
             mService.setRepeating(type, triggerAtMillis, intervalMillis, operation);
+=======
+    public void setRepeating(int type, long triggerAtTime, long interval,
+            PendingIntent operation) {
+        try {
+            mService.setRepeating(type, triggerAtTime, interval, operation);
+>>>>>>> upstream/master
         } catch (RemoteException ex) {
         }
     }
@@ -218,6 +249,7 @@ public class AlarmManager
      * requested, the time between any two successive firings of the alarm
      * may vary.  If your application demands very low jitter, use
      * {@link #setRepeating} instead.
+<<<<<<< HEAD
      *
      * @param type One of ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP}, RTC or
      *             RTC_WAKEUP.
@@ -232,6 +264,22 @@ public class AlarmManager
      * then the alarm will be phase-aligned with other alarms to reduce the
      * number of wakeups.  Otherwise, the alarm will be set as though the
      * application had called {@link #setRepeating}.
+=======
+     * 
+     * @param type One of ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP}, RTC or
+     *             RTC_WAKEUP.
+     * @param triggerAtTime Time the alarm should first go off, using the
+     *                      appropriate clock (depending on the alarm type).  This
+     *                      is inexact: the alarm will not fire before this time,
+     *                      but there may be a delay of almost an entire alarm
+     *                      interval before the first invocation of the alarm.
+     * @param interval Interval between subsequent repeats of the alarm.  If
+     *                 this is one of INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR,
+     *                 INTERVAL_HOUR, INTERVAL_HALF_DAY, or INTERVAL_DAY then the
+     *                 alarm will be phase-aligned with other alarms to reduce
+     *                 the number of wakeups.  Otherwise, the alarm will be set
+     *                 as though the application had called {@link #setRepeating}.
+>>>>>>> upstream/master
      * @param operation Action to perform when the alarm goes off;
      * typically comes from {@link PendingIntent#getBroadcast
      * IntentSender.getBroadcast()}.
@@ -252,10 +300,17 @@ public class AlarmManager
      * @see #INTERVAL_HALF_DAY
      * @see #INTERVAL_DAY
      */
+<<<<<<< HEAD
     public void setInexactRepeating(int type, long triggerAtMillis,
             long intervalMillis, PendingIntent operation) {
         try {
             mService.setInexactRepeating(type, triggerAtMillis, intervalMillis, operation);
+=======
+    public void setInexactRepeating(int type, long triggerAtTime, long interval,
+            PendingIntent operation) {
+        try {
+            mService.setInexactRepeating(type, triggerAtTime, interval, operation);
+>>>>>>> upstream/master
         } catch (RemoteException ex) {
         }
     }

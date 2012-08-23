@@ -5,6 +5,7 @@ package junit.runner;
  * {@hide} - Not needed for 1.0 SDK
  */
 public class StandardTestSuiteLoader implements TestSuiteLoader {
+<<<<<<< HEAD
     /**
      * Uses the system class loader to load the test class
      */
@@ -17,4 +18,18 @@ public class StandardTestSuiteLoader implements TestSuiteLoader {
     public Class reload(Class aClass) throws ClassNotFoundException {
         return aClass;
     }
+=======
+	/**
+	 * Uses the system class loader to load the test class
+	 */
+	public Class load(String suiteClassName) throws ClassNotFoundException {
+		return Class.forName(suiteClassName);
+	}
+	/**
+	 * Uses the system class loader to load the test class
+	 */
+	public Class reload(Class aClass) throws ClassNotFoundException {
+		return aClass;
+	}
+>>>>>>> upstream/master
 }

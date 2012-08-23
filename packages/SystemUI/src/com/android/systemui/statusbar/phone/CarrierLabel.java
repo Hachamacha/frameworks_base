@@ -22,7 +22,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.provider.Settings;
 import android.provider.Telephony;
+<<<<<<< HEAD
 import android.text.TextUtils;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Slog;
 import android.view.View;
@@ -35,8 +38,12 @@ import java.util.TimeZone;
 import com.android.internal.R;
 
 /**
+<<<<<<< HEAD
  * This widget display an analogic clock with two hands for hours and
  * minutes.
+=======
+ * This widget display an analogic clock with two hands for hours and minutes.
+>>>>>>> upstream/master
  */
 public class CarrierLabel extends TextView {
     private boolean mAttached;
@@ -93,6 +100,7 @@ public class CarrierLabel extends TextView {
             Slog.d("CarrierLabel", "updateNetworkName showSpn=" + showSpn + " spn=" + spn
                     + " showPlmn=" + showPlmn + " plmn=" + plmn);
         }
+<<<<<<< HEAD
         final String str;
         // match logic in KeyguardStatusViewManager
         final boolean plmnValid = showPlmn && !TextUtils.isEmpty(plmn);
@@ -113,3 +121,36 @@ public class CarrierLabel extends TextView {
 }
 
 
+=======
+
+        String customLabel = null;
+        customLabel = Settings.System.getString(mContext.getContentResolver(),
+                Settings.System.CUSTOM_CARRIER_LABEL);
+
+        if (customLabel == null) {
+
+            StringBuilder str = new StringBuilder();
+            boolean something = false;
+            if (showPlmn && plmn != null) {
+                str.append(plmn);
+                something = true;
+            }
+            if (showSpn && spn != null) {
+                if (something) {
+                    str.append('\n');
+                }
+                str.append(spn);
+                something = true;
+            }
+            if (something) {
+                setText(str.toString());
+            } else {
+                setText(com.android.internal.R.string.lockscreen_carrier_default);
+            }
+        } else {
+            setText(customLabel);
+        }
+    }
+
+}
+>>>>>>> upstream/master

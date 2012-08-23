@@ -35,11 +35,14 @@ public class EditableInputConnection extends BaseInputConnection {
 
     private final TextView mTextView;
 
+<<<<<<< HEAD
     // Keeps track of nested begin/end batch edit to ensure this connection always has a
     // balanced impact on its associated TextView.
     // A negative value means that this connection has been finished by the InputMethodManager.
     private int mBatchEditNesting;
 
+=======
+>>>>>>> upstream/master
     public EditableInputConnection(TextView textview) {
         super(textview, true);
         mTextView = textview;
@@ -53,6 +56,7 @@ public class EditableInputConnection extends BaseInputConnection {
         }
         return null;
     }
+<<<<<<< HEAD
 
     @Override
     public boolean beginBatchEdit() {
@@ -95,6 +99,21 @@ public class EditableInputConnection extends BaseInputConnection {
         }
     }
 
+=======
+    
+    @Override
+    public boolean beginBatchEdit() {
+        mTextView.beginBatchEdit();
+        return true;
+    }
+    
+    @Override
+    public boolean endBatchEdit() {
+        mTextView.endBatchEdit();
+        return true;
+    }
+    
+>>>>>>> upstream/master
     @Override
     public boolean clearMetaKeyStates(int states) {
         final Editable content = getEditable();
@@ -110,7 +129,11 @@ public class EditableInputConnection extends BaseInputConnection {
         }
         return true;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     @Override
     public boolean commitCompletion(CompletionInfo text) {
         if (DEBUG) Log.v(TAG, "commitCompletion " + text);

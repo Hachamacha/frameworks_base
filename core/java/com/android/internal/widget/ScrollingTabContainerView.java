@@ -15,7 +15,11 @@
  */
 package com.android.internal.widget;
 
+<<<<<<< HEAD
 import com.android.internal.view.ActionBarPolicy;
+=======
+import com.android.internal.R;
+>>>>>>> upstream/master
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -23,6 +27,10 @@ import android.animation.TimeInterpolator;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Configuration;
+<<<<<<< HEAD
+=======
+import android.content.res.TypedArray;
+>>>>>>> upstream/master
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils.TruncateAt;
 import android.view.Gravity;
@@ -44,7 +52,11 @@ import android.widget.TextView;
  * across different configurations or circumstances.
  */
 public class ScrollingTabContainerView extends HorizontalScrollView
+<<<<<<< HEAD
         implements AdapterView.OnItemClickListener {
+=======
+        implements AdapterView.OnItemSelectedListener {
+>>>>>>> upstream/master
     private static final String TAG = "ScrollingTabContainerView";
     Runnable mTabSelector;
     private TabClickListener mTabClickListener;
@@ -54,7 +66,10 @@ public class ScrollingTabContainerView extends HorizontalScrollView
     private boolean mAllowCollapse;
 
     int mMaxTabWidth;
+<<<<<<< HEAD
     int mStackedTabMaxWidth;
+=======
+>>>>>>> upstream/master
     private int mContentHeight;
     private int mSelectedTabIndex;
 
@@ -69,9 +84,16 @@ public class ScrollingTabContainerView extends HorizontalScrollView
         super(context);
         setHorizontalScrollBarEnabled(false);
 
+<<<<<<< HEAD
         ActionBarPolicy abp = ActionBarPolicy.get(context);
         setContentHeight(abp.getTabContainerHeight());
         mStackedTabMaxWidth = abp.getStackedTabMaxWidth();
+=======
+        TypedArray a = getContext().obtainStyledAttributes(null, R.styleable.ActionBar,
+                com.android.internal.R.attr.actionBarStyle, 0);
+        setContentHeight(a.getLayoutDimension(R.styleable.ActionBar_height, 0));
+        a.recycle();
+>>>>>>> upstream/master
 
         mTabLayout = createTabLayout();
         addView(mTabLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -92,7 +114,10 @@ public class ScrollingTabContainerView extends HorizontalScrollView
             } else {
                 mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
             }
+<<<<<<< HEAD
             mMaxTabWidth = Math.min(mMaxTabWidth, mStackedTabMaxWidth);
+=======
+>>>>>>> upstream/master
         } else {
             mMaxTabWidth = -1;
         }
@@ -187,7 +212,10 @@ public class ScrollingTabContainerView extends HorizontalScrollView
         final LinearLayout tabLayout = new LinearLayout(getContext(), null,
                 com.android.internal.R.attr.actionBarTabBarStyle);
         tabLayout.setMeasureWithLargestChildEnabled(true);
+<<<<<<< HEAD
         tabLayout.setGravity(Gravity.CENTER);
+=======
+>>>>>>> upstream/master
         tabLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         return tabLayout;
@@ -198,7 +226,11 @@ public class ScrollingTabContainerView extends HorizontalScrollView
                 com.android.internal.R.attr.actionDropDownStyle);
         spinner.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+<<<<<<< HEAD
         spinner.setOnItemClickListenerInt(this);
+=======
+        spinner.setOnItemSelectedListener(this);
+>>>>>>> upstream/master
         return spinner;
     }
 
@@ -206,11 +238,20 @@ public class ScrollingTabContainerView extends HorizontalScrollView
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
+<<<<<<< HEAD
         ActionBarPolicy abp = ActionBarPolicy.get(getContext());
         // Action bar can change size on configuration changes.
         // Reread the desired height from the theme-specified style.
         setContentHeight(abp.getTabContainerHeight());
         mStackedTabMaxWidth = abp.getStackedTabMaxWidth();
+=======
+        // Action bar can change size on configuration changes.
+        // Reread the desired height from the theme-specified style.
+        TypedArray a = getContext().obtainStyledAttributes(null, R.styleable.ActionBar,
+                com.android.internal.R.attr.actionBarStyle, 0);
+        setContentHeight(a.getLayoutDimension(R.styleable.ActionBar_height, 0));
+        a.recycle();
+>>>>>>> upstream/master
     }
 
     public void animateToVisibility(int visibility) {
@@ -347,11 +388,22 @@ public class ScrollingTabContainerView extends HorizontalScrollView
     }
 
     @Override
+<<<<<<< HEAD
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+=======
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+>>>>>>> upstream/master
         TabView tabView = (TabView) view;
         tabView.getTab().select();
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+>>>>>>> upstream/master
     private class TabView extends LinearLayout {
         private ActionBar.Tab mTab;
         private TextView mTextView;

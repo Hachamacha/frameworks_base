@@ -20,7 +20,10 @@
 #include <SkChunkAlloc.h>
 #include <SkFlattenable.h>
 #include <SkMatrix.h>
+<<<<<<< HEAD
 #include <SkCamera.h>
+=======
+>>>>>>> upstream/master
 #include <SkPaint.h>
 #include <SkPath.h>
 #include <SkRefCnt.h>
@@ -31,6 +34,10 @@
 
 #include "DisplayListLogBuffer.h"
 #include "OpenGLRenderer.h"
+<<<<<<< HEAD
+=======
+#include "utils/Functor.h"
+>>>>>>> upstream/master
 
 namespace android {
 namespace uirenderer {
@@ -40,21 +47,31 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 #define MIN_WRITER_SIZE 4096
+<<<<<<< HEAD
 #define OP_MAY_BE_SKIPPED_MASK 0xff000000
 
 // Debug
 #if DEBUG_DISPLAY_LIST
     #define DISPLAY_LIST_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+
+// Debug
+#if DEBUG_DISPLAY_LIST
+    #define DISPLAY_LIST_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define DISPLAY_LIST_LOGD(...)
 #endif
 
+<<<<<<< HEAD
 #define TRANSLATION 0x0001
 #define ROTATION    0x0002
 #define ROTATION_3D 0x0004
 #define SCALE       0x0008
 #define PIVOT       0x0010
 
+=======
+>>>>>>> upstream/master
 ///////////////////////////////////////////////////////////////////////////////
 // Display list
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +108,10 @@ public:
         DrawBitmap,
         DrawBitmapMatrix,
         DrawBitmapRect,
+<<<<<<< HEAD
         DrawBitmapData,
+=======
+>>>>>>> upstream/master
         DrawBitmapMesh,
         DrawPatch,
         DrawColor,
@@ -104,14 +124,18 @@ public:
         DrawLines,
         DrawPoints,
         DrawText,
+<<<<<<< HEAD
         DrawTextOnPath,
         DrawPosText,
+=======
+>>>>>>> upstream/master
         ResetShader,
         SetupShader,
         ResetColorFilter,
         SetupColorFilter,
         ResetShadow,
         SetupShadow,
+<<<<<<< HEAD
         ResetPaintFilter,
         SetupPaintFilter,
         DrawGLFunction,
@@ -137,6 +161,23 @@ public:
 
     void output(OpenGLRenderer& renderer, uint32_t level = 0);
 
+=======
+        DrawGLFunction,
+    };
+
+    static const char* OP_NAMES[];
+
+    void initFromDisplayListRenderer(const DisplayListRenderer& recorder, bool reusing = false);
+
+    ANDROID_API size_t getSize();
+
+    bool replay(OpenGLRenderer& renderer, Rect& dirty, uint32_t level = 0);
+
+    void output(OpenGLRenderer& renderer, uint32_t level = 0);
+
+    ANDROID_API static void outputLogBuffer(int fd);
+
+>>>>>>> upstream/master
     void setRenderable(bool renderable) {
         mIsRenderable = renderable;
     }
@@ -145,6 +186,7 @@ public:
         return mIsRenderable;
     }
 
+<<<<<<< HEAD
     void setName(const char* name) {
         if (name) {
             mName.setTo(name);
@@ -405,6 +447,13 @@ private:
 
     void updateMatrix();
 
+=======
+private:
+    void init();
+
+    void clearResources();
+
+>>>>>>> upstream/master
     class TextContainer {
     public:
         size_t length() const {
@@ -423,10 +472,13 @@ private:
         return (SkBitmap*) getInt();
     }
 
+<<<<<<< HEAD
     SkBitmap* getBitmapData() {
         return (SkBitmap*) getInt();
     }
 
+=======
+>>>>>>> upstream/master
     SkiaShader* getShader() {
         return (SkiaShader*) getInt();
     }
@@ -435,11 +487,19 @@ private:
         return (SkiaColorFilter*) getInt();
     }
 
+<<<<<<< HEAD
     inline int32_t getIndex() {
         return mReader.readInt();
     }
 
     inline int32_t getInt() {
+=======
+    inline int getIndex() {
+        return mReader.readInt();
+    }
+
+    inline int getInt() {
+>>>>>>> upstream/master
         return mReader.readInt();
     }
 
@@ -455,8 +515,13 @@ private:
         return (SkPath*) getInt();
     }
 
+<<<<<<< HEAD
     SkPaint* getPaint(OpenGLRenderer& renderer) {
         return renderer.filterPaint((SkPaint*) getInt());
+=======
+    SkPaint* getPaint() {
+        return (SkPaint*) getInt();
+>>>>>>> upstream/master
     }
 
     DisplayList* getDisplayList() {
@@ -477,7 +542,11 @@ private:
         return (uint32_t*) mReader.skip(count * sizeof(uint32_t));
     }
 
+<<<<<<< HEAD
     float* getFloats(int32_t& count) {
+=======
+    float* getFloats(int& count) {
+>>>>>>> upstream/master
         count = getInt();
         return (float*) mReader.skip(count * sizeof(float));
     }
@@ -488,12 +557,18 @@ private:
     }
 
     Vector<SkBitmap*> mBitmapResources;
+<<<<<<< HEAD
     Vector<SkBitmap*> mOwnedBitmapResources;
+=======
+>>>>>>> upstream/master
     Vector<SkiaColorFilter*> mFilterResources;
 
     Vector<SkPaint*> mPaints;
     Vector<SkPath*> mPaths;
+<<<<<<< HEAD
     SortedVector<SkPath*> mSourcePaths;
+=======
+>>>>>>> upstream/master
     Vector<SkMatrix*> mMatrices;
     Vector<SkiaShader*> mShaders;
 
@@ -502,6 +577,7 @@ private:
     size_t mSize;
 
     bool mIsRenderable;
+<<<<<<< HEAD
 
     String8 mName;
 
@@ -528,6 +604,8 @@ private:
     SkMatrix* mStaticMatrix;
     SkMatrix* mAnimationMatrix;
     bool mCaching;
+=======
+>>>>>>> upstream/master
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -544,6 +622,7 @@ public:
 
     ANDROID_API DisplayList* getDisplayList(DisplayList* displayList);
 
+<<<<<<< HEAD
     virtual bool isDeferred();
 
     virtual void setViewport(int width, int height);
@@ -551,6 +630,13 @@ public:
     virtual void finish();
 
     virtual status_t callDrawGLFunction(Functor *functor, Rect& dirty);
+=======
+    virtual void setViewport(int width, int height);
+    virtual void prepareDirty(float left, float top, float right, float bottom, bool opaque);
+    virtual void finish();
+
+    virtual bool callDrawGLFunction(Functor *functor, Rect& dirty);
+>>>>>>> upstream/master
 
     virtual void interrupt();
     virtual void resume();
@@ -574,6 +660,7 @@ public:
 
     virtual bool clipRect(float left, float top, float right, float bottom, SkRegion::Op op);
 
+<<<<<<< HEAD
     virtual status_t drawDisplayList(DisplayList* displayList, Rect& dirty, int32_t flags,
             uint32_t level = 0);
     virtual status_t drawLayer(Layer* layer, float x, float y, SkPaint* paint);
@@ -605,6 +692,34 @@ public:
             float hOffset, float vOffset, SkPaint* paint);
     virtual status_t drawPosText(const char* text, int bytesCount, int count,
             const float* positions, SkPaint* paint);
+=======
+    virtual bool drawDisplayList(DisplayList* displayList, uint32_t width, uint32_t height,
+            Rect& dirty, uint32_t level = 0);
+    virtual void drawLayer(Layer* layer, float x, float y, SkPaint* paint);
+    virtual void drawBitmap(SkBitmap* bitmap, float left, float top, SkPaint* paint);
+    virtual void drawBitmap(SkBitmap* bitmap, SkMatrix* matrix, SkPaint* paint);
+    virtual void drawBitmap(SkBitmap* bitmap, float srcLeft, float srcTop,
+            float srcRight, float srcBottom, float dstLeft, float dstTop,
+            float dstRight, float dstBottom, SkPaint* paint);
+    virtual void drawBitmapMesh(SkBitmap* bitmap, int meshWidth, int meshHeight,
+            float* vertices, int* colors, SkPaint* paint);
+    virtual void drawPatch(SkBitmap* bitmap, const int32_t* xDivs, const int32_t* yDivs,
+            const uint32_t* colors, uint32_t width, uint32_t height, int8_t numColors,
+            float left, float top, float right, float bottom, SkPaint* paint);
+    virtual void drawColor(int color, SkXfermode::Mode mode);
+    virtual void drawRect(float left, float top, float right, float bottom, SkPaint* paint);
+    virtual void drawRoundRect(float left, float top, float right, float bottom,
+            float rx, float ry, SkPaint* paint);
+    virtual void drawCircle(float x, float y, float radius, SkPaint* paint);
+    virtual void drawOval(float left, float top, float right, float bottom, SkPaint* paint);
+    virtual void drawArc(float left, float top, float right, float bottom,
+            float startAngle, float sweepAngle, bool useCenter, SkPaint* paint);
+    virtual void drawPath(SkPath* path, SkPaint* paint);
+    virtual void drawLines(float* points, int count, SkPaint* paint);
+    virtual void drawPoints(float* points, int count, SkPaint* paint);
+    virtual void drawText(const char* text, int bytesCount, int count, float x, float y,
+            SkPaint* paint);
+>>>>>>> upstream/master
 
     virtual void resetShader();
     virtual void setupShader(SkiaShader* shader);
@@ -615,9 +730,12 @@ public:
     virtual void resetShadow();
     virtual void setupShadow(float radius, float dx, float dy, int color);
 
+<<<<<<< HEAD
     virtual void resetPaintFilter();
     virtual void setupPaintFilter(int clearBits, int setBits);
 
+=======
+>>>>>>> upstream/master
     ANDROID_API void reset();
 
     const SkWriter32& writeStream() const {
@@ -628,10 +746,13 @@ public:
         return mBitmapResources;
     }
 
+<<<<<<< HEAD
     const Vector<SkBitmap*>& getOwnedBitmapResources() const {
         return mOwnedBitmapResources;
     }
 
+=======
+>>>>>>> upstream/master
     const Vector<SkiaColorFilter*>& getFilterResources() const {
         return mFilterResources;
     }
@@ -648,10 +769,13 @@ public:
         return mPaths;
     }
 
+<<<<<<< HEAD
     const SortedVector<SkPath*>& getSourcePaths() const {
         return mSourcePaths;
     }
 
+=======
+>>>>>>> upstream/master
     const Vector<SkMatrix*>& getMatrices() const {
         return mMatrices;
     }
@@ -665,6 +789,7 @@ private:
         }
     }
 
+<<<<<<< HEAD
     void insertTranlate() {
         if (mHasTranslate) {
             if (mTranslateX != 0.0f || mTranslateY != 0.0f) {
@@ -679,10 +804,15 @@ private:
     inline void addOp(const DisplayList::Op drawOp) {
         insertRestoreToCount();
         insertTranlate();
+=======
+    inline void addOp(DisplayList::Op drawOp) {
+        insertRestoreToCount();
+>>>>>>> upstream/master
         mWriter.writeInt(drawOp);
         mHasDrawOps = mHasDrawOps || drawOp >= DisplayList::DrawDisplayList;
     }
 
+<<<<<<< HEAD
     uint32_t* addOp(const DisplayList::Op drawOp, const bool reject) {
         insertRestoreToCount();
         insertTranlate();
@@ -704,6 +834,9 @@ private:
     }
 
     inline void addInt(int32_t value) {
+=======
+    inline void addInt(int value) {
+>>>>>>> upstream/master
         mWriter.writeInt(value);
     }
 
@@ -714,21 +847,41 @@ private:
 
     void addInts(const int32_t* values, uint32_t count) {
         mWriter.writeInt(count);
+<<<<<<< HEAD
         mWriter.write(values, count * sizeof(int32_t));
+=======
+        for (uint32_t i = 0; i < count; i++) {
+            mWriter.writeInt(values[i]);
+        }
+>>>>>>> upstream/master
     }
 
     void addUInts(const uint32_t* values, int8_t count) {
         mWriter.writeInt(count);
+<<<<<<< HEAD
         mWriter.write(values, count * sizeof(uint32_t));
+=======
+        for (int8_t i = 0; i < count; i++) {
+            mWriter.writeInt(values[i]);
+        }
+>>>>>>> upstream/master
     }
 
     inline void addFloat(float value) {
         mWriter.writeScalar(value);
     }
 
+<<<<<<< HEAD
     void addFloats(const float* values, int32_t count) {
         mWriter.writeInt(count);
         mWriter.write(values, count * sizeof(float));
+=======
+    void addFloats(const float* values, int count) {
+        mWriter.writeInt(count);
+        for (int i = 0; i < count; i++) {
+            mWriter.writeScalar(values[i]);
+        }
+>>>>>>> upstream/master
     }
 
     inline void addPoint(float x, float y) {
@@ -757,6 +910,7 @@ private:
         SkPath* pathCopy = mPathMap.valueFor(path);
         if (pathCopy == NULL || pathCopy->getGenerationID() != path->getGenerationID()) {
             pathCopy = new SkPath(*path);
+<<<<<<< HEAD
             pathCopy->setSourcePath(path);
             // replaceValueFor() performs an add if the entry doesn't exist
             mPathMap.replaceValueFor(path, pathCopy);
@@ -766,6 +920,11 @@ private:
             Caches::getInstance().resourceCache.incrementRefcount(path);
             mSourcePaths.add(path);
         }
+=======
+            mPathMap.add(path, pathCopy);
+            mPaths.add(pathCopy);
+        }
+>>>>>>> upstream/master
 
         addInt((int) pathCopy);
     }
@@ -776,11 +935,18 @@ private:
             return;
         }
 
+<<<<<<< HEAD
         SkPaint* paintCopy = mPaintMap.valueFor(paint);
         if (paintCopy == NULL || paintCopy->getGenerationID() != paint->getGenerationID()) {
             paintCopy = new SkPaint(*paint);
             // replaceValueFor() performs an add if the entry doesn't exist
             mPaintMap.replaceValueFor(paint, paintCopy);
+=======
+        SkPaint* paintCopy =  mPaintMap.valueFor(paint);
+        if (paintCopy == NULL || paintCopy->getGenerationID() != paint->getGenerationID()) {
+            paintCopy = new SkPaint(*paint);
+            mPaintMap.add(paint, paintCopy);
+>>>>>>> upstream/master
             mPaints.add(paintCopy);
         }
 
@@ -812,12 +978,15 @@ private:
         Caches::getInstance().resourceCache.incrementRefcount(bitmap);
     }
 
+<<<<<<< HEAD
     void addBitmapData(SkBitmap* bitmap) {
         addInt((int) bitmap);
         mOwnedBitmapResources.add(bitmap);
         Caches::getInstance().resourceCache.incrementRefcount(bitmap);
     }
 
+=======
+>>>>>>> upstream/master
     inline void addShader(SkiaShader* shader) {
         if (!shader) {
             addInt((int) NULL);
@@ -828,8 +997,12 @@ private:
         // TODO: We also need to handle generation ID changes in compose shaders
         if (shaderCopy == NULL || shaderCopy->getGenerationId() != shader->getGenerationId()) {
             shaderCopy = shader->copy();
+<<<<<<< HEAD
             // replaceValueFor() performs an add if the entry doesn't exist
             mShaderMap.replaceValueFor(shader, shaderCopy);
+=======
+            mShaderMap.add(shader, shaderCopy);
+>>>>>>> upstream/master
             mShaders.add(shaderCopy);
             Caches::getInstance().resourceCache.incrementRefcount(shaderCopy);
         }
@@ -844,7 +1017,10 @@ private:
     }
 
     Vector<SkBitmap*> mBitmapResources;
+<<<<<<< HEAD
     Vector<SkBitmap*> mOwnedBitmapResources;
+=======
+>>>>>>> upstream/master
     Vector<SkiaColorFilter*> mFilterResources;
 
     Vector<SkPaint*> mPaints;
@@ -853,14 +1029,18 @@ private:
     Vector<SkPath*> mPaths;
     DefaultKeyedVector<SkPath*, SkPath*> mPathMap;
 
+<<<<<<< HEAD
     SortedVector<SkPath*> mSourcePaths;
 
+=======
+>>>>>>> upstream/master
     Vector<SkiaShader*> mShaders;
     DefaultKeyedVector<SkiaShader*, SkiaShader*> mShaderMap;
 
     Vector<SkMatrix*> mMatrices;
 
     SkWriter32 mWriter;
+<<<<<<< HEAD
     uint32_t mBufferSize;
 
     int mRestoreSaveCount;
@@ -869,6 +1049,10 @@ private:
     float mTranslateY;
     bool mHasTranslate;
 
+=======
+
+    int mRestoreSaveCount;
+>>>>>>> upstream/master
     bool mHasDrawOps;
 
     friend class DisplayList;

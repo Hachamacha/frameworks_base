@@ -3,8 +3,14 @@ page.title=Color
 
 <style>
   .color-row {
+<<<<<<< HEAD
     width: 760px;
     margin:0;
+=======
+    width: 740px;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+>>>>>>> upstream/master
 
     display: -webkit-box;
     display:    -moz-box;

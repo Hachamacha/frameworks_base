@@ -32,7 +32,11 @@ namespace uirenderer {
 
 // Debug
 #if DEBUG_PATCHES
+<<<<<<< HEAD
     #define PATCH_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define PATCH_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define PATCH_LOGD(...)
 #endif

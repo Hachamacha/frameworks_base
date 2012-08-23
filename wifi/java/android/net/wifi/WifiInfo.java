@@ -68,6 +68,7 @@ public class WifiInfo implements Parcelable {
     private int mLinkSpeed;
 
     private InetAddress mIpAddress;
+<<<<<<< HEAD
     private String mMacAddress;
 
     /**
@@ -75,6 +76,11 @@ public class WifiInfo implements Parcelable {
      * and sensitive to heavy data transfers.
      */
     private boolean mMeteredHint;
+=======
+
+    private String mMacAddress;
+    private boolean mExplicitConnect;
+>>>>>>> upstream/master
 
     WifiInfo() {
         mSSID = null;
@@ -84,6 +90,10 @@ public class WifiInfo implements Parcelable {
         mRssi = -9999;
         mLinkSpeed = -1;
         mHiddenSSID = false;
+<<<<<<< HEAD
+=======
+        mExplicitConnect = false;
+>>>>>>> upstream/master
     }
 
     /**
@@ -101,7 +111,11 @@ public class WifiInfo implements Parcelable {
             mLinkSpeed = source.mLinkSpeed;
             mIpAddress = source.mIpAddress;
             mMacAddress = source.mMacAddress;
+<<<<<<< HEAD
             mMeteredHint = source.mMeteredHint;
+=======
+            mExplicitConnect = source.mExplicitConnect;
+>>>>>>> upstream/master
         }
     }
 
@@ -174,6 +188,7 @@ public class WifiInfo implements Parcelable {
         return mMacAddress;
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public void setMeteredHint(boolean meteredHint) {
         mMeteredHint = meteredHint;
@@ -188,6 +203,28 @@ public class WifiInfo implements Parcelable {
         mNetworkId = id;
     }
 
+=======
+    void setNetworkId(int id) {
+        mNetworkId = id;
+    }
+
+
+    /**
+     * @hide
+     */
+    public boolean isExplicitConnect() {
+        return mExplicitConnect;
+    }
+
+    /**
+     * @hide
+     */
+    public void setExplicitConnect(boolean explicitConnect) {
+        this.mExplicitConnect = explicitConnect;
+    }
+
+
+>>>>>>> upstream/master
     /**
      * Each configured network has a unique small integer ID, used to identify
      * the network when performing operations on the supplicant. This method
@@ -264,6 +301,7 @@ public class WifiInfo implements Parcelable {
         }
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public static String removeDoubleQuotes(String string) {
         if (string == null) return null;
@@ -274,6 +312,8 @@ public class WifiInfo implements Parcelable {
         return string;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
@@ -287,7 +327,11 @@ public class WifiInfo implements Parcelable {
             append(", RSSI: ").append(mRssi).
             append(", Link speed: ").append(mLinkSpeed).
             append(", Net ID: ").append(mNetworkId).
+<<<<<<< HEAD
             append(", Metered hint: ").append(mMeteredHint);
+=======
+            append(", Explicit connect: ").append(mExplicitConnect);
+>>>>>>> upstream/master
 
         return sb.toString();
     }
@@ -311,7 +355,11 @@ public class WifiInfo implements Parcelable {
         dest.writeString(getSSID());
         dest.writeString(mBSSID);
         dest.writeString(mMacAddress);
+<<<<<<< HEAD
         dest.writeInt(mMeteredHint ? 1 : 0);
+=======
+        dest.writeByte(mExplicitConnect ? (byte)1 : (byte)0);
+>>>>>>> upstream/master
         mSupplicantState.writeToParcel(dest, flags);
     }
 
@@ -331,7 +379,11 @@ public class WifiInfo implements Parcelable {
                 info.setSSID(in.readString());
                 info.mBSSID = in.readString();
                 info.mMacAddress = in.readString();
+<<<<<<< HEAD
                 info.mMeteredHint = in.readInt() != 0;
+=======
+                info.mExplicitConnect = in.readByte() == 1 ? true : false;
+>>>>>>> upstream/master
                 info.mSupplicantState = SupplicantState.CREATOR.createFromParcel(in);
                 return info;
             }

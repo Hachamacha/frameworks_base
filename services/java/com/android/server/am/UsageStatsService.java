@@ -656,7 +656,11 @@ public final class UsageStatsService extends IUsageStats.Stub {
                 }
             }
         };
+<<<<<<< HEAD
         mPackageMonitor.register(mContext, null, true);
+=======
+        mPackageMonitor.register(mContext, true);
+>>>>>>> upstream/master
         filterHistoryStats();
     }
 

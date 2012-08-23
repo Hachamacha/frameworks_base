@@ -17,7 +17,11 @@
 #define LOG_TAG "Configuration"
 #include <utils/Log.h>
 
+<<<<<<< HEAD
 #include <androidfw/AssetManager.h>
+=======
+#include <utils/AssetManager.h>
+>>>>>>> upstream/master
 
 #include <android_runtime/android_content_res_Configuration.h>
 

@@ -34,19 +34,30 @@ public class VpnConfig implements Parcelable {
 
     public static final String SERVICE_INTERFACE = "android.net.VpnService";
 
+<<<<<<< HEAD
     public static final String DIALOGS_PACKAGE = "com.android.vpndialogs";
 
+=======
+>>>>>>> upstream/master
     public static final String LEGACY_VPN = "[Legacy VPN]";
 
     public static Intent getIntentForConfirmation() {
         Intent intent = new Intent();
+<<<<<<< HEAD
         intent.setClassName(DIALOGS_PACKAGE, DIALOGS_PACKAGE + ".ConfirmDialog");
+=======
+        intent.setClassName("com.android.vpndialogs", "com.android.vpndialogs.ConfirmDialog");
+>>>>>>> upstream/master
         return intent;
     }
 
     public static PendingIntent getIntentForStatusPanel(Context context, VpnConfig config) {
         Intent intent = new Intent();
+<<<<<<< HEAD
         intent.setClassName(DIALOGS_PACKAGE, DIALOGS_PACKAGE + ".ManageDialog");
+=======
+        intent.setClassName("com.android.vpndialogs", "com.android.vpndialogs.ManageDialog");
+>>>>>>> upstream/master
         intent.putExtra("config", config);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY |
                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);

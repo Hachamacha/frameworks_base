@@ -28,19 +28,27 @@ import android.provider.Telephony;
 import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
+<<<<<<< HEAD
 import com.android.internal.telephony.IccCard;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.OperatorInfo;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneNotifier;
 import com.android.internal.telephony.PhoneProxy;
 import com.android.internal.telephony.SMSDispatcher;
 import com.android.internal.telephony.gsm.GsmSMSDispatcher;
+<<<<<<< HEAD
 import com.android.internal.telephony.gsm.SmsMessage;
 import com.android.internal.telephony.ims.IsimRecords;
 import com.android.internal.telephony.uicc.UiccController;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+=======
+import com.android.internal.telephony.gsm.SimCard;
+import com.android.internal.telephony.ims.IsimRecords;
+>>>>>>> upstream/master
 
 public class CDMALTEPhone extends CDMAPhone {
     static final String LOG_TAG = "CDMA";
@@ -66,21 +74,31 @@ public class CDMALTEPhone extends CDMAPhone {
     public CDMALTEPhone(Context context, CommandsInterface ci, PhoneNotifier notifier) {
         super(context, ci, notifier, false);
         m3gppSMS = new GsmSMSDispatcher(this, mSmsStorageMonitor, mSmsUsageMonitor);
+<<<<<<< HEAD
         mIccRecords.registerForNewSms(this, EVENT_NEW_ICC_SMS, null);
+=======
+>>>>>>> upstream/master
     }
 
     @Override
     public void handleMessage (Message msg) {
         AsyncResult ar;
+<<<<<<< HEAD
+=======
+        Message onComplete;
+>>>>>>> upstream/master
         switch (msg.what) {
             // handle the select network completion callbacks.
             case EVENT_SET_NETWORK_MANUAL_COMPLETE:
                 handleSetSelectNetwork((AsyncResult) msg.obj);
                 break;
+<<<<<<< HEAD
             case EVENT_NEW_ICC_SMS:
                 ar = (AsyncResult)msg.obj;
                 m3gppSMS.dispatchMessage((SmsMessage)ar.result);
                 break;
+=======
+>>>>>>> upstream/master
             default:
                 super.handleMessage(msg);
         }
@@ -88,11 +106,18 @@ public class CDMALTEPhone extends CDMAPhone {
 
     @Override
     protected void initSstIcc() {
+<<<<<<< HEAD
         mIccCard.set(UiccController.getInstance(this).getIccCard());
         mIccRecords = mIccCard.get().getIccRecords();
         // CdmaLteServiceStateTracker registers with IccCard to know
         // when the card is ready. So create mIccCard before the ServiceStateTracker
         mSST = new CdmaLteServiceStateTracker(this);
+=======
+        mSST = new CdmaLteServiceStateTracker(this);
+        mIccRecords = new CdmaLteUiccRecords(this);
+        mIccCard = new SimCard(this, LOG_TAG, DBG);
+        mIccFileHandler = new CdmaLteUiccFileHandler(this);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -100,7 +125,10 @@ public class CDMALTEPhone extends CDMAPhone {
         synchronized(PhoneProxy.lockForRadioTechnologyChange) {
             super.dispose();
             m3gppSMS.dispose();
+<<<<<<< HEAD
             mIccRecords.unregisterForNewSms(this);
+=======
+>>>>>>> upstream/master
         }
     }
 
@@ -173,7 +201,11 @@ public class CDMALTEPhone extends CDMAPhone {
         // look for our wrapper within the asyncresult, skip the rest if it
         // is null.
         if (!(ar.userObj instanceof NetworkSelectMessage)) {
+<<<<<<< HEAD
             Log.e(LOG_TAG, "unexpected result from user object.");
+=======
+            if (DBG) Log.d(LOG_TAG, "unexpected result from user object.");
+>>>>>>> upstream/master
             return;
         }
 
@@ -182,7 +214,11 @@ public class CDMALTEPhone extends CDMAPhone {
         // found the object, now we send off the message we had originally
         // attached to the request.
         if (nsm.message != null) {
+<<<<<<< HEAD
             if (DBG) log("sending original message to recipient");
+=======
+            if (DBG) Log.d(LOG_TAG, "sending original message to recipient");
+>>>>>>> upstream/master
             AsyncResult.forMessage(nsm.message, ar.result, ar.exception);
             nsm.message.sendToTarget();
         }
@@ -209,19 +245,39 @@ public class CDMALTEPhone extends CDMAPhone {
                 ContentValues map = new ContentValues();
                 String operatorNumeric = mIccRecords.getOperatorNumeric();
                 map.put(Telephony.Carriers.NUMERIC, operatorNumeric);
+<<<<<<< HEAD
                 if (DBG) log("updateCurrentCarrierInProvider from UICC: numeric=" +
                         operatorNumeric);
+=======
+                log("updateCurrentCarrierInProvider from UICC: numeric=" + operatorNumeric);
+>>>>>>> upstream/master
                 mContext.getContentResolver().insert(uri, map);
                 return true;
             } catch (SQLException e) {
                 Log.e(LOG_TAG, "[CDMALTEPhone] Can't store current operator ret false", e);
             }
         } else {
+<<<<<<< HEAD
             if (DBG) log("updateCurrentCarrierInProvider mIccRecords == null ret false");
+=======
+            log("updateCurrentCarrierInProvider mIccRecords == null ret false");
+>>>>>>> upstream/master
         }
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public void setSystemLocale(String language, String country, boolean fromMcc) {
+        // Avoid system locale is set from MCC table if CDMALTEPhone is used.
+        // The locale will be picked up based on EFpl/EFli once CSIM records are loaded.
+        if (fromMcc) return;
+
+        super.setSystemLocale(language, country, false);
+    }
+
+>>>>>>> upstream/master
     // return IMSI from USIM as subscriber ID.
     @Override
     public String getSubscriberId() {
@@ -260,6 +316,7 @@ public class CDMALTEPhone extends CDMAPhone {
 
     @Override
     protected void log(String s) {
+<<<<<<< HEAD
             Log.d(LOG_TAG, "[CDMALTEPhone] " + s);
     }
 
@@ -269,4 +326,9 @@ public class CDMALTEPhone extends CDMAPhone {
         super.dump(fd, pw, args);
         pw.println(" m3gppSMS=" + m3gppSMS);
     }
+=======
+        if (DBG)
+            Log.d(LOG_TAG, "[CDMALTEPhone] " + s);
+    }
+>>>>>>> upstream/master
 }

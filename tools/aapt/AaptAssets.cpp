@@ -56,6 +56,7 @@ static bool validateFileName(const char* fileName)
     return true;
 }
 
+<<<<<<< HEAD
 // The default to use if no other ignore pattern is defined.
 const char * const gDefaultIgnoreAssets =
     "!.svn:!.git:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~";
@@ -143,6 +144,57 @@ static bool isHidden(const char *root, const char *path)
 
     free(patterns);
     return ignore;
+=======
+static bool isHidden(const char *root, const char *path)
+{
+    const char *ext  = NULL;
+    const char *type = NULL;
+
+    // Skip all hidden files.
+    if (path[0] == '.') {
+        // Skip ., .. and  .svn but don't chatter about it.
+        if (strcmp(path, ".") == 0
+            || strcmp(path, "..") == 0
+            || strcmp(path, ".svn") == 0) {
+            return true;
+        }
+        type = "hidden";
+    } else if (path[0] == '_') {
+        // skip directories starting with _ (don't chatter about it)
+        String8 subdirName(root);
+        subdirName.appendPath(path);
+        if (getFileType(subdirName.string()) == kFileTypeDirectory) {
+            return true;
+        }
+    } else if (strcmp(path, "CVS") == 0) {
+        // Skip CVS but don't chatter about it.
+        return true;
+    } else if (strcasecmp(path, "thumbs.db") == 0
+               || strcasecmp(path, "picasa.ini") == 0) {
+        // Skip suspected image indexes files.
+        type = "index";
+    } else if (path[strlen(path)-1] == '~') {
+        // Skip suspected emacs backup files.
+        type = "backup";
+    } else if ((ext = strrchr(path, '.')) != NULL && strcmp(ext, ".scc") == 0) {
+        // Skip VisualSourceSafe files and don't chatter about it
+        return true;
+    } else {
+        // Let everything else through.
+        return false;
+    }
+
+    /* If we get this far, "type" should be set and the file
+     * should be skipped.
+     */
+    String8 subdirName(root);
+    subdirName.appendPath(path);
+    fprintf(stderr, "    (skipping %s %s '%s')\n", type,
+            getFileType(subdirName.string())==kFileTypeDirectory ? "dir":"file",
+            subdirName.string());
+
+    return true;
+>>>>>>> upstream/master
 }
 
 // =========================================================================
@@ -1057,11 +1109,14 @@ bool AaptGroupEntry::getUiModeTypeName(const char* name,
               (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
               | ResTable_config::UI_MODE_TYPE_TELEVISION;
         return true;
+<<<<<<< HEAD
     } else if (strcmp(name, "appliance") == 0) {
       if (out) out->uiMode =
               (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
               | ResTable_config::UI_MODE_TYPE_APPLIANCE;
         return true;
+=======
+>>>>>>> upstream/master
     }
 
     return false;
@@ -1122,6 +1177,7 @@ bool AaptGroupEntry::getDensityName(const char* name,
         if (out) out->density = ResTable_config::DENSITY_HIGH;
         return true;
     }
+<<<<<<< HEAD
 
     if (strcmp(name, "xhdpi") == 0) {
         if (out) out->density = ResTable_config::DENSITY_XHIGH;
@@ -1133,6 +1189,14 @@ bool AaptGroupEntry::getDensityName(const char* name,
         return true;
     }
 
+=======
+    
+    if (strcmp(name, "xhdpi") == 0) {
+        if (out) out->density = ResTable_config::DENSITY_MEDIUM*2;
+        return true;
+    }
+    
+>>>>>>> upstream/master
     char* c = (char*)name;
     while (*c >= '0' && *c <= '9') {
         c++;
@@ -1875,6 +1939,7 @@ String8 AaptDir::getPrintableSource() const
 // =========================================================================
 // =========================================================================
 
+<<<<<<< HEAD
 status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols)
 {
     status_t err = NO_ERROR;
@@ -1918,6 +1983,8 @@ status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols)
 // =========================================================================
 // =========================================================================
 
+=======
+>>>>>>> upstream/master
 AaptAssets::AaptAssets()
     : AaptDir(String8(), String8()),
       mChanged(false), mHaveIncludedAssets(false), mRes(NULL)
@@ -2485,6 +2552,7 @@ sp<AaptSymbols> AaptAssets::getSymbolsFor(const String8& name)
     return sym;
 }
 
+<<<<<<< HEAD
 sp<AaptSymbols> AaptAssets::getJavaSymbolsFor(const String8& name)
 {
     sp<AaptSymbols> sym = mJavaSymbols.valueFor(name);
@@ -2527,6 +2595,8 @@ bool AaptAssets::isJavaSymbol(const AaptSymbolEntry& sym, bool includePrivate) c
     return false;
 }
 
+=======
+>>>>>>> upstream/master
 status_t AaptAssets::buildIncludedResources(Bundle* bundle)
 {
     if (!mHaveIncludedAssets) {

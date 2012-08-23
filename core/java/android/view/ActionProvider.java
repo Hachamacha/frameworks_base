@@ -17,6 +17,7 @@
 package android.view;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.util.Log;
 
 /**
@@ -39,6 +40,32 @@ import android.util.Log;
  * </li>
  * <li>
  * Declare the action provider in an XML menu resource. For example:
+=======
+
+/**
+ * This class is a mediator for accomplishing a given task, for example sharing a file.
+ * It is responsible for creating a view that performs an action that accomplishes the task.
+ * This class also implements other functions such a performing a default action.
+ * <p>
+ * An ActionProvider can be optionally specified for a {@link MenuItem} and in such a
+ * case it will be responsible for creating the action view that appears in the
+ * {@link android.app.ActionBar} as a substitute for the menu item when the item is
+ * displayed as an action item. Also the provider is responsible for performing a
+ * default action if a menu item placed on the overflow menu of the ActionBar is
+ * selected and none of the menu item callbacks has handled the selection. For this
+ * case the provider can also optionally provide a sub-menu for accomplishing the
+ * task at hand.
+ * </p>
+ * <p>
+ * There are two ways for using an action provider for creating and handling of action views:
+ * <ul>
+ * <li>
+ * Setting the action provider on a {@link MenuItem} directly by calling
+ * {@link MenuItem#setActionProvider(ActionProvider)}.
+ * </li>
+ * <li>
+ * Declaring the action provider in the menu XML resource. For example:
+>>>>>>> upstream/master
  * <pre>
  * <code>
  *   &lt;item android:id="@+id/my_menu_item"
@@ -56,6 +83,7 @@ import android.util.Log;
  * @see MenuItem#getActionProvider()
  */
 public abstract class ActionProvider {
+<<<<<<< HEAD
     private static final String TAG = "ActionProvider";
     private SubUiVisibilityListener mSubUiVisibilityListener;
     private VisibilityListener mVisibilityListener;
@@ -63,6 +91,12 @@ public abstract class ActionProvider {
     /**
      * Creates a new instance. ActionProvider classes should always implement a
      * constructor that takes a single Context parameter for inflating from menu XML.
+=======
+    private SubUiVisibilityListener mSubUiVisibilityListener;
+
+    /**
+     * Creates a new instance.
+>>>>>>> upstream/master
      *
      * @param context Context for accessing resources.
      */
@@ -70,6 +104,7 @@ public abstract class ActionProvider {
     }
 
     /**
+<<<<<<< HEAD
      * Factory method called by the Android framework to create new action views.
      *
      * <p>This method has been deprecated in favor of {@link #onCreateActionView(MenuItem)}.
@@ -79,10 +114,16 @@ public abstract class ActionProvider {
      * @return A new action view.
      *
      * @deprecated use {@link #onCreateActionView(MenuItem)}
+=======
+     * Factory method for creating new action views.
+     *
+     * @return A new action view.
+>>>>>>> upstream/master
      */
     public abstract View onCreateActionView();
 
     /**
+<<<<<<< HEAD
      * Factory method called by the Android framework to create new action views.
      * This method returns a new action view for the given MenuItem.
      *
@@ -137,6 +178,8 @@ public abstract class ActionProvider {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Performs an optional default action.
      * <p>
      * For the case of an action provider placed in a menu item not shown as an action this
@@ -222,6 +265,7 @@ public abstract class ActionProvider {
     }
 
     /**
+<<<<<<< HEAD
      * Set a listener to be notified when this ActionProvider's overridden visibility changes.
      * This should only be used by MenuItem implementations.
      *
@@ -237,11 +281,14 @@ public abstract class ActionProvider {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * @hide Internal use only
      */
     public interface SubUiVisibilityListener {
         public void onSubUiVisibilityChanged(boolean isVisible);
     }
+<<<<<<< HEAD
 
     /**
      * Listens to changes in visibility as reported by {@link ActionProvider#refreshVisibility()}.
@@ -252,4 +299,6 @@ public abstract class ActionProvider {
     public interface VisibilityListener {
         public void onActionProviderVisibilityChanged(boolean isVisible);
     }
+=======
+>>>>>>> upstream/master
 }

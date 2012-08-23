@@ -36,7 +36,11 @@ next.link=descendant-lateral.html
 
 <h2 id="multi-pane-layouts">Group Screens with Multi-pane Layouts</h2>
 
+<<<<<<< HEAD
 <div class="note design">
+=======
+<div class="design-announce">
+>>>>>>> upstream/master
 <p><strong>Multi-pane Layout Design</strong></p>
   <p>For design guidelines, read Android Design's <a
   href="{@docRoot}design/patterns/multi-pane-layouts.html">Multi-pane Layouts</a> pattern guide.</p>

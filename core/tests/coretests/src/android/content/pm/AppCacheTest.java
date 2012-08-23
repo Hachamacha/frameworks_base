@@ -24,7 +24,10 @@ import android.content.IntentFilter;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.StatFs;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -675,7 +678,11 @@ public class AppCacheTest extends AndroidTestCase {
             PackageDataObserver observer = new PackageDataObserver();
             //wait on observer
             synchronized(observer) {
+<<<<<<< HEAD
                 getPm().clearApplicationUserData(packageName, observer, 0 /* TODO: Other users */);
+=======
+                getPm().clearApplicationUserData(packageName, observer);
+>>>>>>> upstream/master
                 long waitTime = 0;
                 while(!observer.isDone() || (waitTime > MAX_WAIT_TIME)) {
                     observer.wait(WAIT_TIME_INCR);
@@ -718,8 +725,12 @@ public class AppCacheTest extends AndroidTestCase {
     
     File getDataDir() {
         try {
+<<<<<<< HEAD
             ApplicationInfo appInfo = getPm().getApplicationInfo(mContext.getPackageName(), 0,
                     UserId.myUserId());
+=======
+            ApplicationInfo appInfo = getPm().getApplicationInfo(mContext.getPackageName(), 0);
+>>>>>>> upstream/master
             return new File(appInfo.dataDir);
         } catch (RemoteException e) {
             throw new RuntimeException("Pacakge manager dead", e);
@@ -748,7 +759,11 @@ public class AppCacheTest extends AndroidTestCase {
     
     @LargeTest
     public void testClearApplicationUserDataNoObserver() throws Exception {
+<<<<<<< HEAD
         getPm().clearApplicationUserData(mContext.getPackageName(), null, UserId.myUserId());
+=======
+        getPm().clearApplicationUserData(mContext.getPackageName(), null);
+>>>>>>> upstream/master
         //sleep for 1 minute
         Thread.sleep(60*1000);
         //confirm files dont exist

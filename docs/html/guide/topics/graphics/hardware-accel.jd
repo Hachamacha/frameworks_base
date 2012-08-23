@@ -284,6 +284,11 @@ changed.</li>
 
         <li>{@link android.graphics.Canvas#drawPicture drawPicture()}</li>
 
+<<<<<<< HEAD
+=======
+        <li>{@link android.graphics.Canvas#drawPosText drawPosText()}</li>
+
+>>>>>>> upstream/master
         <li>{@link android.graphics.Canvas#drawTextOnPath drawTextOnPath()}</li>
 
         <li>{@link android.graphics.Canvas#drawVertices drawVertices()}</li>
@@ -301,6 +306,7 @@ changed.</li>
         <li>{@link android.graphics.Paint#setRasterizer setRasterizer()}</li>
       </ul>
     </li>
+<<<<<<< HEAD
 
     <li>
       <strong>Xfermodes</strong>
@@ -311,6 +317,8 @@ changed.</li>
         <li>{@link android.graphics.PixelXorXfermode PixelXorXfermode}</li>
       </ul>
     </li>
+=======
+>>>>>>> upstream/master
   </ul>
 
   <p>In addition, some operations behave differently with hardware acceleration enabled:</p>
@@ -326,6 +334,15 @@ changed.</li>
 
         <li>{@link android.graphics.Canvas#drawBitmapMesh drawBitmapMesh()}: colors array is
         ignored</li>
+<<<<<<< HEAD
+=======
+
+        <li>{@link android.graphics.Canvas#drawLines drawLines()}: anti-aliasing is not
+        supported</li>
+
+        <li>{@link android.graphics.Canvas#setDrawFilter setDrawFilter()}: can be set, but is
+        ignored</li>
+>>>>>>> upstream/master
       </ul>
     </li>
 
@@ -344,6 +361,7 @@ changed.</li>
     </li>
 
     <li>
+<<<<<<< HEAD
       <strong>PorterDuffXfermode</strong>
 
       <ul>
@@ -362,6 +380,8 @@ changed.</li>
     </li>
 
     <li>
+=======
+>>>>>>> upstream/master
       <strong>ComposeShader</strong>
 
       <ul>

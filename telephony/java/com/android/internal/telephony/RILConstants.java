@@ -75,6 +75,14 @@ public interface RILConstants {
 
     int PREFERRED_NETWORK_MODE      = NETWORK_MODE_WCDMA_PREF;
 
+<<<<<<< HEAD
+=======
+    /* CDMA subscription source. See ril.h RIL_REQUEST_CDMA_SET_SUBSCRIPTION */
+    int SUBSCRIPTION_FROM_RUIM      = 0; /* CDMA subscription from RUIM when available */
+    int SUBSCRIPTION_FROM_NV        = 1; /* CDMA subscription from NV */
+    int PREFERRED_CDMA_SUBSCRIPTION = SUBSCRIPTION_FROM_NV;
+
+>>>>>>> upstream/master
     int CDMA_CELL_BROADCAST_SMS_DISABLED = 1;
     int CDMA_CELL_BROADCAST_SMS_ENABLED  = 0;
 
@@ -259,7 +267,10 @@ cat include/telephony/ril.h | \
     int RIL_REQUEST_ISIM_AUTHENTICATION = 105;
     int RIL_REQUEST_ACKNOWLEDGE_INCOMING_GSM_SMS_WITH_PDU = 106;
     int RIL_REQUEST_STK_SEND_ENVELOPE_WITH_STATUS = 107;
+<<<<<<< HEAD
     int RIL_REQUEST_VOICE_RADIO_TECH = 108;
+=======
+>>>>>>> upstream/master
     int RIL_UNSOL_RESPONSE_BASE = 1000;
     int RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED = 1000;
     int RIL_UNSOL_RESPONSE_CALL_STATE_CHANGED = 1001;
@@ -293,8 +304,14 @@ cat include/telephony/ril.h | \
     int RIL_UNSOL_RINGBACK_TONE = 1029;
     int RIL_UNSOL_RESEND_INCALL_MUTE = 1030;
     int RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED = 1031;
+<<<<<<< HEAD
     int RIL_UNSOL_CDMA_PRL_CHANGED = 1032;
     int RIL_UNSOL_EXIT_EMERGENCY_CALLBACK_MODE = 1033;
     int RIL_UNSOL_RIL_CONNECTED = 1034;
     int RIL_UNSOL_VOICE_RADIO_TECH_CHANGED = 1035;
+=======
+    int RIL_UNSOl_CDMA_PRL_CHANGED = 1032;
+    int RIL_UNSOL_EXIT_EMERGENCY_CALLBACK_MODE = 1033;
+    int RIL_UNSOL_RIL_CONNECTED = 1034;
+>>>>>>> upstream/master
 }

@@ -132,7 +132,11 @@ abstract class CustomBar extends LinearLayout {
                 if (bitmap != null) {
                     BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(),
                             bitmap);
+<<<<<<< HEAD
                     imageView.setImageDrawable(drawable);
+=======
+                    imageView.setBackgroundDrawable(drawable);
+>>>>>>> upstream/master
                 }
             }
         }

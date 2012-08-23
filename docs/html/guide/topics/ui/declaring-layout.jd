@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 page.title=Layouts
+=======
+page.title=XML Layouts
+>>>>>>> upstream/master
 parent.title=User Interface
 parent.link=index.html
 @jd:body
@@ -6,6 +10,7 @@ parent.link=index.html
 <div id="qv-wrapper">
 <div id="qv">
   <h2>In this document</h2>
+<<<<<<< HEAD
 <ol>
   <li><a href="#write">Write the XML</a></li>
   <li><a href="#load">Load the XML Resource</a></li>
@@ -25,6 +30,20 @@ parent.link=index.html
     </ol>
   </li>
 </ol>
+=======
+  <ol>
+    <li><a href="#write">Write the XML</a></li>
+    <li><a href="#load">Load the XML Resource</a></li>
+    <li><a href="#attributes">Attributes</a>
+      <ol>
+        <li><a href="#id">ID</a></li>
+        <li><a href="#layout-params">Layout Parameters</a></li>
+      </ol>
+    </li>
+    <li><a href="#Position">Position</a></li>
+    <li><a href="#SizePaddingMargins">Size, Padding and Margins</a></li>
+  </ol>
+>>>>>>> upstream/master
 
   <h2>Key classes</h2>
   <ol>
@@ -50,6 +69,7 @@ application can create View and ViewGroup objects (and manipulate their properti
 <div class="sidebox-wrapper">
 <div class="sidebox">
   <ul>
+<<<<<<< HEAD
   <li>The <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT
   Plugin for Eclipse</a> offers a layout preview of your XML &mdash; 
   with the XML file opened, select the <strong>Layout</strong> tab.</li>
@@ -59,6 +79,17 @@ application can create View and ViewGroup objects (and manipulate their properti
   draws wireframes with padding/margin indicators, and full rendered views while 
   you debug on the emulator or device.</li>
   <li>The <a href="{@docRoot}tools/debugging/debugging-ui.html#layoutopt">layoutopt</a> tool lets
+=======
+  <li>The <a href="{@docRoot}sdk/eclipse-adt.html">ADT
+  Plugin for Eclipse</a> offers a layout preview of your XML &mdash; 
+  with the XML file opened, select the <strong>Layout</strong> tab.</li>
+  <li>You should also try the 
+  <a href="{@docRoot}guide/developing/debugging/debugging-ui.html#hierarchyViewer">Hierarchy Viewer</a> tool, 
+  for debugging layouts &mdash; it reveals layout property values, 
+  draws wireframes with padding/margin indicators, and full rendered views while 
+  you debug on the emulator or device.</li>
+  <li>The <a href="{@docRoot}guide/developing/debugging/debugging-ui.html#layoutopt">layoutopt</a> tool lets
+>>>>>>> upstream/master
   you quickly analyze your layouts and hierarchies for inefficiencies or other problems.</li>
 </div>
 </div>
@@ -132,7 +163,11 @@ public void onCreate(Bundle savedInstanceState) {
 
 <p>The <code>onCreate()</code> callback method in your Activity is called by the Android framework when
 your Activity is launched (see the discussion about lifecycles, in the 
+<<<<<<< HEAD
 <a href="{@docRoot}guide/components/activities.html#Lifecycle">Activities</a>
+=======
+<a href="{@docRoot}guide/topics/fundamentals/activities.html#Lifecycle">Activities</a>
+>>>>>>> upstream/master
 document).</p>
 
 
@@ -201,7 +236,11 @@ contains property types that define the size and position for each child view, a
 appropriate for the view group. As you can see in figure 1, the parent
 view group defines layout parameters for each child view (including the child view group).</p>
 
+<<<<<<< HEAD
 <img src="{@docRoot}images/layoutparams.png" alt="" />
+=======
+<img src="{@docRoot}images/layoutparams.png" alt="" height="300" align="center"/>
+>>>>>>> upstream/master
 <p class="img-caption"><strong>Figure 1.</strong> Visualization of a view hierarchy with layout
 parameters associated with each view.</p>
 
@@ -307,6 +346,7 @@ Available Resources</a> document.</p>
    </p>
    
 
+<<<<<<< HEAD
    
    
 
@@ -515,5 +555,7 @@ private OnItemClickListener mMessageClickedHandler = new OnItemClickListener() {
 listView.setOnItemClickListener(mMessageClickedHandler); 
 </pre>
 
+=======
+>>>>>>> upstream/master
 
 

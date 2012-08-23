@@ -855,23 +855,33 @@ public class KeyboardView extends View implements View.OnClickListener {
                 Key oldKey = keys[oldKeyIndex];
                 oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
                 invalidateKey(oldKeyIndex);
+<<<<<<< HEAD
                 final int keyCode = oldKey.codes[0];
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,
                         keyCode);
                 // TODO: We need to implement AccessibilityNodeProvider for this view.
                 sendAccessibilityEventForUnicodeCharacter(
                         AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode);
+=======
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,
+                        oldKey.codes[0]);
+>>>>>>> upstream/master
             }
             if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
                 Key newKey = keys[mCurrentKeyIndex];
                 newKey.onPressed();
                 invalidateKey(mCurrentKeyIndex);
+<<<<<<< HEAD
                 final int keyCode = newKey.codes[0];
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER,
                         keyCode);
                 // TODO: We need to implement AccessibilityNodeProvider for this view.
                 sendAccessibilityEventForUnicodeCharacter(
                         AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode);
+=======
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER,
+                        newKey.codes[0]);
+>>>>>>> upstream/master
             }
         }
         // If key changed and preview is on ...
@@ -1162,6 +1172,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         if (mAccessibilityManager.isTouchExplorationEnabled() && event.getPointerCount() == 1) {
             final int action = event.getAction();
             switch (action) {
+<<<<<<< HEAD
                 case MotionEvent.ACTION_HOVER_ENTER: {
                     event.setAction(MotionEvent.ACTION_DOWN);
                 } break;
@@ -1173,6 +1184,22 @@ public class KeyboardView extends View implements View.OnClickListener {
                 } break;
             }
             return onTouchEvent(event);
+=======
+                case MotionEvent.ACTION_HOVER_ENTER:
+                case MotionEvent.ACTION_HOVER_MOVE:
+                    final int touchX = (int) event.getX() - mPaddingLeft;
+                    int touchY = (int) event.getY() - mPaddingTop;
+                    if (touchY >= -mVerticalCorrection) {
+                        touchY += mVerticalCorrection;
+                    }
+                    final int keyIndex = getKeyIndices(touchX, touchY, null);
+                    showPreview(keyIndex);
+                    break;
+                case MotionEvent.ACTION_HOVER_EXIT:
+                    showPreview(NOT_A_KEY);
+                    break;
+            }
+>>>>>>> upstream/master
         }
         return true;
     }

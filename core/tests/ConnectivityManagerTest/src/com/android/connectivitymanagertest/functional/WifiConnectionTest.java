@@ -63,7 +63,10 @@ public class WifiConnectionTest
     private ConnectivityManagerTestActivity mAct;
     private ConnectivityManagerTestRunner mRunner;
     private WifiManager mWifiManager = null;
+<<<<<<< HEAD
     private WifiManager.Channel mChannel;
+=======
+>>>>>>> upstream/master
     private Set<WifiConfiguration> enabledNetworks = null;
 
     public WifiConnectionTest() {
@@ -77,8 +80,12 @@ public class WifiConnectionTest
         mWifiManager = (WifiManager) mRunner.getContext().getSystemService(Context.WIFI_SERVICE);
 
         mAct = getActivity();
+<<<<<<< HEAD
         mChannel = mWifiManager.initialize(mAct, mAct.getMainLooper(), null);
 
+=======
+        mWifiManager.asyncConnect(mAct, new WifiServiceHandler());
+>>>>>>> upstream/master
         networks = mAct.loadNetworkConfigurations();
         if (DEBUG) {
             printNetworkConfigurations();

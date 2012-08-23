@@ -501,7 +501,11 @@ public class ZoomButtonsController implements View.OnTouchListener {
 
         } else {
 
+<<<<<<< HEAD
             ViewRootImpl viewRoot = mOwnerView.getViewRootImpl();
+=======
+            ViewRootImpl viewRoot = getOwnerViewRootImpl();
+>>>>>>> upstream/master
             if (viewRoot != null) {
                 viewRoot.dispatchKey(event);
             }
@@ -526,6 +530,23 @@ public class ZoomButtonsController implements View.OnTouchListener {
         }
     }
 
+<<<<<<< HEAD
+=======
+    private ViewRootImpl getOwnerViewRootImpl() {
+        View rootViewOfOwner = mOwnerView.getRootView();
+        if (rootViewOfOwner == null) {
+            return null;
+        }
+
+        ViewParent parentOfRootView = rootViewOfOwner.getParent();
+        if (parentOfRootView instanceof ViewRootImpl) {
+            return (ViewRootImpl) parentOfRootView;
+        } else {
+            return null;
+        }
+    }
+
+>>>>>>> upstream/master
     /**
      * @hide The ZoomButtonsController implements the OnTouchListener, but this
      *       does not need to be shown in its public API.

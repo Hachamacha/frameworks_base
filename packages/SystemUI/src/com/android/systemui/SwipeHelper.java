@@ -23,16 +23,25 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.RectF;
+<<<<<<< HEAD
 import android.os.Handler;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+=======
+import android.util.Log;
+>>>>>>> upstream/master
 import android.view.animation.LinearInterpolator;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.ViewConfiguration;
 
 public class SwipeHelper implements Gefingerpoken {
+=======
+
+public class SwipeHelper {
+>>>>>>> upstream/master
     static final String TAG = "com.android.systemui.SwipeHelper";
     private static final boolean DEBUG = false;
     private static final boolean DEBUG_INVALIDATE = false;
@@ -56,11 +65,17 @@ public class SwipeHelper implements Gefingerpoken {
                                                  // where fade starts
     static final float ALPHA_FADE_END = 0.5f; // fraction of thumbnail width
                                               // beyond which alpha->0
+<<<<<<< HEAD
     private float mMinAlpha = 0f;
 
     private float mPagingTouchSlop;
     private Callback mCallback;
     private Handler mHandler;
+=======
+
+    private float mPagingTouchSlop;
+    private Callback mCallback;
+>>>>>>> upstream/master
     private int mSwipeDirection;
     private VelocityTracker mVelocityTracker;
 
@@ -71,6 +86,7 @@ public class SwipeHelper implements Gefingerpoken {
     private boolean mCanCurrViewBeDimissed;
     private float mDensityScale;
 
+<<<<<<< HEAD
     private boolean mLongPressSent;
     private View.OnLongClickListener mLongPressListener;
     private Runnable mWatchLongPress;
@@ -80,16 +96,24 @@ public class SwipeHelper implements Gefingerpoken {
             float pagingTouchSlop) {
         mCallback = callback;
         mHandler = new Handler();
+=======
+    public SwipeHelper(int swipeDirection, Callback callback, float densityScale,
+            float pagingTouchSlop) {
+        mCallback = callback;
+>>>>>>> upstream/master
         mSwipeDirection = swipeDirection;
         mVelocityTracker = VelocityTracker.obtain();
         mDensityScale = densityScale;
         mPagingTouchSlop = pagingTouchSlop;
+<<<<<<< HEAD
 
         mLongPressTimeout = (long) (ViewConfiguration.getLongPressTimeout() * 1.5f); // extra long-press!
     }
 
     public void setLongPressListener(View.OnLongClickListener listener) {
         mLongPressListener = listener;
+=======
+>>>>>>> upstream/master
     }
 
     public void setDensityScale(float densityScale) {
@@ -137,10 +161,13 @@ public class SwipeHelper implements Gefingerpoken {
                 v.getMeasuredHeight();
     }
 
+<<<<<<< HEAD
     public void setMinAlpha(float minAlpha) {
         mMinAlpha = minAlpha;
     }
 
+=======
+>>>>>>> upstream/master
     private float getAlphaForOffset(View view) {
         float viewSize = getSize(view);
         final float fadeSize = ALPHA_FADE_END * viewSize;
@@ -151,7 +178,14 @@ public class SwipeHelper implements Gefingerpoken {
         } else if (pos < viewSize * (1.0f - ALPHA_FADE_START)) {
             result = 1.0f + (viewSize * ALPHA_FADE_START + pos) / fadeSize;
         }
+<<<<<<< HEAD
         return Math.max(mMinAlpha, result);
+=======
+        // Make .03 alpha the minimum so you always see the item a bit-- slightly below
+        // .03, the item disappears entirely (as if alpha = 0) and that discontinuity looks
+        // a bit jarring
+        return Math.max(0.03f, result);
+>>>>>>> upstream/master
     }
 
     // invalidate the view's own bounds all the way up the view hierarchy
@@ -183,6 +217,7 @@ public class SwipeHelper implements Gefingerpoken {
         }
     }
 
+<<<<<<< HEAD
     public void removeLongPressCallback() {
         if (mWatchLongPress != null) {
             mHandler.removeCallbacks(mWatchLongPress);
@@ -190,13 +225,18 @@ public class SwipeHelper implements Gefingerpoken {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mDragging = false;
+<<<<<<< HEAD
                 mLongPressSent = false;
+=======
+>>>>>>> upstream/master
                 mCurrView = mCallback.getChildAtPosition(ev);
                 mVelocityTracker.clear();
                 if (mCurrView != null) {
@@ -204,6 +244,7 @@ public class SwipeHelper implements Gefingerpoken {
                     mCanCurrViewBeDimissed = mCallback.canChildBeDismissed(mCurrView);
                     mVelocityTracker.addMovement(ev);
                     mInitialTouchPos = getPos(ev);
+<<<<<<< HEAD
 
                     if (mLongPressListener != null) {
                         if (mWatchLongPress == null) {
@@ -226,6 +267,12 @@ public class SwipeHelper implements Gefingerpoken {
 
             case MotionEvent.ACTION_MOVE:
                 if (mCurrView != null && !mLongPressSent) {
+=======
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (mCurrView != null) {
+>>>>>>> upstream/master
                     mVelocityTracker.addMovement(ev);
                     float pos = getPos(ev);
                     float delta = pos - mInitialTouchPos;
@@ -233,6 +280,7 @@ public class SwipeHelper implements Gefingerpoken {
                         mCallback.onBeginDrag(mCurrView);
                         mDragging = true;
                         mInitialTouchPos = getPos(ev) - getTranslation(mCurrAnimView);
+<<<<<<< HEAD
 
                         removeLongPressCallback();
                     }
@@ -240,13 +288,21 @@ public class SwipeHelper implements Gefingerpoken {
 
                 break;
 
+=======
+                    }
+                }
+                break;
+>>>>>>> upstream/master
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mDragging = false;
                 mCurrView = null;
                 mCurrAnimView = null;
+<<<<<<< HEAD
                 mLongPressSent = false;
                 removeLongPressCallback();
+=======
+>>>>>>> upstream/master
                 break;
         }
         return mDragging;
@@ -317,6 +373,7 @@ public class SwipeHelper implements Gefingerpoken {
     }
 
     public boolean onTouchEvent(MotionEvent ev) {
+<<<<<<< HEAD
         if (mLongPressSent) {
             return true;
         }
@@ -325,6 +382,9 @@ public class SwipeHelper implements Gefingerpoken {
             // We are not doing anything, make sure the long press callback
             // is not still ticking like a bomb waiting to go off.
             removeLongPressCallback();
+=======
+        if (!mDragging) {
+>>>>>>> upstream/master
             return false;
         }
 

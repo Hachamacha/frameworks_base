@@ -42,7 +42,11 @@ public class HandlerThread extends Thread {
     }
     
     /**
+<<<<<<< HEAD
      * Call back method that can be explicitly overridden if needed to execute some
+=======
+     * Call back method that can be explicitly over ridden if needed to execute some
+>>>>>>> upstream/master
      * setup before Looper loops.
      */
     protected void onLooperPrepared() {

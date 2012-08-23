@@ -31,22 +31,38 @@ int ifc_reset_connections(const char *ifname, int reset_mask);
 int dhcp_do_request(const char *ifname,
                     const char *ipaddr,
                     const char *gateway,
+<<<<<<< HEAD
                     uint32_t *prefixLength,
                     const char *dns1,
                     const char *dns2,
                     const char *server,
                     uint32_t *lease,
                     const char *vendorInfo);
+=======
+                    uint32_t  *prefixLength,
+                    const char *dns1,
+                    const char *dns2,
+                    const char *server,
+                    uint32_t  *lease);
+>>>>>>> upstream/master
 
 int dhcp_do_request_renew(const char *ifname,
                     const char *ipaddr,
                     const char *gateway,
+<<<<<<< HEAD
                     uint32_t *prefixLength,
                     const char *dns1,
                     const char *dns2,
                     const char *server,
                     uint32_t *lease,
                     const char *vendorInfo);
+=======
+                    uint32_t  *prefixLength,
+                    const char *dns1,
+                    const char *dns2,
+                    const char *server,
+                    uint32_t  *lease);
+>>>>>>> upstream/master
 
 int dhcp_stop(const char *ifname);
 int dhcp_release_lease(const char *ifname);
@@ -70,7 +86,10 @@ static struct fieldIds {
     jfieldID dns2;
     jfieldID serverAddress;
     jfieldID leaseDuration;
+<<<<<<< HEAD
     jfieldID vendorInfo;
+=======
+>>>>>>> upstream/master
 } dhcpInfoInternalFieldIds;
 
 static jint android_net_utils_enableInterface(JNIEnv* env, jobject clazz, jstring ifname)
@@ -100,7 +119,11 @@ static jint android_net_utils_resetConnections(JNIEnv* env, jobject clazz,
 
     const char *nameStr = env->GetStringUTFChars(ifname, NULL);
 
+<<<<<<< HEAD
     ALOGD("android_net_utils_resetConnections in env=%p clazz=%p iface=%s mask=0x%x\n",
+=======
+    LOGD("android_net_utils_resetConnections in env=%p clazz=%p iface=%s mask=0x%x\n",
+>>>>>>> upstream/master
           env, clazz, nameStr, mask);
 
     result = ::ifc_reset_connections(nameStr, mask);
@@ -119,17 +142,27 @@ static jboolean android_net_utils_runDhcpCommon(JNIEnv* env, jobject clazz, jstr
     char    dns2[PROPERTY_VALUE_MAX];
     char  server[PROPERTY_VALUE_MAX];
     uint32_t lease;
+<<<<<<< HEAD
     char vendorInfo[PROPERTY_VALUE_MAX];
+=======
+>>>>>>> upstream/master
 
     const char *nameStr = env->GetStringUTFChars(ifname, NULL);
     if (nameStr == NULL) return (jboolean)false;
 
     if (renew) {
         result = ::dhcp_do_request_renew(nameStr, ipaddr, gateway, &prefixLength,
+<<<<<<< HEAD
                 dns1, dns2, server, &lease, vendorInfo);
     } else {
         result = ::dhcp_do_request(nameStr, ipaddr, gateway, &prefixLength,
                 dns1, dns2, server, &lease, vendorInfo);
+=======
+                dns1, dns2, server, &lease);
+    } else {
+        result = ::dhcp_do_request(nameStr, ipaddr, gateway, &prefixLength,
+                dns1, dns2, server, &lease);
+>>>>>>> upstream/master
     }
 
     env->ReleaseStringUTFChars(ifname, nameStr);
@@ -165,7 +198,10 @@ static jboolean android_net_utils_runDhcpCommon(JNIEnv* env, jobject clazz, jstr
         env->SetObjectField(info, dhcpInfoInternalFieldIds.serverAddress,
                 env->NewStringUTF(server));
         env->SetIntField(info, dhcpInfoInternalFieldIds.leaseDuration, lease);
+<<<<<<< HEAD
         env->SetObjectField(info, dhcpInfoInternalFieldIds.vendorInfo, env->NewStringUTF(vendorInfo));
+=======
+>>>>>>> upstream/master
     }
     return (jboolean)(result == 0);
 }
@@ -235,7 +271,10 @@ int register_android_net_NetworkUtils(JNIEnv* env)
     dhcpInfoInternalFieldIds.dns2 = env->GetFieldID(dhcpInfoInternalClass, "dns2", "Ljava/lang/String;");
     dhcpInfoInternalFieldIds.serverAddress = env->GetFieldID(dhcpInfoInternalClass, "serverAddress", "Ljava/lang/String;");
     dhcpInfoInternalFieldIds.leaseDuration = env->GetFieldID(dhcpInfoInternalClass, "leaseDuration", "I");
+<<<<<<< HEAD
     dhcpInfoInternalFieldIds.vendorInfo = env->GetFieldID(dhcpInfoInternalClass, "vendorInfo", "Ljava/lang/String;");
+=======
+>>>>>>> upstream/master
 
     return AndroidRuntime::registerNativeMethods(env,
             NETUTILS_PKG_NAME, gNetworkUtilMethods, NELEM(gNetworkUtilMethods));

@@ -17,9 +17,12 @@
 package com.android.internal.telephony.cdma;
 
 import android.util.Log;
+<<<<<<< HEAD
 
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccCard;
+=======
+>>>>>>> upstream/master
 import com.android.internal.telephony.IccConstants;
 import com.android.internal.telephony.IccFileHandler;
 import android.os.Message;
@@ -30,8 +33,13 @@ import android.os.Message;
 public final class CdmaLteUiccFileHandler extends IccFileHandler {
     static final String LOG_TAG = "CDMA";
 
+<<<<<<< HEAD
     public CdmaLteUiccFileHandler(IccCard card, String aid, CommandsInterface ci) {
         super(card, aid, ci);
+=======
+    CdmaLteUiccFileHandler(CDMALTEPhone phone) {
+        super(phone);
+>>>>>>> upstream/master
     }
 
     protected String getEFPath(int efid) {
@@ -58,8 +66,13 @@ public final class CdmaLteUiccFileHandler extends IccFileHandler {
         if (fileid == EF_CSIM_EPRL) {
             // Entire PRL could be huge. We are only interested in
             // the first 4 bytes of the record.
+<<<<<<< HEAD
             mCi.iccIOForApp(COMMAND_READ_BINARY, fileid, getEFPath(fileid),
                             0, 0, 4, null, null, mAid,
+=======
+            phone.mCM.iccIO(COMMAND_READ_BINARY, fileid, getEFPath(fileid),
+                            0, 0, 4, null, null,
+>>>>>>> upstream/master
                             obtainMessage(EVENT_READ_BINARY_DONE,
                                           fileid, 0, onLoaded));
         } else {

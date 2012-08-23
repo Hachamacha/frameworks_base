@@ -43,8 +43,11 @@ public class SettingsView extends LinearLayout implements View.OnClickListener {
     AutoRotateController mRotate;
     BrightnessController mBrightness;
     DoNotDisturbController mDoNotDisturb;
+<<<<<<< HEAD
     View mRotationLockContainer;
     View mRotationLockSeparator;
+=======
+>>>>>>> upstream/master
 
     public SettingsView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -63,6 +66,7 @@ public class SettingsView extends LinearLayout implements View.OnClickListener {
         mAirplane = new AirplaneModeController(context,
                 (CompoundButton)findViewById(R.id.airplane_checkbox));
         findViewById(R.id.network).setOnClickListener(this);
+<<<<<<< HEAD
 
         mRotationLockContainer = findViewById(R.id.rotate);
         mRotationLockSeparator = findViewById(R.id.rotate_separator);
@@ -76,6 +80,10 @@ public class SettingsView extends LinearLayout implements View.OnClickListener {
                     }
                 });
 
+=======
+        mRotate = new AutoRotateController(context,
+                (CompoundButton)findViewById(R.id.rotate_checkbox));
+>>>>>>> upstream/master
         mBrightness = new BrightnessController(context,
                 (ToggleSlider)findViewById(R.id.brightness));
         mDoNotDisturb = new DoNotDisturbController(context,
@@ -88,7 +96,10 @@ public class SettingsView extends LinearLayout implements View.OnClickListener {
         super.onDetachedFromWindow();
         mAirplane.release();
         mDoNotDisturb.release();
+<<<<<<< HEAD
         mRotate.release();
+=======
+>>>>>>> upstream/master
     }
 
     public void onClick(View v) {

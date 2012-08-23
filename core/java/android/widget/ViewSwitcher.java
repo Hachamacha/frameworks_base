@@ -20,8 +20,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 /**
  * {@link ViewAnimator} that switches between two views, and has a factory
@@ -68,6 +71,7 @@ public class ViewSwitcher extends ViewAnimator {
         super.addView(child, index, params);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -80,6 +84,8 @@ public class ViewSwitcher extends ViewAnimator {
         info.setClassName(ViewSwitcher.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Returns the next view to be displayed.
      *

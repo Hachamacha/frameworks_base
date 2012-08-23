@@ -7,7 +7,11 @@ page.title=Android Compatibility
 <h2>See also</h2>
  <ol>
 <li><a
+<<<<<<< HEAD
 href="{@docRoot}guide/google/play/filters.html">Filtering on Google Play</a></li>
+=======
+href="{@docRoot}guide/appendix/market-filters.html">Filtering on Google Play</a></li>
+>>>>>>> upstream/master
 <li><a
 href="{@docRoot}guide/topics/resources/providing-resources.html#AlternativeResources">Providing Alternative Resources</a></li>
 <li><a
@@ -54,7 +58,11 @@ but the single most important characteristic of a compatible device is the
 ability to install and correctly run an Android <code>.apk</code> file.</p>
 
 <p>There is exactly one Android API for each <a
+<<<<<<< HEAD
 href="{@docRoot}guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level</a>, and it’s the same
+=======
+href="{@docRoot}guide/appendix/api-levels.html">API level</a>, and it’s the same
+>>>>>>> upstream/master
 API no matter what kind of device it’s installed on. No parts of the API are
 optional, and you never have to worry about parts of the API missing on some
 devices. Every compatible Android device your app will land on will include
@@ -119,7 +127,11 @@ device.
 
 <p style="margin-top:1em;">For information about other filters that you can
 use to control the availability of your apps, see the 
+<<<<<<< HEAD
 <a href="{@docRoot}guide/google/play/filters.html">Filters on Google Play</a>
+=======
+<a href="{@docRoot}guide/appendix/market-filters.html">Filters on Google Play</a>
+>>>>>>> upstream/master
 document.</p>
   </div> 
 </div>

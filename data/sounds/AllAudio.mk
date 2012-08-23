@@ -20,5 +20,8 @@ $(call inherit-product, frameworks/base/data/sounds/AudioPackage3.mk)
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage4.mk)
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage5.mk)
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage6.mk)
+<<<<<<< HEAD
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage7.mk)
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage7alt.mk)
+=======
+>>>>>>> upstream/master

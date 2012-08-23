@@ -21,8 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+<<<<<<< HEAD
 import android.database.ContentObserver;
 import android.hardware.input.InputManager;
+=======
+>>>>>>> upstream/master
 import android.os.Handler;
 import android.os.IVibratorService;
 import android.os.PowerManager;
@@ -31,6 +34,7 @@ import android.os.RemoteException;
 import android.os.IBinder;
 import android.os.Binder;
 import android.os.SystemClock;
+<<<<<<< HEAD
 import android.os.Vibrator;
 import android.os.WorkSource;
 import android.provider.Settings;
@@ -39,17 +43,28 @@ import android.util.Slog;
 import android.view.InputDevice;
 
 import java.util.ArrayList;
+=======
+import android.os.WorkSource;
+import android.provider.Settings;
+import android.util.Slog;
+
+>>>>>>> upstream/master
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+<<<<<<< HEAD
 public class VibratorService extends IVibratorService.Stub
         implements InputManager.InputDeviceListener {
+=======
+public class VibratorService extends IVibratorService.Stub {
+>>>>>>> upstream/master
     private static final String TAG = "VibratorService";
 
     private final LinkedList<Vibration> mVibrations;
     private Vibration mCurrentVibration;
     private final WorkSource mTmpWorkSource = new WorkSource();
+<<<<<<< HEAD
     private final Handler mH = new Handler();
 
     private final Context mContext;
@@ -67,6 +82,8 @@ public class VibratorService extends IVibratorService.Stub
     native static boolean vibratorExists();
     native static void vibratorOn(long milliseconds);
     native static void vibratorOff();
+=======
+>>>>>>> upstream/master
 
     private class Vibration implements IBinder.DeathRecipient {
         private final IBinder mToken;
@@ -138,6 +155,7 @@ public class VibratorService extends IVibratorService.Stub
         context.registerReceiver(mIntentReceiver, filter);
     }
 
+<<<<<<< HEAD
     public void systemReady() {
         mIm = (InputManager)mContext.getSystemService(Context.INPUT_SERVICE);
         mContext.getContentResolver().registerContentObserver(
@@ -153,6 +171,10 @@ public class VibratorService extends IVibratorService.Stub
 
     public boolean hasVibrator() {
         return doVibratorExists();
+=======
+    public boolean hasVibrator() {
+        return vibratorExists();
+>>>>>>> upstream/master
     }
 
     private boolean inQuietHours() {
@@ -177,7 +199,11 @@ public class VibratorService extends IVibratorService.Stub
         }
         return false;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     public void vibrate(long milliseconds, IBinder token) {
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.VIBRATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -193,7 +219,10 @@ public class VibratorService extends IVibratorService.Stub
             // longer than milliseconds.
             return;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         Vibration vib = new Vibration(token, milliseconds, uid);
         synchronized (mVibrations) {
             removeVibrationLocked(token);
@@ -218,9 +247,15 @@ public class VibratorService extends IVibratorService.Stub
                 != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Requires VIBRATE permission");
         }
+<<<<<<< HEAD
         if (inQuietHours()) {
             return;
         }
+=======
+	if (inQuietHours()) {
+	    return;
+	}
+>>>>>>> upstream/master
         int uid = Binder.getCallingUid();
         // so wakelock calls will succeed
         long identity = Binder.clearCallingIdentity();
@@ -306,7 +341,11 @@ public class VibratorService extends IVibratorService.Stub
             }
             mThread = null;
         }
+<<<<<<< HEAD
         doVibratorOff();
+=======
+        vibratorOff();
+>>>>>>> upstream/master
         mH.removeCallbacks(mVibrationRunnable);
     }
 
@@ -323,7 +362,11 @@ public class VibratorService extends IVibratorService.Stub
     // Lock held on mVibrations
     private void startVibrationLocked(final Vibration vib) {
         if (vib.mTimeout != 0) {
+<<<<<<< HEAD
             doVibratorOn(vib.mTimeout);
+=======
+            vibratorOn(vib.mTimeout);
+>>>>>>> upstream/master
             mH.postDelayed(mVibrationRunnable, vib.mTimeout);
         } else {
             // mThread better be null here. doCancelVibrate should always be
@@ -361,6 +404,7 @@ public class VibratorService extends IVibratorService.Stub
         }
     }
 
+<<<<<<< HEAD
     private void updateInputDeviceVibrators() {
         synchronized (mVibrations) {
             doCancelVibrateLocked();
@@ -455,6 +499,8 @@ public class VibratorService extends IVibratorService.Stub
         }
     }
 
+=======
+>>>>>>> upstream/master
     private class VibrateThread extends Thread {
         final Vibration mVibration;
         boolean mDone;
@@ -510,7 +556,11 @@ public class VibratorService extends IVibratorService.Stub
                         // duration is saved for delay() at top of loop
                         duration = pattern[index++];
                         if (duration > 0) {
+<<<<<<< HEAD
                             VibratorService.this.doVibratorOn(duration);
+=======
+                            VibratorService.this.vibratorOn(duration);
+>>>>>>> upstream/master
                         }
                     } else {
                         if (repeat < 0) {
@@ -554,4 +604,18 @@ public class VibratorService extends IVibratorService.Stub
             }
         }
     };
+<<<<<<< HEAD
+=======
+
+    private Handler mH = new Handler();
+
+    private final Context mContext;
+    private final PowerManager.WakeLock mWakeLock;
+
+    volatile VibrateThread mThread;
+
+    native static boolean vibratorExists();
+    native static void vibratorOn(long milliseconds);
+    native static void vibratorOff();
+>>>>>>> upstream/master
 }

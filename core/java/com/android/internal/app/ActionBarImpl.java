@@ -16,13 +16,19 @@
 
 package com.android.internal.app;
 
+<<<<<<< HEAD
 import com.android.internal.view.ActionBarPolicy;
+=======
+>>>>>>> upstream/master
 import com.android.internal.view.menu.MenuBuilder;
 import com.android.internal.view.menu.MenuPopupHelper;
 import com.android.internal.view.menu.SubMenuBuilder;
 import com.android.internal.widget.ActionBarContainer;
 import com.android.internal.widget.ActionBarContextView;
+<<<<<<< HEAD
 import com.android.internal.widget.ActionBarOverlayLayout;
+=======
+>>>>>>> upstream/master
 import com.android.internal.widget.ActionBarView;
 import com.android.internal.widget.ScrollingTabContainerView;
 
@@ -39,8 +45,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+<<<<<<< HEAD
 import android.os.Handler;
 import android.util.Log;
+=======
+import android.os.Build;
+import android.os.Handler;
+>>>>>>> upstream/master
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.ContextThemeWrapper;
@@ -49,10 +60,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AnimationUtils;
+=======
+import android.view.Window;
+import android.view.accessibility.AccessibilityEvent;
+>>>>>>> upstream/master
 import android.widget.SpinnerAdapter;
 
 import java.lang.ref.WeakReference;
@@ -73,9 +89,13 @@ public class ActionBarImpl extends ActionBar {
     private Activity mActivity;
     private Dialog mDialog;
 
+<<<<<<< HEAD
     private ActionBarOverlayLayout mOverlayLayout;
     private ActionBarContainer mContainerView;
     private ViewGroup mTopVisibilityView;
+=======
+    private ActionBarContainer mContainerView;
+>>>>>>> upstream/master
     private ActionBarView mActionView;
     private ActionBarContextView mContextView;
     private ActionBarContainer mSplitView;
@@ -87,8 +107,11 @@ public class ActionBarImpl extends ActionBar {
     private TabImpl mSelectedTab;
     private int mSavedTabPosition = INVALID_POSITION;
     
+<<<<<<< HEAD
     private boolean mDisplayHomeAsUpSet;
 
+=======
+>>>>>>> upstream/master
     ActionModeImpl mActionMode;
     ActionMode mDeferredDestroyActionMode;
     ActionMode.Callback mDeferredModeDestroyCallback;
@@ -108,6 +131,7 @@ public class ActionBarImpl extends ActionBar {
     final Handler mHandler = new Handler();
     Runnable mTabSelector;
 
+<<<<<<< HEAD
     private int mCurWindowVisibility = View.VISIBLE;
 
     private boolean mHiddenByApp;
@@ -118,17 +142,28 @@ public class ActionBarImpl extends ActionBar {
 
     private Animator mCurrentShowAnim;
     private boolean mShowHideAnimationEnabled;
+=======
+    private Animator mCurrentShowAnim;
+    private Animator mCurrentModeAnim;
+    private boolean mShowHideAnimationEnabled;
+    boolean mWasHiddenBeforeMode;
+>>>>>>> upstream/master
 
     final AnimatorListener mHideListener = new AnimatorListenerAdapter() {
         @Override
         public void onAnimationEnd(Animator animation) {
             if (mContentView != null) {
                 mContentView.setTranslationY(0);
+<<<<<<< HEAD
                 mTopVisibilityView.setTranslationY(0);
+=======
+                mContainerView.setTranslationY(0);
+>>>>>>> upstream/master
             }
             if (mSplitView != null && mContextDisplayMode == CONTEXT_DISPLAY_SPLIT) {
                 mSplitView.setVisibility(View.GONE);
             }
+<<<<<<< HEAD
             mTopVisibilityView.setVisibility(View.GONE);
             mContainerView.setTransitioning(false);
             mCurrentShowAnim = null;
@@ -136,6 +171,12 @@ public class ActionBarImpl extends ActionBar {
             if (mOverlayLayout != null) {
                 mOverlayLayout.requestFitSystemWindows();
             }
+=======
+            mContainerView.setVisibility(View.GONE);
+            mContainerView.setTransitioning(false);
+            mCurrentShowAnim = null;
+            completeDeferredDestroyActionMode();
+>>>>>>> upstream/master
         }
     };
 
@@ -143,7 +184,11 @@ public class ActionBarImpl extends ActionBar {
         @Override
         public void onAnimationEnd(Animator animation) {
             mCurrentShowAnim = null;
+<<<<<<< HEAD
             mTopVisibilityView.requestLayout();
+=======
+            mContainerView.requestLayout();
+>>>>>>> upstream/master
         }
     };
 
@@ -164,21 +209,27 @@ public class ActionBarImpl extends ActionBar {
 
     private void init(View decor) {
         mContext = decor.getContext();
+<<<<<<< HEAD
         mOverlayLayout = (ActionBarOverlayLayout) decor.findViewById(
                 com.android.internal.R.id.action_bar_overlay_layout);
         if (mOverlayLayout != null) {
             mOverlayLayout.setActionBar(this);
         }
+=======
+>>>>>>> upstream/master
         mActionView = (ActionBarView) decor.findViewById(com.android.internal.R.id.action_bar);
         mContextView = (ActionBarContextView) decor.findViewById(
                 com.android.internal.R.id.action_context_bar);
         mContainerView = (ActionBarContainer) decor.findViewById(
                 com.android.internal.R.id.action_bar_container);
+<<<<<<< HEAD
         mTopVisibilityView = (ViewGroup)decor.findViewById(
                 com.android.internal.R.id.top_action_bar);
         if (mTopVisibilityView == null) {
             mTopVisibilityView = mContainerView;
         }
+=======
+>>>>>>> upstream/master
         mSplitView = (ActionBarContainer) decor.findViewById(
                 com.android.internal.R.id.split_action_bar);
 
@@ -191,6 +242,7 @@ public class ActionBarImpl extends ActionBar {
         mContextDisplayMode = mActionView.isSplitActionBar() ?
                 CONTEXT_DISPLAY_SPLIT : CONTEXT_DISPLAY_NORMAL;
 
+<<<<<<< HEAD
         // This was initially read from the action bar style
         final int current = mActionView.getDisplayOptions();
         final boolean homeAsUp = (current & DISPLAY_HOME_AS_UP) != 0;
@@ -205,6 +257,20 @@ public class ActionBarImpl extends ActionBar {
 
     public void onConfigurationChanged(Configuration newConfig) {
         setHasEmbeddedTabs(ActionBarPolicy.get(mContext).hasEmbeddedTabs());
+=======
+        // Older apps get the home button interaction enabled by default.
+        // Newer apps need to enable it explicitly.
+        setHomeButtonEnabled(mContext.getApplicationInfo().targetSdkVersion <
+                Build.VERSION_CODES.ICE_CREAM_SANDWICH);
+
+        setHasEmbeddedTabs(mContext.getResources().getBoolean(
+                com.android.internal.R.bool.action_bar_embed_tabs));
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        setHasEmbeddedTabs(mContext.getResources().getBoolean(
+                com.android.internal.R.bool.action_bar_embed_tabs));
+>>>>>>> upstream/master
     }
 
     private void setHasEmbeddedTabs(boolean hasEmbeddedTabs) {
@@ -219,6 +285,7 @@ public class ActionBarImpl extends ActionBar {
         }
         final boolean isInTabMode = getNavigationMode() == NAVIGATION_MODE_TABS;
         if (mTabScrollView != null) {
+<<<<<<< HEAD
             if (isInTabMode) {
                 mTabScrollView.setVisibility(View.VISIBLE);
                 if (mOverlayLayout != null) {
@@ -227,14 +294,20 @@ public class ActionBarImpl extends ActionBar {
             } else {
                 mTabScrollView.setVisibility(View.GONE);
             }
+=======
+            mTabScrollView.setVisibility(isInTabMode ? View.VISIBLE : View.GONE);
+>>>>>>> upstream/master
         }
         mActionView.setCollapsable(!mHasEmbeddedTabs && isInTabMode);
     }
 
+<<<<<<< HEAD
     public boolean hasNonEmbeddedTabs() {
         return !mHasEmbeddedTabs && getNavigationMode() == NAVIGATION_MODE_TABS;
     }
 
+=======
+>>>>>>> upstream/master
     private void ensureTabsExist() {
         if (mTabScrollView != null) {
             return;
@@ -246,6 +319,7 @@ public class ActionBarImpl extends ActionBar {
             tabScroller.setVisibility(View.VISIBLE);
             mActionView.setEmbeddedTabView(tabScroller);
         } else {
+<<<<<<< HEAD
             if (getNavigationMode() == NAVIGATION_MODE_TABS) {
                 tabScroller.setVisibility(View.VISIBLE);
                 if (mOverlayLayout != null) {
@@ -254,6 +328,10 @@ public class ActionBarImpl extends ActionBar {
             } else {
                 tabScroller.setVisibility(View.GONE);
             }
+=======
+            tabScroller.setVisibility(getNavigationMode() == NAVIGATION_MODE_TABS ?
+                    View.VISIBLE : View.GONE);
+>>>>>>> upstream/master
             mContainerView.setTabContainer(tabScroller);
         }
         mTabScrollView = tabScroller;
@@ -267,10 +345,13 @@ public class ActionBarImpl extends ActionBar {
         }
     }
 
+<<<<<<< HEAD
     public void setWindowVisibility(int visibility) {
         mCurWindowVisibility = visibility;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Enables or disables animation between show/hide states.
      * If animation is disabled using this method, animations in progress
@@ -388,17 +469,23 @@ public class ActionBarImpl extends ActionBar {
     }
 
     public void setDisplayOptions(int options) {
+<<<<<<< HEAD
         if ((options & DISPLAY_HOME_AS_UP) != 0) {
             mDisplayHomeAsUpSet = true;
         }
+=======
+>>>>>>> upstream/master
         mActionView.setDisplayOptions(options);
     }
 
     public void setDisplayOptions(int options, int mask) {
         final int current = mActionView.getDisplayOptions(); 
+<<<<<<< HEAD
         if ((mask & DISPLAY_HOME_AS_UP) != 0) {
             mDisplayHomeAsUpSet = true;
         }
+=======
+>>>>>>> upstream/master
         mActionView.setDisplayOptions((options & mask) | (current & ~mask));
     }
 
@@ -437,24 +524,38 @@ public class ActionBarImpl extends ActionBar {
     }
 
     public ActionMode startActionMode(ActionMode.Callback callback) {
+<<<<<<< HEAD
         if (mActionMode != null) {
+=======
+        boolean wasHidden = false;
+        if (mActionMode != null) {
+            wasHidden = mWasHiddenBeforeMode;
+>>>>>>> upstream/master
             mActionMode.finish();
         }
 
         mContextView.killMode();
         ActionModeImpl mode = new ActionModeImpl(callback);
         if (mode.dispatchOnCreate()) {
+<<<<<<< HEAD
+=======
+            mWasHiddenBeforeMode = !isShowing() || wasHidden;
+>>>>>>> upstream/master
             mode.invalidate();
             mContextView.initForMode(mode);
             animateToMode(true);
             if (mSplitView != null && mContextDisplayMode == CONTEXT_DISPLAY_SPLIT) {
                 // TODO animate this
+<<<<<<< HEAD
                 if (mSplitView.getVisibility() != View.VISIBLE) {
                     mSplitView.setVisibility(View.VISIBLE);
                     if (mOverlayLayout != null) {
                         mOverlayLayout.requestFitSystemWindows();
                     }
                 }
+=======
+                mSplitView.setVisibility(View.VISIBLE);
+>>>>>>> upstream/master
             }
             mContextView.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
             mActionMode = mode;
@@ -588,6 +689,7 @@ public class ActionBarImpl extends ActionBar {
 
     @Override
     public void show() {
+<<<<<<< HEAD
         if (mHiddenByApp) {
             mHiddenByApp = false;
             updateVisibility(false);
@@ -703,10 +805,41 @@ public class ActionBarImpl extends ActionBar {
             // the action bar animates.  (This corresponds to the corresponding
             // case when hiding, where the status bar has a small delay before
             // starting.)
+=======
+        show(true);
+    }
+
+    void show(boolean markHiddenBeforeMode) {
+        if (mCurrentShowAnim != null) {
+            mCurrentShowAnim.end();
+        }
+        if (mContainerView.getVisibility() == View.VISIBLE) {
+            if (markHiddenBeforeMode) mWasHiddenBeforeMode = false;
+            return;
+        }
+        mContainerView.setVisibility(View.VISIBLE);
+
+        if (mShowHideAnimationEnabled) {
+            mContainerView.setAlpha(0);
+            AnimatorSet anim = new AnimatorSet();
+            AnimatorSet.Builder b = anim.play(ObjectAnimator.ofFloat(mContainerView, "alpha", 1));
+            if (mContentView != null) {
+                b.with(ObjectAnimator.ofFloat(mContentView, "translationY",
+                        -mContainerView.getHeight(), 0));
+                mContainerView.setTranslationY(-mContainerView.getHeight());
+                b.with(ObjectAnimator.ofFloat(mContainerView, "translationY", 0));
+            }
+            if (mSplitView != null && mContextDisplayMode == CONTEXT_DISPLAY_SPLIT) {
+                mSplitView.setAlpha(0);
+                mSplitView.setVisibility(View.VISIBLE);
+                b.with(ObjectAnimator.ofFloat(mSplitView, "alpha", 1));
+            }
+>>>>>>> upstream/master
             anim.addListener(mShowListener);
             mCurrentShowAnim = anim;
             anim.start();
         } else {
+<<<<<<< HEAD
             mTopVisibilityView.setAlpha(1);
             mTopVisibilityView.setTranslationY(0);
             if (mContentView != null) {
@@ -754,6 +887,38 @@ public class ActionBarImpl extends ActionBar {
             anim.setInterpolator(AnimationUtils.loadInterpolator(mContext,
                     com.android.internal.R.interpolator.accelerate_cubic));
             anim.setDuration(250);
+=======
+            mContainerView.setAlpha(1);
+            mContainerView.setTranslationY(0);
+            mShowListener.onAnimationEnd(null);
+        }
+    }
+
+    @Override
+    public void hide() {
+        if (mCurrentShowAnim != null) {
+            mCurrentShowAnim.end();
+        }
+        if (mContainerView.getVisibility() == View.GONE) {
+            return;
+        }
+
+        if (mShowHideAnimationEnabled) {
+            mContainerView.setAlpha(1);
+            mContainerView.setTransitioning(true);
+            AnimatorSet anim = new AnimatorSet();
+            AnimatorSet.Builder b = anim.play(ObjectAnimator.ofFloat(mContainerView, "alpha", 0));
+            if (mContentView != null) {
+                b.with(ObjectAnimator.ofFloat(mContentView, "translationY",
+                        0, -mContainerView.getHeight()));
+                b.with(ObjectAnimator.ofFloat(mContainerView, "translationY",
+                        -mContainerView.getHeight()));
+            }
+            if (mSplitView != null && mSplitView.getVisibility() == View.VISIBLE) {
+                mSplitView.setAlpha(1);
+                b.with(ObjectAnimator.ofFloat(mSplitView, "alpha", 0));
+            }
+>>>>>>> upstream/master
             anim.addListener(mHideListener);
             mCurrentShowAnim = anim;
             anim.start();
@@ -763,18 +928,29 @@ public class ActionBarImpl extends ActionBar {
     }
 
     public boolean isShowing() {
+<<<<<<< HEAD
         return mNowShowing;
     }
 
     public boolean isSystemShowing() {
         return !mHiddenBySystem;
+=======
+        return mContainerView.getVisibility() == View.VISIBLE;
+>>>>>>> upstream/master
     }
 
     void animateToMode(boolean toActionMode) {
         if (toActionMode) {
+<<<<<<< HEAD
             showForActionMode();
         } else {
             hideForActionMode();
+=======
+            show(false);
+        }
+        if (mCurrentModeAnim != null) {
+            mCurrentModeAnim.end();
+>>>>>>> upstream/master
         }
 
         mActionView.animateToVisibility(toActionMode ? View.GONE : View.VISIBLE);
@@ -833,6 +1009,7 @@ public class ActionBarImpl extends ActionBar {
                 return;
             }
 
+<<<<<<< HEAD
             // If this change in state is going to cause the action bar
             // to be hidden, defer the onDestroy callback until the animation
             // is finished and associated relayout is about to happen. This lets
@@ -840,6 +1017,13 @@ public class ActionBarImpl extends ActionBar {
             if (!checkShowingFlags(mHiddenByApp, mHiddenBySystem, false)) {
                 // With the current state but the action bar hidden, our
                 // overall showing state is going to be false.
+=======
+            // If we were hidden before the mode was shown, defer the onDestroy
+            // callback until the animation is finished and associated relayout
+            // is about to happen. This lets apps better anticipate visibility
+            // and layout behavior.
+            if (mWasHiddenBeforeMode) {
+>>>>>>> upstream/master
                 mDeferredDestroyActionMode = this;
                 mDeferredModeDestroyCallback = mCallback;
             } else {
@@ -853,6 +1037,13 @@ public class ActionBarImpl extends ActionBar {
             mActionView.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
 
             mActionMode = null;
+<<<<<<< HEAD
+=======
+
+            if (mWasHiddenBeforeMode) {
+                hide();
+            }
+>>>>>>> upstream/master
         }
 
         @Override
@@ -911,6 +1102,7 @@ public class ActionBarImpl extends ActionBar {
         }
         
         @Override
+<<<<<<< HEAD
         public void setTitleOptionalHint(boolean titleOptional) {
             super.setTitleOptionalHint(titleOptional);
             mContextView.setTitleOptional(titleOptional);
@@ -922,6 +1114,8 @@ public class ActionBarImpl extends ActionBar {
         }
 
         @Override
+=======
+>>>>>>> upstream/master
         public View getCustomView() {
             return mCustomView != null ? mCustomView.get() : null;
         }
@@ -1144,11 +1338,14 @@ public class ActionBarImpl extends ActionBar {
                 mTabScrollView.setVisibility(View.GONE);
                 break;
         }
+<<<<<<< HEAD
         if (oldMode != mode && !mHasEmbeddedTabs) {
             if (mOverlayLayout != null) {
                 mOverlayLayout.requestFitSystemWindows();
             }
         }
+=======
+>>>>>>> upstream/master
         mActionView.setNavigationMode(mode);
         switch (mode) {
             case NAVIGATION_MODE_TABS:
@@ -1188,10 +1385,13 @@ public class ActionBarImpl extends ActionBar {
     public void setLogo(Drawable logo) {
         mActionView.setLogo(logo);
     }
+<<<<<<< HEAD
 
     public void setDefaultDisplayHomeAsUpEnabled(boolean enable) {
         if (!mDisplayHomeAsUpSet) {
             setDisplayHomeAsUpEnabled(enable);
         }
     }
+=======
+>>>>>>> upstream/master
 }

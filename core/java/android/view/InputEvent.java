@@ -19,8 +19,11 @@ package android.view;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+<<<<<<< HEAD
 import java.util.concurrent.atomic.AtomicInteger;
 
+=======
+>>>>>>> upstream/master
 /**
  * Common base class for input events.
  */
@@ -29,6 +32,7 @@ public abstract class InputEvent implements Parcelable {
     protected static final int PARCEL_TOKEN_MOTION_EVENT = 1;
     /** @hide */
     protected static final int PARCEL_TOKEN_KEY_EVENT = 2;
+<<<<<<< HEAD
 
     // Next sequence number.
     private static final AtomicInteger mNextSeq = new AtomicInteger();
@@ -44,6 +48,10 @@ public abstract class InputEvent implements Parcelable {
 
     /*package*/ InputEvent() {
         mSeq = mNextSeq.getAndIncrement();
+=======
+    
+    /*package*/ InputEvent() {
+>>>>>>> upstream/master
     }
 
     /**
@@ -97,6 +105,7 @@ public abstract class InputEvent implements Parcelable {
      * objects are fine.  See {@link KeyEvent#recycle()} for details.
      * @hide
      */
+<<<<<<< HEAD
     public void recycle() {
         if (TRACK_RECYCLED_LOCATION) {
             if (mRecycledLocation != null) {
@@ -135,6 +144,9 @@ public abstract class InputEvent implements Parcelable {
         mRecycledLocation = null;
         mSeq = mNextSeq.getAndIncrement();
     }
+=======
+    public abstract void recycle();
+>>>>>>> upstream/master
 
     /**
      * Gets a private flag that indicates when the system has detected that this input event
@@ -159,6 +171,7 @@ public abstract class InputEvent implements Parcelable {
     public abstract void setTainted(boolean tainted);
 
     /**
+<<<<<<< HEAD
      * Retrieve the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
      *
@@ -179,10 +192,15 @@ public abstract class InputEvent implements Parcelable {
      * in the {@link android.os.SystemClock#uptimeMillis} time base but with
      * nanosecond (instead of millisecond) precision.
      *
+=======
+     * Returns the time (in ns) when this specific event was generated.
+     * The value is in nanosecond precision but it may not have nanosecond accuracy.
+>>>>>>> upstream/master
      * @hide
      */
     public abstract long getEventTimeNano();
 
+<<<<<<< HEAD
     /**
      * Gets the unique sequence number of this event.
      * Every input event that is created or received by a process has a
@@ -199,6 +217,8 @@ public abstract class InputEvent implements Parcelable {
         return mSeq;
     }
 
+=======
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }

@@ -226,6 +226,7 @@ public final class Bundle implements Parcelable, Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * @hide
      */
     public boolean isParcelled() {
@@ -233,6 +234,8 @@ public final class Bundle implements Parcelable, Cloneable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns the number of mappings contained in this Bundle.
      *
      * @return the number of mappings as an int.

@@ -52,6 +52,7 @@ import android.view.KeyCharacterMap.KeyData;
  * to characters.  Be aware that there may be multiple key input devices active
  * at the same time and each will have its own key character map.
  * </p><p>
+<<<<<<< HEAD
  * As soft input methods can use multiple and inventive ways of inputting text,
  * there is no guarantee that any key press on a soft keyboard will generate a key
  * event: this is left to the IME's discretion, and in fact sending such events is
@@ -65,6 +66,8 @@ import android.view.KeyCharacterMap.KeyData;
  * specific interaction with the software keyboard, as it gives more visibility to
  * the user as to how your application will react to key presses.
  * </p><p>
+=======
+>>>>>>> upstream/master
  * When interacting with an IME, the framework may deliver key events
  * with the special action {@link #ACTION_MULTIPLE} that either specifies
  * that single repeated key code or a sequence of characters to insert.
@@ -604,6 +607,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
     /** Key code constant: Calculator special function key.
      * Used to launch a calculator application. */
     public static final int KEYCODE_CALCULATOR      = 210;
+<<<<<<< HEAD
     /** Key code constant: Japanese full-width / half-width key. */
     public static final int KEYCODE_ZENKAKU_HANKAKU = 211;
     /** Key code constant: Japanese alphanumeric key. */
@@ -633,6 +637,10 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_SCREENSHOT      = 226;
 
     private static final int LAST_KEYCODE           = KEYCODE_SCREENSHOT;
+=======
+
+    private static final int LAST_KEYCODE           = KEYCODE_CALCULATOR;
+>>>>>>> upstream/master
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -865,6 +873,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
         names.append(KEYCODE_CALENDAR, "KEYCODE_CALENDAR");
         names.append(KEYCODE_MUSIC, "KEYCODE_MUSIC");
         names.append(KEYCODE_CALCULATOR, "KEYCODE_CALCULATOR");
+<<<<<<< HEAD
         names.append(KEYCODE_ZENKAKU_HANKAKU, "KEYCODE_ZENKAKU_HANKAKU");
         names.append(KEYCODE_EISU, "KEYCODE_EISU");
         names.append(KEYCODE_MUHENKAN, "KEYCODE_MUHENKAN");
@@ -881,6 +890,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
         names.append(KEYCODE_BRIGHTNESS_UP, "KEYCODE_BRIGHTNESS_UP");
         names.append(KEYCODE_BRIGHTNESS_AUTO, "KEYCODE_BRIGHTNESS_AUTO");
         names.append(KEYCODE_SCREENSHOT, "KEYCODE_SCREENSHOT");
+=======
+>>>>>>> upstream/master
     };
 
     // Symbolic names of all metakeys in bit order from least significant to most significant.
@@ -1281,6 +1292,10 @@ public class KeyEvent extends InputEvent implements Parcelable {
     private static KeyEvent gRecyclerTop;
 
     private KeyEvent mNext;
+<<<<<<< HEAD
+=======
+    private boolean mRecycled;
+>>>>>>> upstream/master
 
     private int mDeviceId;
     private int mSource;
@@ -1590,8 +1605,13 @@ public class KeyEvent extends InputEvent implements Parcelable {
             gRecyclerTop = ev.mNext;
             gRecyclerUsed -= 1;
         }
+<<<<<<< HEAD
         ev.mNext = null;
         ev.prepareForReuse();
+=======
+        ev.mRecycled = false;
+        ev.mNext = null;
+>>>>>>> upstream/master
         return ev;
     }
 
@@ -1652,9 +1672,17 @@ public class KeyEvent extends InputEvent implements Parcelable {
      *
      * @hide
      */
+<<<<<<< HEAD
     @Override
     public final void recycle() {
         super.recycle();
+=======
+    public final void recycle() {
+        if (mRecycled) {
+            throw new RuntimeException(toString() + " recycled twice!");
+        }
+        mRecycled = true;
+>>>>>>> upstream/master
         mCharacters = null;
 
         synchronized (gRecyclerLock) {
@@ -1666,12 +1694,15 @@ public class KeyEvent extends InputEvent implements Parcelable {
         }
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public final void recycleIfNeededAfterDispatch() {
         // Do nothing.
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Create a new key event that is the same as the given one, but whose
      * event time and repeat count are replaced with the given value.
@@ -2407,6 +2438,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
     }
 
     /**
+<<<<<<< HEAD
      * Retrieve the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
      *
@@ -2414,10 +2446,19 @@ public class KeyEvent extends InputEvent implements Parcelable {
      * in the {@link android.os.SystemClock#uptimeMillis} time base.
      */
     @Override
+=======
+     * Retrieve the time this event occurred, 
+     * in the {@link android.os.SystemClock#uptimeMillis} time base.
+     * 
+     * @return Returns the time this event occurred, 
+     * in the {@link android.os.SystemClock#uptimeMillis} time base.
+     */
+>>>>>>> upstream/master
     public final long getEventTime() {
         return mEventTime;
     }
 
+<<<<<<< HEAD
     /**
      * Retrieve the time this event occurred,
      * in the {@link android.os.SystemClock#uptimeMillis} time base but with
@@ -2432,6 +2473,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
      *
      * @hide
      */
+=======
+    /** @hide */
+>>>>>>> upstream/master
     @Override
     public final long getEventTimeNano() {
         return mEventTime * 1000000L;

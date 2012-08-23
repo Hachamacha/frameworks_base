@@ -16,7 +16,10 @@
 
 package android.media;
 
+<<<<<<< HEAD
 import android.graphics.Rect;
+=======
+>>>>>>> upstream/master
 import android.os.Parcel;
 import android.util.Log;
 import java.util.HashMap;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
+<<<<<<< HEAD
  * Class to hold the timed text's metadata, including:
  * <ul>
  * <li> The characters for rendering</li>
@@ -47,10 +51,18 @@ import java.util.ArrayList;
  * @see android.media.MediaPlayer
  */
 public final class TimedText
+=======
+ * Class to hold the timed text's metadata.
+ *
+ * {@hide}
+ */
+public class TimedText
+>>>>>>> upstream/master
 {
     private static final int FIRST_PUBLIC_KEY                 = 1;
 
     // These keys must be in sync with the keys in TextDescription.h
+<<<<<<< HEAD
     private static final int KEY_DISPLAY_FLAGS                 = 1; // int
     private static final int KEY_STYLE_FLAGS                   = 2; // int
     private static final int KEY_BACKGROUND_COLOR_RGBA         = 3; // int
@@ -67,6 +79,24 @@ public final class TimedText
     private static final int KEY_STRUCT_TEXT_POS               = 14; // TextPos
     private static final int KEY_STRUCT_JUSTIFICATION          = 15; // Justification
     private static final int KEY_STRUCT_TEXT                   = 16; // Text
+=======
+    public static final int KEY_DISPLAY_FLAGS                 = 1; // int
+    public static final int KEY_STYLE_FLAGS                   = 2; // int
+    public static final int KEY_BACKGROUND_COLOR_RGBA         = 3; // int
+    public static final int KEY_HIGHLIGHT_COLOR_RGBA          = 4; // int
+    public static final int KEY_SCROLL_DELAY                  = 5; // int
+    public static final int KEY_WRAP_TEXT                     = 6; // int
+    public static final int KEY_START_TIME                    = 7; // int
+    public static final int KEY_STRUCT_BLINKING_TEXT_LIST     = 8; // List<CharPos>
+    public static final int KEY_STRUCT_FONT_LIST              = 9; // List<Font>
+    public static final int KEY_STRUCT_HIGHLIGHT_LIST         = 10; // List<CharPos>
+    public static final int KEY_STRUCT_HYPER_TEXT_LIST        = 11; // List<HyperText>
+    public static final int KEY_STRUCT_KARAOKE_LIST           = 12; // List<Karaoke>
+    public static final int KEY_STRUCT_STYLE_LIST             = 13; // List<Style>
+    public static final int KEY_STRUCT_TEXT_POS               = 14; // TextPos
+    public static final int KEY_STRUCT_JUSTIFICATION          = 15; // Justification
+    public static final int KEY_STRUCT_TEXT                   = 16; // Text
+>>>>>>> upstream/master
 
     private static final int LAST_PUBLIC_KEY                  = 16;
 
@@ -86,6 +116,10 @@ public final class TimedText
 
     private static final String TAG = "TimedText";
 
+<<<<<<< HEAD
+=======
+    private Parcel mParcel = Parcel.obtain();
+>>>>>>> upstream/master
     private final HashMap<Integer, Object> mKeyObjectMap =
             new HashMap<Integer, Object>();
 
@@ -102,16 +136,42 @@ public final class TimedText
     private List<Style> mStyleList = null;
     private List<HyperText> mHyperTextList = null;
 
+<<<<<<< HEAD
     private Rect mTextBounds = null;
     private String mTextChars = null;
 
     private Justification mJustification;
+=======
+    private TextPos mTextPos;
+    private Justification mJustification;
+    private Text mTextStruct;
+
+    /**
+     * Helper class to hold the text length and text content of
+     * one text sample. The member variables in this class are
+     * read-only.
+     */
+    public class Text {
+        /**
+         * The byte-count of this text sample
+         */
+        public int textLen;
+
+        /**
+         * The text sample
+         */
+        public byte[] text;
+
+        public Text() { }
+    }
+>>>>>>> upstream/master
 
     /**
      * Helper class to hold the start char offset and end char offset
      * for Blinking Text or Highlight Text. endChar is the end offset
      * of the text (startChar + number of characters to be highlighted
      * or blinked). The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class CharPos {
@@ -119,10 +179,19 @@ public final class TimedText
          * The offset of the start character
          */
         public final int startChar;
+=======
+     */
+    public class CharPos {
+        /**
+         * The offset of the start character
+         */
+        public int startChar = -1;
+>>>>>>> upstream/master
 
         /**
          * The offset of the end character
          */
+<<<<<<< HEAD
         public final int endChar;
 
         /**
@@ -134,11 +203,45 @@ public final class TimedText
             this.startChar = startChar;
             this.endChar = endChar;
         }
+=======
+        public int endChar = -1;
+
+        public CharPos() { }
+    }
+
+    /**
+     * Helper class to hold the box position to display the text sample.
+     * The member variables in this class are read-only.
+     */
+    public class TextPos {
+        /**
+         * The top position of the text
+         */
+        public int top = -1;
+
+        /**
+         * The left position of the text
+         */
+        public int left = -1;
+
+        /**
+         * The bottom position of the text
+         */
+        public int bottom = -1;
+
+        /**
+         * The right position of the text
+         */
+        public int right = -1;
+
+        public TextPos() { }
+>>>>>>> upstream/master
     }
 
     /**
      * Helper class to hold the justification for text display in the text box.
      * The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class Justification {
@@ -161,11 +264,27 @@ public final class TimedText
             this.horizontalJustification = horizontal;
             this.verticalJustification = vertical;
         }
+=======
+     */
+    public class Justification {
+        /**
+         * horizontalJustification  0: left, 1: centered, -1: right
+         */
+        public int horizontalJustification = -1;
+
+        /**
+         * verticalJustification  0: top, 1: centered, -1: bottom
+         */
+        public int verticalJustification = -1;
+
+        public Justification() { }
+>>>>>>> upstream/master
     }
 
     /**
      * Helper class to hold the style information to display the text.
      * The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class Style {
@@ -173,42 +292,75 @@ public final class TimedText
          * The offset of the start character which applys this style
          */
         public final int startChar;
+=======
+     */
+    public class Style {
+        /**
+         * The offset of the start character which applys this style
+         */
+        public int startChar = -1;
+>>>>>>> upstream/master
 
         /**
          * The offset of the end character which applys this style
          */
+<<<<<<< HEAD
         public final int endChar;
+=======
+        public int endChar = -1;
+>>>>>>> upstream/master
 
         /**
          * ID of the font. This ID will be used to choose the font
          * to be used from the font list.
          */
+<<<<<<< HEAD
         public final int fontID;
+=======
+        public int fontID = -1;
+>>>>>>> upstream/master
 
         /**
          * True if the characters should be bold
          */
+<<<<<<< HEAD
         public final boolean isBold;
+=======
+        public boolean isBold = false;
+>>>>>>> upstream/master
 
         /**
          * True if the characters should be italic
          */
+<<<<<<< HEAD
         public final boolean isItalic;
+=======
+        public boolean isItalic = false;
+>>>>>>> upstream/master
 
         /**
          * True if the characters should be underlined
          */
+<<<<<<< HEAD
         public final boolean isUnderlined;
+=======
+        public boolean isUnderlined = false;
+>>>>>>> upstream/master
 
         /**
          * The size of the font
          */
+<<<<<<< HEAD
         public final int fontSize;
+=======
+        public int fontSize = -1;
+>>>>>>> upstream/master
 
         /**
          * To specify the RGBA color: 8 bits each of red, green, blue,
          * and an alpha(transparency) value
          */
+<<<<<<< HEAD
         public final int colorRGBA;
 
         /**
@@ -234,11 +386,17 @@ public final class TimedText
             this.fontSize = fontSize;
             this.colorRGBA = colorRGBA;
         }
+=======
+        public int colorRGBA = -1;
+
+        public Style() { }
+>>>>>>> upstream/master
     }
 
     /**
      * Helper class to hold the font ID and name.
      * The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class Font {
@@ -246,10 +404,19 @@ public final class TimedText
          * The font ID
          */
         public final int ID;
+=======
+     */
+    public class Font {
+        /**
+         * The font ID
+         */
+        public int ID = -1;
+>>>>>>> upstream/master
 
         /**
          * The font name
          */
+<<<<<<< HEAD
         public final String name;
 
         /**
@@ -261,34 +428,57 @@ public final class TimedText
             this.ID = id;
             this.name = name;
         }
+=======
+        public String name;
+
+        public Font() { }
+>>>>>>> upstream/master
     }
 
     /**
      * Helper class to hold the karaoke information.
      * The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class Karaoke {
+=======
+     */
+    public class Karaoke {
+>>>>>>> upstream/master
         /**
          * The start time (in milliseconds) to highlight the characters
          * specified by startChar and endChar.
          */
+<<<<<<< HEAD
         public final int startTimeMs;
+=======
+        public int startTimeMs = -1;
+>>>>>>> upstream/master
 
         /**
          * The end time (in milliseconds) to highlight the characters
          * specified by startChar and endChar.
          */
+<<<<<<< HEAD
         public final int endTimeMs;
+=======
+        public int endTimeMs = -1;
+>>>>>>> upstream/master
 
         /**
          * The offset of the start character to be highlighted
          */
+<<<<<<< HEAD
         public final int startChar;
+=======
+        public int startChar = -1;
+>>>>>>> upstream/master
 
         /**
          * The offset of the end character to be highlighted
          */
+<<<<<<< HEAD
         public final int endChar;
 
         /**
@@ -306,11 +496,17 @@ public final class TimedText
             this.startChar = startChar;
             this.endChar = endChar;
         }
+=======
+        public int endChar = -1;
+
+        public Karaoke() { }
+>>>>>>> upstream/master
     }
 
     /**
      * Helper class to hold the hyper text information.
      * The member variables in this class are read-only.
+<<<<<<< HEAD
      * {@hide}
      */
     public static final class HyperText {
@@ -318,20 +514,37 @@ public final class TimedText
          * The offset of the start character
          */
         public final int startChar;
+=======
+     */
+    public class HyperText {
+        /**
+         * The offset of the start character
+         */
+        public int startChar = -1;
+>>>>>>> upstream/master
 
         /**
          * The offset of the end character
          */
+<<<<<<< HEAD
         public final int endChar;
+=======
+        public int endChar = -1;
+>>>>>>> upstream/master
 
         /**
          * The linked-to URL
          */
+<<<<<<< HEAD
         public final String URL;
+=======
+        public String URL;
+>>>>>>> upstream/master
 
         /**
          * The "alt" string for user display
          */
+<<<<<<< HEAD
         public final String altString;
 
 
@@ -348,6 +561,11 @@ public final class TimedText
             this.URL = url;
             this.altString = alt;
         }
+=======
+        public String altString;
+
+        public HyperText() { }
+>>>>>>> upstream/master
     }
 
     /**
@@ -355,14 +573,22 @@ public final class TimedText
      * @throws IllegalArgumentExcept if parseParcel() fails.
      * {@hide}
      */
+<<<<<<< HEAD
     public TimedText(Parcel parcel) {
         if (!parseParcel(parcel)) {
+=======
+    public TimedText(byte[] obj) {
+        mParcel.unmarshall(obj, 0, obj.length);
+
+        if (!parseParcel()) {
+>>>>>>> upstream/master
             mKeyObjectMap.clear();
             throw new IllegalArgumentException("parseParcel() fails");
         }
     }
 
     /**
+<<<<<<< HEAD
      * Get the characters in the timed text.
      *
      * @return the characters as a String object in the TimedText. Applications
@@ -386,10 +612,13 @@ public final class TimedText
     }
 
     /*
+=======
+>>>>>>> upstream/master
      * Go over all the records, collecting metadata keys and fields in the
      * Parcel. These are stored in mKeyObjectMap for application to retrieve.
      * @return false if an error occurred during parsing. Otherwise, true.
      */
+<<<<<<< HEAD
     private boolean parseParcel(Parcel parcel) {
         parcel.setDataPosition(0);
         if (parcel.dataAvail() == 0) {
@@ -406,10 +635,29 @@ public final class TimedText
             mKeyObjectMap.put(type, mStartTimeMs);
 
             type = parcel.readInt();
+=======
+    private boolean parseParcel() {
+        mParcel.setDataPosition(0);
+        if (mParcel.dataAvail() == 0) {
+            return false;
+        }
+
+        int type = mParcel.readInt();
+        if (type == KEY_LOCAL_SETTING) {
+            type = mParcel.readInt();
+            if (type != KEY_START_TIME) {
+                return false;
+            }
+            int mStartTimeMs = mParcel.readInt();
+            mKeyObjectMap.put(type, mStartTimeMs);
+
+            type = mParcel.readInt();
+>>>>>>> upstream/master
             if (type != KEY_STRUCT_TEXT) {
                 return false;
             }
 
+<<<<<<< HEAD
             int textLen = parcel.readInt();
             byte[] text = parcel.createByteArray();
             if (text == null || text.length == 0) {
@@ -417,14 +665,26 @@ public final class TimedText
             } else {
                 mTextChars = new String(text);
             }
+=======
+            mTextStruct = new Text();
+            mTextStruct.textLen = mParcel.readInt();
+
+            mTextStruct.text = mParcel.createByteArray();
+            mKeyObjectMap.put(type, mTextStruct);
+>>>>>>> upstream/master
 
         } else if (type != KEY_GLOBAL_SETTING) {
             Log.w(TAG, "Invalid timed text key found: " + type);
             return false;
         }
 
+<<<<<<< HEAD
         while (parcel.dataAvail() > 0) {
             int key = parcel.readInt();
+=======
+        while (mParcel.dataAvail() > 0) {
+            int key = mParcel.readInt();
+>>>>>>> upstream/master
             if (!isValidKey(key)) {
                 Log.w(TAG, "Invalid timed text key found: " + key);
                 return false;
@@ -434,67 +694,115 @@ public final class TimedText
 
             switch (key) {
                 case KEY_STRUCT_STYLE_LIST: {
+<<<<<<< HEAD
                     readStyle(parcel);
+=======
+                    readStyle();
+>>>>>>> upstream/master
                     object = mStyleList;
                     break;
                 }
                 case KEY_STRUCT_FONT_LIST: {
+<<<<<<< HEAD
                     readFont(parcel);
+=======
+                    readFont();
+>>>>>>> upstream/master
                     object = mFontList;
                     break;
                 }
                 case KEY_STRUCT_HIGHLIGHT_LIST: {
+<<<<<<< HEAD
                     readHighlight(parcel);
+=======
+                    readHighlight();
+>>>>>>> upstream/master
                     object = mHighlightPosList;
                     break;
                 }
                 case KEY_STRUCT_KARAOKE_LIST: {
+<<<<<<< HEAD
                     readKaraoke(parcel);
+=======
+                    readKaraoke();
+>>>>>>> upstream/master
                     object = mKaraokeList;
                     break;
                 }
                 case KEY_STRUCT_HYPER_TEXT_LIST: {
+<<<<<<< HEAD
                     readHyperText(parcel);
+=======
+                    readHyperText();
+>>>>>>> upstream/master
                     object = mHyperTextList;
 
                     break;
                 }
                 case KEY_STRUCT_BLINKING_TEXT_LIST: {
+<<<<<<< HEAD
                     readBlinkingText(parcel);
+=======
+                    readBlinkingText();
+>>>>>>> upstream/master
                     object = mBlinkingPosList;
 
                     break;
                 }
                 case KEY_WRAP_TEXT: {
+<<<<<<< HEAD
                     mWrapText = parcel.readInt();
+=======
+                    mWrapText = mParcel.readInt();
+>>>>>>> upstream/master
                     object = mWrapText;
                     break;
                 }
                 case KEY_HIGHLIGHT_COLOR_RGBA: {
+<<<<<<< HEAD
                     mHighlightColorRGBA = parcel.readInt();
+=======
+                    mHighlightColorRGBA = mParcel.readInt();
+>>>>>>> upstream/master
                     object = mHighlightColorRGBA;
                     break;
                 }
                 case KEY_DISPLAY_FLAGS: {
+<<<<<<< HEAD
                     mDisplayFlags = parcel.readInt();
+=======
+                    mDisplayFlags = mParcel.readInt();
+>>>>>>> upstream/master
                     object = mDisplayFlags;
                     break;
                 }
                 case KEY_STRUCT_JUSTIFICATION: {
+<<<<<<< HEAD
 
                     int horizontal = parcel.readInt();
                     int vertical = parcel.readInt();
                     mJustification = new Justification(horizontal, vertical);
+=======
+                    mJustification = new Justification();
+
+                    mJustification.horizontalJustification = mParcel.readInt();
+                    mJustification.verticalJustification = mParcel.readInt();
+>>>>>>> upstream/master
 
                     object = mJustification;
                     break;
                 }
                 case KEY_BACKGROUND_COLOR_RGBA: {
+<<<<<<< HEAD
                     mBackgroundColorRGBA = parcel.readInt();
+=======
+                    mBackgroundColorRGBA = mParcel.readInt();
+>>>>>>> upstream/master
                     object = mBackgroundColorRGBA;
                     break;
                 }
                 case KEY_STRUCT_TEXT_POS: {
+<<<<<<< HEAD
                     int top = parcel.readInt();
                     int left = parcel.readInt();
                     int bottom = parcel.readInt();
@@ -505,6 +813,20 @@ public final class TimedText
                 }
                 case KEY_SCROLL_DELAY: {
                     mScrollDelay = parcel.readInt();
+=======
+                    mTextPos = new TextPos();
+
+                    mTextPos.top = mParcel.readInt();
+                    mTextPos.left = mParcel.readInt();
+                    mTextPos.bottom = mParcel.readInt();
+                    mTextPos.right = mParcel.readInt();
+
+                    object = mTextPos;
+                    break;
+                }
+                case KEY_SCROLL_DELAY: {
+                    mScrollDelay = mParcel.readInt();
+>>>>>>> upstream/master
                     object = mScrollDelay;
                     break;
                 }
@@ -517,11 +839,15 @@ public final class TimedText
                 if (mKeyObjectMap.containsKey(key)) {
                     mKeyObjectMap.remove(key);
                 }
+<<<<<<< HEAD
                 // Previous mapping will be replaced with the new object, if there was one.
+=======
+>>>>>>> upstream/master
                 mKeyObjectMap.put(key, object);
             }
         }
 
+<<<<<<< HEAD
         return true;
     }
 
@@ -568,26 +894,78 @@ public final class TimedText
                 }
                 case KEY_TEXT_COLOR_RGBA: {
                     colorRGBA = parcel.readInt();
+=======
+        mParcel.recycle();
+        return true;
+    }
+
+    /**
+     * To parse and store the Style list.
+     */
+    private void readStyle() {
+        Style style = new Style();
+        boolean endOfStyle = false;
+
+        while (!endOfStyle && (mParcel.dataAvail() > 0)) {
+            int key = mParcel.readInt();
+            switch (key) {
+                case KEY_START_CHAR: {
+                    style.startChar = mParcel.readInt();
+                    break;
+                }
+                case KEY_END_CHAR: {
+                    style.endChar = mParcel.readInt();
+                    break;
+                }
+                case KEY_FONT_ID: {
+                    style.fontID = mParcel.readInt();
+                    break;
+                }
+                case KEY_STYLE_FLAGS: {
+                    int flags = mParcel.readInt();
+                    // In the absence of any bits set in flags, the text
+                    // is plain. Otherwise, 1: bold, 2: italic, 4: underline
+                    style.isBold = ((flags % 2) == 1);
+                    style.isItalic = ((flags % 4) >= 2);
+                    style.isUnderlined = ((flags / 4) == 1);
+                    break;
+                }
+                case KEY_FONT_SIZE: {
+                    style.fontSize = mParcel.readInt();
+                    break;
+                }
+                case KEY_TEXT_COLOR_RGBA: {
+                    style.colorRGBA = mParcel.readInt();
+>>>>>>> upstream/master
                     break;
                 }
                 default: {
                     // End of the Style parsing. Reset the data position back
+<<<<<<< HEAD
                     // to the position before the last parcel.readInt() call.
                     parcel.setDataPosition(parcel.dataPosition() - 4);
+=======
+                    // to the position before the last mParcel.readInt() call.
+                    mParcel.setDataPosition(mParcel.dataPosition() - 4);
+>>>>>>> upstream/master
                     endOfStyle = true;
                     break;
                 }
             }
         }
 
+<<<<<<< HEAD
         Style style = new Style(startChar, endChar, fontId, isBold,
                                 isItalic, isUnderlined, fontSize, colorRGBA);
+=======
+>>>>>>> upstream/master
         if (mStyleList == null) {
             mStyleList = new ArrayList<Style>();
         }
         mStyleList.add(style);
     }
 
+<<<<<<< HEAD
     /*
      * To parse and store the Font list
      */
@@ -602,6 +980,22 @@ public final class TimedText
             final String name = new String(text, 0, nameLen);
 
             Font font = new Font(id, name);
+=======
+    /**
+     * To parse and store the Font list
+     */
+    private void readFont() {
+        int entryCount = mParcel.readInt();
+
+        for (int i = 0; i < entryCount; i++) {
+            Font font = new Font();
+
+            font.ID = mParcel.readInt();
+            int nameLen = mParcel.readInt();
+
+            byte[] text = mParcel.createByteArray();
+            font.name = new String(text, 0, nameLen);
+>>>>>>> upstream/master
 
             if (mFontList == null) {
                 mFontList = new ArrayList<Font>();
@@ -610,6 +1004,7 @@ public final class TimedText
         }
     }
 
+<<<<<<< HEAD
     /*
      * To parse and store the Highlight list
      */
@@ -617,6 +1012,16 @@ public final class TimedText
         int startChar = parcel.readInt();
         int endChar = parcel.readInt();
         CharPos pos = new CharPos(startChar, endChar);
+=======
+    /**
+     * To parse and store the Highlight list
+     */
+    private void readHighlight() {
+        CharPos pos = new CharPos();
+
+        pos.startChar = mParcel.readInt();
+        pos.endChar = mParcel.readInt();
+>>>>>>> upstream/master
 
         if (mHighlightPosList == null) {
             mHighlightPosList = new ArrayList<CharPos>();
@@ -624,6 +1029,7 @@ public final class TimedText
         mHighlightPosList.add(pos);
     }
 
+<<<<<<< HEAD
     /*
      * To parse and store the Karaoke list
      */
@@ -637,6 +1043,21 @@ public final class TimedText
             int endChar = parcel.readInt();
             Karaoke kara = new Karaoke(startTimeMs, endTimeMs,
                                        startChar, endChar);
+=======
+    /**
+     * To parse and store the Karaoke list
+     */
+    private void readKaraoke() {
+        int entryCount = mParcel.readInt();
+
+        for (int i = 0; i < entryCount; i++) {
+            Karaoke kara = new Karaoke();
+
+            kara.startTimeMs = mParcel.readInt();
+            kara.endTimeMs = mParcel.readInt();
+            kara.startChar = mParcel.readInt();
+            kara.endChar = mParcel.readInt();
+>>>>>>> upstream/master
 
             if (mKaraokeList == null) {
                 mKaraokeList = new ArrayList<Karaoke>();
@@ -645,6 +1066,7 @@ public final class TimedText
         }
     }
 
+<<<<<<< HEAD
     /*
      * To parse and store HyperText list
      */
@@ -661,6 +1083,24 @@ public final class TimedText
         final String altString = new String(alt, 0, len);
         HyperText hyperText = new HyperText(startChar, endChar, urlString, altString);
 
+=======
+    /**
+     * To parse and store HyperText list
+     */
+    private void readHyperText() {
+        HyperText hyperText = new HyperText();
+
+        hyperText.startChar = mParcel.readInt();
+        hyperText.endChar = mParcel.readInt();
+
+        int len = mParcel.readInt();
+        byte[] url = mParcel.createByteArray();
+        hyperText.URL = new String(url, 0, len);
+
+        len = mParcel.readInt();
+        byte[] alt = mParcel.createByteArray();
+        hyperText.altString = new String(alt, 0, len);
+>>>>>>> upstream/master
 
         if (mHyperTextList == null) {
             mHyperTextList = new ArrayList<HyperText>();
@@ -668,6 +1108,7 @@ public final class TimedText
         mHyperTextList.add(hyperText);
     }
 
+<<<<<<< HEAD
     /*
      * To parse and store blinking text list
      */
@@ -675,6 +1116,16 @@ public final class TimedText
         int startChar = parcel.readInt();
         int endChar = parcel.readInt();
         CharPos blinkingPos = new CharPos(startChar, endChar);
+=======
+    /**
+     * To parse and store blinking text list
+     */
+    private void readBlinkingText() {
+        CharPos blinkingPos = new CharPos();
+
+        blinkingPos.startChar = mParcel.readInt();
+        blinkingPos.endChar = mParcel.readInt();
+>>>>>>> upstream/master
 
         if (mBlinkingPosList == null) {
             mBlinkingPosList = new ArrayList<CharPos>();
@@ -682,12 +1133,20 @@ public final class TimedText
         mBlinkingPosList.add(blinkingPos);
     }
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * To check whether the given key is valid.
      * @param key the key to be checked.
      * @return true if the key is a valid one. Otherwise, false.
      */
+<<<<<<< HEAD
     private boolean isValidKey(final int key) {
+=======
+    public boolean isValidKey(final int key) {
+>>>>>>> upstream/master
         if (!((key >= FIRST_PUBLIC_KEY) && (key <= LAST_PUBLIC_KEY))
                 && !((key >= FIRST_PRIVATE_KEY) && (key <= LAST_PRIVATE_KEY))) {
             return false;
@@ -695,18 +1154,27 @@ public final class TimedText
         return true;
     }
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * To check whether the given key is contained in this TimedText object.
      * @param key the key to be checked.
      * @return true if the key is contained in this TimedText object.
      *         Otherwise, false.
      */
+<<<<<<< HEAD
     private boolean containsKey(final int key) {
+=======
+    public boolean containsKey(final int key) {
+>>>>>>> upstream/master
         if (isValidKey(key) && mKeyObjectMap.containsKey(key)) {
             return true;
         }
         return false;
     }
+<<<<<<< HEAD
 
     /*
      * @return a set of the keys contained in this TimedText object.
@@ -716,15 +1184,32 @@ public final class TimedText
     }
 
     /*
+=======
+    /**
+     * @return a set of the keys contained in this TimedText object.
+     */
+    public Set keySet() {
+        return mKeyObjectMap.keySet();
+    }
+
+    /**
+>>>>>>> upstream/master
      * To retrieve the object associated with the key. Caller must make sure
      * the key is present using the containsKey method otherwise a
      * RuntimeException will occur.
      * @param key the key used to retrieve the object.
+<<<<<<< HEAD
      * @return an object. The object could be 1) an instance of Integer; 2) a
      * List of CharPos, Karaoke, Font, Style, and HyperText, or 3) an instance of
      * Justification.
      */
     private Object getObject(final int key) {
+=======
+     * @return an object. The object could be an instanceof Integer, List, or
+     * any of the helper classes such as TextPos, Justification, and Text.
+     */
+    public Object getObject(final int key) {
+>>>>>>> upstream/master
         if (containsKey(key)) {
             return mKeyObjectMap.get(key);
         } else {

@@ -20,7 +20,10 @@ import android.annotation.Widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -33,8 +36,11 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.animation.Transformation;
 
 import com.android.internal.R;
@@ -49,16 +55,26 @@ import com.android.internal.R;
  * <p>
  * Views given to the Gallery should use {@link Gallery.LayoutParams} as their
  * layout parameters type.
+<<<<<<< HEAD
+=======
+ *
+ * <p>See the <a href="{@docRoot}resources/tutorials/views/hello-gallery.html">Gallery
+ * tutorial</a>.</p>
+>>>>>>> upstream/master
  * 
  * @attr ref android.R.styleable#Gallery_animationDuration
  * @attr ref android.R.styleable#Gallery_spacing
  * @attr ref android.R.styleable#Gallery_gravity
+<<<<<<< HEAD
  * 
  * @deprecated This widget is no longer supported. Other horizontally scrolling
  * widgets include {@link HorizontalScrollView} and {@link android.support.v4.view.ViewPager}
  * from the support library.
  */
 @Deprecated
+=======
+ */
+>>>>>>> upstream/master
 @Widget
 public class Gallery extends AbsSpinner implements GestureDetector.OnGestureListener {
 
@@ -1360,6 +1376,7 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
 
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -1403,6 +1420,8 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         return false;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Responsible for fling behavior. Use {@link #startUsingVelocity(int)} to
      * initiate a fling. Each frame of the fling is handled in {@link #run()}.

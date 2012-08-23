@@ -22,14 +22,21 @@ import android.database.SQLException;
  * A SQLite exception that indicates there was an error with SQL parsing or execution.
  */
 public class SQLiteException extends SQLException {
+<<<<<<< HEAD
     public SQLiteException() {
     }
+=======
+    public SQLiteException() {}
+>>>>>>> upstream/master
 
     public SQLiteException(String error) {
         super(error);
     }
+<<<<<<< HEAD
 
     public SQLiteException(String error, Throwable cause) {
         super(error, cause);
     }
+=======
+>>>>>>> upstream/master
 }

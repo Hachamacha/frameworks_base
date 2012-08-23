@@ -53,4 +53,7 @@ public class ThemeUtils {
         context.registerReceiver(receiver, filter);
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master

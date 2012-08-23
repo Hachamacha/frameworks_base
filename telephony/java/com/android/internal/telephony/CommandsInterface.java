@@ -20,24 +20,97 @@ import com.android.internal.telephony.gsm.SmsBroadcastConfigInfo;
 
 import android.os.Message;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> upstream/master
 
 /**
  * {@hide}
  */
 public interface CommandsInterface {
     enum RadioState {
+<<<<<<< HEAD
         RADIO_OFF,         /* Radio explicitly powered off (eg CFUN=0) */
         RADIO_UNAVAILABLE, /* Radio unavailable (eg, resetting or not booted) */
         RADIO_ON;          /* Radio is on */
 
         public boolean isOn() /* and available...*/ {
             return this == RADIO_ON;
+=======
+        RADIO_OFF(0),         /* Radio explictly powered off (eg CFUN=0) */
+        RADIO_UNAVAILABLE(0), /* Radio unavailable (eg, resetting or not booted) */
+        SIM_NOT_READY(1),     /* Radio is on, but the SIM interface is not ready */
+        SIM_LOCKED_OR_ABSENT(1),  /* SIM PIN locked, PUK required, network
+                                     personalization, or SIM absent */
+        SIM_READY(1),         /* Radio is on and SIM interface is available */
+        RUIM_NOT_READY(2),    /* Radio is on, but the RUIM interface is not ready */
+        RUIM_READY(2),        /* Radio is on and the RUIM interface is available */
+        RUIM_LOCKED_OR_ABSENT(2), /* RUIM PIN locked, PUK required, network
+                                     personalization locked, or RUIM absent */
+        NV_NOT_READY(3),      /* Radio is on, but the NV interface is not available */
+        NV_READY(3);          /* Radio is on and the NV interface is available */
+
+        public boolean isOn() /* and available...*/ {
+            return this == SIM_NOT_READY
+                    || this == SIM_LOCKED_OR_ABSENT
+                    || this == SIM_READY
+                    || this == RUIM_NOT_READY
+                    || this == RUIM_READY
+                    || this == RUIM_LOCKED_OR_ABSENT
+                    || this == NV_NOT_READY
+                    || this == NV_READY;
+        }
+        private int stateType;
+        private RadioState (int type) {
+            stateType = type;
+        }
+
+        public int getType() {
+            return stateType;
+>>>>>>> upstream/master
         }
 
         public boolean isAvailable() {
             return this != RADIO_UNAVAILABLE;
         }
+<<<<<<< HEAD
+=======
+
+        public boolean isSIMReady() {
+            return this == SIM_READY;
+        }
+
+        public boolean isRUIMReady() {
+            return this == RUIM_READY;
+        }
+
+        public boolean isNVReady() {
+            return this == NV_READY;
+        }
+
+        public boolean isGsm() {
+            if (BaseCommands.getLteOnCdmaModeStatic() == Phone.LTE_ON_CDMA_TRUE) {
+                return false;
+            } else {
+                return this == SIM_NOT_READY
+                        || this == SIM_LOCKED_OR_ABSENT
+                        || this == SIM_READY;
+            }
+        }
+
+        public boolean isCdma() {
+            if (BaseCommands.getLteOnCdmaModeStatic() == Phone.LTE_ON_CDMA_TRUE) {
+                return true;
+            } else {
+                return this ==  RUIM_NOT_READY
+                        || this == RUIM_READY
+                        || this == RUIM_LOCKED_OR_ABSENT
+                        || this == NV_NOT_READY
+                        || this == NV_READY;
+            }
+        }
+>>>>>>> upstream/master
     }
 
     //***** Constants
@@ -93,6 +166,14 @@ public interface CommandsInterface {
     static final int USSD_MODE_NOTIFY       = 0;
     static final int USSD_MODE_REQUEST      = 1;
 
+<<<<<<< HEAD
+=======
+    // SIM Refresh results, passed up from RIL.
+    static final int SIM_REFRESH_FILE_UPDATED   = 0;  // Single file updated
+    static final int SIM_REFRESH_INIT           = 1;  // SIM initialized; reload all
+    static final int SIM_REFRESH_RESET          = 2;  // SIM reset; may be locked
+
+>>>>>>> upstream/master
     // GSM SMS fail cause for acknowledgeLastIncomingSMS. From TS 23.040, 9.2.3.22.
     static final int GSM_SMS_FAIL_CAUSE_MEMORY_CAPACITY_EXCEEDED    = 0xD3;
     static final int GSM_SMS_FAIL_CAUSE_USIM_APP_TOOLKIT_BUSY       = 0xD4;
@@ -106,9 +187,17 @@ public interface CommandsInterface {
     static final int CDMA_SMS_FAIL_CAUSE_ENCODING_PROBLEM           = 96;
 
     //***** Methods
+<<<<<<< HEAD
     RadioState getRadioState();
 
     void getVoiceRadioTechnology(Message result);
+=======
+
+    RadioState getRadioState();
+    RadioState getSimState();
+    RadioState getRuimState();
+    RadioState getNvState();
+>>>>>>> upstream/master
 
     /**
      * Fires on any RadioState transition
@@ -121,9 +210,12 @@ public interface CommandsInterface {
     void registerForRadioStateChanged(Handler h, int what, Object obj);
     void unregisterForRadioStateChanged(Handler h);
 
+<<<<<<< HEAD
     void registerForVoiceRadioTechChanged(Handler h, int what, Object obj);
     void unregisterForVoiceRadioTechChanged(Handler h);
 
+=======
+>>>>>>> upstream/master
     /**
      * Fires on any transition into RadioState.isOn()
      * Fires immediately if currently in that state
@@ -161,8 +253,23 @@ public interface CommandsInterface {
     void unregisterForOffOrNotAvailable(Handler h);
 
     /**
+<<<<<<< HEAD
      * Fires on any change in ICC status
      */
+=======
+     * Fires on any transition into SIM_READY
+     * Fires immediately if if currently in that state
+     * In general, actions should be idempotent. State may change
+     * before event is received.
+     */
+    void registerForSIMReady(Handler h, int what, Object obj);
+    void unregisterForSIMReady(Handler h);
+
+    /** Any transition into SIM_LOCKED_OR_ABSENT */
+    void registerForSIMLockedOrAbsent(Handler h, int what, Object obj);
+    void unregisterForSIMLockedOrAbsent(Handler h);
+
+>>>>>>> upstream/master
     void registerForIccStatusChanged(Handler h, int what, Object obj);
     void unregisterForIccStatusChanged(Handler h);
 
@@ -173,6 +280,16 @@ public interface CommandsInterface {
     void registerForDataNetworkStateChanged(Handler h, int what, Object obj);
     void unregisterForDataNetworkStateChanged(Handler h);
 
+<<<<<<< HEAD
+=======
+    void registerForRadioTechnologyChanged(Handler h, int what, Object obj);
+    void unregisterForRadioTechnologyChanged(Handler h);
+    void registerForNVReady(Handler h, int what, Object obj);
+    void unregisterForNVReady(Handler h);
+    void registerForRUIMLockedOrAbsent(Handler h, int what, Object obj);
+    void unregisterForRUIMLockedOrAbsent(Handler h);
+
+>>>>>>> upstream/master
     /** InCall voice privacy notifications */
     void registerForInCallVoicePrivacyOn(Handler h, int what, Object obj);
     void unregisterForInCallVoicePrivacyOn(Handler h);
@@ -180,6 +297,18 @@ public interface CommandsInterface {
     void unregisterForInCallVoicePrivacyOff(Handler h);
 
     /**
+<<<<<<< HEAD
+=======
+     * Fires on any transition into RUIM_READY
+     * Fires immediately if if currently in that state
+     * In general, actions should be idempotent. State may change
+     * before event is received.
+     */
+    void registerForRUIMReady(Handler h, int what, Object obj);
+    void unregisterForRUIMReady(Handler h);
+
+    /**
+>>>>>>> upstream/master
      * unlike the register* methods, there's only one new 3GPP format SMS handler.
      * if you need to unregister, you should also tell the radio to stop
      * sending SMS's to you (via AT+CNMI)
@@ -759,6 +888,7 @@ public interface CommandsInterface {
      *  retMsg.obj = AsyncResult ar
      *  ar.exception carries exception on failure
      *  ar.userObject contains the orignal value of result.obj
+<<<<<<< HEAD
      *  ar.result is String containing IMSI on success
      */
     void getIMSIForApp(String aid, Message result);
@@ -768,6 +898,8 @@ public interface CommandsInterface {
      *  retMsg.obj = AsyncResult ar
      *  ar.exception carries exception on failure
      *  ar.userObject contains the orignal value of result.obj
+=======
+>>>>>>> upstream/master
      *  ar.result is String containing IMEI on success
      */
     void getIMEI(Message result);
@@ -1059,6 +1191,7 @@ public interface CommandsInterface {
             String data, String pin2, Message response);
 
     /**
+<<<<<<< HEAD
      * parameters equivalent to 27.007 AT+CRSM command
      * response.obj will be an AsyncResult
      * response.obj.userObj will be a IccIoResult on success
@@ -1067,6 +1200,8 @@ public interface CommandsInterface {
             String data, String pin2, String aid, Message response);
 
     /**
+=======
+>>>>>>> upstream/master
      * (AsyncResult)response.obj).result is an int[] with element [0] set to
      * 1 for "CLIP is provisioned", and 0 for "CLIP is not provisioned".
      *
@@ -1563,12 +1698,15 @@ public interface CommandsInterface {
     public int getLteOnCdmaMode();
 
     /**
+<<<<<<< HEAD
      * Return if the current radio is LTE on GSM
      * @hide
      */
     public int getLteOnGsmMode();
 
     /**
+=======
+>>>>>>> upstream/master
      * Request the ISIM application on the UICC to perform the AKA
      * challenge/response algorithm for IMS authentication. The nonce string
      * and challenge response are Base64 encoded Strings.
@@ -1577,6 +1715,7 @@ public interface CommandsInterface {
      * @param response a callback message with the String response in the obj field
      */
     public void requestIsimAuthentication(String nonce, Message response);
+<<<<<<< HEAD
 
     /**
      * Notifiy that we are testing an emergency call
@@ -1588,4 +1727,6 @@ public interface CommandsInterface {
      * CM-specific: Ask the RIL about the presence of back-compat flags
      */
     public boolean needsOldRilFeature(String feature);
+=======
+>>>>>>> upstream/master
 }

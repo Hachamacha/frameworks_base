@@ -34,8 +34,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.widget.MediaController.MediaPlayerControl;
 
 import java.io.IOException;
@@ -126,6 +129,7 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
         setMeasuredDimension(width, height);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -138,6 +142,8 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
         info.setClassName(VideoView.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     public int resolveAdjustedSize(int desiredSize, int measureSpec) {
         int result = desiredSize;
         int specMode = MeasureSpec.getMode(measureSpec);
@@ -394,6 +400,10 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
                 }
 
                 new AlertDialog.Builder(mContext)
+<<<<<<< HEAD
+=======
+                        .setTitle(com.android.internal.R.string.VideoView_error_title)
+>>>>>>> upstream/master
                         .setMessage(messageId)
                         .setPositiveButton(com.android.internal.R.string.VideoView_error_button,
                                 new DialogInterface.OnClickListener() {

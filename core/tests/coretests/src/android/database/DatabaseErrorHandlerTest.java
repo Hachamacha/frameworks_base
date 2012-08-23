@@ -21,6 +21,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDiskIOException;
 import android.database.sqlite.SQLiteException;
 import android.test.AndroidTestCase;
+<<<<<<< HEAD
+=======
+import android.test.suitebuilder.annotation.Suppress;
+>>>>>>> upstream/master
 import android.util.Log;
 
 import java.io.BufferedWriter;

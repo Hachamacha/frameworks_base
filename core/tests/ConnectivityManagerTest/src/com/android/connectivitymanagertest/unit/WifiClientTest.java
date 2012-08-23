@@ -271,6 +271,7 @@ public class WifiClientTest extends AndroidTestCase {
 
     }
 
+<<<<<<< HEAD
     // Test case 6: test configured network status
     @LargeTest
     public void testWifiConfiguredNetworkStatus() {
@@ -313,4 +314,6 @@ public class WifiClientTest extends AndroidTestCase {
 
 
 
+=======
+>>>>>>> upstream/master
 }

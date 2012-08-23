@@ -133,6 +133,7 @@ public class BitwiseStreamsTest extends AndroidTestCase {
         long end = android.os.SystemClock.elapsedRealtime();
         Log.d(LOG_TAG, "repeated encode-decode took " + (end - start) + " ms");
     }
+<<<<<<< HEAD
 
     @SmallTest
     public void testExpandArray() throws Exception {
@@ -154,4 +155,6 @@ public class BitwiseStreamsTest extends AndroidTestCase {
             assertEquals(valueArr[i], inStream.read(sizeArr[i]));
         }
     }
+=======
+>>>>>>> upstream/master
 }

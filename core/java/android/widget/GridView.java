@@ -27,8 +27,11 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 import android.view.animation.GridLayoutAnimationController;
 import android.widget.RemoteViews.RemoteView;
 
@@ -99,7 +102,11 @@ public class GridView extends AbsListView {
     private final Rect mTempRect = new Rect();
 
     public GridView(Context context) {
+<<<<<<< HEAD
         this(context, null);
+=======
+        super(context);
+>>>>>>> upstream/master
     }
 
     public GridView(Context context, AttributeSet attrs) {
@@ -292,7 +299,10 @@ public class GridView extends AbsListView {
             pos += mNumColumns;
         }
 
+<<<<<<< HEAD
         setVisibleRangeHint(mFirstPosition, mFirstPosition + getChildCount() - 1);
+=======
+>>>>>>> upstream/master
         return selectedView;
     }
 
@@ -385,7 +395,10 @@ public class GridView extends AbsListView {
             mFirstPosition = Math.max(0, pos + 1);
         }
 
+<<<<<<< HEAD
         setVisibleRangeHint(mFirstPosition, mFirstPosition + getChildCount() - 1);
+=======
+>>>>>>> upstream/master
         return selectedView;
     }
 
@@ -1029,9 +1042,16 @@ public class GridView extends AbsListView {
         if (count > 0) {
             final View child = obtainView(0, mIsScrap);
 
+<<<<<<< HEAD
             AbsListView.LayoutParams p = (AbsListView.LayoutParams) child.getLayoutParams();
             if (p == null) {
                 p = (AbsListView.LayoutParams) generateDefaultLayoutParams();
+=======
+            AbsListView.LayoutParams p = (AbsListView.LayoutParams)child.getLayoutParams();
+            if (p == null) {
+                p = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 0);
+>>>>>>> upstream/master
                 child.setLayoutParams(p);
             }
             p.viewType = mAdapter.getItemViewType(0);
@@ -1204,7 +1224,10 @@ public class GridView extends AbsListView {
             // Clear out old views
             //removeAllViewsInLayout();
             detachAllViewsFromParent();
+<<<<<<< HEAD
             recycleBin.removeSkippedScrap();
+=======
+>>>>>>> upstream/master
 
             switch (mLayoutMode) {
             case LAYOUT_SET_SELECTION:
@@ -1275,10 +1298,13 @@ public class GridView extends AbsListView {
 
             mLayoutMode = LAYOUT_NORMAL;
             mDataChanged = false;
+<<<<<<< HEAD
             if (mPositionScrollAfterLayout != null) {
                 post(mPositionScrollAfterLayout);
                 mPositionScrollAfterLayout = null;
             }
+=======
+>>>>>>> upstream/master
             mNeedSync = false;
             setNextSelectedPositionInt(mSelectedPosition);
 
@@ -1365,9 +1391,16 @@ public class GridView extends AbsListView {
 
         // Respect layout params that are already in the view. Otherwise make
         // some up...
+<<<<<<< HEAD
         AbsListView.LayoutParams p = (AbsListView.LayoutParams) child.getLayoutParams();
         if (p == null) {
             p = (AbsListView.LayoutParams) generateDefaultLayoutParams();
+=======
+        AbsListView.LayoutParams p = (AbsListView.LayoutParams)child.getLayoutParams();
+        if (p == null) {
+            p = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 0);
+>>>>>>> upstream/master
         }
         p.viewType = mAdapter.getItemViewType(position);
 
@@ -1467,9 +1500,12 @@ public class GridView extends AbsListView {
             mResurrectToPosition = position;
         }
         mLayoutMode = LAYOUT_SET_SELECTION;
+<<<<<<< HEAD
         if (mPositionScroller != null) {
             mPositionScroller.stop();
         }
+=======
+>>>>>>> upstream/master
         requestLayout();
     }
 
@@ -1482,10 +1518,13 @@ public class GridView extends AbsListView {
     void setSelectionInt(int position) {
         int previousSelectedPosition = mNextSelectedPosition;
 
+<<<<<<< HEAD
         if (mPositionScroller != null) {
             mPositionScroller.stop();
         }
 
+=======
+>>>>>>> upstream/master
         setNextSelectedPositionInt(position);
         layoutChildren();
         
@@ -1919,8 +1958,12 @@ public class GridView extends AbsListView {
     }
 
     /**
+<<<<<<< HEAD
      * Set the gravity for this grid. Gravity describes how the child views
      * are horizontally aligned. Defaults to Gravity.LEFT
+=======
+     * Describes how the child views are horizontally aligned. Defaults to Gravity.LEFT
+>>>>>>> upstream/master
      *
      * @param gravity the gravity to apply to this grid's children
      *
@@ -1934,6 +1977,7 @@ public class GridView extends AbsListView {
     }
 
     /**
+<<<<<<< HEAD
      * Describes how the child views are horizontally aligned. Defaults to Gravity.LEFT
      *
      * @return the gravity that will be applied to this grid's children
@@ -1945,6 +1989,8 @@ public class GridView extends AbsListView {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set the amount of horizontal (x) spacing to place between each item
      * in the grid.
      *
@@ -1960,6 +2006,7 @@ public class GridView extends AbsListView {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Returns the amount of horizontal spacing currently used between each item in the grid.
      *
@@ -1998,6 +2045,8 @@ public class GridView extends AbsListView {
     public int getRequestedHorizontalSpacing() {
         return mRequestedHorizontalSpacing;
     }
+=======
+>>>>>>> upstream/master
 
     /**
      * Set the amount of vertical (y) spacing to place between each item
@@ -2006,8 +2055,11 @@ public class GridView extends AbsListView {
      * @param verticalSpacing The amount of vertical space between items,
      * in pixels.
      *
+<<<<<<< HEAD
      * @see #getVerticalSpacing()
      *
+=======
+>>>>>>> upstream/master
      * @attr ref android.R.styleable#GridView_verticalSpacing
      */
     public void setVerticalSpacing(int verticalSpacing) {
@@ -2018,6 +2070,7 @@ public class GridView extends AbsListView {
     }
 
     /**
+<<<<<<< HEAD
      * Returns the amount of vertical spacing between each item in the grid.
      *
      * @return The vertical spacing between items in pixels
@@ -2031,6 +2084,8 @@ public class GridView extends AbsListView {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Control how items are stretched to fill their space.
      *
      * @param stretchMode Either {@link #NO_STRETCH},
@@ -2064,6 +2119,7 @@ public class GridView extends AbsListView {
     }
 
     /**
+<<<<<<< HEAD
      * Return the width of a column in the grid.
      *
      * <p>This may not be valid yet if a layout is pending.</p>
@@ -2097,6 +2153,8 @@ public class GridView extends AbsListView {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Set the number of columns in the grid
      *
      * @param numColumns The desired number of columns.
@@ -2228,6 +2286,7 @@ public class GridView extends AbsListView {
         }
         return result;
     }
+<<<<<<< HEAD
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
@@ -2241,3 +2300,7 @@ public class GridView extends AbsListView {
         info.setClassName(GridView.class.getName());
     }
 }
+=======
+}
+
+>>>>>>> upstream/master

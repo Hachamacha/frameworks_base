@@ -17,7 +17,11 @@
 #ifndef _ANDROID_CONTENT_RES_CONFIGURATION_H
 #define _ANDROID_CONTENT_RES_CONFIGURATION_H
 
+<<<<<<< HEAD
 #include <androidfw/ResourceTypes.h>
+=======
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 #include <android/configuration.h>
 
 #include "jni.h"

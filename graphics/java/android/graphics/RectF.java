@@ -46,9 +46,15 @@ public class RectF implements Parcelable {
      * checking is performed, so the caller must ensure that left <= right and
      * top <= bottom.
      *
+<<<<<<< HEAD
      * @param left   The X coordinate of the left side of the rectangle
      * @param top    The Y coordinate of the top of the rectangle
      * @param right  The X coordinate of the right side of the rectangle
+=======
+     * @param left   The X coordinate of the left side of the rectagle
+     * @param top    The Y coordinate of the top of the rectangle
+     * @param right  The X coordinate of the right side of the rectagle
+>>>>>>> upstream/master
      * @param bottom The Y coordinate of the bottom of the rectangle
      */
     public RectF(float left, float top, float right, float bottom) {
@@ -79,6 +85,7 @@ public class RectF implements Parcelable {
         bottom = r.bottom;
     }
 
+<<<<<<< HEAD
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +104,8 @@ public class RectF implements Parcelable {
         return result;
     }
 
+=======
+>>>>>>> upstream/master
     public String toString() {
         return "RectF(" + left + ", " + top + ", "
                       + right + ", " + bottom + ")";
@@ -182,9 +191,15 @@ public class RectF implements Parcelable {
      * checking is performed, so it is up to the caller to ensure that
      * left <= right and top <= bottom.
      *
+<<<<<<< HEAD
      * @param left   The X coordinate of the left side of the rectangle
      * @param top    The Y coordinate of the top of the rectangle
      * @param right  The X coordinate of the right side of the rectangle
+=======
+     * @param left   The X coordinate of the left side of the rectagle
+     * @param top    The Y coordinate of the top of the rectangle
+     * @param right  The X coordinate of the right side of the rectagle
+>>>>>>> upstream/master
      * @param bottom The Y coordinate of the bottom of the rectangle
      */
     public void set(float left, float top, float right, float bottom) {

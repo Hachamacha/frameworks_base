@@ -17,7 +17,10 @@
 package android.widget.focus;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.graphics.Point;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,10 +114,14 @@ public class ListOfInternalSelectionViews extends Activity {
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+<<<<<<< HEAD
 
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
         mScreenHeight = size.y;
+=======
+        mScreenHeight = getWindowManager().getDefaultDisplay().getHeight();
+>>>>>>> upstream/master
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

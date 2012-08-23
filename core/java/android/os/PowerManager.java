@@ -197,6 +197,7 @@ public class PowerManager
      * Does not work with PARTIAL_WAKE_LOCKs.
      */
     public static final int ON_AFTER_RELEASE = 0x20000000;
+<<<<<<< HEAD
 
     /**
      * Brightness value to use when battery is low.
@@ -222,6 +223,9 @@ public class PowerManager
      */
     public static final int BRIGHTNESS_OFF = 0;
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Class lets you say that you need to have the device on.
      * <p>

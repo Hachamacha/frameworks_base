@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 #include <androidfw/ObbFile.h>
+=======
+#include <utils/ObbFile.h>
+>>>>>>> upstream/master
 #include <utils/String8.h>
 
 #include <getopt.h>

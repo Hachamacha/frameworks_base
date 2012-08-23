@@ -43,8 +43,11 @@ import com.android.internal.telephony.gsm.GSMPhone;
 import com.android.internal.telephony.gsm.GsmCall;
 import com.android.internal.telephony.gsm.GsmConnection;
 
+<<<<<<< HEAD
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+=======
+>>>>>>> upstream/master
 import java.util.List;
 import java.util.ArrayList;
 
@@ -169,7 +172,11 @@ public final class GsmCallTracker extends CallTracker {
     /**
      * clirMode is one of the CLIR_ constants
      */
+<<<<<<< HEAD
     synchronized Connection
+=======
+    Connection
+>>>>>>> upstream/master
     dial (String dialString, int clirMode, UUSInfo uusInfo) throws CallStateException {
         // note that this triggers call state changed notif
         clearDisconnected();
@@ -200,8 +207,12 @@ public final class GsmCallTracker extends CallTracker {
             throw new CallStateException("cannot dial in current state");
         }
 
+<<<<<<< HEAD
         pendingMO = new GsmConnection(phone.getContext(), checkForTestEmergencyNumber(dialString),
                 this, foregroundCall);
+=======
+        pendingMO = new GsmConnection(phone.getContext(), dialString, this, foregroundCall);
+>>>>>>> upstream/master
         hangupPendingMO = false;
 
         if (pendingMO.address == null || pendingMO.address.length() == 0
@@ -408,7 +419,11 @@ public final class GsmCallTracker extends CallTracker {
         }
     }
 
+<<<<<<< HEAD
     protected synchronized void
+=======
+    protected void
+>>>>>>> upstream/master
     handlePollCalls(AsyncResult ar) {
         List polledCalls;
 
@@ -924,6 +939,7 @@ public final class GsmCallTracker extends CallTracker {
     protected void log(String msg) {
         Log.d(LOG_TAG, "[GsmCallTracker] " + msg);
     }
+<<<<<<< HEAD
 
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -948,4 +964,6 @@ public final class GsmCallTracker extends CallTracker {
         pw.println(" desiredMute=" + desiredMute);
         pw.println(" state=" + state);
     }
+=======
+>>>>>>> upstream/master
 }

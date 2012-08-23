@@ -20,6 +20,10 @@ import android.app.DownloadManager;
 import android.app.backup.BackupManager;
 import android.content.Context;
 import android.media.MediaPlayer;
+<<<<<<< HEAD
+=======
+import android.net.NetworkStats.NonMonotonicException;
+>>>>>>> upstream/master
 import android.os.RemoteException;
 import android.os.ServiceManager;
 
@@ -44,6 +48,7 @@ public class TrafficStats {
      */
     public final static int UNSUPPORTED = -1;
 
+<<<<<<< HEAD
     /** @hide */
     public static final long KB_IN_BYTES = 1024;
     /** @hide */
@@ -51,6 +56,8 @@ public class TrafficStats {
     /** @hide */
     public static final long GB_IN_BYTES = MB_IN_BYTES * 1024;
 
+=======
+>>>>>>> upstream/master
     /**
      * Special UID value used when collecting {@link NetworkStatsHistory} for
      * removed applications.
@@ -88,6 +95,7 @@ public class TrafficStats {
      */
     public static final int TAG_SYSTEM_BACKUP = 0xFFFFFF03;
 
+<<<<<<< HEAD
     private static INetworkStatsService sStatsService;
 
     private synchronized static INetworkStatsService getStatsService() {
@@ -98,6 +106,8 @@ public class TrafficStats {
         return sStatsService;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Snapshot of {@link NetworkStats} when the currently active profiling
      * session started, or {@code null} if no session active.
@@ -209,12 +219,24 @@ public class TrafficStats {
                 throw new IllegalStateException("not profiling data");
             }
 
+<<<<<<< HEAD
             // subtract starting values and return delta
             final NetworkStats profilingStop = getDataLayerSnapshotForUid(context);
             final NetworkStats profilingDelta = NetworkStats.subtract(
                     profilingStop, sActiveProfilingStart, null, null);
             sActiveProfilingStart = null;
             return profilingDelta;
+=======
+            try {
+                // subtract starting values and return delta
+                final NetworkStats profilingStop = getDataLayerSnapshotForUid(context);
+                final NetworkStats profilingDelta = profilingStop.subtract(sActiveProfilingStart);
+                sActiveProfilingStart = null;
+                return profilingDelta;
+            } catch (NonMonotonicException e) {
+                throw new RuntimeException(e);
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -238,14 +260,23 @@ public class TrafficStats {
      * @param operationCount Number of operations to increment count by.
      */
     public static void incrementOperationCount(int tag, int operationCount) {
+<<<<<<< HEAD
         final int uid = android.os.Process.myUid();
         try {
             getStatsService().incrementOperationCount(uid, tag, operationCount);
+=======
+        final INetworkStatsService statsService = INetworkStatsService.Stub.asInterface(
+                ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        final int uid = android.os.Process.myUid();
+        try {
+            statsService.incrementOperationCount(uid, tag, operationCount);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
 
+<<<<<<< HEAD
     /** {@hide} */
     public static void closeQuietly(INetworkStatsSession session) {
         // TODO: move to NetworkStatsService once it exists
@@ -259,12 +290,15 @@ public class TrafficStats {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Get the total number of packets transmitted through the mobile interface.
      *
      * @return number of packets.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getMobileTxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
@@ -272,6 +306,9 @@ public class TrafficStats {
         }
         return total;
     }
+=======
+    public static native long getMobileTxPackets();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of packets received through the mobile interface.
@@ -279,6 +316,7 @@ public class TrafficStats {
      * @return number of packets.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getMobileRxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
@@ -286,6 +324,9 @@ public class TrafficStats {
         }
         return total;
     }
+=======
+    public static native long getMobileRxPackets();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes transmitted through the mobile interface.
@@ -293,6 +334,7 @@ public class TrafficStats {
      * @return number of bytes.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getMobileTxBytes() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
@@ -300,6 +342,9 @@ public class TrafficStats {
         }
         return total;
     }
+=======
+      public static native long getMobileTxBytes();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes received through the mobile interface.
@@ -307,6 +352,7 @@ public class TrafficStats {
      * @return number of bytes.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getMobileRxBytes() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
@@ -314,6 +360,9 @@ public class TrafficStats {
         }
         return total;
     }
+=======
+    public static native long getMobileRxBytes();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of packets transmitted through the specified interface.
@@ -322,9 +371,13 @@ public class TrafficStats {
      * {@link #UNSUPPORTED} will be returned.
      * @hide
      */
+<<<<<<< HEAD
     public static long getTxPackets(String iface) {
         return nativeGetIfaceStat(iface, TYPE_TX_PACKETS);
     }
+=======
+    public static native long getTxPackets(String iface);
+>>>>>>> upstream/master
 
     /**
      * Get the total number of packets received through the specified interface.
@@ -333,9 +386,13 @@ public class TrafficStats {
      * {@link #UNSUPPORTED} will be returned.
      * @hide
      */
+<<<<<<< HEAD
     public static long getRxPackets(String iface) {
         return nativeGetIfaceStat(iface, TYPE_RX_PACKETS);
     }
+=======
+    public static native long getRxPackets(String iface);
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes transmitted through the specified interface.
@@ -344,9 +401,13 @@ public class TrafficStats {
      * {@link #UNSUPPORTED} will be returned.
      * @hide
      */
+<<<<<<< HEAD
     public static long getTxBytes(String iface) {
         return nativeGetIfaceStat(iface, TYPE_TX_BYTES);
     }
+=======
+    public static native long getTxBytes(String iface);
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes received through the specified interface.
@@ -355,9 +416,14 @@ public class TrafficStats {
      * {@link #UNSUPPORTED} will be returned.
      * @hide
      */
+<<<<<<< HEAD
     public static long getRxBytes(String iface) {
         return nativeGetIfaceStat(iface, TYPE_RX_BYTES);
     }
+=======
+    public static native long getRxBytes(String iface);
+
+>>>>>>> upstream/master
 
     /**
      * Get the total number of packets sent through all network interfaces.
@@ -365,9 +431,13 @@ public class TrafficStats {
      * @return the number of packets.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getTotalTxPackets() {
         return nativeGetTotalStat(TYPE_TX_PACKETS);
     }
+=======
+    public static native long getTotalTxPackets();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of packets received through all network interfaces.
@@ -375,9 +445,13 @@ public class TrafficStats {
      * @return number of packets.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getTotalRxPackets() {
         return nativeGetTotalStat(TYPE_RX_PACKETS);
     }
+=======
+    public static native long getTotalRxPackets();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes sent through all network interfaces.
@@ -385,9 +459,13 @@ public class TrafficStats {
      * @return number of bytes.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getTotalTxBytes() {
         return nativeGetTotalStat(TYPE_TX_BYTES);
     }
+=======
+    public static native long getTotalTxBytes();
+>>>>>>> upstream/master
 
     /**
      * Get the total number of bytes received through all network interfaces.
@@ -395,9 +473,13 @@ public class TrafficStats {
      * @return number of bytes.  If the statistics are not supported by this device,
      * {@link #UNSUPPORTED} will be returned.
      */
+<<<<<<< HEAD
     public static long getTotalRxBytes() {
         return nativeGetTotalStat(TYPE_RX_BYTES);
     }
+=======
+    public static native long getTotalRxBytes();
+>>>>>>> upstream/master
 
     /**
      * Get the number of bytes sent through the network for this UID.
@@ -530,6 +612,10 @@ public class TrafficStats {
      */
     public static native long getUidTcpRxSegments(int uid);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     /**
      * Get the number of UDP packets sent for this UID.
      * Includes DNS requests.
@@ -561,13 +647,22 @@ public class TrafficStats {
      * special permission.
      */
     private static NetworkStats getDataLayerSnapshotForUid(Context context) {
+<<<<<<< HEAD
         final int uid = android.os.Process.myUid();
         try {
             return getStatsService().getDataLayerSnapshotForUid(uid);
+=======
+        final INetworkStatsService statsService = INetworkStatsService.Stub.asInterface(
+                ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        final int uid = android.os.Process.myUid();
+        try {
+            return statsService.getDataLayerSnapshotForUid(uid);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
+<<<<<<< HEAD
 
     /**
      * Return set of any ifaces associated with mobile networks since boot.
@@ -590,4 +685,6 @@ public class TrafficStats {
 
     private static native long nativeGetTotalStat(int type);
     private static native long nativeGetIfaceStat(String iface, int type);
+=======
+>>>>>>> upstream/master
 }

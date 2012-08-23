@@ -88,9 +88,12 @@ public class ListMenuPresenter implements MenuPresenter, AdapterView.OnItemClick
             }
         }
         mMenu = menu;
+<<<<<<< HEAD
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -223,6 +226,10 @@ public class ListMenuPresenter implements MenuPresenter, AdapterView.OnItemClick
         private int mExpandedIndex = -1;
 
         public MenuAdapter() {
+<<<<<<< HEAD
+=======
+            registerDataSetObserver(new ExpandedIndexObserver());
+>>>>>>> upstream/master
             findExpandedIndex();
         }
 
@@ -275,11 +282,20 @@ public class ListMenuPresenter implements MenuPresenter, AdapterView.OnItemClick
             }
             mExpandedIndex = -1;
         }
+<<<<<<< HEAD
 
         @Override
         public void notifyDataSetChanged() {
             findExpandedIndex();
             super.notifyDataSetChanged();
+=======
+    }
+
+    private class ExpandedIndexObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            mAdapter.findExpandedIndex();
+>>>>>>> upstream/master
         }
     }
 }

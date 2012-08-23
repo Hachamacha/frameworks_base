@@ -19,7 +19,10 @@ package android.view.animation;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.RectF;
+<<<<<<< HEAD
 import android.os.Handler;
+=======
+>>>>>>> upstream/master
 import android.os.SystemProperties;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -208,11 +211,14 @@ public abstract class Animation implements Cloneable {
 
     private final CloseGuard guard = CloseGuard.get();
 
+<<<<<<< HEAD
     private Handler mListenerHandler;
     private Runnable mOnStart;
     private Runnable mOnRepeat;
     private Runnable mOnEnd;
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a new animation with a duration of 0ms, the default interpolator, with
      * fillBefore set to true and fillAfter set to false
@@ -281,7 +287,10 @@ public abstract class Animation implements Cloneable {
         mRepeated = 0;
         mMore = true;
         mOneMoreTime = true;
+<<<<<<< HEAD
         mListenerHandler = null;
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -297,7 +306,11 @@ public abstract class Animation implements Cloneable {
      */
     public void cancel() {
         if (mStarted && !mEnded) {
+<<<<<<< HEAD
             fireAnimationEnd();
+=======
+            if (mListener != null) mListener.onAnimationEnd(this);
+>>>>>>> upstream/master
             mEnded = true;
             guard.close();
         }
@@ -313,7 +326,11 @@ public abstract class Animation implements Cloneable {
         if (mStarted && !mEnded) {
             mEnded = true;
             guard.close();
+<<<<<<< HEAD
             fireAnimationEnd();
+=======
+            if (mListener != null) mListener.onAnimationEnd(this);
+>>>>>>> upstream/master
         }
     }
 
@@ -330,7 +347,11 @@ public abstract class Animation implements Cloneable {
     /**
      * Initialize this animation with the dimensions of the object being
      * animated as well as the objects parents. (This is to support animation
+<<<<<<< HEAD
      * sizes being specified relative to these dimensions.)
+=======
+     * sizes being specifed relative to these dimensions.)
+>>>>>>> upstream/master
      *
      * <p>Objects that interpret Animations should call this method when
      * the sizes of the object being animated and its parent are known, and
@@ -348,6 +369,7 @@ public abstract class Animation implements Cloneable {
     }
 
     /**
+<<<<<<< HEAD
      * Sets the handler used to invoke listeners.
      * 
      * @hide
@@ -380,6 +402,8 @@ public abstract class Animation implements Cloneable {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the acceleration curve for this animation. The interpolator is loaded as
      * a resource from the specified context.
      *
@@ -831,6 +855,10 @@ public abstract class Animation implements Cloneable {
      * @return True if the animation is still running
      */
     public boolean getTransformation(long currentTime, Transformation outTransformation) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         if (mStartTime == -1) {
             mStartTime = currentTime;
         }
@@ -853,7 +881,13 @@ public abstract class Animation implements Cloneable {
 
         if ((normalizedTime >= 0.0f || mFillBefore) && (normalizedTime <= 1.0f || mFillAfter)) {
             if (!mStarted) {
+<<<<<<< HEAD
                 fireAnimationStart();
+=======
+                if (mListener != null) {
+                    mListener.onAnimationStart(this);
+                }
+>>>>>>> upstream/master
                 mStarted = true;
                 if (USE_CLOSEGUARD) {
                     guard.open("cancel or detach or getTransformation");
@@ -875,7 +909,13 @@ public abstract class Animation implements Cloneable {
                 if (!mEnded) {
                     mEnded = true;
                     guard.close();
+<<<<<<< HEAD
                     fireAnimationEnd();
+=======
+                    if (mListener != null) {
+                        mListener.onAnimationEnd(this);
+                    }
+>>>>>>> upstream/master
                 }
             } else {
                 if (mRepeatCount > 0) {
@@ -889,7 +929,13 @@ public abstract class Animation implements Cloneable {
                 mStartTime = -1;
                 mMore = true;
 
+<<<<<<< HEAD
                 fireAnimationRepeat();
+=======
+                if (mListener != null) {
+                    mListener.onAnimationRepeat(this);
+                }
+>>>>>>> upstream/master
             }
         }
 
@@ -900,6 +946,7 @@ public abstract class Animation implements Cloneable {
 
         return mMore;
     }
+<<<<<<< HEAD
 
     private void fireAnimationStart() {
         if (mListener != null) {
@@ -922,13 +969,20 @@ public abstract class Animation implements Cloneable {
         }
     }
 
+=======
+    
+>>>>>>> upstream/master
     /**
      * Gets the transformation to apply at a specified point in time. Implementations of this
      * method should always replace the specified Transformation or document they are doing
      * otherwise.
      *
      * @param currentTime Where we are in the animation. This is wall clock time.
+<<<<<<< HEAD
      * @param outTransformation A transformation object that is provided by the
+=======
+     * @param outTransformation A tranformation object that is provided by the
+>>>>>>> upstream/master
      *        caller and will be filled in by the animation.
      * @param scale Scaling factor to apply to any inputs to the transform operation, such
      *        pivot points being rotated or scaled around.

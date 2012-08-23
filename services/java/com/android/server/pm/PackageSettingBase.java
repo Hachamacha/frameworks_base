@@ -20,8 +20,11 @@ import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 
+<<<<<<< HEAD
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+=======
+>>>>>>> upstream/master
 
 import java.io.File;
 import java.util.HashSet;
@@ -64,6 +67,7 @@ class PackageSettingBase extends GrantedPermissions {
 
     // Whether this package is currently stopped, thus can not be
     // started until explicitly launched by the user.
+<<<<<<< HEAD
     private SparseArray<Boolean> stopped = new SparseArray<Boolean>();
 
     // Set to true if we have never launched this app.
@@ -80,6 +84,22 @@ class PackageSettingBase extends GrantedPermissions {
 
     PackageSettingBase origPackage;
 
+=======
+    public boolean stopped;
+
+    // Set to true if we have never launched this app.
+    public boolean notLaunched;
+
+    /* Explicitly disabled components */
+    HashSet<String> disabledComponents = new HashSet<String>(0);
+    /* Explicitly enabled components */
+    HashSet<String> enabledComponents = new HashSet<String>(0);
+    int enabled = COMPONENT_ENABLED_STATE_DEFAULT;
+    int installStatus = PKG_INSTALL_COMPLETE;
+
+    PackageSettingBase origPackage;
+    
+>>>>>>> upstream/master
     /* package name of the app that installed this package */
     String installerPackageName;
     PackageSettingBase(String name, String realName, File codePath, File resourcePath,
@@ -115,12 +135,23 @@ class PackageSettingBase extends GrantedPermissions {
 
         permissionsFixed = base.permissionsFixed;
         haveGids = base.haveGids;
+<<<<<<< HEAD
         notLaunched = base.notLaunched;
 
         disabledComponents = (SparseArray<HashSet<String>>) base.disabledComponents.clone();
         enabledComponents = (SparseArray<HashSet<String>>) base.enabledComponents.clone();
         enabled = (SparseIntArray) base.enabled.clone();
         stopped = (SparseArray<Boolean>) base.stopped.clone();
+=======
+        stopped = base.stopped;
+        notLaunched = base.notLaunched;
+
+        disabledComponents = (HashSet<String>) base.disabledComponents.clone();
+
+        enabledComponents = (HashSet<String>) base.enabledComponents.clone();
+
+        enabled = base.enabled;
+>>>>>>> upstream/master
         installStatus = base.installStatus;
 
         origPackage = base.origPackage;
@@ -179,6 +210,7 @@ class PackageSettingBase extends GrantedPermissions {
         installStatus = base.installStatus;
     }
 
+<<<<<<< HEAD
     void setEnabled(int state, int userId) {
         enabled.put(userId, state);
     }
@@ -268,11 +300,36 @@ class PackageSettingBase extends GrantedPermissions {
         if (enabled.contains(componentName)) {
             return COMPONENT_ENABLED_STATE_ENABLED;
         } else if (disabled.contains(componentName)) {
+=======
+    boolean enableComponentLPw(String componentClassName) {
+        boolean changed = disabledComponents.remove(componentClassName);
+        changed |= enabledComponents.add(componentClassName);
+        return changed;
+    }
+
+    boolean disableComponentLPw(String componentClassName) {
+        boolean changed = enabledComponents.remove(componentClassName);
+        changed |= disabledComponents.add(componentClassName);
+        return changed;
+    }
+
+    boolean restoreComponentLPw(String componentClassName) {
+        boolean changed = enabledComponents.remove(componentClassName);
+        changed |= disabledComponents.remove(componentClassName);
+        return changed;
+    }
+
+    int getCurrentEnabledStateLPr(String componentName) {
+        if (enabledComponents.contains(componentName)) {
+            return COMPONENT_ENABLED_STATE_ENABLED;
+        } else if (disabledComponents.contains(componentName)) {
+>>>>>>> upstream/master
             return COMPONENT_ENABLED_STATE_DISABLED;
         } else {
             return COMPONENT_ENABLED_STATE_DEFAULT;
         }
     }
+<<<<<<< HEAD
 
     void removeUser(int userId) {
         enabled.delete(userId);
@@ -283,3 +340,6 @@ class PackageSettingBase extends GrantedPermissions {
     }
 
 }
+=======
+}
+>>>>>>> upstream/master

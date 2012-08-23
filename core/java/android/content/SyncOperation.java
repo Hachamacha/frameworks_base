@@ -26,7 +26,10 @@ import android.os.SystemClock;
  */
 public class SyncOperation implements Comparable {
     public final Account account;
+<<<<<<< HEAD
     public final int userId;
+=======
+>>>>>>> upstream/master
     public int syncSource;
     public String authority;
     public final boolean allowParallelSyncs;
@@ -39,10 +42,16 @@ public class SyncOperation implements Comparable {
     public long delayUntil;
     public long effectiveRunTime;
 
+<<<<<<< HEAD
     public SyncOperation(Account account, int userId, int source, String authority, Bundle extras,
             long delayInMs, long backoff, long delayUntil, boolean allowParallelSyncs) {
         this.account = account;
         this.userId = userId;
+=======
+    public SyncOperation(Account account, int source, String authority, Bundle extras,
+            long delayInMs, long backoff, long delayUntil, boolean allowParallelSyncs) {
+        this.account = account;
+>>>>>>> upstream/master
         this.syncSource = source;
         this.authority = authority;
         this.allowParallelSyncs = allowParallelSyncs;
@@ -77,7 +86,10 @@ public class SyncOperation implements Comparable {
 
     SyncOperation(SyncOperation other) {
         this.account = other.account;
+<<<<<<< HEAD
         this.userId = other.userId;
+=======
+>>>>>>> upstream/master
         this.syncSource = other.syncSource;
         this.authority = other.authority;
         this.extras = new Bundle(other.extras);
@@ -116,10 +128,13 @@ public class SyncOperation implements Comparable {
         return extras.getBoolean(ContentResolver.SYNC_EXTRAS_INITIALIZE, false);
     }
 
+<<<<<<< HEAD
     public boolean isExpedited() {
         return extras.getBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, false);
     }
 
+=======
+>>>>>>> upstream/master
     public boolean ignoreBackoff() {
         return extras.getBoolean(ContentResolver.SYNC_EXTRAS_IGNORE_BACKOFF, false);
     }
@@ -127,8 +142,12 @@ public class SyncOperation implements Comparable {
     private String toKey() {
         StringBuilder sb = new StringBuilder();
         sb.append("authority: ").append(authority);
+<<<<<<< HEAD
         sb.append(" account {name=" + account.name + ", user=" + userId + ", type=" + account.type
                 + "}");
+=======
+        sb.append(" account {name=" + account.name + ", type=" + account.type + "}");
+>>>>>>> upstream/master
         sb.append(" extras: ");
         extrasToStringBuilder(extras, sb);
         return sb.toString();

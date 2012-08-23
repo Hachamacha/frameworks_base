@@ -28,9 +28,15 @@ import java.util.Comparator;
  */
 public class FocusFinder {
 
+<<<<<<< HEAD
     private static final ThreadLocal<FocusFinder> tlFocusFinder =
             new ThreadLocal<FocusFinder>() {
                 @Override
+=======
+    private static ThreadLocal<FocusFinder> tlFocusFinder =
+            new ThreadLocal<FocusFinder>() {
+
+>>>>>>> upstream/master
                 protected FocusFinder initialValue() {
                     return new FocusFinder();
                 }
@@ -43,12 +49,19 @@ public class FocusFinder {
         return tlFocusFinder.get();
     }
 
+<<<<<<< HEAD
     final Rect mFocusedRect = new Rect();
     final Rect mOtherRect = new Rect();
     final Rect mBestCandidateRect = new Rect();
     final SequentialFocusComparator mSequentialFocusComparator = new SequentialFocusComparator();
 
     private final ArrayList<View> mTempList = new ArrayList<View>();
+=======
+    Rect mFocusedRect = new Rect();
+    Rect mOtherRect = new Rect();
+    Rect mBestCandidateRect = new Rect();
+    SequentialFocusComparator mSequentialFocusComparator = new SequentialFocusComparator();
+>>>>>>> upstream/master
 
     // enforce thread local access
     private FocusFinder() {}
@@ -56,24 +69,72 @@ public class FocusFinder {
     /**
      * Find the next view to take focus in root's descendants, starting from the view
      * that currently is focused.
+<<<<<<< HEAD
      * @param root Contains focused. Cannot be null.
+=======
+     * @param root Contains focused
+>>>>>>> upstream/master
      * @param focused Has focus now.
      * @param direction Direction to look.
      * @return The next focusable view, or null if none exists.
      */
     public final View findNextFocus(ViewGroup root, View focused, int direction) {
+<<<<<<< HEAD
         return findNextFocus(root, focused, null, direction);
+=======
+
+        if (focused != null) {
+            // check for user specified next focus
+            View userSetNextFocus = focused.findUserSetNextFocus(root, direction);
+            if (userSetNextFocus != null &&
+                userSetNextFocus.isFocusable() &&
+                (!userSetNextFocus.isInTouchMode() ||
+                 userSetNextFocus.isFocusableInTouchMode())) {
+                return userSetNextFocus;
+            }
+
+            // fill in interesting rect from focused
+            focused.getFocusedRect(mFocusedRect);
+            root.offsetDescendantRectToMyCoords(focused, mFocusedRect);
+        } else {
+            // make up a rect at top left or bottom right of root
+            switch (direction) {
+                case View.FOCUS_RIGHT:
+                case View.FOCUS_DOWN:
+                case View.FOCUS_FORWARD:
+                    final int rootTop = root.getScrollY();
+                    final int rootLeft = root.getScrollX();
+                    mFocusedRect.set(rootLeft, rootTop, rootLeft, rootTop);
+                    break;
+
+                case View.FOCUS_LEFT:
+                case View.FOCUS_UP:
+                case View.FOCUS_BACKWARD:
+                    final int rootBottom = root.getScrollY() + root.getHeight();
+                    final int rootRight = root.getScrollX() + root.getWidth();
+                    mFocusedRect.set(rootRight, rootBottom,
+                            rootRight, rootBottom);
+                    break;
+            }
+        }
+        return findNextFocus(root, focused, mFocusedRect, direction);
+>>>>>>> upstream/master
     }
 
     /**
      * Find the next view to take focus in root's descendants, searching from
      * a particular rectangle in root's coordinates.
+<<<<<<< HEAD
      * @param root Contains focusedRect. Cannot be null.
+=======
+     * @param root Contains focusedRect.
+>>>>>>> upstream/master
      * @param focusedRect The starting point of the search.
      * @param direction Direction to look.
      * @return The next focusable view, or null if none exists.
      */
     public View findNextFocusFromRect(ViewGroup root, Rect focusedRect, int direction) {
+<<<<<<< HEAD
         mFocusedRect.set(focusedRect);
         return findNextFocus(root, null, mFocusedRect, direction);
     }
@@ -224,6 +285,56 @@ public class FocusFinder {
 
     View findNextInputFocusInAbsoluteDirection(ArrayList<View> focusables, ViewGroup root, View focused,
             Rect focusedRect, int direction) {
+=======
+        return findNextFocus(root, null, focusedRect, direction);
+    }
+
+    private View findNextFocus(ViewGroup root, View focused, Rect focusedRect, int direction) {
+        ArrayList<View> focusables = root.getFocusables(direction);
+        if (focusables.isEmpty()) {
+            // The focus cannot change.
+            return null;
+        }
+
+        if (direction == View.FOCUS_FORWARD || direction == View.FOCUS_BACKWARD) {
+            if (focused != null && !focusables.contains(focused)) {
+                // Add the currently focused view to the list to have it sorted
+                // along with the other views.
+                focusables.add(focused);
+            }
+
+            try {
+                // Note: This sort is stable.
+                mSequentialFocusComparator.setRoot(root);
+                Collections.sort(focusables, mSequentialFocusComparator);
+            } finally {
+                mSequentialFocusComparator.recycle();
+            }
+
+            final int count = focusables.size();
+            switch (direction) {
+                case View.FOCUS_FORWARD:
+                    if (focused != null) {
+                        int position = focusables.lastIndexOf(focused);
+                        if (position >= 0 && position + 1 < count) {
+                            return focusables.get(position + 1);
+                        }
+                    }
+                    return focusables.get(0);
+
+                case View.FOCUS_BACKWARD:
+                    if (focused != null) {
+                        int position = focusables.indexOf(focused);
+                        if (position > 0) {
+                            return focusables.get(position - 1);
+                        }
+                    }
+                    return focusables.get(count - 1);
+            }
+            return null;
+        }
+
+>>>>>>> upstream/master
         // initialize the best candidate to something impossible
         // (so the first plausible view will become the best choice)
         mBestCandidateRect.set(focusedRect);
@@ -262,6 +373,7 @@ public class FocusFinder {
         return closest;
     }
 
+<<<<<<< HEAD
     private static View getForwardFocusable(ViewGroup root, View focused,
                                             ArrayList<View> focusables, int count) {
         return (root.isLayoutRtl()) ?
@@ -302,6 +414,8 @@ public class FocusFinder {
         return null;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Is rect1 a better candidate than rect2 for a focus search in a particular
      * direction from a source rect?  This is the core routine that determines
@@ -422,7 +536,11 @@ public class FocusFinder {
 
 
     /**
+<<<<<<< HEAD
      * Do the "beams" w.r.t the given direction's axis of rect1 and rect2 overlap?
+=======
+     * Do the "beams" w.r.t the given direcition's axis of rect1 and rect2 overlap?
+>>>>>>> upstream/master
      * @param direction the direction (up, down, left, right)
      * @param rect1 The first rectangle
      * @param rect2 The second rectangle
@@ -510,7 +628,11 @@ public class FocusFinder {
 
     /**
      * Find the distance on the minor axis w.r.t the direction to the nearest
+<<<<<<< HEAD
      * edge of the destination rectangle.
+=======
+     * edge of the destination rectange.
+>>>>>>> upstream/master
      * @param direction the direction (up, down, left, right)
      * @param source The source rect.
      * @param dest The destination rect.

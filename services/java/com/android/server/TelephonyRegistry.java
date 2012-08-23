@@ -29,7 +29,10 @@ import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+<<<<<<< HEAD
 import android.telephony.CellInfo;
+=======
+>>>>>>> upstream/master
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Slog;
@@ -108,8 +111,11 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private int mOtaspMode = ServiceStateTracker.OTASP_UNKNOWN;
 
+<<<<<<< HEAD
     private CellInfo mCellInfo = null;
 
+=======
+>>>>>>> upstream/master
     static final int PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR |
                 PhoneStateListener.LISTEN_CALL_STATE |
@@ -239,6 +245,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+<<<<<<< HEAD
                     if ((events & PhoneStateListener.LISTEN_CELL_INFO) != 0) {
                         try {
                             r.callback.onCellInfoChanged(new CellInfo(mCellInfo));
@@ -246,6 +253,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+=======
+>>>>>>> upstream/master
                 }
             }
         } else {
@@ -335,6 +344,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         broadcastSignalStrengthChanged(signalStrength);
     }
 
+<<<<<<< HEAD
     public void notifyCellInfo(CellInfo cellInfo) {
         if (!checkNotifyPermission("notifyCellInfo()")) {
             return;
@@ -355,6 +365,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     }
 
+=======
+>>>>>>> upstream/master
     public void notifyMessageWaitingChanged(boolean mwi) {
         if (!checkNotifyPermission("notifyMessageWaitingChanged()")) {
             return;
@@ -560,7 +572,10 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             pw.println("  mDataConnectionLinkProperties=" + mDataConnectionLinkProperties);
             pw.println("  mDataConnectionLinkCapabilities=" + mDataConnectionLinkCapabilities);
             pw.println("  mCellLocation=" + mCellLocation);
+<<<<<<< HEAD
             pw.println("  mCellInfo=" + mCellInfo);
+=======
+>>>>>>> upstream/master
             pw.println("registrations: count=" + recordCount);
             for (Record r : mRecords) {
                 pw.println("  " + r.pkgForDebug + " 0x" + Integer.toHexString(r.events));
@@ -686,12 +701,15 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         }
 
+<<<<<<< HEAD
         if ((events & PhoneStateListener.LISTEN_CELL_INFO) != 0) {
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.ACCESS_COARSE_LOCATION, null);
 
         }
 
+=======
+>>>>>>> upstream/master
         if ((events & PHONE_STATE_PERMISSION_MASK) != 0) {
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.READ_PHONE_STATE, null);

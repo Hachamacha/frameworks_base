@@ -277,27 +277,34 @@ public class ContextWrapper extends Context {
     }
 
     @Override
+<<<<<<< HEAD
     public void startActivity(Intent intent, Bundle options) {
         mBase.startActivity(intent, options);
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public void startActivities(Intent[] intents) {
         mBase.startActivities(intents);
     }
 
     @Override
+<<<<<<< HEAD
     public void startActivities(Intent[] intents, Bundle options) {
         mBase.startActivities(intents, options);
     }
 
     @Override
+=======
+>>>>>>> upstream/master
     public void startIntentSender(IntentSender intent,
             Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)
             throws IntentSender.SendIntentException {
         mBase.startIntentSender(intent, fillInIntent, flagsMask,
                 flagsValues, extraFlags);
     }
+<<<<<<< HEAD
 
     @Override
     public void startIntentSender(IntentSender intent,
@@ -306,18 +313,23 @@ public class ContextWrapper extends Context {
         mBase.startIntentSender(intent, fillInIntent, flagsMask,
                 flagsValues, extraFlags, options);
     }
+=======
+>>>>>>> upstream/master
     
     @Override
     public void sendBroadcast(Intent intent) {
         mBase.sendBroadcast(intent);
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public void sendBroadcast(Intent intent, int userId) {
         mBase.sendBroadcast(intent, userId);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void sendBroadcast(Intent intent, String receiverPermission) {
         mBase.sendBroadcast(intent, receiverPermission);
@@ -394,12 +406,15 @@ public class ContextWrapper extends Context {
         return mBase.bindService(service, conn, flags);
     }
 
+<<<<<<< HEAD
     /** @hide */
     @Override
     public boolean bindService(Intent service, ServiceConnection conn, int flags, int userId) {
         return mBase.bindService(service, conn, flags, userId);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public void unbindService(ServiceConnection conn) {
         mBase.unbindService(conn);

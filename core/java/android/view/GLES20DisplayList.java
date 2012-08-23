@@ -17,7 +17,10 @@
 package android.view;
 
 import android.graphics.Bitmap;
+<<<<<<< HEAD
 import android.graphics.Matrix;
+=======
+>>>>>>> upstream/master
 
 import java.util.ArrayList;
 
@@ -32,13 +35,17 @@ class GLES20DisplayList extends DisplayList {
     private GLES20RecordingCanvas mCanvas;
     private boolean mValid;
 
+<<<<<<< HEAD
     // Used for debugging
     private final String mName;
 
+=======
+>>>>>>> upstream/master
     // The native display list will be destroyed when this object dies.
     // DO NOT overwrite this reference once it is set.
     private DisplayListFinalizer mFinalizer;
 
+<<<<<<< HEAD
     GLES20DisplayList(String name) {
         mName = name;
     }
@@ -47,6 +54,8 @@ class GLES20DisplayList extends DisplayList {
         return mValid && mFinalizer != null;
     }
 
+=======
+>>>>>>> upstream/master
     int getNativeDisplayList() {
         if (!mValid || mFinalizer == null) {
             throw new IllegalStateException("The display list is not valid.");
@@ -55,7 +64,11 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+<<<<<<< HEAD
     public HardwareCanvas start() {
+=======
+    HardwareCanvas start() {
+>>>>>>> upstream/master
         if (mCanvas != null) {
             throw new IllegalStateException("Recording has already started");
         }
@@ -67,7 +80,11 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+<<<<<<< HEAD
     public void invalidate() {
+=======
+    void invalidate() {
+>>>>>>> upstream/master
         if (mCanvas != null) {
             mCanvas.recycle();
             mCanvas = null;
@@ -76,6 +93,7 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+<<<<<<< HEAD
     public void clear() {
         if (!mValid) {
             mBitmaps.clear();
@@ -84,17 +102,27 @@ class GLES20DisplayList extends DisplayList {
 
     @Override
     public boolean isValid() {
+=======
+    boolean isValid() {
+>>>>>>> upstream/master
         return mValid;
     }
 
     @Override
+<<<<<<< HEAD
     public void end() {
+=======
+    void end() {
+>>>>>>> upstream/master
         if (mCanvas != null) {
             if (mFinalizer != null) {
                 mCanvas.end(mFinalizer.mNativeDisplayList);
             } else {
                 mFinalizer = new DisplayListFinalizer(mCanvas.end(0));
+<<<<<<< HEAD
                 GLES20Canvas.setDisplayListName(mFinalizer.mNativeDisplayList, mName);
+=======
+>>>>>>> upstream/master
             }
             mCanvas.recycle();
             mCanvas = null;
@@ -103,11 +131,16 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+<<<<<<< HEAD
     public int getSize() {
+=======
+    int getSize() {
+>>>>>>> upstream/master
         if (mFinalizer == null) return 0;
         return GLES20Canvas.getDisplayListSize(mFinalizer.mNativeDisplayList);
     }
 
+<<<<<<< HEAD
     ///////////////////////////////////////////////////////////////////////////
     // Native View Properties
     ///////////////////////////////////////////////////////////////////////////
@@ -325,6 +358,8 @@ class GLES20DisplayList extends DisplayList {
     // Finalization
     ///////////////////////////////////////////////////////////////////////////
 
+=======
+>>>>>>> upstream/master
     private static class DisplayListFinalizer {
         final int mNativeDisplayList;
 

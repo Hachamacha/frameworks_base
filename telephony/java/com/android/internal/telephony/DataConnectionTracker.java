@@ -40,7 +40,10 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.telephony.ServiceState;
+<<<<<<< HEAD
 import android.telephony.TelephonyManager;
+=======
+>>>>>>> upstream/master
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -49,12 +52,17 @@ import com.android.internal.telephony.DataConnection.FailCause;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
+<<<<<<< HEAD
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
+=======
+import java.util.ArrayList;
+import java.util.HashMap;
+>>>>>>> upstream/master
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -126,7 +134,11 @@ public abstract class DataConnectionTracker extends Handler {
     protected static final int EVENT_DO_RECOVERY = BASE + 18;
     protected static final int EVENT_APN_CHANGED = BASE + 19;
     protected static final int EVENT_CDMA_DATA_DETACHED = BASE + 20;
+<<<<<<< HEAD
     protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED = BASE + 21;
+=======
+    protected static final int EVENT_NV_READY = BASE + 21;
+>>>>>>> upstream/master
     protected static final int EVENT_PS_RESTRICT_ENABLED = BASE + 22;
     protected static final int EVENT_PS_RESTRICT_DISABLED = BASE + 23;
     public static final int EVENT_CLEAN_UP_CONNECTION = BASE + 24;
@@ -230,8 +242,12 @@ public abstract class DataConnectionTracker extends Handler {
     //       having to have different values for GSM and
     //       CDMA. If so we can then remove the need for
     //       getActionIntentReconnectAlarm.
+<<<<<<< HEAD
     protected static final String INTENT_RECONNECT_ALARM_EXTRA_REASON =
         "reconnect_alarm_extra_reason";
+=======
+    protected static final String INTENT_RECONNECT_ALARM_EXTRA_REASON = "reason";
+>>>>>>> upstream/master
 
     // Used for debugging. Send the INTENT with an optional counter value with the number
     // of times the setup is to fail before succeeding. If the counter isn't passed the
@@ -499,7 +515,10 @@ public abstract class DataConnectionTracker extends Handler {
      */
     protected DataConnectionTracker(PhoneBase phone) {
         super();
+<<<<<<< HEAD
         if (DBG) log("DCT.constructor");
+=======
+>>>>>>> upstream/master
         mPhone = phone;
 
         IntentFilter filter = new IntentFilter();
@@ -535,7 +554,10 @@ public abstract class DataConnectionTracker extends Handler {
     }
 
     public void dispose() {
+<<<<<<< HEAD
         if (DBG) log("DCT.dispose");
+=======
+>>>>>>> upstream/master
         for (DataConnectionAc dcac : mDataConnectionAsyncChannels.values()) {
             dcac.disconnect();
         }
@@ -567,14 +589,18 @@ public abstract class DataConnectionTracker extends Handler {
     }
 
     protected ApnSetting fetchDunApn() {
+<<<<<<< HEAD
         if (SystemProperties.getBoolean("net.tethering.noprovisioning", false)) {
             log("fetchDunApn: net.tethering.noprovisioning=true ret: null");
             return null;
         }
+=======
+>>>>>>> upstream/master
         Context c = mPhone.getContext();
         String apnData = Settings.Secure.getString(c.getContentResolver(),
                 Settings.Secure.TETHER_DUN_APN);
         ApnSetting dunSetting = ApnSetting.fromString(apnData);
+<<<<<<< HEAD
         if (dunSetting != null) {
             if (VDBG) log("fetchDunApn: secure TETHER_DUN_APN dunSetting=" + dunSetting);
             return dunSetting;
@@ -584,6 +610,12 @@ public abstract class DataConnectionTracker extends Handler {
         dunSetting = ApnSetting.fromString(apnData);
         if (VDBG) log("fetchDunApn: config_tether_apndata dunSetting=" + dunSetting);
         return dunSetting;
+=======
+        if (dunSetting != null) return dunSetting;
+
+        apnData = c.getResources().getString(R.string.config_tether_apndata);
+        return ApnSetting.fromString(apnData);
+>>>>>>> upstream/master
     }
 
     public String[] getActiveApnTypes() {
@@ -1141,6 +1173,7 @@ public abstract class DataConnectionTracker extends Handler {
                 mUserDataEnabled = enabled;
                 Settings.Secure.putInt(mPhone.getContext().getContentResolver(),
                         Settings.Secure.MOBILE_DATA, enabled ? 1 : 0);
+<<<<<<< HEAD
                 if (getDataOnRoamingEnabled() == false &&
                         mPhone.getServiceState().getRoaming() == true) {
                     if (enabled) {
@@ -1149,6 +1182,8 @@ public abstract class DataConnectionTracker extends Handler {
                         notifyOffApnsOfAvailability(Phone.REASON_DATA_DISABLED);
                     }
                 }
+=======
+>>>>>>> upstream/master
                 if (prevEnabled != getAnyDataEnabled()) {
                     if (!prevEnabled) {
                         resetAllRetryCounts();
@@ -1182,6 +1217,7 @@ public abstract class DataConnectionTracker extends Handler {
     }
 
     protected String getReryConfig(boolean forDefault) {
+<<<<<<< HEAD
         int nt = mPhone.getServiceState().getNetworkType();
 
         if ((nt == TelephonyManager.NETWORK_TYPE_CDMA) ||
@@ -1190,6 +1226,17 @@ public abstract class DataConnectionTracker extends Handler {
             (nt == TelephonyManager.NETWORK_TYPE_EVDO_A) ||
             (nt == TelephonyManager.NETWORK_TYPE_EVDO_B) ||
             (nt == TelephonyManager.NETWORK_TYPE_EHRPD)) {
+=======
+        int rt = mPhone.getServiceState().getRadioTechnology();
+
+        if ((rt == ServiceState.RADIO_TECHNOLOGY_IS95A) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_IS95B) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_1xRTT) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_EVDO_0) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_EVDO_A) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_EVDO_B) ||
+            (rt == ServiceState.RADIO_TECHNOLOGY_EHRPD)) {
+>>>>>>> upstream/master
             // CDMA variant
             return SystemProperties.get("ro.cdma.data_retry_config");
         } else {
@@ -1207,6 +1254,7 @@ public abstract class DataConnectionTracker extends Handler {
             dc.resetRetryCount();
         }
     }
+<<<<<<< HEAD
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("DataConnectionTracker:");
@@ -1282,4 +1330,6 @@ public abstract class DataConnectionTracker extends Handler {
         pw.println(" mDataRoamingSettingObserver=" + mDataRoamingSettingObserver);
         pw.flush();
     }
+=======
+>>>>>>> upstream/master
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*
+=======
+/* //device/java/android/android/content/Intent.aidl
+>>>>>>> upstream/master
 **
 ** Copyright (C) 2009 Qualcomm Innovation Center, Inc.  All Rights Reserved.
 ** Copyright (C) 2009 The Android Open Source Project

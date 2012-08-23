@@ -373,6 +373,7 @@ public final class CallManager {
         AudioManager audioManager = (AudioManager)
                 context.getSystemService(Context.AUDIO_SERVICE);
 
+<<<<<<< HEAD
         // change the audio mode and request/abandon audio focus according to phone state,
         // but only on audio mode transitions
         switch (getState()) {
@@ -386,6 +387,12 @@ public final class CallManager {
                     }
                     audioManager.setMode(AudioManager.MODE_RINGTONE);
                 }
+=======
+        int mode = AudioManager.MODE_NORMAL;
+        switch (getState()) {
+            case RINGING:
+                mode = AudioManager.MODE_RINGTONE;
+>>>>>>> upstream/master
                 break;
             case OFFHOOK:
                 Phone offhookPhone = getFgPhone();
@@ -395,6 +402,7 @@ public final class CallManager {
                     offhookPhone = getBgPhone();
                 }
 
+<<<<<<< HEAD
                 int newAudioMode = AudioManager.MODE_IN_CALL;
                 if (offhookPhone instanceof SipPhone) {
                     // enable IN_COMMUNICATION audio mode instead for sipPhone
@@ -417,6 +425,20 @@ public final class CallManager {
                 }
                 break;
         }
+=======
+                if (offhookPhone instanceof SipPhone) {
+                    // enable IN_COMMUNICATION audio mode for sipPhone
+                    mode = AudioManager.MODE_IN_COMMUNICATION;
+                } else {
+                    // enable IN_CALL audio mode for telephony
+                    mode = AudioManager.MODE_IN_CALL;
+                }
+                break;
+        }
+        // calling audioManager.setMode() multiple times in a short period of
+        // time seems to break the audio recorder in in-call mode
+        if (audioManager.getMode() != mode) audioManager.setMode(mode);
+>>>>>>> upstream/master
     }
 
     private Context getContext() {

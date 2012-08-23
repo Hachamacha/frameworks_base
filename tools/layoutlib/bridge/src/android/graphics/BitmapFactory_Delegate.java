@@ -85,6 +85,7 @@ import java.io.InputStream;
     // ------ Native Delegates ------
 
     @LayoutlibDelegate
+<<<<<<< HEAD
     /*package*/ static Bitmap nativeDecodeStream(InputStream is, byte[] storage,
             Rect padding, Options opts) {
         return nativeDecodeStream(is, storage, padding, opts, false, 1.f);
@@ -97,6 +98,17 @@ import java.io.InputStream;
 
         //TODO support rescaling
 
+=======
+    /*package*/ static void nativeSetDefaultConfig(int nativeConfig) {
+        // pass
+    }
+
+    @LayoutlibDelegate
+    /*package*/ static Bitmap nativeDecodeStream(InputStream is, byte[] storage,
+            Rect padding, Options opts) {
+        Bitmap bm = null;
+
+>>>>>>> upstream/master
         Density density = Density.MEDIUM;
         if (opts != null) {
             density = Density.getEnum(opts.inDensity);
@@ -150,6 +162,7 @@ import java.io.InputStream;
     }
 
     @LayoutlibDelegate
+<<<<<<< HEAD
     /*package*/ static Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts,
             boolean applyScale, float scale) {
         opts.inBitmap = null;
@@ -157,6 +170,8 @@ import java.io.InputStream;
     }
 
     @LayoutlibDelegate
+=======
+>>>>>>> upstream/master
     /*package*/ static Bitmap nativeDecodeByteArray(byte[] data, int offset,
             int length, Options opts) {
         opts.inBitmap = null;

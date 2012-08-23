@@ -162,7 +162,12 @@ information, you must request location permission:
 &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
 </pre>
 <p>For more information about getting user location, see
+<<<<<<< HEAD
 <a href="{@docRoot}guide/topics/location/strategies.html">Location Strategies</a>.</p>
+=======
+<a href="{@docRoot}guide/topics/location/obtaining-user-location.html">Obtaining User
+Location</a>.</p>
+>>>>>>> upstream/master
   </li>
 </ul>
 

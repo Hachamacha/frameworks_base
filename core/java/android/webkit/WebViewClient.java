@@ -20,7 +20,10 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Message;
 import android.view.KeyEvent;
+<<<<<<< HEAD
 import android.view.ViewRootImpl;
+=======
+>>>>>>> upstream/master
 
 public class WebViewClient {
 
@@ -205,7 +208,11 @@ public class WebViewClient {
 
     /**
      * Notify the host application that an SSL error occurred while loading a
+<<<<<<< HEAD
      * resource, but the WebView chose to proceed anyway based on a
+=======
+     * resource, but the WebView but chose to proceed anyway based on a
+>>>>>>> upstream/master
      * decision retained from a previous response to onReceivedSslError().
      * @hide
      */
@@ -221,7 +228,11 @@ public class WebViewClient {
      * default behavior is to cancel, returning no client certificate.
      *
      * @param view The WebView that is initiating the callback.
+<<<<<<< HEAD
      * @param handler A ClientCertRequestHandler object that will
+=======
+     * @param handler An ClientCertRequestHandler object that will
+>>>>>>> upstream/master
      *            handle the user's response.
      * @param host_and_port The host and port of the requesting server.
      *
@@ -267,17 +278,24 @@ public class WebViewClient {
      * Notify the host application that a key was not handled by the WebView.
      * Except system keys, WebView always consumes the keys in the normal flow
      * or if shouldOverrideKeyEvent returns true. This is called asynchronously
+<<<<<<< HEAD
      * from where the key is dispatched. It gives the host application a chance
+=======
+     * from where the key is dispatched. It gives the host application an chance
+>>>>>>> upstream/master
      * to handle the unhandled key events.
      *
      * @param view The WebView that is initiating the callback.
      * @param event The key event.
      */
     public void onUnhandledKeyEvent(WebView view, KeyEvent event) {
+<<<<<<< HEAD
         ViewRootImpl root = view.getViewRootImpl();
         if (root != null) {
             root.dispatchUnhandledKey(event);
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**

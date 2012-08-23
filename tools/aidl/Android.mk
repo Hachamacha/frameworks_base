@@ -17,9 +17,13 @@ LOCAL_SRC_FILES := \
 	search_path.cpp \
 	AST.cpp \
 	Type.cpp \
+<<<<<<< HEAD
 	generate_java.cpp \
 	generate_java_binder.cpp \
 	generate_java_rpc.cpp
+=======
+	generate_java.cpp
+>>>>>>> upstream/master
 
 LOCAL_CFLAGS := -g
 LOCAL_MODULE := aidl

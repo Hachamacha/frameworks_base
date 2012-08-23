@@ -243,6 +243,7 @@ class Installer {
         return execute(builder.toString());
     }
 
+<<<<<<< HEAD
     public int fixUid(String name, int uid, int gid) {
         StringBuilder builder = new StringBuilder("fixuid");
         builder.append(' ');
@@ -254,6 +255,8 @@ class Installer {
         return execute(builder.toString());
     }
 
+=======
+>>>>>>> upstream/master
     public int deleteCacheFiles(String name) {
         StringBuilder builder = new StringBuilder("rmcache");
         builder.append(' ');
@@ -288,6 +291,7 @@ class Installer {
         return execute(builder.toString());
     }
 
+<<<<<<< HEAD
     /**
      * Clone all the package data directories from srcUserId to targetUserId. If copyData is true,
      * some of the data is also copied, otherwise just empty directories are created with the
@@ -309,6 +313,8 @@ class Installer {
         return execute(builder.toString());
     }
 
+=======
+>>>>>>> upstream/master
     public boolean ping() {
         if (execute("ping") < 0) {
             return false;

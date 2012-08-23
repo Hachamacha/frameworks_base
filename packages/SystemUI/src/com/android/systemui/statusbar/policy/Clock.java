@@ -52,6 +52,7 @@ import com.android.internal.R;
  * minutes.
  */
 public class Clock extends TextView {
+<<<<<<< HEAD
     protected boolean mAttached;
     protected Calendar mCalendar;
     protected String mClockFormatString;
@@ -74,12 +75,32 @@ public class Clock extends TextView {
     Handler mHandler;
 
     protected class SettingsObserver extends ContentObserver {
+=======
+    private boolean mAttached;
+    private Calendar mCalendar;
+    private String mClockFormatString;
+    private SimpleDateFormat mClockFormat;
+
+    private static final int AM_PM_STYLE_NORMAL  = 0;
+    private static final int AM_PM_STYLE_SMALL   = 1;
+    private static final int AM_PM_STYLE_GONE    = 2;
+
+    private static int AM_PM_STYLE = AM_PM_STYLE_GONE;
+
+    private int mAmPmStyle;
+    private boolean mShowClock;
+
+    Handler mHandler;
+
+    class SettingsObserver extends ContentObserver {
+>>>>>>> upstream/master
         SettingsObserver(Handler handler) {
             super(handler);
         }
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
+<<<<<<< HEAD
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_AM_PM), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -87,6 +108,18 @@ public class Clock extends TextView {
         }
 
         @Override public void onChange(boolean selfChange) {
+=======
+            resolver.registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STATUS_BAR_AM_PM), false, this);
+            resolver.registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STATUS_BAR_CLOCK), false, this);
+	    resolver.registerContentObserver(
+		Settings.System.getUriFor(Settings.System.CLOCK_COLOR), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+>>>>>>> upstream/master
             updateSettings();
         }
     }
@@ -102,10 +135,18 @@ public class Clock extends TextView {
     public Clock(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+<<<<<<< HEAD
         mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         updateSettings();
+=======
+	mHandler = new Handler();
+	SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+	settingsObserver.observe();
+	
+	updateSettings();
+>>>>>>> upstream/master
     }
 
     @Override
@@ -143,7 +184,11 @@ public class Clock extends TextView {
         }
     }
 
+<<<<<<< HEAD
     protected final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+=======
+    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+>>>>>>> upstream/master
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -158,12 +203,21 @@ public class Clock extends TextView {
         }
     };
 
+<<<<<<< HEAD
     protected final void updateClock() {
+=======
+    final void updateClock() {
+	AM_PM_STYLE = (Settings.System.getInt(getContext().getContentResolver(), Settings.System.STATUS_BAR_AM_PM, 2));
+>>>>>>> upstream/master
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         setText(getSmallTime());
     }
 
+<<<<<<< HEAD
     protected final CharSequence getSmallTime() {
+=======
+    private final CharSequence getSmallTime() {
+>>>>>>> upstream/master
         Context context = getContext();
         boolean b24 = DateFormat.is24HourFormat(context);
         int res;
@@ -241,6 +295,7 @@ public class Clock extends TextView {
         return result;
 
     }
+<<<<<<< HEAD
 
     protected void updateSettings(){
         ContentResolver resolver = mContext.getContentResolver();
@@ -263,6 +318,23 @@ public class Clock extends TextView {
     public void updateClockVisibility(boolean show) {
         if (mClockStyle == CLOCK_STYLE_RIGHT)
             setVisibility(show ? View.VISIBLE : View.GONE);
+=======
+    protected void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+	int mColorChanger = Settings.System.getInt(resolver,
+	    Settings.System.CLOCK_COLOR, 0xFF33B5E5);
+	setTextColor(mColorChanger);
+
+        mClockFormatString = "";
+        if (mAttached) {
+            updateClock();
+        }
+
+        mShowClock = (Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CLOCK, 1) == 1);
+        if (mShowClock)
+            setVisibility(View.VISIBLE);
+>>>>>>> upstream/master
         else
             setVisibility(View.GONE);
     }

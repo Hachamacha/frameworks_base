@@ -83,9 +83,12 @@ class Tweener {
             } else if (value instanceof float[]) {
                 props.add(PropertyValuesHolder.ofFloat(key,
                         ((float[])value)[0], ((float[])value)[1]));
+<<<<<<< HEAD
             } else if (value instanceof int[]) {
                 props.add(PropertyValuesHolder.ofInt(key,
                         ((int[])value)[0], ((int[])value)[1]));
+=======
+>>>>>>> upstream/master
             } else if (value instanceof Number) {
                 float floatValue = ((Number)value).floatValue();
                 props.add(PropertyValuesHolder.ofFloat(key, floatValue));
@@ -125,6 +128,10 @@ class Tweener {
             anim.addListener(listener);
         }
         anim.addListener(mCleanupListener);
+<<<<<<< HEAD
+=======
+        anim.start();
+>>>>>>> upstream/master
 
         return tween;
     }

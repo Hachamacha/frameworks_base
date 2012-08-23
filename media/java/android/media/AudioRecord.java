@@ -161,7 +161,11 @@ public class AudioRecord
     /**
      * Lock to make sure mRecordingState updates are reflecting the actual state of the object.
      */
+<<<<<<< HEAD
     private final Object mRecordingStateLock = new Object();
+=======
+    private Object mRecordingStateLock = new Object();
+>>>>>>> upstream/master
     /**
      * The listener the AudioRecord notifies when the record position reaches a marker
      * or for periodic updates during the progression of the record head.
@@ -497,6 +501,10 @@ public class AudioRecord
      * Returns the audio session ID.
      *
      * @return the ID of the audio session this AudioRecord belongs to.
+<<<<<<< HEAD
+=======
+     * @hide
+>>>>>>> upstream/master
      */
     public int getAudioSessionId() {
         return mSessionId;
@@ -518,12 +526,17 @@ public class AudioRecord
 
         // start recording
         synchronized(mRecordingStateLock) {
+<<<<<<< HEAD
             if (native_start(MediaSyncEvent.SYNC_EVENT_NONE, 0) == SUCCESS) {
+=======
+            if (native_start() == SUCCESS) {
+>>>>>>> upstream/master
                 mRecordingState = RECORDSTATE_RECORDING;
             }
         }
     }
 
+<<<<<<< HEAD
     /**
      * Starts recording from the AudioRecord instance when the specified synchronization event
      * occurs on the specified audio session.
@@ -545,6 +558,9 @@ public class AudioRecord
             }
         }
     }
+=======
+
+>>>>>>> upstream/master
 
     /**
      * Stops recording.
@@ -806,7 +822,11 @@ public class AudioRecord
     
     private native final void native_release();
 
+<<<<<<< HEAD
     private native final int native_start(int syncEvent, int sessionId);
+=======
+    private native final int native_start();
+>>>>>>> upstream/master
 
     private native final void native_stop();
 

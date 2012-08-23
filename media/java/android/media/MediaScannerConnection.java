@@ -46,7 +46,11 @@ public class MediaScannerConnection implements ServiceConnection {
     private IMediaScannerService mService;
     private boolean mConnected; // true if connect() has been called since last disconnect()
 
+<<<<<<< HEAD
     private final IMediaScannerListener.Stub mListener = new IMediaScannerListener.Stub() {
+=======
+    private IMediaScannerListener.Stub mListener = new IMediaScannerListener.Stub() {
+>>>>>>> upstream/master
         public void scanCompleted(String path, Uri uri) {
             MediaScannerConnectionClient client = mClient;
             if (client != null) {

@@ -47,7 +47,11 @@ page.title=Android とは
 </ul>
 
 <p>アプリケーションの簡単な説明と詳細については、<a
+<<<<<<< HEAD
 href="{@docRoot}training/notepad/index.html">Notepad チュートリアル</a>をご覧ください。</p>
+=======
+href="{@docRoot}resources/tutorials/notepad/index.html">Notepad チュートリアル</a>をご覧ください。</p>
+>>>>>>> upstream/master
     
 <a name="libraries" id="libraries"></a>
 <h2>ライブラリ</h2>

@@ -15,7 +15,11 @@
 -->
 
 <!--
+<<<<<<< HEAD
 This is a custom layout for a screen.
+=======
+This is an custom layout for a screen.
+>>>>>>> upstream/master
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

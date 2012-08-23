@@ -28,9 +28,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.CompatibilityInfo;
 import android.os.Bundle;
 import android.os.IBinder;
+<<<<<<< HEAD
 import android.os.Process;
 import android.os.SystemClock;
 import android.os.UserId;
+=======
+import android.os.SystemClock;
+>>>>>>> upstream/master
 import android.util.PrintWriterPrinter;
 import android.util.TimeUtils;
 
@@ -46,9 +50,12 @@ import java.util.HashSet;
 class ProcessRecord {
     final BatteryStatsImpl.Uid.Proc batteryStats; // where to collect runtime statistics
     final ApplicationInfo info; // all about the first app in the process
+<<<<<<< HEAD
     final boolean isolated;     // true if this is a special isolated process
     final int uid;              // uid of process; may be different from 'info' if isolated
     final int userId;           // user of process.
+=======
+>>>>>>> upstream/master
     final String processName;   // name of the process
     // List of packages running in the process
     final HashSet<String> pkgList = new HashSet<String>();
@@ -63,13 +70,19 @@ class ProcessRecord {
     int hiddenAdj;              // If hidden, this is the adjustment to use
     int curRawAdj;              // Current OOM unlimited adjustment for this process
     int setRawAdj;              // Last set OOM unlimited adjustment for this process
+<<<<<<< HEAD
     int nonStoppingAdj;         // Adjustment not counting any stopping activities
+=======
+>>>>>>> upstream/master
     int curAdj;                 // Current OOM adjustment for this process
     int setAdj;                 // Last set OOM adjustment for this process
     int curSchedGroup;          // Currently desired scheduling class
     int setSchedGroup;          // Last set to background scheduling class
     int trimMemoryLevel;        // Last selected memory trimming level
+<<<<<<< HEAD
     int memImportance;          // Importance constant computed from curAdj
+=======
+>>>>>>> upstream/master
     boolean serviceb;           // Process currently is on the service B list
     boolean keeping;            // Actively running code so don't kill due to that?
     boolean setIsForeground;    // Running foreground UI when last set?
@@ -126,8 +139,13 @@ class ProcessRecord {
     final HashMap<String, ContentProviderRecord> pubProviders
             = new HashMap<String, ContentProviderRecord>(); 
     // All ContentProviderRecord process is using
+<<<<<<< HEAD
     final ArrayList<ContentProviderConnection> conProviders
             = new ArrayList<ContentProviderConnection>();
+=======
+    final HashMap<ContentProviderRecord, Integer> conProviders
+            = new HashMap<ContentProviderRecord, Integer>(); 
+>>>>>>> upstream/master
     
     boolean persistent;         // always keep this application running?
     boolean crashing;           // are we in the process of crashing?
@@ -154,12 +172,15 @@ class ProcessRecord {
     void dump(PrintWriter pw, String prefix) {
         final long now = SystemClock.uptimeMillis();
 
+<<<<<<< HEAD
         pw.print(prefix); pw.print("user #"); pw.print(userId);
                 pw.print(" uid="); pw.print(info.uid);
         if (uid != info.uid) {
             pw.print(" ISOLATED uid="); pw.print(uid);
         }
         pw.println();
+=======
+>>>>>>> upstream/master
         if (info.className != null) {
             pw.print(prefix); pw.print("class="); pw.println(info.className);
         }
@@ -201,7 +222,10 @@ class ProcessRecord {
                 pw.print(" hidden="); pw.print(hiddenAdj);
                 pw.print(" curRaw="); pw.print(curRawAdj);
                 pw.print(" setRaw="); pw.print(setRawAdj);
+<<<<<<< HEAD
                 pw.print(" nonStopping="); pw.print(nonStoppingAdj);
+=======
+>>>>>>> upstream/master
                 pw.print(" cur="); pw.print(curAdj);
                 pw.print(" set="); pw.println(setAdj);
         pw.print(prefix); pw.print("curSchedGroup="); pw.print(curSchedGroup);
@@ -258,6 +282,7 @@ class ProcessRecord {
                     pw.println();
         }
         if (activities.size() > 0) {
+<<<<<<< HEAD
             pw.print(prefix); pw.println("Activities:");
             for (int i=0; i<activities.size(); i++) {
                 pw.print(prefix); pw.print("  - "); pw.println(activities.get(i));
@@ -299,16 +324,43 @@ class ProcessRecord {
             for (ReceiverList rl : receivers) {
                 pw.print(prefix); pw.print("  - "); pw.println(rl);
             }
+=======
+            pw.print(prefix); pw.print("activities="); pw.println(activities);
+        }
+        if (services.size() > 0) {
+            pw.print(prefix); pw.print("services="); pw.println(services);
+        }
+        if (executingServices.size() > 0) {
+            pw.print(prefix); pw.print("executingServices="); pw.println(executingServices);
+        }
+        if (connections.size() > 0) {
+            pw.print(prefix); pw.print("connections="); pw.println(connections);
+        }
+        if (pubProviders.size() > 0) {
+            pw.print(prefix); pw.print("pubProviders="); pw.println(pubProviders);
+        }
+        if (conProviders.size() > 0) {
+            pw.print(prefix); pw.print("conProviders="); pw.println(conProviders);
+        }
+        if (receivers.size() > 0) {
+            pw.print(prefix); pw.print("receivers="); pw.println(receivers);
+>>>>>>> upstream/master
         }
     }
     
     ProcessRecord(BatteryStatsImpl.Uid.Proc _batteryStats, IApplicationThread _thread,
+<<<<<<< HEAD
             ApplicationInfo _info, String _processName, int _uid) {
         batteryStats = _batteryStats;
         info = _info;
         isolated = _info.uid != _uid;
         uid = _uid;
         userId = UserId.getUserId(_uid);
+=======
+            ApplicationInfo _info, String _processName) {
+        batteryStats = _batteryStats;
+        info = _info;
+>>>>>>> upstream/master
         processName = _processName;
         pkgList.add(_info.packageName);
         thread = _thread;
@@ -382,6 +434,7 @@ class ProcessRecord {
         sb.append(':');
         sb.append(processName);
         sb.append('/');
+<<<<<<< HEAD
         if (info.uid < Process.FIRST_APPLICATION_UID) {
             sb.append(uid);
         } else {
@@ -394,6 +447,9 @@ class ProcessRecord {
                 sb.append(UserId.getAppId(uid) - Process.FIRST_ISOLATED_UID);
             }
         }
+=======
+        sb.append(info.uid);
+>>>>>>> upstream/master
     }
     
     public String toString() {

@@ -26,7 +26,10 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+<<<<<<< HEAD
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.Manifest;
@@ -164,8 +167,11 @@ public final class ContentService extends IContentService.Stub {
             Log.v(TAG, "Notifying update of " + uri + " from observer " + observer
                     + ", syncToNetwork " + syncToNetwork);
         }
+<<<<<<< HEAD
 
         int userId = UserId.getCallingUserId();
+=======
+>>>>>>> upstream/master
         // This makes it so that future permission checks will be in the context of this
         // process rather than the caller's process. We will restore this before returning.
         long identityToken = clearCallingIdentity();
@@ -179,7 +185,12 @@ public final class ContentService extends IContentService.Stub {
             for (int i=0; i<numCalls; i++) {
                 ObserverCall oc = calls.get(i);
                 try {
+<<<<<<< HEAD
                     oc.mObserver.onChange(oc.mSelfChange, uri);
+=======
+                    oc.mObserver.onChange(oc.mSelfNotify);
+                    oc.mObserver.onChangeUri(uri, oc.mSelfNotify);
+>>>>>>> upstream/master
                     if (Log.isLoggable(TAG, Log.VERBOSE)) {
                         Log.v(TAG, "Notified " + oc.mObserver + " of " + "update at " + uri);
                     }
@@ -204,8 +215,12 @@ public final class ContentService extends IContentService.Stub {
             if (syncToNetwork) {
                 SyncManager syncManager = getSyncManager();
                 if (syncManager != null) {
+<<<<<<< HEAD
                     syncManager.scheduleLocalSync(null /* all accounts */, userId,
                             uri.getAuthority());
+=======
+                    syncManager.scheduleLocalSync(null /* all accounts */, uri.getAuthority());
+>>>>>>> upstream/master
                 }
             }
         } finally {
@@ -222,26 +237,43 @@ public final class ContentService extends IContentService.Stub {
     public static final class ObserverCall {
         final ObserverNode mNode;
         final IContentObserver mObserver;
+<<<<<<< HEAD
         final boolean mSelfChange;
 
         ObserverCall(ObserverNode node, IContentObserver observer, boolean selfChange) {
             mNode = node;
             mObserver = observer;
             mSelfChange = selfChange;
+=======
+        final boolean mSelfNotify;
+
+        ObserverCall(ObserverNode node, IContentObserver observer,
+                boolean selfNotify) {
+            mNode = node;
+            mObserver = observer;
+            mSelfNotify = selfNotify;
+>>>>>>> upstream/master
         }
     }
 
     public void requestSync(Account account, String authority, Bundle extras) {
         ContentResolver.validateSyncExtrasBundle(extras);
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         // This makes it so that future permission checks will be in the context of this
         // process rather than the caller's process. We will restore this before returning.
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
+<<<<<<< HEAD
                 syncManager.scheduleSync(account, userId, authority, extras, 0 /* no delay */,
+=======
+                syncManager.scheduleSync(account, authority, extras, 0 /* no delay */,
+>>>>>>> upstream/master
                         false /* onlyThoseWithUnkownSyncableState */);
             }
         } finally {
@@ -256,16 +288,24 @@ public final class ContentService extends IContentService.Stub {
      * @param authority filter the pending and active syncs to cancel using this authority
      */
     public void cancelSync(Account account, String authority) {
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         // This makes it so that future permission checks will be in the context of this
         // process rather than the caller's process. We will restore this before returning.
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
+<<<<<<< HEAD
                 syncManager.clearScheduledSyncOperations(account, userId, authority);
                 syncManager.cancelActiveSync(account, userId, authority);
+=======
+                syncManager.clearScheduledSyncOperations(account, authority);
+                syncManager.cancelActiveSync(account, authority);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -291,14 +331,21 @@ public final class ContentService extends IContentService.Stub {
     public boolean getSyncAutomatically(Account account, String providerName) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_SETTINGS,
                 "no permission to read the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 return syncManager.getSyncStorageEngine().getSyncAutomatically(
+<<<<<<< HEAD
                         account, userId, providerName);
+=======
+                        account, providerName);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -309,14 +356,21 @@ public final class ContentService extends IContentService.Stub {
     public void setSyncAutomatically(Account account, String providerName, boolean sync) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.WRITE_SYNC_SETTINGS,
                 "no permission to write the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 syncManager.getSyncStorageEngine().setSyncAutomatically(
+<<<<<<< HEAD
                         account, userId, providerName, sync);
+=======
+                        account, providerName, sync);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -327,12 +381,19 @@ public final class ContentService extends IContentService.Stub {
             long pollFrequency) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.WRITE_SYNC_SETTINGS,
                 "no permission to write the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
         long identityToken = clearCallingIdentity();
         try {
             getSyncManager().getSyncStorageEngine().addPeriodicSync(
                     account, userId, authority, extras, pollFrequency);
+=======
+        long identityToken = clearCallingIdentity();
+        try {
+            getSyncManager().getSyncStorageEngine().addPeriodicSync(
+                    account, authority, extras, pollFrequency);
+>>>>>>> upstream/master
         } finally {
             restoreCallingIdentity(identityToken);
         }
@@ -341,12 +402,18 @@ public final class ContentService extends IContentService.Stub {
     public void removePeriodicSync(Account account, String authority, Bundle extras) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.WRITE_SYNC_SETTINGS,
                 "no permission to write the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
         long identityToken = clearCallingIdentity();
         try {
             getSyncManager().getSyncStorageEngine().removePeriodicSync(account, userId, authority,
                     extras);
+=======
+        long identityToken = clearCallingIdentity();
+        try {
+            getSyncManager().getSyncStorageEngine().removePeriodicSync(account, authority, extras);
+>>>>>>> upstream/master
         } finally {
             restoreCallingIdentity(identityToken);
         }
@@ -355,12 +422,19 @@ public final class ContentService extends IContentService.Stub {
     public List<PeriodicSync> getPeriodicSyncs(Account account, String providerName) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_SETTINGS,
                 "no permission to read the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
         long identityToken = clearCallingIdentity();
         try {
             return getSyncManager().getSyncStorageEngine().getPeriodicSyncs(
                     account, userId, providerName);
+=======
+        long identityToken = clearCallingIdentity();
+        try {
+            return getSyncManager().getSyncStorageEngine().getPeriodicSyncs(
+                    account, providerName);
+>>>>>>> upstream/master
         } finally {
             restoreCallingIdentity(identityToken);
         }
@@ -369,14 +443,21 @@ public final class ContentService extends IContentService.Stub {
     public int getIsSyncable(Account account, String providerName) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_SETTINGS,
                 "no permission to read the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 return syncManager.getSyncStorageEngine().getIsSyncable(
+<<<<<<< HEAD
                         account, userId, providerName);
+=======
+                        account, providerName);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -387,14 +468,21 @@ public final class ContentService extends IContentService.Stub {
     public void setIsSyncable(Account account, String providerName, int syncable) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.WRITE_SYNC_SETTINGS,
                 "no permission to write the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 syncManager.getSyncStorageEngine().setIsSyncable(
+<<<<<<< HEAD
                         account, userId, providerName, syncable);
+=======
+                        account, providerName, syncable);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -404,13 +492,20 @@ public final class ContentService extends IContentService.Stub {
     public boolean getMasterSyncAutomatically() {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_SETTINGS,
                 "no permission to read the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
+<<<<<<< HEAD
                 return syncManager.getSyncStorageEngine().getMasterSyncAutomatically(userId);
+=======
+                return syncManager.getSyncStorageEngine().getMasterSyncAutomatically();
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -421,13 +516,20 @@ public final class ContentService extends IContentService.Stub {
     public void setMasterSyncAutomatically(boolean flag) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.WRITE_SYNC_SETTINGS,
                 "no permission to write the sync settings");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
+<<<<<<< HEAD
                 syncManager.getSyncStorageEngine().setMasterSyncAutomatically(flag, userId);
+=======
+                syncManager.getSyncStorageEngine().setMasterSyncAutomatically(flag);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -437,14 +539,21 @@ public final class ContentService extends IContentService.Stub {
     public boolean isSyncActive(Account account, String authority) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_STATS,
                 "no permission to read the sync stats");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 return syncManager.getSyncStorageEngine().isSyncActive(
+<<<<<<< HEAD
                         account, userId, authority);
+=======
+                        account, authority);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -455,11 +564,17 @@ public final class ContentService extends IContentService.Stub {
     public List<SyncInfo> getCurrentSyncs() {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_STATS,
                 "no permission to read the sync stats");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
         long identityToken = clearCallingIdentity();
         try {
             return getSyncManager().getSyncStorageEngine().getCurrentSyncs(userId);
+=======
+        long identityToken = clearCallingIdentity();
+        try {
+            return getSyncManager().getSyncStorageEngine().getCurrentSyncs();
+>>>>>>> upstream/master
         } finally {
             restoreCallingIdentity(identityToken);
         }
@@ -468,14 +583,21 @@ public final class ContentService extends IContentService.Stub {
     public SyncStatusInfo getSyncStatus(Account account, String authority) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_STATS,
                 "no permission to read the sync stats");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
                 return syncManager.getSyncStorageEngine().getStatusByAccountAndAuthority(
+<<<<<<< HEAD
                         account, userId, authority);
+=======
+                    account, authority);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -486,13 +608,20 @@ public final class ContentService extends IContentService.Stub {
     public boolean isSyncPending(Account account, String authority) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_SYNC_STATS,
                 "no permission to read the sync stats");
+<<<<<<< HEAD
         int userId = UserId.getCallingUserId();
 
+=======
+>>>>>>> upstream/master
         long identityToken = clearCallingIdentity();
         try {
             SyncManager syncManager = getSyncManager();
             if (syncManager != null) {
+<<<<<<< HEAD
                 return syncManager.getSyncStorageEngine().isSyncPending(account, userId, authority);
+=======
+                return syncManager.getSyncStorageEngine().isSyncPending(account, authority);
+>>>>>>> upstream/master
             }
         } finally {
             restoreCallingIdentity(identityToken);
@@ -702,7 +831,11 @@ public final class ContentService extends IContentService.Stub {
         }
 
         private void collectMyObserversLocked(boolean leaf, IContentObserver observer,
+<<<<<<< HEAD
                 boolean observerWantsSelfNotifications, ArrayList<ObserverCall> calls) {
+=======
+                boolean selfNotify, ArrayList<ObserverCall> calls) {
+>>>>>>> upstream/master
             int N = mObservers.size();
             IBinder observerBinder = observer == null ? null : observer.asBinder();
             for (int i = 0; i < N; i++) {
@@ -710,29 +843,49 @@ public final class ContentService extends IContentService.Stub {
 
                 // Don't notify the observer if it sent the notification and isn't interesed
                 // in self notifications
+<<<<<<< HEAD
                 boolean selfChange = (entry.observer.asBinder() == observerBinder);
                 if (selfChange && !observerWantsSelfNotifications) {
+=======
+                if (entry.observer.asBinder() == observerBinder && !selfNotify) {
+>>>>>>> upstream/master
                     continue;
                 }
 
                 // Make sure the observer is interested in the notification
                 if (leaf || (!leaf && entry.notifyForDescendents)) {
+<<<<<<< HEAD
                     calls.add(new ObserverCall(this, entry.observer, selfChange));
+=======
+                    calls.add(new ObserverCall(this, entry.observer, selfNotify));
+>>>>>>> upstream/master
                 }
             }
         }
 
         public void collectObserversLocked(Uri uri, int index, IContentObserver observer,
+<<<<<<< HEAD
                 boolean observerWantsSelfNotifications, ArrayList<ObserverCall> calls) {
+=======
+                boolean selfNotify, ArrayList<ObserverCall> calls) {
+>>>>>>> upstream/master
             String segment = null;
             int segmentCount = countUriSegments(uri);
             if (index >= segmentCount) {
                 // This is the leaf node, notify all observers
+<<<<<<< HEAD
                 collectMyObserversLocked(true, observer, observerWantsSelfNotifications, calls);
             } else if (index < segmentCount){
                 segment = getUriSegment(uri, index);
                 // Notify any observers at this level who are interested in descendents
                 collectMyObserversLocked(false, observer, observerWantsSelfNotifications, calls);
+=======
+                collectMyObserversLocked(true, observer, selfNotify, calls);
+            } else if (index < segmentCount){
+                segment = getUriSegment(uri, index);
+                // Notify any observers at this level who are interested in descendents
+                collectMyObserversLocked(false, observer, selfNotify, calls);
+>>>>>>> upstream/master
             }
 
             int N = mChildren.size();
@@ -740,8 +893,12 @@ public final class ContentService extends IContentService.Stub {
                 ObserverNode node = mChildren.get(i);
                 if (segment == null || node.mName.equals(segment)) {
                     // We found the child,
+<<<<<<< HEAD
                     node.collectObserversLocked(uri, index + 1,
                             observer, observerWantsSelfNotifications, calls);
+=======
+                    node.collectObserversLocked(uri, index + 1, observer, selfNotify, calls);
+>>>>>>> upstream/master
                     if (segment != null) {
                         break;
                     }

@@ -17,7 +17,10 @@
 #define LOG_TAG "MessageQueue-JNI"
 
 #include "JNIHelp.h"
+<<<<<<< HEAD
 #include <android_runtime/AndroidRuntime.h>
+=======
+>>>>>>> upstream/master
 
 #include <utils/Looper.h>
 #include <utils/Log.h>
@@ -25,10 +28,16 @@
 
 namespace android {
 
+<<<<<<< HEAD
+=======
+// ----------------------------------------------------------------------------
+
+>>>>>>> upstream/master
 static struct {
     jfieldID mPtr;   // native object attached to the DVM MessageQueue
 } gMessageQueueClassInfo;
 
+<<<<<<< HEAD
 
 class NativeMessageQueue : public MessageQueue {
 public:
@@ -65,6 +74,27 @@ bool MessageQueue::raiseAndClearException(JNIEnv* env, const char* msg) {
 }
 
 NativeMessageQueue::NativeMessageQueue() : mInCallback(false), mExceptionObj(NULL) {
+=======
+// ----------------------------------------------------------------------------
+
+class NativeMessageQueue {
+public:
+    NativeMessageQueue();
+    ~NativeMessageQueue();
+
+    inline sp<Looper> getLooper() { return mLooper; }
+
+    void pollOnce(int timeoutMillis);
+    void wake();
+
+private:
+    sp<Looper> mLooper;
+};
+
+// ----------------------------------------------------------------------------
+
+NativeMessageQueue::NativeMessageQueue() {
+>>>>>>> upstream/master
     mLooper = Looper::getForThread();
     if (mLooper == NULL) {
         mLooper = new Looper(false);
@@ -75,6 +105,7 @@ NativeMessageQueue::NativeMessageQueue() : mInCallback(false), mExceptionObj(NUL
 NativeMessageQueue::~NativeMessageQueue() {
 }
 
+<<<<<<< HEAD
 void NativeMessageQueue::raiseException(JNIEnv* env, const char* msg, jthrowable exceptionObj) {
     if (exceptionObj) {
         if (mInCallback) {
@@ -101,6 +132,10 @@ void NativeMessageQueue::pollOnce(JNIEnv* env, int timeoutMillis) {
         env->DeleteLocalRef(mExceptionObj);
         mExceptionObj = NULL;
     }
+=======
+void NativeMessageQueue::pollOnce(int timeoutMillis) {
+    mLooper->pollOnce(timeoutMillis);
+>>>>>>> upstream/master
 }
 
 void NativeMessageQueue::wake() {
@@ -121,20 +156,34 @@ static void android_os_MessageQueue_setNativeMessageQueue(JNIEnv* env, jobject m
              reinterpret_cast<jint>(nativeMessageQueue));
 }
 
+<<<<<<< HEAD
 sp<MessageQueue> android_os_MessageQueue_getMessageQueue(JNIEnv* env, jobject messageQueueObj) {
     NativeMessageQueue* nativeMessageQueue =
             android_os_MessageQueue_getNativeMessageQueue(env, messageQueueObj);
     return nativeMessageQueue;
+=======
+sp<Looper> android_os_MessageQueue_getLooper(JNIEnv* env, jobject messageQueueObj) {
+    NativeMessageQueue* nativeMessageQueue =
+            android_os_MessageQueue_getNativeMessageQueue(env, messageQueueObj);
+    return nativeMessageQueue != NULL ? nativeMessageQueue->getLooper() : NULL;
+>>>>>>> upstream/master
 }
 
 static void android_os_MessageQueue_nativeInit(JNIEnv* env, jobject obj) {
     NativeMessageQueue* nativeMessageQueue = new NativeMessageQueue();
+<<<<<<< HEAD
     if (!nativeMessageQueue) {
+=======
+    if (! nativeMessageQueue) {
+>>>>>>> upstream/master
         jniThrowRuntimeException(env, "Unable to allocate native queue");
         return;
     }
 
+<<<<<<< HEAD
     nativeMessageQueue->incStrong(env);
+=======
+>>>>>>> upstream/master
     android_os_MessageQueue_setNativeMessageQueue(env, obj, nativeMessageQueue);
 }
 
@@ -143,7 +192,11 @@ static void android_os_MessageQueue_nativeDestroy(JNIEnv* env, jobject obj) {
             android_os_MessageQueue_getNativeMessageQueue(env, obj);
     if (nativeMessageQueue) {
         android_os_MessageQueue_setNativeMessageQueue(env, obj, NULL);
+<<<<<<< HEAD
         nativeMessageQueue->decStrong(env);
+=======
+        delete nativeMessageQueue;
+>>>>>>> upstream/master
     }
 }
 
@@ -154,7 +207,11 @@ static void throwQueueNotInitialized(JNIEnv* env) {
 static void android_os_MessageQueue_nativePollOnce(JNIEnv* env, jobject obj,
         jint ptr, jint timeoutMillis) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
+<<<<<<< HEAD
     nativeMessageQueue->pollOnce(env, timeoutMillis);
+=======
+    nativeMessageQueue->pollOnce(timeoutMillis);
+>>>>>>> upstream/master
 }
 
 static void android_os_MessageQueue_nativeWake(JNIEnv* env, jobject obj, jint ptr) {

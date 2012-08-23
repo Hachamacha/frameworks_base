@@ -34,7 +34,10 @@ interface IBluetooth
     boolean isEnabled();
     int getBluetoothState();
     boolean enable();
+<<<<<<< HEAD
     boolean enableNoAutoConnect();
+=======
+>>>>>>> upstream/master
     boolean disable(boolean persistSetting);
 
     String getAddress();

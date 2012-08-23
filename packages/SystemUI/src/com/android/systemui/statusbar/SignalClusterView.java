@@ -16,18 +16,28 @@
 
 package com.android.systemui.statusbar;
 
+<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.provider.Settings;
+=======
+import android.content.Context;
+>>>>>>> upstream/master
 import android.util.AttributeSet;
 import android.util.Slog;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+=======
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+>>>>>>> upstream/master
 
 import com.android.systemui.statusbar.policy.NetworkController;
 
@@ -35,22 +45,33 @@ import com.android.systemui.R;
 
 // Intimately tied to the design of res/layout/signal_cluster_view.xml
 public class SignalClusterView
+<<<<<<< HEAD
         extends LinearLayout
+=======
+        extends LinearLayout 
+>>>>>>> upstream/master
         implements NetworkController.SignalCluster {
 
     static final boolean DEBUG = false;
     static final String TAG = "SignalClusterView";
+<<<<<<< HEAD
 
     NetworkController mNC;
 
     private static final int SIGNAL_CLUSTER_STYLE_NORMAL = 0;
 
     private int mSignalClusterStyle;
+=======
+    
+    NetworkController mNC;
+
+>>>>>>> upstream/master
     private boolean mWifiVisible = false;
     private int mWifiStrengthId = 0, mWifiActivityId = 0;
     private boolean mMobileVisible = false;
     private int mMobileStrengthId = 0, mMobileActivityId = 0, mMobileTypeId = 0;
     private boolean mIsAirplaneMode = false;
+<<<<<<< HEAD
     private int mAirplaneIconId = 0;
     private String mWifiDescription, mMobileDescription, mMobileTypeDescription;
 
@@ -77,6 +98,14 @@ public class SignalClusterView
         }
     }
 
+=======
+    private String mWifiDescription, mMobileDescription, mMobileTypeDescription;
+
+    ViewGroup mWifiGroup, mMobileGroup;
+    ImageView mWifi, mMobile, mWifiActivity, mMobileActivity, mMobileType;
+    View mSpacer;
+
+>>>>>>> upstream/master
     public SignalClusterView(Context context) {
         this(context, null);
     }
@@ -87,11 +116,14 @@ public class SignalClusterView
 
     public SignalClusterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+<<<<<<< HEAD
 
         mHandler = new Handler();
 
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+=======
+>>>>>>> upstream/master
     }
 
     public void setNetworkController(NetworkController nc) {
@@ -111,7 +143,10 @@ public class SignalClusterView
         mMobileActivity = (ImageView) findViewById(R.id.mobile_inout);
         mMobileType     = (ImageView) findViewById(R.id.mobile_type);
         mSpacer         =             findViewById(R.id.spacer);
+<<<<<<< HEAD
         mAirplane       = (ImageView) findViewById(R.id.airplane);
+=======
+>>>>>>> upstream/master
 
         apply();
     }
@@ -125,13 +160,19 @@ public class SignalClusterView
         mMobile         = null;
         mMobileActivity = null;
         mMobileType     = null;
+<<<<<<< HEAD
         mSpacer         = null;
         mAirplane       = null;
+=======
+>>>>>>> upstream/master
 
         super.onDetachedFromWindow();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setWifiIndicators(boolean visible, int strengthIcon, int activityIcon,
             String contentDescription) {
         mWifiVisible = visible;
@@ -142,7 +183,10 @@ public class SignalClusterView
         apply();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public void setMobileDataIndicators(boolean visible, int strengthIcon, int activityIcon,
             int typeIcon, String contentDescription, String typeContentDescription) {
         mMobileVisible = visible;
@@ -155,6 +199,7 @@ public class SignalClusterView
         apply();
     }
 
+<<<<<<< HEAD
     @Override
     public void setIsAirplaneMode(boolean is, int airplaneIconId) {
         mIsAirplaneMode = is;
@@ -172,6 +217,10 @@ public class SignalClusterView
         if (mMobileVisible && mMobileGroup.getContentDescription() != null)
             event.getText().add(mMobileGroup.getContentDescription());
         return super.dispatchPopulateAccessibilityEvent(event);
+=======
+    public void setIsAirplaneMode(boolean is) {
+        mIsAirplaneMode = is;
+>>>>>>> upstream/master
     }
 
     // Run after each indicator change.
@@ -192,7 +241,11 @@ public class SignalClusterView
                     (mWifiVisible ? "VISIBLE" : "GONE"),
                     mWifiStrengthId, mWifiActivityId));
 
+<<<<<<< HEAD
         if (mMobileVisible && !mIsAirplaneMode) {
+=======
+        if (mMobileVisible) {
+>>>>>>> upstream/master
             mMobileGroup.setVisibility(View.VISIBLE);
             mMobile.setImageResource(mMobileStrengthId);
             mMobileActivity.setImageResource(mMobileActivityId);
@@ -202,6 +255,7 @@ public class SignalClusterView
             mMobileGroup.setVisibility(View.GONE);
         }
 
+<<<<<<< HEAD
         if (mIsAirplaneMode) {
             mAirplane.setVisibility(View.VISIBLE);
             mAirplane.setImageResource(mAirplaneIconId);
@@ -209,6 +263,8 @@ public class SignalClusterView
             mAirplane.setVisibility(View.GONE);
         }
 
+=======
+>>>>>>> upstream/master
         if (mMobileVisible && mWifiVisible && mIsAirplaneMode) {
             mSpacer.setVisibility(View.INVISIBLE);
         } else {
@@ -222,6 +278,7 @@ public class SignalClusterView
 
         mMobileType.setVisibility(
                 !mWifiVisible ? View.VISIBLE : View.GONE);
+<<<<<<< HEAD
 
         updateSettings();
     }
@@ -235,6 +292,8 @@ public class SignalClusterView
         mSignalClusterStyle = (Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_SIGNAL_TEXT, SIGNAL_CLUSTER_STYLE_NORMAL));
         updateSignalClusterStyle();
+=======
+>>>>>>> upstream/master
     }
 }
 

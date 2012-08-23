@@ -19,6 +19,13 @@
 
 #include <cmath>
 
+<<<<<<< HEAD
+=======
+#define EPSILON 0.00001f
+
+#define ALMOST_EQUAL(u, v) (fabs((u) - (v)) < EPSILON)
+
+>>>>>>> upstream/master
 /**
  * Compare floats.
  */

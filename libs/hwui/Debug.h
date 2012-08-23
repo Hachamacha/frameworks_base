@@ -30,7 +30,11 @@
 #define DEBUG_MEMORY_USAGE 0
 
 // Turn on to enable debugging of cache flushes
+<<<<<<< HEAD
 #define DEBUG_CACHE_FLUSH 0
+=======
+#define DEBUG_CACHE_FLUSH 1
+>>>>>>> upstream/master
 
 // Turn on to enable layers debugging when rendered as regions
 #define DEBUG_LAYERS_AS_REGIONS 0
@@ -62,14 +66,21 @@
 // Turn on to display debug info about the layer renderer
 #define DEBUG_LAYER_RENDERER 0
 
+<<<<<<< HEAD
 // Turn on to enable additional debugging in the font renderers
 #define DEBUG_FONT_RENDERER 0
 
+=======
+>>>>>>> upstream/master
 // Turn on to dump display list state
 #define DEBUG_DISPLAY_LIST 0
 
 #if DEBUG_INIT
+<<<<<<< HEAD
     #define INIT_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define INIT_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define INIT_LOGD(...)
 #endif

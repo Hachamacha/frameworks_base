@@ -82,6 +82,7 @@ public class DataConnectionAc extends AsyncChannel {
     public static final int REQ_GET_RECONNECT_INTENT = BASE + 26;
     public static final int RSP_GET_RECONNECT_INTENT = BASE + 27;
 
+<<<<<<< HEAD
     private static final int CMD_TO_STRING_COUNT = RSP_GET_RECONNECT_INTENT - BASE + 1;
     private static String[] sCmdToString = new String[CMD_TO_STRING_COUNT];
     static {
@@ -127,6 +128,8 @@ public class DataConnectionAc extends AsyncChannel {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * enum used to notify action taken or necessary to be
      * taken after the link property is changed.
@@ -580,11 +583,14 @@ public class DataConnectionAc extends AsyncChannel {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public String toString() {
         return dataConnection.getName();
     }
 
+=======
+>>>>>>> upstream/master
     private void log(String s) {
         android.util.Log.d(mLogTag, "DataConnectionAc " + s);
     }

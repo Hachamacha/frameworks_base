@@ -18,6 +18,10 @@ package android.text.method;
 
 import android.graphics.Rect;
 import android.view.View;
+<<<<<<< HEAD
+=======
+import android.widget.TextView;
+>>>>>>> upstream/master
 
 /**
  * TextView uses TransformationMethods to do things like replacing the

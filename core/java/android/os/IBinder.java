@@ -140,9 +140,12 @@ public interface IBinder {
      */
     int LIKE_TRANSACTION   = ('_'<<24)|('L'<<16)|('I'<<8)|'K';
 
+<<<<<<< HEAD
     /** @hide */
     int SYSPROPS_TRANSACTION = ('_'<<24)|('S'<<16)|('P'<<8)|'R';
 
+=======
+>>>>>>> upstream/master
     /**
      * Flag to {@link #transact}: this is a one-way call, meaning that the
      * caller returns immediately, without waiting for a result from the

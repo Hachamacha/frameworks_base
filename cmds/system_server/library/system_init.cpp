@@ -15,6 +15,13 @@
 #include <utils/Log.h>
 
 #include <SurfaceFlinger.h>
+<<<<<<< HEAD
+=======
+#include <AudioFlinger.h>
+#include <CameraService.h>
+#include <AudioPolicyService.h>
+#include <MediaPlayerService.h>
+>>>>>>> upstream/master
 #include <SensorService.h>
 
 #include <android_runtime/AndroidRuntime.h>
@@ -38,7 +45,11 @@ public:
 
     virtual void binderDied(const wp<IBinder>& who)
     {
+<<<<<<< HEAD
         ALOGI("Grim Reaper killing system_server...");
+=======
+        LOGI("Grim Reaper killing system_server...");
+>>>>>>> upstream/master
         kill(getpid(), SIGKILL);
     }
 };
@@ -49,12 +60,20 @@ public:
 
 extern "C" status_t system_init()
 {
+<<<<<<< HEAD
     ALOGI("Entered system_init()");
+=======
+    LOGI("Entered system_init()");
+>>>>>>> upstream/master
 
     sp<ProcessState> proc(ProcessState::self());
 
     sp<IServiceManager> sm = defaultServiceManager();
+<<<<<<< HEAD
     ALOGI("ServiceManager: %p\n", sm.get());
+=======
+    LOGI("ServiceManager: %p\n", sm.get());
+>>>>>>> upstream/master
 
     sp<GrimReaper> grim = new GrimReaper();
     sm->asBinder()->linkToDeath(grim, grim.get(), 0);
@@ -78,10 +97,17 @@ extern "C" status_t system_init()
     // All other servers should just start the Android runtime at
     // the beginning of their processes's main(), before calling
     // the init function.
+<<<<<<< HEAD
     ALOGI("System server: starting Android runtime.\n");
     AndroidRuntime* runtime = AndroidRuntime::getRuntime();
 
     ALOGI("System server: starting Android services.\n");
+=======
+    LOGI("System server: starting Android runtime.\n");
+    AndroidRuntime* runtime = AndroidRuntime::getRuntime();
+
+    LOGI("System server: starting Android services.\n");
+>>>>>>> upstream/master
     JNIEnv* env = runtime->getJNIEnv();
     if (env == NULL) {
         return UNKNOWN_ERROR;
@@ -96,10 +122,17 @@ extern "C" status_t system_init()
     }
     env->CallStaticVoidMethod(clazz, methodId);
 
+<<<<<<< HEAD
     ALOGI("System server: entering thread pool.\n");
     ProcessState::self()->startThreadPool();
     IPCThreadState::self()->joinThreadPool();
     ALOGI("System server: exiting thread pool.\n");
+=======
+    LOGI("System server: entering thread pool.\n");
+    ProcessState::self()->startThreadPool();
+    IPCThreadState::self()->joinThreadPool();
+    LOGI("System server: exiting thread pool.\n");
+>>>>>>> upstream/master
 
     return NO_ERROR;
 }

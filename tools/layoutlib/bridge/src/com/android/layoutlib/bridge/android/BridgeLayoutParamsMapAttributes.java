@@ -37,7 +37,10 @@ public class BridgeLayoutParamsMapAttributes implements AttributeSet {
         mAttributes = attributes;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeValue(String namespace, String name) {
         if (BridgeConstants.NS_RESOURCES.equals(namespace)) {
             return mAttributes.get(name);
@@ -50,114 +53,177 @@ public class BridgeLayoutParamsMapAttributes implements AttributeSet {
     // BridgeContext#obtainStyledAttributes(AttributeSet, int[], int, int)
     // Should they ever be called, we'll just implement them on a need basis.
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeCount() {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeName(int index) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getAttributeValue(int index) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getPositionDescription() {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeNameResource(int index) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeListValue(String namespace, String attribute,
             String[] options, int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean getAttributeBooleanValue(String namespace, String attribute,
             boolean defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeResourceValue(String namespace, String attribute,
             int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeIntValue(String namespace, String attribute,
             int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeUnsignedIntValue(String namespace, String attribute,
             int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public float getAttributeFloatValue(String namespace, String attribute,
             float defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeListValue(int index,
             String[] options, int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public boolean getAttributeBooleanValue(int index, boolean defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeResourceValue(int index, int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeIntValue(int index, int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getAttributeUnsignedIntValue(int index, int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public float getAttributeFloatValue(int index, float defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getIdAttribute() {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public String getClassAttribute() {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getIdAttributeResourceValue(int defaultValue) {
         throw new UnsupportedOperationException();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> upstream/master
     public int getStyleAttribute() {
         throw new UnsupportedOperationException();
     }

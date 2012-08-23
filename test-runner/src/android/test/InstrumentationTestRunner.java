@@ -399,6 +399,7 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
         return mArguments;
     }
 
+<<<<<<< HEAD
     /**
      * Add a {@link TestListener}
      * @hide
@@ -409,6 +410,8 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
         }
     }
 
+=======
+>>>>>>> upstream/master
     List<Predicate<TestMethod>> getBuilderRequirements() {
         return new ArrayList<Predicate<TestMethod>>();
     }

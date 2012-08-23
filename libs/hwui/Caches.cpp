@@ -20,7 +20,10 @@
 #include <utils/String8.h>
 
 #include "Caches.h"
+<<<<<<< HEAD
 #include "DisplayListRenderer.h"
+=======
+>>>>>>> upstream/master
 #include "Properties.h"
 #include "LayerRenderer.h"
 
@@ -38,7 +41,11 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 #if DEBUG_CACHE_FLUSH
+<<<<<<< HEAD
     #define FLUSH_LOGD(...) ALOGD(__VA_ARGS__)
+=======
+    #define FLUSH_LOGD(...) LOGD(__VA_ARGS__)
+>>>>>>> upstream/master
 #else
     #define FLUSH_LOGD(...)
 #endif
@@ -48,12 +55,27 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 Caches::Caches(): Singleton<Caches>(), mInitialized(false) {
+<<<<<<< HEAD
     init();
     initExtensions();
     initConstraints();
 
     mDebugLevel = readDebugLevel();
     ALOGD("Enabling debug mode %d", mDebugLevel);
+=======
+    GLint maxTextureUnits;
+    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+    if (maxTextureUnits < REQUIRED_TEXTURE_UNITS_COUNT) {
+        LOGW("At least %d texture units are required!", REQUIRED_TEXTURE_UNITS_COUNT);
+    }
+
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+
+    init();
+
+    mDebugLevel = readDebugLevel();
+    LOGD("Enabling debug mode %d", mDebugLevel);
+>>>>>>> upstream/master
 
 #if RENDER_LAYERS_AS_REGIONS
     INIT_LOGD("Layers will be composited as regions");
@@ -68,6 +90,7 @@ void Caches::init() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(gMeshVertices), gMeshVertices, GL_STATIC_DRAW);
 
     mCurrentBuffer = meshBuffer;
+<<<<<<< HEAD
     mCurrentIndicesBuffer = 0;
     mCurrentPositionPointer = this;
     mCurrentTexCoordsPointer = this;
@@ -79,6 +102,8 @@ void Caches::init() {
     glActiveTexture(gTextureUnits[0]);
     mTextureUnit = 0;
 
+=======
+>>>>>>> upstream/master
     mRegionMesh = NULL;
 
     blend = false;
@@ -89,6 +114,7 @@ void Caches::init() {
     mInitialized = true;
 }
 
+<<<<<<< HEAD
 void Caches::initExtensions() {
     if (extensions.hasDebugMarker()) {
         eventMark = glInsertEventMarkerEXT;
@@ -119,6 +145,8 @@ void Caches::initConstraints() {
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
 }
 
+=======
+>>>>>>> upstream/master
 void Caches::terminate() {
     if (!mInitialized) return;
 
@@ -144,7 +172,11 @@ void Caches::terminate() {
 void Caches::dumpMemoryUsage() {
     String8 stringLog;
     dumpMemoryUsage(stringLog);
+<<<<<<< HEAD
     ALOGD("%s", stringLog.string());
+=======
+    LOGD("%s", stringLog.string());
+>>>>>>> upstream/master
 }
 
 void Caches::dumpMemoryUsage(String8 &log) {
@@ -214,6 +246,7 @@ void Caches::clearGarbage() {
         LayerRenderer::destroyLayer(layer);
     }
     mLayerGarbage.clear();
+<<<<<<< HEAD
 
     count = mDisplayListGarbage.size();
     for (size_t i = 0; i < count; i++) {
@@ -221,6 +254,8 @@ void Caches::clearGarbage() {
         delete displayList;
     }
     mDisplayListGarbage.clear();
+=======
+>>>>>>> upstream/master
 }
 
 void Caches::deleteLayerDeferred(Layer* layer) {
@@ -228,11 +263,14 @@ void Caches::deleteLayerDeferred(Layer* layer) {
     mLayerGarbage.push(layer);
 }
 
+<<<<<<< HEAD
 void Caches::deleteDisplayListDeferred(DisplayList* displayList) {
     Mutex::Autolock _l(mGarbageLock);
     mDisplayListGarbage.push(displayList);
 }
 
+=======
+>>>>>>> upstream/master
 void Caches::flush(FlushMode mode) {
     FLUSH_LOGD("Flushing caches (mode %d)", mode);
 
@@ -266,6 +304,7 @@ void Caches::flush(FlushMode mode) {
 // VBO
 ///////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 bool Caches::bindMeshBuffer() {
     return bindMeshBuffer(meshBuffer);
 }
@@ -364,6 +403,24 @@ void Caches::setScissor(GLint x, GLint y, GLint width, GLint height) {
 
 void Caches::resetScissor() {
     mScissorX = mScissorY = mScissorWidth = mScissorHeight = 0;
+=======
+void Caches::bindMeshBuffer() {
+    bindMeshBuffer(meshBuffer);
+}
+
+void Caches::bindMeshBuffer(const GLuint buffer) {
+    if (mCurrentBuffer != buffer) {
+        glBindBuffer(GL_ARRAY_BUFFER, buffer);
+        mCurrentBuffer = buffer;
+    }
+}
+
+void Caches::unbindMeshBuffer() {
+    if (mCurrentBuffer) {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        mCurrentBuffer = 0;
+    }
+>>>>>>> upstream/master
 }
 
 TextureVertex* Caches::getRegionMesh() {
@@ -384,13 +441,21 @@ TextureVertex* Caches::getRegionMesh() {
         }
 
         glGenBuffers(1, &mRegionMeshIndices);
+<<<<<<< HEAD
         bindIndicesBuffer(mRegionMeshIndices);
+=======
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRegionMeshIndices);
+>>>>>>> upstream/master
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, REGION_MESH_QUAD_COUNT * 6 * sizeof(uint16_t),
                 regionIndices, GL_STATIC_DRAW);
 
         delete[] regionIndices;
     } else {
+<<<<<<< HEAD
         bindIndicesBuffer(mRegionMeshIndices);
+=======
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRegionMeshIndices);
+>>>>>>> upstream/master
     }
 
     return mRegionMesh;

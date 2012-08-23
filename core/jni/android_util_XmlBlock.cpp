@@ -19,11 +19,20 @@
 
 #include "jni.h"
 #include "JNIHelp.h"
+<<<<<<< HEAD
 #include <android_runtime/AndroidRuntime.h>
 #include <androidfw/AssetManager.h>
 #include <androidfw/ResourceTypes.h>
 #include <utils/Log.h>
 #include <utils/misc.h>
+=======
+#include <utils/misc.h>
+#include <android_runtime/AndroidRuntime.h>
+#include <utils/AssetManager.h>
+#include <utils/Log.h>
+
+#include <utils/ResourceTypes.h>
+>>>>>>> upstream/master
 
 #include <stdio.h>
 

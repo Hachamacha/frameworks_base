@@ -24,7 +24,10 @@ parent.link=manifest-intro.html
           android:<a href="#multi">multiprocess</a>=["true" | "false"]
           android:<a href="#nm">name</a>="<i>string</i>"
           android:<a href="#nohist">noHistory</a>=["true" | "false"]  <!-- ##api level 3## -->
+<<<<<<< HEAD
           android:<a href="#parent">parentActivityName</a>="<i>string</i>" <!-- api level 16 -->
+=======
+>>>>>>> upstream/master
           android:<a href="#prmsn">permission</a>="<i>string</i>"
           android:<a href="#proc">process</a>="<i>string</i>"
           android:<a href="#screen">screenOrientation</a>=["unspecified" | "user" | "behind" |
@@ -509,7 +512,11 @@ other activities and tasks using the <em>Back</em> button. </p>
 
 <p>For more information on launch modes and their interaction with Intent
 flags, see the 
+<<<<<<< HEAD
 <a href="{@docRoot}guide/components/tasks-and-back-stack.html">Tasks and Back Stack</a>
+=======
+<a href="{@docRoot}guide/topics/fundamentals/tasks-and-back-stack.html">Tasks and Back Stack</a>
+>>>>>>> upstream/master
 document.
 </p>
 </dd>
@@ -563,6 +570,7 @@ so the user will not be able to return to it.
 <p>
 This attribute was introduced in API Level 3.
 </p>
+<<<<<<< HEAD
 </dd>
 
 <!-- api level 16 -->
@@ -581,6 +589,8 @@ This attribute was introduced in API Level 16.
 </dd>
 
 
+=======
+>>>>>>> upstream/master
 
 <dt><a name="prmsn"></a>{@code android:permission}</dt>
 <dd>The name of a permission that clients must have to launch the activity 

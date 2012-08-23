@@ -16,8 +16,11 @@
 
 package android.net.http;
 
+<<<<<<< HEAD
 import com.google.mockwebserver.MockResponse;
 import com.google.mockwebserver.MockWebServer;
+=======
+>>>>>>> upstream/master
 import java.io.File;
 import java.net.CacheRequest;
 import java.net.CacheResponse;
@@ -32,7 +35,10 @@ import junit.framework.TestCase;
 public final class HttpResponseCacheTest extends TestCase {
 
     private File cacheDir;
+<<<<<<< HEAD
     private MockWebServer server = new MockWebServer();
+=======
+>>>>>>> upstream/master
 
     @Override public void setUp() throws Exception {
         super.setUp();
@@ -42,7 +48,10 @@ public final class HttpResponseCacheTest extends TestCase {
 
     @Override protected void tearDown() throws Exception {
         ResponseCache.setDefault(null);
+<<<<<<< HEAD
         server.shutdown();
+=======
+>>>>>>> upstream/master
         super.tearDown();
     }
 
@@ -104,6 +113,7 @@ public final class HttpResponseCacheTest extends TestCase {
         cache.delete();
         assertNull(ResponseCache.getDefault());
     }
+<<<<<<< HEAD
 
     /**
      * Make sure that statistics tracking are wired all the way through the
@@ -132,4 +142,6 @@ public final class HttpResponseCacheTest extends TestCase {
         assertEquals(1, cache.getNetworkCount());
         assertEquals(2, cache.getHitCount());
     }
+=======
+>>>>>>> upstream/master
 }

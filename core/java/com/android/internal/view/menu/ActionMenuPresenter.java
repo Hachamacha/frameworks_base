@@ -16,7 +16,10 @@
 
 package com.android.internal.view.menu;
 
+<<<<<<< HEAD
 import com.android.internal.view.ActionBarPolicy;
+=======
+>>>>>>> upstream/master
 import com.android.internal.view.menu.ActionMenuView.ActionMenuChildView;
 
 import android.content.Context;
@@ -30,6 +33,10 @@ import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.View.MeasureSpec;
+<<<<<<< HEAD
+=======
+import android.view.ViewConfiguration;
+>>>>>>> upstream/master
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
@@ -79,6 +86,7 @@ public class ActionMenuPresenter extends BaseMenuPresenter
 
         final Resources res = context.getResources();
 
+<<<<<<< HEAD
         final ActionBarPolicy abp = ActionBarPolicy.get(context);
         if (!mReserveOverflowSet) {
             mReserveOverflow = abp.showsOverflowMenuButton();
@@ -86,11 +94,23 @@ public class ActionMenuPresenter extends BaseMenuPresenter
 
         if (!mWidthLimitSet) {
             mWidthLimit = abp.getEmbeddedMenuWidthLimit();
+=======
+        if (!mReserveOverflowSet) {
+            mReserveOverflow = !ViewConfiguration.get(context).hasPermanentMenuKey();
+        }
+
+        if (!mWidthLimitSet) {
+            mWidthLimit = res.getDisplayMetrics().widthPixels / 2;
+>>>>>>> upstream/master
         }
 
         // Measure for initial configuration
         if (!mMaxItemsSet) {
+<<<<<<< HEAD
             mMaxItems = abp.getMaxActionButtons();
+=======
+            mMaxItems = res.getInteger(com.android.internal.R.integer.max_action_buttons);
+>>>>>>> upstream/master
         }
 
         int width = mWidthLimit;
@@ -117,9 +137,15 @@ public class ActionMenuPresenter extends BaseMenuPresenter
         if (!mMaxItemsSet) {
             mMaxItems = mContext.getResources().getInteger(
                     com.android.internal.R.integer.max_action_buttons);
+<<<<<<< HEAD
         }
         if (mMenu != null) {
             mMenu.onItemsChanged(true);
+=======
+            if (mMenu != null) {
+                mMenu.onItemsChanged(true);
+            }
+>>>>>>> upstream/master
         }
     }
 

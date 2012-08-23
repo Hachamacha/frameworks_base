@@ -22,6 +22,7 @@
 
 #include <EGL/egl_cache.h>
 
+<<<<<<< HEAD
 #ifdef USE_OPENGL_RENDERER
     EGLAPI void EGLAPIENTRY eglBeginFrame(EGLDisplay dpy, EGLSurface surface);
 #endif
@@ -126,6 +127,12 @@ static void android_view_HardwareRenderer_beginFrame(JNIEnv* env, jobject clazz,
 
 // ----------------------------------------------------------------------------
 // Shaders
+=======
+namespace android {
+
+// ----------------------------------------------------------------------------
+// Misc
+>>>>>>> upstream/master
 // ----------------------------------------------------------------------------
 
 static void android_view_HardwareRenderer_setupShadersDiskCache(JNIEnv* env, jobject clazz,
@@ -143,6 +150,7 @@ static void android_view_HardwareRenderer_setupShadersDiskCache(JNIEnv* env, job
 const char* const kClassPathName = "android/view/HardwareRenderer";
 
 static JNINativeMethod gMethods[] = {
+<<<<<<< HEAD
 #ifdef USE_OPENGL_RENDERER
     { "nIsBackBufferPreserved", "()Z",   (void*) android_view_HardwareRenderer_isBackBufferPreserved },
     { "nPreserveBackBuffer",    "()Z",   (void*) android_view_HardwareRenderer_preserveBackBuffer },
@@ -151,6 +159,8 @@ static JNINativeMethod gMethods[] = {
     { "nBeginFrame",            "([I)V", (void*) android_view_HardwareRenderer_beginFrame },
 #endif
 
+=======
+>>>>>>> upstream/master
     { "nSetupShadersDiskCache", "(Ljava/lang/String;)V",
             (void*) android_view_HardwareRenderer_setupShadersDiskCache },
 };

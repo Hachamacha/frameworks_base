@@ -43,7 +43,10 @@ import android.util.Log;
 
 
 /**
+<<<<<<< HEAD
  * @deprecated in API 16
+=======
+>>>>>>> upstream/master
  * ProgramVertex, also know as a vertex shader, describes a
  * stage in the graphics pipeline responsible for manipulating
  * geometric data in a user-defined way.
@@ -56,6 +59,7 @@ public class ProgramVertex extends Program {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated in API 16
      * @return number of input attribute elements
      */
@@ -77,6 +81,8 @@ public class ProgramVertex extends Program {
 
     /**
     * @deprecated in API 16
+=======
+>>>>>>> upstream/master
     * Builder class for creating ProgramVertex objects.
     * The builder starts empty and the user must minimally provide
     * the GLSL shader code, and the varying inputs. Constant, or
@@ -86,7 +92,10 @@ public class ProgramVertex extends Program {
     **/
     public static class Builder extends BaseProgramBuilder {
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Create a builder object.
          *
          * @param rs Context to which the program will belong.
@@ -96,7 +105,10 @@ public class ProgramVertex extends Program {
         }
 
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Add varying inputs to the program
          *
          * @param e element describing the layout of the varying input
@@ -116,7 +128,10 @@ public class ProgramVertex extends Program {
         }
 
         /**
+<<<<<<< HEAD
          * @deprecated in API 16
+=======
+>>>>>>> upstream/master
          * Creates ProgramVertex from the current state of the builder
          *
          * @return  ProgramVertex
@@ -124,11 +139,15 @@ public class ProgramVertex extends Program {
         public ProgramVertex create() {
             mRS.validate();
             int[] tmp = new int[(mInputCount + mOutputCount + mConstantCount + mTextureCount) * 2];
+<<<<<<< HEAD
             String[] texNames = new String[mTextureCount];
+=======
+>>>>>>> upstream/master
             int idx = 0;
 
             for (int i=0; i < mInputCount; i++) {
                 tmp[idx++] = ProgramParam.INPUT.mID;
+<<<<<<< HEAD
                 tmp[idx++] = mInputs[i].getID(mRS);
             }
             for (int i=0; i < mOutputCount; i++) {
@@ -138,14 +157,31 @@ public class ProgramVertex extends Program {
             for (int i=0; i < mConstantCount; i++) {
                 tmp[idx++] = ProgramParam.CONSTANT.mID;
                 tmp[idx++] = mConstants[i].getID(mRS);
+=======
+                tmp[idx++] = mInputs[i].getID();
+            }
+            for (int i=0; i < mOutputCount; i++) {
+                tmp[idx++] = ProgramParam.OUTPUT.mID;
+                tmp[idx++] = mOutputs[i].getID();
+            }
+            for (int i=0; i < mConstantCount; i++) {
+                tmp[idx++] = ProgramParam.CONSTANT.mID;
+                tmp[idx++] = mConstants[i].getID();
+>>>>>>> upstream/master
             }
             for (int i=0; i < mTextureCount; i++) {
                 tmp[idx++] = ProgramParam.TEXTURE_TYPE.mID;
                 tmp[idx++] = mTextureTypes[i].mID;
+<<<<<<< HEAD
                 texNames[i] = mTextureNames[i];
             }
 
             int id = mRS.nProgramVertexCreate(mShader, texNames, tmp);
+=======
+            }
+
+            int id = mRS.nProgramVertexCreate(mShader, tmp);
+>>>>>>> upstream/master
             ProgramVertex pv = new ProgramVertex(id, mRS);
             initProgram(pv);
             return pv;

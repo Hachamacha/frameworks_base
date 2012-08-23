@@ -252,7 +252,11 @@ public interface IMountService extends IInterface {
              * an int consistent with MountServiceResultCode
              */
             public int createSecureContainer(String id, int sizeMb, String fstype, String key,
+<<<<<<< HEAD
                     int ownerUid, boolean external) throws RemoteException {
+=======
+                    int ownerUid) throws RemoteException {
+>>>>>>> upstream/master
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 int _result;
@@ -263,7 +267,10 @@ public interface IMountService extends IInterface {
                     _data.writeString(fstype);
                     _data.writeString(key);
                     _data.writeInt(ownerUid);
+<<<<<<< HEAD
                     _data.writeInt(external ? 1 : 0);
+=======
+>>>>>>> upstream/master
                     mRemote.transact(Stub.TRANSACTION_createSecureContainer, _data, _reply, 0);
                     _reply.readException();
                     _result = _reply.readInt();
@@ -712,6 +719,7 @@ public interface IMountService extends IInterface {
                 }
                 return _result;
             }
+<<<<<<< HEAD
 
             /**
              * Fix permissions in a container which has just been created and
@@ -737,6 +745,8 @@ public interface IMountService extends IInterface {
                 return _result;
 
             }
+=======
+>>>>>>> upstream/master
         }
 
         private static final String DESCRIPTOR = "IMountService";
@@ -807,8 +817,11 @@ public interface IMountService extends IInterface {
 
         static final int TRANSACTION_verifyEncryptionPassword = IBinder.FIRST_CALL_TRANSACTION + 32;
 
+<<<<<<< HEAD
         static final int TRANSACTION_fixPermissionsSecureContainer = IBinder.FIRST_CALL_TRANSACTION + 33;
 
+=======
+>>>>>>> upstream/master
         /**
          * Cast an IBinder object into an IMountService interface, generating a
          * proxy if needed.
@@ -937,10 +950,14 @@ public interface IMountService extends IInterface {
                     key = data.readString();
                     int ownerUid;
                     ownerUid = data.readInt();
+<<<<<<< HEAD
                     boolean external;
                     external = 0 != data.readInt();
                     int resultCode = createSecureContainer(id, sizeMb, fstype, key, ownerUid,
                             external);
+=======
+                    int resultCode = createSecureContainer(id, sizeMb, fstype, key, ownerUid);
+>>>>>>> upstream/master
                     reply.writeNoException();
                     reply.writeInt(resultCode);
                     return true;
@@ -1140,6 +1157,7 @@ public interface IMountService extends IInterface {
                     reply.writeInt(result);
                     return true;
                 }
+<<<<<<< HEAD
                 case TRANSACTION_fixPermissionsSecureContainer: {
                     data.enforceInterface(DESCRIPTOR);
                     String id;
@@ -1153,6 +1171,8 @@ public interface IMountService extends IInterface {
                     reply.writeInt(resultCode);
                     return true;
                 }
+=======
+>>>>>>> upstream/master
             }
             return super.onTransact(code, data, reply, flags);
         }
@@ -1162,8 +1182,13 @@ public interface IMountService extends IInterface {
      * Creates a secure container with the specified parameters. Returns an int
      * consistent with MountServiceResultCode
      */
+<<<<<<< HEAD
     public int createSecureContainer(String id, int sizeMb, String fstype, String key,
             int ownerUid, boolean external) throws RemoteException;
+=======
+    public int createSecureContainer(String id, int sizeMb, String fstype, String key, int ownerUid)
+            throws RemoteException;
+>>>>>>> upstream/master
 
     /*
      * Destroy a secure container, and free up all resources associated with it.
@@ -1360,6 +1385,7 @@ public interface IMountService extends IInterface {
      */
     public Parcelable[] getVolumeList() throws RemoteException;
 
+<<<<<<< HEAD
     /**
      * Gets the path on the filesystem for the ASEC container itself.
      * 
@@ -1375,4 +1401,7 @@ public interface IMountService extends IInterface {
      */
     public int fixPermissionsSecureContainer(String id, int gid, String filename)
             throws RemoteException;
+=======
+    public String getSecureContainerFilesystemPath(String id) throws RemoteException;
+>>>>>>> upstream/master
 }

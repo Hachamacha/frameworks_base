@@ -17,6 +17,10 @@
 package android.nfc;
 
 import android.app.PendingIntent;
+<<<<<<< HEAD
+=======
+import android.content.ComponentName;
+>>>>>>> upstream/master
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.Tag;
@@ -34,7 +38,11 @@ interface INfcAdapter
     INfcAdapterExtras getNfcAdapterExtrasInterface(in String pkg);
 
     int getState();
+<<<<<<< HEAD
     boolean disable(boolean saveState);
+=======
+    boolean disable();
+>>>>>>> upstream/master
     boolean enable();
     boolean enableNdefPush();
     boolean disableNdefPush();
@@ -42,9 +50,13 @@ interface INfcAdapter
 
     void setForegroundDispatch(in PendingIntent intent,
             in IntentFilter[] filters, in TechListParcel techLists);
+<<<<<<< HEAD
     void setNdefPushCallback(in INdefPushCallback callback);
 
     void dispatch(in Tag tag);
 
     void setP2pModes(int initatorModes, int targetModes);
+=======
+    void setForegroundNdefPush(in NdefMessage msg, in INdefPushCallback callback);
+>>>>>>> upstream/master
 }

@@ -16,8 +16,11 @@
 
 package com.android.internal.telephony;
 
+<<<<<<< HEAD
 import android.telephony.CellInfo;
 
+=======
+>>>>>>> upstream/master
 /**
  * {@hide}
  */
@@ -44,7 +47,10 @@ public interface PhoneNotifier {
     public void notifyDataActivity(Phone sender);
 
     public void notifyOtaspChanged(Phone sender, int otaspMode);
+<<<<<<< HEAD
 
     // TODO - trigger notifyCellInfo from ServiceStateTracker
     public void notifyCellInfo(Phone sender, CellInfo cellInfo);
+=======
+>>>>>>> upstream/master
 }

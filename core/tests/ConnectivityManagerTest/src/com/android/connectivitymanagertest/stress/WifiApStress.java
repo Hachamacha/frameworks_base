@@ -51,7 +51,10 @@ public class WifiApStress
     private int iterations;
     private BufferedWriter mOutputWriter = null;
     private int mLastIteration = 0;
+<<<<<<< HEAD
     private boolean mWifiOnlyFlag;
+=======
+>>>>>>> upstream/master
 
     public WifiApStress() {
         super(ConnectivityManagerTestActivity.class);
@@ -64,7 +67,10 @@ public class WifiApStress
         ConnectivityManagerStressTestRunner mRunner =
             (ConnectivityManagerStressTestRunner)getInstrumentation();
         iterations = mRunner.mSoftapIterations;
+<<<<<<< HEAD
         mWifiOnlyFlag = mRunner.mWifiOnlyFlag;
+=======
+>>>>>>> upstream/master
         mAct.turnScreenOn();
     }
 
@@ -81,10 +87,13 @@ public class WifiApStress
 
     @LargeTest
     public void testWifiHotSpot() {
+<<<<<<< HEAD
         if (mWifiOnlyFlag) {
             Log.v(TAG, this.getName() + " is excluded for wi-fi only test");
             return;
         }
+=======
+>>>>>>> upstream/master
         WifiConfiguration config = new WifiConfiguration();
         config.SSID = NETWORK_ID;
         config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
@@ -103,7 +112,11 @@ public class WifiApStress
             assertTrue(mAct.mWifiManager.setWifiApEnabled(config, true));
             // Wait for wifi ap state to be ENABLED
             assertTrue(mAct.waitForWifiAPState(WifiManager.WIFI_AP_STATE_ENABLED,
+<<<<<<< HEAD
                     2 * ConnectivityManagerTestActivity.LONG_TIMEOUT));
+=======
+                    ConnectivityManagerTestActivity.LONG_TIMEOUT));
+>>>>>>> upstream/master
             // Wait for wifi tethering result
             assertEquals(ConnectivityManagerTestActivity.SUCCESS,
                     mAct.waitForTetherStateChange(2*ConnectivityManagerTestActivity.SHORT_TIMEOUT));

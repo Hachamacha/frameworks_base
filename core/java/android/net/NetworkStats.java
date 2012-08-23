@@ -16,6 +16,11 @@
 
 package android.net;
 
+<<<<<<< HEAD
+=======
+import static com.android.internal.util.Preconditions.checkNotNull;
+
+>>>>>>> upstream/master
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -38,6 +43,11 @@ import java.util.HashSet;
  * @hide
  */
 public class NetworkStats implements Parcelable {
+<<<<<<< HEAD
+=======
+    private static final String TAG = "NetworkStats";
+
+>>>>>>> upstream/master
     /** {@link #iface} value when interface details unavailable. */
     public static final String IFACE_ALL = null;
     /** {@link #uid} value when UID details unavailable. */
@@ -102,6 +112,7 @@ public class NetworkStats implements Parcelable {
             this.operations = operations;
         }
 
+<<<<<<< HEAD
         public boolean isNegative() {
             return rxBytes < 0 || rxPackets < 0 || txBytes < 0 || txPackets < 0 || operations < 0;
         }
@@ -119,6 +130,8 @@ public class NetworkStats implements Parcelable {
             this.operations += another.operations;
         }
 
+=======
+>>>>>>> upstream/master
         @Override
         public String toString() {
             final StringBuilder builder = new StringBuilder();
@@ -163,7 +176,11 @@ public class NetworkStats implements Parcelable {
         operations = parcel.createLongArray();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(elapsedRealtime);
         dest.writeInt(size);
@@ -362,7 +379,11 @@ public class NetworkStats implements Parcelable {
      */
     public void spliceOperationsFrom(NetworkStats stats) {
         for (int i = 0; i < size; i++) {
+<<<<<<< HEAD
             final int j = stats.findIndex(iface[i], uid[i], set[i], tag[i]);
+=======
+            final int j = stats.findIndex(IFACE_ALL, uid[i], set[i], tag[i]);
+>>>>>>> upstream/master
             if (j == -1) {
                 operations[i] = 0;
             } else {
@@ -414,7 +435,11 @@ public class NetworkStats implements Parcelable {
      * Return total of all fields represented by this snapshot object.
      */
     public Entry getTotal(Entry recycle) {
+<<<<<<< HEAD
         return getTotal(recycle, null, UID_ALL, false);
+=======
+        return getTotal(recycle, null, UID_ALL);
+>>>>>>> upstream/master
     }
 
     /**
@@ -422,7 +447,11 @@ public class NetworkStats implements Parcelable {
      * the requested {@link #uid}.
      */
     public Entry getTotal(Entry recycle, int limitUid) {
+<<<<<<< HEAD
         return getTotal(recycle, null, limitUid, false);
+=======
+        return getTotal(recycle, null, limitUid);
+>>>>>>> upstream/master
     }
 
     /**
@@ -430,11 +459,15 @@ public class NetworkStats implements Parcelable {
      * the requested {@link #iface}.
      */
     public Entry getTotal(Entry recycle, HashSet<String> limitIface) {
+<<<<<<< HEAD
         return getTotal(recycle, limitIface, UID_ALL, false);
     }
 
     public Entry getTotalIncludingTags(Entry recycle) {
         return getTotal(recycle, null, UID_ALL, true);
+=======
+        return getTotal(recycle, limitIface, UID_ALL);
+>>>>>>> upstream/master
     }
 
     /**
@@ -444,8 +477,12 @@ public class NetworkStats implements Parcelable {
      * @param limitIface Set of {@link #iface} to include in total; or {@code
      *            null} to include all ifaces.
      */
+<<<<<<< HEAD
     private Entry getTotal(
             Entry recycle, HashSet<String> limitIface, int limitUid, boolean includeTags) {
+=======
+    private Entry getTotal(Entry recycle, HashSet<String> limitIface, int limitUid) {
+>>>>>>> upstream/master
         final Entry entry = recycle != null ? recycle : new Entry();
 
         entry.iface = IFACE_ALL;
@@ -464,7 +501,11 @@ public class NetworkStats implements Parcelable {
 
             if (matchesUid && matchesIface) {
                 // skip specific tags, since already counted in TAG_NONE
+<<<<<<< HEAD
                 if (tag[i] != TAG_NONE && !includeTags) continue;
+=======
+                if (tag[i] != TAG_NONE) continue;
+>>>>>>> upstream/master
 
                 entry.rxBytes += rxBytes[i];
                 entry.rxPackets += rxPackets[i];
@@ -481,6 +522,7 @@ public class NetworkStats implements Parcelable {
      * between two snapshots in time. Assumes that statistics rows collect over
      * time, and that none of them have disappeared.
      */
+<<<<<<< HEAD
     public NetworkStats subtract(NetworkStats right) {
         return subtract(this, right, null, null);
     }
@@ -501,10 +543,30 @@ public class NetworkStats implements Parcelable {
                 observer.foundNonMonotonic(left, -1, right, -1, cookie);
             }
             deltaRealtime = 0;
+=======
+    public NetworkStats subtract(NetworkStats value) throws NonMonotonicException {
+        return subtract(value, false);
+    }
+
+    /**
+     * Subtract the given {@link NetworkStats}, effectively leaving the delta
+     * between two snapshots in time. Assumes that statistics rows collect over
+     * time, and that none of them have disappeared.
+     *
+     * @param clampNonMonotonic When non-monotonic stats are found, just clamp
+     *            to 0 instead of throwing {@link NonMonotonicException}.
+     */
+    public NetworkStats subtract(NetworkStats value, boolean clampNonMonotonic)
+            throws NonMonotonicException {
+        final long deltaRealtime = this.elapsedRealtime - value.elapsedRealtime;
+        if (deltaRealtime < 0) {
+            throw new NonMonotonicException(this, value);
+>>>>>>> upstream/master
         }
 
         // result will have our rows, and elapsed time between snapshots
         final Entry entry = new Entry();
+<<<<<<< HEAD
         final NetworkStats result = new NetworkStats(deltaRealtime, left.size);
         for (int i = 0; i < left.size; i++) {
             entry.iface = left.iface[i];
@@ -539,6 +601,43 @@ public class NetworkStats implements Parcelable {
                     entry.txBytes = Math.max(entry.txBytes, 0);
                     entry.txPackets = Math.max(entry.txPackets, 0);
                     entry.operations = Math.max(entry.operations, 0);
+=======
+        final NetworkStats result = new NetworkStats(deltaRealtime, size);
+        for (int i = 0; i < size; i++) {
+            entry.iface = iface[i];
+            entry.uid = uid[i];
+            entry.set = set[i];
+            entry.tag = tag[i];
+
+            // find remote row that matches, and subtract
+            final int j = value.findIndexHinted(entry.iface, entry.uid, entry.set, entry.tag, i);
+            if (j == -1) {
+                // newly appearing row, return entire value
+                entry.rxBytes = rxBytes[i];
+                entry.rxPackets = rxPackets[i];
+                entry.txBytes = txBytes[i];
+                entry.txPackets = txPackets[i];
+                entry.operations = operations[i];
+            } else {
+                // existing row, subtract remote value
+                entry.rxBytes = rxBytes[i] - value.rxBytes[j];
+                entry.rxPackets = rxPackets[i] - value.rxPackets[j];
+                entry.txBytes = txBytes[i] - value.txBytes[j];
+                entry.txPackets = txPackets[i] - value.txPackets[j];
+                entry.operations = operations[i] - value.operations[j];
+
+                if (entry.rxBytes < 0 || entry.rxPackets < 0 || entry.txBytes < 0
+                        || entry.txPackets < 0 || entry.operations < 0) {
+                    if (clampNonMonotonic) {
+                        entry.rxBytes = Math.max(entry.rxBytes, 0);
+                        entry.rxPackets = Math.max(entry.rxPackets, 0);
+                        entry.txBytes = Math.max(entry.txBytes, 0);
+                        entry.txPackets = Math.max(entry.txPackets, 0);
+                        entry.operations = Math.max(entry.operations, 0);
+                    } else {
+                        throw new NonMonotonicException(this, i, value, j);
+                    }
+>>>>>>> upstream/master
                 }
             }
 
@@ -670,25 +769,55 @@ public class NetworkStats implements Parcelable {
         return writer.toString();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+    /** {@inheritDoc} */
+>>>>>>> upstream/master
     public int describeContents() {
         return 0;
     }
 
     public static final Creator<NetworkStats> CREATOR = new Creator<NetworkStats>() {
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkStats createFromParcel(Parcel in) {
             return new NetworkStats(in);
         }
 
+<<<<<<< HEAD
         @Override
+=======
+>>>>>>> upstream/master
         public NetworkStats[] newArray(int size) {
             return new NetworkStats[size];
         }
     };
 
+<<<<<<< HEAD
     public interface NonMonotonicObserver<C> {
         public void foundNonMonotonic(
                 NetworkStats left, int leftIndex, NetworkStats right, int rightIndex, C cookie);
+=======
+    public static class NonMonotonicException extends Exception {
+        public final NetworkStats left;
+        public final NetworkStats right;
+        public final int leftIndex;
+        public final int rightIndex;
+
+        public NonMonotonicException(NetworkStats left, NetworkStats right) {
+            this(left, -1, right, -1);
+        }
+
+        public NonMonotonicException(
+                NetworkStats left, int leftIndex, NetworkStats right, int rightIndex) {
+            this.left = checkNotNull(left, "missing left");
+            this.right = checkNotNull(right, "missing right");
+            this.leftIndex = leftIndex;
+            this.rightIndex = rightIndex;
+        }
+>>>>>>> upstream/master
     }
 }

@@ -2,10 +2,13 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
+<<<<<<< HEAD
     android_media_MediaCrypto.cpp \
     android_media_MediaCodec.cpp \
     android_media_MediaCodecList.cpp \
     android_media_MediaExtractor.cpp \
+=======
+>>>>>>> upstream/master
     android_media_MediaPlayer.cpp \
     android_media_MediaRecorder.cpp \
     android_media_MediaScanner.cpp \
@@ -24,12 +27,16 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libbinder \
     libmedia \
+<<<<<<< HEAD
     libmedia_native \
+=======
+>>>>>>> upstream/master
     libskia \
     libui \
     libcutils \
     libgui \
     libstagefright \
+<<<<<<< HEAD
     libstagefright_foundation \
     libcamera_client \
     libmtp \
@@ -42,11 +49,19 @@ LOCAL_REQUIRED_MODULES := \
 
 LOCAL_STATIC_LIBRARIES := \
     libstagefright_amrnbenc
+=======
+    libcamera_client \
+    libsqlite \
+    libmtp \
+    libusbhost \
+    libexif
+>>>>>>> upstream/master
 
 LOCAL_C_INCLUDES += \
     external/jhead \
     external/tremor/Tremor \
     frameworks/base/core/jni \
+<<<<<<< HEAD
     frameworks/av/media/libmedia \
     frameworks/av/media/libstagefright \
     frameworks/av/media/libstagefright/codecs/amrnb/enc/src \
@@ -54,6 +69,13 @@ LOCAL_C_INCLUDES += \
     frameworks/av/media/libstagefright/codecs/amrnb/common/include \
     frameworks/av/media/mtp \
     frameworks/native/include/media/openmax \
+=======
+    frameworks/base/media/libmedia \
+    frameworks/base/media/libstagefright/codecs/amrnb/enc/src \
+    frameworks/base/media/libstagefright/codecs/amrnb/common \
+    frameworks/base/media/libstagefright/codecs/amrnb/common/include \
+    frameworks/base/media/mtp \
+>>>>>>> upstream/master
     $(PV_INCLUDES) \
     $(JNI_H_INCLUDE) \
     $(call include-path-for, corecg graphics)

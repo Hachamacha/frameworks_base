@@ -19,7 +19,10 @@
 #define LOG_TAG "MediaScannerJNI"
 #include <utils/Log.h>
 #include <utils/threads.h>
+<<<<<<< HEAD
 #include <utils/Unicode.h>
+=======
+>>>>>>> upstream/master
 #include <media/mediascanner.h>
 #include <media/stagefright/StagefrightMediaScanner.h>
 
@@ -49,7 +52,11 @@ static fields_t fields;
 
 static status_t checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
     if (env->ExceptionCheck()) {
+<<<<<<< HEAD
         ALOGE("An exception was thrown by callback '%s'.", methodName);
+=======
+        LOGE("An exception was thrown by callback '%s'.", methodName);
+>>>>>>> upstream/master
         LOGE_EX(env);
         env->ExceptionClear();
         return UNKNOWN_ERROR;
@@ -57,6 +64,56 @@ static status_t checkAndClearExceptionFromCallback(JNIEnv* env, const char* meth
     return OK;
 }
 
+<<<<<<< HEAD
+=======
+// stolen from dalvik/vm/checkJni.cpp
+static bool isValidUtf8(const char* bytes) {
+    while (*bytes != '\0') {
+        unsigned char utf8 = *(bytes++);
+        // Switch on the high four bits.
+        switch (utf8 >> 4) {
+        case 0x00:
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x04:
+        case 0x05:
+        case 0x06:
+        case 0x07:
+            // Bit pattern 0xxx. No need for any extra bytes.
+            break;
+        case 0x08:
+        case 0x09:
+        case 0x0a:
+        case 0x0b:
+        case 0x0f:
+            /*
+             * Bit pattern 10xx or 1111, which are illegal start bytes.
+             * Note: 1111 is valid for normal UTF-8, but not the
+             * modified UTF-8 used here.
+             */
+            return false;
+        case 0x0e:
+            // Bit pattern 1110, so there are two additional bytes.
+            utf8 = *(bytes++);
+            if ((utf8 & 0xc0) != 0x80) {
+                return false;
+            }
+            // Fall through to take care of the final byte.
+        case 0x0c:
+        case 0x0d:
+            // Bit pattern 110x, so there is one additional byte.
+            utf8 = *(bytes++);
+            if ((utf8 & 0xc0) != 0x80) {
+                return false;
+            }
+            break;
+        }
+    }
+    return true;
+}
+
+>>>>>>> upstream/master
 class MyMediaScannerClient : public MediaScannerClient
 {
 public:
@@ -67,12 +124,20 @@ public:
             mHandleStringTagMethodID(0),
             mSetMimeTypeMethodID(0)
     {
+<<<<<<< HEAD
         ALOGV("MyMediaScannerClient constructor");
+=======
+        LOGV("MyMediaScannerClient constructor");
+>>>>>>> upstream/master
         jclass mediaScannerClientInterface =
                 env->FindClass(kClassMediaScannerClient);
 
         if (mediaScannerClientInterface == NULL) {
+<<<<<<< HEAD
             ALOGE("Class %s not found", kClassMediaScannerClient);
+=======
+            LOGE("Class %s not found", kClassMediaScannerClient);
+>>>>>>> upstream/master
         } else {
             mScanFileMethodID = env->GetMethodID(
                                     mediaScannerClientInterface,
@@ -93,14 +158,22 @@ public:
 
     virtual ~MyMediaScannerClient()
     {
+<<<<<<< HEAD
         ALOGV("MyMediaScannerClient destructor");
+=======
+        LOGV("MyMediaScannerClient destructor");
+>>>>>>> upstream/master
         mEnv->DeleteGlobalRef(mClient);
     }
 
     virtual status_t scanFile(const char* path, long long lastModified,
             long long fileSize, bool isDirectory, bool noMedia)
     {
+<<<<<<< HEAD
         ALOGV("scanFile: path(%s), time(%lld), size(%lld) and isDir(%d)",
+=======
+        LOGV("scanFile: path(%s), time(%lld), size(%lld) and isDir(%d)",
+>>>>>>> upstream/master
             path, lastModified, fileSize, isDirectory);
 
         jstring pathStr;
@@ -118,17 +191,26 @@ public:
 
     virtual status_t handleStringTag(const char* name, const char* value)
     {
+<<<<<<< HEAD
         ALOGV("handleStringTag: name(%s) and value(%s)", name, value);
+=======
+        LOGV("handleStringTag: name(%s) and value(%s)", name, value);
+>>>>>>> upstream/master
         jstring nameStr, valueStr;
         if ((nameStr = mEnv->NewStringUTF(name)) == NULL) {
             mEnv->ExceptionClear();
             return NO_MEMORY;
         }
+<<<<<<< HEAD
 
         // Check if the value is valid UTF-8 string and replace
         // any un-printable characters with '?' when it's not.
         char *cleaned = NULL;
         if (utf8_length(value) == -1) {
+=======
+        char *cleaned = NULL;
+        if (!isValidUtf8(value)) {
+>>>>>>> upstream/master
             cleaned = strdup(value);
             char *chp = cleaned;
             char ch;
@@ -158,7 +240,11 @@ public:
 
     virtual status_t setMimeType(const char* mimeType)
     {
+<<<<<<< HEAD
         ALOGV("setMimeType: %s", mimeType);
+=======
+        LOGV("setMimeType: %s", mimeType);
+>>>>>>> upstream/master
         jstring mimeTypeStr;
         if ((mimeTypeStr = mEnv->NewStringUTF(mimeType)) == NULL) {
             mEnv->ExceptionClear();
@@ -194,7 +280,11 @@ static void
 android_media_MediaScanner_processDirectory(
         JNIEnv *env, jobject thiz, jstring path, jobject client)
 {
+<<<<<<< HEAD
     ALOGV("processDirectory");
+=======
+    LOGV("processDirectory");
+>>>>>>> upstream/master
     MediaScanner *mp = getNativeScanner_l(env, thiz);
     if (mp == NULL) {
         jniThrowException(env, kRunTimeException, "No scanner available");
@@ -214,7 +304,11 @@ android_media_MediaScanner_processDirectory(
     MyMediaScannerClient myClient(env, client);
     MediaScanResult result = mp->processDirectory(pathStr, myClient);
     if (result == MEDIA_SCAN_RESULT_ERROR) {
+<<<<<<< HEAD
         ALOGE("An error occurred while scanning directory '%s'.", pathStr);
+=======
+        LOGE("An error occurred while scanning directory '%s'.", pathStr);
+>>>>>>> upstream/master
     }
     env->ReleaseStringUTFChars(path, pathStr);
 }
@@ -224,7 +318,11 @@ android_media_MediaScanner_processFile(
         JNIEnv *env, jobject thiz, jstring path,
         jstring mimeType, jobject client)
 {
+<<<<<<< HEAD
     ALOGV("processFile");
+=======
+    LOGV("processFile");
+>>>>>>> upstream/master
 
     // Lock already hold by processDirectory
     MediaScanner *mp = getNativeScanner_l(env, thiz);
@@ -254,7 +352,11 @@ android_media_MediaScanner_processFile(
     MyMediaScannerClient myClient(env, client);
     MediaScanResult result = mp->processFile(pathStr, mimeTypeStr, myClient);
     if (result == MEDIA_SCAN_RESULT_ERROR) {
+<<<<<<< HEAD
         ALOGE("An error occurred while scanning file '%s'.", pathStr);
+=======
+        LOGE("An error occurred while scanning file '%s'.", pathStr);
+>>>>>>> upstream/master
     }
     env->ReleaseStringUTFChars(path, pathStr);
     if (mimeType) {
@@ -266,7 +368,11 @@ static void
 android_media_MediaScanner_setLocale(
         JNIEnv *env, jobject thiz, jstring locale)
 {
+<<<<<<< HEAD
     ALOGV("setLocale");
+=======
+    LOGV("setLocale");
+>>>>>>> upstream/master
     MediaScanner *mp = getNativeScanner_l(env, thiz);
     if (mp == NULL) {
         jniThrowException(env, kRunTimeException, "No scanner available");
@@ -290,7 +396,11 @@ static jbyteArray
 android_media_MediaScanner_extractAlbumArt(
         JNIEnv *env, jobject thiz, jobject fileDescriptor)
 {
+<<<<<<< HEAD
     ALOGV("extractAlbumArt");
+=======
+    LOGV("extractAlbumArt");
+>>>>>>> upstream/master
     MediaScanner *mp = getNativeScanner_l(env, thiz);
     if (mp == NULL) {
         jniThrowException(env, kRunTimeException, "No scanner available");
@@ -331,7 +441,11 @@ done:
 static void
 android_media_MediaScanner_native_init(JNIEnv *env)
 {
+<<<<<<< HEAD
     ALOGV("native_init");
+=======
+    LOGV("native_init");
+>>>>>>> upstream/master
     jclass clazz = env->FindClass(kClassMediaScanner);
     if (clazz == NULL) {
         return;
@@ -346,7 +460,11 @@ android_media_MediaScanner_native_init(JNIEnv *env)
 static void
 android_media_MediaScanner_native_setup(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_setup");
+=======
+    LOGV("native_setup");
+>>>>>>> upstream/master
     MediaScanner *mp = new StagefrightMediaScanner;
 
     if (mp == NULL) {
@@ -360,7 +478,11 @@ android_media_MediaScanner_native_setup(JNIEnv *env, jobject thiz)
 static void
 android_media_MediaScanner_native_finalize(JNIEnv *env, jobject thiz)
 {
+<<<<<<< HEAD
     ALOGV("native_finalize");
+=======
+    LOGV("native_finalize");
+>>>>>>> upstream/master
     MediaScanner *mp = getNativeScanner_l(env, thiz);
     if (mp == 0) {
         return;

@@ -345,7 +345,11 @@ filters.
 <p>
 For information on how Intent objects are tested against intent filters, 
 see a separate document, 
+<<<<<<< HEAD
 <a href="{@docRoot}guide/components/intents-filters.html">Intents 
+=======
+<a href="{@docRoot}guide/topics/intents/intents-filters.html">Intents 
+>>>>>>> upstream/master
 and Intent Filters</a>.
 </p>
 

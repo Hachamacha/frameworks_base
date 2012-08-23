@@ -23,7 +23,11 @@
 #include <utils/RefBase.h>
 #include <ui/Region.h>
 
+<<<<<<< HEAD
 #include <SkRegion.h>
+=======
+#include <SkCanvas.h>
+>>>>>>> upstream/master
 
 #include "Layer.h"
 #include "Matrix.h"
@@ -43,12 +47,52 @@ namespace uirenderer {
  */
 class Snapshot: public LightRefBase<Snapshot> {
 public:
+<<<<<<< HEAD
 
     Snapshot();
     Snapshot(const sp<Snapshot>& s, int saveFlags);
 
     /**
      * Various flags set on ::flags.
+=======
+    Snapshot(): flags(0), previous(NULL), layer(NULL), fbo(0), invisible(false), empty(false) {
+        transform = &mTransformRoot;
+        clipRect = &mClipRectRoot;
+        region = NULL;
+    }
+
+    /**
+     * Copies the specified snapshot/ The specified snapshot is stored as
+     * the previous snapshot.
+     */
+    Snapshot(const sp<Snapshot>& s, int saveFlags):
+            flags(0), previous(s), layer(NULL), fbo(s->fbo),
+            invisible(s->invisible), empty(false), viewport(s->viewport), height(s->height) {
+        if (saveFlags & SkCanvas::kMatrix_SaveFlag) {
+            mTransformRoot.load(*s->transform);
+            transform = &mTransformRoot;
+        } else {
+            transform = s->transform;
+        }
+
+        if (saveFlags & SkCanvas::kClip_SaveFlag) {
+            mClipRectRoot.set(*s->clipRect);
+            clipRect = &mClipRectRoot;
+        } else {
+            clipRect = s->clipRect;
+        }
+
+        if (s->flags & Snapshot::kFlagFboTarget) {
+            flags |= Snapshot::kFlagFboTarget;
+            region = s->region;
+        } else {
+            region = NULL;
+        }
+    }
+
+    /**
+     * Various flags set on #flags.
+>>>>>>> upstream/master
      */
     enum Flags {
         /**
@@ -84,18 +128,67 @@ public:
      * by this snapshot's trasnformation.
      */
     bool clip(float left, float top, float right, float bottom,
+<<<<<<< HEAD
             SkRegion::Op op = SkRegion::kIntersect_Op);
+=======
+            SkRegion::Op op = SkRegion::kIntersect_Op) {
+        Rect r(left, top, right, bottom);
+        transform->mapRect(r);
+        return clipTransformed(r, op);
+    }
+>>>>>>> upstream/master
 
     /**
      * Modifies the current clip with the new clip rectangle and
      * the specified operation. The specified rectangle is considered
      * already transformed.
      */
+<<<<<<< HEAD
     bool clipTransformed(const Rect& r, SkRegion::Op op = SkRegion::kIntersect_Op);
+=======
+    bool clipTransformed(const Rect& r, SkRegion::Op op = SkRegion::kIntersect_Op) {
+        bool clipped = false;
+
+        // NOTE: The unimplemented operations require support for regions
+        // Supporting regions would require using a stencil buffer instead
+        // of the scissor. The stencil buffer itself is not too expensive
+        // (memory cost excluded) but on fillrate limited devices, managing
+        // the stencil might have a negative impact on the framerate.
+        switch (op) {
+            case SkRegion::kDifference_Op:
+                break;
+            case SkRegion::kIntersect_Op:
+                clipped = clipRect->intersect(r);
+                if (!clipped) {
+                    clipRect->setEmpty();
+                    clipped = true;
+                }
+                break;
+            case SkRegion::kUnion_Op:
+                clipped = clipRect->unionWith(r);
+                break;
+            case SkRegion::kXOR_Op:
+                break;
+            case SkRegion::kReverseDifference_Op:
+                break;
+            case SkRegion::kReplace_Op:
+                clipRect->set(r);
+                clipped = true;
+                break;
+        }
+
+        if (clipped) {
+            flags |= Snapshot::kFlagClipSet;
+        }
+
+        return clipped;
+    }
+>>>>>>> upstream/master
 
     /**
      * Sets the current clip.
      */
+<<<<<<< HEAD
     void setClip(float left, float top, float right, float bottom);
 
     /**
@@ -119,6 +212,37 @@ public:
      * is typicalled ignored if its layer is invisible or empty.
      */
     bool isIgnored() const;
+=======
+    void setClip(float left, float top, float right, float bottom) {
+        clipRect->set(left, top, right, bottom);
+        flags |= Snapshot::kFlagClipSet;
+    }
+
+    const Rect& getLocalClip() {
+        mat4 inverse;
+        inverse.loadInverse(*transform);
+
+        mLocalClip.set(*clipRect);
+        inverse.mapRect(mLocalClip);
+
+        return mLocalClip;
+    }
+
+    void resetTransform(float x, float y, float z) {
+        transform = &mTransformRoot;
+        transform->loadTranslate(x, y, z);
+    }
+
+    void resetClip(float left, float top, float right, float bottom) {
+        clipRect = &mClipRectRoot;
+        clipRect->set(left, top, right, bottom);
+        flags |= Snapshot::kFlagClipSet;
+    }
+
+    bool isIgnored() const {
+        return invisible || empty;
+    }
+>>>>>>> upstream/master
 
     /**
      * Dirty flags.
@@ -132,8 +256,11 @@ public:
 
     /**
      * Only set when the flag kFlagIsLayer is set.
+<<<<<<< HEAD
      *
      * This snapshot does not own the layer, this pointer must not be freed.
+=======
+>>>>>>> upstream/master
      */
     Layer* layer;
 
@@ -174,13 +301,17 @@ public:
     /**
      * Local transformation. Holds the current translation, scale and
      * rotation values.
+<<<<<<< HEAD
      *
      * This is a reference to a matrix owned by this snapshot or another
      *  snapshot. This pointer must not be freed. See ::mTransformRoot.
+=======
+>>>>>>> upstream/master
      */
     mat4* transform;
 
     /**
+<<<<<<< HEAD
      * Current clip rect. The clip is stored in canvas-space coordinates,
      * (screen-space coordinates in the regular case.)
      *
@@ -228,14 +359,30 @@ private:
     bool clipRegionAnd(float left, float top, float right, float bottom);
     bool clipRegionNand(float left, float top, float right, float bottom);
 
+=======
+     * Current clip region. The clip is stored in canvas-space coordinates,
+     * (screen-space coordinates in the regular case.)
+     */
+    Rect* clipRect;
+
+    /**
+     * The ancestor layer's dirty region.
+     */
+    Region* region;
+
+private:
+>>>>>>> upstream/master
     mat4 mTransformRoot;
     Rect mClipRectRoot;
     Rect mLocalClip;
 
+<<<<<<< HEAD
 #if STENCIL_BUFFER_SIZE
     Region mClipRegionRoot;
 #endif
 
+=======
+>>>>>>> upstream/master
 }; // class Snapshot
 
 }; // namespace uirenderer

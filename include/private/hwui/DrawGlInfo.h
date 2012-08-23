@@ -31,10 +31,13 @@ struct DrawGlInfo {
     int clipRight;
     int clipBottom;
 
+<<<<<<< HEAD
     // Input: current width/height of destination surface
     int width;
     int height;
 
+=======
+>>>>>>> upstream/master
     // Input: is the render target an FBO
     bool isLayer;
 
@@ -46,6 +49,7 @@ struct DrawGlInfo {
     float dirtyTop;
     float dirtyRight;
     float dirtyBottom;
+<<<<<<< HEAD
 
     /**
      * Values used as the "what" parameter of the functor.
@@ -81,6 +85,8 @@ struct DrawGlInfo {
         // commands are issued.
         kStatusDrew = 0x4
     };
+=======
+>>>>>>> upstream/master
 }; // struct DrawGlInfo
 
 }; // namespace uirenderer

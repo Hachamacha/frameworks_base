@@ -21,7 +21,13 @@ import com.android.frameworks.coretests.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.widget.Button;
+=======
+import android.widget.LinearLayout;
+import android.widget.Button;
+import android.view.View;
+>>>>>>> upstream/master
 
 /**
  * Exercises cases where elements of the UI are requestFocus()ed.

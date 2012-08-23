@@ -35,9 +35,15 @@ class ZoomControlExternal implements ZoomControlBase {
     private Runnable mZoomControlRunnable;
     private final Handler mPrivateHandler = new Handler();
 
+<<<<<<< HEAD
     private final WebViewClassic mWebView;
 
     public ZoomControlExternal(WebViewClassic webView) {
+=======
+    private final WebView mWebView;
+
+    public ZoomControlExternal(WebView webView) {
+>>>>>>> upstream/master
         mWebView = webView;
     }
 

@@ -49,8 +49,11 @@ public class DrmManagerClient {
      */
     public static final int ERROR_UNKNOWN = -2000;
 
+<<<<<<< HEAD
     HandlerThread mInfoThread;
     HandlerThread mEventThread;
+=======
+>>>>>>> upstream/master
     private static final String TAG = "DrmManagerClient";
 
     static {
@@ -107,7 +110,10 @@ public class DrmManagerClient {
 
     private int mUniqueId;
     private int mNativeContext;
+<<<<<<< HEAD
     private boolean mReleased;
+=======
+>>>>>>> upstream/master
     private Context mContext;
     private InfoHandler mInfoHandler;
     private EventHandler mEventHandler;
@@ -241,6 +247,7 @@ public class DrmManagerClient {
      */
     public DrmManagerClient(Context context) {
         mContext = context;
+<<<<<<< HEAD
         mReleased = false;
         createEventThreads();
 
@@ -282,6 +289,23 @@ public class DrmManagerClient {
         mOnInfoListener = null;
         mOnErrorListener = null;
         _release(mUniqueId);
+=======
+
+        HandlerThread infoThread = new HandlerThread("DrmManagerClient.InfoHandler");
+        infoThread.start();
+        mInfoHandler = new InfoHandler(infoThread.getLooper());
+
+        HandlerThread eventThread = new HandlerThread("DrmManagerClient.EventHandler");
+        eventThread.start();
+        mEventHandler = new EventHandler(eventThread.getLooper());
+
+        // save the unique id
+        mUniqueId = _initialize(new WeakReference<DrmManagerClient>(this));
+    }
+
+    protected void finalize() {
+        _finalize(mUniqueId);
+>>>>>>> upstream/master
     }
 
     /**
@@ -291,9 +315,14 @@ public class DrmManagerClient {
      * @param infoListener Interface definition for the callback.
      */
     public synchronized void setOnInfoListener(OnInfoListener infoListener) {
+<<<<<<< HEAD
         mOnInfoListener = infoListener;
         if (null != infoListener) {
             createListeners();
+=======
+        if (null != infoListener) {
+            mOnInfoListener = infoListener;
+>>>>>>> upstream/master
         }
     }
 
@@ -304,9 +333,14 @@ public class DrmManagerClient {
      * @param eventListener Interface definition for the callback.
      */
     public synchronized void setOnEventListener(OnEventListener eventListener) {
+<<<<<<< HEAD
         mOnEventListener = eventListener;
         if (null != eventListener) {
             createListeners();
+=======
+        if (null != eventListener) {
+            mOnEventListener = eventListener;
+>>>>>>> upstream/master
         }
     }
 
@@ -317,9 +351,14 @@ public class DrmManagerClient {
      * @param errorListener Interface definition for the callback.
      */
     public synchronized void setOnErrorListener(OnErrorListener errorListener) {
+<<<<<<< HEAD
         mOnErrorListener = errorListener;
         if (null != errorListener) {
             createListeners();
+=======
+        if (null != errorListener) {
+            mOnErrorListener = errorListener;
+>>>>>>> upstream/master
         }
     }
 
@@ -349,7 +388,10 @@ public class DrmManagerClient {
      *
      * @return A {@link android.content.ContentValues} instance that contains
      * key-value pairs representing the constraints. Null in case of failure.
+<<<<<<< HEAD
      * The keys are defined in {@link DrmStore.ConstraintsColumns}.
+=======
+>>>>>>> upstream/master
      */
     public ContentValues getConstraints(String path, int action) {
         if (null == path || path.equals("") || !DrmStore.Action.isValid(action)) {
@@ -825,11 +867,17 @@ public class DrmManagerClient {
     }
 
     // private native interfaces
+<<<<<<< HEAD
     private native int _initialize();
 
     private native void _setListeners(int uniqueId, Object weak_this);
 
     private native void _release(int uniqueId);
+=======
+    private native int _initialize(Object weak_this);
+
+    private native void _finalize(int uniqueId);
+>>>>>>> upstream/master
 
     private native void _installDrmEngine(int uniqueId, String engineFilepath);
 
@@ -864,6 +912,7 @@ public class DrmManagerClient {
     private native DrmConvertedStatus _closeConvertSession(int uniqueId, int convertId);
 
     private native DrmSupportInfo[] _getAllSupportInfo(int uniqueId);
+<<<<<<< HEAD
 
     private void createEventThreads() {
         if (mEventHandler == null && mInfoHandler == null) {
@@ -880,5 +929,7 @@ public class DrmManagerClient {
     private void createListeners() {
         _setListeners(mUniqueId, new WeakReference<DrmManagerClient>(this));
     }
+=======
+>>>>>>> upstream/master
 }
 

@@ -105,9 +105,12 @@
                 />
         </FrameLayout>
     </FrameLayout>
+<<<<<<< HEAD
     <ImageView
         android:id="@+id/airplane"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         />
+=======
+>>>>>>> upstream/master
 </com.android.systemui.statusbar.SignalClusterView>

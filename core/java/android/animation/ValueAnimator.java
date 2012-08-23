@@ -19,9 +19,13 @@ package android.animation;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+<<<<<<< HEAD
 import android.os.SystemProperties;
 import android.util.AndroidRuntimeException;
 import android.view.Choreographer;
+=======
+import android.util.AndroidRuntimeException;
+>>>>>>> upstream/master
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -53,7 +57,22 @@ public class ValueAnimator extends Animator {
     /**
      * Internal constants
      */
+<<<<<<< HEAD
     private static float sDurationScale = 1.0f;
+=======
+
+    /*
+     * The default amount of time in ms between animation frames
+     */
+    private static final long DEFAULT_FRAME_DELAY = 10;
+
+    /**
+     * Messages sent to timing handler: START is sent when an animation first begins, FRAME is sent
+     * by the handler to itself to process the next animation frame
+     */
+    static final int ANIMATION_START = 0;
+    static final int ANIMATION_FRAME = 1;
+>>>>>>> upstream/master
 
     /**
      * Values used with internal variable mPlayingState to indicate the current state of an
@@ -81,15 +100,79 @@ public class ValueAnimator extends Animator {
      */
     long mSeekTime = -1;
 
+<<<<<<< HEAD
+=======
+    // TODO: We access the following ThreadLocal variables often, some of them on every update.
+    // If ThreadLocal access is significantly expensive, we may want to put all of these
+    // fields into a structure sot hat we just access ThreadLocal once to get the reference
+    // to that structure, then access the structure directly for each field.
+
+>>>>>>> upstream/master
     // The static sAnimationHandler processes the internal timing loop on which all animations
     // are based
     private static ThreadLocal<AnimationHandler> sAnimationHandler =
             new ThreadLocal<AnimationHandler>();
 
+<<<<<<< HEAD
+=======
+    // The per-thread list of all active animations
+    private static final ThreadLocal<ArrayList<ValueAnimator>> sAnimations =
+            new ThreadLocal<ArrayList<ValueAnimator>>() {
+                @Override
+                protected ArrayList<ValueAnimator> initialValue() {
+                    return new ArrayList<ValueAnimator>();
+                }
+            };
+
+    // The per-thread set of animations to be started on the next animation frame
+    private static final ThreadLocal<ArrayList<ValueAnimator>> sPendingAnimations =
+            new ThreadLocal<ArrayList<ValueAnimator>>() {
+                @Override
+                protected ArrayList<ValueAnimator> initialValue() {
+                    return new ArrayList<ValueAnimator>();
+                }
+            };
+
+    /**
+     * Internal per-thread collections used to avoid set collisions as animations start and end
+     * while being processed.
+     */
+    private static final ThreadLocal<ArrayList<ValueAnimator>> sDelayedAnims =
+            new ThreadLocal<ArrayList<ValueAnimator>>() {
+                @Override
+                protected ArrayList<ValueAnimator> initialValue() {
+                    return new ArrayList<ValueAnimator>();
+                }
+            };
+
+    private static final ThreadLocal<ArrayList<ValueAnimator>> sEndingAnims =
+            new ThreadLocal<ArrayList<ValueAnimator>>() {
+                @Override
+                protected ArrayList<ValueAnimator> initialValue() {
+                    return new ArrayList<ValueAnimator>();
+                }
+            };
+
+    private static final ThreadLocal<ArrayList<ValueAnimator>> sReadyAnims =
+            new ThreadLocal<ArrayList<ValueAnimator>>() {
+                @Override
+                protected ArrayList<ValueAnimator> initialValue() {
+                    return new ArrayList<ValueAnimator>();
+                }
+            };
+
+>>>>>>> upstream/master
     // The time interpolator to be used if none is set on the animation
     private static final TimeInterpolator sDefaultInterpolator =
             new AccelerateDecelerateInterpolator();
 
+<<<<<<< HEAD
+=======
+    // type evaluators for the primitive types handled by this implementation
+    private static final TypeEvaluator sIntEvaluator = new IntEvaluator();
+    private static final TypeEvaluator sFloatEvaluator = new FloatEvaluator();
+
+>>>>>>> upstream/master
     /**
      * Used to indicate whether the animation is currently playing in reverse. This causes the
      * elapsed fraction to be inverted to calculate the appropriate values.
@@ -145,6 +228,7 @@ public class ValueAnimator extends Animator {
     private boolean mStarted = false;
 
     /**
+<<<<<<< HEAD
      * Tracks whether we've notified listeners of the onAnimationSTart() event. This can be
      * complex to keep track of since we notify listeners at different times depending on
      * startDelay and whether start() was called before end().
@@ -152,6 +236,8 @@ public class ValueAnimator extends Animator {
     private boolean mStartListenersCalled = false;
 
     /**
+=======
+>>>>>>> upstream/master
      * Flag that denotes whether the animation is set up and ready to go. Used to
      * set up animation that has not yet been started.
      */
@@ -162,12 +248,22 @@ public class ValueAnimator extends Animator {
     //
 
     // How long the animation should last in ms
+<<<<<<< HEAD
     private long mDuration = (long)(300 * sDurationScale);
     private long mUnscaledDuration = 300;
 
     // The amount of time in ms to delay starting the animation after start() is called
     private long mStartDelay = 0;
     private long mUnscaledStartDelay = 0;
+=======
+    private long mDuration = 300;
+
+    // The amount of time in ms to delay starting the animation after start() is called
+    private long mStartDelay = 0;
+
+    // The number of milliseconds between animation frames
+    private static long sFrameDelay = DEFAULT_FRAME_DELAY;
+>>>>>>> upstream/master
 
     // The number of times the animation will repeat. The default is 0, which means the animation
     // will play only once
@@ -223,6 +319,7 @@ public class ValueAnimator extends Animator {
      */
     public static final int INFINITE = -1;
 
+<<<<<<< HEAD
 
     /**
      * @hide
@@ -231,6 +328,8 @@ public class ValueAnimator extends Animator {
         sDurationScale = durationScale;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Creates a new ValueAnimator object. This default constructor is primarily for
      * use internally; the factory methods which take parameters are more generally
@@ -402,7 +501,11 @@ public class ValueAnimator extends Animator {
 
     /**
      * Sets the values, per property, being animated between. This function is called internally
+<<<<<<< HEAD
      * by the constructors of ValueAnimator that take a list of values. But a ValueAnimator can
+=======
+     * by the constructors of ValueAnimator that take a list of values. But an ValueAnimator can
+>>>>>>> upstream/master
      * be constructed without values and this method can be called to set the values manually
      * instead.
      *
@@ -467,8 +570,12 @@ public class ValueAnimator extends Animator {
             throw new IllegalArgumentException("Animators cannot have negative duration: " +
                     duration);
         }
+<<<<<<< HEAD
         mUnscaledDuration = duration;
         mDuration = (long)(duration * sDurationScale);
+=======
+        mDuration = duration;
+>>>>>>> upstream/master
         return this;
     }
 
@@ -478,7 +585,11 @@ public class ValueAnimator extends Animator {
      * @return The length of the animation, in milliseconds.
      */
     public long getDuration() {
+<<<<<<< HEAD
         return mUnscaledDuration;
+=======
+        return mDuration;
+>>>>>>> upstream/master
     }
 
     /**
@@ -499,7 +610,11 @@ public class ValueAnimator extends Animator {
             mPlayingState = SEEKED;
         }
         mStartTime = currentTime - playTime;
+<<<<<<< HEAD
         doAnimationFrame(currentTime);
+=======
+        animationFrame(currentTime);
+>>>>>>> upstream/master
     }
 
     /**
@@ -523,6 +638,7 @@ public class ValueAnimator extends Animator {
      * the same times for calculating their values, which makes synchronizing
      * animations possible.
      *
+<<<<<<< HEAD
      * The handler uses the Choreographer for executing periodic callbacks.
      */
     private static class AnimationHandler implements Runnable {
@@ -643,6 +759,120 @@ public class ValueAnimator extends Animator {
             if (!mAnimationScheduled) {
                 mChoreographer.postCallback(Choreographer.CALLBACK_ANIMATION, this, null);
                 mAnimationScheduled = true;
+=======
+     */
+    private static class AnimationHandler extends Handler {
+        /**
+         * There are only two messages that we care about: ANIMATION_START and
+         * ANIMATION_FRAME. The START message is sent when an animation's start()
+         * method is called. It cannot start synchronously when start() is called
+         * because the call may be on the wrong thread, and it would also not be
+         * synchronized with other animations because it would not start on a common
+         * timing pulse. So each animation sends a START message to the handler, which
+         * causes the handler to place the animation on the active animations queue and
+         * start processing frames for that animation.
+         * The FRAME message is the one that is sent over and over while there are any
+         * active animations to process.
+         */
+        @Override
+        public void handleMessage(Message msg) {
+            boolean callAgain = true;
+            ArrayList<ValueAnimator> animations = sAnimations.get();
+            ArrayList<ValueAnimator> delayedAnims = sDelayedAnims.get();
+            switch (msg.what) {
+                // TODO: should we avoid sending frame message when starting if we
+                // were already running?
+                case ANIMATION_START:
+                    ArrayList<ValueAnimator> pendingAnimations = sPendingAnimations.get();
+                    if (animations.size() > 0 || delayedAnims.size() > 0) {
+                        callAgain = false;
+                    }
+                    // pendingAnims holds any animations that have requested to be started
+                    // We're going to clear sPendingAnimations, but starting animation may
+                    // cause more to be added to the pending list (for example, if one animation
+                    // starting triggers another starting). So we loop until sPendingAnimations
+                    // is empty.
+                    while (pendingAnimations.size() > 0) {
+                        ArrayList<ValueAnimator> pendingCopy =
+                                (ArrayList<ValueAnimator>) pendingAnimations.clone();
+                        pendingAnimations.clear();
+                        int count = pendingCopy.size();
+                        for (int i = 0; i < count; ++i) {
+                            ValueAnimator anim = pendingCopy.get(i);
+                            // If the animation has a startDelay, place it on the delayed list
+                            if (anim.mStartDelay == 0) {
+                                anim.startAnimation();
+                            } else {
+                                delayedAnims.add(anim);
+                            }
+                        }
+                    }
+                    // fall through to process first frame of new animations
+                case ANIMATION_FRAME:
+                    // currentTime holds the common time for all animations processed
+                    // during this frame
+                    long currentTime = AnimationUtils.currentAnimationTimeMillis();
+                    ArrayList<ValueAnimator> readyAnims = sReadyAnims.get();
+                    ArrayList<ValueAnimator> endingAnims = sEndingAnims.get();
+
+                    // First, process animations currently sitting on the delayed queue, adding
+                    // them to the active animations if they are ready
+                    int numDelayedAnims = delayedAnims.size();
+                    for (int i = 0; i < numDelayedAnims; ++i) {
+                        ValueAnimator anim = delayedAnims.get(i);
+                        if (anim.delayedAnimationFrame(currentTime)) {
+                            readyAnims.add(anim);
+                        }
+                    }
+                    int numReadyAnims = readyAnims.size();
+                    if (numReadyAnims > 0) {
+                        for (int i = 0; i < numReadyAnims; ++i) {
+                            ValueAnimator anim = readyAnims.get(i);
+                            anim.startAnimation();
+                            anim.mRunning = true;
+                            delayedAnims.remove(anim);
+                        }
+                        readyAnims.clear();
+                    }
+
+                    // Now process all active animations. The return value from animationFrame()
+                    // tells the handler whether it should now be ended
+                    int numAnims = animations.size();
+                    int i = 0;
+                    while (i < numAnims) {
+                        ValueAnimator anim = animations.get(i);
+                        if (anim.animationFrame(currentTime)) {
+                            endingAnims.add(anim);
+                        }
+                        if (animations.size() == numAnims) {
+                            ++i;
+                        } else {
+                            // An animation might be canceled or ended by client code
+                            // during the animation frame. Check to see if this happened by
+                            // seeing whether the current index is the same as it was before
+                            // calling animationFrame(). Another approach would be to copy
+                            // animations to a temporary list and process that list instead,
+                            // but that entails garbage and processing overhead that would
+                            // be nice to avoid.
+                            --numAnims;
+                            endingAnims.remove(anim);
+                        }
+                    }
+                    if (endingAnims.size() > 0) {
+                        for (i = 0; i < endingAnims.size(); ++i) {
+                            endingAnims.get(i).endAnimation();
+                        }
+                        endingAnims.clear();
+                    }
+
+                    // If there are still active or delayed animations, call the handler again
+                    // after the frameDelay
+                    if (callAgain && (!animations.isEmpty() || !delayedAnims.isEmpty())) {
+                        sendEmptyMessageDelayed(ANIMATION_FRAME, Math.max(0, sFrameDelay -
+                            (AnimationUtils.currentAnimationTimeMillis() - currentTime)));
+                    }
+                    break;
+>>>>>>> upstream/master
             }
         }
     }
@@ -654,7 +884,11 @@ public class ValueAnimator extends Animator {
      * @return the number of milliseconds to delay running the animation
      */
     public long getStartDelay() {
+<<<<<<< HEAD
         return mUnscaledStartDelay;
+=======
+        return mStartDelay;
+>>>>>>> upstream/master
     }
 
     /**
@@ -664,8 +898,12 @@ public class ValueAnimator extends Animator {
      * @param startDelay The amount of the delay, in milliseconds
      */
     public void setStartDelay(long startDelay) {
+<<<<<<< HEAD
         this.mStartDelay = (long)(startDelay * sDurationScale);
         mUnscaledStartDelay = startDelay;
+=======
+        this.mStartDelay = startDelay;
+>>>>>>> upstream/master
     }
 
     /**
@@ -675,6 +913,7 @@ public class ValueAnimator extends Animator {
      * function because the same delay will be applied to all animations, since they are all
      * run off of a single timing loop.
      *
+<<<<<<< HEAD
      * The frame delay may be ignored when the animation system uses an external timing
      * source, such as the display refresh rate (vsync), to govern animations.
      *
@@ -682,6 +921,12 @@ public class ValueAnimator extends Animator {
      */
     public static long getFrameDelay() {
         return Choreographer.getFrameDelay();
+=======
+     * @return the requested time between frames, in milliseconds
+     */
+    public static long getFrameDelay() {
+        return sFrameDelay;
+>>>>>>> upstream/master
     }
 
     /**
@@ -691,6 +936,7 @@ public class ValueAnimator extends Animator {
      * function because the same delay will be applied to all animations, since they are all
      * run off of a single timing loop.
      *
+<<<<<<< HEAD
      * The frame delay may be ignored when the animation system uses an external timing
      * source, such as the display refresh rate (vsync), to govern animations.
      *
@@ -698,6 +944,12 @@ public class ValueAnimator extends Animator {
      */
     public static void setFrameDelay(long frameDelay) {
         Choreographer.setFrameDelay(frameDelay);
+=======
+     * @param frameDelay the requested time between frames, in milliseconds
+     */
+    public static void setFrameDelay(long frameDelay) {
+        sFrameDelay = frameDelay;
+>>>>>>> upstream/master
     }
 
     /**
@@ -872,6 +1124,7 @@ public class ValueAnimator extends Animator {
         }
     }
 
+<<<<<<< HEAD
     private void notifyStartListeners() {
         if (mListeners != null && !mStartListenersCalled) {
             ArrayList<AnimatorListener> tmpListeners =
@@ -884,6 +1137,8 @@ public class ValueAnimator extends Animator {
         mStartListenersCalled = true;
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Start the animation playing. This version of start() takes a boolean flag that indicates
      * whether the animation should play in reverse. The flag is usually false, but may be set
@@ -906,6 +1161,7 @@ public class ValueAnimator extends Animator {
         mPlayingState = STOPPED;
         mStarted = true;
         mStartedDelay = false;
+<<<<<<< HEAD
         AnimationHandler animationHandler = getOrCreateAnimationHandler();
         animationHandler.mPendingAnimations.add(this);
         if (mStartDelay == 0) {
@@ -916,6 +1172,30 @@ public class ValueAnimator extends Animator {
             notifyStartListeners();
         }
         animationHandler.start();
+=======
+        sPendingAnimations.get().add(this);
+        if (mStartDelay == 0) {
+            // This sets the initial value of the animation, prior to actually starting it running
+            setCurrentPlayTime(getCurrentPlayTime());
+            mPlayingState = STOPPED;
+            mRunning = true;
+
+            if (mListeners != null) {
+                ArrayList<AnimatorListener> tmpListeners =
+                        (ArrayList<AnimatorListener>) mListeners.clone();
+                int numListeners = tmpListeners.size();
+                for (int i = 0; i < numListeners; ++i) {
+                    tmpListeners.get(i).onAnimationStart(this);
+                }
+            }
+        }
+        AnimationHandler animationHandler = sAnimationHandler.get();
+        if (animationHandler == null) {
+            animationHandler = new AnimationHandler();
+            sAnimationHandler.set(animationHandler);
+        }
+        animationHandler.sendEmptyMessage(ANIMATION_START);
+>>>>>>> upstream/master
     }
 
     @Override
@@ -927,6 +1207,7 @@ public class ValueAnimator extends Animator {
     public void cancel() {
         // Only cancel if the animation is actually running or has been started and is about
         // to run
+<<<<<<< HEAD
         AnimationHandler handler = getOrCreateAnimationHandler();
         if (mPlayingState != STOPPED
                 || handler.mPendingAnimations.contains(this)
@@ -937,24 +1218,41 @@ public class ValueAnimator extends Animator {
                     // If it's not yet running, then start listeners weren't called. Call them now.
                     notifyStartListeners();
                 }
+=======
+        if (mPlayingState != STOPPED || sPendingAnimations.get().contains(this) ||
+                sDelayedAnims.get().contains(this)) {
+            // Only notify listeners if the animator has actually started
+            if (mRunning && mListeners != null) {
+>>>>>>> upstream/master
                 ArrayList<AnimatorListener> tmpListeners =
                         (ArrayList<AnimatorListener>) mListeners.clone();
                 for (AnimatorListener listener : tmpListeners) {
                     listener.onAnimationCancel(this);
                 }
             }
+<<<<<<< HEAD
             endAnimation(handler);
+=======
+            endAnimation();
+>>>>>>> upstream/master
         }
     }
 
     @Override
     public void end() {
+<<<<<<< HEAD
         AnimationHandler handler = getOrCreateAnimationHandler();
         if (!handler.mAnimations.contains(this) && !handler.mPendingAnimations.contains(this)) {
             // Special case if the animation has not yet started; get it ready for ending
             mStartedDelay = false;
             startAnimation(handler);
             mStarted = true;
+=======
+        if (!sAnimations.get().contains(this) && !sPendingAnimations.get().contains(this)) {
+            // Special case if the animation has not yet started; get it ready for ending
+            mStartedDelay = false;
+            startAnimation();
+>>>>>>> upstream/master
         } else if (!mInitialized) {
             initAnimation();
         }
@@ -965,7 +1263,11 @@ public class ValueAnimator extends Animator {
         } else {
             animateValue(1f);
         }
+<<<<<<< HEAD
         endAnimation(handler);
+=======
+        endAnimation();
+>>>>>>> upstream/master
     }
 
     @Override
@@ -1001,6 +1303,7 @@ public class ValueAnimator extends Animator {
      * Called internally to end an animation by removing it from the animations list. Must be
      * called on the UI thread.
      */
+<<<<<<< HEAD
     private void endAnimation(AnimationHandler handler) {
         handler.mAnimations.remove(this);
         handler.mPendingAnimations.remove(this);
@@ -1011,6 +1314,14 @@ public class ValueAnimator extends Animator {
                 // If it's not yet running, then start listeners weren't called. Call them now.
                 notifyStartListeners();
              }
+=======
+    private void endAnimation() {
+        sAnimations.get().remove(this);
+        sPendingAnimations.get().remove(this);
+        sDelayedAnims.get().remove(this);
+        mPlayingState = STOPPED;
+        if (mRunning && mListeners != null) {
+>>>>>>> upstream/master
             ArrayList<AnimatorListener> tmpListeners =
                     (ArrayList<AnimatorListener>) mListeners.clone();
             int numListeners = tmpListeners.size();
@@ -1020,13 +1331,17 @@ public class ValueAnimator extends Animator {
         }
         mRunning = false;
         mStarted = false;
+<<<<<<< HEAD
         mStartListenersCalled = false;
+=======
+>>>>>>> upstream/master
     }
 
     /**
      * Called internally to start an animation by adding it to the active animations list. Must be
      * called on the UI thread.
      */
+<<<<<<< HEAD
     private void startAnimation(AnimationHandler handler) {
         initAnimation();
         handler.mAnimations.add(this);
@@ -1034,6 +1349,20 @@ public class ValueAnimator extends Animator {
             // Listeners were already notified in start() if startDelay is 0; this is
             // just for delayed animations
             notifyStartListeners();
+=======
+    private void startAnimation() {
+        initAnimation();
+        sAnimations.get().add(this);
+        if (mStartDelay > 0 && mListeners != null) {
+            // Listeners were already notified in start() if startDelay is 0; this is
+            // just for delayed animations
+            ArrayList<AnimatorListener> tmpListeners =
+                    (ArrayList<AnimatorListener>) mListeners.clone();
+            int numListeners = tmpListeners.size();
+            for (int i = 0; i < numListeners; ++i) {
+                tmpListeners.get(i).onAnimationStart(this);
+            }
+>>>>>>> upstream/master
         }
     }
 
@@ -1078,6 +1407,20 @@ public class ValueAnimator extends Animator {
      */
     boolean animationFrame(long currentTime) {
         boolean done = false;
+<<<<<<< HEAD
+=======
+
+        if (mPlayingState == STOPPED) {
+            mPlayingState = RUNNING;
+            if (mSeekTime < 0) {
+                mStartTime = currentTime;
+            } else {
+                mStartTime = currentTime - mSeekTime;
+                // Now that we're playing, reset the seek time
+                mSeekTime = -1;
+            }
+        }
+>>>>>>> upstream/master
         switch (mPlayingState) {
         case RUNNING:
         case SEEKED:
@@ -1113,6 +1456,7 @@ public class ValueAnimator extends Animator {
     }
 
     /**
+<<<<<<< HEAD
      * Processes a frame of the animation, adjusting the start time if needed.
      *
      * @param frameTime The frame time.
@@ -1138,6 +1482,8 @@ public class ValueAnimator extends Animator {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Returns the current animation fraction, which is the elapsed/interpolated fraction used in
      * the most recent frame update on the animation.
      *
@@ -1224,14 +1570,23 @@ public class ValueAnimator extends Animator {
     /**
      * Return the number of animations currently running.
      *
+<<<<<<< HEAD
      * Used by StrictMode internally to annotate violations.
      * May be called on arbitrary threads!
+=======
+     * Used by StrictMode internally to annotate violations.  Only
+     * called on the main thread.
+>>>>>>> upstream/master
      *
      * @hide
      */
     public static int getCurrentAnimationsCount() {
+<<<<<<< HEAD
         AnimationHandler handler = sAnimationHandler.get();
         return handler != null ? handler.mAnimations.size() : 0;
+=======
+        return sAnimations.get().size();
+>>>>>>> upstream/master
     }
 
     /**
@@ -1241,6 +1596,7 @@ public class ValueAnimator extends Animator {
      * @hide
      */
     public static void clearAllAnimations() {
+<<<<<<< HEAD
         AnimationHandler handler = sAnimationHandler.get();
         if (handler != null) {
             handler.mAnimations.clear();
@@ -1256,6 +1612,11 @@ public class ValueAnimator extends Animator {
             sAnimationHandler.set(handler);
         }
         return handler;
+=======
+        sAnimations.get().clear();
+        sPendingAnimations.get().clear();
+        sDelayedAnims.get().clear();
+>>>>>>> upstream/master
     }
 
     @Override

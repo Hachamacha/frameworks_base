@@ -246,17 +246,25 @@ public class StaticLayout extends Layout {
             int width = firstWidth;
 
             float w = 0;
+<<<<<<< HEAD
             // here is the offset of the starting character of the line we are currently measuring
             int here = paraStart;
 
             // ok is a character offset located after a word separator (space, tab, number...) where
             // we would prefer to cut the current line. Equals to here when no such break was found.
+=======
+            int here = paraStart;
+
+>>>>>>> upstream/master
             int ok = paraStart;
             float okWidth = w;
             int okAscent = 0, okDescent = 0, okTop = 0, okBottom = 0;
 
+<<<<<<< HEAD
             // fit is a character offset such that the [here, fit[ range fits in the allowed width.
             // We will cut the line there if no ok position is found.
+=======
+>>>>>>> upstream/master
             int fit = paraStart;
             float fitWidth = w;
             int fitAscent = 0, fitDescent = 0, fitTop = 0, fitBottom = 0;
@@ -265,6 +273,7 @@ public class StaticLayout extends Layout {
             boolean hasTab = false;
             TabStops tabStops = null;
 
+<<<<<<< HEAD
             for (int spanStart = paraStart, spanEnd; spanStart < paraEnd; spanStart = spanEnd) {
 
                 if (spanned == null) {
@@ -281,6 +290,32 @@ public class StaticLayout extends Layout {
                     measured.addStyleRun(paint, spans, spanLen, fm);
                 }
 
+=======
+            for (int spanStart = paraStart, spanEnd = spanStart, nextSpanStart;
+                    spanStart < paraEnd; spanStart = nextSpanStart) {
+
+                if (spanStart == spanEnd) {
+                    if (spanned == null)
+                        spanEnd = paraEnd;
+                    else
+                        spanEnd = spanned.nextSpanTransition(spanStart, paraEnd,
+                                MetricAffectingSpan.class);
+
+                    int spanLen = spanEnd - spanStart;
+                    if (spanned == null) {
+                        measured.addStyleRun(paint, spanLen, fm);
+                    } else {
+                        MetricAffectingSpan[] spans =
+                            spanned.getSpans(spanStart, spanEnd, MetricAffectingSpan.class);
+                        spans = TextUtils.removeEmptySpans(spans, spanned,
+                                MetricAffectingSpan.class);
+                        measured.addStyleRun(paint, spans, spanLen, fm);
+                    }
+                }
+
+                nextSpanStart = spanEnd;
+
+>>>>>>> upstream/master
                 int fmTop = fm.top;
                 int fmBottom = fm.bottom;
                 int fmAscent = fm.ascent;
@@ -340,6 +375,11 @@ public class StaticLayout extends Layout {
                         w += widths[j - paraStart];
                     }
 
+<<<<<<< HEAD
+=======
+                    // Log.e("text", "was " + before + " now " + w + " after " + c + " within " + width);
+
+>>>>>>> upstream/master
                     if (w <= width) {
                         fitWidth = w;
                         fit = j + 1;
@@ -368,6 +408,10 @@ public class StaticLayout extends Layout {
                          * except for NS (non-starters), which can be broken
                          * after but not before.
                          */
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
                         if (c == CHAR_SPACE || c == CHAR_TAB ||
                             ((c == CHAR_DOT || c == CHAR_COMMA ||
                                     c == CHAR_COLON || c == CHAR_SEMICOLON) &&
@@ -431,9 +475,23 @@ public class StaticLayout extends Layout {
                                 needMultiply, chdirs, dir, easy, bufEnd, includepad, trackpad,
                                 chs, widths, paraStart, ellipsize, ellipsizedWidth,
                                 currentTextWidth, paint, moreChars);
+<<<<<<< HEAD
 
                         here = endPos;
                         j = here - 1; // restart j-span loop from here, compensating for the j++
+=======
+                        here = endPos;
+
+                        if (here < spanStart) {
+                            // didn't output all the text for this span
+                            // we've measured the raw widths, though, so
+                            // just reset the start point
+                            j = nextSpanStart = here;
+                        } else {
+                            j = here - 1;    // continue looping
+                        }
+
+>>>>>>> upstream/master
                         ok = fit = here;
                         w = 0;
                         fitAscent = fitDescent = fitTop = fitBottom = 0;
@@ -442,6 +500,7 @@ public class StaticLayout extends Layout {
                         if (--firstWidthLineLimit <= 0) {
                             width = restWidth;
                         }
+<<<<<<< HEAD
 
                         if (here < spanStart) {
                             // The text was cut before the beginning of the current span range.
@@ -452,6 +511,9 @@ public class StaticLayout extends Layout {
                         }
                     }
                     // FIXME This should be moved in the above else block which changes mLineCount
+=======
+                    }
+>>>>>>> upstream/master
                     if (mLineCount >= mMaximumVisibleLineCount) {
                         break;
                     }
@@ -711,8 +773,12 @@ public class StaticLayout extends Layout {
             boolean currentLineIsTheLastVisibleOne = (j + 1 == mMaximumVisibleLineCount);
             boolean forceEllipsis = moreChars && (mLineCount + 1 == mMaximumVisibleLineCount);
 
+<<<<<<< HEAD
             boolean doEllipsis =
                         (((mMaximumVisibleLineCount == 1 && moreChars) || (firstLine && !moreChars)) &&
+=======
+            boolean doEllipsis = (firstLine && !moreChars &&
+>>>>>>> upstream/master
                                 ellipsize != TextUtils.TruncateAt.MARQUEE) ||
                         (!firstLine && (currentLineIsTheLastVisibleOne || !moreChars) &&
                                 ellipsize == TextUtils.TruncateAt.END);
@@ -740,8 +806,12 @@ public class StaticLayout extends Layout {
         }
 
         float ellipsisWidth = paint.measureText(
+<<<<<<< HEAD
                 (where == TextUtils.TruncateAt.END_SMALL) ?
                         ELLIPSIS_TWO_DOTS : ELLIPSIS_NORMAL, 0, 1);
+=======
+                (where == TextUtils.TruncateAt.END_SMALL) ? ELLIPSIS_TWO_DOTS : ELLIPSIS_NORMAL);
+>>>>>>> upstream/master
         int ellipsisStart = 0;
         int ellipsisCount = 0;
         int len = lineEnd - lineStart;
@@ -981,6 +1051,12 @@ public class StaticLayout extends Layout {
 
     private static final double EXTRA_ROUNDING = 0.5;
 
+<<<<<<< HEAD
+=======
+    private static final String ELLIPSIS_NORMAL = "\u2026"; // this is "..."
+    private static final String ELLIPSIS_TWO_DOTS = "\u2025"; // this is ".."
+
+>>>>>>> upstream/master
     private static final int CHAR_FIRST_HIGH_SURROGATE = 0xD800;
     private static final int CHAR_LAST_LOW_SURROGATE = 0xDFFF;
 

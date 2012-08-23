@@ -15,6 +15,10 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
+=======
+    <item android:state_enabled="false" android:drawable="@drawable/switch_bg_disabled_holo_light" />
+>>>>>>> upstream/master
     <item android:state_focused="true"  android:drawable="@drawable/switch_bg_focused_holo_light" />
     <item                               android:drawable="@drawable/switch_bg_holo_light" />
 </selector>

@@ -54,7 +54,11 @@ public class RtpStream {
     private int mRemotePort = -1;
     private int mMode = MODE_NORMAL;
 
+<<<<<<< HEAD
     private int mSocket = -1;
+=======
+    private int mNative;
+>>>>>>> upstream/master
     static {
         System.loadLibrary("rtp_jni");
     }
@@ -165,9 +169,13 @@ public class RtpStream {
         mRemotePort = port;
     }
 
+<<<<<<< HEAD
     int getSocket() {
         return mSocket;
     }
+=======
+    synchronized native int dup();
+>>>>>>> upstream/master
 
     /**
      * Releases allocated resources. The stream becomes inoperable after calling
@@ -177,6 +185,7 @@ public class RtpStream {
      * @see #isBusy()
      */
     public void release() {
+<<<<<<< HEAD
         synchronized (this) {
             if (isBusy()) {
                 throw new IllegalStateException("Busy");
@@ -186,6 +195,15 @@ public class RtpStream {
     }
 
     private native void close();
+=======
+        if (isBusy()) {
+            throw new IllegalStateException("Busy");
+        }
+        close();
+    }
+
+    private synchronized native void close();
+>>>>>>> upstream/master
 
     @Override
     protected void finalize() throws Throwable {

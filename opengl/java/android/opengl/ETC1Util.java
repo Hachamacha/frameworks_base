@@ -193,7 +193,11 @@ public class ETC1Util {
         int encodedImageSize = ETC1.getEncodedDataSize(width, height);
         ByteBuffer compressedImage = ByteBuffer.allocateDirect(encodedImageSize).
             order(ByteOrder.nativeOrder());
+<<<<<<< HEAD
         ETC1.encodeImage(input, width, height, pixelSize, stride, compressedImage);
+=======
+        ETC1.encodeImage(input, width, height, 3, stride, compressedImage);
+>>>>>>> upstream/master
         return new ETC1Texture(width, height, compressedImage);
     }
 

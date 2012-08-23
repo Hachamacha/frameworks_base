@@ -24,7 +24,10 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+<<<<<<< HEAD
 import android.content.ContextWrapper;
+=======
+>>>>>>> upstream/master
 import android.content.CursorEntityIterator;
 import android.content.Entity;
 import android.content.EntityIterator;
@@ -751,6 +754,11 @@ public final class ContactsContract {
         public static final String SYNC3 = "sync3";
         /** Generic column for use by sync adapters. */
         public static final String SYNC4 = "sync4";
+<<<<<<< HEAD
+=======
+	/** FB */
+	public static final String IS_RESTRICTED = "is_restricted";
+>>>>>>> upstream/master
     }
 
     /**
@@ -1537,11 +1545,15 @@ public final class ContactsContract {
          *
          * @param resolver the ContentResolver to use
          * @param contactId the person who was contacted
+<<<<<<< HEAD
          *
          * @deprecated The class DataUsageStatUpdater of the Android support library should
          *     be used instead.
          */
         @Deprecated
+=======
+         */
+>>>>>>> upstream/master
         public static void markAsContacted(ContentResolver resolver, long contactId) {
             Uri uri = ContentUris.withAppendedId(CONTENT_URI, contactId);
             ContentValues values = new ContentValues();
@@ -3050,6 +3062,7 @@ public final class ContactsContract {
      * requires android.permission.READ_SOCIAL_STREAM permission, and inserting or updating social
      * stream items requires android.permission.WRITE_SOCIAL_STREAM permission.
      * </p>
+<<<<<<< HEAD
      * <h3>Account check</h3>
      * <p>
      * The content URIs to the insert, update and delete operations are required to have the account
@@ -3057,6 +3070,8 @@ public final class ContactsContract {
      * {@link RawContacts#ACCOUNT_TYPE} and {@link RawContacts#ACCOUNT_NAME}.
      * {@link RawContacts#DATA_SET} isn't required.
      * </p>
+=======
+>>>>>>> upstream/master
      * <h3>Operations</h3>
      * <dl>
      * <dt><b>Insert</b></dt>
@@ -3071,12 +3086,18 @@ public final class ContactsContract {
      * values.put(StreamItems.TEXT, "Breakfasted at Tiffanys");
      * values.put(StreamItems.TIMESTAMP, timestamp);
      * values.put(StreamItems.COMMENTS, "3 people reshared this");
+<<<<<<< HEAD
      * Uri.Builder builder = RawContacts.CONTENT_URI.buildUpon();
      * ContentUris.appendId(builder, rawContactId);
      * builder.appendEncodedPath(RawContacts.StreamItems.CONTENT_DIRECTORY);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * Uri streamItemUri = getContentResolver().insert(builder.build(), values);
+=======
+     * Uri streamItemUri = getContentResolver().insert(
+     *     Uri.withAppendedPath(ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawContactId),
+     *         RawContacts.StreamItems.CONTENT_DIRECTORY), values);
+>>>>>>> upstream/master
      * long streamItemId = ContentUris.parseId(streamItemUri);
      * </pre>
      * </dd>
@@ -3088,10 +3109,14 @@ public final class ContactsContract {
      * values.put(StreamItems.TEXT, "Breakfasted at Tiffanys");
      * values.put(StreamItems.TIMESTAMP, timestamp);
      * values.put(StreamItems.COMMENTS, "3 people reshared this");
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_URI.buildUpon();
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * Uri streamItemUri = getContentResolver().insert(builder.build(), values);
+=======
+     * Uri streamItemUri = getContentResolver().insert(StreamItems.CONTENT_URI, values);
+>>>>>>> upstream/master
      * long streamItemId = ContentUris.parseId(streamItemUri);
      *</pre>
      * </dd>
@@ -3424,6 +3449,7 @@ public final class ContactsContract {
      * requires android.permission.READ_SOCIAL_STREAM permission, and inserting or updating
      * social stream photos requires android.permission.WRITE_SOCIAL_STREAM permission.
      * </p>
+<<<<<<< HEAD
      * <h3>Account check</h3>
      * <p>
      * The content URIs to the insert, update and delete operations are required to have the account
@@ -3431,6 +3457,8 @@ public final class ContactsContract {
      * {@link RawContacts#ACCOUNT_TYPE} and {@link RawContacts#ACCOUNT_NAME}.
      * {@link RawContacts#DATA_SET} isn't required.
      * </p>
+=======
+>>>>>>> upstream/master
      * <h3>Operations</h3>
      * <dl>
      * <dt><b>Insert</b></dt>
@@ -3447,12 +3475,18 @@ public final class ContactsContract {
      * ContentValues values = new ContentValues();
      * values.put(StreamItemPhotos.SORT_INDEX, 1);
      * values.put(StreamItemPhotos.PHOTO, photoData);
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_URI.buildUpon();
      * ContentUris.appendId(builder, streamItemId);
      * builder.appendEncodedPath(StreamItems.StreamItemPhotos.CONTENT_DIRECTORY);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * Uri photoUri = getContentResolver().insert(builder.build(), values);
+=======
+     * Uri photoUri = getContentResolver().insert(Uri.withAppendedPath(
+     *     ContentUris.withAppendedId(StreamItems.CONTENT_URI, streamItemId)
+     *     StreamItems.StreamItemPhotos#CONTENT_DIRECTORY), values);
+>>>>>>> upstream/master
      * long photoId = ContentUris.parseId(photoUri);
      * </pre>
      * </dd>
@@ -3463,10 +3497,14 @@ public final class ContactsContract {
      * values.put(StreamItemPhotos.STREAM_ITEM_ID, streamItemId);
      * values.put(StreamItemPhotos.SORT_INDEX, 1);
      * values.put(StreamItemPhotos.PHOTO, photoData);
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_PHOTO_URI.buildUpon();
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * Uri photoUri = getContentResolver().insert(builder.build(), values);
+=======
+     * Uri photoUri = getContentResolver().insert(StreamItems.CONTENT_PHOTO_URI, values);
+>>>>>>> upstream/master
      * long photoId = ContentUris.parseId(photoUri);
      * </pre>
      * </dd>
@@ -3486,6 +3524,7 @@ public final class ContactsContract {
      * <pre>
      * ContentValues values = new ContentValues();
      * values.put(StreamItemPhotos.PHOTO, newPhotoData);
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_URI.buildUpon();
      * ContentUris.appendId(builder, streamItemId);
      * builder.appendEncodedPath(StreamItems.StreamItemPhotos.CONTENT_DIRECTORY);
@@ -3493,6 +3532,14 @@ public final class ContactsContract {
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * getContentResolver().update(builder.build(), values, null, null);
+=======
+     * getContentResolver().update(
+     *     ContentUris.withAppendedId(
+     *         Uri.withAppendedPath(
+     *             ContentUris.withAppendedId(StreamItems.CONTENT_URI, streamItemId)
+     *             StreamItems.StreamItemPhotos#CONTENT_DIRECTORY),
+     *         streamItemPhotoId), values, null, null);
+>>>>>>> upstream/master
      * </pre>
      * </dd>
      * <dt>Via the {@link ContactsContract.StreamItems#CONTENT_PHOTO_URI} URI:</dt>
@@ -3501,10 +3548,14 @@ public final class ContactsContract {
      * ContentValues values = new ContentValues();
      * values.put(StreamItemPhotos.STREAM_ITEM_ID, streamItemId);
      * values.put(StreamItemPhotos.PHOTO, newPhotoData);
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_PHOTO_URI.buildUpon();
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * getContentResolver().update(builder.build(), values);
+=======
+     * getContentResolver().update(StreamItems.CONTENT_PHOTO_URI, values);
+>>>>>>> upstream/master
      * </pre>
      * </dd>
      * </dl>
@@ -3520,6 +3571,7 @@ public final class ContactsContract {
      * </dt>
      * <dd>
      * <pre>
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_URI.buildUpon();
      * ContentUris.appendId(builder, streamItemId);
      * builder.appendEncodedPath(StreamItems.StreamItemPhotos.CONTENT_DIRECTORY);
@@ -3527,17 +3579,32 @@ public final class ContactsContract {
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * getContentResolver().delete(builder.build(), null, null);
+=======
+     * getContentResolver().delete(
+     *     ContentUris.withAppendedId(
+     *         Uri.withAppendedPath(
+     *             ContentUris.withAppendedId(StreamItems.CONTENT_URI, streamItemId)
+     *             StreamItems.StreamItemPhotos#CONTENT_DIRECTORY),
+     *         streamItemPhotoId), null, null);
+>>>>>>> upstream/master
      * </pre>
      * </dd>
      * <dt>Deleting all photos under a stream item</dt>
      * <dd>
      * <pre>
+<<<<<<< HEAD
      * Uri.Builder builder = StreamItems.CONTENT_URI.buildUpon();
      * ContentUris.appendId(builder, streamItemId);
      * builder.appendEncodedPath(StreamItems.StreamItemPhotos.CONTENT_DIRECTORY);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_NAME, accountName);
      * builder.appendQueryParameter(RawContacts.ACCOUNT_TYPE, accountType);
      * getContentResolver().delete(builder.build(), null, null);
+=======
+     * getContentResolver().delete(
+     *     Uri.withAppendedPath(
+     *         ContentUris.withAppendedId(StreamItems.CONTENT_URI, streamItemId)
+     *         StreamItems.StreamItemPhotos#CONTENT_DIRECTORY), null, null);
+>>>>>>> upstream/master
      * </pre>
      * </dd>
      * </dl>
@@ -4569,6 +4636,11 @@ public final class ContactsContract {
         /**
          * The phone number's E164 representation.
          * <P>Type: TEXT</P>
+<<<<<<< HEAD
+=======
+         *
+         * @hide
+>>>>>>> upstream/master
          */
         public static final String NORMALIZED_NUMBER = "normalized_number";
     }
@@ -5416,6 +5488,7 @@ public final class ContactsContract {
             public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI,
                     "filter");
 
+<<<<<<< HEAD
             /**
              * A boolean query parameter that can be used with {@link #CONTENT_FILTER_URI}.
              * If "1" or "true", display names are searched.  If "0" or "false", display names
@@ -5430,6 +5503,8 @@ public final class ContactsContract {
              */
             public static final String SEARCH_PHONE_NUMBER_KEY = "search_phone_number";
 
+=======
+>>>>>>> upstream/master
             public static final int TYPE_HOME = 1;
             public static final int TYPE_MOBILE = 2;
             public static final int TYPE_WORK = 3;
@@ -5458,11 +5533,18 @@ public final class ContactsContract {
             public static final String NUMBER = DATA;
 
             /**
+<<<<<<< HEAD
              * The phone number's E164 representation. This value can be omitted in which
              * case the provider will try to automatically infer it.  (It'll be left null if the
              * provider fails to infer.)
              * If present, {@link #NUMBER} has to be set as well (it will be ignored otherwise).
              * <P>Type: TEXT</P>
+=======
+             * The phone number's E164 representation.
+             * <P>Type: TEXT</P>
+             *
+             * @hide
+>>>>>>> upstream/master
              */
             public static final String NORMALIZED_NUMBER = DATA4;
 
@@ -6798,6 +6880,7 @@ public final class ContactsContract {
              */
             public static final String NAMESPACE = DataColumns.DATA2;
         }
+<<<<<<< HEAD
 
         /**
          * <p>
@@ -6831,6 +6914,8 @@ public final class ContactsContract {
             public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI,
                     "filter");
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -7505,7 +7590,11 @@ public final class ContactsContract {
     /**
      * <p>
      * API allowing applications to send usage information for each {@link Data} row to the
+<<<<<<< HEAD
      * Contacts Provider.  Applications can also clear all usage information.
+=======
+     * Contacts Provider.
+>>>>>>> upstream/master
      * </p>
      * <p>
      * With the feedback, Contacts Provider may return more contextually appropriate results for
@@ -7550,12 +7639,15 @@ public final class ContactsContract {
      * boolean successful = resolver.update(uri, new ContentValues(), null, null) > 0;
      * </pre>
      * </p>
+<<<<<<< HEAD
      * <p>
      * Applications can also clear all usage information with:
      * <pre>
      * boolean successful = resolver.delete(DataUsageFeedback.DELETE_USAGE_URI, null, null) > 0;
      * </pre>
      * </p>
+=======
+>>>>>>> upstream/master
      */
     public static final class DataUsageFeedback {
 
@@ -7567,6 +7659,7 @@ public final class ContactsContract {
                 Uri.withAppendedPath(Data.CONTENT_URI, "usagefeedback");
 
         /**
+<<<<<<< HEAD
          * The content:// style URI for deleting all usage information.
          * Must be used with {@link ContentResolver#delete(Uri, String, String[])}.
          * The {@code where} and {@code selectionArgs} parameters are ignored.
@@ -7575,6 +7668,8 @@ public final class ContactsContract {
                 Uri.withAppendedPath(Contacts.CONTENT_URI, "delete_usage");
 
         /**
+=======
+>>>>>>> upstream/master
          * <p>
          * Name for query parameter specifying the type of data usage.
          * </p>
@@ -7726,6 +7821,7 @@ public final class ContactsContract {
          */
         public static void showQuickContact(Context context, Rect target, Uri lookupUri, int mode,
                 String[] excludeMimes) {
+<<<<<<< HEAD
             // When launching from an Activiy, we don't want to start a new task, but otherwise
             // we *must* start a new task.  (Otherwise startActivity() would crash.)
             Context actualContext = context;
@@ -7739,6 +7835,12 @@ public final class ContactsContract {
 
             // Launch pivot dialog through intent for now
             final Intent intent = new Intent(ACTION_QUICK_CONTACT).addFlags(intentFlags);
+=======
+            // Launch pivot dialog through intent for now
+            final Intent intent = new Intent(ACTION_QUICK_CONTACT);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+>>>>>>> upstream/master
 
             intent.setData(lookupUri);
             intent.setSourceBounds(target);

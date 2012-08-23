@@ -1091,6 +1091,7 @@ public class TextUtils {
             if (avail < 0) {
                 // it all goes
             } else if (where == TruncateAt.START) {
+<<<<<<< HEAD
                 right = len - mt.breakText(len, false, avail);
             } else if (where == TruncateAt.END || where == TruncateAt.END_SMALL) {
                 left = mt.breakText(len, true, avail);
@@ -1098,6 +1099,15 @@ public class TextUtils {
                 right = len - mt.breakText(len, false, avail / 2);
                 avail -= mt.measure(right, len);
                 left = mt.breakText(right, true, avail);
+=======
+                right = len - mt.breakText(0, len, false, avail);
+            } else if (where == TruncateAt.END || where == TruncateAt.END_SMALL) {
+                left = mt.breakText(0, len, true, avail);
+            } else {
+                right = len - mt.breakText(0, len, false, avail / 2);
+                avail -= mt.measure(right, len);
+                left = mt.breakText(0, right, true, avail);
+>>>>>>> upstream/master
             }
 
             if (callback != null) {
@@ -1664,6 +1674,7 @@ public class TextUtils {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Pack 2 int values into a long, useful as a return value for a range
      * @see #unpackRangeStartFromLong(long)
@@ -1694,6 +1705,8 @@ public class TextUtils {
         return (int) (range & 0x00000000FFFFFFFFL);
     }
 
+=======
+>>>>>>> upstream/master
     private static Object sLock = new Object();
     private static char[] sTemp = null;
 

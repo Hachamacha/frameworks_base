@@ -143,8 +143,13 @@ class GLES20RecordingCanvas extends GLES20Canvas implements Poolable<GLES20Recor
     @Override
     public void drawBitmapMesh(Bitmap bitmap, int meshWidth, int meshHeight, float[] verts,
             int vertOffset, int[] colors, int colorOffset, Paint paint) {
+<<<<<<< HEAD
         super.drawBitmapMesh(bitmap, meshWidth, meshHeight, verts, vertOffset,
                 colors, colorOffset, paint);
+=======
+        super.drawBitmapMesh(bitmap, meshWidth, meshHeight, verts, vertOffset, colors, colorOffset,
+                paint);
+>>>>>>> upstream/master
         mDisplayList.mBitmaps.add(bitmap);
         // Shaders in the Paint are ignored when drawing a Bitmap
     }

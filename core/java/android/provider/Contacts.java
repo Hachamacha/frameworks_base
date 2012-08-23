@@ -84,7 +84,11 @@ public class Contacts {
     @Deprecated
     public static final int KIND_ORGANIZATION = 4;
     /**
+<<<<<<< HEAD
      * Signifies a Phone row that is stored in the Phones table
+=======
+     * Signifies an Phone row that is stored in the Phones table
+>>>>>>> upstream/master
      * @deprecated see {@link android.provider.ContactsContract}
      */
     @Deprecated

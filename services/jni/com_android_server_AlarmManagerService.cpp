@@ -46,10 +46,17 @@ static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv* env, jo
 
     int result = settimeofday(NULL, &tz);
     if (result < 0) {
+<<<<<<< HEAD
         ALOGE("Unable to set kernel timezone to %d: %s\n", minswest, strerror(errno));
         return -1;
     } else {
         ALOGD("Kernel timezone updated to %d minutes west of GMT\n", minswest);
+=======
+        LOGE("Unable to set kernel timezone to %d: %s\n", minswest, strerror(errno));
+        return -1;
+    } else {
+        LOGD("Kernel timezone updated to %d minutes west of GMT\n", minswest);
+>>>>>>> upstream/master
     }
 
     return 0;
@@ -74,7 +81,11 @@ static void android_server_AlarmManagerService_set(JNIEnv* env, jobject obj, jin
 	int result = ioctl(fd, ANDROID_ALARM_SET(type), &ts);
 	if (result < 0)
 	{
+<<<<<<< HEAD
         ALOGE("Unable to set alarm to %lld.%09lld: %s\n", seconds, nanoseconds, strerror(errno));
+=======
+        LOGE("Unable to set alarm to %lld.%09lld: %s\n", seconds, nanoseconds, strerror(errno));
+>>>>>>> upstream/master
     }
 }
 
@@ -89,7 +100,11 @@ static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv* env, jobject
 
 	if (result < 0)
 	{
+<<<<<<< HEAD
         ALOGE("Unable to wait on alarm: %s\n", strerror(errno));
+=======
+        LOGE("Unable to wait on alarm: %s\n", strerror(errno));
+>>>>>>> upstream/master
         return 0;
     }
 

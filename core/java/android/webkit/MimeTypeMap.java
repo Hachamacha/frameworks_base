@@ -17,6 +17,10 @@
 package android.webkit;
 
 import android.text.TextUtils;
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+>>>>>>> upstream/master
 import java.util.regex.Pattern;
 import libcore.net.MimeUtils;
 

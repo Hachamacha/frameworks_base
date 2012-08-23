@@ -32,9 +32,13 @@ import java.util.List;
  * {@hide}
  */
 public class MediaInserter {
+<<<<<<< HEAD
     private final HashMap<Uri, List<ContentValues>> mRowMap =
             new HashMap<Uri, List<ContentValues>>();
     private final HashMap<Uri, List<ContentValues>> mPriorityRowMap =
+=======
+    private HashMap<Uri, List<ContentValues>> mRowMap =
+>>>>>>> upstream/master
             new HashMap<Uri, List<ContentValues>>();
 
     private IContentProvider mProvider;
@@ -46,6 +50,7 @@ public class MediaInserter {
     }
 
     public void insert(Uri tableUri, ContentValues values) throws RemoteException {
+<<<<<<< HEAD
         insert(tableUri, values, false);
     }
 
@@ -64,18 +69,34 @@ public class MediaInserter {
         if (list.size() >= mBufferSizePerUri) {
             flushAllPriority();
             flush(tableUri, list);
+=======
+        List<ContentValues> list = mRowMap.get(tableUri);
+        if (list == null) {
+            list = new ArrayList<ContentValues>();
+            mRowMap.put(tableUri, list);
+        }
+        list.add(new ContentValues(values));
+        if (list.size() >= mBufferSizePerUri) {
+            flush(tableUri);
+>>>>>>> upstream/master
         }
     }
 
     public void flushAll() throws RemoteException {
+<<<<<<< HEAD
         flushAllPriority();
         for (Uri tableUri : mRowMap.keySet()){
             List<ContentValues> list = mRowMap.get(tableUri);
             flush(tableUri, list);
+=======
+        for (Uri tableUri : mRowMap.keySet()){
+            flush(tableUri);
+>>>>>>> upstream/master
         }
         mRowMap.clear();
     }
 
+<<<<<<< HEAD
     private void flushAllPriority() throws RemoteException {
         for (Uri tableUri : mPriorityRowMap.keySet()){
             List<ContentValues> list = mPriorityRowMap.get(tableUri);
@@ -85,6 +106,10 @@ public class MediaInserter {
     }
 
     private void flush(Uri tableUri, List<ContentValues> list) throws RemoteException {
+=======
+    private void flush(Uri tableUri) throws RemoteException {
+        List<ContentValues> list = mRowMap.get(tableUri);
+>>>>>>> upstream/master
         if (!list.isEmpty()) {
             ContentValues[] valuesArray = new ContentValues[list.size()];
             valuesArray = list.toArray(valuesArray);

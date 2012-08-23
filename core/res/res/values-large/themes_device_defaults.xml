@@ -32,6 +32,7 @@ easier.
  -->
 <resources>
     <style name="Theme.DeviceDefault.DialogWhenLarge"
+<<<<<<< HEAD
             parent="@android:style/Theme.DeviceDefault.Dialog.FixedSize">
         <item name="preferencePanelStyle">@style/PreferencePanel.Dialog</item>
     </style>
@@ -44,5 +45,19 @@ easier.
     </style>
     <style name="Theme.DeviceDefault.Light.DialogWhenLarge.NoActionBar"
             parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar.FixedSize">
+=======
+            parent="@android:style/Theme.DeviceDefault.Dialog.MinWidth">
+        <item name="preferencePanelStyle">@style/PreferencePanel.Dialog</item>
+    </style>
+    <style name="Theme.DeviceDefault.DialogWhenLarge.NoActionBar"
+            parent="@android:style/Theme.DeviceDefault.Dialog.NoActionBar.MinWidth">
+        <item name="preferencePanelStyle">@style/PreferencePanel.Dialog</item>
+    </style>
+    <style name="Theme.DeviceDefault.Light.DialogWhenLarge"
+            parent="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth">
+    </style>
+    <style name="Theme.DeviceDefault.Light.DialogWhenLarge.NoActionBar"
+            parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth">
+>>>>>>> upstream/master
     </style>
 </resources>

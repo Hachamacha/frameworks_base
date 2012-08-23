@@ -49,9 +49,15 @@ public final class Rect implements Parcelable {
      * checking is performed, so the caller must ensure that left <= right and
      * top <= bottom.
      *
+<<<<<<< HEAD
      * @param left   The X coordinate of the left side of the rectangle
      * @param top    The Y coordinate of the top of the rectangle
      * @param right  The X coordinate of the right side of the rectangle
+=======
+     * @param left   The X coordinate of the left side of the rectagle
+     * @param top    The Y coordinate of the top of the rectangle
+     * @param right  The X coordinate of the right side of the rectagle
+>>>>>>> upstream/master
      * @param bottom The Y coordinate of the bottom of the rectangle
      */
     public Rect(int left, int top, int right, int bottom) {
@@ -76,6 +82,7 @@ public final class Rect implements Parcelable {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -91,6 +98,15 @@ public final class Rect implements Parcelable {
         result = 31 * result + right;
         result = 31 * result + bottom;
         return result;
+=======
+    public boolean equals(Object obj) {
+        Rect r = (Rect) obj;
+        if (r != null) {
+            return left == r.left && top == r.top && right == r.right
+                    && bottom == r.bottom;
+        }
+        return false;
+>>>>>>> upstream/master
     }
 
     @Override
@@ -235,9 +251,15 @@ public final class Rect implements Parcelable {
      * checking is performed, so it is up to the caller to ensure that
      * left <= right and top <= bottom.
      *
+<<<<<<< HEAD
      * @param left   The X coordinate of the left side of the rectangle
      * @param top    The Y coordinate of the top of the rectangle
      * @param right  The X coordinate of the right side of the rectangle
+=======
+     * @param left   The X coordinate of the left side of the rectagle
+     * @param top    The Y coordinate of the top of the rectangle
+     * @param right  The X coordinate of the right side of the rectagle
+>>>>>>> upstream/master
      * @param bottom The Y coordinate of the bottom of the rectangle
      */
     public void set(int left, int top, int right, int bottom) {
@@ -352,7 +374,12 @@ public final class Rect implements Parcelable {
                // check for empty first
         return this.left < this.right && this.top < this.bottom
                // now check for containment
+<<<<<<< HEAD
                && left <= r.left && top <= r.top && right >= r.right && bottom >= r.bottom;
+=======
+               && left <= r.left && top <= r.top
+               && right >= r.right && bottom >= r.bottom;
+>>>>>>> upstream/master
     }
 
     /**
@@ -374,11 +401,28 @@ public final class Rect implements Parcelable {
      *              return false and do not change this rectangle.
      */
     public boolean intersect(int left, int top, int right, int bottom) {
+<<<<<<< HEAD
         if (this.left < right && left < this.right && this.top < bottom && top < this.bottom) {
             if (this.left < left) this.left = left;
             if (this.top < top) this.top = top;
             if (this.right > right) this.right = right;
             if (this.bottom > bottom) this.bottom = bottom;
+=======
+        if (this.left < right && left < this.right
+                && this.top < bottom && top < this.bottom) {
+            if (this.left < left) {
+                this.left = left;
+            }
+            if (this.top < top) {
+                this.top = top;
+            }
+            if (this.right > right) {
+                this.right = right;
+            }
+            if (this.bottom > bottom) {
+                this.bottom = bottom;
+            }
+>>>>>>> upstream/master
             return true;
         }
         return false;
@@ -412,7 +456,12 @@ public final class Rect implements Parcelable {
      *              false and do not change this rectangle.
      */
     public boolean setIntersect(Rect a, Rect b) {
+<<<<<<< HEAD
         if (a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom) {
+=======
+        if (a.left < b.right && b.left < a.right
+                && a.top < b.bottom && b.top < a.bottom) {
+>>>>>>> upstream/master
             left = Math.max(a.left, b.left);
             top = Math.max(a.top, b.top);
             right = Math.min(a.right, b.right);
@@ -437,7 +486,12 @@ public final class Rect implements Parcelable {
      *              no event is this rectangle modified.
      */
     public boolean intersects(int left, int top, int right, int bottom) {
+<<<<<<< HEAD
         return this.left < right && left < this.right && this.top < bottom && top < this.bottom;
+=======
+        return this.left < right && left < this.right
+               && this.top < bottom && top < this.bottom;
+>>>>>>> upstream/master
     }
 
     /**
@@ -451,7 +505,12 @@ public final class Rect implements Parcelable {
      *              either of the rectangles modified.
      */
     public static boolean intersects(Rect a, Rect b) {
+<<<<<<< HEAD
         return a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+=======
+        return a.left < b.right && b.left < a.right
+               && a.top < b.bottom && b.top < a.bottom;
+>>>>>>> upstream/master
     }
 
     /**
@@ -467,10 +526,21 @@ public final class Rect implements Parcelable {
     public void union(int left, int top, int right, int bottom) {
         if ((left < right) && (top < bottom)) {
             if ((this.left < this.right) && (this.top < this.bottom)) {
+<<<<<<< HEAD
                 if (this.left > left) this.left = left;
                 if (this.top > top) this.top = top;
                 if (this.right < right) this.right = right;
                 if (this.bottom < bottom) this.bottom = bottom;
+=======
+                if (this.left > left)
+                    this.left = left;
+                if (this.top > top)
+                    this.top = top;
+                if (this.right < right)
+                    this.right = right;
+                if (this.bottom < bottom)
+                    this.bottom = bottom;
+>>>>>>> upstream/master
             } else {
                 this.left = left;
                 this.top = top;

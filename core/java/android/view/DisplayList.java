@@ -16,8 +16,11 @@
 
 package android.view;
 
+<<<<<<< HEAD
 import android.graphics.Matrix;
 
+=======
+>>>>>>> upstream/master
 /**
  * A display lists records a series of graphics related operation and can replay
  * them later. Display lists are usually built by recording operations on a
@@ -29,6 +32,7 @@ import android.graphics.Matrix;
  */
 public abstract class DisplayList {
     /**
+<<<<<<< HEAD
      * Flag used when calling
      * {@link HardwareCanvas#drawDisplayList(DisplayList, android.graphics.Rect, int)} 
      * When this flag is set, draw operations lying outside of the bounds of the
@@ -69,24 +73,35 @@ public abstract class DisplayList {
     public static final int STATUS_DREW = 0x4;
 
     /**
+=======
+>>>>>>> upstream/master
      * Starts recording the display list. All operations performed on the
      * returned canvas are recorded and stored in this display list.
      * 
      * @return A canvas to record drawing operations.
      */
+<<<<<<< HEAD
     public abstract HardwareCanvas start();
+=======
+    abstract HardwareCanvas start();
+>>>>>>> upstream/master
 
     /**
      * Ends the recording for this display list. A display list cannot be
      * replayed if recording is not finished. 
      */
+<<<<<<< HEAD
     public abstract void end();
+=======
+    abstract void end();
+>>>>>>> upstream/master
 
     /**
      * Invalidates the display list, indicating that it should be repopulated
      * with new drawing commands prior to being used again. Calling this method
      * causes calls to {@link #isValid()} to return <code>false</code>.
      */
+<<<<<<< HEAD
     public abstract void invalidate();
 
     /**
@@ -94,6 +109,9 @@ public abstract class DisplayList {
      * only invoke this method after {@link #invalidate()}.
      */
     public abstract void clear();
+=======
+    abstract void invalidate();
+>>>>>>> upstream/master
 
     /**
      * Returns whether the display list is currently usable. If this returns false,
@@ -101,13 +119,18 @@ public abstract class DisplayList {
      *
      * @return boolean true if the display list is able to be replayed, false otherwise.
      */
+<<<<<<< HEAD
     public abstract boolean isValid();
+=======
+    abstract boolean isValid();
+>>>>>>> upstream/master
 
     /**
      * Return the amount of memory used by this display list.
      * 
      * @return The size of this display list in bytes
      */
+<<<<<<< HEAD
     public abstract int getSize();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -332,4 +355,7 @@ public abstract class DisplayList {
      * @see View#offsetTopAndBottom(int)
      */
     public abstract void offsetTopBottom(int offset);
+=======
+    abstract int getSize();
+>>>>>>> upstream/master
 }

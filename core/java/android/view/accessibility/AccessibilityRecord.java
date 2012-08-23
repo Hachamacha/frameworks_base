@@ -41,6 +41,7 @@ import java.util.List;
  * event types. For detailed information please refer to {@link AccessibilityEvent}.
  * </p>
  *
+<<<<<<< HEAD
  * <div class="special reference">
  * <h3>Developer Guides</h3>
  * <p>For more information about creating and processing AccessibilityRecords, read the
@@ -48,6 +49,8 @@ import java.util.List;
  * developer guide.</p>
  * </div>
  *
+=======
+>>>>>>> upstream/master
  * @see AccessibilityEvent
  * @see AccessibilityManager
  * @see android.accessibilityservice.AccessibilityService
@@ -62,12 +65,15 @@ public class AccessibilityRecord {
     private static final int PROPERTY_PASSWORD = 0x00000004;
     private static final int PROPERTY_FULL_SCREEN = 0x00000080;
     private static final int PROPERTY_SCROLLABLE = 0x00000100;
+<<<<<<< HEAD
     private static final int PROPERTY_IMPORTANT_FOR_ACCESSIBILITY = 0x00000200;
 
     private static final int GET_SOURCE_PREFETCH_FLAGS =
         AccessibilityNodeInfo.FLAG_PREFETCH_PREDECESSORS
         | AccessibilityNodeInfo.FLAG_PREFETCH_SIBLINGS
         | AccessibilityNodeInfo.FLAG_PREFETCH_DESCENDANTS;
+=======
+>>>>>>> upstream/master
 
     // Housekeeping
     private static final int MAX_POOL_SIZE = 10;
@@ -78,7 +84,11 @@ public class AccessibilityRecord {
     private boolean mIsInPool;
 
     boolean mSealed;
+<<<<<<< HEAD
     int mBooleanProperties = PROPERTY_IMPORTANT_FOR_ACCESSIBILITY;
+=======
+    int mBooleanProperties;
+>>>>>>> upstream/master
     int mCurrentItemIndex = UNDEFINED;
     int mItemCount = UNDEFINED;
     int mFromIndex = UNDEFINED;
@@ -90,7 +100,11 @@ public class AccessibilityRecord {
 
     int mAddedCount= UNDEFINED;
     int mRemovedCount = UNDEFINED;
+<<<<<<< HEAD
     long mSourceNodeId = AccessibilityNodeInfo.makeNodeId(UNDEFINED, UNDEFINED);
+=======
+    int mSourceViewId = UNDEFINED;
+>>>>>>> upstream/master
     int mSourceWindowId = UNDEFINED;
 
     CharSequence mClassName;
@@ -116,6 +130,7 @@ public class AccessibilityRecord {
      * @throws IllegalStateException If called from an AccessibilityService.
      */
     public void setSource(View source) {
+<<<<<<< HEAD
         setSource(source, UNDEFINED);
     }
 
@@ -145,6 +160,16 @@ public class AccessibilityRecord {
         mSourceWindowId = (root != null) ? root.getAccessibilityWindowId() : UNDEFINED;
         final int rootViewId = (root != null) ? root.getAccessibilityViewId() : UNDEFINED;
         mSourceNodeId = AccessibilityNodeInfo.makeNodeId(rootViewId, virtualDescendantId);
+=======
+        enforceNotSealed();
+        if (source != null) {
+            mSourceWindowId = source.getAccessibilityWindowId();
+            mSourceViewId = source.getAccessibilityViewId();
+        } else {
+            mSourceWindowId = UNDEFINED;
+            mSourceViewId = UNDEFINED;
+        }
+>>>>>>> upstream/master
     }
 
     /**
@@ -159,12 +184,20 @@ public class AccessibilityRecord {
     public AccessibilityNodeInfo getSource() {
         enforceSealed();
         if (mConnectionId == UNDEFINED || mSourceWindowId == UNDEFINED
+<<<<<<< HEAD
                 || AccessibilityNodeInfo.getAccessibilityViewId(mSourceNodeId) == UNDEFINED) {
+=======
+                || mSourceViewId == UNDEFINED) {
+>>>>>>> upstream/master
             return null;
         }
         AccessibilityInteractionClient client = AccessibilityInteractionClient.getInstance();
         return client.findAccessibilityNodeInfoByAccessibilityId(mConnectionId, mSourceWindowId,
+<<<<<<< HEAD
                 mSourceNodeId, GET_SOURCE_PREFETCH_FLAGS);
+=======
+                mSourceViewId);
+>>>>>>> upstream/master
     }
 
     /**
@@ -282,6 +315,7 @@ public class AccessibilityRecord {
     }
 
     /**
+<<<<<<< HEAD
      * Gets if the source is important for accessibility.
      *
      * <strong>Note:</strong> Used only internally to determine whether
@@ -299,6 +333,8 @@ public class AccessibilityRecord {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Gets the number of items that can be visited.
      *
      * @return The number of items.
@@ -434,7 +470,10 @@ public class AccessibilityRecord {
     public int getMaxScrollX() {
         return mMaxScrollX;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     /**
      * Sets the max scroll offset of the source left edge in pixels.
      *
@@ -601,6 +640,7 @@ public class AccessibilityRecord {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the id of the source node.
      *
      * @return The id.
@@ -612,6 +652,8 @@ public class AccessibilityRecord {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Sets the unique id of the IAccessibilityServiceConnection over which
      * this instance can send requests to the system.
      *
@@ -664,7 +706,11 @@ public class AccessibilityRecord {
     void enforceNotSealed() {
         if (isSealed()) {
             throw new IllegalStateException("Cannot perform this "
+<<<<<<< HEAD
                     + "action on a sealed instance.");
+=======
+                    + "action on an sealed instance.");
+>>>>>>> upstream/master
         }
     }
 
@@ -771,7 +817,11 @@ public class AccessibilityRecord {
         mParcelableData = record.mParcelableData;
         mText.addAll(record.mText);
         mSourceWindowId = record.mSourceWindowId;
+<<<<<<< HEAD
         mSourceNodeId = record.mSourceNodeId;
+=======
+        mSourceViewId = record.mSourceViewId;
+>>>>>>> upstream/master
         mConnectionId = record.mConnectionId;
     }
 
@@ -780,7 +830,11 @@ public class AccessibilityRecord {
      */
     void clear() {
         mSealed = false;
+<<<<<<< HEAD
         mBooleanProperties = PROPERTY_IMPORTANT_FOR_ACCESSIBILITY;
+=======
+        mBooleanProperties = 0;
+>>>>>>> upstream/master
         mCurrentItemIndex = UNDEFINED;
         mItemCount = UNDEFINED;
         mFromIndex = UNDEFINED;
@@ -796,7 +850,11 @@ public class AccessibilityRecord {
         mBeforeText = null;
         mParcelableData = null;
         mText.clear();
+<<<<<<< HEAD
         mSourceNodeId = AccessibilityNodeInfo.makeNodeId(UNDEFINED, UNDEFINED);
+=======
+        mSourceViewId = UNDEFINED;
+>>>>>>> upstream/master
         mSourceWindowId = UNDEFINED;
         mConnectionId = UNDEFINED;
     }

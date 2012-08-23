@@ -25,7 +25,12 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_C_INCLUDES += \
 	external/skia/include/core \
 	frameworks/base/native/include \
+<<<<<<< HEAD
 	frameworks/base/core/jni/android/graphics
+=======
+	frameworks/base/core/jni/android/graphics \
+	dalvik/libnativehelper/include/nativehelper
+>>>>>>> upstream/master
 
 LOCAL_MODULE:= libjnigraphics
 

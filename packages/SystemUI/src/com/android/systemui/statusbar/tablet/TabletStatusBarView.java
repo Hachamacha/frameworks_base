@@ -16,10 +16,13 @@
 
 package com.android.systemui.statusbar.tablet;
 
+<<<<<<< HEAD
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.DelegateViewHelper;
 
+=======
+>>>>>>> upstream/master
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -35,14 +38,21 @@ public class TabletStatusBarView extends FrameLayout {
     private final View[] mIgnoreChildren = new View[MAX_PANELS];
     private final View[] mPanels = new View[MAX_PANELS];
     private final int[] mPos = new int[2];
+<<<<<<< HEAD
     private DelegateViewHelper mDelegateHelper;
 
     public TabletStatusBarView(Context context) {
         this(context, null);
+=======
+
+    public TabletStatusBarView(Context context) {
+        super(context);
+>>>>>>> upstream/master
     }
 
     public TabletStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
+<<<<<<< HEAD
         mDelegateHelper = new DelegateViewHelper(this);
     }
 
@@ -74,6 +84,8 @@ public class TabletStatusBarView extends FrameLayout {
         }
         mDelegateHelper.setSourceView(view);
         mDelegateHelper.setInitialTouchRegion(view);
+=======
+>>>>>>> upstream/master
     }
 
     @Override
@@ -82,11 +94,18 @@ public class TabletStatusBarView extends FrameLayout {
             if (TabletStatusBar.DEBUG) {
                 Slog.d(TabletStatusBar.TAG, "TabletStatusBarView intercepting touch event: " + ev);
             }
+<<<<<<< HEAD
             // do not close the recents panel here- the intended behavior is that recents is dismissed
             // on touch up when clicking on status bar buttons
             // TODO: should we be closing the notification panel and input methods panel?
             mHandler.removeMessages(TabletStatusBar.MSG_CLOSE_NOTIFICATION_PANEL);
             mHandler.sendEmptyMessage(TabletStatusBar.MSG_CLOSE_NOTIFICATION_PANEL);
+=======
+            mHandler.removeMessages(TabletStatusBar.MSG_CLOSE_NOTIFICATION_PANEL);
+            mHandler.sendEmptyMessage(TabletStatusBar.MSG_CLOSE_NOTIFICATION_PANEL);
+            mHandler.removeMessages(TabletStatusBar.MSG_CLOSE_RECENTS_PANEL);
+            mHandler.sendEmptyMessage(TabletStatusBar.MSG_CLOSE_RECENTS_PANEL);
+>>>>>>> upstream/master
             mHandler.removeMessages(TabletStatusBar.MSG_CLOSE_INPUT_METHODS_PANEL);
             mHandler.sendEmptyMessage(TabletStatusBar.MSG_CLOSE_INPUT_METHODS_PANEL);
             mHandler.removeMessages(TabletStatusBar.MSG_STOP_TICKER);
@@ -108,9 +127,12 @@ public class TabletStatusBarView extends FrameLayout {
         if (TabletStatusBar.DEBUG) {
             Slog.d(TabletStatusBar.TAG, "TabletStatusBarView not intercepting event");
         }
+<<<<<<< HEAD
         if (mDelegateHelper != null && mDelegateHelper.onInterceptTouchEvent(ev)) {
             return true;
         }
+=======
+>>>>>>> upstream/master
         return super.onInterceptTouchEvent(ev);
     }
 
@@ -136,7 +158,11 @@ public class TabletStatusBarView extends FrameLayout {
 
     /**
      * Let the status bar know that if you tap on ignore while panel is showing, don't do anything.
+<<<<<<< HEAD
      *
+=======
+     * 
+>>>>>>> upstream/master
      * Debounces taps on, say, a popup's trigger when the popup is already showing.
      */
     public void setIgnoreChildren(int index, View ignore, View panel) {

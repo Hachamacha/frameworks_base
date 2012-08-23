@@ -55,6 +55,7 @@ public class UsbAccessory implements Parcelable {
     private final String mUri;
     private final String mSerial;
 
+<<<<<<< HEAD
     /** @hide */
     public static final int MANUFACTURER_STRING = 0;
     /** @hide */
@@ -68,6 +69,8 @@ public class UsbAccessory implements Parcelable {
     /** @hide */
     public static final int SERIAL_STRING = 5;
 
+=======
+>>>>>>> upstream/master
     /**
      * UsbAccessory should only be instantiated by UsbService implementation
      * @hide
@@ -87,12 +90,21 @@ public class UsbAccessory implements Parcelable {
      * @hide
      */
     public UsbAccessory(String[] strings) {
+<<<<<<< HEAD
         mManufacturer = strings[MANUFACTURER_STRING];
         mModel = strings[MODEL_STRING];
         mDescription = strings[DESCRIPTION_STRING];
         mVersion = strings[VERSION_STRING];
         mUri = strings[URI_STRING];
         mSerial = strings[SERIAL_STRING];
+=======
+        mManufacturer = strings[0];
+        mModel = strings[1];
+        mDescription = strings[2];
+        mVersion = strings[3];
+        mUri = strings[4];
+        mSerial = strings[5];
+>>>>>>> upstream/master
     }
 
     /**

@@ -36,8 +36,11 @@ import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
+<<<<<<< HEAD
 import android.os.Trace;
 import android.os.UserId;
+=======
+>>>>>>> upstream/master
 import android.util.AndroidRuntimeException;
 import android.util.Slog;
 import android.view.CompatibilityInfoHolder;
@@ -69,8 +72,11 @@ final class ServiceConnectionLeaked extends AndroidRuntimeException {
  */
 public final class LoadedApk {
 
+<<<<<<< HEAD
     private static final String TAG = "LoadedApk";
 
+=======
+>>>>>>> upstream/master
     private final ActivityThread mActivityThread;
     private final ApplicationInfo mApplicationInfo;
     final String mPackageName;
@@ -117,6 +123,7 @@ public final class LoadedApk {
         mApplicationInfo = aInfo;
         mPackageName = aInfo.packageName;
         mAppDir = aInfo.sourceDir;
+<<<<<<< HEAD
         final int myUid = Process.myUid();
         mResDir = aInfo.uid == myUid ? aInfo.sourceDir
                 : aInfo.publicSourceDir;
@@ -124,6 +131,10 @@ public final class LoadedApk {
             aInfo.dataDir = PackageManager.getDataDirForUser(UserId.getUserId(myUid),
                     mPackageName);
         }
+=======
+        mResDir = aInfo.uid == Process.myUid() ? aInfo.sourceDir
+                : aInfo.publicSourceDir;
+>>>>>>> upstream/master
         mSharedLibraries = aInfo.sharedLibraryFiles;
         mDataDir = aInfo.dataDir;
         mDataDirFile = mDataDir != null ? new File(mDataDir) : null;
@@ -195,7 +206,11 @@ public final class LoadedApk {
         ApplicationInfo ai = null;
         try {
             ai = ActivityThread.getPackageManager().getApplicationInfo(packageName,
+<<<<<<< HEAD
                     PackageManager.GET_SHARED_LIBRARY_FILES, UserId.myUserId());
+=======
+                    PackageManager.GET_SHARED_LIBRARY_FILES);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             throw new AssertionError(e);
         }
@@ -262,7 +277,10 @@ public final class LoadedApk {
 
             if (mIncludeCode && !mPackageName.equals("android")) {
                 String zip = mAppDir;
+<<<<<<< HEAD
                 String libraryPath = mLibDir;
+=======
+>>>>>>> upstream/master
 
                 /*
                  * The following is a bit of a hack to inject
@@ -275,20 +293,29 @@ public final class LoadedApk {
 
                 String instrumentationAppDir =
                         mActivityThread.mInstrumentationAppDir;
+<<<<<<< HEAD
                 String instrumentationAppLibraryDir =
                         mActivityThread.mInstrumentationAppLibraryDir;
+=======
+>>>>>>> upstream/master
                 String instrumentationAppPackage =
                         mActivityThread.mInstrumentationAppPackage;
                 String instrumentedAppDir =
                         mActivityThread.mInstrumentedAppDir;
+<<<<<<< HEAD
                 String instrumentedAppLibraryDir =
                         mActivityThread.mInstrumentedAppLibraryDir;
+=======
+>>>>>>> upstream/master
                 String[] instrumentationLibs = null;
 
                 if (mAppDir.equals(instrumentationAppDir)
                         || mAppDir.equals(instrumentedAppDir)) {
                     zip = instrumentationAppDir + ":" + instrumentedAppDir;
+<<<<<<< HEAD
                     libraryPath = instrumentationAppLibraryDir + ":" + instrumentedAppLibraryDir;
+=======
+>>>>>>> upstream/master
                     if (! instrumentedAppDir.equals(instrumentationAppDir)) {
                         instrumentationLibs =
                             getLibrariesFor(instrumentationAppPackage);
@@ -308,7 +335,11 @@ public final class LoadedApk {
                  */
 
                 if (ActivityThread.localLOGV)
+<<<<<<< HEAD
                     Slog.v(ActivityThread.TAG, "Class path: " + zip + ", JNI path: " + libraryPath);
+=======
+                    Slog.v(ActivityThread.TAG, "Class path: " + zip + ", JNI path: " + mLibDir);
+>>>>>>> upstream/master
 
                 // Temporarily disable logging of disk reads on the Looper thread
                 // as this is early and necessary.
@@ -316,7 +347,11 @@ public final class LoadedApk {
 
                 mClassLoader =
                     ApplicationLoaders.getDefault().getClassLoader(
+<<<<<<< HEAD
                         zip, libraryPath, mBaseClassLoader);
+=======
+                        zip, mLibDir, mBaseClassLoader);
+>>>>>>> upstream/master
                 initializeJavaContextClassLoader();
 
                 StrictMode.setThreadPolicy(oldPolicy);
@@ -358,7 +393,11 @@ public final class LoadedApk {
         IPackageManager pm = ActivityThread.getPackageManager();
         android.content.pm.PackageInfo pi;
         try {
+<<<<<<< HEAD
             pi = pm.getPackageInfo(mPackageName, 0, UserId.myUserId());
+=======
+            pi = pm.getPackageInfo(mPackageName, 0);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             throw new AssertionError(e);
         }
@@ -449,10 +488,13 @@ public final class LoadedApk {
         return mAppDir;
     }
 
+<<<<<<< HEAD
     public String getLibDir() {
         return mLibDir;
     }
 
+=======
+>>>>>>> upstream/master
     public String getResDir() {
         return mResDir;
     }
@@ -523,7 +565,10 @@ public final class LoadedApk {
 
     public void removeContextRegistrations(Context context,
             String who, String what) {
+<<<<<<< HEAD
         final boolean reportRegistrationLeaks = StrictMode.vmRegistrationLeaksEnabled();
+=======
+>>>>>>> upstream/master
         HashMap<BroadcastReceiver, LoadedApk.ReceiverDispatcher> rmap =
             mReceivers.remove(context);
         if (rmap != null) {
@@ -537,9 +582,12 @@ public final class LoadedApk {
                         "call to unregisterReceiver()?");
                 leak.setStackTrace(rd.getLocation().getStackTrace());
                 Slog.e(ActivityThread.TAG, leak.getMessage(), leak);
+<<<<<<< HEAD
                 if (reportRegistrationLeaks) {
                     StrictMode.onIntentReceiverLeaked(leak);
                 }
+=======
+>>>>>>> upstream/master
                 try {
                     ActivityManagerNative.getDefault().unregisterReceiver(
                             rd.getIIntentReceiver());
@@ -561,9 +609,12 @@ public final class LoadedApk {
                         + sd.getServiceConnection() + " that was originally bound here");
                 leak.setStackTrace(sd.getLocation().getStackTrace());
                 Slog.e(ActivityThread.TAG, leak.getMessage(), leak);
+<<<<<<< HEAD
                 if (reportRegistrationLeaks) {
                     StrictMode.onServiceConnectionLeaked(leak);
                 }
+=======
+>>>>>>> upstream/master
                 try {
                     ActivityManagerNative.getDefault().unbindService(
                             sd.getIServiceConnection());
@@ -746,7 +797,10 @@ public final class LoadedApk {
                     return;
                 }
 
+<<<<<<< HEAD
                 Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "broadcastReceiveReg");
+=======
+>>>>>>> upstream/master
                 try {
                     ClassLoader cl =  mReceiver.getClass().getClassLoader();
                     intent.setExtrasClassLoader(cl);
@@ -761,7 +815,10 @@ public final class LoadedApk {
                     }
                     if (mInstrumentation == null ||
                             !mInstrumentation.onException(mReceiver, e)) {
+<<<<<<< HEAD
                         Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+>>>>>>> upstream/master
                         throw new RuntimeException(
                             "Error receiving broadcast " + intent
                             + " in " + mReceiver, e);
@@ -771,7 +828,10 @@ public final class LoadedApk {
                 if (receiver.getPendingResult() != null) {
                     finish();
                 }
+<<<<<<< HEAD
                 Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+=======
+>>>>>>> upstream/master
             }
         }
 

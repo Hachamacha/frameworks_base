@@ -21,9 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+=======
+>>>>>>> upstream/master
 
 import java.util.HashSet;
 
@@ -35,11 +38,15 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
     static final IntentFilter sPackageFilt = new IntentFilter();
     static final IntentFilter sNonDataFilt = new IntentFilter();
     static final IntentFilter sExternalFilt = new IntentFilter();
+<<<<<<< HEAD
 
     static final Object sLock = new Object();
     static HandlerThread sBackgroundThread;
     static Handler sBackgroundHandler;
 
+=======
+    
+>>>>>>> upstream/master
     static {
         sPackageFilt.addAction(Intent.ACTION_PACKAGE_ADDED);
         sPackageFilt.addAction(Intent.ACTION_PACKAGE_REMOVED);
@@ -56,7 +63,10 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
     final HashSet<String> mUpdatingPackages = new HashSet<String>();
     
     Context mRegisteredContext;
+<<<<<<< HEAD
     Handler mRegisteredHandler;
+=======
+>>>>>>> upstream/master
     String[] mDisappearingPackages;
     String[] mAppearingPackages;
     String[] mModifiedPackages;
@@ -65,11 +75,16 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
     
     String[] mTempArray = new String[1];
     
+<<<<<<< HEAD
     public void register(Context context, Looper thread, boolean externalStorage) {
+=======
+    public void register(Context context, boolean externalStorage) {
+>>>>>>> upstream/master
         if (mRegisteredContext != null) {
             throw new IllegalStateException("Already registered");
         }
         mRegisteredContext = context;
+<<<<<<< HEAD
         if (thread == null) {
             synchronized (sLock) {
                 if (sBackgroundThread == null) {
@@ -94,6 +109,15 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         return mRegisteredHandler;
     }
 
+=======
+        context.registerReceiver(this, sPackageFilt);
+        context.registerReceiver(this, sNonDataFilt);
+        if (externalStorage) {
+            context.registerReceiver(this, sExternalFilt);
+        }
+    }
+    
+>>>>>>> upstream/master
     public void unregister() {
         if (mRegisteredContext == null) {
             throw new IllegalStateException("Not registered");

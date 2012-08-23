@@ -19,7 +19,10 @@
     package="com.android.backupconfirm" >
 
     <uses-permission android:name="android.permission.BACKUP" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.CRYPT_KEEPER" />
+=======
+>>>>>>> upstream/master
 
     <application android:allowClearUserData="false"
                  android:allowBackup="false"

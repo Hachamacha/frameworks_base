@@ -30,24 +30,36 @@ import java.io.IOException;
  * A caller can also instantiate a {@link DrmRights} object by using the
  * {@link DrmRights#DrmRights(String, String)} constructor, which takes a path to a file
  * containing rights information instead of a <code>ProcessedData</code>.
+<<<<<<< HEAD
  *<p>
  * Please note that the account id and subscription id is not mandatory by all DRM agents
  * or plugins. When account id or subscription id is not required by the specific DRM
  * agent or plugin, they can be either null, or an empty string, or any other don't-care
  * string value.
+=======
+>>>>>>> upstream/master
  *
  */
 public class DrmRights {
     private byte[] mData;
     private String mMimeType;
+<<<<<<< HEAD
     private String mAccountId;
     private String mSubscriptionId;
+=======
+    private String mAccountId = "_NO_USER";
+    private String mSubscriptionId = "";
+>>>>>>> upstream/master
 
     /**
      * Creates a <code>DrmRights</code> object with the given parameters.
      *
      * @param rightsFilePath Path to the file containing rights information.
+<<<<<<< HEAD
      * @param mimeType MIME type. Must not be null or an empty string.
+=======
+     * @param mimeType MIME type.
+>>>>>>> upstream/master
      */
     public DrmRights(String rightsFilePath, String mimeType) {
         File file = new File(rightsFilePath);
@@ -58,20 +70,34 @@ public class DrmRights {
      * Creates a <code>DrmRights</code> object with the given parameters.
      *
      * @param rightsFilePath Path to the file containing rights information.
+<<<<<<< HEAD
      * @param mimeType MIME type. Must not be null or an empty string.
+=======
+     * @param mimeType MIME type.
+>>>>>>> upstream/master
      * @param accountId Account ID of the user.
      */
     public DrmRights(String rightsFilePath, String mimeType, String accountId) {
         this(rightsFilePath, mimeType);
 
+<<<<<<< HEAD
         mAccountId = accountId;
+=======
+        if (null != accountId && !accountId.equals("")) {
+            mAccountId = accountId;
+        }
+>>>>>>> upstream/master
     }
 
     /**
      * Creates a <code>DrmRights</code> object with the given parameters.
      *
      * @param rightsFilePath Path to the file containing rights information.
+<<<<<<< HEAD
      * @param mimeType MIME type. Must not be null or an empty string.
+=======
+     * @param mimeType MIME type.
+>>>>>>> upstream/master
      * @param accountId Account ID of the user.
      * @param subscriptionId Subscription ID of the user.
      */
@@ -79,15 +105,29 @@ public class DrmRights {
             String rightsFilePath, String mimeType, String accountId, String subscriptionId) {
         this(rightsFilePath, mimeType);
 
+<<<<<<< HEAD
         mAccountId = accountId;
         mSubscriptionId = subscriptionId;
+=======
+        if (null != accountId && !accountId.equals("")) {
+            mAccountId = accountId;
+        }
+
+        if (null != subscriptionId && !subscriptionId.equals("")) {
+            mSubscriptionId = subscriptionId;
+        }
+>>>>>>> upstream/master
     }
 
     /**
      * Creates a <code>DrmRights</code> object with the given parameters.
      *
      * @param rightsFile File containing rights information.
+<<<<<<< HEAD
      * @param mimeType MIME type. Must not be null or an empty string.
+=======
+     * @param mimeType MIME type.
+>>>>>>> upstream/master
      */
     public DrmRights(File rightsFile, String mimeType) {
         instantiate(rightsFile, mimeType);
@@ -101,17 +141,21 @@ public class DrmRights {
         }
 
         mMimeType = mimeType;
+<<<<<<< HEAD
         if (!isValid()) {
             final String msg = "mimeType: " + mMimeType + "," +
                                "data: " + mData;
             throw new IllegalArgumentException(msg);
         }
+=======
+>>>>>>> upstream/master
     }
 
     /**
      * Creates a <code>DrmRights</code> object with the given parameters.
      *
      * @param data A {@link ProcessedData} object containing rights information.
+<<<<<<< HEAD
      *             Must not be null.
      * @param mimeType The MIME type. It must not be null or an empty string.
      */
@@ -130,6 +174,27 @@ public class DrmRights {
                                "data: " + mData;
             throw new IllegalArgumentException(msg);
         }
+=======
+     *             data could be null because it's optional for some DRM schemes.
+     * @param mimeType The MIME type.
+     */
+    public DrmRights(ProcessedData data, String mimeType) {
+        if (data != null) {
+            mData = data.getData();
+
+            String accountId = data.getAccountId();
+            if (null != accountId && !accountId.equals("")) {
+                mAccountId = accountId;
+            }
+
+            String subscriptionId = data.getSubscriptionId();
+            if (null != subscriptionId && !subscriptionId.equals("")) {
+                mSubscriptionId = subscriptionId;
+            }
+        }
+
+        mMimeType = mimeType;
+>>>>>>> upstream/master
     }
 
     /**

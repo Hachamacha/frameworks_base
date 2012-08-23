@@ -20,7 +20,10 @@ package android.graphics;
  * AvoidXfermode xfermode will draw the src everywhere except on top of the
  * opColor or, depending on the Mode, draw only on top of the opColor.
  */
+<<<<<<< HEAD
 @Deprecated
+=======
+>>>>>>> upstream/master
 public class AvoidXfermode extends Xfermode {
 
     // these need to match the enum in SkAvoidXfermode.h on the native side

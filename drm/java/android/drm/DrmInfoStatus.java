@@ -17,6 +17,7 @@
 package android.drm;
 
 /**
+<<<<<<< HEAD
  * An entity class that wraps the result of communication between a device
  * and an online DRM server. Specifically, when the
  * {@link DrmManagerClient#processDrmInfo DrmManagerClient.processDrmInfo()}
@@ -58,12 +59,42 @@ public class DrmInfoStatus {
      * is null, it indicates that a particular call to
      * {@link DrmManagerClient#processDrmInfo DrmManagerClient.processDrmInfo()}
      * does not return any additional useful information except for the status code.
+=======
+ * An entity class that wraps the result of communication between a device and an online DRM
+ * server. Specifically, when the {@link DrmManagerClient#processDrmInfo processDrmInfo()} method
+ * is called, an instance of <code>DrmInfoStatus</code> is returned.
+ *<p>
+ * This class contains the {@link ProcessedData} object, which can be used to instantiate a
+ * {@link DrmRights} object during license acquisition.
+ *
+ */
+public class DrmInfoStatus {
+    // Should be in sync with DrmInfoStatus.cpp
+    public static final int STATUS_OK = 1;
+    public static final int STATUS_ERROR = 2;
+
+    /**
+     * The status of the communication.
+     */
+    public final int statusCode;
+    /**
+     * The type of DRM information processed.
+     */
+    public final int infoType;
+    /**
+     * The MIME type of the content.
+     */
+    public final String mimeType;
+    /**
+     * The processed data.
+>>>>>>> upstream/master
      */
     public final ProcessedData data;
 
     /**
      * Creates a <code>DrmInfoStatus</code> object with the specified parameters.
      *
+<<<<<<< HEAD
      * @param statusCode The status of the communication. Must be one of the defined
      * status constants above.
      * @param infoType The type of the DRM information processed. Must be a valid
@@ -92,6 +123,18 @@ public class DrmInfoStatus {
 
     private boolean isValidStatusCode(int statusCode) {
         return statusCode == STATUS_OK || statusCode == STATUS_ERROR;
+=======
+     * @param _statusCode The status of the communication.
+     * @param _infoType The type of the DRM information processed.
+     * @param _data The processed data.
+     * @param _mimeType The MIME type.
+     */
+    public DrmInfoStatus(int _statusCode, int _infoType, ProcessedData _data, String _mimeType) {
+        statusCode = _statusCode;
+        infoType = _infoType;
+        data = _data;
+        mimeType = _mimeType;
+>>>>>>> upstream/master
     }
 }
 

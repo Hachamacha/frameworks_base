@@ -303,8 +303,12 @@ public class BroadcastTest extends ActivityTestsBase {
     public void testSetSticky() throws Exception {
         Intent intent = new Intent(LaunchpadActivity.BROADCAST_STICKY1, null);
         intent.putExtra("test", LaunchpadActivity.DATA_1);
+<<<<<<< HEAD
         ActivityManagerNative.getDefault().unbroadcastIntent(null, intent,
                 Binder.getOrigCallingUser());
+=======
+        ActivityManagerNative.getDefault().unbroadcastIntent(null, intent);
+>>>>>>> upstream/master
 
         ActivityManagerNative.broadcastStickyIntent(intent, null);
         addIntermediate("finished-broadcast");
@@ -321,8 +325,12 @@ public class BroadcastTest extends ActivityTestsBase {
         ActivityManagerNative.broadcastStickyIntent(intent, null);
 
         ActivityManagerNative.getDefault().unbroadcastIntent(
+<<<<<<< HEAD
                 null, new Intent(LaunchpadActivity.BROADCAST_STICKY1, null),
                 Binder.getOrigCallingUser());
+=======
+                null, new Intent(LaunchpadActivity.BROADCAST_STICKY1, null));
+>>>>>>> upstream/master
         addIntermediate("finished-unbroadcast");
 
         IntentFilter filter = new IntentFilter(LaunchpadActivity.BROADCAST_STICKY1);

@@ -403,7 +403,11 @@ public class LocationManager {
      * the named provider.  Periodically, the supplied LocationListener will
      * be called with the current Location or with status updates.
      *
+<<<<<<< HEAD
      * <p> It may take a while to receive the first location update. If
+=======
+     * <p> It may take a while to receive the most recent location. If
+>>>>>>> upstream/master
      * an immediate location is required, applications may use the
      * {@link #getLastKnownLocation(String)} method.
      *
@@ -413,6 +417,7 @@ public class LocationManager {
      * the {@link LocationListener#onProviderEnabled(String)} method will
      * be called and location updates will start again.
      *
+<<<<<<< HEAD
      * <p> The update interval can be controlled using the minTime parameter.
      * The elapsed time between location updates will never be less than
      * minTime, although it can be more depending on the Location Provider
@@ -449,10 +454,24 @@ public class LocationManager {
      * select non-zero values for minTime and/or minDistance to rate-limit
      * your update frequency in the case another application enables a
      * location provider with extremely fast updates.
+=======
+     * <p> The frequency of notification may be controlled using the
+     * minTime and minDistance parameters. If minTime is greater than 0,
+     * the LocationManager could potentially rest for minTime milliseconds
+     * between location updates to conserve power. If minDistance is greater than 0,
+     * a location will only be broadcasted if the device moves by minDistance meters.
+     * To obtain notifications as frequently as possible, set both parameters to 0.
+     *
+     * <p> Background services should be careful about setting a sufficiently high
+     * minTime so that the device doesn't consume too much power by keeping the
+     * GPS or wireless radios on all the time. In particular, values under 60000ms
+     * are not recommended.
+>>>>>>> upstream/master
      *
      * <p> The calling thread must be a {@link android.os.Looper} thread such as
      * the main thread of the calling Activity.
      *
+<<<<<<< HEAD
      * <p class="note"> Prior to Jellybean, the minTime parameter was
      * only a hint, and some location provider implementations ignored it.
      * From Jellybean and onwards it is mandatory for Android compatible
@@ -461,13 +480,25 @@ public class LocationManager {
      * @param provider the name of the provider with which to register
      * @param minTime minimum time interval between location updates, in milliseconds
      * @param minDistance minimum distance between location updates, in meters
+=======
+     * @param provider the name of the provider with which to register
+     * @param minTime the minimum time interval for notifications, in
+     * milliseconds. This field is only used as a hint to conserve power, and actual
+     * time between location updates may be greater or lesser than this value.
+     * @param minDistance the minimum distance interval for notifications,
+     * in meters
+>>>>>>> upstream/master
      * @param listener a {#link LocationListener} whose
      * {@link LocationListener#onLocationChanged} method will be called for
      * each location update
      *
+<<<<<<< HEAD
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * on this device
      * @throws IllegalArgumentException if listener is null
+=======
+     * @throws IllegalArgumentException if provider or listener is null
+>>>>>>> upstream/master
      * @throws RuntimeException if the calling thread has no Looper
      * @throws SecurityException if no suitable permission is present for the provider.
      */
@@ -487,7 +518,11 @@ public class LocationManager {
      * the named provider.  Periodically, the supplied LocationListener will
      * be called with the current Location or with status updates.
      *
+<<<<<<< HEAD
      * <p> It may take a while to receive the first location update. If
+=======
+     * <p> It may take a while to receive the most recent location. If
+>>>>>>> upstream/master
      * an immediate location is required, applications may use the
      * {@link #getLastKnownLocation(String)} method.
      *
@@ -497,6 +532,7 @@ public class LocationManager {
      * the {@link LocationListener#onProviderEnabled(String)} method will
      * be called and location updates will start again.
      *
+<<<<<<< HEAD
      * <p> The update interval can be controlled using the minTime parameter.
      * The elapsed time between location updates will never be less than
      * minTime, although it can be more depending on the Location Provider
@@ -544,12 +580,39 @@ public class LocationManager {
      * @param provider the name of the provider with which to register
      * @param minTime minimum time interval between location updates, in milliseconds
      * @param minDistance minimum distance between location updates, in meters
+=======
+     * <p> The frequency of notification may be controlled using the
+     * minTime and minDistance parameters. If minTime is greater than 0,
+     * the LocationManager could potentially rest for minTime milliseconds
+     * between location updates to conserve power. If minDistance is greater than 0,
+     * a location will only be broadcasted if the device moves by minDistance meters.
+     * To obtain notifications as frequently as possible, set both parameters to 0.
+     *
+     * <p> Background services should be careful about setting a sufficiently high
+     * minTime so that the device doesn't consume too much power by keeping the
+     * GPS or wireless radios on all the time. In particular, values under 60000ms
+     * are not recommended.
+     *
+     * <p> The supplied Looper is used to implement the callback mechanism.
+     *
+     * @param provider the name of the provider with which to register
+     * @param minTime the minimum time interval for notifications, in
+     * milliseconds. This field is only used as a hint to conserve power, and actual
+     * time between location updates may be greater or lesser than this value.
+     * @param minDistance the minimum distance interval for notifications,
+     * in meters
+>>>>>>> upstream/master
      * @param listener a {#link LocationListener} whose
      * {@link LocationListener#onLocationChanged} method will be called for
      * each location update
      * @param looper a Looper object whose message queue will be used to
+<<<<<<< HEAD
      * implement the callback mechanism, or null to make callbacks on the
      * main thread
+=======
+     * implement the callback mechanism.
+     * If looper is null then the callbacks will be called on the main thread.
+>>>>>>> upstream/master
      *
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * @throws IllegalArgumentException if listener is null
@@ -569,10 +632,17 @@ public class LocationManager {
 
     /**
      * Registers the current activity to be notified periodically based on
+<<<<<<< HEAD
      * the supplied criteria.  Periodically, the supplied LocationListener will
      * be called with the current Location or with status updates.
      *
      * <p> It may take a while to receive the first location update. If
+=======
+     * the specified criteria.  Periodically, the supplied LocationListener will
+     * be called with the current Location or with status updates.
+     *
+     * <p> It may take a while to receive the most recent location. If
+>>>>>>> upstream/master
      * an immediate location is required, applications may use the
      * {@link #getLastKnownLocation(String)} method.
      *
@@ -582,6 +652,7 @@ public class LocationManager {
      * the {@link LocationListener#onProviderEnabled(String)} method will
      * be called and location updates will start again.
      *
+<<<<<<< HEAD
      * <p> The update interval can be controlled using the minTime parameter.
      * The elapsed time between location updates will never be less than
      * minTime, although it can be more depending on the Location Provider
@@ -617,18 +688,49 @@ public class LocationManager {
      *
      * @param minTime minimum time interval between location updates, in milliseconds
      * @param minDistance minimum distance between location updates, in meters
+=======
+     * <p> The frequency of notification may be controlled using the
+     * minTime and minDistance parameters. If minTime is greater than 0,
+     * the LocationManager could potentially rest for minTime milliseconds
+     * between location updates to conserve power. If minDistance is greater than 0,
+     * a location will only be broadcasted if the device moves by minDistance meters.
+     * To obtain notifications as frequently as possible, set both parameters to 0.
+     *
+     * <p> Background services should be careful about setting a sufficiently high
+     * minTime so that the device doesn't consume too much power by keeping the
+     * GPS or wireless radios on all the time. In particular, values under 60000ms
+     * are not recommended.
+     *
+     * <p> The supplied Looper is used to implement the callback mechanism.
+     *
+     * @param minTime the minimum time interval for notifications, in
+     * milliseconds. This field is only used as a hint to conserve power, and actual
+     * time between location updates may be greater or lesser than this value.
+     * @param minDistance the minimum distance interval for notifications,
+     * in meters
+>>>>>>> upstream/master
      * @param criteria contains parameters for the location manager to choose the
      * appropriate provider and parameters to compute the location
      * @param listener a {#link LocationListener} whose
      * {@link LocationListener#onLocationChanged} method will be called for
      * each location update
      * @param looper a Looper object whose message queue will be used to
+<<<<<<< HEAD
      * implement the callback mechanism, or null to make callbacks on the
      * main thread.
      *
      * @throws IllegalArgumentException if criteria is null
      * @throws IllegalArgumentException if listener is null
      * @throws SecurityException if no suitable permission is present for the provider.
+=======
+     * implement the callback mechanism.
+     * If looper is null then the callbacks will be called on the main thread.
+     *
+     * @throws IllegalArgumentException if criteria is null
+     * @throws IllegalArgumentException if listener is null
+     * @throws SecurityException if no suitable permission is present to access
+     * the location services.
+>>>>>>> upstream/master
      */
     public void requestLocationUpdates(long minTime, float minDistance,
             Criteria criteria, LocationListener listener, Looper looper) {
@@ -669,6 +771,7 @@ public class LocationManager {
      * the named provider.  Periodically, the supplied PendingIntent will
      * be broadcast with the current Location or with status updates.
      *
+<<<<<<< HEAD
      * <p> Location updates are sent with a key of
      * {@link #KEY_LOCATION_CHANGED} and a {@link android.location.Location} value.
      *
@@ -737,6 +840,45 @@ public class LocationManager {
      *
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * on this device
+=======
+     * <p> Location updates are sent with a key of KEY_LOCATION_CHANGED and a Location value.
+     *
+     * <p> It may take a while to receive the most recent location. If
+     * an immediate location is required, applications may use the
+     * {@link #getLastKnownLocation(String)} method.
+     *
+     * <p> The frequency of notification or new locations may be controlled using the
+     * minTime and minDistance parameters. If minTime is greater than 0,
+     * the LocationManager could potentially rest for minTime milliseconds
+     * between location updates to conserve power. If minDistance is greater than 0,
+     * a location will only be broadcast if the device moves by minDistance meters.
+     * To obtain notifications as frequently as possible, set both parameters to 0.
+     *
+     * <p> Background services should be careful about setting a sufficiently high
+     * minTime so that the device doesn't consume too much power by keeping the
+     * GPS or wireless radios on all the time. In particular, values under 60000ms
+     * are not recommended.
+     *
+     * <p> In case the provider is disabled by the user, updates will stop,
+     * and an intent will be sent with an extra with key KEY_PROVIDER_ENABLED and a boolean value
+     * of false.  If the provider is re-enabled, an intent will be sent with an
+     * extra with key KEY_PROVIDER_ENABLED and a boolean value of true and location updates will
+     * start again.
+     *
+     * <p> If the provider's status changes, an intent will be sent with an extra with key
+     * KEY_STATUS_CHANGED and an integer value indicating the new status.  Any extras associated
+     * with the status update will be sent as well.
+     *
+     * @param provider the name of the provider with which to register
+     * @param minTime the minimum time interval for notifications, in
+     * milliseconds. This field is only used as a hint to conserve power, and actual
+     * time between location updates may be greater or lesser than this value.
+     * @param minDistance the minimum distance interval for notifications,
+     * in meters
+     * @param intent a {#link PendingIntent} to be sent for each location update
+     *
+     * @throws IllegalArgumentException if provider is null or doesn't exist
+>>>>>>> upstream/master
      * @throws IllegalArgumentException if intent is null
      * @throws SecurityException if no suitable permission is present for the provider.
      */
@@ -753,6 +895,7 @@ public class LocationManager {
 
     /**
      * Registers the current activity to be notified periodically based on
+<<<<<<< HEAD
      * the supplied criteria.  Periodically, the supplied PendingIntent will
      * be broadcast with the current Location or with status updates.
      *
@@ -808,16 +951,62 @@ public class LocationManager {
      *
      * @param minTime minimum time interval between location updates, in milliseconds
      * @param minDistance minimum distance between location updates, in meters
+=======
+     * the specified criteria.  Periodically, the supplied PendingIntent will
+     * be broadcast with the current Location or with status updates.
+     *
+     * <p> Location updates are sent with a key of KEY_LOCATION_CHANGED and a Location value.
+     *
+     * <p> It may take a while to receive the most recent location. If
+     * an immediate location is required, applications may use the
+     * {@link #getLastKnownLocation(String)} method.
+     *
+     * <p> The frequency of notification or new locations may be controlled using the
+     * minTime and minDistance parameters. If minTime is greater than 0,
+     * the LocationManager could potentially rest for minTime milliseconds
+     * between location updates to conserve power. If minDistance is greater than 0,
+     * a location will only be broadcast if the device moves by minDistance meters.
+     * To obtain notifications as frequently as possible, set both parameters to 0.
+     *
+     * <p> Background services should be careful about setting a sufficiently high
+     * minTime so that the device doesn't consume too much power by keeping the
+     * GPS or wireless radios on all the time. In particular, values under 60000ms
+     * are not recommended.
+     *
+     * <p> In case the provider is disabled by the user, updates will stop,
+     * and an intent will be sent with an extra with key KEY_PROVIDER_ENABLED and a boolean value
+     * of false.  If the provider is re-enabled, an intent will be sent with an
+     * extra with key KEY_PROVIDER_ENABLED and a boolean value of true and location updates will
+     * start again.
+     *
+     * <p> If the provider's status changes, an intent will be sent with an extra with key
+     * KEY_STATUS_CHANGED and an integer value indicating the new status.  Any extras associated
+     * with the status update will be sent as well.
+     *
+     * @param minTime the minimum time interval for notifications, in
+     * milliseconds. This field is only used as a hint to conserve power, and actual
+     * time between location updates may be greater or lesser than this value.
+     * @param minDistance the minimum distance interval for notifications,
+     * in meters
+>>>>>>> upstream/master
      * @param criteria contains parameters for the location manager to choose the
      * appropriate provider and parameters to compute the location
      * @param intent a {#link PendingIntent} to be sent for each location update
      *
+<<<<<<< HEAD
      * @throws IllegalArgumentException if criteria is null
      * @throws IllegalArgumentException if intent is null
      * @throws SecurityException if no suitable permission is present for the provider.
      */
     public void requestLocationUpdates(long minTime, float minDistance, Criteria criteria,
             PendingIntent intent) {
+=======
+     * @throws IllegalArgumentException if provider is null or doesn't exist
+     * @throws IllegalArgumentException if intent is null
+     * @throws SecurityException if no suitable permission is present for the provider.
+     */
+    public void requestLocationUpdates(long minTime, float minDistance, Criteria criteria, PendingIntent intent) {
+>>>>>>> upstream/master
         if (criteria == null) {
             throw new IllegalArgumentException("criteria==null");
         }
@@ -863,12 +1052,21 @@ public class LocationManager {
      * {@link LocationListener#onLocationChanged} method will be called when
      * the location update is available
      * @param looper a Looper object whose message queue will be used to
+<<<<<<< HEAD
      * implement the callback mechanism, or null to make callbacks on the
      * main thread
      *
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * @throws IllegalArgumentException if listener is null
      * @throws SecurityException if no suitable permission is present for the provider
+=======
+     * implement the callback mechanism.
+     * If looper is null then the callbacks will be called on the main thread.
+     *
+     * @throws IllegalArgumentException if provider is null or doesn't exist
+     * @throws IllegalArgumentException if listener is null
+     * @throws SecurityException if no suitable permission is present for the provider.
+>>>>>>> upstream/master
      */
     public void requestSingleUpdate(String provider, LocationListener listener, Looper looper) {
         if (provider == null) {
@@ -901,13 +1099,22 @@ public class LocationManager {
      * {@link LocationListener#onLocationChanged} method will be called when
      * the location update is available
      * @param looper a Looper object whose message queue will be used to
+<<<<<<< HEAD
      * implement the callback mechanism, or null to make callbacks on the
      * main thread
+=======
+     * implement the callback mechanism.
+     * If looper is null then the callbacks will be called on the current thread.
+>>>>>>> upstream/master
      *
      * @throws IllegalArgumentException if criteria is null
      * @throws IllegalArgumentException if listener is null
      * @throws SecurityException if no suitable permission is present to access
+<<<<<<< HEAD
      * the location services
+=======
+     * the location services.
+>>>>>>> upstream/master
      */
     public void requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper) {
         if (criteria == null) {
@@ -926,8 +1133,12 @@ public class LocationManager {
      * an immediate location is required, applications may use the
      * {@link #getLastKnownLocation(String)} method.
      *
+<<<<<<< HEAD
      * <p> Location updates are sent with a key of
      * {@link #KEY_LOCATION_CHANGED} and a {@link android.location.Location} value.
+=======
+     * <p> Location updates are sent with a key of KEY_LOCATION_CHANGED and a Location value.
+>>>>>>> upstream/master
      *
      * <p> In case the provider is disabled by the user, the update will not be received,
      * and the {@link LocationListener#onProviderDisabled(String)}
@@ -940,7 +1151,11 @@ public class LocationManager {
      *
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * @throws IllegalArgumentException if intent is null
+<<<<<<< HEAD
      * @throws SecurityException if no suitable permission is present for the provider
+=======
+     * @throws SecurityException if no suitable permission is present for the provider.
+>>>>>>> upstream/master
      */
     public void requestSingleUpdate(String provider, PendingIntent intent) {
         if (provider == null) {
@@ -959,6 +1174,7 @@ public class LocationManager {
      * an immediate location is required, applications may use the
      * {@link #getLastKnownLocation(String)} method.
      *
+<<<<<<< HEAD
      * <p> Location updates are sent with a key of
      * {@link #KEY_LOCATION_CHANGED} and a {@link android.location.Location} value.
      *
@@ -968,6 +1184,15 @@ public class LocationManager {
      * If the provider is re-enabled, an intent will be sent with an
      * extra with key {@link #KEY_PROVIDER_ENABLED} and a boolean value of
      * true and the location update will occur.
+=======
+     * <p> Location updates are sent with a key of KEY_LOCATION_CHANGED and a Location value.
+     *
+     * <p> In case the provider is disabled by the user, the update will not be received,
+     * and the {@link LocationListener#onProviderDisabled(String)}
+     * method will be called. As soon as the provider is enabled again,
+     * the {@link LocationListener#onProviderEnabled(String)} method will
+     * be called and location updates will start again.
+>>>>>>> upstream/master
      *
      * @param criteria contains parameters for the location manager to choose the
      * appropriate provider and parameters to compute the location
@@ -975,7 +1200,11 @@ public class LocationManager {
      *
      * @throws IllegalArgumentException if provider is null or doesn't exist
      * @throws IllegalArgumentException if intent is null
+<<<<<<< HEAD
      * @throws SecurityException if no suitable permission is present for the provider
+=======
+     * @throws SecurityException if no suitable permission is present for the provider.
+>>>>>>> upstream/master
      */
     public void requestSingleUpdate(Criteria criteria, PendingIntent intent) {
         if (criteria == null) {

@@ -24,8 +24,11 @@ public class FormatException extends Exception {
     public FormatException(String message) {
         super(message);
     }
+<<<<<<< HEAD
 
     public FormatException(String message, Throwable e) {
         super(message, e);
     }
+=======
+>>>>>>> upstream/master
 }

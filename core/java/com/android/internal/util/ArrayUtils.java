@@ -17,6 +17,10 @@
 package com.android.internal.util;
 
 import java.lang.reflect.Array;
+<<<<<<< HEAD
+=======
+import java.util.Collection;
+>>>>>>> upstream/master
 
 // XXX these should be changed to reflect the actual memory allocator we use.
 // it looks like right now objects want to be powers of 2 minus 8
@@ -141,6 +145,7 @@ public class ArrayUtils
         }
         return false;
     }
+<<<<<<< HEAD
 
     public static long total(long[] array) {
         long total = 0;
@@ -237,4 +242,6 @@ public class ArrayUtils
         }
         return cur;
     }
+=======
+>>>>>>> upstream/master
 }

@@ -23,6 +23,7 @@
  * @hide
  */
 public class StateChangeResult {
+<<<<<<< HEAD
     StateChangeResult(int networkId, String SSID, String BSSID, SupplicantState state) {
         this.state = state;
         this.SSID = SSID;
@@ -32,6 +33,14 @@ public class StateChangeResult {
 
     int networkId;
     String SSID;
+=======
+    StateChangeResult(int networkId, String BSSID, SupplicantState state) {
+        this.state = state;
+        this.BSSID = BSSID;
+        this.networkId = networkId;
+    }
+    int networkId;
+>>>>>>> upstream/master
     String BSSID;
     SupplicantState state;
 }

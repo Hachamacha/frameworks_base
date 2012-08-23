@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 #include <androidfw/BackupHelpers.h>
+=======
+#include <utils/BackupHelpers.h>
+>>>>>>> upstream/master
 #include <utils/String8.h>
 
 #include <fcntl.h>

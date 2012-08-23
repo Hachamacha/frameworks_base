@@ -7,6 +7,13 @@ LOCAL_SRC_FILES:= \
 	IObbActionListener.cpp \
 	IMountService.cpp
 
+<<<<<<< HEAD
+=======
+LOCAL_STATIC_LIBRARIES := \
+	libutils \
+	libbinder
+
+>>>>>>> upstream/master
 LOCAL_MODULE:= libstorage
 
 include $(BUILD_STATIC_LIBRARY)

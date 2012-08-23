@@ -20,7 +20,11 @@
 #include "JNIHelp.h"
 #include <android_runtime/AndroidRuntime.h>
 
+<<<<<<< HEAD
 #include <androidfw/BackupHelpers.h>
+=======
+#include <utils/BackupHelpers.h>
+>>>>>>> upstream/master
 
 namespace android
 {
@@ -52,6 +56,10 @@ writeEntityHeader_native(JNIEnv* env, jobject clazz, int w, jstring key, int dat
     if (keyUTF == NULL) {
         return -1;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     err = writer->WriteEntityHeader(String8(keyUTF), dataSize);
 
     env->ReleaseStringUTFChars(key, keyUTF);
@@ -106,7 +114,11 @@ static const JNINativeMethod g_methods[] = {
 
 int register_android_backup_BackupDataOutput(JNIEnv* env)
 {
+<<<<<<< HEAD
     //ALOGD("register_android_backup_BackupDataOutput");
+=======
+    //LOGD("register_android_backup_BackupDataOutput");
+>>>>>>> upstream/master
     return AndroidRuntime::registerNativeMethods(env, "android/app/backup/BackupDataOutput",
             g_methods, NELEM(g_methods));
 }

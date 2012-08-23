@@ -210,6 +210,7 @@ public class GLTextureViewActivity extends Activity implements TextureView.Surfa
             glEnableVertexAttribArray(attribTexCoords);
             checkGlError();
 
+<<<<<<< HEAD
             glUniform1i(uniformTexture, 0);
             checkGlError();
 
@@ -225,16 +226,38 @@ public class GLTextureViewActivity extends Activity implements TextureView.Surfa
             checkGlError();
 
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+=======
+            glUniform1i(uniformTexture, texture);
+>>>>>>> upstream/master
             checkGlError();
             
             while (!mFinished) {
                 checkCurrent();
 
+<<<<<<< HEAD
                 glClear(GL_COLOR_BUFFER_BIT);
                 checkGlError();
 
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
                 checkGlError();
+=======
+                glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+                checkGlError();
+
+                glClear(GL_COLOR_BUFFER_BIT);
+                checkGlError();
+
+                // drawQuad
+                triangleVertices.position(TRIANGLE_VERTICES_DATA_POS_OFFSET);
+                glVertexAttribPointer(attribPosition, 3, GL_FLOAT, false,
+                        TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangleVertices);
+
+                triangleVertices.position(TRIANGLE_VERTICES_DATA_UV_OFFSET);
+                glVertexAttribPointer(attribTexCoords, 3, GL_FLOAT, false,
+                        TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangleVertices);
+
+                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+>>>>>>> upstream/master
 
                 if (!mEgl.eglSwapBuffers(mEglDisplay, mEglSurface)) {
                     throw new RuntimeException("Cannot swap buffers");

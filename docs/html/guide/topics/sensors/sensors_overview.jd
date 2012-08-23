@@ -50,6 +50,7 @@ href="{@docRoot}resources/samples/ApiDemos/src/com/example/android/apis/os/Senso
   </div>
 </div>
 
+<<<<<<< HEAD
 <p>Most Android-powered devices have built-in sensors that measure motion, orientation,
 and various environmental conditions. These sensors are capable of providing raw data with high
 precision and accuracy, and are useful if you want to monitor three-dimensional device movement or
@@ -83,6 +84,15 @@ bearing.</p>
 <p>You can access sensors available on the device and acquire raw sensor data by using the Android
 sensor framework. The sensor framework provides several classes and interfaces that help you perform a wide
 variety of sensor-related tasks. For example, you can use the sensor framework to do the following:</p>
+=======
+<p>Most Android-powered devices have sensors that let you monitor changes in device
+position and motion. Many devices also have sensors that let you determine ambient environmental
+conditions, such as temperature, pressure, humidity, and lighting. You can access these
+sensors and acquire raw sensor data by using the Android sensor framework.</p>
+
+<p>The sensor framework provides several classes and interfaces that help you perform a wide variety
+of sensor-related tasks. For example, you can use the sensor framework to do the following:</p>
+>>>>>>> upstream/master
 
 <ul>
    <li>Determine which sensors are available on a device.</li>

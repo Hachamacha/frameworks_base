@@ -24,8 +24,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+=======
+>>>>>>> upstream/master
 
 
 /**
@@ -379,6 +382,7 @@ public class TableRow extends LinearLayout {
         return new LayoutParams(p);
     }
 
+<<<<<<< HEAD
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -391,6 +395,8 @@ public class TableRow extends LinearLayout {
         info.setClassName(TableRow.class.getName());
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * <p>Set of layout parameters used in table rows.</p>
      *

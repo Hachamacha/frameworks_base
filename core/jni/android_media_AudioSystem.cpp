@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /*
+=======
+/* //device/libs/android_runtime/android_media_AudioSystem.cpp
+>>>>>>> upstream/master
 **
 ** Copyright 2006, The Android Open Source Project
 **
@@ -16,18 +20,31 @@
 */
 
 #define LOG_TAG "AudioSystem"
+<<<<<<< HEAD
 #include <utils/Log.h>
+=======
+#include "utils/Log.h"
+>>>>>>> upstream/master
 
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <math.h>
 
+<<<<<<< HEAD
 #include <jni.h>
 #include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
 
 #include <media/AudioSystem.h>
+=======
+#include "jni.h"
+#include "JNIHelp.h"
+#include "android_runtime/AndroidRuntime.h"
+
+#include <media/AudioSystem.h>
+#include <media/AudioTrack.h>
+>>>>>>> upstream/master
 
 #include <system/audio.h>
 #include <system/audio_policy.h>
@@ -71,7 +88,11 @@ static jboolean
 android_media_AudioSystem_isStreamActive(JNIEnv *env, jobject thiz, jint stream, jint inPastMs)
 {
     bool state = false;
+<<<<<<< HEAD
     AudioSystem::isStreamActive((audio_stream_type_t) stream, &state, inPastMs);
+=======
+    AudioSystem::isStreamActive(stream, &state, inPastMs);
+>>>>>>> upstream/master
     return state;
 }
 
@@ -151,7 +172,17 @@ android_media_AudioSystem_getDeviceConnectionState(JNIEnv *env, jobject thiz, ji
 static int
 android_media_AudioSystem_setPhoneState(JNIEnv *env, jobject thiz, jint state)
 {
+<<<<<<< HEAD
     return check_AudioSystem_Command(AudioSystem::setPhoneState((audio_mode_t) state));
+=======
+    return check_AudioSystem_Command(AudioSystem::setPhoneState(state));
+}
+
+static int
+android_media_AudioSystem_setRingerMode(JNIEnv *env, jobject thiz, jint mode, jint mask)
+{
+    return check_AudioSystem_Command(AudioSystem::setRingerMode(mode, mask));
+>>>>>>> upstream/master
 }
 
 static int
@@ -176,6 +207,7 @@ android_media_AudioSystem_initStreamVolume(JNIEnv *env, jobject thiz, jint strea
 }
 
 static int
+<<<<<<< HEAD
 android_media_AudioSystem_setStreamVolumeIndex(JNIEnv *env,
                                                jobject thiz,
                                                jint stream,
@@ -199,11 +231,24 @@ android_media_AudioSystem_getStreamVolumeIndex(JNIEnv *env,
                                           &index,
                                           (audio_devices_t)device)
             != NO_ERROR) {
+=======
+android_media_AudioSystem_setStreamVolumeIndex(JNIEnv *env, jobject thiz, jint stream, jint index)
+{
+    return check_AudioSystem_Command(AudioSystem::setStreamVolumeIndex(static_cast <audio_stream_type_t>(stream), index));
+}
+
+static int
+android_media_AudioSystem_getStreamVolumeIndex(JNIEnv *env, jobject thiz, jint stream)
+{
+    int index;
+    if (AudioSystem::getStreamVolumeIndex(static_cast <audio_stream_type_t>(stream), &index) != NO_ERROR) {
+>>>>>>> upstream/master
         index = -1;
     }
     return index;
 }
 
+<<<<<<< HEAD
 static int
 android_media_AudioSystem_setMasterVolume(JNIEnv *env, jobject thiz, jfloat value)
 {
@@ -236,6 +281,8 @@ android_media_AudioSystem_getMasterMute(JNIEnv *env, jobject thiz)
     return mute;
 }
 
+=======
+>>>>>>> upstream/master
 static jint
 android_media_AudioSystem_getDevicesForStream(JNIEnv *env, jobject thiz, jint stream)
 {
@@ -253,6 +300,7 @@ static JNINativeMethod gMethods[] = {
     {"setDeviceConnectionState", "(IILjava/lang/String;)I", (void *)android_media_AudioSystem_setDeviceConnectionState},
     {"getDeviceConnectionState", "(ILjava/lang/String;)I",  (void *)android_media_AudioSystem_getDeviceConnectionState},
     {"setPhoneState",       "(I)I",     (void *)android_media_AudioSystem_setPhoneState},
+<<<<<<< HEAD
     {"setForceUse",         "(II)I",    (void *)android_media_AudioSystem_setForceUse},
     {"getForceUse",         "(I)I",     (void *)android_media_AudioSystem_getForceUse},
     {"initStreamVolume",    "(III)I",   (void *)android_media_AudioSystem_initStreamVolume},
@@ -262,13 +310,25 @@ static JNINativeMethod gMethods[] = {
     {"getMasterVolume",     "()F",      (void *)android_media_AudioSystem_getMasterVolume},
     {"setMasterMute",       "(Z)I",     (void *)android_media_AudioSystem_setMasterMute},
     {"getMasterMute",       "()Z",      (void *)android_media_AudioSystem_getMasterMute},
+=======
+    {"setRingerMode",       "(II)I",    (void *)android_media_AudioSystem_setRingerMode},
+    {"setForceUse",         "(II)I",    (void *)android_media_AudioSystem_setForceUse},
+    {"getForceUse",         "(I)I",     (void *)android_media_AudioSystem_getForceUse},
+    {"initStreamVolume",    "(III)I",   (void *)android_media_AudioSystem_initStreamVolume},
+    {"setStreamVolumeIndex","(II)I",    (void *)android_media_AudioSystem_setStreamVolumeIndex},
+    {"getStreamVolumeIndex","(I)I",     (void *)android_media_AudioSystem_getStreamVolumeIndex},
+>>>>>>> upstream/master
     {"getDevicesForStream", "(I)I",     (void *)android_media_AudioSystem_getDevicesForStream},
 };
 
 int register_android_media_AudioSystem(JNIEnv *env)
 {
     AudioSystem::setErrorCallback(android_media_AudioSystem_error_callback);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> upstream/master
     return AndroidRuntime::registerNativeMethods(env,
                 kClassPathName, gMethods, NELEM(gMethods));
 }

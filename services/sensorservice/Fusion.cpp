@@ -338,7 +338,11 @@ void Fusion::checkState() {
 
     if (!isPositiveSemidefinite(P[0][0], SYMMETRY_TOLERANCE) ||
         !isPositiveSemidefinite(P[1][1], SYMMETRY_TOLERANCE)) {
+<<<<<<< HEAD
         ALOGW("Sensor fusion diverged; resetting state.");
+=======
+        LOGW("Sensor fusion diverged; resetting state.");
+>>>>>>> upstream/master
         P = 0;
     }
 }

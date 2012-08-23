@@ -65,7 +65,11 @@ public class MediaPlayerInvokeTest extends ActivityInstrumentationTestCase2<Medi
 
         int val = rnd.nextInt();
         request.writeInt(val);
+<<<<<<< HEAD
         mPlayer.invoke(request, reply);
+=======
+        assertEquals(0, mPlayer.invoke(request, reply));
+>>>>>>> upstream/master
         assertEquals(val, reply.readInt());
    }
 }

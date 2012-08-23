@@ -20,24 +20,33 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
+<<<<<<< HEAD
 import android.webkit.WebSettingsClassic;
 import android.webkit.WebView;
 import android.webkit.WebViewClassic;
 
 import java.util.ArrayList;
+=======
+import android.webkit.WebView;
+>>>>>>> upstream/master
 
 import com.test.tilebenchmark.ProfileActivity.ProfileCallback;
 import com.test.tilebenchmark.RunData.TileData;
 
+<<<<<<< HEAD
 public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapDelegate {
     private static final String LOGTAG = "ProfiledWebView";
 
+=======
+public class ProfiledWebView extends WebView {
+>>>>>>> upstream/master
     private int mSpeed;
 
     private boolean mIsTesting = false;
     private boolean mIsScrolling = false;
     private ProfileCallback mCallback;
     private long mContentInvalMillis;
+<<<<<<< HEAD
     private static final int LOAD_STALL_MILLIS = 2000; // nr of millis after load,
                                                        // before test is forced
 
@@ -46,6 +55,13 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
     private long mLoadTime;
     private long mAnimationTime;
 
+=======
+    private boolean mHadToBeForced = false;
+    private int mTestCount = 0;
+    private static final int LOAD_STALL_MILLIS = 5000; // nr of millis after load,
+                                                       // before test is forced
+
+>>>>>>> upstream/master
     public ProfiledWebView(Context context) {
         super(context);
     }
@@ -63,6 +79,7 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
         super(context, attrs, defStyle, privateBrowsing);
     }
 
+<<<<<<< HEAD
     private class JavaScriptInterface {
         Context mContext;
 
@@ -98,6 +115,8 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
         mLoadTime = System.currentTimeMillis();
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     protected void onDraw(android.graphics.Canvas canvas) {
         if (mIsTesting && mIsScrolling) {
@@ -117,12 +136,25 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
      * scrolling, invalidate all content and redraw it, measuring time taken.
      */
     public void startScrollTest(ProfileCallback callback, boolean autoScrolling) {
+<<<<<<< HEAD
         mCallback = callback;
         mIsTesting = false;
         mIsScrolling = false;
         WebSettingsClassic settings = getWebViewClassic().getSettings();
         settings.setProperty("tree_updates", "0");
 
+=======
+        mIsScrolling = autoScrolling;
+        mCallback = callback;
+        mIsTesting = false;
+        mContentInvalMillis = System.currentTimeMillis();
+        registerPageSwapCallback();
+        contentInvalidateAll();
+        invalidate();
+
+        mTestCount++;
+        final int testCount = mTestCount;
+>>>>>>> upstream/master
 
         if (autoScrolling) {
             // after a while, force it to start even if the pages haven't swapped
@@ -133,6 +165,7 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
 
                 @Override
                 public void onFinish() {
+<<<<<<< HEAD
                     // invalidate all content, and kick off redraw
                     Log.d("ProfiledWebView",
                             "kicking off test with callback registration, and tile discard...");
@@ -145,12 +178,24 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
         } else {
             mIsTesting = true;
             getWebViewClassic().tileProfilingStart();
+=======
+                    if (testCount == mTestCount && !mIsTesting) {
+                        mHadToBeForced = true;
+                        Log.d("ProfiledWebView", "num " + testCount
+                                + " forcing a page swap with a scroll...");
+                        scrollBy(0, 1);
+                        invalidate(); // ensure a redraw so that auto-scrolling can occur
+                    }
+                }
+            }.start();
+>>>>>>> upstream/master
         }
     }
 
     /*
      * Called after the manual contentInvalidateAll, after the tiles have all
      * been redrawn.
+<<<<<<< HEAD
      * From PageSwapDelegate.
      */
     @Override
@@ -183,12 +228,25 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
     public void setDoubleBuffering(boolean useDoubleBuffering) {
         WebSettingsClassic settings = getWebViewClassic().getSettings();
         settings.setProperty("use_double_buffering", useDoubleBuffering ? "true" : "false");
+=======
+     */
+    @Override
+    protected void pageSwapCallback(boolean startAnim) {
+        mContentInvalMillis = System.currentTimeMillis() - mContentInvalMillis;
+        super.pageSwapCallback(startAnim);
+        Log.d("ProfiledWebView", "REDRAW TOOK " + mContentInvalMillis
+                + "millis");
+        mIsTesting = true;
+        invalidate(); // ensure a redraw so that auto-scrolling can occur
+        tileProfilingStart();
+>>>>>>> upstream/master
     }
 
     /*
      * Called once the page has stopped scrolling
      */
     public void stopScrollTest() {
+<<<<<<< HEAD
         getWebViewClassic().tileProfilingStop();
         mIsTesting = false;
 
@@ -222,20 +280,61 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
                 int level = getWebViewClassic().tileProfilingGetInt(frame, tile, "level");
 
                 float scale = getWebViewClassic().tileProfilingGetFloat(frame, tile, "scale");
+=======
+        tileProfilingStop();
+        mIsTesting = false;
+
+        if (mCallback == null) {
+            tileProfilingClear();
+            return;
+        }
+
+        RunData data = new RunData(super.tileProfilingNumFrames());
+        // record the time spent (before scrolling) rendering the page
+        data.singleStats.put(getResources().getString(R.string.render_millis),
+                (double)mContentInvalMillis);
+        // record if the page render timed out
+        Log.d("ProfiledWebView", "hadtobeforced = " + mHadToBeForced);
+        data.singleStats.put(getResources().getString(R.string.render_stalls),
+                             mHadToBeForced ? 1.0 : 0.0);
+        mHadToBeForced = false;
+
+        for (int frame = 0; frame < data.frames.length; frame++) {
+            data.frames[frame] = new TileData[
+                    tileProfilingNumTilesInFrame(frame)];
+            for (int tile = 0; tile < data.frames[frame].length; tile++) {
+                int left = tileProfilingGetInt(frame, tile, "left");
+                int top = tileProfilingGetInt(frame, tile, "top");
+                int right = tileProfilingGetInt(frame, tile, "right");
+                int bottom = tileProfilingGetInt(frame, tile, "bottom");
+
+                boolean isReady = super.tileProfilingGetInt(
+                        frame, tile, "isReady") == 1;
+                int level = tileProfilingGetInt(frame, tile, "level");
+
+                float scale = tileProfilingGetFloat(frame, tile, "scale");
+>>>>>>> upstream/master
 
                 data.frames[frame][tile] = data.new TileData(left, top, right, bottom,
                         isReady, level, scale);
             }
         }
+<<<<<<< HEAD
         getWebViewClassic().tileProfilingClear();
+=======
+        tileProfilingClear();
+>>>>>>> upstream/master
 
         mCallback.profileCallback(data);
     }
 
     @Override
     public void loadUrl(String url) {
+<<<<<<< HEAD
         mAnimationTime = 0;
         mLoadTime = 0;
+=======
+>>>>>>> upstream/master
         if (!url.startsWith("http://") && !url.startsWith("file://")) {
             url = "http://" + url;
         }
@@ -245,8 +344,11 @@ public class ProfiledWebView extends WebView implements WebViewClassic.PageSwapD
     public void setAutoScrollSpeed(int speedInt) {
         mSpeed = speedInt;
     }
+<<<<<<< HEAD
 
     public WebViewClassic getWebViewClassic() {
         return WebViewClassic.fromWebView(this);
     }
+=======
+>>>>>>> upstream/master
 }

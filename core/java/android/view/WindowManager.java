@@ -423,6 +423,7 @@ public interface WindowManager extends ViewManager {
         public static final int TYPE_HIDDEN_NAV_CONSUMER = FIRST_SYSTEM_WINDOW+22;
 
         /**
+<<<<<<< HEAD
          * Window type: Dreams (screen saver) window, just above keyguard.
          * @hide
          */
@@ -435,6 +436,8 @@ public interface WindowManager extends ViewManager {
         public static final int TYPE_NAVIGATION_BAR_PANEL = FIRST_SYSTEM_WINDOW+24;
 
         /**
+=======
+>>>>>>> upstream/master
          * End of types of system windows.
          */
         public static final int LAST_SYSTEM_WINDOW      = 2999;
@@ -691,6 +694,16 @@ public interface WindowManager extends ViewManager {
          */
         public static final int FLAG_NEEDS_MENU_KEY = 0x08000000;
 
+<<<<<<< HEAD
+=======
+        /** Window flag: *sigh* The lock screen wants to continue running its
+         * animation while it is fading.  A kind-of hack to allow this.  Maybe
+         * in the future we just make this the default behavior.
+         *
+         * {@hide} */
+        public static final int FLAG_KEEP_SURFACE_WHILE_ANIMATING = 0x10000000;
+        
+>>>>>>> upstream/master
         /** Window flag: special flag to limit the size of the window to be
          * original size ([320x480] x density). Used to create window for applications
          * running under compatibility mode.
@@ -704,6 +717,12 @@ public interface WindowManager extends ViewManager {
          * {@hide} */
         public static final int FLAG_SYSTEM_ERROR = 0x40000000;
 
+<<<<<<< HEAD
+=======
+	/** Window flag: Overrides default power key behavior */
+	public static final int PREVENT_POWER_KEY = 0x80000000;
+
+>>>>>>> upstream/master
         /**
          * Various behavioral options/flags.  Default is none.
          * 
@@ -792,10 +811,17 @@ public interface WindowManager extends ViewManager {
          * hardware accelerated.  This is used for the starting preview windows
          * in the system process, which don't need to have the overhead of
          * hardware acceleration (they are just a static rendering), but should
+<<<<<<< HEAD
          * be rendered as such to match the actual window of the app even if it
          * is hardware accelerated.
          * Even if the window isn't hardware accelerated, still do its rendering
          * as if it was.
+=======
+         * be rendered as much to match the actual window of the app even if it
+         * is hardware accelerated.
+         * Even if the window isn't hardware accelerated, still do its rendering
+         * as if it is.
+>>>>>>> upstream/master
          * Like {@link #FLAG_HARDWARE_ACCELERATED} except for trusted system windows
          * that need hardware acceleration (e.g. LockScreen), where hardware acceleration
          * is generally disabled. This flag must be specified in addition to 
@@ -808,7 +834,11 @@ public interface WindowManager extends ViewManager {
 
         /**
          * In the system process, we globally do not use hardware acceleration
+<<<<<<< HEAD
          * because there are many threads doing UI there and they conflict.
+=======
+         * because there are many threads doing UI there and they an conflict.
+>>>>>>> upstream/master
          * If certain parts of the UI that really do want to use hardware
          * acceleration, this flag can be set to force it.  This is basically
          * for the lock screen.  Anyone else using it, you are probably wrong.
@@ -819,7 +849,11 @@ public interface WindowManager extends ViewManager {
 
         /**
          * By default, wallpapers are sent new offsets when the wallpaper is scrolled. Wallpapers
+<<<<<<< HEAD
          * may elect to skip these notifications if they are not doing anything productive with
+=======
+         * may elect to skp these notifications if they are no doing anything productive with
+>>>>>>> upstream/master
          * them (they do not affect the wallpaper scrolling operation) by calling
          * {@link
          * android.service.wallpaper.WallpaperService.Engine#setOffsetNotificationsEnabled(boolean)}.

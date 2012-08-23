@@ -25,12 +25,21 @@
 
 #include <cutils/properties.h>
 
+<<<<<<< HEAD
 #include <androidfw/AssetManager.h>
 #include <binder/IPCThreadState.h>
 #include <utils/Atomic.h>
 #include <utils/Errors.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
+=======
+#include <binder/IPCThreadState.h>
+#include <utils/threads.h>
+#include <utils/Atomic.h>
+#include <utils/Errors.h>
+#include <utils/Log.h>
+#include <utils/AssetManager.h>
+>>>>>>> upstream/master
 
 #include <ui/PixelFormat.h>
 #include <ui/Rect.h>
@@ -38,8 +47,13 @@
 #include <ui/DisplayInfo.h>
 #include <ui/FramebufferNativeWindow.h>
 
+<<<<<<< HEAD
 #include <gui/Surface.h>
 #include <gui/SurfaceComposerClient.h>
+=======
+#include <surfaceflinger/ISurfaceComposer.h>
+#include <surfaceflinger/ISurfaceComposerClient.h>
+>>>>>>> upstream/master
 
 #include <core/SkBitmap.h>
 #include <core/SkStream.h>
@@ -54,11 +68,14 @@
 #define USER_BOOTANIMATION_FILE "/data/local/bootanimation.zip"
 #define SYSTEM_BOOTANIMATION_FILE "/system/media/bootanimation.zip"
 #define SYSTEM_ENCRYPTED_BOOTANIMATION_FILE "/system/media/bootanimation-encrypted.zip"
+<<<<<<< HEAD
 #define EXIT_PROP_NAME "service.bootanim.exit"
 
 extern "C" int clock_nanosleep(clockid_t clock_id, int flags,
                            const struct timespec *request,
                            struct timespec *remain);
+=======
+>>>>>>> upstream/master
 
 namespace android {
 
@@ -74,7 +91,11 @@ BootAnimation::~BootAnimation() {
 
 void BootAnimation::onFirstRef() {
     status_t err = mSession->linkToComposerDeath(this);
+<<<<<<< HEAD
     ALOGE_IF(err, "linkToComposerDeath failed (%s) ", strerror(-err));
+=======
+    LOGE_IF(err, "linkToComposerDeath failed (%s) ", strerror(-err));
+>>>>>>> upstream/master
     if (err == NO_ERROR) {
         run("BootAnimation", PRIORITY_DISPLAY);
     }
@@ -88,7 +109,11 @@ sp<SurfaceComposerClient> BootAnimation::session() const {
 void BootAnimation::binderDied(const wp<IBinder>& who)
 {
     // woah, surfaceflinger died!
+<<<<<<< HEAD
     ALOGD("SurfaceFlinger died, exiting...");
+=======
+    LOGD("SurfaceFlinger died, exiting...");
+>>>>>>> upstream/master
 
     // calling requestExit() is not enough here because the Surface code
     // might be blocked on a condition variable that will never be updated.
@@ -161,7 +186,11 @@ status_t BootAnimation::initTexture(void* buffer, size_t len)
     codec->setDitherImage(false);
     if (codec) {
         codec->decode(&stream, &bitmap,
+<<<<<<< HEAD
                 SkBitmap::kARGB_8888_Config,
+=======
+                SkBitmap::kRGB_565_Config,
+>>>>>>> upstream/master
                 SkImageDecoder::kDecodePixels_Mode);
         delete codec;
     }
@@ -298,9 +327,12 @@ bool BootAnimation::threadLoop()
         r = movie();
     }
 
+<<<<<<< HEAD
     // No need to force exit anymore
     property_set(EXIT_PROP_NAME, "0");
 
+=======
+>>>>>>> upstream/master
     eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     eglDestroyContext(mDisplay, mContext);
     eglDestroySurface(mDisplay, mSurface);
@@ -367,8 +399,11 @@ bool BootAnimation::android()
         const nsecs_t sleepTime = 83333 - ns2us(systemTime() - now);
         if (sleepTime > 0)
             usleep(sleepTime);
+<<<<<<< HEAD
 
         checkExit();
+=======
+>>>>>>> upstream/master
     } while (!exitPending());
 
     glDeleteTextures(1, &mAndroid[0].name);
@@ -377,6 +412,7 @@ bool BootAnimation::android()
 }
 
 
+<<<<<<< HEAD
 void BootAnimation::checkExit() {
     // Allow surface flinger to gracefully request shutdown
     char value[PROPERTY_VALUE_MAX];
@@ -387,6 +423,8 @@ void BootAnimation::checkExit() {
     }
 }
 
+=======
+>>>>>>> upstream/master
 bool BootAnimation::movie()
 {
     ZipFileRO& zip(mZip);
@@ -394,7 +432,11 @@ bool BootAnimation::movie()
     size_t numEntries = zip.getNumEntries();
     ZipEntryRO desc = zip.findEntryByName("desc.txt");
     FileMap* descMap = zip.createEntryFileMap(desc);
+<<<<<<< HEAD
     ALOGE_IF(!descMap, "descMap is null");
+=======
+    LOGE_IF(!descMap, "descMap is null");
+>>>>>>> upstream/master
     if (!descMap) {
         return false;
     }
@@ -413,23 +455,37 @@ bool BootAnimation::movie()
         const char* l = line.string();
         int fps, width, height, count, pause;
         char path[256];
+<<<<<<< HEAD
         char pathType;
         if (sscanf(l, "%d %d %d", &width, &height, &fps) == 3) {
             //LOGD("> w=%d, h=%d, fps=%d", width, height, fps);
+=======
+        if (sscanf(l, "%d %d %d", &width, &height, &fps) == 3) {
+            //LOGD("> w=%d, h=%d, fps=%d", fps, width, height);
+>>>>>>> upstream/master
             animation.width = width;
             animation.height = height;
             animation.fps = fps;
         }
+<<<<<<< HEAD
         else if (sscanf(l, " %c %d %d %s", &pathType, &count, &pause, path) == 4) {
             //LOGD("> type=%c, count=%d, pause=%d, path=%s", pathType, count, pause, path);
             Animation::Part part;
             part.playUntilComplete = pathType == 'c';
+=======
+        if (sscanf(l, "p %d %d %s", &count, &pause, path) == 3) {
+            //LOGD("> count=%d, pause=%d, path=%s", count, pause, path);
+            Animation::Part part;
+>>>>>>> upstream/master
             part.count = count;
             part.pause = pause;
             part.path = path;
             animation.parts.add(part);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         s = ++endl;
     }
 
@@ -491,12 +547,17 @@ bool BootAnimation::movie()
     Region clearReg(Rect(mWidth, mHeight));
     clearReg.subtractSelf(Rect(xc, yc, xc+animation.width, yc+animation.height));
 
+<<<<<<< HEAD
     for (int i=0 ; i<pcount ; i++) {
+=======
+    for (int i=0 ; i<pcount && !exitPending() ; i++) {
+>>>>>>> upstream/master
         const Animation::Part& part(animation.parts[i]);
         const size_t fcount = part.frames.size();
         glBindTexture(GL_TEXTURE_2D, 0);
 
         for (int r=0 ; !part.count || r<part.count ; r++) {
+<<<<<<< HEAD
             // Exit any non playuntil complete parts immediately
             if(exitPending() && !part.playUntilComplete)
                 break;
@@ -504,6 +565,10 @@ bool BootAnimation::movie()
             for (int j=0 ; j<fcount && (!exitPending() || part.playUntilComplete) ; j++) {
                 const Animation::Frame& frame(part.frames[j]);
                 nsecs_t lastFrame = systemTime();
+=======
+            for (int j=0 ; j<fcount && !exitPending(); j++) {
+                const Animation::Frame& frame(part.frames[j]);
+>>>>>>> upstream/master
 
                 if (r > 0) {
                     glBindTexture(GL_TEXTURE_2D, frame.tid);
@@ -536,6 +601,7 @@ bool BootAnimation::movie()
 
                 nsecs_t now = systemTime();
                 nsecs_t delay = frameDuration - (now - lastFrame);
+<<<<<<< HEAD
                 //ALOGD("%lld, %lld", ns2ms(now - lastFrame), ns2ms(delay));
                 lastFrame = now;
 
@@ -557,6 +623,14 @@ bool BootAnimation::movie()
             // For infinite parts, we've now played them at least once, so perhaps exit
             if(exitPending() && !part.count)
                 break;
+=======
+                lastFrame = now;
+                long wait = ns2us(frameDuration);
+                if (wait > 0)
+                    usleep(wait);
+            }
+            usleep(part.pause * ns2us(frameDuration));
+>>>>>>> upstream/master
         }
 
         // free the textures for this part

@@ -16,6 +16,12 @@
 
 package android.os;
 
+<<<<<<< HEAD
+=======
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+>>>>>>> upstream/master
 import android.util.TimeUtils;
 
 /**
@@ -72,6 +78,7 @@ public final class Message implements Parcelable {
     public Messenger replyTo;
 
     /** If set message is in use */
+<<<<<<< HEAD
     /*package*/ static final int FLAG_IN_USE = 1 << 0;
 
     /** If set message is asynchronous */
@@ -79,6 +86,15 @@ public final class Message implements Parcelable {
 
     /** Flags to clear in the copyFrom method */
     /*package*/ static final int FLAGS_TO_CLEAR_ON_COPY_FROM = FLAG_IN_USE;
+=======
+    /*package*/ static final int FLAG_IN_USE = 1;
+
+    /** Flags reserved for future use (All are reserved for now) */
+    /*package*/ static final int FLAGS_RESERVED = ~FLAG_IN_USE;
+
+    /** Flags to clear in the copyFrom method */
+    /*package*/ static final int FLAGS_TO_CLEAR_ON_COPY_FROM = FLAGS_RESERVED | FLAG_IN_USE;
+>>>>>>> upstream/master
 
     /*package*/ int flags;
 
@@ -97,8 +113,13 @@ public final class Message implements Parcelable {
     private static Message sPool;
     private static int sPoolSize = 0;
 
+<<<<<<< HEAD
     private static final int MAX_POOL_SIZE = 50;
 
+=======
+    private static final int MAX_POOL_SIZE = 10;
+    
+>>>>>>> upstream/master
     /**
      * Return a new Message instance from the global pool. Allows us to
      * avoid allocating new objects in many cases.
@@ -360,6 +381,7 @@ public final class Message implements Parcelable {
         target.sendMessage(this);
     }
 
+<<<<<<< HEAD
     /**
      * Returns true if the message is asynchronous.
      *
@@ -402,6 +424,8 @@ public final class Message implements Parcelable {
         }
     }
 
+=======
+>>>>>>> upstream/master
     /*package*/ void clearForRecycle() {
         flags = 0;
         what = 0;
@@ -503,7 +527,11 @@ public final class Message implements Parcelable {
         Messenger.writeMessengerOrNullToParcel(replyTo, dest);
     }
 
+<<<<<<< HEAD
     private void readFromParcel(Parcel source) {
+=======
+    private final void readFromParcel(Parcel source) {
+>>>>>>> upstream/master
         what = source.readInt();
         arg1 = source.readInt();
         arg2 = source.readInt();

@@ -18,6 +18,7 @@ package android.drm;
 
 /**
  * An entity class that wraps converted data, conversion status, and the
+<<<<<<< HEAD
  * offset for appending the header and body signature to the converted data.
  * An instance of this class may be created two ways by the drm framework:
  * a) a call to {@link DrmManagerClient#convertData DrmManagerClient.convertData()} and
@@ -55,11 +56,31 @@ public class DrmConvertedStatus {
     /**
      * Offset value for the body and header signature.
      */
+=======
+ * offset for appending the header and body signature to the converted data. An instance of this
+ * class is returned by the {@link DrmManagerClient#convertData convertData()} and
+ * {@link DrmManagerClient#closeConvertSession closeConvertSession()} methods. The offset is provided only when a
+ * conversion session is closed by calling {@link DrmManagerClient#closeConvertSession closeConvertSession()}.
+ *
+ */
+public class DrmConvertedStatus {
+    // Should be in sync with DrmConvertedStatus.cpp
+    public static final int STATUS_OK = 1;
+    public static final int STATUS_INPUTDATA_ERROR = 2;
+    public static final int STATUS_ERROR = 3;
+
+    /** Status code for the conversion.*/
+    public final int statusCode;
+    /** Converted data.*/
+    public final byte[] convertedData;
+    /** Offset value for the body and header signature.*/
+>>>>>>> upstream/master
     public final int offset;
 
     /**
      * Creates a <code>DrmConvertedStatus</code> object with the specified parameters.
      *
+<<<<<<< HEAD
      * @param statusCode Conversion status. Must be one of the status code constants
      * defined above.
      * @param convertedData Converted data. It can be null.
@@ -79,6 +100,16 @@ public class DrmConvertedStatus {
         return statusCode == STATUS_OK ||
                statusCode == STATUS_INPUTDATA_ERROR ||
                statusCode == STATUS_ERROR;
+=======
+     * @param _statusCode Conversion status.
+     * @param _convertedData Converted data.
+     * @param _offset Offset value for appending the header and body signature.
+     */
+    public DrmConvertedStatus(int _statusCode, byte[] _convertedData, int _offset) {
+        statusCode = _statusCode;
+        convertedData = _convertedData;
+        offset = _offset;
+>>>>>>> upstream/master
     }
 }
 

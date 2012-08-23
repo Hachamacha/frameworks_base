@@ -30,7 +30,11 @@ public class AllocationAdapter extends Allocation {
         mAdaptedAllocation = alloc;
     }
 
+<<<<<<< HEAD
     int getID(RenderScript rs) {
+=======
+    int getID() {
+>>>>>>> upstream/master
         throw new RSInvalidStateException(
             "This operation is not supported with adapters at this time.");
     }

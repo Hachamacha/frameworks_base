@@ -73,10 +73,17 @@ private:
 static
 void
 print_poly(const char* label, Poly* pPoly) {
+<<<<<<< HEAD
     ALOGI("%s: %d verts", label, pPoly->n);
     for(int i = 0; i < pPoly->n; i++) {
         Poly_vert* pV = & pPoly->vert[i];
         ALOGI("[%d] %g, %g, %g %g", i, pV->sx, pV->sy, pV->sz, pV->sw);
+=======
+    LOGI("%s: %d verts", label, pPoly->n);
+    for(int i = 0; i < pPoly->n; i++) {
+        Poly_vert* pV = & pPoly->vert[i];
+        LOGI("[%d] %g, %g, %g %g", i, pV->sx, pV->sy, pV->sz, pV->sw);
+>>>>>>> upstream/master
     }
 }
 #endif
@@ -556,12 +563,15 @@ void nativeUtilsClassInit(JNIEnv *env, jclass clazz)
     nativeBitmapID = env->GetFieldID(bitmapClass, "mNativeBitmap", "I");
 }
 
+<<<<<<< HEAD
 extern void setGLDebugLevel(int level);
 void nativeEnableTracing(JNIEnv *env, jclass clazz)
 {
     setGLDebugLevel(1);
 }
 
+=======
+>>>>>>> upstream/master
 static int checkFormat(SkBitmap::Config config, int format, int type)
 {
     switch(config) {
@@ -1032,7 +1042,10 @@ static JNINativeMethod gUtilsMethods[] = {
     { "native_getType", "(Landroid/graphics/Bitmap;)I", (void*) util_getType },
     { "native_texImage2D", "(IIILandroid/graphics/Bitmap;II)I", (void*)util_texImage2D },
     { "native_texSubImage2D", "(IIIILandroid/graphics/Bitmap;II)I", (void*)util_texSubImage2D },
+<<<<<<< HEAD
     { "native_enableTracing", "()V",                    (void*)nativeEnableTracing },
+=======
+>>>>>>> upstream/master
 };
 
 static JNINativeMethod gEtc1Methods[] = {
@@ -1069,7 +1082,11 @@ int register_android_opengl_classes(JNIEnv* env)
         result = AndroidRuntime::registerNativeMethods(env,
                 cri->classPath, cri->methods, cri->methodCount);
         if (result < 0) {
+<<<<<<< HEAD
             ALOGE("Failed to register %s: %d", cri->classPath, result);
+=======
+            LOGE("Failed to register %s: %d", cri->classPath, result);
+>>>>>>> upstream/master
             break;
         }
     }

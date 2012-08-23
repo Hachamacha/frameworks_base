@@ -69,6 +69,7 @@ public final class ServiceManager {
      */
     public static void addService(String name, IBinder service) {
         try {
+<<<<<<< HEAD
             getIServiceManager().addService(name, service, false);
         } catch (RemoteException e) {
             Log.e(TAG, "error in addService", e);
@@ -87,6 +88,9 @@ public final class ServiceManager {
     public static void addService(String name, IBinder service, boolean allowIsolated) {
         try {
             getIServiceManager().addService(name, service, allowIsolated);
+=======
+            getIServiceManager().addService(name, service);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             Log.e(TAG, "error in addService", e);
         }

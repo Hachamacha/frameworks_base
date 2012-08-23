@@ -575,11 +575,14 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
     @Override
     public Drawable mutate() {
         if (!mMutated && super.mutate() == this) {
+<<<<<<< HEAD
             if (!mLayerState.canConstantState()) {
                 throw new IllegalStateException("One or more children of this LayerDrawable does " +
                         "not have constant state; this drawable cannot be mutated.");
             }
             mLayerState = new LayerState(mLayerState, this, null);
+=======
+>>>>>>> upstream/master
             final ChildDrawable[] array = mLayerState.mChildren;
             final int N = mLayerState.mNum;
             for (int i = 0; i < N; i++) {
@@ -699,7 +702,11 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
             return stateful;
         }
 
+<<<<<<< HEAD
         public boolean canConstantState() {
+=======
+        public synchronized boolean canConstantState() {
+>>>>>>> upstream/master
             if (!mCheckedConstantState && mChildren != null) {
                 mCanConstantState = true;
                 final int N = mNum;

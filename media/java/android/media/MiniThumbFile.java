@@ -52,7 +52,11 @@ public class MiniThumbFile {
     private RandomAccessFile mMiniThumbFile;
     private FileChannel mChannel;
     private ByteBuffer mBuffer;
+<<<<<<< HEAD
     private static final Hashtable<String, MiniThumbFile> sThumbFiles =
+=======
+    private static Hashtable<String, MiniThumbFile> sThumbFiles =
+>>>>>>> upstream/master
         new Hashtable<String, MiniThumbFile>();
 
     /**

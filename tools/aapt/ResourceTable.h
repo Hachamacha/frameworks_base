@@ -76,6 +76,7 @@ public:
     class Type;
     class Entry;
 
+<<<<<<< HEAD
     struct ConfigDescription : public ResTable_config {
         ConfigDescription() {
             memset(this, 0, sizeof(*this));
@@ -107,6 +108,8 @@ public:
         inline bool operator>(const ConfigDescription& o) const { return compare(o) > 0; }
     };
 
+=======
+>>>>>>> upstream/master
     ResourceTable(Bundle* bundle, const String16& assetsPackage);
 
     status_t addIncludedResources(Bundle* bundle, const sp<AaptAssets>& assets);
@@ -214,9 +217,13 @@ public:
                        uint32_t attrID,
                        const Vector<StringPool::entry_style_span>* style = NULL,
                        String16* outStr = NULL, void* accessorCookie = NULL,
+<<<<<<< HEAD
                        uint32_t attrType = ResTable_map::TYPE_ANY,
                        const String8* configTypeName = NULL,
                        const ConfigDescription* config = NULL);
+=======
+                       uint32_t attrType = ResTable_map::TYPE_ANY);
+>>>>>>> upstream/master
 
     status_t assignResourceIds();
     status_t addSymbols(const sp<AaptSymbols>& outSymbols = NULL);
@@ -338,10 +345,14 @@ public:
         status_t assignResourceIds(ResourceTable* table,
                                    const String16& package);
 
+<<<<<<< HEAD
         status_t prepareFlatten(StringPool* strings, ResourceTable* table,
                const String8* configTypeName, const ConfigDescription* config);
 
         status_t remapStringValue(StringPool* strings);
+=======
+        status_t prepareFlatten(StringPool* strings, ResourceTable* table);
+>>>>>>> upstream/master
 
         ssize_t flatten(Bundle*, const sp<AaptFile>& data, bool isPublic);
 
@@ -358,6 +369,40 @@ public:
         uint32_t mParentId;
         SourcePos mPos;
     };
+<<<<<<< HEAD
+=======
+
+    struct ConfigDescription : public ResTable_config {
+        ConfigDescription() {
+            memset(this, 0, sizeof(*this));
+            size = sizeof(ResTable_config);
+        }
+        ConfigDescription(const ResTable_config&o) {
+            *static_cast<ResTable_config*>(this) = o;
+            size = sizeof(ResTable_config);
+        }
+        ConfigDescription(const ConfigDescription&o) {
+            *static_cast<ResTable_config*>(this) = o;
+        }
+        
+        ConfigDescription& operator=(const ResTable_config& o) {
+            *static_cast<ResTable_config*>(this) = o;
+            size = sizeof(ResTable_config);
+            return *this;
+        }
+        ConfigDescription& operator=(const ConfigDescription& o) {
+            *static_cast<ResTable_config*>(this) = o;
+            return *this;
+        }
+        
+        inline bool operator<(const ConfigDescription& o) const { return compare(o) < 0; }
+        inline bool operator<=(const ConfigDescription& o) const { return compare(o) <= 0; }
+        inline bool operator==(const ConfigDescription& o) const { return compare(o) == 0; }
+        inline bool operator!=(const ConfigDescription& o) const { return compare(o) != 0; }
+        inline bool operator>=(const ConfigDescription& o) const { return compare(o) >= 0; }
+        inline bool operator>(const ConfigDescription& o) const { return compare(o) > 0; }
+    };
+>>>>>>> upstream/master
     
     class ConfigList : public RefBase {
     public:

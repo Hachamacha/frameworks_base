@@ -551,6 +551,10 @@ public class SearchDialog extends Dialog {
         try {
             // If the intent was created from a suggestion, it will always have an explicit
             // component here.
+<<<<<<< HEAD
+=======
+            Log.i(LOG_TAG, "Starting (as ourselves) " + intent.toUri(0));
+>>>>>>> upstream/master
             getContext().startActivity(intent);
             // If the search switches to a different activity,
             // SearchDialogWrapper#performActivityResuming

@@ -37,10 +37,17 @@ public class PlaybackGraphs {
     private static Paint whiteLabels;
 
     private static double viewportCoverage(TileData view, TileData tile) {
+<<<<<<< HEAD
         if (tile.left < (view.right * view.scale)
                 && tile.right >= (view.left * view.scale)
                 && tile.top < (view.bottom * view.scale)
                 && tile.bottom >= (view.top * view.scale)) {
+=======
+        if (tile.left < view.right
+                && tile.right >= view.left
+                && tile.top < view.bottom
+                && tile.bottom >= view.top) {
+>>>>>>> upstream/master
             return 1.0f;
         }
         return 0.0f;
@@ -80,7 +87,11 @@ public class PlaybackGraphs {
                     for (int tileID = 1; tileID < frame.length; tileID++) {
                         TileData data = frame[tileID];
                         double coverage = viewportCoverage(frame[0], data);
+<<<<<<< HEAD
                         total += coverage * (data.isReady ? 100 : 0);
+=======
+                        total += coverage * (data.isReady ? 1 : 0);
+>>>>>>> upstream/master
                         totalCount += coverage;
                     }
                     if (totalCount == 0) {
@@ -91,7 +102,11 @@ public class PlaybackGraphs {
 
                 @Override
                 public double getMax() {
+<<<<<<< HEAD
                     return 100;
+=======
+                    return 1;
+>>>>>>> upstream/master
                 }
 
                 @Override
@@ -108,9 +123,12 @@ public class PlaybackGraphs {
     }
 
     public static double getPercentile(double sortedValues[], double ratioAbove) {
+<<<<<<< HEAD
         if (sortedValues.length == 0)
             return -1;
 
+=======
+>>>>>>> upstream/master
         double index = ratioAbove * (sortedValues.length - 1);
         int intIndex = (int) Math.floor(index);
         if (index == intIndex) {
@@ -121,6 +139,7 @@ public class PlaybackGraphs {
                 + sortedValues[intIndex + 1] * (alpha);
     }
 
+<<<<<<< HEAD
     public static double getMean(double sortedValues[]) {
         if (sortedValues.length == 0)
             return -1;
@@ -146,6 +165,8 @@ public class PlaybackGraphs {
         return Math.sqrt((sqrAgg / sortedValues.length) - (mean * mean));
     }
 
+=======
+>>>>>>> upstream/master
     protected static StatGen[] Stats = new StatGen[] {
             new StatGen() {
                 @Override
@@ -177,6 +198,7 @@ public class PlaybackGraphs {
                 public int getLabelId() {
                     return R.string.percentile_75;
                 }
+<<<<<<< HEAD
             }, new StatGen() {
                 @Override
                 public double getValue(double[] sortedValues) {
@@ -197,6 +219,8 @@ public class PlaybackGraphs {
                 public int getLabelId() {
                     return R.string.mean;
                 }
+=======
+>>>>>>> upstream/master
             },
     };
 
@@ -207,6 +231,7 @@ public class PlaybackGraphs {
     }
 
     private ArrayList<ShapeDrawable> mShapes = new ArrayList<ShapeDrawable>();
+<<<<<<< HEAD
     protected final double[][] mStats = new double[Metrics.length][Stats.length];
     protected HashMap<String, Double> mSingleStats;
 
@@ -235,19 +260,52 @@ public class PlaybackGraphs {
         }
     }
 
+=======
+    protected double[][] mStats = new double[Metrics.length][Stats.length];
+    protected HashMap<String, Double> mSingleStats;
+
+>>>>>>> upstream/master
     public void setData(RunData data) {
         mShapes.clear();
         double metricValues[] = new double[data.frames.length];
 
+<<<<<<< HEAD
         mSingleStats = data.singleStats;
 
+=======
+>>>>>>> upstream/master
         if (data.frames.length == 0) {
             return;
         }
 
         for (int metricIndex = 0; metricIndex < Metrics.length; metricIndex++) {
+<<<<<<< HEAD
             // calculate metric based on list of frames
             gatherFrameMetric(metricIndex, metricValues, data);
+=======
+            // create graph out of rectangles, one per frame
+            int lastBar = 0;
+            for (int frameIndex = 0; frameIndex < data.frames.length; frameIndex++) {
+                TileData frame[] = data.frames[frameIndex];
+                int newBar = (frame[0].top + frame[0].bottom) / 2;
+
+                MetricGen s = Metrics[metricIndex];
+                double absoluteValue = s.getValue(frame);
+                double relativeValue = absoluteValue / s.getMax();
+                relativeValue = Math.min(1,relativeValue);
+                relativeValue = Math.max(0,relativeValue);
+                int rightPos = (int) (-BAR_WIDTH * metricIndex);
+                int leftPos = (int) (-BAR_WIDTH * (metricIndex + relativeValue));
+
+                ShapeDrawable graphBar = new ShapeDrawable();
+                graphBar.getPaint().setColor(Color.BLUE);
+                graphBar.setBounds(leftPos, lastBar, rightPos, newBar);
+
+                mShapes.add(graphBar);
+                metricValues[frameIndex] = absoluteValue;
+                lastBar = newBar;
+            }
+>>>>>>> upstream/master
 
             // store aggregate statistics per metric (median, and similar)
             Arrays.sort(metricValues);
@@ -255,6 +313,11 @@ public class PlaybackGraphs {
                 mStats[metricIndex][statIndex] =
                         Stats[statIndex].getValue(metricValues);
             }
+<<<<<<< HEAD
+=======
+
+            mSingleStats = data.singleStats;
+>>>>>>> upstream/master
         }
     }
 

@@ -24,7 +24,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+<<<<<<< HEAD
 import android.os.Parcelable;
+=======
+>>>>>>> upstream/master
 import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.util.Log;
@@ -34,11 +37,16 @@ import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+=======
+import java.io.FileDescriptor;
+import java.io.IOException;
+>>>>>>> upstream/master
 import java.util.Map;
 import java.util.Set;
 import java.lang.ref.WeakReference;
@@ -394,10 +402,13 @@ import java.lang.ref.WeakReference;
  *     <td>{} </p></td>
  *     <td>This method can be called in any state and calling it does not change
  *         the object state. </p></td></tr>
+<<<<<<< HEAD
  * <tr><td>setVideoScalingMode </p></td>
  *     <td>{Initialized, Prepared, Started, Paused, Stopped, PlaybackCompleted} </p></td>
  *     <td>{Idle, Error}</p></td>
  *     <td>Successful invoke of this method does not change the state.</p></td></tr>
+=======
+>>>>>>> upstream/master
  * <tr><td>setLooping </p></td>
  *     <td>{Idle, Initialized, Stopped, Prepared, Started, Paused,
  *         PlaybackCompleted}</p></td>
@@ -462,6 +473,7 @@ import java.lang.ref.WeakReference;
  *     <td>Successful invoke of this method in a valid state transfers the
  *         object to the <em>Stopped</em> state. Calling this method in an
  *         invalid state transfers the object to the <em>Error</em> state.</p></td></tr>
+<<<<<<< HEAD
  * <tr><td>getTrackInfo </p></td>
  *     <td>{Prepared, Started, Stopped, Paused, PlaybackCompleted}</p></td>
  *     <td>{Idle, Initialized, Error}</p></td>
@@ -478,6 +490,8 @@ import java.lang.ref.WeakReference;
  *     <td>{Prepared, Started, Stopped, Paused, PlaybackCompleted}</p></td>
  *     <td>{Idle, Initialized, Error}</p></td>
  *     <td>Successful invoke of this method does not change the state.</p></td></tr>
+=======
+>>>>>>> upstream/master
  *
  * </table>
  *
@@ -595,6 +609,7 @@ public class MediaPlayer
      */
     private native void _setVideoSurface(Surface surface);
 
+<<<<<<< HEAD
     /* Do not change these values (starting with INVOKE_ID) without updating
      * their counterparts in include/media/mediaplayer.h!
      */
@@ -605,6 +620,8 @@ public class MediaPlayer
     private static final int INVOKE_ID_DESELECT_TRACK = 5;
     private static final int INVOKE_ID_SET_VIDEO_SCALE_MODE = 6;
 
+=======
+>>>>>>> upstream/master
     /**
      * Create a request parcel which can be routed to the native media
      * player using {@link #invoke(Parcel, Parcel)}. The Parcel
@@ -627,7 +644,11 @@ public class MediaPlayer
      * parcels for the request and reply. Both payloads' format is a
      * convention between the java caller and the native player.
      * Must be called after setDataSource to make sure a native player
+<<<<<<< HEAD
      * exists. On failure, a RuntimeException is thrown.
+=======
+     * exists.
+>>>>>>> upstream/master
      *
      * @param request Parcel with the data for the extension. The
      * caller must use {@link #newRequest()} to get one.
@@ -635,6 +656,7 @@ public class MediaPlayer
      * @param reply Output parcel with the data returned by the
      * native player.
      *
+<<<<<<< HEAD
      * {@hide}
      */
     public void invoke(Parcel request, Parcel reply) {
@@ -643,6 +665,15 @@ public class MediaPlayer
         if (retcode != 0) {
             throw new RuntimeException("failure code: " + retcode);
         }
+=======
+     * @return The status code see utils/Errors.h
+     * {@hide}
+     */
+    public int invoke(Parcel request, Parcel reply) {
+        int retcode = native_invoke(request, reply);
+        reply.setDataPosition(0);
+        return retcode;
+>>>>>>> upstream/master
     }
 
     /**
@@ -696,6 +727,7 @@ public class MediaPlayer
         updateSurfaceScreenOn();
     }
 
+<<<<<<< HEAD
     /* Do not change these video scaling mode values below without updating
      * their counterparts in system/window.h! Please do not forget to update
      * {@link #isVideoScalingModeSupported} when new video scaling modes
@@ -754,6 +786,8 @@ public class MediaPlayer
         }
     }
 
+=======
+>>>>>>> upstream/master
     /**
      * Convenience method to create a MediaPlayer for a given Uri.
      * On success, {@link #prepare()} will already have been called and must not be called again.
@@ -905,6 +939,7 @@ public class MediaPlayer
      *
      * @param path the path of the file, or the http/rtsp URL of the stream you want to play
      * @throws IllegalStateException if it is called in an invalid state
+<<<<<<< HEAD
      *
      * <p>When <code>path</code> refers to a local file, the file may actually be opened by a
      * process other than the calling application.  This implies that the pathname
@@ -917,6 +952,11 @@ public class MediaPlayer
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         setDataSource(path, null, null);
     }
+=======
+     */
+    public native void setDataSource(String path)
+            throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
+>>>>>>> upstream/master
 
     /**
      * Sets the data source (file-path or http/rtsp URL) to use.
@@ -943,6 +983,7 @@ public class MediaPlayer
                 ++i;
             }
         }
+<<<<<<< HEAD
         setDataSource(path, keys, values);
     }
 
@@ -957,6 +998,9 @@ public class MediaPlayer
         } else {
             _setDataSource(path, keys, values);
         }
+=======
+        _setDataSource(path, keys, values);
+>>>>>>> upstream/master
     }
 
     private native void _setDataSource(
@@ -1262,6 +1306,7 @@ public class MediaPlayer
     }
 
     /**
+<<<<<<< HEAD
      * Set the MediaPlayer to start when this MediaPlayer finishes playback
      * (i.e. reaches the end of the stream).
      * The media framework will attempt to transition from this player to
@@ -1281,6 +1326,8 @@ public class MediaPlayer
     public native void setNextMediaPlayer(MediaPlayer next);
 
     /**
+=======
+>>>>>>> upstream/master
      * Releases resources associated with this MediaPlayer object.
      * It is considered good practice to call this method when you're
      * done using the MediaPlayer. In particular, whenever an Activity
@@ -1419,6 +1466,26 @@ public class MediaPlayer
     /* Do not change these values (starting with KEY_PARAMETER) without updating
      * their counterparts in include/media/mediaplayer.h!
      */
+<<<<<<< HEAD
+=======
+    /*
+     * Key used in setParameter method.
+     * Indicates the index of the timed text track to be enabled/disabled.
+     * The index includes both the in-band and out-of-band timed text.
+     * The index should start from in-band text if any. Application can retrieve the number
+     * of in-band text tracks by using MediaMetadataRetriever::extractMetadata().
+     * Note it might take a few hundred ms to scan an out-of-band text file
+     * before displaying it.
+     */
+    private static final int KEY_PARAMETER_TIMED_TEXT_TRACK_INDEX = 1000;
+    /*
+     * Key used in setParameter method.
+     * Used to add out-of-band timed text source path.
+     * Application can add multiple text sources by calling setParameter() with
+     * KEY_PARAMETER_TIMED_TEXT_ADD_OUT_OF_BAND_SOURCE multiple times.
+     */
+    private static final int KEY_PARAMETER_TIMED_TEXT_ADD_OUT_OF_BAND_SOURCE = 1001;
+>>>>>>> upstream/master
 
     // There are currently no defined keys usable from Java with get*Parameter.
     // But if any keys are defined, the order must be kept in sync with include/media/mediaplayer.h.
@@ -1463,7 +1530,11 @@ public class MediaPlayer
         return ret;
     }
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * Gets the value of the parameter indicated by key.
      * @param key key indicates the parameter to get.
      * @param reply value of the parameter to get.
@@ -1525,7 +1596,11 @@ public class MediaPlayer
      */
     public native void setAuxEffectSendLevel(float level);
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * @param request Parcel destinated to the media player. The
      *                Interface token must be set to the IMediaPlayer
      *                one to be routed correctly through the system.
@@ -1535,7 +1610,11 @@ public class MediaPlayer
     private native final int native_invoke(Parcel request, Parcel reply);
 
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * @param update_only If true fetch only the set of metadata that have
      *                    changed since the last invocation of getMetadata.
      *                    The set is built using the unfiltered
@@ -1552,7 +1631,11 @@ public class MediaPlayer
                                                     boolean apply_filter,
                                                     Parcel reply);
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * @param request Parcel with the 2 serialized lists of allowed
      *                metadata types followed by the one to be
      *                dropped. Each list starts with an integer
@@ -1566,6 +1649,7 @@ public class MediaPlayer
     private native final void native_finalize();
 
     /**
+<<<<<<< HEAD
      * Class for MediaPlayer to return each audio/video/subtitle track's metadata.
      *
      * @see android.media.MediaPlayer#getTrackInfo
@@ -1882,6 +1966,37 @@ public class MediaPlayer
     }
 
 
+=======
+     * @param index The index of the text track to be turned on.
+     * @return true if the text track is enabled successfully.
+     * {@hide}
+     */
+    public boolean enableTimedTextTrackIndex(int index) {
+        if (index < 0) {
+            return false;
+        }
+        return setParameter(KEY_PARAMETER_TIMED_TEXT_TRACK_INDEX, index);
+    }
+
+    /**
+     * Enables the first timed text track if any.
+     * @return true if the text track is enabled successfully
+     * {@hide}
+     */
+    public boolean enableTimedText() {
+        return enableTimedTextTrackIndex(0);
+    }
+
+    /**
+     * Disables timed text display.
+     * @return true if the text track is disabled successfully.
+     * {@hide}
+     */
+    public boolean disableTimedText() {
+        return setParameter(KEY_PARAMETER_TIMED_TEXT_TRACK_INDEX, -1);
+    }
+
+>>>>>>> upstream/master
     /**
      * @param reply Parcel with audio/video duration info for battery
                     tracking usage
@@ -1890,6 +2005,7 @@ public class MediaPlayer
      */
     public native static int native_pullBatteryData(Parcel reply);
 
+<<<<<<< HEAD
     /**
      * Sets the target UDP re-transmit endpoint for the low level player.
      * Generally, the address portion of the endpoint is an IP multicast
@@ -1936,6 +2052,8 @@ public class MediaPlayer
 
     private native final int native_setRetransmitEndpoint(String addrString, int port);
 
+=======
+>>>>>>> upstream/master
     @Override
     protected void finalize() { native_finalize(); }
 
@@ -1995,6 +2113,11 @@ public class MediaPlayer
               return;
 
             case MEDIA_ERROR:
+<<<<<<< HEAD
+=======
+                // For PV specific error values (msg.arg2) look in
+                // opencore/pvmi/pvmf/include/pvmf_return_codes.h
+>>>>>>> upstream/master
                 Log.e(TAG, "Error (" + msg.arg1 + "," + msg.arg2 + ")");
                 boolean error_was_handled = false;
                 if (mOnErrorListener != null) {
@@ -2016,6 +2139,7 @@ public class MediaPlayer
                 // No real default action so far.
                 return;
             case MEDIA_TIMED_TEXT:
+<<<<<<< HEAD
                 if (mOnTimedTextListener == null)
                     return;
                 if (msg.obj == null) {
@@ -2025,6 +2149,16 @@ public class MediaPlayer
                         Parcel parcel = (Parcel)msg.obj;
                         TimedText text = new TimedText(parcel);
                         mOnTimedTextListener.onTimedText(mMediaPlayer, text);
+=======
+                if (mOnTimedTextListener != null) {
+                    if (msg.obj == null) {
+                        mOnTimedTextListener.onTimedText(mMediaPlayer, null);
+                    } else {
+                        if (msg.obj instanceof byte[]) {
+                            TimedText text = new TimedText((byte[])(msg.obj));
+                            mOnTimedTextListener.onTimedText(mMediaPlayer, text);
+                        }
+>>>>>>> upstream/master
                     }
                 }
                 return;
@@ -2039,7 +2173,11 @@ public class MediaPlayer
         }
     }
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+>>>>>>> upstream/master
      * Called from native code when an interesting event happens.  This method
      * just uses the EventHandler system to post the event back to the main app thread.
      * We use a weak reference to the original MediaPlayer object so that the native
@@ -2054,10 +2192,13 @@ public class MediaPlayer
             return;
         }
 
+<<<<<<< HEAD
         if (what == MEDIA_INFO && arg1 == MEDIA_INFO_STARTED_AS_NEXT) {
             // this acquires the wakelock if needed, and sets the client side state
             mp.start();
         }
+=======
+>>>>>>> upstream/master
         if (mp.mEventHandler != null) {
             Message m = mp.mEventHandler.obtainMessage(what, arg1, arg2, obj);
             mp.mEventHandler.sendMessage(m);
@@ -2188,9 +2329,12 @@ public class MediaPlayer
         /**
          * Called to indicate the video size
          *
+<<<<<<< HEAD
          * The video size (width and height) could be 0 if there was no video,
          * no display surface was set, or the value was not determined yet.
          *
+=======
+>>>>>>> upstream/master
          * @param mp        the MediaPlayer associated with this callback
          * @param width     the width of the video
          * @param height    the height of the video
@@ -2214,6 +2358,10 @@ public class MediaPlayer
     /**
      * Interface definition of a callback to be invoked when a
      * timed text is available for display.
+<<<<<<< HEAD
+=======
+     * {@hide}
+>>>>>>> upstream/master
      */
     public interface OnTimedTextListener
     {
@@ -2223,6 +2371,10 @@ public class MediaPlayer
          * @param mp             the MediaPlayer associated with this callback
          * @param text           the timed text sample which contains the text
          *                       needed to be displayed and the display format.
+<<<<<<< HEAD
+=======
+         * {@hide}
+>>>>>>> upstream/master
          */
         public void onTimedText(MediaPlayer mp, TimedText text);
     }
@@ -2232,6 +2384,10 @@ public class MediaPlayer
      * for display.
      *
      * @param listener the callback that will be run
+<<<<<<< HEAD
+=======
+     * {@hide}
+>>>>>>> upstream/master
      */
     public void setOnTimedTextListener(OnTimedTextListener listener)
     {
@@ -2309,6 +2465,7 @@ public class MediaPlayer
      */
     public static final int MEDIA_INFO_UNKNOWN = 1;
 
+<<<<<<< HEAD
     /** The player was started because it was used as the next player for another
      * player, which just completed playback.
      * @see android.media.MediaPlayer.OnInfoListener
@@ -2316,6 +2473,8 @@ public class MediaPlayer
      */
     public static final int MEDIA_INFO_STARTED_AS_NEXT = 2;
 
+=======
+>>>>>>> upstream/master
     /** The video is too complex for the decoder: it can't decode frames fast
      *  enough. Possibly only the audio plays fine at this stage.
      * @see android.media.MediaPlayer.OnInfoListener
@@ -2350,6 +2509,7 @@ public class MediaPlayer
      */
     public static final int MEDIA_INFO_METADATA_UPDATE = 802;
 
+<<<<<<< HEAD
     /** Failed to handle timed text track properly.
      * @see android.media.MediaPlayer.OnInfoListener
      *
@@ -2357,6 +2517,8 @@ public class MediaPlayer
      */
     public static final int MEDIA_INFO_TIMED_TEXT_ERROR = 900;
 
+=======
+>>>>>>> upstream/master
     /**
      * Interface definition of a callback to be invoked to communicate some
      * info and/or warning about the media or its playback.
@@ -2398,6 +2560,7 @@ public class MediaPlayer
 
     private OnInfoListener mOnInfoListener;
 
+<<<<<<< HEAD
     /*
      * Test whether a given video scaling mode is supported.
      */
@@ -2405,4 +2568,6 @@ public class MediaPlayer
         return (mode == VIDEO_SCALING_MODE_SCALE_TO_FIT ||
                 mode == VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
     }
+=======
+>>>>>>> upstream/master
 }

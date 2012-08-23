@@ -113,10 +113,13 @@ public class ViewPropertyAnimator {
      * on that list are added to the list of properties associated with that animator.
      */
     ArrayList<NameValuesHolder> mPendingAnimations = new ArrayList<NameValuesHolder>();
+<<<<<<< HEAD
     private Runnable mPendingSetupAction;
     private Runnable mPendingCleanupAction;
     private Runnable mPendingOnStartAction;
     private Runnable mPendingOnEndAction;
+=======
+>>>>>>> upstream/master
 
     /**
      * Constants used to associate a property being requested and the mechanism used to set
@@ -203,10 +206,13 @@ public class ViewPropertyAnimator {
      */
     private HashMap<Animator, PropertyBundle> mAnimatorMap =
             new HashMap<Animator, PropertyBundle>();
+<<<<<<< HEAD
     private HashMap<Animator, Runnable> mAnimatorSetupMap;
     private HashMap<Animator, Runnable> mAnimatorCleanupMap;
     private HashMap<Animator, Runnable> mAnimatorOnStartMap;
     private HashMap<Animator, Runnable> mAnimatorOnEndMap;
+=======
+>>>>>>> upstream/master
 
     /**
      * This is the information we need to set each property during the animation.
@@ -342,7 +348,10 @@ public class ViewPropertyAnimator {
      * otherwise), then this method can be used.
      */
     public void start() {
+<<<<<<< HEAD
         mView.removeCallbacks(mAnimationStarter);
+=======
+>>>>>>> upstream/master
         startAnimation();
     }
 
@@ -623,6 +632,7 @@ public class ViewPropertyAnimator {
     }
 
     /**
+<<<<<<< HEAD
      * The View associated with this ViewPropertyAnimator will have its
      * {@link View#setLayerType(int, android.graphics.Paint) layer type} set to
      * {@link View#LAYER_TYPE_HARDWARE} for the duration of the next animation.
@@ -716,12 +726,17 @@ public class ViewPropertyAnimator {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Starts the underlying Animator for a set of properties. We use a single animator that
      * simply runs from 0 to 1, and then use that fractional value to set each property
      * value accordingly.
      */
     private void startAnimation() {
+<<<<<<< HEAD
         mView.setHasTransientState(true);
+=======
+>>>>>>> upstream/master
         ValueAnimator animator = ValueAnimator.ofFloat(1.0f);
         ArrayList<NameValuesHolder> nameValueList =
                 (ArrayList<NameValuesHolder>) mPendingAnimations.clone();
@@ -733,6 +748,7 @@ public class ViewPropertyAnimator {
             propertyMask |= nameValuesHolder.mNameConstant;
         }
         mAnimatorMap.put(animator, new PropertyBundle(propertyMask, nameValueList));
+<<<<<<< HEAD
         if (mPendingSetupAction != null) {
             mAnimatorSetupMap.put(animator, mPendingSetupAction);
             mPendingSetupAction = null;
@@ -749,6 +765,8 @@ public class ViewPropertyAnimator {
             mAnimatorOnEndMap.put(animator, mPendingOnEndAction);
             mPendingOnEndAction = null;
         }
+=======
+>>>>>>> upstream/master
         animator.addUpdateListener(mAnimatorEventListener);
         animator.addListener(mAnimatorEventListener);
         if (mStartDelaySet) {
@@ -842,6 +860,7 @@ public class ViewPropertyAnimator {
      */
     private void setValue(int propertyConstant, float value) {
         final View.TransformationInfo info = mView.mTransformationInfo;
+<<<<<<< HEAD
         final DisplayList displayList = mView.mDisplayList;
         switch (propertyConstant) {
             case TRANSLATION_X:
@@ -883,6 +902,38 @@ public class ViewPropertyAnimator {
             case ALPHA:
                 info.mAlpha = value;
                 if (displayList != null) displayList.setAlpha(value);
+=======
+        switch (propertyConstant) {
+            case TRANSLATION_X:
+                info.mTranslationX = value;
+                break;
+            case TRANSLATION_Y:
+                info.mTranslationY = value;
+                break;
+            case ROTATION:
+                info.mRotation = value;
+                break;
+            case ROTATION_X:
+                info.mRotationX = value;
+                break;
+            case ROTATION_Y:
+                info.mRotationY = value;
+                break;
+            case SCALE_X:
+                info.mScaleX = value;
+                break;
+            case SCALE_Y:
+                info.mScaleY = value;
+                break;
+            case X:
+                info.mTranslationX = value - mView.mLeft;
+                break;
+            case Y:
+                info.mTranslationY = value - mView.mTop;
+                break;
+            case ALPHA:
+                info.mAlpha = value;
+>>>>>>> upstream/master
                 break;
         }
     }
@@ -930,6 +981,7 @@ public class ViewPropertyAnimator {
             implements Animator.AnimatorListener, ValueAnimator.AnimatorUpdateListener {
         @Override
         public void onAnimationStart(Animator animation) {
+<<<<<<< HEAD
             if (mAnimatorSetupMap != null) {
                 Runnable r = mAnimatorSetupMap.get(animation);
                 if (r != null) {
@@ -944,6 +996,8 @@ public class ViewPropertyAnimator {
                 }
                 mAnimatorOnStartMap.remove(animation);
             }
+=======
+>>>>>>> upstream/master
             if (mListener != null) {
                 mListener.onAnimationStart(animation);
             }
@@ -954,9 +1008,12 @@ public class ViewPropertyAnimator {
             if (mListener != null) {
                 mListener.onAnimationCancel(animation);
             }
+<<<<<<< HEAD
             if (mAnimatorOnEndMap != null) {
                 mAnimatorOnEndMap.remove(animation);
             }
+=======
+>>>>>>> upstream/master
         }
 
         @Override
@@ -968,6 +1025,7 @@ public class ViewPropertyAnimator {
 
         @Override
         public void onAnimationEnd(Animator animation) {
+<<<<<<< HEAD
             mView.setHasTransientState(false);
             if (mListener != null) {
                 mListener.onAnimationEnd(animation);
@@ -986,6 +1044,11 @@ public class ViewPropertyAnimator {
                 }
                 mAnimatorCleanupMap.remove(animation);
             }
+=======
+            if (mListener != null) {
+                mListener.onAnimationEnd(animation);
+            }
+>>>>>>> upstream/master
             mAnimatorMap.remove(animation);
         }
 
@@ -999,6 +1062,7 @@ public class ViewPropertyAnimator {
          */
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
+<<<<<<< HEAD
             PropertyBundle propertyBundle = mAnimatorMap.get(animation);
             if (propertyBundle == null) {
                 // Shouldn't happen, but just to play it safe
@@ -1006,12 +1070,15 @@ public class ViewPropertyAnimator {
             }
             boolean useDisplayListProperties = mView.mDisplayList != null;
 
+=======
+>>>>>>> upstream/master
             // alpha requires slightly different treatment than the other (transform) properties.
             // The logic in setAlpha() is not simply setting mAlpha, plus the invalidation
             // logic is dependent on how the view handles an internal call to onSetAlpha().
             // We track what kinds of properties are set, and how alpha is handled when it is
             // set, and perform the invalidation steps appropriately.
             boolean alphaHandled = false;
+<<<<<<< HEAD
             if (!useDisplayListProperties) {
                 mView.invalidateParentCaches();
             }
@@ -1019,6 +1086,14 @@ public class ViewPropertyAnimator {
             int propertyMask = propertyBundle.mPropertyMask;
             if ((propertyMask & TRANSFORM_MASK) != 0) {
                 mView.invalidateViewProperty(false, false);
+=======
+            mView.invalidateParentCaches();
+            float fraction = animation.getAnimatedFraction();
+            PropertyBundle propertyBundle = mAnimatorMap.get(animation);
+            int propertyMask = propertyBundle.mPropertyMask;
+            if ((propertyMask & TRANSFORM_MASK) != 0) {
+                mView.invalidate(false);
+>>>>>>> upstream/master
             }
             ArrayList<NameValuesHolder> valueList = propertyBundle.mNameValuesHolder;
             if (valueList != null) {
@@ -1035,6 +1110,7 @@ public class ViewPropertyAnimator {
             }
             if ((propertyMask & TRANSFORM_MASK) != 0) {
                 mView.mTransformationInfo.mMatrixDirty = true;
+<<<<<<< HEAD
                 if (!useDisplayListProperties) {
                     mView.mPrivateFlags |= View.DRAWN; // force another invalidation
                 }
@@ -1046,6 +1122,13 @@ public class ViewPropertyAnimator {
             } else {
                 mView.invalidateViewProperty(false, false);
             }
+=======
+                mView.mPrivateFlags |= View.DRAWN; // force another invalidation
+            }
+            // invalidate(false) in all cases except if alphaHandled gets set to true
+            // via the call to setAlphaNoInvalidation(), above
+            mView.invalidate(alphaHandled);
+>>>>>>> upstream/master
         }
     }
 }

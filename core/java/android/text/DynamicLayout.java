@@ -20,8 +20,11 @@ import android.graphics.Paint;
 import android.text.style.UpdateLayout;
 import android.text.style.WrapTogetherSpan;
 
+<<<<<<< HEAD
 import com.android.internal.util.ArrayUtils;
 
+=======
+>>>>>>> upstream/master
 import java.lang.ref.WeakReference;
 
 /**
@@ -32,10 +35,17 @@ import java.lang.ref.WeakReference;
  * {@link android.graphics.Canvas#drawText(java.lang.CharSequence, int, int, float, float, android.graphics.Paint)
  *  Canvas.drawText()} directly.</p>
  */
+<<<<<<< HEAD
 public class DynamicLayout extends Layout
 {
     private static final int PRIORITY = 128;
     private static final int BLOCK_MINIMUM_CHARACTER_LENGTH = 400;
+=======
+public class DynamicLayout
+extends Layout
+{
+    private static final int PRIORITY = 128;
+>>>>>>> upstream/master
 
     /**
      * Make a layout for the specified text that will be updated as
@@ -167,6 +177,10 @@ public class DynamicLayout extends Layout
         mObjects.insertAt(0, dirs);
 
         // Update from 0 characters to whatever the real text is
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         reflow(base, 0, 0, base.length());
 
         if (base instanceof Spannable) {
@@ -291,10 +305,19 @@ public class DynamicLayout extends Layout
         // the very end of the buffer, then we already have a line that
         // starts there, so disregard the blank line.
 
+<<<<<<< HEAD
         if (where + after != len && reflowed.getLineStart(n - 1) == where + after)
             n--;
 
         // remove affected lines from old layout
+=======
+        if (where + after != len &&
+            reflowed.getLineStart(n - 1) == where + after)
+            n--;
+
+        // remove affected lines from old layout
+
+>>>>>>> upstream/master
         mInts.deleteAt(startline, endline - startline);
         mObjects.deleteAt(startline, endline - startline);
 
@@ -356,14 +379,18 @@ public class DynamicLayout extends Layout
             mObjects.insertAt(startline + i, objects);
         }
 
+<<<<<<< HEAD
         updateBlocks(startline, endline - 1, n);
 
+=======
+>>>>>>> upstream/master
         synchronized (sLock) {
             sStaticLayout = reflowed;
             reflowed.finish();
         }
     }
 
+<<<<<<< HEAD
     /**
      * Create the initial block structure, cutting the text into blocks of at least
      * BLOCK_MINIMUM_CHARACTER_SIZE characters, aligned on the ends of paragraphs.
@@ -559,6 +586,8 @@ public class DynamicLayout extends Layout
         return mNumberOfBlocks;
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public int getLineCount() {
         return mInts.size() - 1;
@@ -624,7 +653,10 @@ public class DynamicLayout extends Layout
         }
 
         public void beforeTextChanged(CharSequence s, int where, int before, int after) {
+<<<<<<< HEAD
             // Intentionally empty
+=======
+>>>>>>> upstream/master
         }
 
         public void onTextChanged(CharSequence s, int where, int before, int after) {
@@ -632,7 +664,10 @@ public class DynamicLayout extends Layout
         }
 
         public void afterTextChanged(Editable s) {
+<<<<<<< HEAD
             // Intentionally empty
+=======
+>>>>>>> upstream/master
         }
 
         public void onSpanAdded(Spannable s, Object o, int start, int end) {
@@ -684,6 +719,7 @@ public class DynamicLayout extends Layout
     private PackedIntVector mInts;
     private PackedObjectVector<Directions> mObjects;
 
+<<<<<<< HEAD
     /**
      * Value used in mBlockIndices when a block has been created or recycled and indicating that its
      * display list needs to be re-created.
@@ -698,6 +734,8 @@ public class DynamicLayout extends Layout
     // Number of items actually currently being used in the above 2 arrays
     private int mNumberOfBlocks;
 
+=======
+>>>>>>> upstream/master
     private int mTopPadding, mBottomPadding;
 
     private static StaticLayout sStaticLayout = new StaticLayout(null);

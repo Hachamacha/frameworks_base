@@ -29,7 +29,10 @@ import com.android.ide.common.rendering.api.SessionParams;
 import com.android.layoutlib.bridge.impl.FontLoader;
 import com.android.layoutlib.bridge.impl.RenderDrawable;
 import com.android.layoutlib.bridge.impl.RenderSessionImpl;
+<<<<<<< HEAD
 import com.android.layoutlib.bridge.util.DynamicIdMap;
+=======
+>>>>>>> upstream/master
 import com.android.ninepatch.NinePatchChunk;
 import com.android.resources.ResourceType;
 import com.android.tools.layoutlib.create.MethodAdapter;
@@ -79,7 +82,11 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
     private final static ReentrantLock sLock = new ReentrantLock();
 
     /**
+<<<<<<< HEAD
      * Maps from id to resource type/name. This is for com.android.internal.R
+=======
+     * Maps from id to resource type/name. This is for android.R only.
+>>>>>>> upstream/master
      */
     private final static Map<Integer, Pair<ResourceType, String>> sRMap =
         new HashMap<Integer, Pair<ResourceType, String>>();
@@ -90,6 +97,7 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
     private final static Map<IntArray, String> sRArrayMap = new HashMap<IntArray, String>();
     /**
      * Reverse map compared to sRMap, resource type -> (resource name -> id).
+<<<<<<< HEAD
      * This is for com.android.internal.R.
      */
     private final static Map<ResourceType, Map<String, Integer>> sRevRMap =
@@ -101,6 +109,13 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
     private final static int DYNAMIC_ID_SEED_START = 0x01ff0000;
     private final static DynamicIdMap sDynamicIds = new DynamicIdMap(DYNAMIC_ID_SEED_START);
 
+=======
+     * This is for android.R only.
+     */
+    private final static Map<ResourceType, Map<String, Integer>> sRFullMap =
+        new EnumMap<ResourceType, Map<String,Integer>>(ResourceType.class);
+
+>>>>>>> upstream/master
     private final static Map<Object, Map<String, SoftReference<Bitmap>>> sProjectBitmapCache =
         new HashMap<Object, Map<String, SoftReference<Bitmap>>>();
     private final static Map<Object, Map<String, SoftReference<NinePatchChunk>>> sProject9PatchCache =
@@ -264,7 +279,11 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
                 ResourceType resType = ResourceType.getEnum(resTypeName);
                 if (resType != null) {
                     Map<String, Integer> fullMap = new HashMap<String, Integer>();
+<<<<<<< HEAD
                     sRevRMap.put(resType, fullMap);
+=======
+                    sRFullMap.put(resType, fullMap);
+>>>>>>> upstream/master
 
                     for (Field f : inner.getDeclaredFields()) {
                         // only process static final fields. Since the final attribute may have
@@ -466,6 +485,7 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
      *     does not match any resource.
      */
     public static Pair<ResourceType, String> resolveResourceId(int value) {
+<<<<<<< HEAD
         Pair<ResourceType, String> pair = sRMap.get(value);
         if (pair == null) {
             pair = sDynamicIds.resolveId(value);
@@ -474,6 +494,9 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
             }
         }
         return pair;
+=======
+        return sRMap.get(value);
+>>>>>>> upstream/master
     }
 
     /**
@@ -492,6 +515,7 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
      * @return an {@link Integer} containing the resource id, or null if no resource were found.
      */
     public static Integer getResourceId(ResourceType type, String name) {
+<<<<<<< HEAD
         Map<String, Integer> map = sRevRMap.get(type);
         Integer value = null;
         if (map != null) {
@@ -503,6 +527,14 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
         }
 
         return value;
+=======
+        Map<String, Integer> map = sRFullMap.get(type);
+        if (map != null) {
+            return map.get(name);
+        }
+
+        return null;
+>>>>>>> upstream/master
     }
 
     /**
@@ -617,4 +649,9 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
             sFramework9PatchCache.put(value, new SoftReference<NinePatchChunk>(ninePatch));
         }
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> upstream/master
 }

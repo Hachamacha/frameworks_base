@@ -27,28 +27,44 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.IPackageDataObserver;
+<<<<<<< HEAD
 import android.content.pm.PackageManager;
+=======
+>>>>>>> upstream/master
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+<<<<<<< HEAD
 import android.os.Binder;
 import android.os.Bundle;
+=======
+>>>>>>> upstream/master
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
+<<<<<<< HEAD
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserId;
+=======
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.os.SystemProperties;
+>>>>>>> upstream/master
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Slog;
 import android.view.Display;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> upstream/master
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +79,7 @@ public class ActivityManager {
     private final Context mContext;
     private final Handler mHandler;
 
+<<<<<<< HEAD
     /**
      * Result for IActivityManager.startActivity: an error where the
      * start had to be canceled.
@@ -211,6 +228,8 @@ public class ActivityManager {
      */
     public static final int INTENT_SENDER_SERVICE = 4;
 
+=======
+>>>>>>> upstream/master
     /*package*/ ActivityManager(Context context, Handler handler) {
         mContext = context;
         mHandler = handler;
@@ -387,6 +406,10 @@ public class ActivityManager {
         return false;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     /**
      * Use to decide whether the running device can be considered a "large
      * RAM" device.  Exactly what memory limit large RAM is will vary, but
@@ -505,6 +528,7 @@ public class ActivityManager {
     /**
      * Return a list of the tasks that the user has recently launched, with
      * the most recent being first and older ones after in order.
+<<<<<<< HEAD
      *
      * <p><b>Note: this method is only intended for debugging and presenting
      * task management user interfaces</b>.  This should never be used for
@@ -515,6 +539,9 @@ public class ActivityManager {
      * same time, assumptions made about the meaning of the data here for
      * purposes of control flow will be incorrect.</p>
      *
+=======
+     * 
+>>>>>>> upstream/master
      * @param maxNum The maximum number of entries to return in the list.  The
      * actual number returned may be smaller, depending on how many tasks the
      * user has started and the maximum number the system can remember.
@@ -681,6 +708,7 @@ public class ActivityManager {
      * can be restarted in its previous state when next brought to the
      * foreground.
      *
+<<<<<<< HEAD
      * <p><b>Note: this method is only intended for debugging and presenting
      * task management user interfaces</b>.  This should never be used for
      * core logic in an application, such as deciding between different
@@ -690,6 +718,8 @@ public class ActivityManager {
      * same time, assumptions made about the meaning of the data here for
      * purposes of control flow will be incorrect.</p>
      *
+=======
+>>>>>>> upstream/master
      * @param maxNum The maximum number of entries to return in the list.  The
      * actual number returned may be smaller, depending on how many tasks the
      * user has started.
@@ -838,6 +868,7 @@ public class ActivityManager {
     public static final int MOVE_TASK_NO_USER_ACTION = 0x00000002;
 
     /**
+<<<<<<< HEAD
      * Equivalent to calling {@link #moveTaskToFront(int, int, Bundle)}
      * with a null options argument.
      *
@@ -851,6 +882,8 @@ public class ActivityManager {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Ask that the task associated with a given task ID be moved to the
      * front of the stack, so it is now visible to the user.  Requires that
      * the caller hold permission {@link android.Manifest.permission#REORDER_TASKS}
@@ -860,6 +893,7 @@ public class ActivityManager {
      * {@link RunningTaskInfo} or {@link RecentTaskInfo}.
      * @param flags Additional operational flags, 0 or more of
      * {@link #MOVE_TASK_WITH_HOME}.
+<<<<<<< HEAD
      * @param options Additional options for the operation, either null or
      * as per {@link Context#startActivity(Intent, android.os.Bundle)
      * Context.startActivity(Intent, Bundle)}.
@@ -867,6 +901,12 @@ public class ActivityManager {
     public void moveTaskToFront(int taskId, int flags, Bundle options) {
         try {
             ActivityManagerNative.getDefault().moveTaskToFront(taskId, flags, options);
+=======
+     */
+    public void moveTaskToFront(int taskId, int flags) {
+        try {
+            ActivityManagerNative.getDefault().moveTaskToFront(taskId, flags);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             // System dead, we will be dead too soon!
         }
@@ -1037,10 +1077,14 @@ public class ActivityManager {
 
     /**
      * Return a list of the services that are currently running.
+<<<<<<< HEAD
      *
      * <p><b>Note: this method is only intended for debugging or implementing
      * service management type user interfaces.</b></p>
      *
+=======
+     * 
+>>>>>>> upstream/master
      * @param maxNum The maximum number of entries to return in the list.  The
      * actual number returned may be smaller, depending on how many services
      * are running.
@@ -1081,12 +1125,17 @@ public class ActivityManager {
      */
     public static class MemoryInfo implements Parcelable {
         /**
+<<<<<<< HEAD
          * The available memory on the system.  This number should not
+=======
+         * The total available memory on the system.  This number should not
+>>>>>>> upstream/master
          * be considered absolute: due to the nature of the kernel, a significant
          * portion of this memory is actually in use and needed for the overall
          * system to run well.
          */
         public long availMem;
+<<<<<<< HEAD
 
         /**
          * The total memory accessible by the kernel.  This is basically the
@@ -1095,6 +1144,9 @@ public class ActivityManager {
          */
         public long totalMem;
 
+=======
+        
+>>>>>>> upstream/master
         /**
          * The threshold of {@link #availMem} at which we consider memory to be
          * low and start killing background services and other non-extraneous
@@ -1126,7 +1178,10 @@ public class ActivityManager {
 
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeLong(availMem);
+<<<<<<< HEAD
             dest.writeLong(totalMem);
+=======
+>>>>>>> upstream/master
             dest.writeLong(threshold);
             dest.writeInt(lowMemory ? 1 : 0);
             dest.writeLong(hiddenAppThreshold);
@@ -1137,7 +1192,10 @@ public class ActivityManager {
         
         public void readFromParcel(Parcel source) {
             availMem = source.readLong();
+<<<<<<< HEAD
             totalMem = source.readLong();
+=======
+>>>>>>> upstream/master
             threshold = source.readLong();
             lowMemory = source.readInt() != 0;
             hiddenAppThreshold = source.readLong();
@@ -1161,6 +1219,7 @@ public class ActivityManager {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Return general information about the memory state of the system.  This
      * can be used to help decide how to manage your own memory, though note
@@ -1171,6 +1230,8 @@ public class ActivityManager {
      * level of your process as needed, which gives a better hint for how to
      * manage its memory.
      */
+=======
+>>>>>>> upstream/master
     public void getMemoryInfo(MemoryInfo outInfo) {
         try {
             ActivityManagerNative.getDefault().getMemoryInfo(outInfo);
@@ -1184,7 +1245,11 @@ public class ActivityManager {
     public boolean clearApplicationUserData(String packageName, IPackageDataObserver observer) {
         try {
             return ActivityManagerNative.getDefault().clearApplicationUserData(packageName, 
+<<<<<<< HEAD
                     observer, Binder.getOrigCallingUser());
+=======
+                    observer);
+>>>>>>> upstream/master
         } catch (RemoteException e) {
             return false;
         }
@@ -1353,6 +1418,7 @@ public class ActivityManager {
          * @hide
          */
         public int flags;
+<<<<<<< HEAD
 
         /**
          * Last memory trim level reported to the process: corresponds to
@@ -1368,6 +1434,9 @@ public class ActivityManager {
          */
         public static final int IMPORTANCE_PERSISTENT = 50;
 
+=======
+        
+>>>>>>> upstream/master
         /**
          * Constant for {@link #importance}: this process is running the
          * foreground UI.
@@ -1434,7 +1503,11 @@ public class ActivityManager {
          * be maintained in the future.
          */
         public int lru;
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> upstream/master
         /**
          * Constant for {@link #importanceReasonCode}: nothing special has
          * been specified for the reason for this level.
@@ -1504,7 +1577,10 @@ public class ActivityManager {
             dest.writeInt(uid);
             dest.writeStringArray(pkgList);
             dest.writeInt(this.flags);
+<<<<<<< HEAD
             dest.writeInt(lastTrimLevel);
+=======
+>>>>>>> upstream/master
             dest.writeInt(importance);
             dest.writeInt(lru);
             dest.writeInt(importanceReasonCode);
@@ -1519,7 +1595,10 @@ public class ActivityManager {
             uid = source.readInt();
             pkgList = source.readStringArray();
             flags = source.readInt();
+<<<<<<< HEAD
             lastTrimLevel = source.readInt();
+=======
+>>>>>>> upstream/master
             importance = source.readInt();
             lru = source.readInt();
             importanceReasonCode = source.readInt();
@@ -1547,9 +1626,12 @@ public class ActivityManager {
      * Returns a list of application processes installed on external media
      * that are running on the device.
      *
+<<<<<<< HEAD
      * <p><b>Note: this method is only intended for debugging or building
      * a user-facing process management UI.</b></p>
      *
+=======
+>>>>>>> upstream/master
      * @return Returns a list of ApplicationInfo records, or null if none
      * This list ordering is not specified.
      * @hide
@@ -1561,6 +1643,7 @@ public class ActivityManager {
             return null;
         }
     }
+<<<<<<< HEAD
     /**
      * @hide
      */
@@ -1578,6 +1661,12 @@ public class ActivityManager {
      * <p><b>Note: this method is only intended for debugging or building
      * a user-facing process management UI.</b></p>
      *
+=======
+
+    /**
+     * Returns a list of application processes that are running on the device.
+     * 
+>>>>>>> upstream/master
      * @return Returns a list of RunningAppProcessInfo records, or null if there are no
      * running processes (it will not return an empty list).  This list ordering is not
      * specified.
@@ -1589,6 +1678,7 @@ public class ActivityManager {
             return null;
         }
     }
+<<<<<<< HEAD
 
     /**
      * Return global memory state information for the calling process.  This
@@ -1614,6 +1704,12 @@ public class ActivityManager {
      * <p><b>Note: this method is only intended for debugging or building
      * a user-facing process management UI.</b></p>
      *
+=======
+    
+    /**
+     * Return information about the memory usage of one or more processes.
+     * 
+>>>>>>> upstream/master
      * @param pids The pids of the processes whose memory usage is to be
      * retrieved.
      * @return Returns an array of memory information, one for each
@@ -1704,10 +1800,16 @@ public class ActivityManager {
     public int getLauncherLargeIconDensity() {
         final Resources res = mContext.getResources();
         final int density = res.getDisplayMetrics().densityDpi;
+<<<<<<< HEAD
         final int sw = res.getConfiguration().smallestScreenWidthDp;
 
         if (sw < 600) {
             // Smaller than approx 7" tablets, use the regular icon size.
+=======
+
+        if ((res.getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                != Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+>>>>>>> upstream/master
             return density;
         }
 
@@ -1716,6 +1818,7 @@ public class ActivityManager {
                 return DisplayMetrics.DENSITY_MEDIUM;
             case DisplayMetrics.DENSITY_MEDIUM:
                 return DisplayMetrics.DENSITY_HIGH;
+<<<<<<< HEAD
             case DisplayMetrics.DENSITY_TV:
                 return DisplayMetrics.DENSITY_XHIGH;
             case DisplayMetrics.DENSITY_HIGH:
@@ -1728,6 +1831,14 @@ public class ActivityManager {
                 // The density is some abnormal value.  Return some other
                 // abnormal value that is a reasonable scaling of it.
                 return (int)((density*1.5f)+.5f);
+=======
+            case DisplayMetrics.DENSITY_HIGH:
+                return DisplayMetrics.DENSITY_XHIGH;
+            case DisplayMetrics.DENSITY_XHIGH:
+                return DisplayMetrics.DENSITY_MEDIUM * 2;
+            default:
+                return density;
+>>>>>>> upstream/master
         }
     }
 
@@ -1740,10 +1851,16 @@ public class ActivityManager {
     public int getLauncherLargeIconSize() {
         final Resources res = mContext.getResources();
         final int size = res.getDimensionPixelSize(android.R.dimen.app_icon_size);
+<<<<<<< HEAD
         final int sw = res.getConfiguration().smallestScreenWidthDp;
 
         if (sw < 600) {
             // Smaller than approx 7" tablets, use the regular icon size.
+=======
+
+        if ((res.getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                != Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+>>>>>>> upstream/master
             return size;
         }
 
@@ -1754,6 +1871,7 @@ public class ActivityManager {
                 return (size * DisplayMetrics.DENSITY_MEDIUM) / DisplayMetrics.DENSITY_LOW;
             case DisplayMetrics.DENSITY_MEDIUM:
                 return (size * DisplayMetrics.DENSITY_HIGH) / DisplayMetrics.DENSITY_MEDIUM;
+<<<<<<< HEAD
             case DisplayMetrics.DENSITY_TV:
                 return (size * DisplayMetrics.DENSITY_XHIGH) / DisplayMetrics.DENSITY_HIGH;
             case DisplayMetrics.DENSITY_HIGH:
@@ -1766,6 +1884,14 @@ public class ActivityManager {
                 // The density is some abnormal value.  Return some other
                 // abnormal value that is a reasonable scaling of it.
                 return (int)((size*1.5f) + .5f);
+=======
+            case DisplayMetrics.DENSITY_HIGH:
+                return (size * DisplayMetrics.DENSITY_XHIGH) / DisplayMetrics.DENSITY_HIGH;
+            case DisplayMetrics.DENSITY_XHIGH:
+                return (size * DisplayMetrics.DENSITY_MEDIUM * 2) / DisplayMetrics.DENSITY_XHIGH;
+            default:
+                return size;
+>>>>>>> upstream/master
         }
     }
 
@@ -1817,6 +1943,7 @@ public class ActivityManager {
             return new HashMap<String, Integer>();
         }
     }
+<<<<<<< HEAD
 
     /** @hide */
     public static int checkComponentPermission(String permission, int uid,
@@ -1850,6 +1977,17 @@ public class ActivityManager {
             Slog.e(TAG, "PackageManager is dead?!?", e);
         }
         return PackageManager.PERMISSION_DENIED;
+=======
+    /**
+     * @hide
+     */
+    public Configuration getConfiguration() {
+        try {
+            return ActivityManagerNative.getDefault().getConfiguration();
+        } catch (RemoteException e) {
+            return null;
+        }
+>>>>>>> upstream/master
     }
 
     /**

@@ -140,7 +140,11 @@ class BluetoothBondState {
             return;
         }
 
+<<<<<<< HEAD
         // Check if this was a pending outgoing bonding.
+=======
+        // Check if this was an pending outgoing bonding.
+>>>>>>> upstream/master
         // If yes, reset the state.
         if (oldState == BluetoothDevice.BOND_BONDING) {
             if (address.equals(mPendingOutgoingBonding)) {

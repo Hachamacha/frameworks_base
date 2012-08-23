@@ -35,7 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+<<<<<<< HEAD
 import java.util.concurrent.locks.ReentrantLock;
+=======
+
+>>>>>>> upstream/master
 
 /**
  * The Camera class is used to set image capture settings, start/stop preview,
@@ -138,7 +142,11 @@ public class Camera {
     private static final int CAMERA_MSG_COMPRESSED_IMAGE = 0x100;
     private static final int CAMERA_MSG_RAW_IMAGE_NOTIFY = 0x200;
     private static final int CAMERA_MSG_PREVIEW_METADATA = 0x400;
+<<<<<<< HEAD
     private static final int CAMERA_MSG_FOCUS_MOVE       = 0x800;
+=======
+    private static final int CAMERA_MSG_ALL_MSGS         = 0x4FF;
+>>>>>>> upstream/master
 
     private int mNativeContext; // accessed by native methods
     private EventHandler mEventHandler;
@@ -148,14 +156,20 @@ public class Camera {
     private PreviewCallback mPreviewCallback;
     private PictureCallback mPostviewCallback;
     private AutoFocusCallback mAutoFocusCallback;
+<<<<<<< HEAD
     private AutoFocusMoveCallback mAutoFocusMoveCallback;
+=======
+>>>>>>> upstream/master
     private OnZoomChangeListener mZoomListener;
     private FaceDetectionListener mFaceListener;
     private ErrorCallback mErrorCallback;
     private boolean mOneShot;
     private boolean mWithBuffer;
     private boolean mFaceDetectionRunning = false;
+<<<<<<< HEAD
     private Object mAutoFocusCallbackLock = new Object();
+=======
+>>>>>>> upstream/master
 
     /**
      * Broadcast Action:  A new picture is taken by the camera, and the entry of
@@ -236,9 +250,13 @@ public class Camera {
     };
 
     /**
+<<<<<<< HEAD
      * Creates a new Camera object to access a particular hardware camera. If
      * the same camera is opened by other applications, this will throw a
      * RuntimeException.
+=======
+     * Creates a new Camera object to access a particular hardware camera.
+>>>>>>> upstream/master
      *
      * <p>You must call {@link #release()} when you are done using the camera,
      * otherwise it will remain locked and be unavailable to other applications.
@@ -259,9 +277,15 @@ public class Camera {
      * @param cameraId the hardware camera to access, between 0 and
      *     {@link #getNumberOfCameras()}-1.
      * @return a new Camera object, connected, locked and ready for use.
+<<<<<<< HEAD
      * @throws RuntimeException if opening the camera fails (for example, if the
      *     camera is in use by another process or device policy manager has
      *     disabled the camera).
+=======
+     * @throws RuntimeException if connection to the camera service fails (for
+     *     example, if the camera is in use by another process or device policy
+     *     manager has disabled the camera).
+>>>>>>> upstream/master
      * @see android.app.admin.DevicePolicyManager#getCameraDisabled(android.content.ComponentName)
      */
     public static Camera open(int cameraId) {
@@ -306,12 +330,15 @@ public class Camera {
         native_setup(new WeakReference<Camera>(this), cameraId);
     }
 
+<<<<<<< HEAD
     /**
      * An empty Camera for testing purpose.
      */
     Camera() {
     }
 
+=======
+>>>>>>> upstream/master
     protected void finalize() {
         release();
     }
@@ -441,6 +468,7 @@ public class Camera {
      * instances of the same camera, or across multiple runs of the same
      * program.
      *
+<<<<<<< HEAD
      * <p>If you are using the preview data to create video or still images,
      * strongly consider using {@link android.media.MediaActionSound} to
      * properly indicate image capture or recording start/stop to the user.</p>
@@ -448,6 +476,8 @@ public class Camera {
      * @see android.media.MediaActionSound
      * @see android.graphics.SurfaceTexture
      * @see android.view.TextureView
+=======
+>>>>>>> upstream/master
      * @param surfaceTexture the {@link SurfaceTexture} to which the preview
      *     images are to be sent or null to remove the current preview surface
      *     texture
@@ -471,11 +501,14 @@ public class Camera {
          * Called as preview frames are displayed.  This callback is invoked
          * on the event thread {@link #open(int)} was called from.
          *
+<<<<<<< HEAD
          * <p>If using the {@link android.graphics.ImageFormat#YV12} format,
          * refer to the equations in {@link Camera.Parameters#setPreviewFormat}
          * for the arrangement of the pixel data in the preview callback
          * buffers.
          *
+=======
+>>>>>>> upstream/master
          * @param data the contents of the preview frame in the format defined
          *  by {@link android.graphics.ImageFormat}, which can be queried
          *  with {@link android.hardware.Camera.Parameters#getPreviewFormat()}.
@@ -513,10 +546,14 @@ public class Camera {
         mRawImageCallback = null;
         mPostviewCallback = null;
         mJpegCallback = null;
+<<<<<<< HEAD
         synchronized (mAutoFocusCallbackLock) {
             mAutoFocusCallback = null;
         }
         mAutoFocusMoveCallback = null;
+=======
+        mAutoFocusCallback = null;
+>>>>>>> upstream/master
     }
 
     private native final void _stopPreview();
@@ -530,6 +567,7 @@ public class Camera {
     public native final boolean previewEnabled();
 
     /**
+<<<<<<< HEAD
      * <p>Installs a callback to be invoked for every preview frame in addition
      * to displaying them on the screen.  The callback will be repeatedly called
      * for as long as preview is active.  This method can be called at any time,
@@ -543,6 +581,15 @@ public class Camera {
      * @param cb a callback object that receives a copy of each preview frame,
      *     or null to stop receiving callbacks.
      * @see android.media.MediaActionSound
+=======
+     * Installs a callback to be invoked for every preview frame in addition
+     * to displaying them on the screen.  The callback will be repeatedly called
+     * for as long as preview is active.  This method can be called at any time,
+     * even while preview is live.  Any other preview callbacks are overridden.
+     *
+     * @param cb a callback object that receives a copy of each preview frame,
+     *     or null to stop receiving callbacks.
+>>>>>>> upstream/master
      */
     public final void setPreviewCallback(PreviewCallback cb) {
         mPreviewCallback = cb;
@@ -554,6 +601,7 @@ public class Camera {
     }
 
     /**
+<<<<<<< HEAD
      * <p>Installs a callback to be invoked for the next preview frame in
      * addition to displaying it on the screen.  After one invocation, the
      * callback is cleared. This method can be called any time, even when
@@ -566,6 +614,15 @@ public class Camera {
      * @param cb a callback object that receives a copy of the next preview frame,
      *     or null to stop receiving callbacks.
      * @see android.media.MediaActionSound
+=======
+     * Installs a callback to be invoked for the next preview frame in addition
+     * to displaying it on the screen.  After one invocation, the callback is
+     * cleared. This method can be called any time, even when preview is live.
+     * Any other preview callbacks are overridden.
+     *
+     * @param cb a callback object that receives a copy of the next preview frame,
+     *     or null to stop receiving callbacks.
+>>>>>>> upstream/master
      */
     public final void setOneShotPreviewCallback(PreviewCallback cb) {
         mPreviewCallback = cb;
@@ -577,15 +634,24 @@ public class Camera {
     private native final void setHasPreviewCallback(boolean installed, boolean manualBuffer);
 
     /**
+<<<<<<< HEAD
      * <p>Installs a callback to be invoked for every preview frame, using
      * buffers supplied with {@link #addCallbackBuffer(byte[])}, in addition to
      * displaying them on the screen.  The callback will be repeatedly called
      * for as long as preview is active and buffers are available.  Any other
      * preview callbacks are overridden.</p>
+=======
+     * Installs a callback to be invoked for every preview frame, using buffers
+     * supplied with {@link #addCallbackBuffer(byte[])}, in addition to
+     * displaying them on the screen.  The callback will be repeatedly called
+     * for as long as preview is active and buffers are available.
+     * Any other preview callbacks are overridden.
+>>>>>>> upstream/master
      *
      * <p>The purpose of this method is to improve preview efficiency and frame
      * rate by allowing preview frame memory reuse.  You must call
      * {@link #addCallbackBuffer(byte[])} at some point -- before or after
+<<<<<<< HEAD
      * calling this method -- or no callbacks will received.</p>
      *
      * <p>The buffer queue will be cleared if this method is called with a null
@@ -596,11 +662,21 @@ public class Camera {
      * <p>If you are using the preview data to create video or still images,
      * strongly consider using {@link android.media.MediaActionSound} to
      * properly indicate image capture or recording start/stop to the user.</p>
+=======
+     * calling this method -- or no callbacks will received.
+     *
+     * The buffer queue will be cleared if this method is called with a null
+     * callback, {@link #setPreviewCallback(Camera.PreviewCallback)} is called,
+     * or {@link #setOneShotPreviewCallback(Camera.PreviewCallback)} is called.
+>>>>>>> upstream/master
      *
      * @param cb a callback object that receives a copy of the preview frame,
      *     or null to stop receiving callbacks and clear the buffer queue.
      * @see #addCallbackBuffer(byte[])
+<<<<<<< HEAD
      * @see android.media.MediaActionSound
+=======
+>>>>>>> upstream/master
      */
     public final void setPreviewCallbackWithBuffer(PreviewCallback cb) {
         mPreviewCallback = cb;
@@ -618,6 +694,7 @@ public class Camera {
      * the frame is discarded. Applications should add buffers back when they
      * finish processing the data in them.
      *
+<<<<<<< HEAD
      * <p>For formats besides YV12, the size of the buffer is determined by
      * multiplying the preview image width, height, and bytes per pixel. The
      * width and height can be read from
@@ -629,6 +706,14 @@ public class Camera {
      * <p>If using the {@link android.graphics.ImageFormat#YV12} format, the
      * size can be calculated using the equations listed in
      * {@link Camera.Parameters#setPreviewFormat}.
+=======
+     * <p>The size of the buffer is determined by multiplying the preview
+     * image width, height, and bytes per pixel. The width and height can be
+     * read from {@link Camera.Parameters#getPreviewSize()}. Bytes per pixel
+     * can be computed from
+     * {@link android.graphics.ImageFormat#getBitsPerPixel(int)} / 8,
+     * using the image format from {@link Camera.Parameters#getPreviewFormat()}.
+>>>>>>> upstream/master
      *
      * <p>This method is only necessary when
      * {@link #setPreviewCallbackWithBuffer(PreviewCallback)} is used. When
@@ -638,8 +723,13 @@ public class Camera {
      * hold the preview frame data, preview callback will return null and
      * the buffer will be removed from the buffer queue.
      *
+<<<<<<< HEAD
      * @param callbackBuffer the buffer to add to the queue. The size of the
      *   buffer must match the values described above.
+=======
+     * @param callbackBuffer the buffer to add to the queue.
+     *     The size should be width * height * bits_per_pixel / 8.
+>>>>>>> upstream/master
      * @see #setPreviewCallbackWithBuffer(PreviewCallback)
      */
     public final void addCallbackBuffer(byte[] callbackBuffer)
@@ -736,8 +826,13 @@ public class Camera {
                 return;
 
             case CAMERA_MSG_PREVIEW_FRAME:
+<<<<<<< HEAD
                 PreviewCallback pCb = mPreviewCallback;
                 if (pCb != null) {
+=======
+                if (mPreviewCallback != null) {
+                    PreviewCallback cb = mPreviewCallback;
+>>>>>>> upstream/master
                     if (mOneShot) {
                         // Clear the callback variable before the callback
                         // in case the app calls setPreviewCallback from
@@ -749,7 +844,11 @@ public class Camera {
                         // Set to oneshot mode again.
                         setHasPreviewCallback(true, false);
                     }
+<<<<<<< HEAD
                     pCb.onPreviewFrame((byte[])msg.obj, mCamera);
+=======
+                    cb.onPreviewFrame((byte[])msg.obj, mCamera);
+>>>>>>> upstream/master
                 }
                 return;
 
@@ -760,6 +859,7 @@ public class Camera {
                 return;
 
             case CAMERA_MSG_FOCUS:
+<<<<<<< HEAD
                 AutoFocusCallback cb = null;
                 synchronized (mAutoFocusCallbackLock) {
                     cb = mAutoFocusCallback;
@@ -767,6 +867,10 @@ public class Camera {
                 if (cb != null) {
                     boolean success = msg.arg1 == 0 ? false : true;
                     cb.onAutoFocus(success, mCamera);
+=======
+                if (mAutoFocusCallback != null) {
+                    mAutoFocusCallback.onAutoFocus(msg.arg1 == 0 ? false : true, mCamera);
+>>>>>>> upstream/master
                 }
                 return;
 
@@ -789,12 +893,15 @@ public class Camera {
                 }
                 return;
 
+<<<<<<< HEAD
             case CAMERA_MSG_FOCUS_MOVE:
                 if (mAutoFocusMoveCallback != null) {
                     mAutoFocusMoveCallback.onAutoFocusMoving(msg.arg1 == 0 ? false : true, mCamera);
                 }
                 return;
 
+=======
+>>>>>>> upstream/master
             default:
                 Log.e(TAG, "Unknown message type " + msg.what);
                 return;
@@ -879,14 +986,18 @@ public class Camera {
      * the focus position. Applications must call cancelAutoFocus to reset the
      * focus.</p>
      *
+<<<<<<< HEAD
      * <p>If autofocus is successful, consider using
      * {@link android.media.MediaActionSound} to properly play back an autofocus
      * success sound to the user.</p>
      *
+=======
+>>>>>>> upstream/master
      * @param cb the callback to run
      * @see #cancelAutoFocus()
      * @see android.hardware.Camera.Parameters#setAutoExposureLock(boolean)
      * @see android.hardware.Camera.Parameters#setAutoWhiteBalanceLock(boolean)
+<<<<<<< HEAD
      * @see android.media.MediaActionSound
      */
     public final void autoFocus(AutoFocusCallback cb)
@@ -894,6 +1005,12 @@ public class Camera {
         synchronized (mAutoFocusCallbackLock) {
             mAutoFocusCallback = cb;
         }
+=======
+     */
+    public final void autoFocus(AutoFocusCallback cb)
+    {
+        mAutoFocusCallback = cb;
+>>>>>>> upstream/master
         native_autoFocus();
     }
     private native final void native_autoFocus();
@@ -908,6 +1025,7 @@ public class Camera {
      */
     public final void cancelAutoFocus()
     {
+<<<<<<< HEAD
         synchronized (mAutoFocusCallbackLock) {
             mAutoFocusCallback = null;
         }
@@ -928,10 +1046,15 @@ public class Camera {
         // time. It is HAL's responsibility not to send a CAMERA_MSG_FOCUS
         // message after native_cancelAutoFocus is called.
         mEventHandler.removeMessages(CAMERA_MSG_FOCUS);
+=======
+        mAutoFocusCallback = null;
+        native_cancelAutoFocus();
+>>>>>>> upstream/master
     }
     private native final void native_cancelAutoFocus();
 
     /**
+<<<<<<< HEAD
      * Callback interface used to notify on auto focus start and stop.
      *
      * <p>This is only supported in continuous autofocus modes -- {@link
@@ -963,6 +1086,8 @@ public class Camera {
     private native void enableFocusMoveCallback(int enable);
 
     /**
+=======
+>>>>>>> upstream/master
      * Callback interface used to signal the moment of actual image capture.
      *
      * @see #takePicture(ShutterCallback, PictureCallback, PictureCallback, PictureCallback)
@@ -1059,7 +1184,10 @@ public class Camera {
         }
 
         native_takePicture(msgType);
+<<<<<<< HEAD
         mFaceDetectionRunning = false;
+=======
+>>>>>>> upstream/master
     }
 
     /**
@@ -1425,6 +1553,7 @@ public class Camera {
     }
 
     /**
+<<<<<<< HEAD
      * Returns an empty {@link Parameters} for testing purpose.
      *
      * @return a Parameter object.
@@ -1437,6 +1566,8 @@ public class Camera {
     }
 
     /**
+=======
+>>>>>>> upstream/master
      * Image size (width and height dimensions).
      */
     public class Size {
@@ -1976,12 +2107,21 @@ public class Camera {
          * @param value the String value of the parameter
          */
         public void set(String key, String value) {
+<<<<<<< HEAD
             if (key.indexOf('=') != -1 || key.indexOf(';') != -1 || key.indexOf(0) != -1) {
                 Log.e(TAG, "Key \"" + key + "\" contains invalid character (= or ; or \\0)");
                 return;
             }
             if (value.indexOf('=') != -1 || value.indexOf(';') != -1 || value.indexOf(0) != -1) {
                 Log.e(TAG, "Value \"" + value + "\" contains invalid character (= or ; or \\0)");
+=======
+            if (key.indexOf('=') != -1 || key.indexOf(';') != -1) {
+                Log.e(TAG, "Key \"" + key + "\" contains invalid character (= or ;)");
+                return;
+            }
+            if (value.indexOf('=') != -1 || value.indexOf(';') != -1) {
+                Log.e(TAG, "Value \"" + value + "\" contains invalid character (= or ;)");
+>>>>>>> upstream/master
                 return;
             }
 
@@ -2310,6 +2450,7 @@ public class Camera {
          * {@link android.graphics.ImageFormat#NV21}, which
          * uses the NV21 encoding format.</p>
          *
+<<<<<<< HEAD
          * <p>Use {@link Parameters#getSupportedPreviewFormats} to get a list of
          * the available preview formats.
          *
@@ -2348,6 +2489,14 @@ public class Camera {
          *
          * @see android.graphics.ImageFormat
          * @see android.hardware.Camera.Parameters#getSupportedPreviewFormats
+=======
+         * @param pixel_format the desired preview picture format, defined
+         *   by one of the {@link android.graphics.ImageFormat} constants.
+         *   (E.g., <var>ImageFormat.NV21</var> (default),
+         *                      <var>ImageFormat.RGB_565</var>, or
+         *                      <var>ImageFormat.JPEG</var>)
+         * @see android.graphics.ImageFormat
+>>>>>>> upstream/master
          */
         public void setPreviewFormat(int pixel_format) {
             String s = cameraFormatForPixelFormat(pixel_format);
@@ -2365,7 +2514,10 @@ public class Camera {
          *
          * @return the preview format.
          * @see android.graphics.ImageFormat
+<<<<<<< HEAD
          * @see #setPreviewFormat
+=======
+>>>>>>> upstream/master
          */
         public int getPreviewFormat() {
             return pixelFormatForCameraFormat(get(KEY_PREVIEW_FORMAT));
@@ -2379,7 +2531,10 @@ public class Camera {
          * @return a list of supported preview formats. This method will always
          *         return a list with at least one element.
          * @see android.graphics.ImageFormat
+<<<<<<< HEAD
          * @see #setPreviewFormat
+=======
+>>>>>>> upstream/master
          */
         public List<Integer> getSupportedPreviewFormats() {
             String str = get(KEY_PREVIEW_FORMAT + SUPPORTED_VALUES_SUFFIX);
@@ -2516,6 +2671,7 @@ public class Camera {
         }
 
         /**
+<<<<<<< HEAD
          * Sets the clockwise rotation angle in degrees relative to the
          * orientation of the camera. This affects the pictures returned from
          * JPEG {@link PictureCallback}. The camera driver may set orientation
@@ -2523,6 +2679,15 @@ public class Camera {
          * rotate the picture and the EXIF thumbnail. If the Jpeg picture is
          * rotated, the orientation in the EXIF header will be missing or 1
          * (row #0 is top and column #0 is left side).
+=======
+         * Sets the rotation angle in degrees relative to the orientation of
+         * the camera. This affects the pictures returned from JPEG {@link
+         * PictureCallback}. The camera driver may set orientation in the
+         * EXIF header without rotating the picture. Or the driver may rotate
+         * the picture and the EXIF thumbnail. If the Jpeg picture is rotated,
+         * the orientation in the EXIF header will be missing or 1 (row #0 is
+         * top and column #0 is left side).
+>>>>>>> upstream/master
          *
          * <p>If applications want to rotate the picture to match the orientation
          * of what users see, apps should use {@link
@@ -3230,7 +3395,11 @@ public class Camera {
         public void getFocusDistances(float[] output) {
             if (output == null || output.length != 3) {
                 throw new IllegalArgumentException(
+<<<<<<< HEAD
                         "output must be a float array with three elements.");
+=======
+                        "output must be an float array with three elements.");
+>>>>>>> upstream/master
             }
             splitFloat(get(KEY_FOCUS_DISTANCES), output);
         }

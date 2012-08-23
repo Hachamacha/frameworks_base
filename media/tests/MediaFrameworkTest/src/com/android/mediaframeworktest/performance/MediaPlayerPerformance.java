@@ -72,7 +72,10 @@ public class MediaPlayerPerformance extends ActivityInstrumentationTestCase2<Med
         "/sdcard/mediaMemOutput.txt";
     private static final String MEDIA_PROCMEM_OUTPUT =
         "/sdcard/mediaProcmemOutput.txt";
+<<<<<<< HEAD
     private static final int CAMERA_ID = 0;
+=======
+>>>>>>> upstream/master
 
     private static int mStartMemory = 0;
     private static int mEndMemory = 0;
@@ -102,9 +105,12 @@ public class MediaPlayerPerformance extends ActivityInstrumentationTestCase2<Med
 
     protected void setUp() throws Exception {
         super.setUp();
+<<<<<<< HEAD
         //Insert a 2 second before launching the test activity. This is
         //the workaround for the race condition of requesting the updated surface.
         Thread.sleep(2000);
+=======
+>>>>>>> upstream/master
         getActivity();
         if (MediaFrameworkPerfTestRunner.mGetNativeHeapDump)
             MediaTestUtil.getNativeHeapDump(this.getName() + "_before");
@@ -133,7 +139,11 @@ public class MediaPlayerPerformance extends ActivityInstrumentationTestCase2<Med
                 Looper.prepare();
                 Log.v(TAG, "start loopRun");
                 mLooper = Looper.myLooper();
+<<<<<<< HEAD
                 mCamera = Camera.open(CAMERA_ID);
+=======
+                mCamera = Camera.open();
+>>>>>>> upstream/master
                 startDone.open();
                 Looper.loop();
                 Log.v(TAG, "initializeMessageLooper: quit.");

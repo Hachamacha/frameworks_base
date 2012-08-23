@@ -17,7 +17,10 @@
 package android.app;
 
 import android.content.Loader;
+<<<<<<< HEAD
 import android.content.Loader.OnLoadCanceledListener;
+=======
+>>>>>>> upstream/master
 import android.os.Bundle;
 import android.util.DebugUtils;
 import android.util.Log;
@@ -220,8 +223,12 @@ class LoaderManagerImpl extends LoaderManager {
     
     boolean mCreatingLoader;
 
+<<<<<<< HEAD
     final class LoaderInfo implements Loader.OnLoadCompleteListener<Object>,
             Loader.OnLoadCanceledListener<Object> {
+=======
+    final class LoaderInfo implements Loader.OnLoadCompleteListener<Object> {
+>>>>>>> upstream/master
         final int mId;
         final Bundle mArgs;
         LoaderManager.LoaderCallbacks<Object> mCallbacks;
@@ -273,7 +280,10 @@ class LoaderManagerImpl extends LoaderManager {
                 }
                 if (!mListenerRegistered) {
                     mLoader.registerListener(mId, this);
+<<<<<<< HEAD
                     mLoader.registerOnLoadCanceledListener(this);
+=======
+>>>>>>> upstream/master
                     mListenerRegistered = true;
                 }
                 mLoader.startLoading();
@@ -332,11 +342,15 @@ class LoaderManagerImpl extends LoaderManager {
                     // Let the loader know we're done with it
                     mListenerRegistered = false;
                     mLoader.unregisterListener(this);
+<<<<<<< HEAD
                     mLoader.unregisterOnLoadCanceledListener(this);
+=======
+>>>>>>> upstream/master
                     mLoader.stopLoading();
                 }
             }
         }
+<<<<<<< HEAD
 
         void cancel() {
             if (DEBUG) Log.v(TAG, "  Canceling: " + this);
@@ -347,6 +361,9 @@ class LoaderManagerImpl extends LoaderManager {
             }
         }
 
+=======
+        
+>>>>>>> upstream/master
         void destroy() {
             if (DEBUG) Log.v(TAG, "  Destroying: " + this);
             mDestroyed = true;
@@ -374,7 +391,10 @@ class LoaderManagerImpl extends LoaderManager {
                 if (mListenerRegistered) {
                     mListenerRegistered = false;
                     mLoader.unregisterListener(this);
+<<<<<<< HEAD
                     mLoader.unregisterOnLoadCanceledListener(this);
+=======
+>>>>>>> upstream/master
                 }
                 mLoader.reset();
             }
@@ -382,6 +402,7 @@ class LoaderManagerImpl extends LoaderManager {
                 mPendingLoader.destroy();
             }
         }
+<<<<<<< HEAD
 
         @Override
         public void onLoadCanceled(Loader<Object> loader) {
@@ -414,6 +435,10 @@ class LoaderManagerImpl extends LoaderManager {
 
         @Override
         public void onLoadComplete(Loader<Object> loader, Object data) {
+=======
+        
+        @Override public void onLoadComplete(Loader<Object> loader, Object data) {
+>>>>>>> upstream/master
             if (DEBUG) Log.v(TAG, "onLoadComplete: " + this);
             
             if (mDestroyed) {
@@ -676,9 +701,13 @@ class LoaderManagerImpl extends LoaderManager {
                     } else {
                         // Now we have three active loaders... we'll queue
                         // up this request to be processed once one of the other loaders
+<<<<<<< HEAD
                         // finishes or is canceled.
                         if (DEBUG) Log.v(TAG, "  Current loader is running; attempting to cancel");
                         info.cancel();
+=======
+                        // finishes.
+>>>>>>> upstream/master
                         if (info.mPendingLoader != null) {
                             if (DEBUG) Log.v(TAG, "  Removing pending loader: " + info.mPendingLoader);
                             info.mPendingLoader.destroy();

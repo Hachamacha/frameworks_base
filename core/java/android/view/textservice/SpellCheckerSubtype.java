@@ -21,11 +21,17 @@ import android.content.pm.ApplicationInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+<<<<<<< HEAD
 import android.util.Slog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+=======
+
+import java.util.ArrayList;
+import java.util.Arrays;
+>>>>>>> upstream/master
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -35,15 +41,21 @@ import java.util.Locale;
  * Subtype can describe locale (e.g. en_US, fr_FR...) used for settings.
  */
 public final class SpellCheckerSubtype implements Parcelable {
+<<<<<<< HEAD
     private static final String TAG = SpellCheckerSubtype.class.getSimpleName();
     private static final String EXTRA_VALUE_PAIR_SEPARATOR = ",";
     private static final String EXTRA_VALUE_KEY_VALUE_SEPARATOR = "=";
+=======
+>>>>>>> upstream/master
 
     private final int mSubtypeHashCode;
     private final int mSubtypeNameResId;
     private final String mSubtypeLocale;
     private final String mSubtypeExtraValue;
+<<<<<<< HEAD
     private HashMap<String, String> mExtraValueHashMapCache;
+=======
+>>>>>>> upstream/master
 
     /**
      * Constructor
@@ -89,6 +101,7 @@ public final class SpellCheckerSubtype implements Parcelable {
         return mSubtypeExtraValue;
     }
 
+<<<<<<< HEAD
     private HashMap<String, String> getExtraValueHashMap() {
         if (mExtraValueHashMapCache == null) {
             mExtraValueHashMapCache = new HashMap<String, String>();
@@ -129,6 +142,8 @@ public final class SpellCheckerSubtype implements Parcelable {
         return getExtraValueHashMap().get(key);
     }
 
+=======
+>>>>>>> upstream/master
     @Override
     public int hashCode() {
         return mSubtypeHashCode;
@@ -146,10 +161,14 @@ public final class SpellCheckerSubtype implements Parcelable {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * @hide
      */
     public static Locale constructLocaleFromString(String localeStr) {
+=======
+    private static Locale constructLocaleFromString(String localeStr) {
+>>>>>>> upstream/master
         if (TextUtils.isEmpty(localeStr))
             return null;
         String[] localeParams = localeStr.split("_", 3);

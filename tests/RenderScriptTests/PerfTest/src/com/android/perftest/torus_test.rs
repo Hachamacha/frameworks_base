@@ -47,6 +47,7 @@ rs_program_vertex gProgVertexPixelLight;
 rs_program_vertex gProgVertexPixelLightMove;
 rs_program_fragment gProgFragmentPixelLight;
 
+<<<<<<< HEAD
 typedef struct TorusTestData_s {
     int testId;
     int user1;
@@ -54,6 +55,8 @@ typedef struct TorusTestData_s {
 } TorusTestData;
 TorusTestData *gData;
 
+=======
+>>>>>>> upstream/master
 static float gDt = 0.0f;
 
 static int gRenderSurfaceW;
@@ -276,6 +279,7 @@ void root(const void *v_in, void *v_out, const void *usrData, uint32_t x, uint32
     gRenderSurfaceH = testData->renderSurfaceH;
     gDt = testData->dt;
 
+<<<<<<< HEAD
     gData = (TorusTestData*)v_in;
 
     switch(gData->testId) {
@@ -290,6 +294,17 @@ void root(const void *v_in, void *v_out, const void *usrData, uint32_t x, uint32
             break;
         default:
             rsDebug("Wrong test number", gData->testId);
+=======
+    switch(testData->user) {
+        case 0:
+            displaySimpleGeoSamples(testData->user1 == 1 ? true : false, testData->user2);
+            break;
+        case 1:
+            displayCustomShaderSamples(testData->user1);
+            break;
+        case 2:
+            displayPixelLightSamples(testData->user1, testData->user2 == 1 ? true : false);
+>>>>>>> upstream/master
             break;
     }
 }

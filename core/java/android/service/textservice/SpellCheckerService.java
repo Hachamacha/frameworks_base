@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
+<<<<<<< HEAD
 import android.text.TextUtils;
 import android.text.method.WordIterator;
 import android.util.Log;
@@ -38,6 +39,13 @@ import java.lang.ref.WeakReference;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Locale;
+=======
+import android.util.Log;
+import android.view.textservice.SuggestionsInfo;
+import android.view.textservice.TextInfo;
+
+import java.lang.ref.WeakReference;
+>>>>>>> upstream/master
 
 /**
  * SpellCheckerService provides an abstract base class for a spell checker.
@@ -98,7 +106,10 @@ public abstract class SpellCheckerService extends Service {
      */
     public static abstract class Session {
         private InternalISpellCheckerSession mInternalSession;
+<<<<<<< HEAD
         private volatile SentenceLevelAdapter mSentenceLevelAdapter;
+=======
+>>>>>>> upstream/master
 
         /**
          * @hide
@@ -119,7 +130,11 @@ public abstract class SpellCheckerService extends Service {
          * So, this is not called on the main thread,
          * but will be called in series on another thread.
          * @param textInfo the text metadata
+<<<<<<< HEAD
          * @param suggestionsLimit the maximum number of suggestions to be returned
+=======
+         * @param suggestionsLimit the number of limit of suggestions returned
+>>>>>>> upstream/master
          * @return SuggestionsInfo which contains suggestions for textInfo
          */
         public abstract SuggestionsInfo onGetSuggestions(TextInfo textInfo, int suggestionsLimit);
@@ -130,10 +145,16 @@ public abstract class SpellCheckerService extends Service {
          * So, this is not called on the main thread,
          * but will be called in series on another thread.
          * @param textInfos an array of the text metadata
+<<<<<<< HEAD
          * @param suggestionsLimit the maximum number of suggestions to be returned
          * @param sequentialWords true if textInfos can be treated as sequential words.
          * @return an array of {@link SentenceSuggestionsInfo} returned by
          * {@link SpellCheckerService.Session#onGetSuggestions(TextInfo, int)}
+=======
+         * @param suggestionsLimit the number of limit of suggestions returned
+         * @param sequentialWords true if textInfos can be treated as sequential words.
+         * @return an array of SuggestionsInfo of onGetSuggestions
+>>>>>>> upstream/master
          */
         public SuggestionsInfo[] onGetSuggestionsMultiple(TextInfo[] textInfos,
                 int suggestionsLimit, boolean sequentialWords) {
@@ -148,6 +169,7 @@ public abstract class SpellCheckerService extends Service {
         }
 
         /**
+<<<<<<< HEAD
          * Get sentence suggestions for specified texts in an array of TextInfo.
          * The default implementation splits the input text to words and returns
          * {@link SentenceSuggestionsInfo} which contains suggestions for each word.
@@ -203,6 +225,8 @@ public abstract class SpellCheckerService extends Service {
         }
 
         /**
+=======
+>>>>>>> upstream/master
          * Request to abort all tasks executed in SpellChecker.
          * This function will run on the incoming IPC thread.
          * So, this is not called on the main thread,
@@ -265,6 +289,7 @@ public abstract class SpellCheckerService extends Service {
         }
 
         @Override
+<<<<<<< HEAD
         public void onGetSentenceSuggestionsMultiple(TextInfo[] textInfos, int suggestionsLimit) {
             try {
                 mListener.onGetSentenceSuggestions(
@@ -274,6 +299,8 @@ public abstract class SpellCheckerService extends Service {
         }
 
         @Override
+=======
+>>>>>>> upstream/master
         public void onCancel() {
             int pri = Process.getThreadPriority(Process.myTid());
             try {
@@ -324,6 +351,7 @@ public abstract class SpellCheckerService extends Service {
             return internalSession;
         }
     }
+<<<<<<< HEAD
 
     /**
      * Adapter class to accommodate word level spell checking APIs to sentence level spell checking
@@ -447,4 +475,6 @@ public abstract class SpellCheckerService extends Service {
             return new SentenceSuggestionsInfo(reconstructedSuggestions, offsets, lengths);
         }
     }
+=======
+>>>>>>> upstream/master
 }

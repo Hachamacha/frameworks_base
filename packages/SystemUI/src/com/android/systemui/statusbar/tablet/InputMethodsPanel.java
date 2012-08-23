@@ -201,6 +201,10 @@ public class InputMethodsPanel extends LinearLayout implements StatusBarPanel,
         if (closeKeyboard) {
             mImm.hideSoftInputFromWindow(getWindowToken(), 0);
         }
+<<<<<<< HEAD
+=======
+        updateHardKeyboardEnabled();
+>>>>>>> upstream/master
     }
 
     private void startActivity(Intent intent) {
@@ -225,7 +229,11 @@ public class InputMethodsPanel extends LinearLayout implements StatusBarPanel,
         }
         final CharSequence imiName = getIMIName(imi);
         final Drawable icon = getSubtypeIcon(imi, subtype);
+<<<<<<< HEAD
         final View view = View.inflate(mContext, R.layout.system_bar_input_methods_item, null);
+=======
+        final View view = View.inflate(mContext, R.layout.status_bar_input_methods_item, null);
+>>>>>>> upstream/master
         final ImageView subtypeIcon = (ImageView)view.findViewById(R.id.item_icon);
         final TextView itemTitle = (TextView)view.findViewById(R.id.item_title);
         final TextView itemSubtitle = (TextView)view.findViewById(R.id.item_subtitle);
@@ -328,7 +336,10 @@ public class InputMethodsPanel extends LinearLayout implements StatusBarPanel,
             mHardKeyboardSection.setVisibility(View.VISIBLE);
             if (mHardKeyboardSwitch.isChecked() != mHardKeyboardEnabled) {
                 mHardKeyboardSwitch.setChecked(mHardKeyboardEnabled);
+<<<<<<< HEAD
                 updateHardKeyboardEnabled();
+=======
+>>>>>>> upstream/master
             }
         } else {
             mHardKeyboardSection.setVisibility(View.GONE);

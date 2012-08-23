@@ -67,6 +67,7 @@ public:
     static void freeCaches(JNIEnv* env, jobject) {
         // these are called in no particular order
         SkImageRef_GlobalPool::SetRAMUsed(0);
+<<<<<<< HEAD
         SkGraphics::PurgeFontCache();
     }
 
@@ -74,6 +75,11 @@ public:
         TextLayoutEngine::getInstance().purgeCaches();
     }
 
+=======
+        SkGraphics::SetFontCacheUsed(0);
+    }
+    
+>>>>>>> upstream/master
     static jboolean isOpaque(JNIEnv* env, jobject jcanvas) {
         NPE_CHECK_RETURN_ZERO(env, jcanvas);
         SkCanvas* canvas = GraphicsJNI::getNativeCanvas(env, jcanvas);
@@ -446,7 +452,11 @@ public:
 #endif
         canvas->drawPicture(*picture);
 #ifdef TIME_DRAW
+<<<<<<< HEAD
         ALOGD("---- picture playback %d ms\n", get_thread_msec() - now);
+=======
+        LOGD("---- picture playback %d ms\n", get_thread_msec() - now);
+>>>>>>> upstream/master
 #endif
     }
 
@@ -736,7 +746,15 @@ public:
                                       jcharArray text, int index, int count,
                                       jfloat x, jfloat y, int flags, SkPaint* paint) {
         jchar* textArray = env->GetCharArrayElements(text, NULL);
+<<<<<<< HEAD
         drawTextWithGlyphs(canvas, textArray + index, 0, count, x, y, flags, paint);
+=======
+#if RTL_USE_HARFBUZZ
+        drawTextWithGlyphs(canvas, textArray + index, 0, count, x, y, flags, paint);
+#else
+        TextLayout::drawText(paint, textArray + index, count, flags, x, y, canvas);
+#endif
+>>>>>>> upstream/master
         env->ReleaseCharArrayElements(text, textArray, JNI_ABORT);
     }
 
@@ -745,7 +763,15 @@ public:
                                           int start, int end,
                                           jfloat x, jfloat y, int flags, SkPaint* paint) {
         const jchar* textArray = env->GetStringChars(text, NULL);
+<<<<<<< HEAD
         drawTextWithGlyphs(canvas, textArray, start, end, x, y, flags, paint);
+=======
+#if RTL_USE_HARFBUZZ
+        drawTextWithGlyphs(canvas, textArray, start, end, x, y, flags, paint);
+#else
+        TextLayout::drawText(paint, textArray + start, end - start, flags, x, y, canvas);
+#endif
+>>>>>>> upstream/master
         env->ReleaseStringChars(text, textArray);
     }
 
@@ -761,18 +787,48 @@ public:
             int start, int count, int contextCount,
             jfloat x, jfloat y, int flags, SkPaint* paint) {
 
+<<<<<<< HEAD
         sp<TextLayoutValue> value = TextLayoutEngine::getInstance().getValue(paint,
                 textArray, start, count, contextCount, flags);
         if (value == NULL) {
             return;
         }
+=======
+        sp<TextLayoutCacheValue> value;
+#if USE_TEXT_LAYOUT_CACHE
+        value = TextLayoutCache::getInstance().getValue(paint, textArray, start, count,
+                contextCount, flags);
+        if (value == NULL) {
+            LOGE("Cannot get TextLayoutCache value");
+            return ;
+        }
+#else
+        value = new TextLayoutCacheValue();
+        value->computeValues(paint, textArray, start, count, contextCount, flags);
+#endif
+>>>>>>> upstream/master
         doDrawGlyphs(canvas, value->getGlyphs(), 0, value->getGlyphsCount(), x, y, flags, paint);
     }
 
     static void doDrawGlyphs(SkCanvas* canvas, const jchar* glyphArray, int index, int count,
             jfloat x, jfloat y, int flags, SkPaint* paint) {
+<<<<<<< HEAD
         // Beware: this needs Glyph encoding (already done on the Paint constructor)
         canvas->drawText(glyphArray + index * 2, count * 2, x, y, *paint);
+=======
+        // TODO: need to suppress this code after the GL renderer is modified for not
+        // copying the paint
+
+        // Save old text encoding
+        SkPaint::TextEncoding oldEncoding = paint->getTextEncoding();
+        // Define Glyph encoding
+        paint->setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+
+        canvas->drawText(glyphArray + index * 2, count * 2, x, y, *paint);
+
+        // Get back old encoding
+        paint->setTextEncoding(oldEncoding);
+>>>>>>> upstream/master
     }
 
     static void drawTextRun___CIIIIFFIPaint(
@@ -781,8 +837,18 @@ public:
         jfloat x, jfloat y, int dirFlags, SkPaint* paint) {
 
         jchar* chars = env->GetCharArrayElements(text, NULL);
+<<<<<<< HEAD
         drawTextWithGlyphs(canvas, chars + contextIndex, index - contextIndex,
                 count, contextCount, x, y, dirFlags, paint);
+=======
+#if RTL_USE_HARFBUZZ
+        drawTextWithGlyphs(canvas, chars + contextIndex, index - contextIndex,
+                count, contextCount, x, y, dirFlags, paint);
+#else
+        TextLayout::drawTextRun(paint, chars + contextIndex, index - contextIndex,
+                count, contextCount, dirFlags, x, y, canvas);
+#endif
+>>>>>>> upstream/master
         env->ReleaseCharArrayElements(text, chars, JNI_ABORT);
     }
 
@@ -794,8 +860,18 @@ public:
         jint count = end - start;
         jint contextCount = contextEnd - contextStart;
         const jchar* chars = env->GetStringChars(text, NULL);
+<<<<<<< HEAD
         drawTextWithGlyphs(canvas, chars + contextStart, start - contextStart,
                 count, contextCount, x, y, dirFlags, paint);
+=======
+#if RTL_USE_HARFBUZZ
+        drawTextWithGlyphs(canvas, chars + contextStart, start - contextStart,
+                count, contextCount, x, y, dirFlags, paint);
+#else
+        TextLayout::drawTextRun(paint, chars + contextStart, start - contextStart,
+                count, contextCount, dirFlags, x, y, canvas);
+#endif
+>>>>>>> upstream/master
         env->ReleaseStringChars(text, chars);
     }
 
@@ -812,12 +888,16 @@ public:
             posPtr[indx].fX = SkFloatToScalar(posArray[indx << 1]);
             posPtr[indx].fY = SkFloatToScalar(posArray[(indx << 1) + 1]);
         }
+<<<<<<< HEAD
         
         SkPaint::TextEncoding encoding = paint->getTextEncoding();
         paint->setTextEncoding(SkPaint::kUTF16_TextEncoding);
         canvas->drawPosText(textArray + index, count << 1, posPtr, *paint);
         paint->setTextEncoding(encoding);
         
+=======
+        canvas->drawPosText(textArray + index, count << 1, posPtr, *paint);
+>>>>>>> upstream/master
         if (text) {
             env->ReleaseCharArrayElements(text, textArray, 0);
         }
@@ -841,12 +921,16 @@ public:
             posPtr[indx].fX = SkFloatToScalar(posArray[indx << 1]);
             posPtr[indx].fY = SkFloatToScalar(posArray[(indx << 1) + 1]);
         }
+<<<<<<< HEAD
 
         SkPaint::TextEncoding encoding = paint->getTextEncoding();
         paint->setTextEncoding(SkPaint::kUTF16_TextEncoding);
         canvas->drawPosText(text_, byteLength << 1, posPtr, *paint);
         paint->setTextEncoding(encoding);
 
+=======
+        canvas->drawPosText(text_, byteLength << 1, posPtr, *paint);
+>>>>>>> upstream/master
         if (text) {
             env->ReleaseStringChars(text, (const jchar*) text_);
         }
@@ -990,9 +1074,13 @@ static JNINativeMethod gCanvasMethods[] = {
         (void*) SkCanvasGlue::drawTextOnPath__StringPathFFPaint},
     {"native_drawPicture", "(II)V", (void*) SkCanvasGlue::drawPicture},
 
+<<<<<<< HEAD
     {"freeCaches", "()V", (void*) SkCanvasGlue::freeCaches},
 
     {"freeTextLayoutCaches", "()V", (void*) SkCanvasGlue::freeTextLayoutCaches}
+=======
+    {"freeCaches", "()V", (void*) SkCanvasGlue::freeCaches}
+>>>>>>> upstream/master
 };
 
 ///////////////////////////////////////////////////////////////////////////////
